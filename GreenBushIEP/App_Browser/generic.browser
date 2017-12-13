@@ -1,0 +1,5 @@
+<browser refID="Mozilla" >
+  <capabilities>
+    <capability name="cookies"  value="true" />
+  </capabilities>
+</browser>

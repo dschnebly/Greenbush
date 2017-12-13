@@ -1,0 +1,69 @@
+﻿@using GreenBushIEP.Models
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Welcome to IEP. Please log in.";
+    ViewBag.Error = "";
+}
+
+<div class="jumbotron vertical-center">
+    <div class="c-sub-hero__background-cloud-one"></div>
+    <div class="c-sub-hero__background-cloud-three"></div>
+    <div class="container login-container">
+        <div id="output">@ViewBag.Error</div>
+        <div class="panel panel-default" style="z-index: 2;">
+            <div class="panel-heading">
+                <h3 class="panel-title">@ViewBag.Title</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-11 col-xs-12">
+                        <section>
+
+                            @using (Html.BeginForm("Login", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Email, new { @class = "col-md-3 col-xs-11 control-label" })
+                                    <div class="col-md-9 col-xs-11 input-group ">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Recipient's email or username", @id = "Email", @type = "email" })
+                                        <span class="input-group-addon" id="basic-addon2">@@example.com</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 col-xs-11 control-label" })
+                                    <div class="col-md-9 col-xs-11 input-group">
+                                        @Html.TextBoxFor(m => m.Password, new { @id = "Password", @type = "password", @placeholder = "Recipient's password", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-9 col-xs-11 col-md-push-3 col-lg-push-3 submit-login">
+                                        <input type="submit" class="btn btn-default" role="button" value="Log In">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-xs-pull-1 col-md-pull-0">
+                                        @Html.ActionLink("Create an Account", "Register", "Account", null, new { @class = "create-account" })
+                                    </div>
+                                </div>
+                            }
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function setVolumeHalf() {
+        document.getElementById("audio1").volume = 0.3;
+    }
+</script>
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/home.js")
+}

@@ -1,0 +1,322 @@
+﻿
+@{
+    ViewBag.Title = "EditStudentInformation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
+    @Styles.Render("~/Content/switchbutton.css")
+}
+
+<style>
+    body {
+        background-color: rgb(82, 86, 89);
+    }
+
+    .body-content {
+        border-left: 1px solid #000;
+        border-right: 1px solid #000;
+        box-shadow: 10px 10px 25px #333;
+        position: relative;
+        top: 15px;
+        background-color: #fff;
+        margin-bottom: 75px;
+    }
+
+    .report-heading {
+        padding: 60px;
+    }
+
+    .close-circle {
+        font-size: 30px;
+        text-align: right;
+        padding: 0;
+        right: 25px;
+    }
+
+    .btn-primary.gradient {
+        background: -moz-linear-gradient(top, #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #33a6cc 50%,#0099cc 50%); /* IE10+ */
+        background: linear-gradient(to bottom, #33a6cc 50%,#0099cc 50%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
+    }
+
+        .btn-primary.gradient:hover, .btn-primary.gradient:focus, .btn-primary.gradient:active, .btn-primary.gradient.active, .open > .dropdown-toggle.btn-primary {
+            background: -moz-linear-gradient(top, #66b2cc 50%, #33a6cc 50%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#66b2cc), color-stop(50%,#33a6cc)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #66b2cc 50%,#33a6cc 50%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #66b2cc 50%,#33a6cc 50%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #66b2cc 50%,#33a6cc 50%); /* IE10+ */
+            background: linear-gradient(to bottom, #66b2cc 50%,#33a6cc 50%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66b2cc', endColorstr='#33a6cc',GradientType=0 ); /* IE6-9 */
+        }
+
+        .btn-primary.gradient:active, .btn-primary.gradient.active {
+            background: -moz-linear-gradient(top, #267c99 50%, #007299 50%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#267c99), color-stop(50%,#007299)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #267c99 50%,#007299 50%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #267c99 50%,#007299 50%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #267c99 50%,#007299 50%); /* IE10+ */
+            background: linear-gradient(to bottom, #267c99 50%,#007299 50%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c99', endColorstr='#007299',GradientType=0 ); /* IE6-9 */
+        }
+
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+</style>
+
+<div class="transition-page" style="margin-bottom: 45px;">
+    <div class="container" style="min-height: 1250px;">
+        <div class="row">
+            <div class="col-md-10">
+                <h3 class="report-heading">Edit Student Information</h3>
+            </div>
+            <div class="col-md-2 close-circle">
+                <span style="font-size: 12px; padding-right: 5px; vertical-align: super;">close window</span><span id="close-circle" class="glyphicon glyphicon-remove-circle" title="close window"></span>
+            </div>
+        </div>
+        <div class="row" style="padding: 0 60px 60px 60px;">
+            <div class="col-md-12" style="text-align: center;">
+                <div id="personal">
+
+                    <form name="personalInfomation">
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-xs-2 col-md-2">
+                                    <label for="kidsid" class="control-label">KIDS ID#</label>
+                                    <input type="text" class="form-control" id="kidsid" placeholder="KIDS ID">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-5 col-md-5">
+                                    <label for="firstname" class="control-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstname" placeholder="First Name">
+                                </div>
+                                <div class="form-group col-xs-1 col-md-1">
+                                    <label for="firstname" class="control-label">M.I.</label>
+                                    <input type="text" class="form-control" id="firstname" placeholder="Middle Intial">
+                                </div>
+                                <div class="form-group col-xs-6 col-md-6">
+                                    <label for="lastname" class="control-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-3 col-md-3 date" id="dobdate">
+                                    <label for="dobdate" class="control-label">D.O.B.</label>
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" id="dobtimepicker" placeholder="i.e. 10/25/20016" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-2 col-md-2">
+                                    <label class="control-label">Gender</label>
+                                    <div class="onoffswitch1">
+                                        <input type="checkbox" name="onoffswitch1" class="onoffswitch1-checkbox" id="myonoffswitch1" checked>
+                                        <label class="onoffswitch1-label" for="myonoffswitch1">
+                                            <span class="onoffswitch1-inner"></span>
+                                            <span class="onoffswitch1-switch"></span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-xs-3 col-md-3">
+                                    <label for="ethnic" class="control-label">Ethnic Group</label>
+                                    <select id="selectlanguage" name="selectlanguage" class="form-control">
+                                        <option value="1">White</option>
+                                        <option value="2">Hispanic or Latino</option>
+                                        <option value="3">Black or African American</option>
+                                        <option value="4">Native American or American Indian</option>
+                                        <option value="5">Asian / Pacific Islander</option>
+                                        <option value="6">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-3 col-md-3">
+                                    <label for="ethnic" class="control-label">Grade Level</label>
+                                    <select id="selectlanguage" name="selectlanguage" class="form-control">
+                                        <option value="1">1st Grade</option>
+                                        <option value="2">2nd Grade</option>
+                                        <option value="3">3rd Grade</option>
+                                        <option value="4">4th Grade</option>
+                                        <option value="5">5th Grade</option>
+                                        <option value="6">6th Grade</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-md-6">
+                                    <label for="primarylang" class="control-label">Primary Language of Student</label>
+                                    <select id="primarylang" name="selectlanguage" class="form-control">
+                                        <option value="1">Arabic</option>
+                                        <option value="2">Cantonese</option>
+                                        <option value="3">Czech</option>
+                                        <option value="18" selected="selected">English</option>
+                                        <option value="4">French</option>
+                                        <option value="5">German</option>
+                                        <option value="6">Hebrew</option>
+                                        <option value="7">Hindi</option>
+                                        <option value="8">Italian</option>
+                                        <option value="9">Japanese</option>
+                                        <option value="10">Korean</option>
+                                        <option value="11">Mandarin</option>
+                                        <option value="12">Polish</option>
+                                        <option value="13">Russian</option>
+                                        <option value="14">Spanish</option>
+                                        <option value="15">Thai</option>
+                                        <option value="16">Turkish</option>
+                                        <option value="17">Vietnamesse</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-6">
+                                    <label for="primarylang" class="control-label">Primary Language of Parent(s)</label>
+                                    <select id="primarylang" name="selectlanguage" class="form-control">
+                                        <option value="1">Arabic</option>
+                                        <option value="2">Cantonese</option>
+                                        <option value="3">Czech</option>
+                                        <option value="18" selected="selected">English</option>
+                                        <option value="4">French</option>
+                                        <option value="5">German</option>
+                                        <option value="6">Hebrew</option>
+                                        <option value="7">Hindi</option>
+                                        <option value="8">Italian</option>
+                                        <option value="9">Japanese</option>
+                                        <option value="10">Korean</option>
+                                        <option value="11">Mandarin</option>
+                                        <option value="12">Polish</option>
+                                        <option value="13">Russian</option>
+                                        <option value="14">Spanish</option>
+                                        <option value="15">Thai</option>
+                                        <option value="16">Turkish</option>
+                                        <option value="17">Vietnamesse</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-md-6" id="EnrollmentLEA">
+                                    <label for="dobdate" class="control-label">Enrollement LEA#</label>
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-building-o"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-6" id="dobdate">
+                                    <label for="dobdate" class="control-label">Enrollement School Building</label>
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-building"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-md-6" id="EnrollmentLEA">
+                                    <label for="dobdate" class="control-label">Attendance LEA#</label>
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-building-o"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6 col-md-6" id="dobdate">
+                                    <label for="dobdate" class="control-label">Attendance School Building</label>
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-building"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="row" style="margin-top: 35px;">
+                            <div class="form-group">
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button id="button1id" type="reset" name="button1id" class="btn btn-default btn-lg">Cancel</button>
+                                    <button id="button2id" type="submit" name="button2id" class="btn btn-primary btn-lg gradient"> Save </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var el = document.getElementsByClassName("body-content")[0];
+    var className = 'transition-page-scaleUpCenter';
+
+    if (el.classList) {
+        el.classList.add(className);
+    } else {
+        el.className += ' ' + className;
+    }
+</script>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/editstudentinformation.js");
+}

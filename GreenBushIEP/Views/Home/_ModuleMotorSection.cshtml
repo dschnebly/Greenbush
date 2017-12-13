@@ -1,0 +1,123 @@
+﻿@model GreenBushIEP.Models.tblIEPMotor
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-cogs" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Motor</h4>
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("EditMotor", "ModuleSection", FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IEPMotorID)
+
+        <div class="funkyradio">
+            <div class="funkyradio-success">
+                <input type="checkbox" id="ModuleMotorNoConcerns" name="ModuleMotorNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
+                <label for="ModuleMotorNoConcerns">No Concerns</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
+                <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.Needs ? "checked" : String.Empty) />
+                <label for="ModuleMotorNeeds">Area of Need which impacts perforamnce in General Education</label>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Team will consider participation in:</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 ? "checked" : String.Empty)>General Education P.E.</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>The team considered participation in</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Modified P.E</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="4" style="position: relative; right: 5px;" @(Model.Participation == 4 ? "checked" : String.Empty)>Student has previously met P.E. Requirements</label>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+            </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;") ">
+                    *if other, please explain<br />
+                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                </p>
+            </div>
+        </fieldset>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12" style="text-align:center;">
+                    <button type="button" class="btn btn-default" id="resetModuleMotorForm">Reset</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    //reset the form to default database/brand new values.
+    $("input[name='ModuleMotorNoConcerns']").on('click', function (event) {
+        if ($("input[name='ModuleMotorNoConcerns']:checked").length)
+        {
+            $("input[name='ModuleMotorProgressTowardGenEd']").prop('checked', false);
+            $("input[name='ModuleMotorNeeds']").prop('checked', false);
+
+            $("input[name='ModuleMotorParticipation']").prop('checked', false);
+            $("input[name='ModuleMotorNeeds']").prop('checked', false);
+            $("input:radio[name=ModuleMotorMeetNeedBy]").prop('checked', false);
+
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    $("input[name='ModuleMotorProgressTowardGenEd']").on('click', function (event) {
+        $("input[name='ModuleMotorNoConcerns']").prop('checked', false);
+    });
+
+    // Attach Event
+    $("input[name='ModuleMotorNeeds']").on('click', function (event) {
+        $("input[name='ModuleMotorNoConcerns']").prop('checked', false);
+    });
+
+    // Attach Event
+    // if radio button is selected than show text box.
+    $("input:radio[name=ModuleMotorMeetNeedBy]").on('click', function (event) {
+        if ($("input:radio[name=ModuleMotorMeetNeedBy]:checked").val() == 3) {
+            $("#MeetByOtherTextArea p").show();
+        }
+        else {
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetModuleMotorForm").trigger("reset");
+</script>

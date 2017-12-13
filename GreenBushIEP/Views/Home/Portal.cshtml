@@ -1,0 +1,278 @@
+﻿
+@{
+    ViewBag.Title = " Teacher Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="user-head">
+    <a class="inbox-avatar" href="javascript:;">
+        <img width="64" hieght="60" src="http://bootsnipp.com/img/avatars/ebeb306fd7ec11ab68cbcaa34282158bd80361a7.jpg">
+    </a>
+</div>
+
+<div class="container">
+    <h3>
+        Aleid Majeh <small> - my current list of students</small>
+        <a href="#add-students" title="Add Student" role="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#addStudentModal"><span class="glyphicon glyphicon-plus"></span></a>
+        <a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
+    </h3>
+    <hr>
+    <div class="row" style="display: none;">
+        <div class="col-xs-12">
+            <div class="input-group c-search">
+                <input type="text" class="form-control" id="contact-list-search">
+                <span class="input-group-btn">
+                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Kids #</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Birthdate</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3415342</td>
+                <td>Steven</td>
+                <td>Monts</td>
+                <td>9/30/2000</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>3556378</td>
+                <td>Jim</td>
+                <td>Petro</td>
+                <td>10/15/2007</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>3778989</td>
+                <td>Jason</td>
+                <td>Schull</td>
+                <td>3/25/2010</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>4465711</td>
+                <td>Mary</td>
+                <td>Tretor</td>
+                <td>6/1/2009</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>5776895</td>
+                <td>Shelby</td>
+                <td>Windorf</td>
+                <td>8/1/2010</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>8998100</td>
+                <td>Mike</td>
+                <td>Zehr</td>
+                <td>7/11/2008</td>
+                <td>
+                    <button type="button" class="btn btn-info remove">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-info edit" data-toggle="modal" data-target="#editStudentModal">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <a role="button" class="btn btn-info" data-ftrans="slide" href="/Home/StudentProdcedures">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="col-sm-12 ">
+        <div class="result pull-left"><strong>displaying 1 - 6 of 500</strong></div>
+        <ul class="pagination pull-right">
+            <li><a href="#">«</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fadeInUp" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Student Information</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <!-- Name -->
+                        <div class="control-group">
+                            <label class="control-label" for="username">Legal First Name</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="username">Legal Last Name</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="username">Legal Birthdate</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- end Modal-->
+
+<!-- Modal -->
+<div class="modal fadeInUp" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="text-muted fa fa-shopping-cart"></i> <strong>All Students</strong> - select students to add to your class</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="container" style="width: 100%;">
+                    <div class="row">
+                        <ul class="listrap">
+                            <li>
+                                <div class="listrap-toggle">
+                                    <span></span>
+                                    <img src="~/Content/Images/student1.jpg" class="img-circle" />
+                                </div>
+                                <strong>My Lorem Option #1</strong>
+                            </li>
+                            <li>
+                                <div class="listrap-toggle">
+                                    <span></span>
+                                    <img src="~/Content/Images/student2.jpg" class="img-circle" />
+                                </div>
+                                <strong>Your Ipsum Option #2</strong>
+                            </li>
+                            <li>
+                                <div class="listrap-toggle">
+                                    <span></span>
+                                    <img src="~/Content/Images/student3.jpg" class="img-circle" />
+                                </div>
+                                <strong>Their Consectuer Option #3</strong>
+                            </li>
+                            <li>
+                                <div class="listrap-toggle">
+                                    <span></span>
+                                    <img src="~/Content/Images/student4.jpg" class="img-circle" />
+                                </div>
+                                <strong>His Adjascent Option #4</strong>
+                            </li>
+                            <li>
+                                <div class="listrap-toggle">
+                                    <span></span>
+                                    <img src="~/Content/Images/student6.jpg" class="img-circle" />
+                                </div>
+                                <strong>Her Split Option #5</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Modal-->
+
+@section scripts {
+    @Scripts.Render("~/Scripts/portal.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.min.js")
+}

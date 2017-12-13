@@ -1,0 +1,322 @@
+﻿@model GreenBushIEP.Models.UserDetailsViewModel
+@{
+    ViewBag.Title = "Edit this User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/chosen.css")
+}
+
+<style>
+    hr {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+    .multiselect-container {
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .multiselect-container .input-group {
+            margin: 5px;
+        }
+
+        .multiselect-container > li {
+            padding: 0;
+        }
+
+            .multiselect-container > li > a.multiselect-all label {
+                font-weight: bold;
+            }
+
+            .multiselect-container > li > label.multiselect-group {
+                margin: 0;
+                padding: 3px 20px 3px 10px;
+                height: 100%;
+                font-weight: bold;
+            }
+
+            .multiselect-container > li > a > label {
+                margin: 0;
+                height: 100%;
+                cursor: pointer;
+                font-weight: normal;
+            }
+
+                .multiselect-container > li > a > label.radio,
+                .multiselect-container > li > a > label.checkbox {
+                    margin: 0;
+                }
+
+                .multiselect-container > li > a > label > input[type="checkbox"] {
+                    margin-bottom: 5px;
+                }
+
+    .btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .dropdown-menu > li > a {
+        padding: 6px 40px;
+    }
+
+    .dropdown-toggle {
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 0; /* 6px; */
+    }
+
+    .dropdown-toggle {
+        font-size: 14px;
+        min-height: 49px;
+    }
+
+    .search-choice span {
+        line-height: 2.7;
+        font-size: 14px;
+    }
+
+    li.search-field input[type="text"] {
+        height: 49px !important;
+    }
+</style>
+
+
+@using (Html.BeginForm("Edit", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 pull-right">
+                @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+            </div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => Model.user.UserID, new { id = "hidden-userid" })
+
+            <ul class="breadcrumb">
+                <li>@Html.ActionLink((string)(ViewBag.RoleName + " Portal").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                <li class="active" style="font-size: 20px;">@ViewBag.Title</li>
+            </ul>
+
+            <div class="col-md-10">
+                <div class="input-group">
+                    <img src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newUser.png" : "/Content/Images/Uploads/" + Model.user.ImageURL.ToString())" alt="" title="" class="img-circle pull-left" height="100" id="avatarImage" />
+                    <div class="input-group">
+                        <span class="btn btn-default btn-file" style="top: 30px; left: 15px;">
+                            Browse <input type="file" name="adminpersona" id="adminpersona" accept="image/gif, image/jpeg, image/png">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+        </div>
+
+        @if (Model.user.UserID != Model.submitter.UserID)
+        {
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-id-card-o" title="User Role" aria-hidden="true"></i>
+                        </span>
+                        <select class="form-control" id="role" Name="role" required="required">
+                            @if (Int32.Parse(Model.submitter.RoleID) < 2)
+                            {
+                                <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Management Information System</option>
+                            }
+                            @if (Int32.Parse(Model.submitter.RoleID) < 3)
+                            {
+                                <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Special Education Administrator</option>
+                            }
+                            <option value="4" @(Model.user.RoleID == "4" ? "selected='selected'" : "" )>Teacher</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                    </span>
+                    @Html.EditorFor(model => model.user.TeacherID, new { htmlAttributes = new { @class = "form-control", id = "teacherId", Name = "teacherId", placeholder = "Teacher Id if applicable", title = "The Teacher Id" } })
+                    @Html.ValidationMessageFor(model => model.user.TeacherID, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user" title="First Name"></i>
+                    </span>
+                    @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user" title="Last Name"></i>
+                    </span>
+                    @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
+                    @*<input id="lastname" name="lastname" class="form-control" placeholder="Legal Last Name" type="text" required="required">*@
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope" title="User Email"></i>
+                    </span>
+                    @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", id = "email", Name = "email", placeholder = "User email", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
+                    @*<input id="email" name="email" class="form-control" placeholder="User email" type="email" required="required" />*@
+                </div>
+            </div>
+        </div>
+
+        @if (Model.user.RoleID != "5")
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user-secret" title="User Password" aria-hidden="true"></i>
+                        </span>
+                        @if (Model.submitter.UserID == Model.user.UserID)
+                        {
+                            @Html.EditorFor(model => model.user.Password, new { htmlAttributes = new { @class = "form-control", id = "password", Name = "password", placeholder = "User password", required = "required", type = "password", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                            <input type="password" name="password" class="form-control text-box single-line" disabled="disabled" required="required" value="@( new string('*', Model.user.Password.Length))">
+                        }
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" style="font-size:18px" data-toggle="modal" data-target="#confirmPassword">Reset Password</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="form-group" id="listOfDistricts">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-home" title="User District" aria-hidden="true"></i>
+                    </span>
+                    <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="min-height: 49px; display: none;">
+                        @if (Model.districts != null)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+                                string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
+                                <option value="@district.USD" @selected>@district.DistrictName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row" id="userWorksAtTheseBuildings">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-building" title="User Building" aria-hidden="true"></i>
+                    </span>
+                    <select id="buildingIds" Name="buildingIds" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect" style="min-height: 49px; display:none;">
+                        @if (Model.buildings != null)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <option value="@building.BuildingID" data-icon="glyphicon-home" selected="selected">@building.BuildingName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding: 0 20px 20px;">
+            <button id="ActionButton" type="submit" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
+                <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Update</span>
+            </button>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="confirmPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Change this user's password?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Do you really want to change this user's password? This action cannot be undone.<br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
+}
+
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/AddEdit.js"></var>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}

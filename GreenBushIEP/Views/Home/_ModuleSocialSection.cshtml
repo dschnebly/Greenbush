@@ -1,0 +1,151 @@
+﻿@model GreenBushIEP.Models.tblIEPSocial
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-smile-o" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Social-Emotional</h4>
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("EditSocial", "ModuleSection", FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IEPSocialID)
+
+        <div class="funkyradio">
+            <div class="funkyradio-success">
+                <input type="checkbox" id="ModuleSocialNoConcern" name="ModuleSocialNoConcern" @(Model.NoConcerns ? "checked" : String.Empty) />
+                <label for="ModuleSocialNoConcern">No Concerns</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleSocialProgressTowardGenEd" id="ModuleSocialProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
+                <label for="ModuleSocialProgressTowardGenEd">Progressing with General Education Support</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) />
+                <label for="ModuleSocialAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.MentalHealthDiagnosis ? "checked" : String.Empty) />
+                <label for="ModuleSocialMentalHealthDiagnosis">Mental Health Diagnosis</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleSocialSignificantBehaviors" id="ModuleSocialSignificantBehaviors" @(Model.SignificantBehaviors ? "checked" : String.Empty) />
+                <label for="ModuleSocialSignificantBehaviors">Significant Behaviors</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleSocialDeficit" id="ModuleSocialDeficit" @(Model.SkillDeficit == true ? "checked" : String.Empty) />
+                <label for="ModuleSocialDeficit">Social Skills Deficit</label>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does this student's behavior impede the learning of self or others?</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? "checked" : String.Empty)>Yes</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? String.Empty : "checked")>No</label><br />
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does this student require a Behavior Intervention Plan?</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? "checked" : String.Empty)>Yes</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? String.Empty : "checked")>No</label><br />
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleSocialLevelOfPerformance" id="ModuleSocialLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleSocialAreaOfNeedDescription" id="ModuleSocialAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+            </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display:@(Model.MeetNeedBy == 3 ? "block" : "none");">
+                    *if other, please explain<br />
+                    <textarea class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.MeedNeedByOtherDescription)</textarea>
+            </div>
+        </fieldset>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12" style="text-align:center;">
+                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleSocialForm">Reset</button>
+                    <button type="submit" name="button2id" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    //reset the form to default database/brand new values.
+    $("input[name='ModuleSocialNoConcern']").on('click', function (event) {
+        if ($("input[name='ModuleSocialNoConcern']:checked").length) {
+            $("input[name='ModuleSocialProgressTowardGenEd']").prop('checked', false);
+            $("input[name='ModuleSocialAreaOfNeed']").prop('checked', false);
+            $("input[name='ModuleSocialMentalHealthDiagnosis']").prop('checked', false);
+            $("input[name='ModuleSocialSignificantBehaviors']").prop('checked', false);
+            $("input[name='ModuleSocialDeficit']").prop('checked', false);
+
+            $("input:radio[name=ModuleSocialBehaviorImepedeLearning]").prop('checked', false);
+            $("input:radio[name=ModuleSocialBehaviorInterventionPlan]").prop('checked', false);
+            $("input:radio[name=ModuleSocialMeetNeedBy]").prop('checked', false);
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    $("input[name='ModuleSocialProgressTowardGenEd']").on('click', function (event) {
+        $("input[name='ModuleSocialNoConcern']").prop('checked', false);
+    });
+
+    $("input[name='ModuleSocialAreaOfNeed']").on('click', function (event) {
+        $("input[name='ModuleSocialNoConcern']").prop('checked', false);
+    });
+
+    $("input[name='ModuleSocialMentalHealthDiagnosis']").on('click', function (event) {
+        $("input[name='ModuleSocialNoConcern']").prop('checked', false);
+    });
+
+    $("input[name='ModuleSocialSignificantBehaviors']").on('click', function (event) {
+        $("input[name='ModuleSocialNoConcern']").prop('checked', false);
+    });
+
+    $("input[name='ModuleSocialDeficit']").on('click', function (event) {
+        $("input[name='ModuleSocialNoConcern']").prop('checked', false);
+    });
+
+    // Attach Event
+    // if radio button is selected than show text box.
+    $("input:radio[name=ModuleSocialMeetNeedBy]").on('click', function (event) {
+        if ($("input:radio[name=ModuleSocialMeetNeedBy]:checked").val() == 3) {
+            $("#MeetByOtherTextArea p").show();
+        }
+        else {
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetModuleSocialForm").trigger("reset");
+</script>

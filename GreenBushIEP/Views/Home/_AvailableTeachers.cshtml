@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GreenBushIEP.Models.tblUser>
+
+@{
+    if (Model.Count() > 0)
+    {
+        foreach (var user in Model)
+        {
+            <li>
+                <div class="listrap-toggle pull-left">
+                    <span class="ourTeacher" data-id="@user.UserID.ToString()"></span>
+                    <img src="~/Content/Images/@(string.IsNullOrEmpty(user.ImageURL) ? "newUser.png" : "Uploads/" + user.ImageURL.ToString() )" class="img-circle pull-left" width="58" height="60" />
+                </div>
+                <div class="teacher-search-addtional-information">
+                    <strong>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</strong>
+                    <div class="county-name">Crawford</div>
+                    <div class="school-name">Riverbank High</div>
+                </div>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <div class="listrap-toggle pull-left">
+                &nbsp;
+            </div>
+            <div class="teacher-search-addtional-information">
+                <strong>No Teachers Found. Try Creating Some.</strong>
+            </div>
+        </li>
+    }
+}

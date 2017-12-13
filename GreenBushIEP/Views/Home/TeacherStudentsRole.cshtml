@@ -1,0 +1,226 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h3 a {
+        margin: 0 5px;
+    }
+
+    hr {
+        margin-top: 0;
+    }
+
+    .breadcrumb {
+        margin-top: 20px;
+        padding: 3px 0;
+        margin-bottom: 0;
+        list-style: none;
+        background-color: transparent;
+    }
+
+    .btn {
+        margin: -4px 4px;
+    }
+
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+</style>
+
+@if (Model.Teacher != null)
+{
+    <div class="container">
+        <h3>
+            @(Model.Teacher.FirstName + " " + Model.Teacher.LastName)'s Student List
+            <a href="#" id="searchStudents" title="Search Student List" data-toggle="tooltip" data-command="toggle-my-search" role="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
+            <a href="#" id="addExistingStudents" title="Search Exsisting Greenbush Students List" data-toggle="modal" data-target="#addExistingStudentModal" role="button" class="btn btn-info pull-right"><span class="fa fa-users"></span></a>
+        </h3>
+        <hr>
+        <div class="row" style="display: none;">
+            <div class="col-xs-12">
+                <div class="input-group c-my-search">
+                    <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
+                    <span class="input-group-btn">
+                        <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="mytable" class="table table-bordred table-striped my-table-root">
+                        @if (Model.Students.Count() > 0)
+                        {
+                            <thead>
+                                <tr>
+                                    @*<th>WebKidsIDs</th>*@
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Building Name</th>
+                                    <th>Email</th>
+                                    @*<th>Date of Birth</th>*@
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var student in Model.Students)
+                                {
+                                    <tr class="my-table-item">
+                                        @*<td>@(student.WebKidsID)</td>*@
+                                        <td>@(student.FirstName.ToTitleCase())</td>
+                                        <td>@(student.LastName.ToTitleCase())</td>
+                                        <td>@(student.BuildingID)</td>
+                                        <td><a href="mailto:@(student.Email)">@(student.Email)</a></td>
+                                        @*<td>@(student.DateOfBirth.ToString("MM-dd-yyyy"))</td>*@
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#confirmStudentRemoval">
+                                                <span class="fa fa-user-times" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a role="button" class="btn btn-info" id="backtoportal" data-ftrans="slide reverse" data-ajax="false" href="/Home/AdminPortal">Back To Managed Teachers</a>
+
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="addExistingStudentModal" tabindex="-1" role="dialog" data-id="@(Model.Teacher.UserID)" aria-labelledby="addExistingStudentModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><strong>Avaliable Students</strong> - select a student and add them to the list</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container" style="width: 100%;">
+                        <div class="row">
+                            <a href="#" id="searchGreenBushStudents" title="Search Greenbush Students" role="button" class="btn btn-info pull-right" style="position:relative;bottom: 6px; z-index: 1;"><span class="glyphicon glyphicon-search"></span></a>
+                            <div class="row" id="searchAvailableStudents" style="display: none; position: relative; bottom: 8px; z-index: 0;">
+                                <div class="col-md-5">
+                                    <div class="input-group c-greenbush-search">
+                                        <label for="county" style="padding-right: 8px; display: inline;">District</label>
+                                        <select id="county" style="height: 34px; width: 175px;">
+                                            <option>Chester</option>
+                                            <option selected="selected">Crawford</option>
+                                            <option>Cupertino</option>
+                                            <option>Leawood</option>
+                                            <option>Sedgwick</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="input-group c-student-search">
+                                        <label for="searchStudent" style="padding-right: 8px; display: table-cell; position: relative; top: -10px;">Search</label>
+                                        <input id="searchStudent" type="text" class="form-control" style="height: 34px; width: 135px;">
+                                        <span class="input-group-btn">
+                                            <button id="search_muted" class="btn btn-default" type="button" style="margin-bottom: 1px;"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="overflow: auto; max-height: 400px;">
+                            <ul id="studentList" class="listrap">
+                                <li id="loadingIcon">
+                                    <div><img src="~/Content/Images/loading.gif" alt="loading" style="display: block; margin: auto;" /></div>
+                                </li>
+                                /* students are loaded here */
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-right">
+                        <button type="button" id="addAvailableStudents" class="btn btn-default">Add</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Modal-->
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="confirmStudentRemoval" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @Html.Hidden("id", 0)
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Remove this user from your list?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Do you want to remove this user from your list?<br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
+}
+
+    <!--loading the file even though it's an ajax call-->
+    <var data-reload="true" data-src="/Scripts/teacherstudentsrole.js"></var>
+
+@*    <script>
+       function loadScript(url, callback) {
+            // Adding the script tag to the head as suggested before
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+
+            // Then bind the event to the callback function.
+            // There are several events for cross browser compatibility.
+            script.onreadystatechange = callback;
+            script.onload = callback;
+
+            // Fire the loading
+            head.appendChild(script);
+        }
+
+        loadScript("/Scripts/teacherstudentsrole.js", function () {
+            console.log("loaded");
+        });
+
+        document.readyState(alert('seriously'));
+    </script>
+*@
+    @section scripts {
+        @Scripts.Render("~/Scripts/fasw.transitions.min.js")
+        @Scripts.Render("~/Scripts/teacherstudentsrole.js")
+    }

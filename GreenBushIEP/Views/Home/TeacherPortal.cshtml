@@ -1,0 +1,96 @@
+﻿@using GreenBushIEP.Helper
+@model GreenBushIEP.Models.StudentViewModel
+
+@{
+    ViewBag.Title = " Teacher Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
+</style>
+
+<h2>@ViewBag.Title</h2>
+<div class="user-head">
+    <a href="/Manage/Edit/@(Model.Teacher.UserID)" class="inbox-avatar" data-ftrans="slide">
+        <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.Teacher.ImageURL) ? "/Content/Images/newTeacher.png" :  "/Content/Images/Uploads/" + Model.Teacher.ImageURL  )" style="height: 62px;">
+    </a>
+</div>
+
+<div class="container">
+    <h3>
+        @ViewBag.DisplayName <small> - my current list of students</small>
+        <a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
+    </h3>
+    <hr>
+    <div class="row" style="display: none;">
+        <div class="col-xs-12">
+            <div class="input-group c-search">
+                <input type="text" class="form-control" id="contact-list-search">
+                <span class="input-group-btn">
+                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    @{
+        if (Model.Students.Count > 0)
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Kids #</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthdate</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students)
+                    {
+                        <tr>
+                            <td>@student.KidsID</td>
+                            <td>@student.FirstName.ToTitleCase()</td>
+                            <td>@student.LastName.ToTitleCase()</td>
+                            <td>@student.DateOfBirth.ToString("MM-dd-yyyy")</td>
+                            <td>
+                                <a role="button" class="btn btn-info pull-right" data-ftrans="slide" href="/Home/StudentProcedures?stid=@student.UserID.ToString()">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    <div class="ajax-loader">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/portal.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}

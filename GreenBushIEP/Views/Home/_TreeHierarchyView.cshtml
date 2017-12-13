@@ -1,0 +1,74 @@
+﻿@model GreenBushIEP.Models.UserOrganizationViewModel
+
+@{
+    if (Model.staff.Count > 0)
+    {
+        <div class="list-group">
+
+            @foreach (var user in Model.staff)
+            {
+                <div class="list-group-item" data-id="@(user.UserID)">
+
+                    @if (user.RoleID == "2")
+                    {
+                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                        <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                            <span class="fa fa-building-o" aria-hidden="true"></span>
+                        </button>
+                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                    }
+                    else if (user.RoleID == "3")
+                    {
+                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                        <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                            <span class="fa fa-building-o" aria-hidden="true"></span>
+                        </button>
+                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                    }
+                    else if (user.RoleID == "4")
+                    {
+                        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                            <span class="fa fa-building-o" aria-hidden="true"></span>
+                        </button>
+                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                    }
+                    else
+                    {
+                        <i class="fa fa-child" aria-hidden="true"></i>
+                        <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+
+                        if (Model.staff.Any(u => u.RoleID == "4"))
+                        {
+                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                <span class="glyphicon glyphicon glyphicon-trash"></span>
+                            </button>
+                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                <span class="fa fa-building-o" aria-hidden="true"></span>
+                            </button>
+                            <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                        }
+                    }
+
+                </div>
+            }
+
+        </div>
+    }
+}
+

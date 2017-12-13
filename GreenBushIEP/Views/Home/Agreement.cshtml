@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Agreement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="position: absolute; top: 50px; left: 0px; bottom: 0; width: 100%; margin: 0 auto; text-align: center; background-color: #262626;">
+    <iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fresearch.google.com%2Farchive%2Fbigtable-osdi06.pdf&embedded=true" width="600" height="650" style="border: none;"></iframe>
+    <div>
+        <button class="btn btn-default" type="button" id="agree">Agree</button>
+        <button class="btn btn-default" type="button" id="cancel">Cancel</button>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/agreement.js")
+}

@@ -1,0 +1,633 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.UserOrganizationViewModel
+@{
+    ViewBag.Title = "Special Education Administrator Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    h3 a {
+        margin: 0 5px;
+    }
+
+    hr {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+    .result {
+        margin-top: 20px;
+    }
+
+    .list-group {
+        margin-bottom: 0;
+    }
+
+    .list-group-item {
+        padding-bottom: 0;
+    }
+
+    .panel-heading {
+        padding: 15px 15px;
+    }
+
+    .panel-body {
+        padding: 0;
+    }
+
+    [id^=dropdown-detail-] .fa-graduation-cap {
+        padding-left: 15px;
+    }
+
+    [id^=detail-] .fa-user {
+        padding-left: 25px;
+    }
+
+    .dual-list .list-group {
+        margin-top: 8px;
+    }
+
+    .dual-list input {
+        height: 34px !important;
+    }
+
+    .list-left li, .list-right li {
+        cursor: pointer;
+    }
+
+    .district-selection {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        margin: -4px 4px;
+    }
+
+    .just-padding {
+        padding: 0 0 15px 0;
+    }
+
+    /*.list-group-item > i,
+    .list-group-item > text {
+        cursor: pointer;
+    }
+
+        .list-group-item > text:hover {
+            text-decoration: underline;
+        }*/
+
+    .list-group.list-group-root {
+        padding: 0;
+        overflow: inherit;
+        margin-bottom: 42px;
+    }
+
+        .list-group.list-group-root .list-group {
+            margin-bottom: 0;
+        }
+
+        .list-group.list-group-root .list-group-item {
+            border-radius: 0;
+            border-width: 1px 0 0 0;
+            min-height: 45px;
+            font-size: 16px;
+        }
+
+        .list-group.list-group-root > .list-group-item:first-child {
+            border-top-width: 0;
+        }
+
+        .list-group.list-group-root > .list-group > .list-group-item {
+            padding-left: 30px;
+        }
+
+        .list-group.list-group-root > .list-group > .list-group > .list-group-item {
+            padding-left: 45px;
+        }
+
+        .list-group.list-group-root > .list-group > .list-group > .list-group > .list-group-item {
+            padding-left: 60px;
+        }
+
+    .subactivated {
+        margin-bottom: 1px;
+        background-color: #ddd;
+    }
+
+    .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+        margin-left: -15px !important;
+    }
+
+    .fa-plus-square-o,
+    .fa-minus-square-o {
+        margin-right: 2px;
+    }
+
+    .empty-icon {
+        margin-right: 19px;
+    }
+
+    .fa-child {
+        padding-left: 20px;
+    }
+
+    #filter {
+        position: relative;
+        right: 22px;
+        top: 3px;
+    }
+
+    .fa-check {
+        padding-right: 2px;
+        visibility: hidden;
+    }
+
+    .filteroptions li a {
+        height: 29px;
+    }
+
+    .selected-filter {
+        background-color: #e6e6e6;
+    }
+
+        .selected-filter > a > .fa-check {
+            visibility: visible;
+        }
+
+    .filteredby {
+        display: none;
+    }
+
+    /*//////////////////////////////////////
+    ///  User Toggle Buttons Starts Here
+    //////////////////////////////////////*/
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+        margin: 0;
+    }
+
+        .btn-circle:focus {
+            outline: none;
+        }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+            margin-bottom: 10px;
+        }
+
+    #add-student-user i {
+        padding: 0;
+    }
+
+    #user-toggle .user-toggle-item {
+        display: inline-block;
+    }
+
+    #user-toggle button:first-child {
+        margin-left: 15px;
+    }
+
+    #user-toggle .user-toggle-item button:hover {
+        -webkit-animation: pulse 1s ease 0s;
+        -o-animation: pulse 1s ease 0s;
+        -moz-animation: pulse 1s ease 0s;
+        animation: pulse 1s ease 0s;
+    }
+
+    #user-toggle .user-toggle-item ul {
+        display: inline-block;
+        list-style-type: none;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        top: 10px;
+        padding-right: 12px;
+    }
+
+        #user-toggle .user-toggle-item ul li {
+            display: inline-block;
+            float: left;
+            padding-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item ul.show-buttons {
+            display: inline-block;
+            /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
+            -moz-animation: fadein 1s; /* Firefox < 16
+            -ms-animation: fadein 1s; /* Internet Explorer
+            -o-animation: fadein 1s; /* Opera < 12.1
+            animation: fadein 1s;*/
+        }
+
+        #user-toggle .user-toggle-item ul.hide-buttons {
+            display: none;
+        }
+
+    @@-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
+        }
+
+        50% {
+            -webkit-transform: scale(1.2);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@-o-keyframes pulse {
+        0% {
+            -o-transform: scale(1);
+        }
+
+        50% {
+            -o-transform: scale(1.2);
+        }
+
+        100% {
+            -o-transform: scale(1);
+        }
+    }
+
+    @@-moz-keyframes pulse {
+        0% {
+            -moz-transform: scale(1);
+        }
+
+        50% {
+            -moz-transform: scale(1.2);
+        }
+
+        100% {
+            -moz-transform: scale(1);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @@keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Firefox < 16 */
+    @@-moz-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Safari, Chrome and Opera > 12.1 */
+    @@-webkit-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Internet Explorer */
+    @@-ms-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Opera < 12.1 */
+    @@-o-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <div class="user-head">
+        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+            <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newAdmin.png" :  "/Content/Images/Uploads/" + Model.user.ImageURL  )">
+        </a>
+    </div>
+
+    <h3>
+        @ViewBag.DisplayName <small> - the current list of managed teachers in Greenbush IEP</small>
+    </h3>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="user-toggle" class="pull-right">
+                <div class="user-toggle-item">
+                    <button id="add-system-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-user-plus" title="Working with a System User"></i></button>
+                    <ul id="system-user-actions" class="hide-buttons">
+                        <li><a href="/Manage/Create" title="Create New System User" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><i class="glyphicon glyphicon-plus"></i></a></li>
+                        <li><a href="#" id="searchMyTeachers" title="Search My Users" role="button" data-toggle="tooltip" data-command="toggle-my-admin-search" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-search"></i></a></li>
+                        <li><a href="#" id="addExistingTeacher" title="Search Exsisting Teacher List" role="button" data-id="@(Model.user.UserID)" class="btn btn-primary btn-circle"><i class="fa fa-users"></i></a></li>
+                    </ul>
+                </div>
+                <div class="user-toggle-item">
+                    <button id="add-student-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-child" title="Working with a Student"></i></button>
+                    <ul id="student-actions" class="hide-buttons">
+                        <li><a href="/Manage/CreateStudent" title="Create New Student" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="display: none; margin-right: 0;">
+        <div class="col-md-10">
+            <div class="input-group c-my-search">
+                <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
+                <span class="input-group-btn">
+                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-1" id="filter">
+            <div class="input-group-btn search-panel">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span id="search_concept"><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu filteroptions" role="menu">
+                    <li class="selected-filter"><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>No Filters</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Teachers Only</a></li>
+                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Students Only</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+    </div>
+
+    @{
+        if (Model.staff.Count > 0)
+        {
+            <div class="just-padding">
+
+                <div class="list-group list-group-root well">
+
+                    @foreach (var user in Model.staff)
+                    {
+                        <div class="list-group-item" data-id="@(user.UserID)">
+
+                            @if (user.RoleID == "5")
+                            {
+                                <i class="fa fa-child" aria-hidden="true"></i>
+                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                            else
+                            {
+                                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" data-ftrans="slide">@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#confirmRemoval">
+                                    <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+<!-- Modal -->
+<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.Hidden("id", 0)
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-warning-sign"></span> Deleting a user also deletes all data in your database associated with them. Is this what you want to do? <strong>(can't be undone)</strong><br />
+                    <br />
+                    Type DELETE to confirm<br />
+                    <input id="confirmDeletion" type="text" value="" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- end modal -->
+<!-- Modal -->
+<div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.Hidden("id", Model.user.UserID.ToString())
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Assign this User to Buildings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 district-selection">
+                    <label for="selectedDistrict">Your District:&nbsp;</label>
+                    <select id="selectedDistrict" style="min-width: 70%;"></select>
+                </div>
+                <div class="dual-list list-right col-md-12">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="btn-group">
+                                    <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="SearchBuildingList" class="form-control" placeholder="search" />
+                                    <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <ul id="selectBuildings" class="list-group"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: 0 !important;">
+                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="savetheseBuildingsToThisUser">Save</button>
+                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- Modal -->
+<div class="modal fadeInUp" id="confirmRemoval" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.Hidden("id", 0)
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Remove this user from your list?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-warning-sign"></span> Do you want to remove this teacher from your list?<br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- end modal -->
+<!-- Modal -->
+<div class="modal fadeInUp" id="addExistingTeacherModal" tabindex="-1" role="dialog" aria-labelledby="addExistingTeacherModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                <h4 class="modal-title" id="myModalLabel"><strong>Avaliable Teachers</strong> - select a teacher and add them to your list</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container" style="width: 100%;">
+                    <div class="row">
+                        <a href="#searchGreenBushTeachers" id="searchGreenBushTeachers" data-command="toggle-greenbush-search" data-toggle="tooltip" title="Search Greenbush Teachers" role="button" class="hide-greenbush-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
+                        <div class="row" style="display: none;">
+                            <div class="col-md-6">
+                                <div class="input-group c-greenbush-search">
+                                    <label for="county" style="padding-right: 8px; display: inline;">District</label>
+                                    <select id="county" style="height: 34px; width: 175px;">
+                                        <option>Chester</option>
+                                        <option selected="selected">Crawford</option>
+                                        <option>Cupertino</option>
+                                        <option>Leawood</option>
+                                        <option>Sedgwick</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group c-search">
+                                    <label for="searchTeacher" style="display: table-cell; width: 58px;">Search</label>
+                                    <input id="searchTeacher" type="text" class="form-control" style="height: 34px;">
+                                    <span class="input-group-btn">
+                                        <button id="search_muted" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="overflow: auto; max-height: 400px;">
+                        <ul class="listrap"></ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button type="button" id="addAvailableTeachers" class="btn btn-default">Add</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Modal-->
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.min.js")
+    @Scripts.Render("~/Scripts/adminportal.js")
+}
+

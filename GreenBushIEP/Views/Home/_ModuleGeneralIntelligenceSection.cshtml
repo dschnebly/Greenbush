@@ -1,0 +1,82 @@
+﻿@model GreenBushIEP.Models.tblIEPIntelligence
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-education" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;General Intelligence</h4>
+</div>
+<div class="modal-body">
+
+@using (Html.BeginForm("EditIntelligence", "ModuleSection", FormMethod.Post, new { }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IEPIntelligenceID)
+
+        <div class="funkyradio">
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty)/>
+                <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) />
+                <label for="ModuleIntelligenceAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+            <div class="form-check">
+                <textarea class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
+            <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+            </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;") ">
+                    *if other, please explain<br />
+                    <textarea class="form-control" name="ModuleIntelligenceMeetNeedByOtherDescription" id="ModuleIntelligenceMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12" style="text-align:center;" id="questionSubmit">
+                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleIntelligenceForm">Reset</button>
+                    <button type="submit" name="button2id" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+}
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    // if radio button is selected than show text box.
+    $("input:radio[name=ModuleIntelligenceMeetNeedBy]").on('click', function (event) {
+        if ($("input:radio[name=ModuleIntelligenceMeetNeedBy]:checked").val() == 3) {
+            $("#MeetByOtherTextArea p").show();
+        }
+        else {
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetModuleIntelligenceForm").trigger("reset");
+</script>

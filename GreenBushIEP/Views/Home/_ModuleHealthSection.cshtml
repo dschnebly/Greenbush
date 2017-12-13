@@ -1,0 +1,154 @@
+﻿@model GreenBushIEP.Models.tblIEPHealth
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IEPHealthID)
+
+        <div class="funkyradio">
+            <div class="funkyradio-success">
+                <input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
+                <label for="HealthNoConcerns">No Concerns</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
+                <label for="HealthProgressTowardGenEd">Health Concerns progressing with General Education Supports</label>
+            </div>
+            <div class="funkyradio-primary">
+                <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) />
+                <label for="HealthDiagnosis">Concerns that impact ability to learn or access to learn</label>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
+            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImparied != null ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="HearingImpaired">
+                    <span class="onoffswitch2-inner"></span>
+                    <span class="onoffswitch2-switch"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="form-group" id="HearingImpairmentInfo">
+            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
+                Hearing Screening Date:&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field HearingDate must be a date." data-val-required="The HearingDate field is required." id="HearingDate" name="HearingDate" value="@(Model.HearingDate.ToString("yyyy-MM-dd"))" />
+                &nbsp;&nbsp;
+                <label class="radio-inline"><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.HearingResult == 1 ? "checked" : String.Empty)>Pass</label>
+                <label class="radio-inline"><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.HearingResult == 0 ? "checked" : String.Empty)>Failed</label>
+                <label class="radio-inline"><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.HearingResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
+            </legend>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does the student have a visual impairment?</label>&nbsp;&nbsp;
+            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="VisionImparied" id="VisionImparied" class="onoffswitch2-checkbox" @(Model.VisionImparied ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="VisionImparied">
+                    <span class="onoffswitch2-inner"></span>
+                    <span class="onoffswitch2-switch"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
+                Visual Screening Date:&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The VisionDate field is required." id="VisionDate" name="VisionDate" value="@(Model.VisionDate.ToString("yyyy-MM-dd"))" />
+                &nbsp;&nbsp;
+                <label class="radio-inline"><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.VisionResult == 1 ? "checked" : String.Empty)>Pass</label>
+                <label class="radio-inline"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.VisionResult == 0 ? "checked" : String.Empty)>Failed</label>
+                <label class="radio-inline"><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.VisionResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
+            </legend>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <div class="form-check">
+                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Area of need which impacts performance</label>
+            <div class="form-check">
+                <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be meet by:</label>
+            <div class="form-check">
+                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="1" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
+                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="2" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="3" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+            </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;")">
+                    *if other, please explain<br />
+                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                </p>
+            </div>
+        </fieldset>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12" style="text-align:center;">
+                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    //reset the form to default database/brand new values.
+    $("input[name='HealthNoConcerns']").on('click', function (event) {
+        if ($("input[name='HealthNoConcerns']").is(':checked')) {
+            $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
+            $("input[name='HealthDiagnosis']").prop('checked', false);
+            $("input[name='HealthHearingDate']")[0].value = new Date().toJSON().slice(0, 10);
+            $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
+            $("input[name='HealthHearingResult']").prop('checked', false);
+            $("input[name='HealthVisionResult']").prop('checked', false);
+            $("input[name='VisionImparied']").prop('checked', false);
+            $("input[name='HearingImpaired']").prop('checked', false);
+
+            $("#MeetNeedByOtherDescription").val('');
+            $("input:radio[name=MeetNeedBy]").prop('checked', false);
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetForm").trigger("reset");
+
+    // Attach Event
+    // if an option other than no concern is selected than turn off noconcern
+    $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
+        $("input[name='HealthNoConcerns']").prop('checked', false)
+    });
+    $("input[name='HealthDiagnosis']").on('click', function (event) {
+        $("input[name='HealthNoConcerns']").prop('checked', false)
+    });
+
+    // Attach Event
+    // if radio button is selected than show text box.
+    $("input:radio[name=MeetNeedBy]").on('click', function (event) {
+        if ($("input:radio[name=MeetNeedBy]:checked").val() == 3) {
+            $("#MeetByOtherTextArea p").show();
+        }
+        else {
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
+</script>

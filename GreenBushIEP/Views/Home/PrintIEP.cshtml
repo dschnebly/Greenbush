@@ -1,0 +1,878 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.IEP
+
+@{
+    ViewBag.Title = "Print IEP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    body {
+        background-color: #525659;
+    }
+
+    .fadeInToBackground {
+        background: #525659;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page {
+        display: block;
+        position: relative;
+    }
+
+        /* implements an image with opacity of 50% */
+        .transition-page::after {
+            content: "";
+            background: url(/Content/Images/draft-watermark-printing.png);
+            background-size: 38px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+        width: 900px;
+        display: block;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    .section-break {
+        border-top: 1px solid black !important;
+    }
+
+    .module-page {
+        margin-top: -1cm;
+    }
+
+    legend {
+        white-space: nowrap;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@media only print {
+
+        * {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact; /* Non-Webkit Browsers */
+            z-index: 2 !important;
+        }
+
+        .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+            float: left;
+        }
+
+        .col-sm-12 {
+            width: 100%;
+        }
+
+        .col-sm-11 {
+            width: 91.66666666666666%;
+        }
+
+        .col-sm-10 {
+            width: 83.33333333333334%;
+        }
+
+        .col-sm-9 {
+            width: 75%;
+        }
+
+        .col-sm-8 {
+            width: 66.66666666666666%;
+        }
+
+        .col-sm-7 {
+            width: 58.333333333333336%;
+        }
+
+        .col-sm-6 {
+            width: 50%;
+        }
+
+        .col-sm-5 {
+            width: 41.66666666666667%;
+        }
+
+        .col-sm-4 {
+            width: 33.33333333333333%;
+        }
+
+        .col-sm-3 {
+            width: 25%;
+        }
+
+        .col-sm-2 {
+            width: 16.666666666666664%;
+        }
+
+        .col-sm-1 {
+            width: 8.333333333333332%;
+        }
+
+        @@page {
+            size: 5.5in 8.5in;
+            margin: 0 -6cm;
+        }
+
+        @@page:left {
+            @@bottom-left {
+                margin: 10pt 0 30pt 0;
+                border-top: .25pt solid #666;
+                content: "My IEP";
+                font-size: 9pt;
+                color: #333;
+            }
+        }
+
+        legend {
+            page-break-inside: avoid;
+        }
+
+        body {
+            /* this affects the margin on the content before sending to printer  */
+            margin: 1.6cm;
+        }
+
+            body::before {
+                content: "";
+                background: url(/Content/Images/draft-watermark-printing.png) !important;
+                background-size: 38px !important;
+                opacity: 0.5 !important;
+                top: 0px !important;
+                left: 0px !important;
+                bottom: 0 !important;
+                right: 0 !important;
+                position: fixed !important;
+            }
+
+        .transition-page::after {
+            background-color: #fff !important;
+            top: -55px !important;
+            left: 55px !important;
+            bottom: -10000px !important;
+            right: 55px !important;
+            position: fixed !important;
+        }
+
+        .glyphicon-remove, #printbutton, footer {
+            display: none;
+        }
+
+        .body-content {
+            border-left: 0 !important;
+            border-right: 0 !important;
+            box-shadow: none !important;
+        }
+    }
+</style>
+
+<div class="transition-page" style="display:none;">
+    <div class="container" style="min-height: 1250px; width: 725px;">
+        <div class="row print-button" style="margin-top: 25px; margin-left: -200px; position: fixed;">
+            <div class="col-md-11">
+                @Html.ActionLink("PRINT", "AgreementPrint", "Home", new { id = Model.draft.UserID }, new { @id = "printbutton", @class = "btn btn-info print", onclick = "return window.print();" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="pull-right">
+                @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right exit", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
+            </div>
+        </div>
+        <div class="module-page">
+            <h3 class="text-center">HEALTH</h3>
+            @if (!Model.studentHealth.NoConcerns)
+            {
+                <div style="font-size:12pt; color: #333;">
+                    <div>
+                        <div>
+                            <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.studentHealth.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="HealthProgressTowardGenEd">Health Concerns progressing with General Education Supports</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.studentHealth.Diagnosis ? "checked" : String.Empty )>
+                            <label for="HealthDiagnosis">Has a Diagnosis</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="HealthMedications" name="HealthMedications" @(Model.studentHealth.Medications ? "checked" : String.Empty )>
+                            <label for="HealthMedications">Takes Medications</label>
+                        </div>
+                        <div class="form-check" id="TakesMedicationsTextArea">
+                            <p style="padding: 5px 0 0 0;">
+                                Does this student take medication? If yes, please explain<br>
+                                <textarea class="form-control" id="MedicationDescription" name="MedicationDescription" rows="3">@(Model.studentHealth.MedicationDescription)</textarea>
+                            </p>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <label>Does the student have a hearing impairment?</label>&nbsp;&nbsp;
+                        <div style="display: inline-block; vertical-align: middle;">
+                            <input type="checkbox" name="HearingImpared" id="HearingImpared" @(Model.studentHealth.HearingImparied != null ? "checked" : String.Empty )>
+                        </div>
+                        <div class="form-check">
+                            <p style="padding: 5px 0 0 0;">
+                                If yes, the IEP team must consider the child's language and communication needs, opportunities for direct communication with peers and professional personnel in the child's language and communication mode.
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
+                        <div style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
+                            Hearing Screening Date:&nbsp;&nbsp;<text style="font-weight:normal;">@(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</text>&nbsp;&nbsp;
+                            <label class="radio-inline"><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 1 ? "checked" : String.Empty )>Pass</label>
+                            <label class="radio-inline"><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 0 ? "checked" : String.Empty )>Failed</label>
+                            <label class="radio-inline"><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == -1 ? "checked" : String.Empty )>Unable to Test</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;
+                        <div style="display: inline-block; vertical-align: middle;">
+                            <input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty )>
+                        </div>
+                        <div class="form-check">
+                            <p style="padding: 5px 0 0 0;">
+                                If yes, the IEP team must consider instruction in Braille and the user of Braille unless determined, to be inappropriate.
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group" id="VisualImpairmentInfo">
+                        <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0; font-size: unset;">
+                            Visual Screening Date:&nbsp;&nbsp;<text style="font-weight:normal;">@(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</text>&nbsp;&nbsp;
+                            <label class="radio-inline"><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 1 ? "checked" : String.Empty )>Pass</label>
+                            <label class="radio-inline"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty )>Failed</label>
+                            <label class="radio-inline"><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty )>Unable to Test</label>
+                        </legend>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Is this student medicaid eligible?</label>&nbsp;&nbsp;
+                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                            <input type="checkbox" name="MedicaidEligible" id="MedicaidEligible" @(Model.studentHealth.MedicaidEligible == true ? "checked" : String.Empty )>
+                        </div>
+                        <div class="form-check" id="AdditionalHealthInfoTextArea">
+                            <p style="padding: 5px 0 0 0;">
+                                If yes, please explain<br>
+                                <textarea class="form-control" id="AdditionalHealthInfo" name="AdditionalHealthInfo" rows="3">@(Model.studentHealth.AdditionalHealthInfo)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3">@(Model.studentHealth.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentHealth.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="MeetNeedBy" value="1" @(Model.studentHealth.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="MeetNeedBy" value="2" @(Model.studentHealth.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="MeetNeedBy" value="3" @(Model.studentHealth.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label><br>
+                        </div>
+                        <div class="form-check" id="MeetByOtherTextArea">
+                            <p style="padding: 10px 0 0 0;">
+                                If other, please explain<br>
+                                <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3">@(Model.studentHealth.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">MOTOR</h3>
+            @if (!Model.studentMotor.NoConcerns)
+            {
+                <div style="font-size:12pt; color: #333;">
+                    <div class="funkyradio-primary">
+                        <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.studentMotor.ProgressTowardGenEd ? "checked" : String.Empty )>
+                        <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
+                    </div>
+                    <div class="funkyradio-primary">
+                        <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.studentMotor.Needs ? "checked" : String.Empty )>
+                        <label for="ModuleMotorNeeds">Area of Need which impacts perforamnce in General Education</label>
+                    </div>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Team will consider participation in:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty )>General Education P.E.</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty )>Adaptive P.E.</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty )>Modified P.E</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="4" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 4 ? "checked" : String.Empty )>Student has previously met P.E. Requirements</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.studentMotor.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.studentMotor.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label><br>
+                        </div>
+                        <div class="form-check" id="MeetByOtherTextArea">
+                            <br>
+                            <p style="display: block; ">
+                                If other, please explain<br>
+                                <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;">@(Model.studentMotor.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">COMMUNICATION</h3>
+            @if (!Model.studentCommunication.NoConcerns)
+            {
+                <div style="font-size:12pt; color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleCommunicationProgressTowardGenEd" id="ModuleCommunicationProgressTowardGenEd" @(Model.studentCommunication.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleCommunicationProgressTowardGenEd">Progressing with General Education Support</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.studentCommunication.AreaOfNeed == true ? "checked" : String.Empty )>
+                            <label for="ModuleCommunicationAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.studentCommunication.Deaf ? "checked" : String.Empty )>
+                            <label for="ModuleCommunicationDeaf">Deaf/Hard of Hearing</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleCommunicationLimitedEnglish" id="ModuleCommunicationLimitedEnglish" @(Model.studentCommunication.LimitedEnglish ? "checked" : String.Empty )>
+                            <label for="ModuleCommunicationLimitedEnglish">Limited English Proficiency</label>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleCommunicationLevelOfPerformance" id="ModuleCommunicationLevelOfPerformance" rows="3">@(Model.studentCommunication.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3">@(Model.studentCommunication.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentCommunication.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentCommunication.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentCommunication.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label><br>
+                        </div>
+                        <div class="form-check" id="MeetByOtherTextArea">
+                            <br>
+                            <p style="display: block;">
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleCommunicationMeetNeedByOtherDescription" id="ModuleCommunicationMeetNeedByOtherDescription" rows="3">@(Model.studentCommunication.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">SOCIAL/EMOTIONAL</h3>
+            @if (!Model.studentSocial.NoConcerns)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleSocialProgressTowardGenEd" id="ModuleSocialProgressTowardGenEd" @(Model.studentSocial.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleSocialProgressTowardGenEd">Progressing with General Education Support</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.studentSocial.AreaOfNeed == true ? "checked" : String.Empty )>
+                            <label for="ModuleSocialAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.studentSocial.MentalHealthDiagnosis ? "checked" : String.Empty )>
+                            <label for="ModuleSocialMentalHealthDiagnosis">Mental Health Diagnosis</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleSocialSignificantBehaviors" id="ModuleSocialSignificantBehaviors" @(Model.studentSocial.SignificantBehaviors ? "checked" : String.Empty )>
+                            <label for="ModuleSocialSignificantBehaviors">Significant Behaviours</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleSocialDeficit" id="ModuleSocialDeficit" @(Model.studentSocial.SocialDeficit == true ? "checked" : String.Empty )>
+                            <label for="ModuleSocialDeficit">Social Skills Deficit</label>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Does this student's behaviour impede the learning of self or others?</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? "checked" : String.Empty )>Yes</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? String.Empty : "checked" )>No</label><br>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Does this student require a Behavior Intervention Plan?</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? "checked" : String.Empty )>Yes</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? String.Empty : "checked" )>No</label><br>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleSocialLevelOfPerformance" id="ModuleSocialLevelOfPerformance" rows="3">@(Model.studentSocial.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleSocialAreaOfNeedDescription" id="ModuleSocialAreaOfNeedDescription" rows="3">@(Model.studentSocial.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentSocial.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentSocial.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentSocial.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label><br>
+                        </div>
+                        <div class="form-check" id="MeetByOtherTextArea">
+                            <br>
+                            <p>
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3">@(Model.studentSocial.MeedNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">INTELLIGENCE</h3>
+            @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.studentIntelligence.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.studentIntelligence.AreaOfNeed == true ? "checked" : String.Empty )>
+                            <label for="ModuleIntelligenceAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3">@(Model.studentIntelligence.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3">@(Model.studentIntelligence.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label><br>
+                        </div>
+                        <div class="form-check" id="MeetByOtherTextArea">
+                            <br>
+                            <p>
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleIntelligenceMeetNeedByOtherDescription" id="ModuleIntelligenceMeetNeedByOtherDescription" rows="3">@(Model.studentIntelligence.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">ACADEMICS</h3>
+            @if (!Model.studentAcademic.NoConcerns)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.studentAcademic.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleAcademicProgressTowardGenEd">Progressing with general education support</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.studentAcademic.AreaOfNeed ? "checked" : String.Empty )>
+                            <label for="ModuleAcademicAreaOfNeed">Area of need which impacts performance in general education</label>
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance:</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3">@(Model.studentAcademic.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance:</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.studentAcademic.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentAcademic.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentAcademic.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), modification(s), and/or supplemental aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentAcademic.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label>*<br>
+                        </div>
+                        <div class="form-check" id="AcademicMeetByOtherTextArea">
+                            <br>
+                            <p>
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3">@(Model.studentAcademic.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                        <br>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">READING</h3>
+            @if (!Model.studentReading.NoConcerns)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.studentReading.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleReadingProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.studentReading.AreaOfNeed == true ? "checked" : String.Empty )>
+                            <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <label style="padding: 15px 0 5px;">Reading Instructional Levels (multi-select options)</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="checkbox" name="ModuleReadingInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier1 ? "checked" : String.Empty )>Tier 1 core/basic instruction</label><br>
+                            <label class="radio-inline"><input type="checkbox" name="ModuleReadingInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier2 ? "checked" : String.Empty )>Tier 2 group instruction</label><br>
+                            <label class="radio-inline"><input type="checkbox" name="ModuleReadingInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier3 ? "checked" : String.Empty )>Tier 3 individual/intensive instruction</label><br>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3">@(Model.studentReading.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.studentReading.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentReading.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentReading.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), modification(s), and/or supplemental aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentReading.MeetNeedBy == 3 ? "checked" : String.Empty )>Other</label>*<br>
+                        </div>
+                        <div class="form-check" id="ReadingMeetByOtherTextArea">
+                            <br>
+                            <p>
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3">@(Model.studentReading.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">MATH</h3>
+            @if (!Model.studentMath.NoConcerns)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.studentMath.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleMathProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.studentMath.AreaOfNeed == true ? "checked" : String.Empty )>
+                            <label for="ModuleMathAreaOfNeed">Area of need which impacts performance in general education</label>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <label style="padding: 15px 0 5px;">Math Instructional Levels (multi-select options)</label>
+                        <div class="form-check">
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier1 ? "checked" : String.Empty )>Tier 1 core/basic instruction
+                            </label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier2 ? "checked" : String.Empty )>Tier 2 group instruction
+                            </label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier3 ? "checked" : String.Empty )>Tier 3 individual/intensive instruction
+                            </label><br>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3">@(Model.studentMath.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3">@(Model.studentMath.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentMath.MeetNeedBy == 1 ? "checked" : String.Empty )>Goal
+                            </label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentMath.MeetNeedBy == 2 ? "checked" : String.Empty )>Accommodation(s), modification(s), and/or supplemental aid
+                            </label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="ModuleMathMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentMath.MeetNeedBy == 3 ? "checked" : String.Empty )>Other
+                            </label>*<br>
+                        </div>
+                        <div class="form-check" id="MathMeetByOtherTextArea">
+                            <br>
+                            <p style="display:none;">
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3">@(Model.studentMath.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">WRITTEN</h3>
+            @if (!Model.studentWritten.NoConcerns)
+            {
+                <div style="font-size:12pt;  color: #333;">
+                    <div class="funkyradio">
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.studentWritten.ProgressTowardGenEd ? "checked" : String.Empty)>
+                            <label for="ModuleWrittenProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                        </div>
+                        <div class="funkyradio-primary">
+                            <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.studentWritten.AreaOfNeed == true ? "checked" : String.Empty)>
+                            <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamnce in general education</label>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <label style="padding: 15px 0 5px;">Written Instructional Levels (multi-select options)</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier1 ? "checked" : String.Empty)>Tier 1 core/basic instruction</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier2 ? "checked" : String.Empty)>Tier 2 group instruction</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier3 ? "checked" : String.Empty)>Tier 3 individual/intensive instruction</label><br>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Present Level of Performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3">@(Model.studentWritten.LevelOfPerformance)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">Area of Need which impacts performance</label>
+                        <div class="form-check">
+                            <textarea class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3">@(Model.studentWritten.AreaOfNeedDescription)</textarea>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label style="padding: 15px 0 5px;">This need will be meet by:</label>
+                        <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentWritten.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentWritten.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), modification(s), and/or supplemental aid</label><br>
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentWritten.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label>*<br>
+                        </div>
+                        <div class="form-check" id="WrittenMeetByOtherTextArea">
+                            <br>
+                            <p>
+                                If other, please explain<br>
+                                <textarea class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3">@(Model.studentWritten.MeetNeedByOtherDescription)</textarea>
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no concerns at this time.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.classList += ' ' + 'fadeInToBackground';
+
+    var el = document.getElementsByClassName("body-content")[0], c = el.style;
+    c.borderLeft = "1px solid #000";
+    c.borderRight = "1px solid #000";
+    c.boxShadow = "10px 10px 25px #333";
+    c.position = "relative";
+    c.top = "15px";
+    c.backgroundColor = "#ffffff";
+    c.marginBottom = "75px";
+
+    setTimeout(function () {
+        var tp = document.getElementsByClassName("transition-page")[0];
+        tp.style.display = "block";
+
+        var className = 'transition-page-scaleUpCenter';
+        if (el.classList) {
+            el.classList.add(className);
+        } else {
+            el.className += ' ' + className;
+        }
+    }, 200);
+
+    document.getElementsByClassName('transition-page')[0].addEventListener('click', function (e) {
+        if (e && e.target && !(hasClass(e.target, 'exit') || hasClass(e.target, 'print'))) {
+            event.preventDefault();
+            document.activeElement.blur();
+        }
+    });
+
+    function hasClass(target, className) {
+        return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
+    }
+</script>

@@ -1,0 +1,1676 @@
+﻿@model GreenBushIEP.Models.MISCalendarViewModel
+
+<style>
+    .responsive-calendar .controls {
+        text-align: center;
+    }
+
+        .responsive-calendar .controls a {
+            cursor: pointer;
+        }
+
+        .responsive-calendar .controls h4 {
+            display: inline;
+        }
+
+    .responsive-calendar .day-headers,
+    .responsive-calendar .days {
+        font-size: 0;
+    }
+
+    .responsive-calendar .day {
+        display: inline-block;
+        position: relative;
+        font-size: 14px;
+        width: 14.285714285714286%;
+        text-align: center;
+    }
+
+        .responsive-calendar .day a {
+            color: #000000;
+            display: block;
+            cursor: pointer;
+            padding: 20% 0 20% 0;
+        }
+
+        /*.responsive-calendar .day a:hover {
+                background-color: #eee;
+                text-decoration: none;
+            }*/
+
+        .responsive-calendar .day.header {
+            border-bottom: 1px gray solid;
+        }
+
+        .responsive-calendar .day.active a {
+            background-color: #4ca3d8;
+            border-radius: 4px;
+            color: #ffffff !important;
+        }
+
+            .responsive-calendar .day.active a:hover {
+                background-color: #36a0e2;
+            }
+
+        .responsive-calendar .day.active .not-current {
+            background-color: #8fcaef;
+            color: #ffffff;
+        }
+
+            .responsive-calendar .day.active .not-current:hover {
+                background-color: #bcdff5;
+            }
+
+        .responsive-calendar .day.not-current a {
+            color: #ddd;
+        }
+
+        .responsive-calendar .day .badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            z-index: 1;
+        }
+
+
+    .controls {
+        margin-top: 25px;
+    }
+
+    .selectbutton {
+        min-width: 175px;
+        margin: 15px 15px 0 0;
+    }
+
+    .responsive-calendar {
+        border: 1px solid #ddd;
+    }
+
+
+    .sat a, .sun a, .past a, .sat.active a, .sun.active a, .past.active a, .sat a:hover, .sun a:hover, .past a:hover {
+        color: #ddd !important;
+        cursor: default;
+    }
+
+    .responsive-calendar .day.active.sat a {
+        color: #ddd !important;
+        background-color: #fff !important;
+        cursor: default;
+    }
+
+    .responsive-calendar .day.active.sun a {
+        color: #ddd !important;
+        background-color: #fff !important;
+        cursor: default;
+    }
+
+    .responsive-calendar .day.active.past a {
+        color: #ddd !important;
+        background-color: #fff !important;
+        cursor: default;
+    }
+
+    #calendarCopyModal {
+        display: block !important;
+        z-index: 1065;
+        position: relative;
+        width: 57%;
+        margin: auto;
+        position: relative;
+        top: -250px;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #999;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-radius: 6px;
+        outline: 0;
+        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        height: auto !important;
+    }
+
+        #calendarCopyModal.modal.fade #calendarCopyModal.modal-dialog {
+            -webkit-transition: -webkit-transform .3s ease-out;
+            -o-transition: -o-transform .3s ease-out;
+            transition: transform .3s ease-out;
+            -webkit-transform: translate(0, -25%);
+            -ms-transform: translate(0, -25%);
+            -o-transform: translate(0, -25%);
+            transform: translate(0, -25%);
+        }
+
+        #calendarCopyModal.modal.in #calendarCopyModal.modal-dialog {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -o-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
+
+        #calendarCopyModal.modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #calendarCopyModal.modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 10px;
+        }
+
+        #calendarCopyModal.modal-content {
+            position: relative;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+
+        #calendarCopyModal.modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #000;
+        }
+
+            #calendarCopyModal.modal-backdrop.fade {
+                filter: alpha(opacity=0);
+                opacity: 0;
+            }
+
+            #calendarCopyModal.modal-backdrop.in {
+                filter: alpha(opacity=50);
+                opacity: .5;
+            }
+
+        #calendarCopyModal.modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+            #calendarCopyModal.modal-header .close {
+                margin-top: -2px;
+            }
+
+        #calendarCopyModal.modal-title {
+            margin: 0;
+            line-height: 1.42857143;
+        }
+
+        #calendarCopyModal.modal-body {
+            position: relative;
+            padding: 15px;
+        }
+
+        #calendarCopyModal.modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+
+            #calendarCopyModal.modal-footer .btn + .btn {
+                margin-bottom: 0;
+                margin-left: 5px;
+            }
+
+            #calendarCopyModal.modal-footer .btn-group .btn + .btn {
+                margin-left: -1px;
+            }
+
+            #calendarCopyModal.modal-footer .btn-block + .btn-block {
+                margin-left: 0;
+            }
+
+        #calendarCopyModal.modal-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll;
+        }
+
+    .district-selection select {
+        min-width: 70%;
+        min-height: 28px;
+        vertical-align: middle;
+        margin-bottom: 12px;
+    }
+
+    .child-ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 2000 !important;
+        width: auto;
+        top: -100px;
+        left: -50px;
+        right: 0;
+    }
+
+        .child-ajax-loader img {
+            margin: 0 auto;
+            margin-top: 30%;
+        }
+
+    .form-control-input {
+        box-shadow: none;
+        border-color: #333;
+        height: 32px;
+    }
+
+    @@media (min-width: 768px) {
+        #calendarCopyModal.modal-dialog {
+            width: 600px;
+            margin: 30px auto;
+        }
+
+        #calendarCopyModal.modal-content {
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        }
+
+        #calendarCopyModal.modal-sm {
+            width: 300px;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        #calendarCopyModal.modal-lg {
+            width: 900px;
+        }
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;"><i class="glyphicon glyphicon-calendar" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Calendar</h4>
+</div>
+<div class="modal-body">
+    <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+        <strong class="moreinfo">Oh snap!</strong>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <input type="hidden" id="selectedYear" name="selectedYear" value="2018" />
+                <div class="btn-group" id="selectYear">
+                    <button type="button" class="btn btn-primary dropdown-toggle selectbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select School Year&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-year="2018">2017 - 2018</a></li>
+                        <li><a href="#" data-year="2019">2018 - 2019</a></li>
+                        <li><a href="#" data-year="2020">2019 - 2020</a></li>
+                        <li><a href="#" data-year="2021">2020 - 2021</a></li>
+                        <li><a href="#" data-year="2022">2021 - 2022</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <input type="hidden" id="selectedDistrict" name="selectedDistrict" value="" />
+                <div class="btn-group" id="selectDistrict">
+                    <button type="button" class="btn btn-primary dropdown-toggle selectbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select School District&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if (Model.districts.Count > 0)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+                                <li><a href="#" data-districtid="@district.USD">@district.DistrictName</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <input type="hidden" id="selectedBuilding" name="selectedBuilding" value="" />
+                <div class="btn-group" id="selectBuilding">
+                    <button type="button" class="btn btn-primary dropdown-toggle selectbutton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select School Building&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if (Model.buildings.Count > 0)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <li><a href="#" class="hidden" data-buildingid="@building.BuildingID" data-usd="@building.USD">@building.BuildingName</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 text-center pull-left">
+                <div class="btn-group">
+                    <button id="calendarCopy" type="button" class="close pull-left" style="margin: 15px 15px 15px 0">
+                        <span class="glyphicon glyphicon-copy" style="font-size: 30px;"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row" style="margin: auto;">
+            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="daysPerWeek" style="font-weight:normal;">Days Per Week</label>
+                    <input class="form-control form-control-input" data-old="1" type="number" min="1" max="5" value="1" name="daysPerWeek" disabled />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="totalDays" style="font-weight:normal;">Total Days</label>
+                    <input class="form-control form-control-input" data-old="52" type="number" min="1" max="261" value="52" name="totalDays" disabled />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="totalWeeks" style="font-weight:normal;">Total Weeks</label>
+                    <input class="form-control form-control-input" data-old="52" type="number" min="1" max="52" value="52" name="totalWeeks" disabled />
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <br />
+
+        <!-- Responsive calendar - START -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="responsive-calendar">
+                    <div class="controls">
+                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                    </div><hr />
+                    <div class="day-headers">
+                        <div class="day header">Sun</div>
+                        <div class="day header">Mon</div>
+                        <div class="day header">Tue</div>
+                        <div class="day header">Wed</div>
+                        <div class="day header">Thu</div>
+                        <div class="day header">Fri</div>
+                        <div class="day header">Sat</div>
+                    </div>
+                    <div class="days" data-group="days">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Responsive calendar - END -->
+
+        <br />
+        <br />
+        <!-- Modal -->
+        <div id="calendarCopyModal" class="modal hidden" data-backdrop-limit="1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-parent="#moduleSection" style="display: none !important;">
+            <div class="modal-header">
+                <button type="button" class="close closeChildModal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Copy Calendar to:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 district-selection">
+                    <label for="selectedDistrict">Your District:&nbsp;</label>
+                    <select id="copyModalSelectedDistrict" style="min-width: 70%;" required>
+                        <option value="" selected>select your district</option>
+                        @if (Model.districts.Count > 0)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+                                <option value="@district.USD">@district.DistrictName.ToString()</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="dual-list list-right col-md-12">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="btn-group">
+                                    <a class="btn btn-default selector" title="select all" style="margin-bottom:10px;"><i class="glyphicon glyphicon-unchecked"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <ul id="copyModalSelectBuildings" class="list-group">
+                            @if (Model.buildings.Count > 0)
+                            {
+                                foreach (var building in Model.buildings)
+                                {
+                                    <li class="list-group-item building-group-item hidden" data-districtid="@building.USD" data-id="@building.BuildingID"><i class="glyphicon glyphicon-home"></i>&nbsp;@building.BuildingName.ToString()</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border: 0 !important;">
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="copyModalPaste">Paste</button>
+                <button type="button" class="btn btn-default btn-lg closeChildModal" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- end Modal -->
+    </div>
+
+    <div class="child-ajax-loader">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    </div>
+</div>
+
+<script>
+    var reports = []
+
+    var OnCalendarDayClick = function (events) {
+        var usd = $('#selectedDistrict').val();
+        var bId = $('#selectedBuilding').val();
+
+        if (usd == "" || bId == "") { alert("You must selected a District and a Building"); return; }
+
+        var selectedDay = $(this);
+        var year = selectedDay.data("year");
+        var month = selectedDay.data("month");
+        var day = selectedDay.data("day");
+        var hasSchool = selectedDay.parent().hasClass("active");
+
+        if (!selectedDay.parent().is(".sun, .sat, .past")) {
+            $.ajax({
+                type: 'GET',
+                url: '/Home/HasSchool',
+                data: { year: year, month: month, day: day, hasSchool: hasSchool, usd: usd, bId: bId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.HasClass !== undefined) {
+                        if (data.HasClass) { selectedDay.parents().removeClass("active"); }
+                        else { selectedDay.parents().addClass("active"); }
+                    }
+                    else {
+                        $("#alertMessage .moreinfo").html('Server Error');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                },
+                error: function (data) {
+                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin or try again.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+        }
+    }
+
+    function addLeadingZero(num) {
+        if (num < 10) {
+            return "0" + num;
+        } else {
+            return "" + num;
+        }
+    }
+
+    $(document).ready(function () {
+
+        /*!
+          # Responsive Celendar widget script
+          # by w3widgets
+          #
+          # Author: Lukasz Kokoszkiewicz
+          #
+          # Copyright © w3widgets 2013 All Rights Reserved
+          # documentation: http://w3widgets.com/responsive-calendar/#options
+        */
+        (function () {
+
+            (function ($) {
+                "use strict";
+                var Calendar, opts, spy;
+                Calendar = function (element, options) {
+                    var time;
+                    this.$element = element;
+                    this.options = options;
+                    this.weekDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+                    this.time = new Date();
+                    this.currentYear = this.time.getFullYear();
+                    this.currentMonth = this.time.getMonth();
+                    if (this.options.time) {
+                        time = this.splitDateString(this.options.time);
+                        this.currentYear = time.year;
+                        this.currentMonth = time.month;
+                    }
+                    this.initialDraw();
+                    return null;
+                };
+                Calendar.prototype = {
+                    addLeadingZero: function (num) {
+                        if (num < 10) {
+                            return "0" + num;
+                        } else {
+                            return "" + num;
+                        }
+                    },
+                    applyTransition: function ($el, transition) {
+                        $el.css('transition', transition);
+                        $el.css('-ms-transition', '-ms-' + transition);
+                        $el.css('-moz-transition', '-moz-' + transition);
+                        return $el.css('-webkit-transition', '-webkit-' + transition);
+                    },
+                    applyBackfaceVisibility: function ($el) {
+                        $el.css('backface-visibility', 'hidden');
+                        $el.css('-ms-backface-visibility', 'hidden');
+                        $el.css('-moz-backface-visibility', 'hidden');
+                        return $el.css('-webkit-backface-visibility', 'hidden');
+                    },
+                    applyTransform: function ($el, transform) {
+                        $el.css('transform', transform);
+                        $el.css('-ms-transform', transform);
+                        $el.css('-moz-transform', transform);
+                        return $el.css('-webkit-transform', transform);
+                    },
+                    splitDateString: function (dateString) {
+                        var day, month, time, year;
+                        time = dateString.split('-');
+                        year = parseInt(time[0]);
+                        month = parseInt(time[1] - 1);
+                        day = parseInt(time[2]);
+                        return time = {
+                            year: year,
+                            month: month,
+                            day: day
+                        };
+                    },
+                    initialDraw: function () {
+                        return this.drawDays(this.currentYear, this.currentMonth);
+                    },
+                    editDays: function (events) {
+                        var dateString, day, dayEvents, time, _results;
+                        _results = [];
+                        for (dateString in events) {
+                            dayEvents = events[dateString];
+                            this.options.events[dateString] = events[dateString];
+                            time = this.splitDateString(dateString);
+                            day = this.$element.find('[data-year="' + time.year + '"][data-month="' + (time.month + 1) + '"][data-day="' + time.day + '"]').parent('.day');
+                            day.removeClass('active');
+                            day.find('.badge').remove();
+                            day.find('a').removeAttr('href');
+                            if (this.currentMonth === time.month || this.options.activateNonCurrentMonths) {
+                                _results.push(this.makeActive(day, dayEvents));
+                            } else {
+                                _results.push(void 0);
+                            }
+                        }
+                        return _results;
+                    },
+                    clearDays: function (days) {
+                        var dateString, day, time, _i, _len, _results;
+                        _results = [];
+                        for (_i = 0, _len = days.length; _i < _len; _i++) {
+                            dateString = days[_i];
+                            delete this.options.events[dateString];
+                            time = this.splitDateString(dateString);
+                            day = this.$element.find('[data-year="' + time.year + '"][data-month="' + (time.month + 1) + '"][data-day="' + time.day + '"]').parent('.day');
+                            day.removeClass('active');
+                            day.find('.badge').remove();
+                            _results.push(day.find('a').removeAttr('href'));
+                        }
+                        return _results;
+                    },
+                    clearAll: function () {
+                        var day, days, i, _i, _len, _results;
+                        this.options.events = {};
+                        days = this.$element.find('[data-group="days"] .day');
+                        _results = [];
+                        for (i = _i = 0, _len = days.length; _i < _len; i = ++_i) {
+                            day = days[i];
+                            $(day).removeClass('active');
+                            $(day).find('.badge').remove();
+                            _results.push($(day).find('a').removeAttr('href'));
+                        }
+                        return _results;
+                    },
+                    setMonthYear: function (dateString) {
+                        var time;
+                        time = this.splitDateString(dateString);
+                        this.currentMonth = this.drawDays(time.year, time.month);
+                        return this.currentYear = time.year;
+                    },
+                    prev: function () {
+                        if (this.currentMonth - 1 < 0) {
+                            this.currentYear = this.currentYear - 1;
+                            this.currentMonth = 11;
+                        } else {
+                            this.currentMonth = this.currentMonth - 1;
+                        }
+                        this.drawDays(this.currentYear, this.currentMonth);
+                        if (this.options.onMonthChange) {
+                            this.options.onMonthChange.call(this);
+                        }
+                        return null;
+                    },
+                    next: function () {
+                        if (this.currentMonth + 1 > 11) {
+                            this.currentYear = this.currentYear + 1;
+                            this.currentMonth = 0;
+                        } else {
+                            this.currentMonth = this.currentMonth + 1;
+                        }
+                        this.drawDays(this.currentYear, this.currentMonth);
+                        if (this.options.onMonthChange) {
+                            this.options.onMonthChange.call(this);
+                        }
+                        return null;
+                    },
+                    curr: function () {
+                        this.currentYear = this.time.getFullYear();
+                        this.currentMonth = this.time.getMonth();
+                        this.drawDays(this.currentYear, this.currentMonth);
+                        if (this.options.onMonthChange) {
+                            this.options.onMonthChange.call(this);
+                        }
+                        return null;
+                    },
+                    addOthers: function (day, dayEvents) {
+                        var badge;
+                        if (typeof dayEvents === "object") {
+                            if (dayEvents.number != null) {
+                                badge = $("<span></span>").html(dayEvents.number).addClass("badge");
+                                if (dayEvents.badgeClass != null) {
+                                    badge.addClass(dayEvents.badgeClass);
+                                }
+                                day.append(badge);
+                            }
+                            if (dayEvents.url) {
+                                day.find("a").attr("href", dayEvents.url);
+                            }
+                        }
+                        return day;
+                    },
+                    makeActive: function (day, dayEvents) {
+                        var classes, eventClass, i, _i, _len;
+                        if (dayEvents) {
+                            if (dayEvents["class"]) {
+                                classes = dayEvents["class"].split(" ");
+                                for (i = _i = 0, _len = classes.length; _i < _len; i = ++_i) {
+                                    eventClass = classes[i];
+                                    day.addClass(eventClass);
+                                }
+                            } else {
+                                day.addClass("active");
+                            }
+                            day = this.addOthers(day, dayEvents);
+                        }
+                        return day;
+                    },
+                    getDaysInMonth: function (year, month) {
+                        return new Date(year, month + 1, 0).getDate();
+                    },
+                    drawDay: function (lastDayOfMonth, yearNum, monthNum, dayNum, i) {
+                        var calcDate, dateNow, dateString, day, dayDate, pastFutureClass;
+                        day = $("<div></div>").addClass("day");
+                        dateNow = new Date();
+                        dateNow.setHours(0, 0, 0, 0);
+                        dayDate = new Date(yearNum, monthNum - 1, dayNum);
+                        if (dayDate.getTime() < dateNow.getTime()) {
+                            pastFutureClass = "past";
+                        } else if (dayDate.getTime() === dateNow.getTime()) {
+                            pastFutureClass = "today";
+                        } else {
+                            pastFutureClass = "future";
+                        }
+                        day.addClass(this.weekDays[i % 7]);
+                        day.addClass(pastFutureClass);
+                        dateString = yearNum + "-" + this.addLeadingZero(monthNum) + "-" + this.addLeadingZero(dayNum);
+                        if (dayNum <= 0 || dayNum > lastDayOfMonth) {
+                            calcDate = new Date(yearNum, monthNum - 1, dayNum);
+                            dayNum = calcDate.getDate();
+                            monthNum = calcDate.getMonth() + 1;
+                            yearNum = calcDate.getFullYear();
+                            day.addClass("not-current").addClass(pastFutureClass);
+                            if (this.options.activateNonCurrentMonths) {
+                                dateString = yearNum + "-" + this.addLeadingZero(monthNum) + "-" + this.addLeadingZero(dayNum);
+                            }
+                        }
+                        day.append($("<a>" + dayNum + "</a>").attr("data-day", dayNum).attr("data-month", monthNum).attr("data-year", yearNum));
+                        if (this.options.monthChangeAnimation) {
+                            this.applyTransform(day, 'rotateY(180deg)');
+                            this.applyBackfaceVisibility(day);
+                        }
+                        day = this.makeActive(day, this.options.events[dateString]);
+                        return this.$element.find('[data-group="days"]').append(day);
+                    },
+                    drawDays: function (year, month) {
+                        var currentMonth, day, dayBase, days, delay, draw, firstDayOfMonth, i, lastDayOfMonth, loopBase, monthNum, multiplier, thisRef, time, timeout, yearNum, _i, _len;
+                        thisRef = this;
+                        time = new Date(year, month);
+                        currentMonth = time.getMonth();
+                        monthNum = time.getMonth() + 1;
+                        yearNum = time.getFullYear();
+                        time.setDate(1);
+                        firstDayOfMonth = this.options.startFromSunday ? time.getDay() + 1 : time.getDay() || 7;
+                        lastDayOfMonth = this.getDaysInMonth(year, month);
+                        timeout = 0;
+                        if (this.options.monthChangeAnimation) {
+                            days = this.$element.find('[data-group="days"] .day');
+                            for (i = _i = 0, _len = days.length; _i < _len; i = ++_i) {
+                                day = days[i];
+                                delay = i * 0.01;
+                                this.applyTransition($(day), 'transform .5s ease ' + delay + 's');
+                                this.applyTransform($(day), 'rotateY(180deg)');
+                                this.applyBackfaceVisibility($(day));
+                                timeout = (delay + 0.1) * 1000;
+                            }
+                        }
+                        dayBase = 2;
+                        if (this.options.allRows) {
+                            loopBase = 42;
+                        } else {
+                            multiplier = Math.ceil((firstDayOfMonth - (dayBase - 1) + lastDayOfMonth) / 7);
+                            loopBase = multiplier * 7;
+                        }
+                        this.$element.find("[data-head-year]").html(time.getFullYear());
+                        this.$element.find("[data-head-month]").html(this.options.translateMonths[time.getMonth()]);
+                        draw = function () {
+                            var dayNum, setEvents;
+                            thisRef.$element.find('[data-group="days"]').empty();
+                            dayNum = dayBase - firstDayOfMonth;
+                            i = thisRef.options.startFromSunday ? 0 : 1;
+                            while (dayNum < loopBase - firstDayOfMonth + dayBase) {
+                                thisRef.drawDay(lastDayOfMonth, yearNum, monthNum, dayNum, i);
+                                dayNum = dayNum + 1;
+                                i = i + 1;
+                            }
+                            setEvents = function () {
+                                var _j, _len1;
+                                days = thisRef.$element.find('[data-group="days"] .day');
+                                for (i = _j = 0, _len1 = days.length; _j < _len1; i = ++_j) {
+                                    day = days[i];
+                                    thisRef.applyTransition($(day), 'transform .5s ease ' + (i * 0.01) + 's');
+                                    thisRef.applyTransform($(day), 'rotateY(0deg)');
+                                }
+                                if (thisRef.options.onDayClick) {
+                                    thisRef.$element.find('[data-group="days"] .day a').click(function () {
+                                        return thisRef.options.onDayClick.call(this, thisRef.options.events);
+                                    });
+                                }
+                                if (thisRef.options.onDayHover) {
+                                    thisRef.$element.find('[data-group="days"] .day a').hover(function () {
+                                        return thisRef.options.onDayHover.call(this, thisRef.options.events);
+                                    });
+                                }
+                                if (thisRef.options.onActiveDayClick) {
+                                    thisRef.$element.find('[data-group="days"] .day.active a').click(function () {
+                                        return thisRef.options.onActiveDayClick.call(this, thisRef.options.events);
+                                    });
+                                }
+                                if (thisRef.options.onActiveDayHover) {
+                                    return thisRef.$element.find('[data-group="days"] .day.active a').hover(function () {
+                                        return thisRef.options.onActiveDayHover.call(this, thisRef.options.events);
+                                    });
+                                }
+                            };
+                            return setTimeout(setEvents, 0);
+                        };
+                        setTimeout(draw, timeout);
+                        return currentMonth;
+                    }
+                };
+                $.fn.responsiveCalendar = function (option, params) {
+                    var init, options, publicFunc;
+                    options = $.extend({}, $.fn.responsiveCalendar.defaults, typeof option === 'object' && option);
+                    publicFunc = {
+                        next: 'next',
+                        prev: 'prev',
+                        edit: 'editDays',
+                        clear: 'clearDays',
+                        clearAll: 'clearAll',
+                        getYearMonth: 'getYearMonth',
+                        jump: 'jump',
+                        curr: 'curr'
+                    };
+                    init = function ($this) {
+                        var data;
+                        options = $.metadata ? $.extend({}, options, $this.metadata()) : options;
+                        $this.data('calendar', (data = new Calendar($this, options)));
+                        if (options.onInit) {
+                            options.onInit.call(data);
+                        }
+                        return $this.find("[data-go]").click(function () {
+                            if ($(this).data("go") === "prev") {
+                                data.prev();
+                            }
+                            if ($(this).data("go") === "next") {
+                                return data.next();
+                            }
+                        });
+                    };
+                    return this.each(function () {
+                        var $this, data;
+                        $this = $(this);
+                        data = $this.data('calendar');
+                        if (!data) {
+                            init($this);
+                        } else if (typeof option === 'string') {
+                            if (publicFunc[option] != null) {
+                                data[publicFunc[option]](params);
+                            } else {
+                                data.setMonthYear(option);
+                            }
+                        } else if (typeof option === 'number') {
+                            data.jump(Math.abs(option) + 1);
+                        }
+                        return null;
+                    });
+                };
+                $.fn.responsiveCalendar.defaults = {
+                    translateMonths: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    events: {},
+                    time: void 0,
+                    allRows: true,
+                    startFromSunday: true,
+                    activateNonCurrentMonths: false,
+                    monthChangeAnimation: true,
+                    onInit: void 0,
+                    onDayClick: void 0,
+                    onDayHover: void 0,
+                    onActiveDayClick: void 0,
+                    onActiveDayHover: void 0,
+                    onMonthChange: void 0
+                };
+                spy = $('[data-spy="responsive-calendar"]');
+                if (spy.length) {
+                    opts = {};
+                    if ((spy.data('translate-months')) != null) {
+                        opts.translateMonths = spy.data('translate-months').split(',');
+                    }
+                    if ((spy.data('time')) != null) {
+                        opts.time = spy.data('time');
+                    }
+                    if ((spy.data('all-rows')) != null) {
+                        opts.allRows = spy.data('all-rows');
+                    }
+                    if ((spy.data('start-from-sunday')) != null) {
+                        opts.startFromSunday = spy.data('start-from-sunday');
+                    }
+                    if ((spy.data('activate-non-current-months')) != null) {
+                        opts.activateNonCurrentMonths = spy.data('activate-non-current-months');
+                    }
+                    if ((spy.data('month-change-animation')) != null) {
+                        opts.monthChangeAnimation = spy.data('month-change-animation');
+                    }
+                    return spy.responsiveCalendar(opts);
+                }
+            })(jQuery);
+
+        }).call(this);
+
+        var schoolYear = ((new Date()).getMonth() < 6) ? (new Date()).getFullYear() - 1 : (new Date()).getFullYear();
+        var nextYear = parseInt(schoolYear) + 1;
+
+        $(".responsive-calendar:eq(0)").responsiveCalendar({
+            time: schoolYear + '-07',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 7))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(1)").responsiveCalendar({
+            time: schoolYear + '-08',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 8))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(2)").responsiveCalendar({
+            time: schoolYear + '-09',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 9))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(3)").responsiveCalendar({
+            time: schoolYear + '-10',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 10))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1}-{2}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(4)").responsiveCalendar({
+            time: schoolYear + '-11',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                    {
+                        foreach (var day in Model.calendarDays.Where(d => d.Month == 11))
+                        {
+                            @Html.Raw(String.Format("\"{0}-{1}-{2}\": {{}},", day.Year, day.Month, day.Day));
+                        }
+                    }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(5)").responsiveCalendar({
+            time: schoolYear + '-12',
+            onDayClick: OnCalendarDayClick,
+            events: {
+
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 12))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1}-{2}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(6)").responsiveCalendar({
+            time: nextYear + '-01',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 1))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(7)").responsiveCalendar({
+            time: nextYear + '-02',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 2))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(8)").responsiveCalendar({
+            time: nextYear + '-03',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 3))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(9)").responsiveCalendar({
+            time: nextYear + '-04',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 4))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(10)").responsiveCalendar({
+            time: nextYear + '-05',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 5))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        $(".responsive-calendar:eq(11)").responsiveCalendar({
+            time: nextYear + '-06',
+            onDayClick: OnCalendarDayClick,
+            events: {
+                @if (Model.calendarDays.Count > 1)
+                {
+                    foreach (var day in Model.calendarDays.Where(d => d.Month == 6))
+                    {
+                        @Html.Raw(String.Format("\"{0}-{1:00}-{2:00}\": {{}},", day.Year, day.Month, day.Day));
+                    }
+                }
+            } //end events
+        });
+
+        //* Event */
+        // When user select a year from the drop down.
+        $('#selectYear ul li a').on('click', function () {
+            var selectedYearElem = $(this);
+            var schoolYear = ((new Date()).getMonth() > 6) ? $(this).data("year") - 1 : $(this).data("year");
+            var nextYear = parseInt(schoolYear) + 1;
+
+            $('#selectedYear').val(selectedYearElem.data("year"));
+            selectedYearElem.parents('#selectYear').find('button').html(selectedYearElem.html() + '&nbsp;&nbsp;<span class="caret"></span>');
+
+            $(".responsive-calendar:eq(0)").responsiveCalendar(schoolYear + '-07');
+            $(".responsive-calendar:eq(1)").responsiveCalendar(schoolYear + '-08');
+            $(".responsive-calendar:eq(2)").responsiveCalendar(schoolYear + '-09');
+            $(".responsive-calendar:eq(3)").responsiveCalendar(schoolYear + '-10');
+            $(".responsive-calendar:eq(4)").responsiveCalendar(schoolYear + '-11');
+            $(".responsive-calendar:eq(5)").responsiveCalendar(schoolYear + '-12');
+            $(".responsive-calendar:eq(6)").responsiveCalendar(nextYear + '-01');
+            $(".responsive-calendar:eq(7)").responsiveCalendar(nextYear + '-02');
+            $(".responsive-calendar:eq(8)").responsiveCalendar(nextYear + '-03');
+            $(".responsive-calendar:eq(9)").responsiveCalendar(nextYear + '-04');
+            $(".responsive-calendar:eq(10)").responsiveCalendar(nextYear + '-05');
+            $(".responsive-calendar:eq(11)").responsiveCalendar(nextYear + '-06');
+
+            if (reports != null) {
+                reports.forEach(function (element) {
+                    if (element.SchoolYear == nextYear) {
+                        $('input[name=daysPerWeek]').val(element.DaysPerWeek);
+                        $('input[name=totalDays]').val(element.TotalDays);
+                        $('input[name=totalWeeks').val(element.TotalWeeks);
+                    }
+                });
+            }
+        });
+
+        //* Event */
+        // When user select a district from the drop down.
+        $('#selectDistrict ul li a').on('click', function () {
+            var districtId = $(this).data("districtid");
+
+            $('#selectedDistrict').val(districtId);
+            $(this).parents('#selectDistrict').find('button').html($(this).html() + '&nbsp;&nbsp;<span class="caret"></span>');
+
+            $('#selectedBuilding').val('');
+            $('#selectBuilding button').html('Select School Building&nbsp;&nbsp;<span class="caret"></span>');
+            $.each($('#selectBuilding ul li a'), function (index, building) {
+                ($(building).data('usd') != districtId) ? $(building).addClass("hidden") : $(building).removeClass("hidden");
+            });
+        });
+
+        //* Event */
+        // When user select a building from the drop down.
+        $('#selectBuilding ul li a').on('click', function () {
+            var selectedBuilding = $(this);
+            var districtId = $('#selectedDistrict').val();
+            var buildingId = selectedBuilding.data('buildingid');
+            var schoolYear = $('#selectedYear').val();
+
+            // should never be fired but just in case.
+            if (districtId == "" || buildingId == "") { alert("You must selected a District and a Building"); return; }
+
+            $('.child-ajax-loader').css('visibility', 'visible');
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/GetCalendarViewByBuilding',
+                data: { SchoolYear: schoolYear, usd: districtId, bId: buildingId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result != "error") {
+                        if (data.calendarEvents != null) {
+
+                            $('#selectedBuilding').val(buildingId);
+                            selectedBuilding.parents('#selectBuilding').find('button').html(selectedBuilding.html() + '&nbsp;&nbsp;<span class="caret"></span>');
+
+                            $(".responsive-calendar:eq(0)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(1)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(2)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(3)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(4)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(5)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(6)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(7)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(8)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(9)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(10)").responsiveCalendar('clearAll');
+                            $(".responsive-calendar:eq(11)").responsiveCalendar('clearAll');
+
+                            var January = Feburary = March = April = May = June = July = August = September = October = November = December = {};
+                            var tempDate;
+
+                            for (var i = 0, len = data.calendarEvents.length; i < len; i++) {
+                                tempDate = data.calendarEvents[i].Year + "-" + addLeadingZero(data.calendarEvents[i].Month) + "-" + addLeadingZero(data.calendarEvents[i].Day);
+                                switch (data.calendarEvents[i].Month) {
+                                    case 1:
+                                        January[tempDate] = {};
+                                        break;
+                                    case 2:
+                                        Feburary[tempDate] = {};
+                                        break;
+                                    case 3:
+                                        March[tempDate] = {};
+                                        break;
+                                    case 4:
+                                        April[tempDate] = {};
+                                        break;
+                                    case 5:
+                                        May[tempDate] = {};
+                                        break;
+                                    case 6:
+                                        June[tempDate] = {};
+                                        break;
+                                    case 7:
+                                        July[tempDate] = {};
+                                        break;
+                                    case 8:
+                                        August[tempDate] = {};
+                                        break;
+                                    case 9:
+                                        September[tempDate] = {};
+                                        break;
+                                    case 10:
+                                        October[tempDate] = {};
+                                        break;
+                                    case 11:
+                                        November[tempDate] = {};
+                                        break;
+                                    case 12:
+                                        December[tempDate] = {};
+                                        break;
+                                }
+                            }
+
+                            $(".responsive-calendar:eq(5)").responsiveCalendar('edit', January);
+                            $(".responsive-calendar:eq(6)").responsiveCalendar('edit', Feburary);
+                            $(".responsive-calendar:eq(7)").responsiveCalendar('edit', March);
+                            $(".responsive-calendar:eq(8)").responsiveCalendar('edit', April);
+                            $(".responsive-calendar:eq(9)").responsiveCalendar('edit', May);
+                            $(".responsive-calendar:eq(10)").responsiveCalendar('edit', June);
+                            $(".responsive-calendar:eq(11)").responsiveCalendar('edit', July);
+                            $(".responsive-calendar:eq(0)").responsiveCalendar('edit', August);
+                            $(".responsive-calendar:eq(1)").responsiveCalendar('edit', September);
+                            $(".responsive-calendar:eq(2)").responsiveCalendar('edit', October);
+                            $(".responsive-calendar:eq(3)").responsiveCalendar('edit', November);
+                            $(".responsive-calendar:eq(4)").responsiveCalendar('edit', December);
+
+                            $('input[name=daysPerWeek]').removeAttr('disabled');
+                            $('input[name=totalDays]').removeAttr('disabled');
+                            $('input[name=totalWeeks]').removeAttr('disabled');
+
+                            console.log(data)
+                            if (data.calendarReports != null) {
+                                reports = data.calendarReports;
+                                reports.forEach(function (element) {
+                                    if (element.SchoolYear == schoolYear) {
+                                        $('input[name=daysPerWeek]').val(element.DaysPerWeek);
+                                        $('input[name=totalDays]').val(element.TotalDays);
+                                        $('input[name=totalWeeks').val(element.TotalWeeks);
+                                    }
+                                });
+                            } else {
+                                $('input[name=daysPerWeek]').val(1);
+                                $('input[name=totalDays]').val(52);
+                                $('input[name=totalWeeks').val(52);
+                            }
+
+                            $('.child-ajax-loader').css('visibility', 'hidden');
+                        } else {
+
+                            $('.child-ajax-loader').css('visibility', 'hidden');
+
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+
+                    } else {
+
+                        $('.child-ajax-loader').css('visibility', 'hidden');
+
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                },
+                error: function (data) {
+                    $('.child-ajax-loader').css('visibility', 'hidden');
+
+                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin or try again.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+
+        });
+
+        /* Event */
+        // When the user clicks the copy button.
+        $('#calendarCopy').on('click', function () {
+            var usd = $('#selectedDistrict').val();
+            var bId = $('#selectedBuilding').val();
+
+            if (usd == "" || bId == "") { alert("You must selected a District and a Building"); return; }
+
+            var $m1 = $('#moduleSection');
+            var $innermodal = $m1.find(".modal");     //get reference to nested modal
+            $m1.after($innermodal);
+
+
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', 1050).addClass('modal-stack');
+                $innermodal.removeAttr('style');
+            }, 0);
+        });
+
+        $('.closeChildModal').on('click', function () {
+            var $m2 = $('#calendarCopyModal');
+            var $m1 = $('#moduleSection').find(".container-fluid");
+
+            $m1.before($m2);
+            $m2.attr('style', 'display: none !important');
+
+            $('.modal-stack').css('z-index', 1049).removeClass('modal-stack');
+
+        });
+
+        $('#copyModalSelectedDistrict').change(function () {
+            var districtId = $('#copyModalSelectedDistrict option:selected').val();
+            $('#copyModalSelectBuildings li').each(function (index) {
+                if ($(this).data('districtid') == districtId) {
+                    $(this).removeClass('hidden');
+                }
+                else {
+                    $(this).removeClass('active');
+                    $(this).addClass('hidden');
+                }
+            });
+        });
+
+        // attach event
+        // fires when clicking the "checkbox" on the modal popup.
+        $('.dual-list .selector').click(function () {
+            var $checkBox = $(this);
+            if (!$checkBox.hasClass('selected')) {
+                $checkBox.addClass('selected').closest('.well').find('ul li:not(.hidden)').addClass('active');
+                $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+            } else {
+                $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+            }
+        });
+
+        $('.building-group-item').on('click', function () {
+            $(this).toggleClass('active');
+        })
+
+        $('#copyModalPaste').on('click', function () {
+
+            var usd = $('#selectedDistrict').val();
+            var bId = $('#selectedBuilding').val();
+
+            var formData = new FormData();
+            var selectedDistricts = [];
+            var selectedBuildings = [];
+
+            $('#copyModalSelectBuildings li.active').each(function (index) {
+                selectedDistricts.push($(this).data('districtid'));
+                selectedBuildings.push($(this).data('id'));
+            });
+            formData.append("district", usd);
+            formData.append("building", bId);
+            formData.append('selectedDistrict[]', selectedDistricts);
+            formData.append('selectedBuilding[]', selectedBuildings);
+
+            var $m2 = $('#calendarCopyModal');
+            var $m1 = $('#moduleSection').find(".container-fluid");
+
+            $m1.before($m2);
+            $m2.attr('style', 'display: none !important');
+
+            $('.modal-stack').css('z-index', 1049).removeClass('modal-stack');
+            $('.child-ajax-loader').css('visibility', 'visible');
+
+            $.ajax({
+                type: 'POST',
+                url: '/Home/CopyOverToCalendars',
+                dataType: 'json',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+
+                    $('.child-ajax-loader').css('visibility', 'hidden');
+
+                    $("#alertMessage .moreinfo").html(data.Message);
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                },
+                error: function (data) {
+
+                    $('.child-ajax-loader').css('visibility', 'hidden');
+
+                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin or try again.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+        });
+
+        $("input[type=number]").bind('change', function (evt) {
+            if ($(this).data("old") == $(this).val()){ return; }
+
+            var input= $(this);
+            var usd = $('#selectedDistrict').val();
+            var bId = $('#selectedBuilding').val();
+            var max = parseInt(input.attr('max'));
+            var min = parseInt(input.attr('min'));
+
+            // Check correct, else revert back to old value.
+            if (parseInt(input.val()) > max || parseInt(input.val()) < min) {
+                input.val(input.data("old"));
+            } else {
+
+                var schoolYear = $('#selectedYear').val();
+                var daysAWeek = $('input[name=daysPerWeek]').val();
+                var total = $('input[name=totalDays]').val();
+                var allWeeks = $('input[name=totalWeeks]').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/SaveCalendarReports',
+                    data: { SchoolYear: schoolYear, usd: usd, building: bId, daysPerWeek: daysAWeek, totalDays: total, totalWeeks: allWeeks },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Result != "error") {
+                            input.data("old", input.val());
+
+                            reports.forEach(function (element) {
+                                if (element.SchoolYear == schoolYear) {
+
+                                    element.DaysPerWeek = daysAWeek;
+                                    element.TotalDays = total;
+                                    element.TotalWeeks = allWeeks;
+                                }
+                            });
+                        } else {
+                            input.val(input.data("old"));
+                            $('.child-ajax-loader').css('visibility', 'hidden');
+
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        input.val(input.data("old"));
+                        $('.child-ajax-loader').css('visibility', 'hidden');
+
+                        $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin or try again.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                });
+            }
+        });
+    });;
+</script>
