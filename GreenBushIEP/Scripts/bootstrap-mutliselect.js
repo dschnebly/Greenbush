@@ -37,7 +37,7 @@
         this.query = '';
         this.searchTimeout = null;
 
-        this.options.multiple = this.$select.attr('multiple') == "multiple";
+        this.options.multiple = this.$select.attr('multiple') === "multiple";
         this.options.onChange = $.proxy(this.options.onChange, this);
 
         // Build select all if enabled.

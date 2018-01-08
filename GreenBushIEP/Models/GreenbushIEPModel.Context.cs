@@ -54,6 +54,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
+        public virtual DbSet<tblProvider> tblProviders { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

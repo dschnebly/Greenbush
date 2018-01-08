@@ -330,6 +330,9 @@
     <Compile Include="Models\tblOrganizationMapping.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblProvider.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblRole.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -515,6 +518,7 @@
     <Content Include="Views\Home\_ModuleStudentGoals.cshtml" />
     <Content Include="Views\Home\_ModuleStudentServices.cshtml" />
     <Content Include="Views\Home\_ModuleCalendarSection.cshtml" />
+    <Content Include="Views\Home\_ModuleServiceProviders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

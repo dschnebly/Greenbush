@@ -1,0 +1,214 @@
+﻿<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<style>
+    .list-group-item i.glyphicon-trash,
+    .list-group-item i.glyphicon-pencil {
+        margin-top: -8px;
+        margin-right: 5px;
+    }
+
+    .list-group-item:nth-child(even) {
+        background-color: #EDEDED;
+    }
+
+    .list-group-item input.form-control {
+        height: 30px;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 0 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .list-group .head {
+        text-align: center;
+        font-size: 15pt;
+        color: black;
+        list-style: none;
+        margin-bottom: 12px;
+    }
+
+        .list-group .head:hover {
+            cursor: initial;
+        }
+
+    .editable-click, a.editable-click, a.editable-click:hover {
+        border-bottom: 0;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;"><i class="glyphicon glyphicon-th-list" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Service Providers</h4>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+
+        <div class="row">
+            <a class="btn btn-default pull-right" href="#" role="button" id="addProvider"><i class="glyphicon glyphicon-plus"></i> Add New Provider</a>
+        </div>
+        <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+        </div>
+        <div class="row">
+            <ul class="list-group">
+                <li class="head">List of Providers</li>
+                <li class="list-group-item"><a href="#" data-type="text" data-pk="1" data-title="Enter Provider name" class="editme editable editable-click">Johnna's Amazing Bakery</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                <li class="list-group-item"><a href="#" data-type="text" data-pk="2" data-title="Enter Provider name" class="editme editable editable-click">Troubleshooting Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                <li class="list-group-item"><a href="#" data-type="text" data-pk="3" data-title="Enter Provider name" class="editme editable editable-click">Internet Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                <li class="list-group-item"><a href="#" data-type="text" data-pk="4" data-title="Enter Provider name" class="editme editable editable-click">Server Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="child-ajax-loader">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        function init() {
+            $('.child-ajax-loader').css('visibility', 'hidden');
+
+            $("#addProvider").on('click', function (e) {
+                var listgroupitem = '<li class="list-group-item"><a href="#" data-type="text" data-pk="1" data-title="Enter Provider name" class="editme editable editable-click editable-unsaved editable-empty" style="background-color: rgba(0, 0, 0, 0);"></a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>';
+
+                $('ul.list-group').append(listgroupitem);
+                $('.editme').not(".bound").addClass("bound").editable({
+                    type: 'text',
+                    mode: 'inline'
+                });
+
+                initalizeRow();
+            });
+
+            function initProvider() {
+
+                // fires when a Provider was saved.
+                $('.editme').on('save', function (e, params) {
+                    alert('Saved value: ' + params.newValue);
+                });
+
+                // init the list of providers.
+                $('.editme').addClass("bound").editable({
+                    type: 'text',
+                    mode: 'inline',
+                    url: '/Home/UpdateProvidersList?ProviderName=' +  + '&ProviderPK=' + 12,
+                    ajaxOptions: {
+                        dataType: 'json' //assuming json response
+                    },
+                    success: function (data, config) {
+                        console.log('yup');
+                        //if (data && data.id) {  //record created, response like {"id": 2}
+                        //    //set pk
+                        //    $(this).editable('option', 'pk', data.id);
+                        //    //remove unsaved class
+                        //    $(this).removeClass('editable-unsaved');
+                        //    //show messages
+                        //    var msg = 'New user created! Now editables submit individually.';
+                        //    $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
+                        //    $('#save-btn').hide();
+                        //    $(this).off('save.newuser');
+                        //} else if (data && data.errors) {
+                        //    //server-side validation error, response like {"errors": {"username": "username already exist"} }
+                        //    config.error.call(this, data.errors);
+                        //}
+                    },
+                    error: function (errors) {
+                        
+                        var msg = '';
+                        //if (errors && errors.responseText) { //ajax error, errors = xhr object
+                        //    msg = errors.responseText;
+                        //} else { //validation error (client-side or server-side)
+                            //$.each(errors, function (k, v) { msg += k + ": " + v + "<br>"; });
+                        //}
+
+                        msg = '<strong>Oh SNAP!</strong> Server Error or the resource cannot be found.';
+                        $('.moreinfo').html(msg);
+                        $('#alertMessage').show();
+                    }
+                });
+
+                initalizeRow();
+            }
+
+            function initalizeRow() {
+                $('.glyphicon-trash').not(".bound").addClass("bound").on('click', function (e) {
+                    var answer = confirm("Do you really want to delete this Service Provider?")
+                    console.log($(this).find('li'));
+                    if (answer) {
+                        $(this).closest('li').remove();
+                    }
+                });
+
+                $('.glyphicon-pencil').not(".bound").addClass("bound").on('click', function (e) {
+                    e.stopPropagation();
+                    $(this).siblings(".editme").editable('toggle');
+                });
+
+                $('.close').on('click', function (e) {
+                    $(this).parent().hide();
+                });
+            }
+
+            initProvider();
+
+            //$('#save-btn').click(function () {
+            //    alert('ack!');
+            //    $('.editme').editable('submit', {
+            //        url: '/newuser',
+            //        ajaxOptions: {
+            //            dataType: 'json' //assuming json response
+            //        },
+            //        success: function (data, config) {
+            //            if (data && data.id) {  //record created, response like {"id": 2}
+            //                //set pk
+            //                $(this).editable('option', 'pk', data.id);
+            //                //remove unsaved class
+            //                $(this).removeClass('editable-unsaved');
+            //                //show messages
+            //                var msg = 'New user created! Now editables submit individually.';
+            //                $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
+            //                $('#save-btn').hide();
+            //                $(this).off('save.newuser');
+            //            } else if (data && data.errors) {
+            //                //server-side validation error, response like {"errors": {"username": "username already exist"} }
+            //                config.error.call(this, data.errors);
+            //            }
+            //        },
+            //        error: function (errors) {
+            //            var msg = '';
+            //            if (errors && errors.responseText) { //ajax error, errors = xhr object
+            //                msg = errors.responseText;
+            //            } else { //validation error (client-side or server-side)
+            //                $.each(errors, function (k, v) { msg += k + ": " + v + "<br>"; });
+            //            }
+            //            $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
+            //        }
+            //    });
+            //});
+        }
+
+        // Prevent race conditions.
+        loadScript("//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js", init);
+    });
+
+    function loadScript(url, callback) {
+        // adding the script tag to the head as suggested before
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+
+        // then bind the event to the callback function
+        // there are several events for cross browser compatibility
+        script.onreadystatechange = callback;
+        script.onload = callback;
+
+        // fire the loading
+        head.appendChild(script);
+    }
+</script>

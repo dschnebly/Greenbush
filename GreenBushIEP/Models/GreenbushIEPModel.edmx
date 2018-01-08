@@ -335,6 +335,14 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblProviders">
+          <Key>
+            <PropertyRef Name="ProviderID" />
+          </Key>
+          <Property Name="ProviderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblRoles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -486,6 +494,7 @@
           <EntitySet Name="tblIEPWritten" EntityType="Self.tblIEPWritten" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServices" EntityType="Self.tblServices" Schema="dbo" store:Type="Tables" />
@@ -556,6 +565,7 @@
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
+          <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           </EntityContainer>
         <EntityType Name="tblBuildingMapping">
           <Key>
@@ -997,6 +1007,14 @@
           <Property Name="DaysPerWeek" Type="Int32" Nullable="false" />
           <Property Name="TotalDays" Type="Int32" Nullable="false" />
           <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProvider">
+          <Key>
+            <PropertyRef Name="ProviderID" />
+          </Key>
+          <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1476,6 +1494,15 @@
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="calendarReportingID" ColumnName="calendarReportingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProviders">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProvider">
+              <MappingFragment StoreEntitySet="tblProviders">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

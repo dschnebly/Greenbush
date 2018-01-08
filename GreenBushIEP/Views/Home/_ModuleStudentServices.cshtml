@@ -46,74 +46,183 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapse0" class="panel-collapse collapse in">
+                        <div id="collapse0" class="panel-collapse">
                             <div class="panel-body">
-                                <div class="row" style="background-color: #f5f5f5;">
-                                    <div class="col-md-12">
-                                        <div>
-                                            <label for="StudentGoalTitle">Service Type</label><br />
-                                            <div class="form-group">
-                                                <input type="text" class="form-control studentGoalTitle" name="StudentGoalTitle" placeholder="Enter a title for this goal" required value="Service Type" />
-                                            </div>
-                                            <label for="StudentAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Service Description</label><br />
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="StudentAnnualGoal" placeholder="Provide more information about this service." rows="5" required></textarea>
-                                            </div>
-                                            <label for="serviceStartDate">Service Start Date</label>
-                                            <div class="form-group">
-                                                <input name="serviceStartDate" type="date" vale="" style="box-shadow: none; height: 49px; padding: 6px 12px; font-size: 14px;" />
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="fiscalYear">Fiscal Year</label>
+                                        <div class="dropdown input-group">
+                                            <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 150px;">
+                                                2017 - 2018
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                <li><a href="#" data-year="2018">2017 - 2018</a></li>
+                                                <li><a href="#" data-year="2019">2018 - 2019</a></li>
+                                                <li><a href="#" data-year="2020">2019 - 2020</a></li>
+                                                <li><a href="#" data-year="2021">2020 - 2021</a></li>
+                                                <li><a href="#" data-year="2022">2021 - 2022</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="Frequency">Start Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input id="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="Frequency">End Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input id="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="ServiceType">Service Type</label>
+                                        <div class="dropdown input-group">
+                                            <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 220%;">
+                                                Choose an option
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                <li><a href="#">(AC) Attendant Care - A non-instructional paraeducator</a></li>
+                                                <li><a href="#">(AP) Adaptive Physical Education</a></li>
+                                                <li><a href="#">(AS) Assistive Technology</a></li>
+                                                <li><a href="#">(AT) Art Therapy</a></li>
+                                                <li><a href="#">(AU) Audiology</a></li>
+                                                <li><a href="#">(CM) Case Management</a></li>
+                                                <li><a href="#">(CS) School Counselor</a></li>
+                                                <li><a href="#">(DI) Diagnostic Medical</a></li>
+                                                <li><a href="#">(DM) Dance Movement Therapy</a></li>
+                                                <li><a href="#">(GI) Gifted</a></li>
+                                                <li><a href="#">(IN) Interpreter/Educational Interpreter</a></li>
+                                                <li><a href="#">(KT) </a></li>
+                                                <li><a href="#">(MA) Mobility Assistance</a></li>
+                                                <li><a href="#">(MS) Music Therapist</a></li>
+                                                <li><a href="#">(NU) Nurse/School Nurse</a></li>
+                                                <li><a href="#">(OM) Orientation/Mobility Specialist</a></li>
+                                                <li><a href="#">(OT) Occupational Therapist</a></li>
+                                                <li><a href="#">(PC) Parent Counseling</a></li>
+                                                <li><a href="#">(PS) School Psychologists</a></li>
+                                                <li><a href="#">(PT) Physical Therapist</a></li>
+                                                <li><a href="#">(RC) Rehabilitation Counceling</a></li>
+                                                <li><a href="#">(RE) Recreation Therapist</a></li>
+                                                <li><a href="#">(SE) Special Ed</a></li>
+                                                <li><a href="#">(SH) School Health Services</a></li>
+                                                <li><a href="#">(SL) Speech Language Pathologist</a></li>
+                                                <li><a href="#">(SS) Speech Services</a></li>
+                                                <li><a href="#">(SU) Supervisor/Coordinator</a></li>
+                                                <li><a href="#">(SW) Social Worker</a></li>
+                                                <li><a href="#">(TS) Trasition Services</a></li>
+                                                <li><a href="#">(TT) Travel Training</a></li>
+                                                <li><a href="#">(VO) Vocational Special Needs</a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row" style="margin-top: 35px;">
-                                            <div class="col-md-12">
-                                                <div class="form-group col-md-4" name="Frequency" style="padding-left: 0;">
-                                                    <label for="Frequency">Frequency <span style="font-size: 8pt; font-weight: normal;">(Days per Week)</span></label>
-                                                    <div class="input-group number-spinner">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </span>
-                                                        <input type="text" class="form-control text-center" value="1">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-4" name="Duration">
-                                                    <label for="Duration">Duration <span style="font-size: 8pt; font-weight: normal;">(Minutes per Day)</span></label>
-                                                    <div class="input-group minute-spinner">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </span>
-                                                        <input type="text" class="form-control text-center" value="1">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-4" name="Location">
-                                                    <label for="Location">Location</label><br />
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="ServiceLocation" required value="" />
-                                                    </div>
+                                            <div class="form-group col-md-2" name="Frequency">
+                                                <label for="Frequency">Frequency</label>
+                                                <div class="input-group minute-spinner">
+                                                    <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 150px;">
+                                                        Choose an option
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                        <li><a href="#" data-year="2018">Every week (1)</a></li>
+                                                        <li><a href="#" data-year="2019">Every 2 weeks (2)</a></li>
+                                                        <li><a href="#" data-year="2020">Every 3 weeks (3)/a></li>
+                                                        <li><a href="#" data-year="2021">Every 4 weeks (4)</a></li>
+                                                        <li><a href="#" data-year="2021">Every 8 weeks (8)</a></li>
+                                                        <li><a href="#" data-year="2021">Every 9 weeks (9)</a></li>
+                                                        <li><a href="#" data-year="2021">Every 12 weeks (12)</a></li>
+                                                        <li><a href="#" data-year="2021">Every 18 weeks (18)</a></li>
+                                                        <li><a href="#" data-year="2021">3 out of 4 weeks (19)</a></li>
+                                                        <li><a href="#" data-year="2022">1 day per year (99)</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <label for="ServiceComment">Comments</label>
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="ServiceComment" rows="5" required></textarea>
+                                            <div class="form-group col-md-2" name="Days" style="padding-left: 0;">
+                                                <label for="Days">Days per Week</label>
+                                                <div class="input-group number-spinner">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                    </span>
+                                                    <input type="text" class="form-control text-center" value="1" min="1" max="5">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-2" name="Duration">
+                                                <label for="Duration">Minutes per Day </label>
+                                                <div class="input-group minute-spinner">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                    </span>
+                                                    <input type="text" class="form-control text-center" value="1">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6" name="Frequency">
+                                                <label for="Frequency">Provider</label>
+                                                <div class="input-group minute-spinner">
+                                                    <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 225%;">
+                                                        Choose an option
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                        <li><a href="#" data-year="2018">Johna's education restroration business</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
-
+                                    <div class="col-md-3">
+                                        <div class="form-group" name="Location">
+                                            <label for="Location">Location</label><br />
+                                            <div class="form-group">
+                                                <select class="form-control" name="location" style="border-color: #ccc; display: inline-block;">
+                                                    <option value="a">(A) Home-Based</option>
+                                                    <option value="b">(B) Early Childhood Locations</option>
+                                                    <option value="c">(C) Special Ed Direct Service in a Regular Ed Classroom</option>
+                                                    <option value="d">(D) Non-School Location</option>
+                                                    <option value="e">(E) Community Based Direct Instruction</option>
+                                                    <option value="g">(G) Special Ed Direct Service Outside Regular Ed Classroom/program/other Location</option>
+                                                    <option value="h">(H) Alternative School</option>
+                                                    <option value="i">(I) Incarceration</option>
+                                                    <option value="j">(J) Special Day School</option>
+                                                    <option value="k">(K) Early Childhood Program Time without Services</option>
+                                                    <option value="l">(L) Hospital</option>
+                                                    <option value="m">(M) Residential</option>
+                                                    <option value="o">(O) Home School</option>
+                                                    <option value="p">(P) Homebound</option>
+                                                    <option value="r">(R) E.C. Special Education</option>
+                                                    <option value="s">(S) Program classroom</option>
+                                                    <option value="t">(T) Extracurricular</option>
+                                                    <option value="u">(U) Under Suspension/Under Expulsion</option>
+                                                    <option value="w">(W) Reverse Mainstream ESCE Classroom</option>
+                                                    <option value="x">(X) Indirect Services</option>
+                                                    <option value="y">(Y) Juvenile Correction Facility</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8" style="margin-right:15px;">
+                                        <label for="values[]">Goal</label><br />
                                         <select class="form-control" name="values[]" style="border-color: #ccc; width: 300px; display: inline-block;">
                                             <option value="">Add a student goal</option>
                                             <option value="4">Goal 4</option>
+                                            <option value="5">Goal 5</option>
+                                            <option value="6">Goal 6</option>
                                         </select>
                                         <span class="btn btn-default" style="padding: 15px 12px; height: 50px; background: #ff9f1a; color: #fff; border-radius: 0; margin-left: -5px; margin-top: -3px;">
                                             <span class="glyphicon glyphicon-plus"></span>
@@ -167,6 +276,9 @@
 </div>
 
 <script>
+    $('#serviceStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+    $('#serviceEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -217,6 +329,30 @@
 
     function initGoal() {
         $('.oneStudentGoal').not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
+
+            $(this).find("input[type=date]").on('input', function (e) {
+
+                var day = new Date(e.target.value).getUTCDay();
+
+                // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+                if (day == 0) {
+
+                    e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
+                    e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+                    e.target.parentNode.classList.add('has-error');
+                } else if (day == 6) {
+
+                    e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
+                    e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+                    e.target.parentNode.classList.add('has-error');
+                } else {
+
+                    e.target.setCustomValidity('');
+                    e.target.title = '';
+                    e.target.parentNode.classList.remove('has-error');
+                }
+
+            });
 
             //* Binding */
             /* fires when changing the goal title. It updates the accordian label too. */
@@ -285,7 +421,7 @@
                     newValue = parseInt(oldValue);
 
                 if (btn.attr('data-dir') == 'up') {
-                    if (newValue < 7) {
+                    if (newValue < 5) {
                         newValue = newValue + 1;
                     }
                 } else {

@@ -33,11 +33,6 @@
             padding: 20% 0 20% 0;
         }
 
-        /*.responsive-calendar .day a:hover {
-                background-color: #eee;
-                text-decoration: none;
-            }*/
-
         .responsive-calendar .day.header {
             border-bottom: 1px gray solid;
         }
@@ -696,6 +691,8 @@
         var day = selectedDay.data("day");
         var hasSchool = selectedDay.parent().hasClass("active");
 
+        var calendar = $(this).parents('.responsive-calendar');
+
         if (!selectedDay.parent().is(".sun, .sat, .past")) {
             $.ajax({
                 type: 'GET',
@@ -704,8 +701,17 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.HasClass !== undefined) {
-                        if (data.HasClass) { selectedDay.parents().removeClass("active"); }
-                        else { selectedDay.parents().addClass("active"); }
+                        if (data.HasClass) {
+                            selectedDay.parents().removeClass("active");
+                            var calendarDayToEdit = selectedDay.data("year") + "-" + selectedDay.data("month") + "-" + selectedDay.data("day");
+                            calendar.responsiveCalendar('clear', [calendarDayToEdit]);
+                        }
+                        else {
+                            selectedDay.parents().addClass("active");
+                            editDay = {};
+                            editDay[selectedDay.data("year") + '-' + selectedDay.data("month") + '-' + selectedDay.data("day")] = {};
+                            calendar.responsiveCalendar('edit', editDay);
+                        }
                     }
                     else {
                         $("#alertMessage .moreinfo").html('Server Error');
@@ -806,6 +812,7 @@
                         return this.drawDays(this.currentYear, this.currentMonth);
                     },
                     editDays: function (events) {
+                        console.log(events);
                         var dateString, day, dayEvents, time, _results;
                         _results = [];
                         for (dateString in events) {
@@ -1448,7 +1455,6 @@
                             $('input[name=totalDays]').removeAttr('disabled');
                             $('input[name=totalWeeks]').removeAttr('disabled');
 
-                            console.log(data)
                             if (data.calendarReports != null) {
                                 reports = data.calendarReports;
                                 reports.forEach(function (element) {

@@ -153,8 +153,20 @@ namespace GreenbushIep.Controllers
                 }
             }
 
+            if(view == "ServiceProviderModule")
+            {
+                return PartialView("_ModuleServiceProviders");
+            }
+
             // Unknow user or view.
             return RedirectToAction("Index", "Home", null);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult UpdateProvidersList(string ProviderName, int ProviderPK)
+        {
+            return Json(new { Result = "success", id = "", errors = ""}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
