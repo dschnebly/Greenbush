@@ -232,7 +232,43 @@ namespace GreenBushIEP.Models
             studentGoals = new List<StudentGoal>();
         }
     }
-}
+
+    public class AccomodationViewModel
+    {
+     
+        public AccomodationViewModel()
+        {
+            AccomList = new List<tblAccommodation>();
+        }
+
+
+        public int StudentId { get; set; }
+
+        [Required(ErrorMessage = "Please select a Type: Accomodation or Modification.")]
+        public int? AccomType { get; set; }
+
+        public int AccommodationID { get; set; }
+
+        public int IEPid { get; set; }
+
+        public string AccDescription { get; set; }
+
+        public string Location { get; set; }
+
+        public int? Frequency { get; set; }
+
+        public int Duration { get; set; }
+                
+        public DateTime? AnticipatedStartDate { get; set; }
+
+        public DateTime? AnticipatedEndDate { get; set; }
+
+        public string Message { get; set; }
+
+        public List<tblAccommodation> AccomList { get; set; }
+               
+    }
+  }
 
 public class IEPStatus
 {

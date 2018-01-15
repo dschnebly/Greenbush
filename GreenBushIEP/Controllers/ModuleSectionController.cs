@@ -291,6 +291,74 @@ namespace GreenBushIEP.Controllers
             throw new Exception("Unable to log you in.");
         }
 
+        // POST: ModuleSection/Edit/5
+        [HttpPost]
+        public ActionResult EditAccom(AccomodationViewModel model)
+        {
+            int studentId = model.StudentId;
+
+            if (ModelState.IsValid)
+            {               
+
+                tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).SingleOrDefault();
+                if (AccomodationIEP == null)
+                {
+                    AccomodationIEP = new tblAccommodation();
+                    AccomodationIEP.IEPid = model.IEPid;
+                }
+
+
+                if (AccomodationIEP != null)
+                {
+                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
+                    
+                    try
+                    {
+                        AccomodationIEP.AccomType = model.AccomType.HasValue ? (int)model.AccomType : 0;
+                        AccomodationIEP.Description = model.AccDescription;
+                        AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
+                        AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
+                        AccomodationIEP.Duration = model.Duration;
+                        AccomodationIEP.Frequency = model.Frequency;
+                        AccomodationIEP.Location = model.Location;
+                        if (model.AccommodationID == 0)
+                        {
+                            AccomodationIEP.Create_Date = DateTime.Now;
+                            db.tblAccommodations.Add(AccomodationIEP);
+                            
+                        }
+
+                        db.SaveChanges();
+
+                        //return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
+
+                        return Json(new { success = true, url = Url.Action("StudentProcedures", "Home", new { stid = studentId }) });
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Unable to save changes to Accomodation/Modification Module: " + e.InnerException);
+                    }
+                }
+            }
+            
+                string errorMessage = "";
+                foreach (ModelState modelState in ViewData.ModelState.Values)
+                {
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        errorMessage += " " + error.ErrorMessage;
+                    }
+                }
+
+                model.Message = errorMessage;
+
+         
+            return Json(new { success = false, error = model.Message }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
         [HttpPost]
         [Authorize]
         public ActionResult DeleteStudentGoal(int studentGoalId)

@@ -244,7 +244,6 @@
     <Compile Include="Helper\RandomPassword.cs" />
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\StudentGoal.cs" />
     <Compile Include="Models\GreenbushIEPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -260,16 +259,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentGoal.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IEP.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\StudentPlan.cs" />
+    <Compile Include="Models\tblAccommodation.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblBuilding.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -327,6 +324,9 @@
     <Compile Include="Models\tblLanguage.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblLocation.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblOrganizationMapping.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -337,9 +337,6 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblService.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblServiceGoal.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblServiceType.cs">
@@ -357,6 +354,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SQL\tblAccommodations.sql" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -519,6 +517,7 @@
     <Content Include="Views\Home\_ModuleStudentServices.cshtml" />
     <Content Include="Views\Home\_ModuleCalendarSection.cshtml" />
     <Content Include="Views\Home\_ModuleServiceProviders.cshtml" />
+    <Content Include="Views\Home\_ModuleAccommodations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -526,9 +525,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

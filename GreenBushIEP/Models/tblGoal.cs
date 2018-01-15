@@ -14,6 +14,12 @@ namespace GreenBushIEP.Models
     
     public partial class tblGoal
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblGoal()
+        {
+            this.tblServices = new HashSet<tblService>();
+        }
+    
         public int goalID { get; set; }
         public int IEPid { get; set; }
         public string Module { get; set; }
@@ -36,5 +42,8 @@ namespace GreenBushIEP.Models
         public string ProgressDescription_Quarter4 { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblService> tblServices { get; set; }
     }
 }

@@ -739,6 +739,47 @@ namespace GreenbushIep.Controllers
             return PartialView("_ModuleStudentServices");
         }
 
+
+        [Authorize]
+        public ActionResult Accommodations(int studentId, AccomodationViewModel model2)
+        {
+            var model = new AccomodationViewModel();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            
+
+            if (iep != null)
+            {
+                model.StudentId = studentId;
+                model.IEPid = iep.IEPid;
+                model.AccomList = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid).OrderBy(o => o.AccomType).ToList();
+
+            }
+
+            return PartialView("_ModuleAccommodations", model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult DeleteAccommodation(int accomId)
+        {
+
+            try
+            {
+                var accomodation = db.tblAccommodations.FirstOrDefault(o => o.AccommodationID == accomId);
+                if (accomodation != null)
+                {
+                    db.tblAccommodations.Remove(accomodation);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, error = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [Authorize]
         public ActionResult StudentPlanning(FormCollection collection)
