@@ -844,7 +844,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = teacher)]
         public ActionResult DeleteAccommodation(int accomId)
         {
-
             try
             {
                 var accomodation = db.tblAccommodations.FirstOrDefault(o => o.AccommodationID == accomId);
