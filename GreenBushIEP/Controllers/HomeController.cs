@@ -153,9 +153,17 @@ namespace GreenbushIep.Controllers
                 }
             }
 
-            if(view == "ServiceProviderModule")
+            if (view == "ServiceProviderModule")
             {
-                return PartialView("_ModuleServiceProviders");
+                List<tblProvider> listOfProviders = new List<tblProvider>();
+                tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+                if (MIS != null)
+                {
+                    listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).ToList();
+                }
+
+                return PartialView("_ModuleServiceProviders", listOfProviders);
             }
 
             // Unknow user or view.
@@ -163,10 +171,58 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public ActionResult UpdateProvidersList(string ProviderName, int ProviderPK)
+        [Authorize(Roles = mis)]
+        public ActionResult UpdateProvidersList(string name, int pk, string value)
         {
-            return Json(new { Result = "success", id = "", errors = ""}, JsonRequestBehavior.AllowGet);
+            tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (owner != null)
+            {
+                tblProvider provider = db.tblProviders.Where(p => p.ProviderID == pk).SingleOrDefault();
+                if (provider != null)
+                {
+                    provider.Name = value.ToString();
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    tblProvider providerName = new tblProvider();
+                    providerName.Name = value.ToString();
+                    providerName.UserID = owner.UserID;
+
+                    db.tblProviders.Add(providerName);
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", id = providerName.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Result = "error", id = pk, errors = "Unknown database error." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = mis)]
+        public ActionResult DeleteProviderName(int providerId)
+        {
+            tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (owner != null)
+            {
+                tblProvider provider = db.tblProviders.Where(p => p.ProviderID == providerId).SingleOrDefault();
+                if (provider != null)
+                {
+                    db.tblProviders.Remove(provider);
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Result = "error", id = providerId, errors = "Unknown Provider Name." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", id = providerId, errors = "Unknown error." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -318,7 +374,7 @@ namespace GreenbushIep.Controllers
             if (MIS != null)
             {
                 tblCalendarReporting reports = db.tblCalendarReportings.Where(r => r.UserID == MIS.UserID && r.SchoolYear == schoolYear && r.USD == usd && r.BuildingID == building).FirstOrDefault();
-                if(reports != null)
+                if (reports != null)
                 {
                     reports.DaysPerWeek = daysPerWeek;
                     reports.TotalDays = totalDays;
@@ -733,10 +789,29 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = teacher)]
         public ActionResult StudentServices(int studentId)
         {
-            return PartialView("_ModuleStudentServices");
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            if (iep != null)
+            {
+                // Get the MIS id of the logged in teacher.
+                tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
+                tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
+
+                StudentServiceViewModel model = new StudentServiceViewModel();
+                model.studentService.IEPid = iep.IEPid;
+                model.serviceTypes = db.tblServiceTypes.ToList();
+                model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
+                model.serviceLocations = db.tblLocations.ToList();
+                model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                
+                return PartialView("_ModuleStudentServices", model);
+            }
+
+            return PartialView("_ModuleStudentServices", new StudentServiceViewModel());
         }
 
         [HttpPost]

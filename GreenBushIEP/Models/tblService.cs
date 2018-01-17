@@ -14,16 +14,28 @@ namespace GreenBushIEP.Models
     
     public partial class tblService
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblService()
+        {
+            this.tblGoals = new HashSet<tblGoal>();
+        }
+    
         public int ServiceID { get; set; }
         public int IEPid { get; set; }
+        public int SchoolYear { get; set; }
         public System.DateTime StartDate { get; set; }
-        public string ServiceType { get; set; }
-        public string ServiceDescription { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public string ServiceCode { get; set; }
         public int Frequency { get; set; }
-        public int Duration { get; set; }
-        public string Location { get; set; }
-        public string Comments { get; set; }
+        public byte DaysPerWeek { get; set; }
+        public short Minutes { get; set; }
+        public int ProviderID { get; set; }
+        public string LocationCode { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+    
+        public virtual tblProvider tblProvider { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblGoal> tblGoals { get; set; }
     }
 }

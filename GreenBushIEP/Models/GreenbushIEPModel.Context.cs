@@ -46,15 +46,15 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblIEPWritten> tblIEPWrittens { get; set; }
         public virtual DbSet<tblIEPMotor> tblIEPMotors { get; set; }
         public virtual DbSet<tblIEPCommunication> tblIEPCommunications { get; set; }
-        public virtual DbSet<tblServiceGoal> tblServiceGoals { get; set; }
-        public virtual DbSet<tblService> tblServices { get; set; }
-        public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
+        public virtual DbSet<tblLocation> tblLocations { get; set; }
+        public virtual DbSet<tblService> tblServices { get; set; }
+        public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

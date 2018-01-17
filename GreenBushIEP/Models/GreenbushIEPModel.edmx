@@ -325,6 +325,14 @@
           <Property Name="languageAbbr" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="languageName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblLocations">
+          <Key>
+            <PropertyRef Name="LocationCode" />
+          </Key>
+          <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -355,7 +363,6 @@
             <PropertyRef Name="GoalID" />
             <PropertyRef Name="ServiceID" />
           </Key>
-          <Property Name="ServiceGoalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoalID" Type="int" Nullable="false" />
           <Property Name="ServiceID" Type="int" Nullable="false" />
         </EntityType>
@@ -365,13 +372,15 @@
           </Key>
           <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="SchoolYear" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="ServiceType" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ServiceDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="ServiceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Frequency" Type="int" Nullable="false" />
-          <Property Name="Duration" Type="int" Nullable="false" />
-          <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DaysPerWeek" Type="tinyint" Nullable="false" />
+          <Property Name="Minutes" Type="smallint" Nullable="false" />
+          <Property Name="ProviderID" Type="int" Nullable="false" />
+          <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -379,8 +388,7 @@
           <Key>
             <PropertyRef Name="ServiceCode" />
           </Key>
-          <Property Name="ServiceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ServiceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
@@ -443,6 +451,44 @@
           <Property Name="Archive" Type="bit" />
           <Property Name="TeacherID" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK_tblServices_GoalID">
+          <End Role="tblGoals" Type="Self.tblGoals" Multiplicity="1" />
+          <End Role="tblServiceGoals" Type="Self.tblServiceGoals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGoals">
+              <PropertyRef Name="goalID" />
+            </Principal>
+            <Dependent Role="tblServiceGoals">
+              <PropertyRef Name="GoalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblServices_ProviderID">
+          <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="1" />
+          <End Role="tblServices" Type="Self.tblServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProviders">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblServices">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblServices_ServiceID">
+          <End Role="tblServices" Type="Self.tblServices" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblServiceGoals" Type="Self.tblServiceGoals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblServices">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="tblServiceGoals">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -493,6 +539,7 @@
           <EntitySet Name="tblIEPSocial" EntityType="Self.tblIEPSocial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblIEPWritten" EntityType="Self.tblIEPWritten" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
@@ -502,6 +549,18 @@
           <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentRelationships" EntityType="Self.tblStudentRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblServices_GoalID" Association="Self.FK_tblServices_GoalID">
+            <End Role="tblGoals" EntitySet="tblGoals" />
+            <End Role="tblServiceGoals" EntitySet="tblServiceGoals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblServices_ProviderID" Association="Self.FK_tblServices_ProviderID">
+            <End Role="tblProviders" EntitySet="tblProviders" />
+            <End Role="tblServices" EntitySet="tblServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblServices_ServiceID" Association="Self.FK_tblServices_ServiceID">
+            <End Role="tblServices" EntitySet="tblServices" />
+            <End Role="tblServiceGoals" EntitySet="tblServiceGoals" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -557,15 +616,23 @@
           <EntitySet Name="tblIEPWrittens" EntityType="IndividualizedEducationProgramModel.tblIEPWritten" />
           <EntitySet Name="tblIEPMotors" EntityType="IndividualizedEducationProgramModel.tblIEPMotor" />
           <EntitySet Name="tblIEPCommunications" EntityType="IndividualizedEducationProgramModel.tblIEPCommunication" />
-          <EntitySet Name="tblServiceGoals" EntityType="IndividualizedEducationProgramModel.tblServiceGoal" />
-          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
-          <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
           <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
+          <EntitySet Name="tblLocations" EntityType="IndividualizedEducationProgramModel.tblLocation" />
+          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
+          <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
+          <AssociationSet Name="FK_tblServices_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID">
+            <End Role="tblProvider" EntitySet="tblProviders" />
+            <End Role="tblService" EntitySet="tblServices" />
+          </AssociationSet>
+          <AssociationSet Name="tblServiceGoals" Association="IndividualizedEducationProgramModel.tblServiceGoals">
+            <End Role="tblGoal" EntitySet="tblGoals" />
+            <End Role="tblService" EntitySet="tblServices" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tblBuildingMapping">
           <Key>
@@ -879,40 +946,6 @@
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
-        <EntityType Name="tblServiceGoal">
-          <Key>
-            <PropertyRef Name="GoalID" />
-            <PropertyRef Name="ServiceID" />
-          </Key>
-          <Property Name="ServiceGoalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GoalID" Type="Int32" Nullable="false" />
-          <Property Name="ServiceID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblService">
-          <Key>
-            <PropertyRef Name="ServiceID" />
-          </Key>
-          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ServiceType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Frequency" Type="Int32" Nullable="false" />
-          <Property Name="Duration" Type="Int32" Nullable="false" />
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblServiceType">
-          <Key>
-            <PropertyRef Name="ServiceCode" />
-          </Key>
-          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="tblGoalBenchmark">
           <Key>
             <PropertyRef Name="goalBenchmarkID" />
@@ -963,6 +996,7 @@
           <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -1015,7 +1049,60 @@
           <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
         </EntityType>
+        <EntityType Name="tblLocation">
+          <Key>
+            <PropertyRef Name="LocationCode" />
+          </Key>
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblService">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Frequency" Type="Int32" Nullable="false" />
+          <Property Name="DaysPerWeek" Type="Byte" Nullable="false" />
+          <Property Name="Minutes" Type="Int16" Nullable="false" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
+          <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+        </EntityType>
+        <EntityType Name="tblServiceType">
+          <Key>
+            <PropertyRef Name="ServiceCode" />
+          </Key>
+          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblServices_ProviderID">
+          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProvider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblService">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblServiceGoals">
+          <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1361,42 +1448,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblServiceGoals">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceGoal">
-              <MappingFragment StoreEntitySet="tblServiceGoals">
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="GoalID" ColumnName="GoalID" />
-                <ScalarProperty Name="ServiceGoalID" ColumnName="ServiceGoalID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblServices">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
-              <MappingFragment StoreEntitySet="tblServices">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblServiceTypes">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
-              <MappingFragment StoreEntitySet="tblServiceTypes">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
-                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblGoalBenchmarks">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalBenchmark">
               <MappingFragment StoreEntitySet="tblGoalBenchmarks">
@@ -1506,6 +1557,51 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblLocations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblLocation">
+              <MappingFragment StoreEntitySet="tblLocations">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblServices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
+              <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblServiceTypes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
+              <MappingFragment StoreEntitySet="tblServiceTypes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="tblServiceGoals" TypeName="IndividualizedEducationProgramModel.tblServiceGoals" StoreEntitySet="tblServiceGoals">
+            <EndProperty Name="tblService">
+              <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+            </EndProperty>
+            <EndProperty Name="tblGoal">
+              <ScalarProperty Name="goalID" ColumnName="GoalID" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

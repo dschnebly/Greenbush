@@ -14,8 +14,17 @@ namespace GreenBushIEP.Models
     
     public partial class tblProvider
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblProvider()
+        {
+            this.tblServices = new HashSet<tblService>();
+        }
+    
         public int ProviderID { get; set; }
         public int UserID { get; set; }
         public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblService> tblServices { get; set; }
     }
 }

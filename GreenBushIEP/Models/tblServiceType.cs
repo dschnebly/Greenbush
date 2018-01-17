@@ -14,7 +14,6 @@ namespace GreenBushIEP.Models
     
     public partial class tblServiceType
     {
-        public int ServiceTypeID { get; set; }
         public string ServiceCode { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
