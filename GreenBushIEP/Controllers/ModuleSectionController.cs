@@ -299,31 +299,38 @@ namespace GreenBushIEP.Controllers
 
             if (ModelState.IsValid)
             {
+                //find existing if updateing
+                tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).FirstOrDefault();
 
-                tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).SingleOrDefault();
                 if (AccomodationIEP == null)
                 {
-                    AccomodationIEP = new tblAccommodation();
-                    AccomodationIEP.IEPid = model.IEPid;
+                    AccomodationIEP = new tblAccommodation();                   
                 }
  
 
                 if (AccomodationIEP != null)
                 {
-                   // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
+                    // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
+                    AccomodationIEP.IEPid = model.IEPid;
 
                     try
                     {
                         AccomodationIEP.AccomType = model.AccomType.HasValue ? (int)model.AccomType : 0;
                         AccomodationIEP.Description = model.AccDescription;
-                        AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
-                        AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
+
+                        if(model.AnticipatedStartDate.HasValue)
+                            AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
+
+                        if(model.AnticipatedEndDate.HasValue)
+                            AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
+
                         AccomodationIEP.Duration = model.Duration;
                         AccomodationIEP.Frequency = model.Frequency;
-                        AccomodationIEP.Location = model.Location;
+                        AccomodationIEP.LocationCode = model.LocationCode;
                         if (model.AccommodationID == 0)
                         {
                             AccomodationIEP.Create_Date = DateTime.Now;
+                            AccomodationIEP.Update_Date = DateTime.Now;
                             db.tblAccommodations.Add(AccomodationIEP);
 
                         }

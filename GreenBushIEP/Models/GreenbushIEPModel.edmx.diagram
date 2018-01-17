@@ -35,7 +35,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblServiceType" Width="1.5" PointX="17.5" PointY="9.25" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="13.375" PointY="11.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="17.625" PointY="12.5" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,12 +12,11 @@
           <Property Name="AccommodationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="Location" Type="nchar" MaxLength="255" />
           <Property Name="Frequency" Type="int" />
           <Property Name="Duration" Type="int" />
           <Property Name="LocationCode" Type="char" MaxLength="1" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
-          <Property Name="Update_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="AccomType" Type="int" Nullable="false" />
           <Property Name="AnticipatedStartDate" Type="datetime" />
           <Property Name="AnticipatedEndDate" Type="datetime" />
@@ -468,6 +467,18 @@
           <Property Name="Archive" Type="bit" />
           <Property Name="TeacherID" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK_tblAccommodations_LocationCode">
+          <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="0..1" />
+          <End Role="tblAccommodations" Type="Self.tblAccommodations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocations">
+              <PropertyRef Name="LocationCode" />
+            </Principal>
+            <Dependent Role="tblAccommodations">
+              <PropertyRef Name="LocationCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblServices_GoalID">
           <End Role="tblGoals" Type="Self.tblGoals" Multiplicity="1" />
           <End Role="tblServiceGoals" Type="Self.tblServiceGoals" Multiplicity="*" />
@@ -567,6 +578,10 @@
           <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentRelationships" EntityType="Self.tblStudentRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
+            <End Role="tblLocations" EntitySet="tblLocations" />
+            <End Role="tblAccommodations" EntitySet="tblAccommodations" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblServices_GoalID" Association="Self.FK_tblServices_GoalID">
             <End Role="tblGoals" EntitySet="tblGoals" />
             <End Role="tblServiceGoals" EntitySet="tblServiceGoals" />
@@ -652,6 +667,10 @@
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
           <EntitySet Name="tblAccommodations" EntityType="IndividualizedEducationProgramModel.tblAccommodation" />
+          <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
+            <End Role="tblLocation" EntitySet="tblLocations" />
+            <End Role="tblAccommodation" EntitySet="tblAccommodations" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tblBuildingMapping">
           <Key>
@@ -1077,6 +1096,7 @@
           <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblAccommodations" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblLocation" ToRole="tblAccommodation" />
         </EntityType>
         <EntityType Name="tblService">
           <Key>
@@ -1129,16 +1149,28 @@
           <Property Name="AccommodationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
           <Property Name="Frequency" Type="Int32" />
           <Property Name="Duration" Type="Int32" />
           <Property Name="LocationCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AccomType" Type="Int32" Nullable="false" />
           <Property Name="AnticipatedStartDate" Type="DateTime" Precision="3" />
           <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
         </EntityType>
+        <Association Name="FK_tblAccommodations_LocationCode">
+          <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocation">
+              <PropertyRef Name="LocationCode" />
+            </Principal>
+            <Dependent Role="tblAccommodation">
+              <PropertyRef Name="LocationCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1649,7 +1681,6 @@
                 <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />

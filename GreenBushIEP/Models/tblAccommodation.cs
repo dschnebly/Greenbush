@@ -17,14 +17,15 @@ namespace GreenBushIEP.Models
         public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string Description { get; set; }
-        public string Location { get; set; }
         public Nullable<int> Frequency { get; set; }
         public Nullable<int> Duration { get; set; }
         public string LocationCode { get; set; }
         public System.DateTime Create_Date { get; set; }
-        public Nullable<System.DateTime> Update_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
         public int AccomType { get; set; }
         public Nullable<System.DateTime> AnticipatedStartDate { get; set; }
         public Nullable<System.DateTime> AnticipatedEndDate { get; set; }
+    
+        public virtual tblLocation tblLocation { get; set; }
     }
 }
