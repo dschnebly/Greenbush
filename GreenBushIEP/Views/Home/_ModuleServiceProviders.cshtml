@@ -1,4 +1,7 @@
-﻿<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+﻿@using GreenBushIEP.Models
+@model List<tblProvider>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <style>
     .list-group-item i.glyphicon-trash,
     .list-group-item i.glyphicon-pencil {
@@ -56,10 +59,14 @@
         <div class="row">
             <ul class="list-group">
                 <li class="head">List of Providers</li>
-                <li class="list-group-item"><a href="#" data-type="text" data-pk="1" data-title="Enter Provider name" class="editme editable editable-click">Johnna's Amazing Bakery</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
-                <li class="list-group-item"><a href="#" data-type="text" data-pk="2" data-title="Enter Provider name" class="editme editable editable-click">Troubleshooting Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
-                <li class="list-group-item"><a href="#" data-type="text" data-pk="3" data-title="Enter Provider name" class="editme editable editable-click">Internet Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
-                <li class="list-group-item"><a href="#" data-type="text" data-pk="4" data-title="Enter Provider name" class="editme editable editable-click">Server Services</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var provider in Model)
+                    {
+                        <li class="list-group-item"><a href="#" data-name="ProviderName" data-pk="@provider.ProviderID" data-type="text" data-title="Enter Provider name" data-value="@provider.Name" class="editme editable editable-click">@provider.Name</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                    }
+                }
+
             </ul>
         </div>
 
@@ -74,58 +81,36 @@
             $('.child-ajax-loader').css('visibility', 'hidden');
 
             $("#addProvider").on('click', function (e) {
-                var listgroupitem = '<li class="list-group-item"><a href="#" data-type="text" data-pk="1" data-title="Enter Provider name" class="editme editable editable-click editable-unsaved editable-empty" style="background-color: rgba(0, 0, 0, 0);"></a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>';
+                var listgroupitem = '<li class="list-group-item"><a href="#" data-name="ProviderName" data-pk="0" data-type="text" data-title="Enter Provider name" class="editme editable editable-click"></a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>';
 
                 $('ul.list-group').append(listgroupitem);
-                $('.editme').not(".bound").addClass("bound").editable({
-                    type: 'text',
-                    mode: 'inline'
-                });
-
-                initalizeRow();
+                initProvider();
             });
 
             function initProvider() {
 
-                // fires when a Provider was saved.
-                $('.editme').on('save', function (e, params) {
-                    alert('Saved value: ' + params.newValue);
-                });
+                $.fn.editable.defaults.mode = 'inline';
 
                 // init the list of providers.
                 $('.editme').addClass("bound").editable({
                     type: 'text',
-                    mode: 'inline',
-                    url: '/Home/UpdateProvidersList?ProviderName=' +  + '&ProviderPK=' + 12,
+                    url: '/Home/UpdateProvidersList',
                     ajaxOptions: {
                         dataType: 'json' //assuming json response
                     },
                     success: function (data, config) {
-                        console.log('yup');
-                        //if (data && data.id) {  //record created, response like {"id": 2}
-                        //    //set pk
-                        //    $(this).editable('option', 'pk', data.id);
-                        //    //remove unsaved class
-                        //    $(this).removeClass('editable-unsaved');
-                        //    //show messages
-                        //    var msg = 'New user created! Now editables submit individually.';
-                        //    $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
-                        //    $('#save-btn').hide();
-                        //    $(this).off('save.newuser');
-                        //} else if (data && data.errors) {
-                        //    //server-side validation error, response like {"errors": {"username": "username already exist"} }
-                        //    config.error.call(this, data.errors);
-                        //}
+                        if (data && data.id) {
+                            //set pk
+                            $(this).attr('data-pk', data.id);
+                            //remove unsaved class
+                            $(this).removeClass('editable-unsaved');
+                        } else if (data && data.errors) {
+                            //server-side validation error, response like {"errors": {"username": "username already exist"} }
+                            config.error.call(this, data.errors);
+                        }
                     },
                     error: function (errors) {
-                        
                         var msg = '';
-                        //if (errors && errors.responseText) { //ajax error, errors = xhr object
-                        //    msg = errors.responseText;
-                        //} else { //validation error (client-side or server-side)
-                            //$.each(errors, function (k, v) { msg += k + ": " + v + "<br>"; });
-                        //}
-
                         msg = '<strong>Oh SNAP!</strong> Server Error or the resource cannot be found.';
                         $('.moreinfo').html(msg);
                         $('#alertMessage').show();
@@ -138,9 +123,36 @@
             function initalizeRow() {
                 $('.glyphicon-trash').not(".bound").addClass("bound").on('click', function (e) {
                     var answer = confirm("Do you really want to delete this Service Provider?")
-                    console.log($(this).find('li'));
+
                     if (answer) {
-                        $(this).closest('li').remove();
+
+                        var li = $(this).closest('li');
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/DeleteProviderName',
+                            dataType: 'json',
+                            data: { providerId: $(this).closest('li').find('a').attr('data-pk') },
+                            async: false,
+                            success: function (data) {
+                                console.log(data);
+                                if (data.Result === "success") {
+                                    li.remove();
+                                }
+                                else {
+                                    $("#alertMessage .moreinfo").html(data.errors);
+                                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                        $("#alertMessage").slideUp(500);
+                                    });
+                                }
+                            },
+                            error: function (data) {
+                                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                    $("#alertMessage").slideUp(500);
+                                });
+                            }
+                        });
+
                     }
                 });
 
@@ -155,41 +167,6 @@
             }
 
             initProvider();
-
-            //$('#save-btn').click(function () {
-            //    alert('ack!');
-            //    $('.editme').editable('submit', {
-            //        url: '/newuser',
-            //        ajaxOptions: {
-            //            dataType: 'json' //assuming json response
-            //        },
-            //        success: function (data, config) {
-            //            if (data && data.id) {  //record created, response like {"id": 2}
-            //                //set pk
-            //                $(this).editable('option', 'pk', data.id);
-            //                //remove unsaved class
-            //                $(this).removeClass('editable-unsaved');
-            //                //show messages
-            //                var msg = 'New user created! Now editables submit individually.';
-            //                $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
-            //                $('#save-btn').hide();
-            //                $(this).off('save.newuser');
-            //            } else if (data && data.errors) {
-            //                //server-side validation error, response like {"errors": {"username": "username already exist"} }
-            //                config.error.call(this, data.errors);
-            //            }
-            //        },
-            //        error: function (errors) {
-            //            var msg = '';
-            //            if (errors && errors.responseText) { //ajax error, errors = xhr object
-            //                msg = errors.responseText;
-            //            } else { //validation error (client-side or server-side)
-            //                $.each(errors, function (k, v) { msg += k + ": " + v + "<br>"; });
-            //            }
-            //            $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
-            //        }
-            //    });
-            //});
         }
 
         // Prevent race conditions.

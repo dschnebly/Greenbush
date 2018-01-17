@@ -1,4 +1,6 @@
-﻿
+﻿@using GreenBushIEP.Models
+@model StudentServiceViewModel
+
 <style>
     .form-inline .form-group {
         margin-right: 10px;
@@ -24,14 +26,14 @@
 </div>
 <div class="modal-body">
 
-    <div class="container goalContainer">
+    <div class="container serviceContainer">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
-                <button id="newgoal" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
 
-        <div class="row oneStudentGoal hidden" id="defaultgoal">
+        <div class="row oneStudentService hidden" id="defaultStudentService">
             <div class="col-md-12">
                 <div class="panel-group" id="accordion[0]">
 
@@ -39,31 +41,29 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                    <span class="fa fa-handshake-o"></span><span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
+                                    <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
                                     <span class="pull-right">
                                         <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                     </span>
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapse0" class="panel-collapse">
+                        <div id="collapse0" class="collapse in">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-2">
+
                                         <label for="fiscalYear">Fiscal Year</label>
-                                        <div class="dropdown input-group">
-                                            <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 150px;">
-                                                2017 - 2018
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                <li><a href="#" data-year="2018">2017 - 2018</a></li>
-                                                <li><a href="#" data-year="2019">2018 - 2019</a></li>
-                                                <li><a href="#" data-year="2020">2019 - 2020</a></li>
-                                                <li><a href="#" data-year="2021">2020 - 2021</a></li>
-                                                <li><a href="#" data-year="2022">2021 - 2022</a></li>
-                                            </ul>
+                                        <div class="form-group">
+                                            <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
+                                                <option value="2018">2017 - 2018</option>
+                                                <option value="2019">2019 - 2020</option>
+                                                <option value="2020">2020 - 2021</option>
+                                                <option value="2021">2020 - 2021</option>
+                                                <option value="2022">2021 - 2022</option>
+                                            </select>
                                         </div>
+
                                     </div>
                                     <div class="col-md-3">
                                         <label for="Frequency">Start Date</label>
@@ -80,151 +80,116 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
+
                                         <label for="ServiceType">Service Type</label>
-                                        <div class="dropdown input-group">
-                                            <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 220%;">
-                                                Choose an option
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                <li><a href="#">(AC) Attendant Care - A non-instructional paraeducator</a></li>
-                                                <li><a href="#">(AP) Adaptive Physical Education</a></li>
-                                                <li><a href="#">(AS) Assistive Technology</a></li>
-                                                <li><a href="#">(AT) Art Therapy</a></li>
-                                                <li><a href="#">(AU) Audiology</a></li>
-                                                <li><a href="#">(CM) Case Management</a></li>
-                                                <li><a href="#">(CS) School Counselor</a></li>
-                                                <li><a href="#">(DI) Diagnostic Medical</a></li>
-                                                <li><a href="#">(DM) Dance Movement Therapy</a></li>
-                                                <li><a href="#">(GI) Gifted</a></li>
-                                                <li><a href="#">(IN) Interpreter/Educational Interpreter</a></li>
-                                                <li><a href="#">(KT) </a></li>
-                                                <li><a href="#">(MA) Mobility Assistance</a></li>
-                                                <li><a href="#">(MS) Music Therapist</a></li>
-                                                <li><a href="#">(NU) Nurse/School Nurse</a></li>
-                                                <li><a href="#">(OM) Orientation/Mobility Specialist</a></li>
-                                                <li><a href="#">(OT) Occupational Therapist</a></li>
-                                                <li><a href="#">(PC) Parent Counseling</a></li>
-                                                <li><a href="#">(PS) School Psychologists</a></li>
-                                                <li><a href="#">(PT) Physical Therapist</a></li>
-                                                <li><a href="#">(RC) Rehabilitation Counceling</a></li>
-                                                <li><a href="#">(RE) Recreation Therapist</a></li>
-                                                <li><a href="#">(SE) Special Ed</a></li>
-                                                <li><a href="#">(SH) School Health Services</a></li>
-                                                <li><a href="#">(SL) Speech Language Pathologist</a></li>
-                                                <li><a href="#">(SS) Speech Services</a></li>
-                                                <li><a href="#">(SU) Supervisor/Coordinator</a></li>
-                                                <li><a href="#">(SW) Social Worker</a></li>
-                                                <li><a href="#">(TS) Trasition Services</a></li>
-                                                <li><a href="#">(TT) Travel Training</a></li>
-                                                <li><a href="#">(VO) Vocational Special Needs</a></li>
-                                            </ul>
+                                        <div class="form-group">
+                                            <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;">
+                                                @if (Model.serviceTypes.Count > 0)
+                                                {
+                                                    foreach (var serviceType in Model.serviceTypes)
+                                                    {
+                                                        <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                    }
+                                                }
+                                            </select>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row" style="margin-top: 35px;">
-                                            <div class="form-group col-md-2" name="Frequency">
-                                                <label for="Frequency">Frequency</label>
-                                                <div class="input-group minute-spinner">
-                                                    <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 150px;">
-                                                        Choose an option
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                        <li><a href="#" data-year="2018">Every week (1)</a></li>
-                                                        <li><a href="#" data-year="2019">Every 2 weeks (2)</a></li>
-                                                        <li><a href="#" data-year="2020">Every 3 weeks (3)/a></li>
-                                                        <li><a href="#" data-year="2021">Every 4 weeks (4)</a></li>
-                                                        <li><a href="#" data-year="2021">Every 8 weeks (8)</a></li>
-                                                        <li><a href="#" data-year="2021">Every 9 weeks (9)</a></li>
-                                                        <li><a href="#" data-year="2021">Every 12 weeks (12)</a></li>
-                                                        <li><a href="#" data-year="2021">Every 18 weeks (18)</a></li>
-                                                        <li><a href="#" data-year="2021">3 out of 4 weeks (19)</a></li>
-                                                        <li><a href="#" data-year="2022">1 day per year (99)</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-2" name="Days" style="padding-left: 0;">
-                                                <label for="Days">Days per Week</label>
-                                                <div class="input-group number-spinner">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                    </span>
-                                                    <input type="text" class="form-control text-center" value="1" min="1" max="5">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-2" name="Duration">
-                                                <label for="Duration">Minutes per Day </label>
-                                                <div class="input-group minute-spinner">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                    </span>
-                                                    <input type="text" class="form-control text-center" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-6" name="Frequency">
-                                                <label for="Frequency">Provider</label>
-                                                <div class="input-group minute-spinner">
-                                                    <button id="dLabel" type="button" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 225%;">
-                                                        Choose an option
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
-                                                        <li><a href="#" data-year="2018">Johna's education restroration business</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                    <div class="form-group col-md-2" name="Frequency">
+
+                                        <label for="Frequency">Frequency</label>
+                                        <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                            <option value="1">Every week (1)</option>
+                                            <option value="2">Every 2 weeks (2)</option>
+                                            <option value="3">Every 3 weeks (3)</option>
+                                            <option value="4">Every 4 weeks (4)</option>
+                                            <option value="8">Every 8 weeks (8)</option>
+                                            <option value="9">Every 9 weeks (9)</option>
+                                            <option value="12">Every 12 weeks (12)</option>
+                                            <option value="18">Every 18 weeks (18)</option>
+                                            <option value="19">3 out of 4 weeks (19)</option>
+                                            <option value="99">1 day per year (99)</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group col-md-2" name="Days" style="padding-left: 0;">
+                                        <label for="Days">Days per Week</label>
+                                        <div class="input-group number-spinner">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                            </span>
+                                            <input type="text" class="form-control text-center" value="1" min="1" max="5">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                            </span>
                                         </div>
+                                    </div>
+                                    <div class="form-group col-md-2" name="Duration">
+                                        <label for="Duration">Minutes per Day </label>
+                                        <div class="input-group minute-spinner">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                            </span>
+                                            <input type="text" class="form-control text-center" value="1">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6" name="Frequency">
+
+                                        <label for="Frequency">Provider</label>
+                                        <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                            @if (Model.serviceProviders.Count > 0)
+                                            {
+                                                foreach (var serviceProvider in Model.serviceProviders)
+                                                {
+                                                    <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="-1">-- No providers currently available --</option>
+                                            }
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group" name="Location">
+
                                             <label for="Location">Location</label><br />
                                             <div class="form-group">
                                                 <select class="form-control" name="location" style="border-color: #ccc; display: inline-block;">
-                                                    <option value="a">(A) Home-Based</option>
-                                                    <option value="b">(B) Early Childhood Locations</option>
-                                                    <option value="c">(C) Special Ed Direct Service in a Regular Ed Classroom</option>
-                                                    <option value="d">(D) Non-School Location</option>
-                                                    <option value="e">(E) Community Based Direct Instruction</option>
-                                                    <option value="g">(G) Special Ed Direct Service Outside Regular Ed Classroom/program/other Location</option>
-                                                    <option value="h">(H) Alternative School</option>
-                                                    <option value="i">(I) Incarceration</option>
-                                                    <option value="j">(J) Special Day School</option>
-                                                    <option value="k">(K) Early Childhood Program Time without Services</option>
-                                                    <option value="l">(L) Hospital</option>
-                                                    <option value="m">(M) Residential</option>
-                                                    <option value="o">(O) Home School</option>
-                                                    <option value="p">(P) Homebound</option>
-                                                    <option value="r">(R) E.C. Special Education</option>
-                                                    <option value="s">(S) Program classroom</option>
-                                                    <option value="t">(T) Extracurricular</option>
-                                                    <option value="u">(U) Under Suspension/Under Expulsion</option>
-                                                    <option value="w">(W) Reverse Mainstream ESCE Classroom</option>
-                                                    <option value="x">(X) Indirect Services</option>
-                                                    <option value="y">(Y) Juvenile Correction Facility</option>
+                                                    @if (Model.serviceLocations.Count > 0)
+                                                    {
+                                                        foreach (var serviceLocation in Model.serviceLocations)
+                                                        {
+                                                            <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                        }
+                                                    }
                                                 </select>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-8" style="margin-right:15px;">
-                                        <label for="values[]">Goal</label><br />
-                                        <select class="form-control" name="values[]" style="border-color: #ccc; width: 300px; display: inline-block;">
-                                            <option value="">Add a student goal</option>
-                                            <option value="4">Goal 4</option>
-                                            <option value="5">Goal 5</option>
-                                            <option value="6">Goal 6</option>
+
+                                        <label for="studentGoals">Goal</label><br />
+                                        <select class="form-control" name="studentGoalsSelect" style="border-color: #ccc; width: 300px; display: inline-block;">
+                                            <option value="-1">-- Add a student goal to the service --</option>
+                                            @if (Model.studentGoals.Count > 0)
+                                            {
+                                                foreach (var goal in Model.studentGoals)
+                                                {
+                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                }
+                                            }
                                         </select>
-                                        <span class="btn btn-default" style="padding: 15px 12px; height: 50px; background: #ff9f1a; color: #fff; border-radius: 0; margin-left: -5px; margin-top: -3px;">
+                                        <span class="btn btn-default addServiceGoal" style="padding: 15px 12px; height: 50px; background: #ff9f1a; color: #fff; border-radius: 0; margin-left: -5px; margin-top: -3px;">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </span>
 
@@ -233,30 +198,20 @@
                                 <div class="row">
                                     <div class="col-md-12 StudentGoals">
 
-                                        <div class="panel panel-info autocollapse aStudentGoal" style="margin: 5px 0">
-                                            <div class="panel-heading clickable">
-                                                <h3 class="panel-title">
-                                                    <i class="fa fa-trophy"></i>&nbsp;Goal 1
-                                                    <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-info autocollapse aStudentGoal" style="margin: 5px 0">
-                                            <div class="panel-heading clickable">
-                                                <h3 class="panel-title">
-                                                    <i class="fa fa-trophy"></i>&nbsp;Goal 2
-                                                    <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-info autocollapse aStudentGoal" style="margin: 5px 0">
-                                            <div class="panel-heading clickable">
-                                                <h3 class="panel-title">
-                                                    <i class="fa fa-trophy"></i>&nbsp;Goal 3
-                                                    <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
-                                                </h3>
-                                            </div>
-                                        </div>
+                                        @if (Model.studentService.tblGoals.Count > 0)
+                                        {
+                                            foreach (var goal in Model.studentService.tblGoals)
+                                            {
+                                                <div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0">
+                                                    <div class="panel-heading clickable">
+                                                        <h3 class="panel-title">
+                                                            <i class="fa fa-trophy"></i>&nbsp;@goal.Title.ToString()
+                                                            <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
 
                                     </div>
                                 </div>
@@ -292,43 +247,29 @@
     });
 
     /* Event */
-    /* when the form is submitted we need to remove the default code elements */
-    $("form").on("submit", function () {
-        $("tr#defaultrow").remove();
-
-        $("#EditStudentGoalsForm").submit();
-    });
-
-    /* Event */
     /* when clicking on the New Student Goal button */
-    $('#newgoal').on('click', function () {
-        var cloneGoal = $("#defaultgoal").clone();
-        cloneGoal.removeClass("hidden");
-        cloneGoal.removeAttr("id");
+    $('#newService').on('click', function () {
 
-        var goalCount = $('.oneStudentGoal').not("#defaultgoal").length + 1;
-        cloneGoal.children().children().prop("id", "accordion[" + goalCount + "]");
+        var cloneService = $("#defaultStudentService").clone();
+        cloneService.removeClass("hidden");
+        cloneService.removeAttr("id");
 
-        var goalA = cloneGoal.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + goalCount + ']');
-        goalA.attr('href', '#collapse' + goalCount);
+        // count the number of services and increment our counter in the accordian view.
+        var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 1;
+        cloneService.children().children().prop("id", "accordion[" + serviceCount + "]");
 
-        var needService = cloneGoal.find('i.needService').attr('name', 'hasService[' + goalCount + ']');
-        needService.next().attr('name', 'hasService[' + goalCount + ']');
+        // set up the accordian click event.
+        var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
+        serviceA.attr('href', '#collapse' + serviceCount);
 
-        var defaultRow = cloneGoal.find("#defaultrow").removeAttr('id');
+        cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+        $('.serviceContainer').append(cloneService);
 
-        $.each($('.oneStudentGoal').not("#defaultgoal").find('.collapse'), function (index, value) {
-            $(this).removeClass("in");
-        });
-
-        cloneGoal.find("#collapse0").prop("id", "collapse" + goalCount);
-        $('.goalContainer').append(cloneGoal);
-
-        initGoal();
+        initService();
     });
 
-    function initGoal() {
-        $('.oneStudentGoal').not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
+    function initService() {
+        $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
             $(this).find("input[type=date]").on('input', function (e) {
 
@@ -354,68 +295,23 @@
 
             });
 
-            //* Binding */
-            /* fires when changing the goal title. It updates the accordian label too. */
-            $(this).find(".studentGoalTitle").on("keyup blur", function (e) {
-                var title = $(e.target).val();
-
-                if (title != "") {
-                    var label = $(e.target).parentsUntil('.oneStudentGoal ').find('.studentGoalLabel');
-                    label.text(title);
-                } else {
-                    $(e.target).val('Student Goal');
-                    $(e.target).parentsUntil('.oneStudentGoal ').find('.studentGoalLabel').text('Student Goal');
-                    $(e.target).focus();
-                    alert("The goal title cannot be blank");
-                }
-            });
-
-            //* Binding */
-            /* when the student clicks the hand icon for service */
-            $(this).find("a i.needService").on("click", function (e) {
-                if ($(e.target).hasClass('needService')) {
-                    e.stopPropagation();
-
-                    if ($(this).css("opacity") == 1) {
-                        $(this).css('opacity', '0.2');
-                        $(this).next().prop("checked", false);
-                        $(this).next().val("false");
-                    }
-                    else {
-                        $(this).css('opacity', '1');
-                        $(this).next().prop("checked", "checked");
-                        $(this).next().val("true");
-                    }
-                }
-            });
-
             /* Binding */
             /* Fires where the user deletes a goal */
             $(this).find("a i.deleteGoal").on("click", function (e) {
+
                 if ($(e.target).hasClass('deleteGoal')) {
                     e.stopPropagation();
 
                     var answer = confirm('Are you sure you want to delete this student service?');
                     if (answer) {
-                        $(e.target).parentsUntil(".oneStudentGoal").remove();
+                        $(e.target).parentsUntil(".oneStudentService").remove();
                     }
                 }
-            });
 
-            //* Binding */
-            //* Adds a new objective when the user clicks the new objective button */
-            $(this).find(".newObjectiveBenchmark").on("click", function (e) {
-                event.preventDefault();
-
-                var $clonerow = $('#defaultrow').clone().show();
-                $clonerow.removeAttr("id");
-
-                $(this).parent().find("tr.studentProgress").before($clonerow);
-
-                initObjectives();
             });
 
             $(this).find(".number-spinner button").on("click", function () {
+
                 var btn = $(this),
                     oldValue = btn.closest('.number-spinner').find('input').val().trim(),
                     newValue = parseInt(oldValue);
@@ -433,8 +329,8 @@
                 btn.closest('.number-spinner').find('input').val(newValue);
             });
 
-
             $(this).find(".minute-spinner button").on("click", function () {
+
                 var btn = $(this),
                     oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
                     newValue = parseInt(oldValue);
@@ -452,38 +348,47 @@
                 btn.closest('.minute-spinner').find('input').val(newValue);
             });
 
-            initObjectives();
-        });
-    }
-    initGoal();
+            $(this).find(".addServiceGoal").on("click", function () {
 
-    function initObjectives() {
-        $(".aStudentGoal").not(".bound").addClass("bound").each(function (index) {
+                var selectGoal = $(this).prev('select');
+                var selectGoalSelectedTitle = $(selectGoal).find("option:selected").data('title');
+                var selectGoalSelectedId = $(selectGoal).find("option:selected").attr('value');
 
-            console.log($(this));
-            /* Binding */
-            //When the user clicks on the trash can to delete objective
-            $(this).find(".deletegoal").on("click", function (e) {
+                if (selectGoalSelectedId != -1) {
+                    $('option:selected', selectGoal).remove();
 
-                if (confirm("Do you really want to delete this goal?")) {
-                    var row = $(e.target).closest('div.panel-info');
-                    $(row).fadeOut(400, function () {
-                        $(row).remove();
-                    });
+                    var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i></h3></div></div>';
+                    $(this).closest(".row").next(".row").find(".StudentGoals").append(attachGoal);
+
+                    initGoalEvents();
                 }
             });
 
         });
     }
+    initService();
 
-    /* Helper function */
-    function endEdit(e) {
-        var input = $(e.target),
-            label = input && input.prev();
+    function initGoalEvents() {
 
-        label.text(input.val() === '' ? input.attr('placeholder') : input.val());
-        input.hide();
-        label.show();
+        $('.oneStudentService').not('#defaultStudentService').each(function (index) {
+
+            /* Binding */
+            /* Fires where the user deletes a goal */
+            $(this).find(".serviceStudentGoal i.deletegoal").not('.bound').addClass('bound').on("click", function (e) {
+
+                var answer = confirm('Are you sure you want to delete this student service?');
+                if (answer) {
+
+                    var thisStudentGoal = $(e.target).closest('.serviceStudentGoal');
+                    var studentGoalText = $(thisStudentGoal).data('title');
+                    var studentGoalId = $(thisStudentGoal).data('id');
+
+                    $(e.target).closest(".oneStudentService ").find("select[name='studentGoalsSelect']").append('<option value="' + studentGoalId + '" data-title="' + studentGoalText + '">' + studentGoalText + '</option>');
+                    $(e.target).parentsUntil(".StudentGoals").remove();
+                }
+            });
+        });
     }
+    initGoalEvents();
 
 </script>

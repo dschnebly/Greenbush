@@ -270,6 +270,24 @@ namespace GreenBushIEP.Models
     }
   }
 
+    public class StudentServiceViewModel
+    {
+        public tblService studentService { get; set; }
+        public List<tblServiceType> serviceTypes { get; set; }
+        public List<tblProvider> serviceProviders { get; set; }
+        public List<tblLocation> serviceLocations { get; set; }
+        public List<tblGoal> studentGoals { get; set; }
+
+        public StudentServiceViewModel()
+        {
+            studentService = new tblService();
+            serviceTypes = new List<tblServiceType>();
+            serviceProviders = new List<tblProvider>();
+            serviceLocations = new List<tblLocation>();
+        }
+    }
+}
+
 public class IEPStatus
 {
     public const string CURRENT = "Current";

@@ -10,12 +10,10 @@
 namespace GreenBushIEP.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblLocation
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public string LocationCode { get; set; }
-        public string Name { get; set; }
-        public bool Active { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
