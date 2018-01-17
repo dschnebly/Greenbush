@@ -298,7 +298,7 @@ namespace GreenBushIEP.Controllers
             int studentId = model.StudentId;
 
             if (ModelState.IsValid)
-            {               
+            {
 
                 tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).SingleOrDefault();
                 if (AccomodationIEP == null)
@@ -310,8 +310,8 @@ namespace GreenBushIEP.Controllers
 
                 if (AccomodationIEP != null)
                 {
-                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
-                    
+                   // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
+
                     try
                     {
                         AccomodationIEP.AccomType = model.AccomType.HasValue ? (int)model.AccomType : 0;
@@ -325,7 +325,7 @@ namespace GreenBushIEP.Controllers
                         {
                             AccomodationIEP.Create_Date = DateTime.Now;
                             db.tblAccommodations.Add(AccomodationIEP);
-                            
+
                         }
 
                         db.SaveChanges();
@@ -340,31 +340,29 @@ namespace GreenBushIEP.Controllers
                     }
                 }
             }
-            
-                string errorMessage = "";
-                foreach (ModelState modelState in ViewData.ModelState.Values)
+
+            string errorMessage = "";
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
                 {
-                    foreach (ModelError error in modelState.Errors)
-                    {
-                        errorMessage += " " + error.ErrorMessage;
-                    }
+                    errorMessage += " " + error.ErrorMessage;
                 }
+            }
 
-                model.Message = errorMessage;
+            model.Message = errorMessage;
 
-         
+
             return Json(new { success = false, error = model.Message }, JsonRequestBehavior.AllowGet);
 
         }
-
-
 
         [HttpPost]
         [Authorize]
         public ActionResult DeleteStudentGoal(int studentGoalId)
         {
             tblGoalBenchmark benchmarkToRemove = db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == studentGoalId).FirstOrDefault();
-            if(benchmarkToRemove != null)
+            if (benchmarkToRemove != null)
             {
                 db.tblGoalBenchmarks.Remove(benchmarkToRemove);
                 db.SaveChanges();
@@ -442,7 +440,7 @@ namespace GreenBushIEP.Controllers
 
                         studentGoal.benchmarks.Add(benchmark);
 
-                        keyName = (++j != collection.Count) ? collection.GetKey(j) : String.Empty ;
+                        keyName = (++j != collection.Count) ? collection.GetKey(j) : String.Empty;
                     }
 
                     studentGoal.SaveGoal();

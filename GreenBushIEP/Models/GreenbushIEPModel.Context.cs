@@ -55,6 +55,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
+        public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

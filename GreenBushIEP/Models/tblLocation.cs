@@ -12,17 +12,10 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblCalendarTemplate
+    public partial class tblLocation
     {
-        public System.DateTime SchoolDate { get; set; }
-        public bool NoService { get; set; }
-        public bool canHaveClass { get; set; }
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
-        public short SchoolYear { get; set; }
-        public byte SchoolMonth { get; set; }
-        public byte SchoolWeek { get; set; }
-        public byte SchoolQuarter { get; set; }
+        public string LocationCode { get; set; }
+        public string Name { get; set; }
+        public bool Active { get; set; }
     }
 }

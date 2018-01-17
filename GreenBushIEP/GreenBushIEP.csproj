@@ -259,6 +259,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StudentGoal.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IEP.cs" />
@@ -443,6 +449,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="GreenbushIEP.pubxml" />
     <EntityDeploy Include="Models\GreenbushIEPModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -476,9 +485,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\studentprocedures.js" />
     <Content Include="Scripts\teacherstudentsrole.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />

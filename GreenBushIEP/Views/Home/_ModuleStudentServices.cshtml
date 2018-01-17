@@ -37,138 +37,61 @@
             <div class="col-md-12">
                 <div class="panel-group" id="accordion[0]">
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                    <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
-                                    <span class="pull-right">
-                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                    </span>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse0" class="collapse in">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-2">
+                    @using (Ajax.BeginForm("saveStudentService", null))
+                    {
+                        <input type="hidden" name="StudentId" value="@Model.studentId" />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
+                                        <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
+                                        <span class="pull-right">
+                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                        </span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse0" class="collapse in">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
 
-                                        <label for="fiscalYear">Fiscal Year</label>
-                                        <div class="form-group">
-                                            <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
-                                                <option value="2018">2017 - 2018</option>
-                                                <option value="2019">2019 - 2020</option>
-                                                <option value="2020">2020 - 2021</option>
-                                                <option value="2021">2020 - 2021</option>
-                                                <option value="2022">2021 - 2022</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="Frequency">Start Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            <input id="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="Frequency">End Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            <input id="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-
-                                        <label for="ServiceType">Service Type</label>
-                                        <div class="form-group">
-                                            <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;">
-                                                @if (Model.serviceTypes.Count > 0)
-                                                {
-                                                    foreach (var serviceType in Model.serviceTypes)
-                                                    {
-                                                        <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-2" name="Frequency">
-
-                                        <label for="Frequency">Frequency</label>
-                                        <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
-                                            <option value="1">Every week (1)</option>
-                                            <option value="2">Every 2 weeks (2)</option>
-                                            <option value="3">Every 3 weeks (3)</option>
-                                            <option value="4">Every 4 weeks (4)</option>
-                                            <option value="8">Every 8 weeks (8)</option>
-                                            <option value="9">Every 9 weeks (9)</option>
-                                            <option value="12">Every 12 weeks (12)</option>
-                                            <option value="18">Every 18 weeks (18)</option>
-                                            <option value="19">3 out of 4 weeks (19)</option>
-                                            <option value="99">1 day per year (99)</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="form-group col-md-2" name="Days" style="padding-left: 0;">
-                                        <label for="Days">Days per Week</label>
-                                        <div class="input-group number-spinner">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                            </span>
-                                            <input type="text" class="form-control text-center" value="1" min="1" max="5">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2" name="Duration">
-                                        <label for="Duration">Minutes per Day </label>
-                                        <div class="input-group minute-spinner">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                            </span>
-                                            <input type="text" class="form-control text-center" value="1">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6" name="Frequency">
-
-                                        <label for="Frequency">Provider</label>
-                                        <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
-                                            @if (Model.serviceProviders.Count > 0)
-                                            {
-                                                foreach (var serviceProvider in Model.serviceProviders)
-                                                {
-                                                    <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <option value="-1">-- No providers currently available --</option>
-                                            }
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group" name="Location">
-
-                                            <label for="Location">Location</label><br />
+                                            <label for="fiscalYear">Fiscal Year</label>
                                             <div class="form-group">
-                                                <select class="form-control" name="location" style="border-color: #ccc; display: inline-block;">
-                                                    @if (Model.serviceLocations.Count > 0)
+                                                <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
+                                                    <option value="2018">2017 - 2018</option>
+                                                    <option value="2019">2019 - 2020</option>
+                                                    <option value="2020">2020 - 2021</option>
+                                                    <option value="2021">2020 - 2021</option>
+                                                    <option value="2022">2021 - 2022</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="Frequency">Start Date</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="Frequency">End Date</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <label for="ServiceType">Service Type</label>
+                                            <div class="form-group">
+                                                <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;">
+                                                    @if (Model.serviceTypes.Count > 0)
                                                     {
-                                                        foreach (var serviceLocation in Model.serviceLocations)
+                                                        foreach (var serviceType in Model.serviceTypes)
                                                         {
-                                                            <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                            <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
                                                         }
                                                     }
                                                 </select>
@@ -176,48 +99,133 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-8" style="margin-right:15px;">
+                                    <div class="row">
+                                        <div class="form-group col-md-2" name="Frequency">
 
-                                        <label for="studentGoals">Goal</label><br />
-                                        <select class="form-control" name="studentGoalsSelect" style="border-color: #ccc; width: 300px; display: inline-block;">
-                                            <option value="-1">-- Add a student goal to the service --</option>
-                                            @if (Model.studentGoals.Count > 0)
-                                            {
-                                                foreach (var goal in Model.studentGoals)
+                                            <label for="Frequency">Frequency</label>
+                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                                <option value="1">Every week (1)</option>
+                                                <option value="2">Every 2 weeks (2)</option>
+                                                <option value="3">Every 3 weeks (3)</option>
+                                                <option value="4">Every 4 weeks (4)</option>
+                                                <option value="8">Every 8 weeks (8)</option>
+                                                <option value="9">Every 9 weeks (9)</option>
+                                                <option value="12">Every 12 weeks (12)</option>
+                                                <option value="18">Every 18 weeks (18)</option>
+                                                <option value="19">3 out of 4 weeks (19)</option>
+                                                <option value="99">1 day per year (99)</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group col-md-2" name="Days" style="padding-left: 0;">
+                                            <label for="Days">Days per Week</label>
+                                            <div class="input-group number-spinner">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                </span>
+                                                <input type="text" class="form-control text-center" value="1" min="1" max="5">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2" name="Duration">
+                                            <label for="Duration">Minutes per Day </label>
+                                            <div class="input-group minute-spinner">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                </span>
+                                                <input type="text" class="form-control text-center" value="1">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6" name="Frequency">
+
+                                            <label for="Frequency">Provider</label>
+                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                                @if (Model.serviceProviders.Count > 0)
                                                 {
-                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                    foreach (var serviceProvider in Model.serviceProviders)
+                                                    {
+                                                        <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option value="-1">-- No providers currently available --</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group" name="Location">
+
+                                                <label for="Location">Location</label><br />
+                                                <div class="form-group">
+                                                    <select class="form-control" name="location" style="border-color: #ccc; display: inline-block;">
+                                                        @if (Model.serviceLocations.Count > 0)
+                                                        {
+                                                            foreach (var serviceLocation in Model.serviceLocations)
+                                                            {
+                                                                <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7" s>
+
+                                            <label for="studentGoals">Goal</label><br />
+                                            <select class="form-control" name="studentGoalsSelect" style="border-color: #ccc; width: 300px; display: inline-block;">
+                                                <option value="-1">-- Add a student goal to the service --</option>
+                                                @if (Model.studentGoals.Count > 0)
+                                                {
+                                                    foreach (var goal in Model.studentGoals)
+                                                    {
+                                                        <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <span class="btn btn-default addServiceGoal" style="padding: 15px 12px; height: 50px; background: #ff9f1a; color: #fff; border-radius: 0; margin-left: -5px; margin-top: -3px;">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </span>
+
+                                        </div>
+                                        <div class="col-md-2 pull-right" style="margin-top: 33px;">
+                                            <button type="reset" class="btn btn-default">Reset</button>
+                                            <button type="submit" class="saveStudentService btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 StudentGoals">
+
+                                            @if (Model.studentService.tblGoals.Count > 0)
+                                            {
+                                                foreach (var goal in Model.studentService.tblGoals)
+                                                {
+                                                    <div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0">
+                                                        <div class="panel-heading clickable">
+                                                            <h3 class="panel-title">
+                                                                <i class="fa fa-trophy"></i>&nbsp;@goal.Title.ToString()
+                                                                <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
+                                                            </h3>
+                                                        </div>
+                                                    </div>
                                                 }
                                             }
-                                        </select>
-                                        <span class="btn btn-default addServiceGoal" style="padding: 15px 12px; height: 50px; background: #ff9f1a; color: #fff; border-radius: 0; margin-left: -5px; margin-top: -3px;">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </span>
 
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 StudentGoals">
-
-                                        @if (Model.studentService.tblGoals.Count > 0)
-                                        {
-                                            foreach (var goal in Model.studentService.tblGoals)
-                                            {
-                                                <div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0">
-                                                    <div class="panel-heading clickable">
-                                                        <h3 class="panel-title">
-                                                            <i class="fa fa-trophy"></i>&nbsp;@goal.Title.ToString()
-                                                            <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
 
                 </div>
             </div>

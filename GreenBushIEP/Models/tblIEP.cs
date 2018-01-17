@@ -33,6 +33,5 @@ namespace GreenBushIEP.Models
         public Nullable<int> IEPReadingID { get; set; }
         public Nullable<int> IEPMathID { get; set; }
         public Nullable<int> IEPWrittenID { get; set; }
-        public Nullable<int> IEPAccomodationID { get; set; }
     }
 }

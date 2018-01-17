@@ -23,7 +23,7 @@ namespace GreenBushIEP.Models
         public int Day { get; set; }
         public bool NoService { get; set; }
         public bool canHaveClass { get; set; }
-        public short SchoolYear { get; set; }
         public Nullable<System.DateTime> calendarDate { get; set; }
+        public short SchoolYear { get; set; }
     }
 }

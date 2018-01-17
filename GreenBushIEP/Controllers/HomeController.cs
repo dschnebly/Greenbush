@@ -802,39 +802,46 @@ namespace GreenbushIep.Controllers
                 tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
 
                 StudentServiceViewModel model = new StudentServiceViewModel();
+                model.studentId = studentId;
                 model.studentService.IEPid = iep.IEPid;
                 model.serviceTypes = db.tblServiceTypes.ToList();
                 model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
                 model.serviceLocations = db.tblLocations.ToList();
                 model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                
+
                 return PartialView("_ModuleStudentServices", model);
             }
 
             return PartialView("_ModuleStudentServices", new StudentServiceViewModel());
         }
 
+        [HttpPost]
+        [Authorize(Roles = teacher)]
+        public ActionResult SaveStudentService(FormCollection collection)
+        {
+            int studentId = Convert.ToInt32(collection["StudentId"]);
 
-        [Authorize]
+            return RedirectToAction("StudentServices", new { studentId = collection["StudentId"] });
+        }
+
+        [Authorize(Roles = teacher)]
         public ActionResult Accommodations(int studentId, AccomodationViewModel model2)
         {
             var model = new AccomodationViewModel();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-            
 
             if (iep != null)
             {
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
                 model.AccomList = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid).OrderBy(o => o.AccomType).ToList();
-
             }
 
             return PartialView("_ModuleAccommodations", model);
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = teacher)]
         public ActionResult DeleteAccommodation(int accomId)
         {
 
@@ -986,6 +993,7 @@ namespace GreenbushIep.Controllers
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
+
 
         public ActionResult EditStudentInformation()
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using GreenBushIEP.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
@@ -235,43 +236,31 @@ namespace GreenBushIEP.Models
 
     public class AccomodationViewModel
     {
-     
         public AccomodationViewModel()
         {
             AccomList = new List<tblAccommodation>();
         }
 
-
         public int StudentId { get; set; }
 
         [Required(ErrorMessage = "Please select a Type: Accomodation or Modification.")]
         public int? AccomType { get; set; }
-
         public int AccommodationID { get; set; }
-
         public int IEPid { get; set; }
-
         public string AccDescription { get; set; }
-
         public string Location { get; set; }
-
         public int? Frequency { get; set; }
-
         public int Duration { get; set; }
-                
         public DateTime? AnticipatedStartDate { get; set; }
-
         public DateTime? AnticipatedEndDate { get; set; }
-
         public string Message { get; set; }
-
         public List<tblAccommodation> AccomList { get; set; }
-               
+
     }
-  }
 
     public class StudentServiceViewModel
     {
+        public int studentId { get; set; }
         public tblService studentService { get; set; }
         public List<tblServiceType> serviceTypes { get; set; }
         public List<tblProvider> serviceProviders { get; set; }
@@ -280,6 +269,7 @@ namespace GreenBushIEP.Models
 
         public StudentServiceViewModel()
         {
+            studentId = 0;
             studentService = new tblService();
             serviceTypes = new List<tblServiceType>();
             serviceProviders = new List<tblProvider>();
