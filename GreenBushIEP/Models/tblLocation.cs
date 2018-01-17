@@ -14,8 +14,17 @@ namespace GreenBushIEP.Models
     
     public partial class tblLocation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblLocation()
+        {
+            this.tblAccommodations = new HashSet<tblAccommodation>();
+        }
+    
         public string LocationCode { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAccommodation> tblAccommodations { get; set; }
     }
 }

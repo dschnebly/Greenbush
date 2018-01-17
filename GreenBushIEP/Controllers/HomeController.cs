@@ -825,7 +825,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = teacher)]
-        public ActionResult Accommodations(int studentId, AccomodationViewModel model2)
+        public ActionResult Accommodations(int studentId)
         {
             var model = new AccomodationViewModel();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
@@ -834,7 +834,19 @@ namespace GreenbushIep.Controllers
             {
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
-                model.AccomList = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid).OrderBy(o => o.AccomType).ToList();
+                var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
+                if (accommodations.Any())
+                    model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
+
+                var locations = db.tblLocations.Where(o => o.Active == true);
+
+                if (locations.Any())
+                {
+                    foreach (var loc in locations)
+                    {
+                        model.Locations.Add(new SelectListItem() { Text = loc.Name, Value = loc.LocationCode });
+                    }
+                }
             }
 
             return PartialView("_ModuleAccommodations", model);

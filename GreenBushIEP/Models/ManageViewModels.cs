@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace GreenBushIEP.Models
 {
     public class IndexViewModel
@@ -239,6 +240,8 @@ namespace GreenBushIEP.Models
         public AccomodationViewModel()
         {
             AccomList = new List<tblAccommodation>();
+            Locations = new List<System.Web.Mvc.SelectListItem>();
+        
         }
 
         public int StudentId { get; set; }
@@ -248,13 +251,14 @@ namespace GreenBushIEP.Models
         public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string AccDescription { get; set; }
-        public string Location { get; set; }
+        public string LocationCode { get; set; }
         public int? Frequency { get; set; }
         public int Duration { get; set; }
         public DateTime? AnticipatedStartDate { get; set; }
         public DateTime? AnticipatedEndDate { get; set; }
         public string Message { get; set; }
         public List<tblAccommodation> AccomList { get; set; }
+        public List<System.Web.Mvc.SelectListItem> Locations { get; set; }
 
     }
 

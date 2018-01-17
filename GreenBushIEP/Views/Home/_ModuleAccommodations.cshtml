@@ -143,7 +143,8 @@
                                             <div class="form-group" name="Location">
                                                 <label for="Location">Location</label><br />
                                                 <div class="form-group">
-                                                    <select class="form-control" name="Location" id="Location" style="border-color: #ccc; display: inline-block;">
+                                                    @Html.DropDownList("LocationCode", Model.Locations, new { @style = "border-color: #ccc; display: inline-block;", @class = "form-control" })
+                                                    @*<select class="form-control" name="Location" id="Location" style="border-color: #ccc; display: inline-block;">
                                                         <option value="a">(A) Home-Based</option>
                                                         <option value="b">(B) Early Childhood Locations</option>
                                                         <option value="c">(C) Special Ed Direct Service in a Regular Ed Classroom</option>
@@ -165,7 +166,7 @@
                                                         <option value="w">(W) Reverse Mainstream ESCE Classroom</option>
                                                         <option value="x">(X) Indirect Services</option>
                                                         <option value="y">(Y) Juvenile Correction Facility</option>
-                                                    </select>
+                                                    </select>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -244,7 +245,7 @@
                         <td>@endDate</td>
                         <td>@accom.Frequency</td>
                         <td>@accom.Duration</td>
-                        <td><p style="text-transform: uppercase;">@accom.Location</p></td>
+                        <td><p style="text-transform: uppercase;">@accom.LocationCode</p></td>
                         <td><span class="deleteAccom" onclick='_deleteRow(@accom.AccommodationID);'>
                             <i class="glyphicon glyphicon-trash" ></i>
                             </span>
