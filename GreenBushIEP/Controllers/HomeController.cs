@@ -821,7 +821,23 @@ namespace GreenbushIep.Controllers
         {
             int studentId = Convert.ToInt32(collection["StudentId"]);
 
-            return RedirectToAction("StudentServices", new { studentId = collection["StudentId"] });
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            if(iep != null)
+            {
+                tblService service = new tblService();
+                service.IEPid = iep.IEPid;
+                service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
+                service.StartDate = Convert.ToDateTime(collection["serviceStartDate"]);
+                service.EndDate = Convert.ToDateTime(collection["serviceEndDate"]);
+                service.ServiceCode = collection["ServiceType"].ToString();
+                service.Frequency = Convert.ToInt32(collection["Frequency"]);
+                service.DaysPerWeek = Convert.ToByte(collection["serviceDaysPerWeek"]);
+                service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
+                service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
+                service.LocationCode = collection["location"];
+            }
+
+            return RedirectToAction("StudentServices", new { studentId = studentId });
         }
 
         [Authorize(Roles = teacher)]

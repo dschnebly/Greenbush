@@ -37,8 +37,7 @@
             <div class="col-md-12">
                 <div class="panel-group" id="accordion[0]">
 
-                    @using (Ajax.BeginForm("saveStudentService", null))
-                    {
+                    <form action="/Home/saveStudentService" method="post">
                         <input type="hidden" name="StudentId" value="@Model.studentId" />
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -123,7 +122,7 @@
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
                                                 </span>
-                                                <input type="text" class="form-control text-center" value="1" min="1" max="5">
+                                                <input type="text" name="serviceDaysPerWeek" class="form-control text-center" value="1" min="1" max="5">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
                                                 </span>
@@ -135,7 +134,7 @@
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
                                                 </span>
-                                                <input type="text" class="form-control text-center" value="1">
+                                                <input type="text" name="serviceMinutesPerDay" class="form-control text-center" value="1">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
                                                 </span>
@@ -144,7 +143,7 @@
                                         <div class="form-group col-md-6" name="Frequency">
 
                                             <label for="Frequency">Provider</label>
-                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                            <select class="form-control" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
                                                 @if (Model.serviceProviders.Count > 0)
                                                 {
                                                     foreach (var serviceProvider in Model.serviceProviders)
@@ -182,7 +181,7 @@
                                         <div class="col-md-7" s>
 
                                             <label for="studentGoals">Goal</label><br />
-                                            <select class="form-control" name="studentGoalsSelect" style="border-color: #ccc; width: 300px; display: inline-block;">
+                                            <select class="form-control" id="studentGoalsSelect" style="border-color: #ccc; width: 300px; display: inline-block;">
                                                 <option value="-1">-- Add a student goal to the service --</option>
                                                 @if (Model.studentGoals.Count > 0)
                                                 {
@@ -214,6 +213,7 @@
                                                             <h3 class="panel-title">
                                                                 <i class="fa fa-trophy"></i>&nbsp;@goal.Title.ToString()
                                                                 <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
+                                                                <input type="hidden" name="studentServiceGoal@goal.goalID"  value="@goal.goalID" />
                                                             </h3>
                                                         </div>
                                                     </div>
@@ -225,7 +225,7 @@
                                 </div>
                             </div>
                         </div>
-                    }
+                    </form>
 
                 </div>
             </div>
@@ -362,10 +362,11 @@
                 var selectGoalSelectedTitle = $(selectGoal).find("option:selected").data('title');
                 var selectGoalSelectedId = $(selectGoal).find("option:selected").attr('value');
 
+                var goalCount = $(".serviceStudentGoal").length + 1;
                 if (selectGoalSelectedId != -1) {
                     $('option:selected', selectGoal).remove();
 
-                    var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i></h3></div></div>';
+                    var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i><input type="hidden" name="studentServiceGoal' + goalCount + '" value="' + selectGoalSelectedId + '" /></h3></div></div>';
                     $(this).closest(".row").next(".row").find(".StudentGoals").append(attachGoal);
 
                     initGoalEvents();
@@ -391,7 +392,7 @@
                     var studentGoalText = $(thisStudentGoal).data('title');
                     var studentGoalId = $(thisStudentGoal).data('id');
 
-                    $(e.target).closest(".oneStudentService ").find("select[name='studentGoalsSelect']").append('<option value="' + studentGoalId + '" data-title="' + studentGoalText + '">' + studentGoalText + '</option>');
+                    $(e.target).closest(".oneStudentService ").find("#studentGoalsSelect").append('<option value="' + studentGoalId + '" data-title="' + studentGoalText + '">' + studentGoalText + '</option>');
                     $(e.target).parentsUntil(".StudentGoals").remove();
                 }
             });
