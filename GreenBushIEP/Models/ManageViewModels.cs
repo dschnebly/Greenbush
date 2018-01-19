@@ -265,7 +265,7 @@ namespace GreenBushIEP.Models
     public class StudentServiceViewModel
     {
         public int studentId { get; set; }
-        public tblService studentService { get; set; }
+        public List<tblService> studentService { get; set; }
         public List<tblServiceType> serviceTypes { get; set; }
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblLocation> serviceLocations { get; set; }
@@ -274,7 +274,7 @@ namespace GreenBushIEP.Models
         public StudentServiceViewModel()
         {
             studentId = 0;
-            studentService = new tblService();
+            studentService = new List<tblService>();
             serviceTypes = new List<tblServiceType>();
             serviceProviders = new List<tblProvider>();
             serviceLocations = new List<tblLocation>();

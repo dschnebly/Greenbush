@@ -793,51 +793,122 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentServices(int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            StudentServiceViewModel model = new StudentServiceViewModel();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
+                List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
+
                 // Get the MIS id of the logged in teacher.
                 tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
                 tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
 
-                StudentServiceViewModel model = new StudentServiceViewModel();
-                model.studentId = studentId;
-                model.studentService.IEPid = iep.IEPid;
-                model.serviceTypes = db.tblServiceTypes.ToList();
-                model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
-                model.serviceLocations = db.tblLocations.ToList();
-                model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                if (services != null)
+                {
+                    model.studentId = studentId;
+                    model.studentService = services;
+                    model.serviceTypes = db.tblServiceTypes.ToList();
+                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
+                    model.serviceLocations = db.tblLocations.ToList();
+                    model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                }
+                else
+                {
+                    model.studentId = studentId;
+                    model.studentService.Add(new tblService() { IEPid = iep.IEPid });
+                    model.serviceTypes = db.tblServiceTypes.ToList();
+                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
+                    model.serviceLocations = db.tblLocations.ToList();
+                    model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                }
 
                 return PartialView("_ModuleStudentServices", model);
             }
 
-            return PartialView("_ModuleStudentServices", new StudentServiceViewModel());
+            return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
         [HttpPost]
         [Authorize(Roles = teacher)]
         public ActionResult SaveStudentService(FormCollection collection)
         {
+            int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
 
+            DateTime temp;
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if(iep != null)
             {
-                tblService service = new tblService();
-                service.IEPid = iep.IEPid;
-                service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
-                service.StartDate = Convert.ToDateTime(collection["serviceStartDate"]);
-                service.EndDate = Convert.ToDateTime(collection["serviceEndDate"]);
-                service.ServiceCode = collection["ServiceType"].ToString();
-                service.Frequency = Convert.ToInt32(collection["Frequency"]);
-                service.DaysPerWeek = Convert.ToByte(collection["serviceDaysPerWeek"]);
-                service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
-                service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
-                service.LocationCode = collection["location"];
+                if (StudentSerivceId == 0) // new service
+                {
+                    tblService service = new tblService();
+                    service.IEPid = iep.IEPid;
+                    service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
+                    service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
+                    service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
+                    service.ServiceCode = collection["ServiceType"].ToString();
+                    service.Frequency = Convert.ToInt32(collection["Frequency"]);
+                    service.DaysPerWeek = Convert.ToByte(collection["serviceDaysPerWeek"]);
+                    service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
+                    service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
+                    service.LocationCode = collection["location"];
+                    service.Create_Date = DateTime.Now;
+                    service.Update_Date = DateTime.Now;
+          
+                    for (int i = 11; i < collection.Count; i++)
+                    {
+                        int goalId = Convert.ToInt32(collection[i]);
+                        tblGoal goal = db.tblGoals.Where(g => g.goalID == goalId).First();
+                        service.tblGoals.Add(goal);
+                    }
+
+                    db.tblServices.Add(service);
+                }
+                else // exsisting service
+                {
+                    tblService service = db.tblServices.Where(s => s.ServiceID == StudentSerivceId).FirstOrDefault();
+                    service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
+                    service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
+                    service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
+                    service.ServiceCode = collection["ServiceType"].ToString();
+                    service.Frequency = Convert.ToInt32(collection["Frequency"]);
+                    service.DaysPerWeek = Convert.ToByte(collection["serviceDaysPerWeek"]);
+                    service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
+                    service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
+                    service.LocationCode = collection["location"];
+                    service.Update_Date = DateTime.Now;
+                    service.tblGoals.Clear();
+
+                    for (int i = 11; i < collection.Count; i++)
+                    {
+                        int goalId = Convert.ToInt32(collection[i]);
+                        tblGoal goal = db.tblGoals.Where(g => g.goalID == goalId).First();
+                        service.tblGoals.Add(goal);
+                    }
+                }
+
+                //save the service
+                db.SaveChanges();
             }
 
             return RedirectToAction("StudentServices", new { studentId = studentId });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult DeleteStudentService(int studentServiceId)
+        {
+            tblService service = db.tblServices.Where(s => s.ServiceID == studentServiceId).FirstOrDefault();
+            if(service != null)
+            {
+                db.tblServices.Remove(service);
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "The Service has been delete." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "Unknown Error Occured." }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = teacher)]
