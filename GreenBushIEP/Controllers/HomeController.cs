@@ -812,6 +812,7 @@ namespace GreenbushIep.Controllers
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.NoService == true && c.canHaveClass == false && c.Year >= DateTime.Now.Year).ToList();
                 }
                 else
                 {
@@ -821,6 +822,7 @@ namespace GreenbushIep.Controllers
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.NoService == true && c.canHaveClass == false && c.Year >= DateTime.Now.Year).ToList();
                 }
 
                 return PartialView("_ModuleStudentServices", model);
@@ -892,7 +894,8 @@ namespace GreenbushIep.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("StudentServices", new { studentId = studentId });
+            //return Json Dummie.
+            return Json(new { Result = "success", Message = "The service has been saved." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

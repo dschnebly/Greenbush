@@ -270,6 +270,7 @@ namespace GreenBushIEP.Models
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblLocation> serviceLocations { get; set; }
         public List<tblGoal> studentGoals { get; set; }
+        public List<tblCalendar> calendar { get; set; }
 
         public StudentServiceViewModel()
         {
@@ -278,6 +279,7 @@ namespace GreenBushIEP.Models
             serviceTypes = new List<tblServiceType>();
             serviceProviders = new List<tblProvider>();
             serviceLocations = new List<tblLocation>();
+            calendar = new List<tblCalendar>();
         }
     }
 }
