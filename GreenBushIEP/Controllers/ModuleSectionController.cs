@@ -420,34 +420,38 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.ProgressDescription_Quarter4 = collection[++j].ToString();
 
                     studentGoal.benchmarks.Clear();
+                    int keyNum = ++j;
+                    string keyName = (collection.Keys.Count - 1) > keyNum ? collection.GetKey(keyNum) : "";
 
-                    string keyName = collection.GetKey(++j);
-                    while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
+                    if (!string.IsNullOrEmpty(keyName))
                     {
-                        int BenchmarkID;
-                        bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
-                        tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
+                        while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
+                        {
+                            int BenchmarkID;
+                            bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
+                            tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
 
-                        benchmark.goalID = studentGoal.goal.goalID;
-                        benchmark.Method = Convert.ToInt32(collection[++j]);
-                        benchmark.ObjectiveBenchmark = collection[++j].ToString();
-                        benchmark.TransitionActivity = (collection[++j] == "true") ? true : false;
-                        benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
-                        benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
-                        benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
-                        benchmark.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
-                        benchmark.Progress_Quarter1 = collection[++j].ToString();
-                        benchmark.Progress_Quarter2 = collection[++j].ToString();
-                        benchmark.Progress_Quarter3 = collection[++j].ToString();
-                        benchmark.Progress_Quarter4 = collection[++j].ToString();
-                        benchmark.ProgressDescription_Quarter1 = collection[++j].ToString();
-                        benchmark.ProgressDescription_Quarter2 = collection[++j].ToString();
-                        benchmark.ProgressDescription_Quarter3 = collection[++j].ToString();
-                        benchmark.ProgressDescription_Quarter4 = collection[++j].ToString();
+                            benchmark.goalID = studentGoal.goal.goalID;
+                            benchmark.Method = Convert.ToInt32(collection[++j]);
+                            benchmark.ObjectiveBenchmark = collection[++j].ToString();
+                            benchmark.TransitionActivity = (collection[++j] == "true") ? true : false;
+                            benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                            benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                            benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                            benchmark.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                            benchmark.Progress_Quarter1 = collection[++j].ToString();
+                            benchmark.Progress_Quarter2 = collection[++j].ToString();
+                            benchmark.Progress_Quarter3 = collection[++j].ToString();
+                            benchmark.Progress_Quarter4 = collection[++j].ToString();
+                            benchmark.ProgressDescription_Quarter1 = collection[++j].ToString();
+                            benchmark.ProgressDescription_Quarter2 = collection[++j].ToString();
+                            benchmark.ProgressDescription_Quarter3 = collection[++j].ToString();
+                            benchmark.ProgressDescription_Quarter4 = collection[++j].ToString();
 
-                        studentGoal.benchmarks.Add(benchmark);
+                            studentGoal.benchmarks.Add(benchmark);
 
-                        keyName = (++j != collection.Count) ? collection.GetKey(j) : String.Empty;
+                            keyName = (++j != collection.Count) ? collection.GetKey(j) : String.Empty;
+                        }
                     }
 
                     studentGoal.SaveGoal();

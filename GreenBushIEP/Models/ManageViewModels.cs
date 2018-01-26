@@ -112,6 +112,7 @@ namespace GreenBushIEP.Models
         public string Password { get; set; }
         public string RoleID { get; set; }
         public string BuildingID { get; set; }
+        public string NeighborhoodBuildingID { get; set; }
         public string ImageURL { get; set; }
         public Nullable<bool> Agreement { get; set; }
         public Nullable<bool> Archive { get; set; }
