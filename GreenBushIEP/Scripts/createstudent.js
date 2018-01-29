@@ -18,16 +18,8 @@
 function init() {
 
     //set up the bootstrap datepicker
-    var date_input = $('input[name="dob"]'); //our date input has the name "dob"
-    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-    var options = {
-        format: 'mm-dd-yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
-    date_input.datepicker(options);
-
+    //var date_input = $('input[name="dob"]'); //our date input has the name "dob"
+   
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
@@ -78,6 +70,61 @@ function init() {
         prevTab($active);
     });
 
+    $('[name="SearchBuildingList"]').keyup(function (e) {
+        var code = e.keyCode || e.which;
+        if (code === '9') return;
+        if (code === '27') $(this).val(null);
+        var $rows = $(this).closest('.dual-list').find('.list-group li');
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        $rows.show().filter(function () {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
+
+    $('#misDistrict').change(function (e) {
+        // assign the userid to the id value in the form.
+        //var districtId = $(e.relatedTarget).data('id');
+       // $(e.currentTarget).find('input[name="misDistrict"]').val(userId);
+        //var districtId = $('#selectedDistrict option:first-child').attr("selected", "selected").val();
+        var districtIds = '';
+        var districtNums = new Array();
+        var districtArr = $("#misDistrict").val();
+
+        if (districtArr.length > 0) {
+
+            for (i = 0; i < districtArr.length; i++) {
+                var districtAdd = districtArr[i];
+                districtNums.push(districtAdd);                
+            }            
+            districtIds = districtNums.join(',');
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/GetBuildingsByDistrictId',
+            data: { ids: districtIds },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+                    var buildings = data.Message;
+                    $(".studentBuilding").find('option').remove().end().append($("<option></option>").attr("value", "").text("Select Building"));
+                    $.each(buildings, function (key, value) {
+                        // throw away the key. It's simply an index counter for the returned array.                                                
+                        $(".studentBuilding").append($("<option></option>").attr("value", value.BuildingID).text(value.BuildingName));
+                    });
+
+                }
+            },
+            error: function (data) {
+                alert("There was an error retrieving the building information.");
+                console.log(data);
+            }
+        });
+
+    });
+
     function nextTab(elem) {
         $(elem).next().find('a[data-toggle="tab"]').click();
     }
@@ -85,6 +132,7 @@ function init() {
         $(elem).prev().find('a[data-toggle="tab"]').click();
     }
 }
+
 
 function tabValidates()
 {
@@ -97,9 +145,14 @@ function tabValidates()
     $inputs.each(function () {
         var input = $(this);
         var is_valid = input.val();
-        if (is_valid == "") {
-            if (input.is("select")) { $(this).next().addClass('contact-tooltip'); }
-            else { input.addClass('contact-tooltip'); }
+        if (is_valid == "" || is_valid == null) {
+            if (input.is("select")) {
+                $(this).next().addClass('contact-tooltip');
+                input.addClass('contact-tooltip');
+            }
+            else {
+                input.addClass('contact-tooltip');
+            }
             validates = false;
         }
         else {
@@ -113,20 +166,28 @@ function tabValidates()
 function initContacts() {
 
     $('.add-contact').each(function (index) {
+       
         $(this).not('.bound').addClass('bound').on("click", function (e) {
             if ($(this).find('i').hasClass("glyphicon-plus")) {
                 // clone and unhide the contact template.
                 var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
-
+                var count = $("#numberOfContacts").val();
+                count++;
+                $("#numberOfContacts").val(count);
                 // new contact id.
                 newContact.html(newContact.html().replace(/\[#\]/g, '[' + ++index + ']'));
                 newContact.find(".contact-button").removeClass("contact-button").addClass("add-contact").removeClass("btn-info").addClass('btn-danger');
 
                 // rebind the recently added contact.
                 initContacts();
+
+                
             } else {
                 $(this).unbind("click").parents(".student-contact").fadeOut(300, function () {
                     $(this).remove();
+                    var count = $("#numberOfContacts").val();
+                    count--;
+                    $("#numberOfContacts").val(count);
                 });
             }
         });

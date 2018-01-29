@@ -2,6 +2,7 @@
 using GreenBushIEP.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -171,7 +172,8 @@ namespace GreenBushIEP.Controllers
                         KIDSID = Convert.ToInt32(collection["kidsid"]),
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
                         USD = collection["misDistrict"],
-                        BuildingID = "0",
+                        BuildingID = collection["AttendanceBuildingId"],
+                        NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
                         Ethicity = collection["ethnic"],
                         StudentLanguage = collection["studentLanguage"],
                         ParentLanguage = collection["parentLanguage"],
@@ -187,74 +189,125 @@ namespace GreenBushIEP.Controllers
                     // Create new Relationship table - add student contact and their relationships
                     // tblRelationships
                     int i = studentInfo.Gender == "M" ? 11 : 12;
-                    while (i < collection.Count)
+                                       
+                    int count = 0; //first contact
+                    int totalContacts = 0;
+                    foreach(var collectionItem in collection)
                     {
-                        tblStudentRelationship contact = new tblStudentRelationship()
+                        if(collectionItem.ToString() == "contacts[0].ContactFirstName")
                         {
-                            RealtionshipID = 0,
-                            UserID = student.UserID,
-                            FirstName = collection[i].ToString(),
-                            MiddleName = collection[i + 1].ToString(),
-                            LastName = collection[i + 2].ToString(),
-                            Realtionship = collection[i + 3].ToString(),
-                            Address1 = collection[i + 4].ToString(),
-                            Address2 = collection[i + 5].ToString(),
-                            City = collection[i + 6].ToString(),
-                            State = collection[i + 7].ToString(),
-                            Zip = collection[i + 8].ToString(),
-                            Phone = collection[i + 9].ToString(),
-                            Email = collection[i + 10].ToString()
-                        };
-
-                        //worst code in awhile.
-                        if (i + 10 < collection.Count - 1)
-                        {
-                            if (collection[i + 11] == "on")
-                            {
-                                // this is the primary contact.
-                                contact.PrimaryContact = 1;
-                                i += 12;
-                            }
-                            else
-                            {
-                                i += 11;
-                            }
+                            i = count;
                         }
+                        if (collectionItem.ToString().Contains("ContactFirstName"))
+                        {
+                            totalContacts++;
+                        }
+                        count++;
+                    }
+                    
+                    for (int j = 0; j < totalContacts; j++)
+                    {
+                        
+                            tblStudentRelationship contact = new tblStudentRelationship()
+                            {
+                                RealtionshipID = 0,
+                                UserID = student.UserID,
+                                FirstName = collection[i].ToString(),
+                                MiddleName = collection[i + 1].ToString(),
+                                LastName = collection[i + 2].ToString(),
+                                Realtionship = collection[i + 3].ToString(),
+                                Address1 = collection[i + 4].ToString(),
+                                Address2 = collection[i + 5].ToString(),
+                                City = collection[i + 6].ToString(),
+                                State = collection[i + 7].ToString(),
+                                Zip = collection[i + 8].ToString(),
+                                Phone = collection[i + 9].ToString(),
+                                Email = collection[i + 10].ToString()
+                            };
+
+
+                            if (collection.AllKeys.Contains(string.Format("contacts[{0}].PrimaryContact", j)))
+                            {
+                                //worst code in awhile.
+                                if (i + 10 < collection.Count - 1)
+                                {
+                                    if (collection[i + 11] == "on")
+                                    {
+                                        // this is the primary contact.
+                                        contact.PrimaryContact = 1;
+                                        i += 12;
+                                    }
+                                    else
+                                    {
+                                        i += 11;
+                                    }
+                                }
+                                else
+                                {
+                                    i += 11;
+                                }
+                            }
                         else
                         {
                             i += 11;
                         }
 
-                        db.tblStudentRelationships.Add(contact);
-                        db.SaveChanges();
+                            db.tblStudentRelationships.Add(contact);
+                            db.SaveChanges();
+                        
                     }
 
                     // save to organization chart
                     // save the user to all the districts that was selected.
                     // tblOrganizationMapping and tblBuildingMapping
-                    foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                    var districtValues = collection["misDistrict"];
+                    
+                    if (!string.IsNullOrEmpty(districtValues))
                     {
-                        tblOrganizationMapping org = new tblOrganizationMapping();
-                        org.AdminID = submitter.UserID;
-                        org.UserID = student.UserID;
-                        org.USD = usd;
+                        string[] districtArray = districtValues.Split(','); ;
 
-                        db.tblOrganizationMappings.Add(org);
-                        db.SaveChanges();
+                        foreach (string usd in districtArray)
+                        {
+                            tblOrganizationMapping org = new tblOrganizationMapping();
+                            org.AdminID = submitter.UserID;
+                            org.UserID = student.UserID;
+                            org.USD = usd;
 
-                        tblBuildingMapping district = new tblBuildingMapping();
-                        district.BuildingID = "0";
-                        district.USD = usd;
-                        district.UserID = student.UserID;
+                            db.tblOrganizationMappings.Add(org);
+                            db.SaveChanges();
 
-                        db.tblBuildingMappings.Add(district);
-                        db.SaveChanges();
+                            tblBuildingMapping district = new tblBuildingMapping();
+                            district.BuildingID = "0";
+                            district.USD = usd;
+                            district.UserID = student.UserID;
+
+                            db.tblBuildingMappings.Add(district);
+                            db.SaveChanges();
+                        }
                     }
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    // Retrieve the error messages as a list of strings.
+                    var errorMessages = ex.EntityValidationErrors
+                            .SelectMany(x => x.ValidationErrors)
+                            .Select(x => x.ErrorMessage);
+
+                    // Join the list to a single string.
+                    var fullErrorMessage = string.Join("; ", errorMessages);
+
+                    // Combine the original exception message with the new one.
+                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                    // Throw a new DbEntityValidationException with the improved exception message.
+                    //throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+                    Console.Write(exceptionMessage);
                 }
                 catch (Exception e)
                 {
                     Console.Write(e.Message);
                 }
+                
             }
 
             return RedirectToAction("Portal", "Home");
@@ -287,6 +340,7 @@ namespace GreenBushIEP.Controllers
                 model.student.DateOfBirth = studentinfo.DateOfBirth;
                 model.student.USD = studentinfo.USD;
                 model.student.BuildingID = studentinfo.BuildingID;
+                model.student.NeighborhoodBuildingID = studentinfo.NeighborhoodBuildingID;
                 model.info = studentinfo;
             }
 
@@ -318,19 +372,26 @@ namespace GreenBushIEP.Controllers
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.student.UserID == bm.UserID select d).Distinct().ToList();
             model.districts = (model.submitter.RoleID == "1") ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
-            model.buildings = (from bm in db.tblBuildingMappings
-                               join b in db.tblBuildings on bm.USD equals b.USD
-                               where bm.UserID == model.student.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
+            //model.buildings = (from bm in db.tblBuildingMappings
+            //                   join b in db.tblBuildings on bm.USD equals b.USD
+            //                   where bm.UserID == model.student.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
+            //                   select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+
+            foreach (var d in model.selectedDistrict) {
+                var districtBuildings = (from b in db.tblBuildings 
+                                   where b.USD == d.USD && b.Active == 1 
                                select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
-
+                model.buildings.AddRange(districtBuildings);
+            }
+            
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
             return View("~/Views/Home/EditStudent.cshtml", model);
         }
 
         // POST: Manage/EditStudent
-        public ActionResult EditStudent(HttpPostedFileBase adminpersona, FormCollection collection)
+        public ActionResult EditStudent(HttpPostedFileBase adminpersona, FormCollection collection, StudentDetailsViewModel model)
         {
             int id = Convert.ToInt32(collection["id"]);
 
@@ -353,7 +414,8 @@ namespace GreenBushIEP.Controllers
                 info.KIDSID = Convert.ToInt32(collection["kidsid"]);
                 info.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                 info.USD = collection["misDistrict"];
-                info.BuildingID = "0";
+                info.BuildingID = collection["AttendanceBuildingId"];
+                info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                 info.Ethicity = collection["ethnic"];
                 info.StudentLanguage = collection["studentLanguage"];
                 info.ParentLanguage = collection["parentLanguage"];
@@ -376,54 +438,107 @@ namespace GreenBushIEP.Controllers
             }
 
             db.SaveChanges();
+            
+            
+            int totalContacts = Convert.ToInt32(collection["numberOfContacts"]);
+            
+            int primaryContactId = -1;
+            int contactId = -1;
+            List<int> contactList = new List<int>();
 
-            // Blow Away the old relationship table.
-            // Create new Relationship table - add student contact and their relationships
-            List<tblStudentRelationship> removeRelationship = db.tblStudentRelationships.Where(r => r.UserID == student.UserID).ToList();
-            db.tblStudentRelationships.RemoveRange(removeRelationship);
-            db.SaveChanges();
-
-            int i = info.Gender == "M" ? 12 : 13;
-            while (i < collection.Count)
+            foreach (var collectionItem in collection)
             {
-                tblStudentRelationship contact = new tblStudentRelationship()
+                if (collectionItem.ToString().StartsWith("contact[") || collectionItem.ToString().StartsWith("contacts["))
                 {
-                    RealtionshipID = 0,
-                    UserID = student.UserID,
-                    FirstName = collection[i].ToString(),
-                    MiddleName = collection[i + 1].ToString(),
-                    LastName = collection[i + 2].ToString(),
-                    Realtionship = collection[i + 3].ToString(),
-                    Address1 = collection[i + 4].ToString(),
-                    Address2 = collection[i + 5].ToString(),
-                    City = collection[i + 6].ToString(),
-                    State = collection[i + 7].ToString(),
-                    Zip = collection[i + 8].ToString(),
-                    Phone = collection[i + 9].ToString(),
-                    Email = collection[i + 10].ToString()
-                };
+                    //contacts[3].ContactFirstName
+                    int startIndex = collectionItem.ToString().IndexOf("[") + 1;
+                    int endIndex = collectionItem.ToString().IndexOf("]");
+                    string num = collectionItem.ToString().Substring(startIndex, endIndex - startIndex);
+                    int pcRid = -1;
+                    Int32.TryParse(num, out pcRid);
+                    
+                    if (collectionItem.ToString().Contains("PrimaryContact"))
+                    {                    
+                        primaryContactId = pcRid;
+                    }
 
-                //worst code in awhile.
-                if (i + 10 < collection.Count - 1)
-                {
-                    if (collection[i + 11] == "on")
+                    if (pcRid != contactId)
                     {
-                        // this is the primary contact.
-                        contact.PrimaryContact = 1;
-                        i += 12;
+                        //add list
+                        contactList.Add(pcRid);
+                        
+                        contactId = pcRid;
+                    }
+                    
+                }
+            
+            }
+
+            foreach(var contactItem in contactList)
+            {
+                var existingContact = db.tblStudentRelationships.Where(r => r.UserID == student.UserID && r.RealtionshipID == contactItem).FirstOrDefault();
+               
+                if (existingContact != null)
+                {
+                    //update
+                    string contactStr = string.Format("contact[{0}].", contactItem);
+
+                    existingContact.FirstName = collection[contactStr + "FirstName"] != null ? collection[contactStr + "FirstName"].ToString() : "";
+                    existingContact.MiddleName = collection[contactStr + "MiddleName"] != null ? collection[contactStr + "MiddleName"].ToString() : "";
+                    existingContact.LastName = collection[contactStr + "LastName"] != null ? collection[contactStr + "LastName"].ToString() : "";
+                    existingContact.Phone = collection[contactStr + "Phone"] != null ? collection[contactStr + "Phone"].ToString() : "";
+                    existingContact.Realtionship = collection[contactStr + "Realtionship"] != null ? collection[contactStr + "Realtionship"].ToString() : "";
+                    existingContact.Address1 = collection[contactStr + "Address1"] != null ? collection[contactStr + "Address1"].ToString() : "";
+                    existingContact.Address2 = collection[contactStr + "Address2"] != null ? collection[contactStr + "Address2"].ToString() : "";
+                    existingContact.State = collection[contactStr + "ContactState"] != null ? collection[contactStr + "ContactState"].ToString() : "";
+                    existingContact.City = collection[contactStr + "City"] != null ? collection[contactStr + "City"].ToString() : "";
+                    existingContact.Zip = collection[contactStr + "Zip"] != null ? collection[contactStr + "Zip"].ToString() : "";
+                    existingContact.Email = collection[contactStr + "Email"] != null ? collection[contactStr + "Email"].ToString() : "";
+                    if (contactItem == primaryContactId)
+                    {
+                        existingContact.PrimaryContact = 1;
                     }
                     else
                     {
-                        i += 11;
+                        existingContact.PrimaryContact = 0;
                     }
                 }
                 else
                 {
-                    i += 11;
-                }
+                    string contactStr = string.Format("contacts[{0}].", contactItem);
 
-                db.tblStudentRelationships.Add(contact);
+                    tblStudentRelationship contact = new tblStudentRelationship()
+                    {
+                        RealtionshipID = 0,
+                        UserID = student.UserID,
+                        FirstName = collection[contactStr + "ContactFirstName"] != null ? collection[contactStr + "ContactFirstName"].ToString() : "",
+                        MiddleName = collection[contactStr + "ContactMiddleName"] != null ? collection[contactStr + "ContactMiddleName"].ToString() : "",
+                        LastName = collection[contactStr + "ContactLastName"] != null ? collection[contactStr + "ContactLastName"].ToString() : "",
+                        Realtionship = collection[contactStr + "ContactRealtionship"] != null ? collection[contactStr + "ContactRealtionship"].ToString() : "",
+                        Address1 = collection[contactStr + "ContactStreetAddress1"] != null ? collection[contactStr + "ContactStreetAddress1"].ToString() : "",
+                        Address2 = collection[contactStr + "ContactStreetAddress2"] != null ? collection[contactStr + "ContactStreetAddress2"].ToString() : "",
+                        City = collection[contactStr + "ContactCity"] != null ? collection[contactStr + "ContactCity"].ToString() : "",
+                        State = collection[contactStr + "ContactState"] != null ? collection[contactStr + "ContactState"].ToString() : "",
+                        Zip = collection[contactStr + "ContactZipCode"] != null ? collection[contactStr + "ContactZipCode"].ToString() : "",
+                        Phone = collection[contactStr + "ContactPhoneNumber"] != null ? collection[contactStr + "ContactPhoneNumber"].ToString() : "",
+                        Email = collection[contactStr + "ContactEmail"] != null ? collection[contactStr + "ContactEmail"].ToString() : ""
+                    };
+
+                    if (contactItem == primaryContactId)
+                    {
+                        contact.PrimaryContact = 1;
+                    }
+                    else
+                    {
+                        contact.PrimaryContact = 0;
+                    }
+
+                    db.tblStudentRelationships.Add(contact);
+
+                }
+                
                 db.SaveChanges();
+
             }
 
             // remove all mapping. Blow it all away.
@@ -714,6 +829,9 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get districts. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
+
+
+
         [HttpGet]
         public ActionResult GetAllStudentsInDistrict(int id)
         {
@@ -796,6 +914,45 @@ namespace GreenBushIEP.Controllers
                 if (listOfBuildings != null)
                 {
                     return Json(new { Result = "success", Message = listOfBuildings }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetBuildingsByDistrictId(string ids)
+        {
+            try
+            {
+                List<tblBuilding> buildings = new List<tblBuilding>();
+
+                if (!string.IsNullOrEmpty(ids))
+                {
+                    
+
+                    string[] usdIds = ids.Split(',');
+                    foreach (var usdId in usdIds)
+                    {
+                        // Give me the list of all the buildings in the current district 
+                        var listOfBuildings = from b in db.tblBuildings
+                                              where b.USD == usdId && b.Active == 1
+                                              orderby b.BuildingName
+                                              select b;
+
+                        buildings.AddRange(listOfBuildings.ToList());
+                    }
+
+                }
+
+
+                if (buildings != null)
+                {
+                    return Json(new { Result = "success", Message = buildings }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
