@@ -1070,11 +1070,8 @@
                 </li>
             </ul>
         </div>
-        @*<div class="row">
-            <div class="col-md-2 pull-left">
-                <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor:pointer; color: #000;">Your Student Plan</a>
-            </div>
-        </div>*@
+
+
 
         <!-- Modal fullscreen Student Planning -->
         <div id="modal-studentPlanning" class="modal modal-fullscreen fade-scale @((Model.hasplan) ? String.Empty : "needsPlan" )" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
@@ -1082,7 +1079,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
                     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-                    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-key" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Planning - <span style="font-size: 16px;"> @(Model.student.FirstName) @(Model.student.LastName)</span></h4> 
+                    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-key" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Planning - <span style="font-size: 16px;"> @(Model.student.FirstName) @(Model.student.LastName)</span></h4>
                 </div>
                 <div class="modal-body">
 
@@ -1372,6 +1369,19 @@
                                     <label><input type="checkbox" name="WrittenNeed" @(Model.studentPlan.WrittenNeed ? "checked" : String.Empty ) />Area of Need which impacts performance in General Education</label>
                                 </div>
                             </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row @(Model.studentPlan.isDOC ? string.Empty : "hidden")">
+                            <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-resize-full" aria-hidden="true"></i> Transition</h5>
+                            <br/>
+                            <div>
+                                <b>Reminder</b>
+                            </div>
+                            <div>Had student been invited to the IEP meeting</div>
+                            <div>Do you have written permission to invite other outside agencies to the IEP</div>
+                            <div>Have other agencies represnting transition services been invited to the IEP meeting</div>
                         </div>
 
                         <div class="modal-footer">

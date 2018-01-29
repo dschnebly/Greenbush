@@ -61,6 +61,7 @@ namespace GreenBushIEP.Models
         public bool WrittenTier2 { get; set; }
         public bool WrittenTier3 { get; set; }
         public bool WrittenNeed { get; set; }
+        public bool isDOC { get; set; }
 
         // Create the student's plan
         public StudentPlan()
@@ -116,6 +117,7 @@ namespace GreenBushIEP.Models
             this.WrittenTier2 = false;
             this.WrittenTier3 = false;
             this.WrittenNeed = false;
+            this.isDOC = false;
         }
 
         // Read the student's plan
@@ -227,6 +229,16 @@ namespace GreenBushIEP.Models
                     this.WrittenTier1 = studentWritten.InstructionalTier1;
                     this.WrittenTier2 = studentWritten.InstructionalTier2;
                     this.WrittenTier3 = studentWritten.InstructionalTier3;
+                }
+
+                tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();
+                if(info != null)
+                {
+                    tblDistrict district = db.tblDistricts.Where(d => d.USD == info.USD).FirstOrDefault();
+                    if(district != null)
+                    {
+                        isDOC = district.DOC;
+                    }
                 }
             }
         }
