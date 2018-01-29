@@ -5,9 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="94">
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="0.75" PointY="3" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblOrganizationMapping" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblRole" Width="1.5" PointX="4.75" PointY="3" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUser" Width="1.5" PointX="8.5" PointY="0.75" />
@@ -37,6 +34,9 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="17.625" PointY="12.5" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="2.625" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="0.75" PointY="3" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

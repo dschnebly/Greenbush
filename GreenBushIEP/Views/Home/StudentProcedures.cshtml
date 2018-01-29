@@ -812,8 +812,9 @@
                 <div class="student-information">
                     <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Content/Images/Uploads/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
                     <div class="student-identity edit-student">
-                        <h3>@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
+                        <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
+                        <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor: pointer; color: #000; display: block; text-align: center; line-height: 1.8;">Your Student Plan</a>
                     </div>
                 </div>
             </div>
@@ -1069,11 +1070,11 @@
                 </li>
             </ul>
         </div>
-        <div class="row">
+        @*<div class="row">
             <div class="col-md-2 pull-left">
                 <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor:pointer; color: #000;">Your Student Plan</a>
             </div>
-        </div>
+        </div>*@
 
         <!-- Modal fullscreen Student Planning -->
         <div id="modal-studentPlanning" class="modal modal-fullscreen fade-scale @((Model.hasplan) ? String.Empty : "needsPlan" )" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">

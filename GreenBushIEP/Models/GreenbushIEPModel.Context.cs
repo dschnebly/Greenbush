@@ -27,9 +27,6 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
-        public virtual DbSet<tblBuilding> tblBuildings { get; set; }
-        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
@@ -56,6 +53,9 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
+        public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
+        public virtual DbSet<tblBuilding> tblBuildings { get; set; }
+        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

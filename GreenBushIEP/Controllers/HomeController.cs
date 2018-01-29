@@ -784,7 +784,6 @@ namespace GreenbushIep.Controllers
                 return PartialView("_ModuleStudentGoals", model);
             }
 
-            //return RedirectToAction("StudentProcedures", new { stid = studentId });
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());
         }
 

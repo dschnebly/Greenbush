@@ -17,5 +17,6 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string DistrictName { get; set; }
         public Nullable<int> Active { get; set; }
+        public bool DOC { get; set; }
     }
 }
