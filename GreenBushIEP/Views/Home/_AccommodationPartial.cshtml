@@ -1,0 +1,180 @@
+﻿@model GreenBushIEP.Models.tblAccommodation
+@using (Html.BeginForm("UpdateAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+{
+<div class="row oneStudentGoal " id="defaultgoal_@Model.AccommodationID" >
+  @Html.HiddenFor(model => model.AccommodationID)
+  @Html.HiddenFor(model => model.IEPid)
+    
+    @{ 
+        string shortDesc = Model.AccomType == 1 ? "Accommodation" : "Modification";
+        shortDesc += " (" + Model.LocationCode + ") ";
+        if (Model.AnticipatedStartDate.HasValue)
+        {
+            shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
+        }
+
+        //if (!string.IsNullOrEmpty(Model.Description) && Model.Description.Length >= 10)
+        //{
+        //    shortDesc += Model.Description.Substring(0, 9) + "...";
+        //}
+        //else
+        //{
+        //    shortDesc += Model.Description.Substring(0, 9);
+        //}
+    }
+    <div class="col-md-12">
+        <div class="panel-group" id="accordion[@Model.AccommodationID]">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[@Model.AccommodationID]" href=@string.Format("#collapse{0}",Model.AccommodationID) data-val=@string.Format("collapse{0}", Model.AccommodationID)>
+                            <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">@shortDesc</span>
+                            <span class="pull-right">
+                                <i class="glyphicon glyphicon-trash deleteGoal" accom-id="@Model.AccommodationID" ></i>
+                            </span>
+                        </a>
+                    </h4>
+                </div>
+                <div id=@string.Format("collapse{0}", Model.AccommodationID) class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="AccType">Type</label>
+                                <div class="form-check" style="margin-left:8px">
+                                    <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;"  @(Model.AccomType == 1 ? "checked=true" : String.Empty )>Accommodation</label><br />
+                                    <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;" @(Model.AccomType == 2 ? "checked=true" : String.Empty )>Modification</label><br />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-12">
+                                <label>Description:</label>
+                                <div>
+                                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row" style="margin-top: 35px;">
+                                    <div class="form-group col-md-2">
+                                        <label for="Frequency">Frequency</label>
+                                        <div class="input-group">
+                                            
+                                            <select class="form-control" id="Frequency" name="Frequency">
+                                                <option value=0 label="Choose an option" />
+                                                <option value=1 @(Model.Frequency.HasValue && Model.Frequency == 1 ? "selected='selected'" : String.Empty )>Every week (1)</option>
+                                                <option value=2 @(Model.Frequency.HasValue && Model.Frequency == 2 ? "selected='selected'" : String.Empty )>Every 2 weeks (2)</option>
+                                                <option value=3 @(Model.Frequency.HasValue && Model.Frequency == 3 ? "selected='selected'" : String.Empty )>Every 3 weeks (3)</option>
+                                                <option value=4 @(Model.Frequency.HasValue && Model.Frequency == 4 ? "selected='selected'" : String.Empty )>Every 4 weeks (4)</option>
+                                                <option value=5 @(Model.Frequency.HasValue && Model.Frequency == 5 ? "selected='selected'" : String.Empty )>Every 8 weeks (8)</option>
+                                                <option value=6 @(Model.Frequency.HasValue && Model.Frequency == 6 ? "selected='selected'" : String.Empty )>Every 9 weeks (9)</option>
+                                                <option value=7 @(Model.Frequency.HasValue && Model.Frequency == 7 ? "selected='selected'" : String.Empty )>Every 12 weeks (12)</option>
+                                                <option value=8 @(Model.Frequency.HasValue && Model.Frequency == 8 ? "selected='selected'" : String.Empty )>Every 18 weeks (18)</option>
+                                                <option value=9 @(Model.Frequency.HasValue && Model.Frequency == 9 ? "selected='selected'" : String.Empty )>3 out of 4 weeks (19)</option>
+                                                <option value=10 @(Model.Frequency.HasValue && Model.Frequency == 10 ? "selected='selected'" : String.Empty )>1 day per year (99)</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-2" name="Duration">
+                                        <label for="Duration">Duration </label>
+                                        <div class="input-group ">
+                                            @*<span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                            </span>*@
+                                            <input type="text" class="form-control text-center" name="Duration" id="Duration" value="@Model.Duration">
+                                            @*<span class="input-group-btn">
+                                                <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                            </span>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="AnticipatedStartDate">Anticipated Start Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            
+                                            @if (Model.AnticipatedStartDate.HasValue)
+                                            {
+
+                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                       id="AnticipatedStartDate" name="AnticipatedStartDate"
+                                                       class="form-control" aria-describedby="basic-addon1" value="@Model.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")" />
+
+                                            }
+                                            else
+                                            {
+                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                       id="AnticipatedStartDate" name="AnticipatedStartDate"
+                                                       class="form-control" aria-describedby="basic-addon1" />
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="AnticipatedEndDate">Anticipated End Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                            @if (Model.AnticipatedEndDate.HasValue)
+                                            {
+
+                                                <input type="date" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                       id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                       class="form-control" aria-describedby="basic-addon1" value="@Model.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")" />
+
+                                            }
+                                            else
+                                            {
+                                                <input type="date" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                       id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                       class="form-control" aria-describedby="basic-addon1"  />
+
+                                            }
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group" name="Location">
+                                    <label for="Location">Location</label><br />
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.LocationCode, (IEnumerable<SelectListItem>)ViewBag.Locations, new { @style = "border-color: #ccc; display: inline-block;", @class = "form-control" })
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group" id="saveGroup">
+                                <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                    @*<button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>*@
+                                    <button type="submit"  onclick="_update(@Model.AccommodationID); return false;" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+
+            </div>
+           
+        </div>
+        
+    </div>
+    
+</div>
+}
+

@@ -24,8 +24,6 @@
         <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations and Modifications
     </h4>
 </div>
-@using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
-{
 
     <div class="modal-body">
         <div class="row">
@@ -34,229 +32,168 @@
             </div>
         </div>
 
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.AccommodationID)
-        @Html.HiddenFor(model => model.IEPid)
-        @Html.HiddenFor(model => model.StudentId)
+      
 
         <div class="container goalContainer">
 
+            <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+            </div>          
+          
+            <div id="ExistingAccommodations" style="margin: 5px;">
+            @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
+            {
+                <table class="table-striped col-md-12">
+                    @foreach (var accom in Model.AccomList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom)
+                            </td>
+                        </tr>
+                    }
+                </table>
+              }
+            </div>
 
-            <div class="row oneStudentGoal hidden" id="defaultgoal">
+    <div class="row oneStudentGoal hidden" id="defaultgoal">
+        @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.AccommodationID)
+            @Html.HiddenFor(model => model.IEPid)
+            @Html.HiddenFor(model => model.StudentId)
 
-                <div class="col-md-12">
-                    <div class="panel-group" id="accordion[0]">
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                        <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
-                                        <span class="pull-right">
-                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                        </span>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse0" class="panel-collapse">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="AccType">Type</label>
-                                            <div class="form-check" style="margin-left:8px">
-                                                <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;">Accommodation</label><br />
-                                                <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
-                                                
-                                            </div>
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion[0]">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="btnToggle"  data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0" >
+                                    <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
+                                    <span class="pull-right">
+                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                    </span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse0" class="panel-collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="AccType">Type</label>
+                                        <div class="form-check" style="margin-left:8px">
+                                            <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;">Accommodation</label><br />
+                                            <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
+
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-top:10px;">
-                                        <div class="col-md-12">
-                                            <label>Description:</label>
-                                            <div>
-                                                @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control" })
-                                            </div>
+                                </div>
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-12">
+                                        <label>Description:</label>
+                                        <div>
+                                            @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control" })
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="row" style="margin-top: 35px;">
-                                                <div class="form-group col-md-2">
-                                                    <label for="Frequency">Frequency</label>
-                                                    <div class="input-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row" style="margin-top: 35px;">
+                                            <div class="form-group col-md-2">
+                                                <label for="Frequency">Frequency</label>
+                                                <div class="input-group">
 
-                                                        <select class="form-control" id="Frequency" name="Frequency">
-                                                            <option value=0 label="Choose an option" />
-                                                            <option value=1>Every week (1)</option>
-                                                            <option value=2>Every 2 weeks (2)</option>
-                                                            <option value=3>Every 3 weeks (3)</option>
-                                                            <option value=4>Every 4 weeks (4)</option>
-                                                            <option value=5>Every 8 weeks (8)</option>
-                                                            <option value=6>Every 9 weeks (9)</option>
-                                                            <option value=7>Every 12 weeks (12)</option>
-                                                            <option value=8>Every 18 weeks (18)</option>
-                                                            <option value=9>3 out of 4 weeks (19)</option>
-                                                            <option value=10>1 day per year (99)</option>
-                                                        </select>
+                                                    <select class="form-control" id="Frequency" name="Frequency">
+                                                        <option value=0 label="Choose an option" />
+                                                        <option value=1>Every week (1)</option>
+                                                        <option value=2>Every 2 weeks (2)</option>
+                                                        <option value=3>Every 3 weeks (3)</option>
+                                                        <option value=4>Every 4 weeks (4)</option>
+                                                        <option value=5>Every 8 weeks (8)</option>
+                                                        <option value=6>Every 9 weeks (9)</option>
+                                                        <option value=7>Every 12 weeks (12)</option>
+                                                        <option value=8>Every 18 weeks (18)</option>
+                                                        <option value=9>3 out of 4 weeks (19)</option>
+                                                        <option value=10>1 day per year (99)</option>
+                                                    </select>
 
-                                                    </div>
                                                 </div>
-
-                                                <div class="form-group col-md-2" name="Duration">
-                                                    <label for="Duration">Duration </label>
-                                                    <div class="input-group minute-spinner">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                        </span>
-                                                        <input type="text" class="form-control text-center" name="Duration" id="Duration" value="1">
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="AnticipatedStartDate">Anticipated Start Date</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="AnticipatedEndDate">Anticipated End Date</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                               id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control" aria-describedby="basic-addon1" />
-                                                    </div>
-                                                </div>
-
                                             </div>
+
+                                            <div class="form-group col-md-2" name="Duration">
+                                                <label for="Duration">Duration </label>
+                                                <div class="input-group minute-spinner">
+                                                    @*<span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                    </span>*@
+                                                    <input type="text" class="form-control text-center" name="Duration" id="Duration" value="1">
+                                                    @*<span class="input-group-btn">
+                                                        <button class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    </span>*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                           id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="AnticipatedEndDate">Anticipated End Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                           id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                           class="form-control" aria-describedby="basic-addon1" />
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group" name="Location">
-                                                <label for="Location">Location</label><br />
-                                                <div class="form-group">
-                                                    @Html.DropDownList("LocationCode", Model.Locations, new { @style = "border-color: #ccc; display: inline-block;", @class = "form-control" })
-                                                    @*<select class="form-control" name="Location" id="Location" style="border-color: #ccc; display: inline-block;">
-                                                        <option value="a">(A) Home-Based</option>
-                                                        <option value="b">(B) Early Childhood Locations</option>
-                                                        <option value="c">(C) Special Ed Direct Service in a Regular Ed Classroom</option>
-                                                        <option value="d">(D) Non-School Location</option>
-                                                        <option value="e">(E) Community Based Direct Instruction</option>
-                                                        <option value="g">(G) Special Ed Direct Service Outside Regular Ed Classroom/program/other Location</option>
-                                                        <option value="h">(H) Alternative School</option>
-                                                        <option value="i">(I) Incarceration</option>
-                                                        <option value="j">(J) Special Day School</option>
-                                                        <option value="k">(K) Early Childhood Program Time without Services</option>
-                                                        <option value="l">(L) Hospital</option>
-                                                        <option value="m">(M) Residential</option>
-                                                        <option value="o">(O) Home School</option>
-                                                        <option value="p">(P) Homebound</option>
-                                                        <option value="r">(R) E.C. Special Education</option>
-                                                        <option value="s">(S) Program classroom</option>
-                                                        <option value="t">(T) Extracurricular</option>
-                                                        <option value="u">(U) Under Suspension/Under Expulsion</option>
-                                                        <option value="w">(W) Reverse Mainstream ESCE Classroom</option>
-                                                        <option value="x">(X) Indirect Services</option>
-                                                        <option value="y">(Y) Juvenile Correction Facility</option>
-                                                    </select>*@
-                                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group" name="Location">
+                                            <label for="Location">Location</label><br />
+                                            <div class="form-group">
+                                                @Html.DropDownListFor(m => m.LocationCode, Model.Locations, new { @style = "border-color: #ccc; display: inline-block;", @class = "form-control" })
+
                                             </div>
                                         </div>
-
                                     </div>
 
                                 </div>
+                                <div class="row">
+                                    <div class="form-group" id="saveGroup">
+                                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                                            <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
 
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="form-group hidden" id="saveGroup">
-                <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                    <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                    <button type="submit" name="btnSubmit" class="btn btn-primary">Save</button>
                 </div>
             </div>
-        </div>
-        <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
-            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
-        </div><br />
-        <label class="input-labels" style="margin-top: 5px;">Accomodation(s) and Modification(s)</label>
-        <div class="ExistingAccommodations" style="margin: 5px;">
-            @if (Model.AccomList.Any())
-            {
-            <table class="table-striped col-md-12" >
-                <thead>
-                    <tr>
-                        <td>Type</td>
-                        <td>Description</td>
-                        <td>Start Date</td>
-                        <td>End Date</td>
-                        <td>Frequency</td>
-                        <td>Duration</td>                        
-                        <td>Location</td>
-                    </tr>
-                </thead>
-                
-                @foreach (var accom in Model.AccomList)
-                {
-                    string rowName = string.Format("accomRow{0}", @accom.AccommodationID);
-                    string accmType = "";
-                    string startDate = "";
-                    string endDate = "";
-                    if (accom.AnticipatedStartDate.HasValue)
-                    {
-                        startDate = @accom.AnticipatedStartDate.Value.Date.ToShortDateString();
-                    }
-                    if (accom.AnticipatedEndDate.HasValue)
-                    {
-                        startDate = @accom.AnticipatedEndDate.Value.Date.ToShortDateString();
-                    }
-                    
-                    switch (accom.AccomType)
-                    {
-                        case 1:
-                            accmType = "Accommodation";
-                            break;
-                        case 2:
-                            accmType = "Modification";
-                            break;
-                    }
 
-                    <tr id=@rowName class="accomRow">
-                        <td>@accmType</td>
-                        <td>@accom.Description</td>
-                        <td>@startDate</td>
-                        <td>@endDate</td>
-                        <td>@accom.Frequency</td>
-                        <td>@accom.Duration</td>
-                        <td><p style="text-transform: uppercase;">@accom.LocationCode</p></td>
-                        <td><span class="deleteAccom" onclick='_deleteRow(@accom.AccommodationID);'>
-                            <i class="glyphicon glyphicon-trash" ></i>
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </table>
-            }
-        </div>
+        }
+        </div> <!--end oneStudentGoal-->
+        
+      </div><!--end container student goal-->
+        
     </div>
- }
+ 
         <div class="modal-footer">
             <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
         </div>
@@ -278,19 +215,90 @@
                 $('[data-toggle="tooltip"]').tooltip('toggle');
             });
 
+            $("#resetModuleAccForm").trigger("reset");
+                     
+
             /* Event */
-            /* when the form is submitted we need to remove the default code elements */
-            $("form").on("submit", function (event) {
+            /* when clicking on the New Student Goal button */
+            $('#newgoal').on('click', function () {
+                var cloneGoal = $("#defaultgoal").clone();
+                cloneGoal.removeClass("hidden");
+                cloneGoal.attr('id', 'defaultgoal_X');
+                var saveButton = cloneGoal.find('#btnSubmit');
+
+                saveButton.click(function () {
+                    var buttonVal = $(this).attr('accom-id');
+                    if (buttonVal == undefined)
+                        _save(0);
+                    else
+                        _save(buttonVal);
+
+                });
+
+                //clear location list when form has existing accommodations
+                cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
+
+                $("#ExistingAccommodations").append(cloneGoal);
+                initGoal(cloneGoal);
+
+                return false;
+            });
+                       
+
+            $(".deleteGoal").click(function () {
+                _deleteRow($(this));
+            });
+
+                      
+            
+            function _save(elementValue)
+            {                
                 event.preventDefault();
-                var datastring = $("form").serialize();
+                var element = $("#defaultgoal_X");
+                if(elementValue != 0)
+                    element = $("#defaultgoal_" + elementValue);
+                var datastring = element.find('select, textarea, input').serialize();
+                var accomType = $('input[name=AccomType]:checked').val();
+                datastring = datastring + "&AccomType=" + accomType;
+                var url = '/ModuleSection/EditAccom';
+                                
                 $.ajax({
                     type: 'POST',
-                    url: '/ModuleSection/EditAccom',
+                        url: url,
                     data: datastring,
                     dataType: "json",
                     success: function (data) {
                         if (data.success) {
-                            window.location = data.url;
+                            _showAlert("The Accommodation/Modification has been saved.");
+
+                            if (data.isNew) {
+                                var cloneGoal = element; //.clone();
+
+
+                                cloneGoal.attr('id', 'defaultgoal_' + data.id);
+                                var deleteButton = cloneGoal.find('.deleteGoal');
+                                deleteButton.attr('accom-id', data.id);
+                                deleteButton.click(function () {
+                                    _deleteRow(deleteButton);
+                                });
+
+                                var saveButton = cloneGoal.find('#btnSubmit');
+                                saveButton.attr('accom-id', data.id);
+                                saveButton.attr('id', "btnSave_" + data.id);
+
+                                //collapse panel collapse0
+                                var togglePanel = cloneGoal.find('#collapse0');
+                                togglePanel.attr('id', "collapse" + data.id);
+                                var toggleButton = cloneGoal.find('.btnToggle');
+                                
+                                toggleButton.attr("href", "#collapse" + data.id);
+                                
+                                var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
+                                
+
+                                //cloneGoal.append('<input type="hidden" name="IEPid" id="IEPid" value="' + data.iep + '" />');
+
+                            }
                         }
                         else {
                             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -306,45 +314,49 @@
                     }
                 });
 
-            
-            });
 
-            $("#resetModuleAccForm").trigger("reset");
-                     
+            }
 
-            /* Event */
-            /* when clicking on the New Student Goal button */
-            $('#newgoal').on('click', function () {
-                var cloneGoal = $("#defaultgoal");//.clone();
-                cloneGoal.removeClass("hidden");
-                cloneGoal.removeAttr("id");
-                $("#saveGroup").removeClass("hidden");
+            function _update(id) {
 
-                //var goalCount = $('.oneStudentGoal').not("#defaultgoal").length + 1;
-                //cloneGoal.children().children().prop("id", "accordion[" + goalCount + "]");
+                event.preventDefault();
+                var element = $("#defaultgoal_X");
+                if (id != 0)
+                    element = $("#defaultgoal_" + id);
 
-                //var goalA = cloneGoal.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + goalCount + ']');
-                //goalA.attr('href', '#collapse' + goalCount);
+                var datastring = element.find('select, textarea, input').serialize();
+                var accomType = $('input[name=AccomType]:checked').val();
+                datastring = datastring + "&AccomType=" + accomType;
+                var url = '/ModuleSection/UpdateAccom';
 
-                //var needService = cloneGoal.find('i.needService').attr('name', 'hasService[' + goalCount + ']');
-                //needService.next().attr('name', 'hasService[' + goalCount + ']');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: datastring,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            _showAlert("The Accommodation/Modification has been updated.");
+                        }
+                        else {
+                            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                $("#alertMessage .moreinfo").html(data.error);
+                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                    $("#alertMessage").slideUp(500);
+                                });
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Unable to delete the student goal.");
+                    }
+                });
 
-                //var defaultRow = cloneGoal.find("#defaultrow").removeAttr('id');
 
-                //$.each($('.oneStudentGoal').not("#defaultgoal").find('.collapse'), function (index, value) {
-                //    $(this).removeClass("in");
-                //});
+            }
 
-                //cloneGoal.find("#collapse0").prop("id", "collapse" + goalCount);
-                //$('.goalContainer').append(cloneGoal);
-
-                initGoal();
-
-                return false;
-            });
-
-            function initGoal() {
-                $('.oneStudentGoal').not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
+            function initGoal(element) {
+                element.addClass('bound').each(function (index) {
 
                     $(this).find("input[type=date]").on('input', function (e) {
 
@@ -413,57 +425,26 @@
                         return false;
                     });
 
-                    initObjectives();
+                    
                 });
             }
-            initGoal();
 
-            function initObjectives() {
-
-                //$(".aStudentGoal").not(".bound").addClass("bound").each(function (index) {
-
-                //    console.log($(this));
-                //    /* Binding */
-                //    //When the user clicks on the trash can to delete objective
-                //    $(this).find(".deletegoal").on("click", function (e) {
-
-                //        if (confirm("Do you really want to delete this goal?")) {
-                //            var row = $(e.target).closest('div.panel-info');
-                //            $(row).fadeOut(400, function () {
-                //                $(row).remove();
-                //            });
-                //        }
-                //    });
-
-                //});
-            }
-
-            /* Helper function */
-            function endEdit(e) {
-                //var input = $(e.target),
-                //    label = input && input.prev();
-
-                //label.text(input.val() === '' ? input.attr('placeholder') : input.val());
-                //input.hide();
-                //label.show();
-            }
-
-            function _deleteRow(dataId)
+            function _deleteRow(element)
             {
-                if (confirm("Do you really want to delete this Accomodation/Modification?")) {
+                var dataId = element.attr('accom-id');
+
+                if (confirm("Do you really want to delete this Accommodation/Modification?")) {
                    
                     if (dataId != undefined && dataId != null) {
                         $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
                             if (response.result != undefined && response.result) {
                                 
-                                var row = $("#accomRow" + dataId);
-
-                                $(row).fadeOut(400, function () {
-                                    $(row).remove();
-                                });                                              
+                                var container = $("#defaultgoal_" + dataId);
+                                container.remove();
+                                           
                             }
                             else {
-                                _showAlert("There was a problem deleting the Accomodation or Modification.") ;
+                                _showAlert("There was a problem deleting the Accommodation or Modification.") ;
                             }
                                
              
