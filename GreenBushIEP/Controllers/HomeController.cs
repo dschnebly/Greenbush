@@ -782,10 +782,7 @@ namespace GreenbushIep.Controllers
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
-
-                    StudentGoal test = new StudentGoal(goal.goalID);
-
-                    model.studentGoals.Add(test);
+                    model.studentGoals.Add(new StudentGoal(goal.goalID));
                 }
 
                 return PartialView("_ModuleStudentGoals", model);

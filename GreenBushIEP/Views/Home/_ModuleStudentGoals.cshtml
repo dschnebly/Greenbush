@@ -88,7 +88,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <input type="hidden" name="StudentGoalId0" value="" />
+                                    <input type="hidden" name="StudentGoalId" value="0" />
                                     <a data-toggle="collapse" data-parent="#accordion0" href="#collapse0">
                                         <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">Student Goal</span>
                                         <span class="pull-right">
@@ -404,7 +404,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <input type="hidden" name="StudentGoalId@(studentGoal.goal.goalID)" value="@(studentGoal.goal.goalID)" />
+                                            <input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
                                             <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
                                                 <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
                                                 <span class="pull-right">
@@ -1154,10 +1154,34 @@
             });
 
             //* Binding */
-            /* when the teacher clicks the hand icon for service */
+            /* when the teacher clicks the trash can to delete a goal. */
             $(this).find('.deleteGoal').on('click', function (e) {
-                if (confirm("Are you sure you want to delete this student's goal?")) {
-                    $(this).closest('.StudentGoal').remove();
+                if (confirm("Would you like to delete this goal?")) {
+                    var studentGoal = $(this).closest('.StudentGoal');
+                    var studentGoalId = studentGoal.find("input[name='StudentGoalId']").prop("value");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ModuleSection/DeleteStudentGoal',
+                        data: { studentGoalId: studentGoalId },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.Result == "success") {
+                                studentGoal.remove();
+                            }
+                            else {
+                                if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                    $("#alertMessage .moreinfo").html(data.Message);
+                                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                        $("#alertMessage").slideUp(500);
+                                    });
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            console.log("Unable to delete the student goal.");
+                        }
+                    });
                 }
             });
 
@@ -1290,17 +1314,17 @@
             /* fires when the user clicks the trash icon on a short term benchmark */
             $(this).find('.deleteBenchmark').on('click', function (event) {
                 if (confirm("Would you like to delete this Benchmark?")) {
-                    var studentGoal = $(this).parents('.StudentGoalBenchmark')
-                    var studentGoalId = studentGoal.find('input:hidden:first').prop("value");
+                    var studentBenchmark = $(this).parents('.StudentGoalBenchmark')
+                    var studentBenchmarkId = studentBenchmark.find('input:hidden:first').prop("value");
 
                     $.ajax({
                         type: 'POST',
-                        url: '/ModuleSection/DeleteStudentGoal',
-                        data: { studentGoalId: studentGoalId },
+                        url: '/ModuleSection/DeleteStudentBenchmark',
+                        data: { studentBenchmarkId: studentBenchmarkId },
                         dataType: "json",
                         success: function (data) {
                             if (data.Result == "success") {
-                                studentGoal.remove();
+                                studentBenchmark.remove();
                             }
                             else {
                                 if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {

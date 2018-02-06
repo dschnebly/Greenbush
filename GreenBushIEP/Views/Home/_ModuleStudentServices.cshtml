@@ -74,7 +74,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="Frequency">Start Date</label>
+                                            <label for="Frequency">Initiation Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                 <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("yyyy-MM-dd"))">
@@ -623,12 +623,13 @@
 
             $(this).find(".minute-spinner button").on("click", function () {
 
-                 var btn = $(this),
+                var btn = $(this),
+                    maxValue = btn.closest('.minute-spinner').find('input').prop("max"),
                     oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
                     newValue = parseInt(oldValue);
 
                  if (btn.attr('data-dir') == 'up') {
-                     if (newValue < 720) {
+                     if (newValue <  maxValue) {
                          newValue = newValue + 1;
                      }
                  } else {

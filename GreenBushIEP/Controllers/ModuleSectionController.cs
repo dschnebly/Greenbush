@@ -431,22 +431,36 @@ namespace GreenBushIEP.Controllers
             }
         }
 
-      
-
         [HttpPost]
         [Authorize]
         public ActionResult DeleteStudentGoal(int studentGoalId)
         {
-            tblGoalBenchmark benchmarkToRemove = db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == studentGoalId).FirstOrDefault();
-            if (benchmarkToRemove != null)
+            tblGoal studentGoalToRemove = db.tblGoals.Where(g => g.goalID == studentGoalId).FirstOrDefault();
+            if (studentGoalToRemove != null)
             {
-                db.tblGoalBenchmarks.Remove(benchmarkToRemove);
+                db.tblGoals.Remove(studentGoalToRemove);
                 db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "Student Goal was successfully deleted." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "failure", Message = "The Student Goal Benchmark Id was not found and thus not deleted." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult DeleteStudentBenchmark(int studentBenchmarkId)
+        {
+            tblGoalBenchmark benchmarkToRemove = db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == studentBenchmarkId).FirstOrDefault();
+            if (benchmarkToRemove != null)
+            {
+                db.tblGoalBenchmarks.Remove(benchmarkToRemove);
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Student Benchmark was successfully deleted." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Benchmark was not deleted." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
