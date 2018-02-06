@@ -251,8 +251,8 @@ namespace GreenBushIEP.Models
 
         public int StudentId { get; set; }
 
-        [Required(ErrorMessage = "Please select a Type: Accomodation or Modification.")]
-        public int? AccomType { get; set; }
+        [Required(ErrorMessage = "Please select a Type: Accommodation or Modification.")]
+        public int AccomType { get; set; }
         public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string AccDescription { get; set; }

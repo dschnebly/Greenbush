@@ -524,6 +524,7 @@
     <Content Include="Views\Home\_ModuleCalendarSection.cshtml" />
     <Content Include="Views\Home\_ModuleServiceProviders.cshtml" />
     <Content Include="Views\Home\_ModuleAccommodations.cshtml" />
+    <Content Include="Views\Home\_AccommodationPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

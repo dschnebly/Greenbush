@@ -934,7 +934,7 @@ namespace GreenbushIep.Controllers
         {
             var model = new AccomodationViewModel();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-
+            List<SelectListItem> locationList = new List<SelectListItem>();
             if (iep != null)
             {
                 model.StudentId = studentId;
@@ -949,10 +949,15 @@ namespace GreenbushIep.Controllers
                 {
                     foreach (var loc in locations)
                     {
-                        model.Locations.Add(new SelectListItem() { Text = loc.Name, Value = loc.LocationCode });
+                        locationList.Add(new SelectListItem() { Text = loc.Name, Value = loc.LocationCode });
                     }
+
+                    model.Locations = locationList;
                 }
             }
+
+
+            ViewBag.Locations = locationList;
 
             return PartialView("_ModuleAccommodations", model);
         }

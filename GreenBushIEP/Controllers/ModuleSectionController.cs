@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -293,6 +294,50 @@ namespace GreenBushIEP.Controllers
 
         // POST: ModuleSection/Edit/5
         [HttpPost]
+        public ActionResult UpdateAccom(tblAccommodation model)
+        {
+
+            var avm = new AccomodationViewModel();
+            avm.AccDescription = model.Description;
+            avm.AccommodationID = model.AccommodationID;
+            avm.AccomType = model.AccomType; 
+            avm.AnticipatedEndDate = model.AnticipatedEndDate;
+            avm.AnticipatedStartDate = model.AnticipatedStartDate;
+            avm.LocationCode = model.LocationCode;
+            avm.Duration = model.Duration.HasValue ? model.Duration.Value : 0;
+            avm.Frequency = model.Frequency;
+
+            if (ModelState.IsValid)
+            {
+                tblAccommodation existingIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).FirstOrDefault();
+                if (existingIEP != null)
+                {
+                    avm.IEPid = existingIEP.IEPid;
+                    int newId = EditAccomodation(existingIEP, avm);
+                    return Json(new { success = true, id = newId });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            else
+            {
+                string errorMessage = "";
+                foreach (ModelState modelState in ViewData.ModelState.Values)
+                {
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        errorMessage += " " + error.ErrorMessage;
+                    }
+                }
+                                
+                return Json(new { success = false, error = errorMessage }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
         public ActionResult EditAccom(AccomodationViewModel model)
         {
             int studentId = model.StudentId;
@@ -301,49 +346,25 @@ namespace GreenBushIEP.Controllers
             {
                 //find existing if updateing
                 tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).FirstOrDefault();
+                bool isNew = false;
 
                 if (AccomodationIEP == null)
                 {
+                    isNew = true;
                     AccomodationIEP = new tblAccommodation();                   
                 }
  
 
                 if (AccomodationIEP != null)
                 {
-                    // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
-                    AccomodationIEP.IEPid = model.IEPid;
-
-                    try
+                    int newId = EditAccomodation(AccomodationIEP, model);
+                    if (isNew)
                     {
-                        AccomodationIEP.AccomType = model.AccomType.HasValue ? (int)model.AccomType : 0;
-                        AccomodationIEP.Description = model.AccDescription;
-
-                        if(model.AnticipatedStartDate.HasValue)
-                            AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
-
-                        if(model.AnticipatedEndDate.HasValue)
-                            AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
-
-                        AccomodationIEP.Duration = model.Duration;
-                        AccomodationIEP.Frequency = model.Frequency;
-                        AccomodationIEP.LocationCode = model.LocationCode;
-                        if (model.AccommodationID == 0)
-                        {
-                            AccomodationIEP.Create_Date = DateTime.Now;
-                            AccomodationIEP.Update_Date = DateTime.Now;
-                            db.tblAccommodations.Add(AccomodationIEP);
-
-                        }
-
-                        db.SaveChanges();
-
-                        //return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
-
-                        return Json(new { success = true, url = Url.Action("StudentProcedures", "Home", new { stid = studentId }) });
+                        return Json(new { success = true, id = newId, iep = model.IEPid, isNew = true});
                     }
-                    catch (Exception e)
+                    else
                     {
-                        throw new Exception("Unable to save changes to Accomodation/Modification Module: " + e.InnerException);
+                        return Json(new { success = true, id = model.AccommodationID, iep = model.IEPid, isNew = false });
                     }
                 }
             }
@@ -363,6 +384,54 @@ namespace GreenBushIEP.Controllers
             return Json(new { success = false, error = model.Message }, JsonRequestBehavior.AllowGet);
 
         }
+
+        private int EditAccomodation(tblAccommodation AccomodationIEP, AccomodationViewModel model)
+        {
+            // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
+            AccomodationIEP.IEPid = model.IEPid;
+
+            try
+            {
+                //int accomType = 0;
+                //Int32.TryParse(model.AccomType, out accomType);
+
+                AccomodationIEP.AccomType = model.AccomType;
+                AccomodationIEP.Description = model.AccDescription;
+
+                if (model.AnticipatedStartDate.HasValue)
+                    AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
+
+                if (model.AnticipatedEndDate.HasValue)
+                    AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
+
+                AccomodationIEP.Duration = model.Duration;
+                AccomodationIEP.Frequency = model.Frequency;
+                AccomodationIEP.LocationCode = model.LocationCode;
+                AccomodationIEP.IEPid = model.IEPid;
+
+                if (model.AccommodationID == 0)
+                {
+                    AccomodationIEP.Create_Date = DateTime.Now;
+                    AccomodationIEP.Update_Date = DateTime.Now;
+                   
+                    db.tblAccommodations.Add(AccomodationIEP);
+
+                }
+                
+                db.SaveChanges();
+                int newId = AccomodationIEP.AccommodationID;
+
+                return newId;
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Unable to save changes to Accommodation/Modification Module: " + e.InnerException);
+            }
+        }
+
+      
 
         [HttpPost]
         [Authorize]
