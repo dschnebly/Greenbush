@@ -32,6 +32,9 @@
                 <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
+        <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
+        <input type="hidden" value="@Model.IEPEndDate.ToString("yyyy-MM-dd")" id="iepEndDate" />
+
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
@@ -74,14 +77,14 @@
                                             <label for="Frequency">Start Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("yyyy-MM-dd"))">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPEndDate.ToString("yyyy-MM-dd"))">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -102,7 +105,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
                                                 </span>
-                                                <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="1">
+                                                <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="1" min="1" max="60">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
                                                 </span>
@@ -217,7 +220,7 @@
             </div>
         </div>
 
-        @foreach (var service in Model.studentService)
+        @foreach (var service in Model.studentServices)
         {
             <div class="row oneStudentService">
                 <div class="col-md-12">
@@ -253,7 +256,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="Frequency">Start Date</label>
+                                                <label for="Frequency">Initiation Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("yyyy-MM-dd"))">
@@ -284,7 +287,7 @@
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
                                                     </span>
-                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)">
+                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
                                                     </span>
@@ -437,9 +440,11 @@
     $('#serviceStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
     $('#serviceEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
 
-    //var calendarArrayOfDates = JSON.parse('@Html.Raw(Json.Encode(Model.calendar))');
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
     var calendarArrayOfDates = JSON.parse(model);
+
+    var Reports = '@Html.Raw(Json.Encode(Model.calendarReportings))';
+    var calendarReportsArray = JSON.parse(Reports);
 
     /* Binding */
     /* tooltips */
@@ -476,7 +481,25 @@
      });
 
      function initService() {
-        $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
+         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
+
+             $(this).find("select[name='fiscalYear']").on("change", function (e) {
+                 var year = $(this).val();
+
+                 for (var i = 0; i < calendarReportsArray.length; i++)
+                 {
+                     if (calendarReportsArray[i].SchoolYear == year)
+                     {
+                         var serviceDaysPerWeek = $(this).closest(".row").find("input[name='serviceDaysPerWeek']");
+                         var serviceMinutesPerDay = $(this).closest(".row").find("input[name='serviceMinutesPerDay']");
+
+                         serviceDaysPerWeek.prop("max", calendarReportsArray[i].DaysPerWeek);
+                         if (serviceDaysPerWeek.val() > calendarReportsArray[i].DaysPerWeek) { serviceDaysPerWeek.prop("value", calendarReportsArray[i].DaysPerWeek); }
+                         serviceMinutesPerDay.prop("max", calendarReportsArray[i].MinutesPerDay);
+                         if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
+                     }
+                 }
+             });
 
             $(this).find("input[type=date]").on('input', function (e) {
                 if (e.target.value == '') {
@@ -502,6 +525,10 @@
                  } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
                      e.target.setCustomValidity('OH NOES! That is day is not is session.');
                      e.target.title = 'OH NOES! That is day is not is session.';
+                     e.target.parentNode.classList.add('has-error');
+                 } else if (e.target.value < $('#iepStartDate').val() || e.target.value > $('#iepEndDate').val()) {
+                     e.target.setCustomValidity('OH NOES! That not in range of the IEP.');
+                     e.target.title = 'OH NOES! That not in range of the IEP.';
                      e.target.parentNode.classList.add('has-error');
                  }
                  else {

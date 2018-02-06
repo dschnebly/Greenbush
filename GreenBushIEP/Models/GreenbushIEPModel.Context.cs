@@ -47,7 +47,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblGoal> tblGoals { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
-        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
@@ -56,6 +55,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
         public virtual DbSet<tblBuilding> tblBuildings { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

@@ -180,11 +180,15 @@ namespace GreenBushIEP.Models
     {
         public StudentProcedureViewModel()
         {
+            isDoc = false;
+            studentAge = 12;
             hasplan = false;
             student = new tblUser();
             studentPlan = new StudentPlan(student.UserID);
         }
 
+        public bool isDoc { get; set; }
+        public int studentAge { get; set; }
         public bool hasplan { get; set; }
         public tblUser student { get; set; }
         public IEP studentIEP { get; set; }
@@ -266,21 +270,28 @@ namespace GreenBushIEP.Models
     public class StudentServiceViewModel
     {
         public int studentId { get; set; }
-        public List<tblService> studentService { get; set; }
+        public List<tblService> studentServices { get; set; }
         public List<tblServiceType> serviceTypes { get; set; }
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblLocation> serviceLocations { get; set; }
         public List<tblGoal> studentGoals { get; set; }
         public List<tblCalendar> calendar { get; set; }
+        public List<tblCalendarReporting> calendarReportings { get; set; }
+        public DateTime IEPStartDate { get; set; }
+        public DateTime IEPEndDate { get; set; }
 
         public StudentServiceViewModel()
         {
             studentId = 0;
-            studentService = new List<tblService>();
+            studentServices = new List<tblService>();
             serviceTypes = new List<tblServiceType>();
             serviceProviders = new List<tblProvider>();
             serviceLocations = new List<tblLocation>();
+            studentGoals = new List<tblGoal>();
             calendar = new List<tblCalendar>();
+            calendarReportings = new List<tblCalendarReporting>();
+            IEPStartDate = new DateTime();
+            IEPEndDate = new DateTime();
         }
     }
 }

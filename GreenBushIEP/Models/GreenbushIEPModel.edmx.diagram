@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoal" Width="1.5" PointX="14.375" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" Width="1.5" PointX="13.25" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendar" Width="1.5" PointX="11" PointY="6.625" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="13.875" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProvider" Width="1.5" PointX="15.375" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblLocation" Width="1.5" PointX="15.375" PointY="9.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblService" Width="1.5" PointX="17.625" PointY="2.75" />
@@ -37,6 +36,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="2.625" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="0.75" PointY="3" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="13.625" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

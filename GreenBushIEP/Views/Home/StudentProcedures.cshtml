@@ -814,7 +814,7 @@
                     <div class="student-identity edit-student">
                         <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
-                        <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor: pointer; color: #000; display: block; text-align: center; line-height: 1.8;">Your Student Plan</a>
+                        <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor: pointer; color: #000; display: block; text-align: center; line-height: 1.8; text-decoration:underline;">Your Student Plan</a>
                     </div>
                 </div>
             </div>
@@ -1064,6 +1064,21 @@
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg accom-mod-section" data-view="AccommodationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
+                        </div>
+                    </div>
+
+                </li>
+                <li class="ui-state-default filter planning"> @*@((Model.isDoc) ? String.Empty : "hidden" )">*@ 
+
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>
+                        </div>
+                        <div class="text">
+                            <label class="text-muted">Transition</label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg accom-mod-section" data-view="AccommodationsModule"><i class="glyphicon glyphicon-search"></i> View Transitions</button>
                         </div>
                     </div>
 
@@ -1373,8 +1388,8 @@
 
                         <hr />
 
-                        <div class="row @(Model.studentPlan.isDOC ? string.Empty : "hidden")">
-                            <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-resize-full" aria-hidden="true"></i> Transition</h5>
+                        <div class="row @(Model.studentAge < 13 ? "hidden" : String.Empty )">
+                            <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
                             <br/>
                             <div>
                                 <b>Reminder</b>

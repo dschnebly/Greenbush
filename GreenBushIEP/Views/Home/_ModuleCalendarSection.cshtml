@@ -355,7 +355,7 @@
         <br />
         <br />
         <div class="row" style="margin: auto;">
-            <div class="col-md-3"></div>
+            <div class="col-md-2"></div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="daysPerWeek" style="font-weight:normal;">Days Per Week</label>
@@ -374,7 +374,13 @@
                     <input class="form-control form-control-input" data-old="52" type="number" min="1" max="52" value="52" name="totalWeeks" disabled />
                 </div>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="minutesPerDay" style="font-weight:normal;">Minutes Per Day</label>
+                    <input class="form-control form-control-input" data-old="60" type="number" min="1" value="60" name="minutesPerDay" disabled />
+                </div>
+            </div>
+            <div class="col-md-2"></div>
         </div>
         <br />
 
@@ -1334,7 +1340,8 @@
                     if (element.SchoolYear == nextYear) {
                         $('input[name=daysPerWeek]').val(element.DaysPerWeek);
                         $('input[name=totalDays]').val(element.TotalDays);
-                        $('input[name=totalWeeks').val(element.TotalWeeks);
+                        $('input[name=totalWeeks]').val(element.TotalWeeks);
+                        $('input[name=minutesPerDay]').val(element.MinutesPerDay);
                     }
                 });
             }
@@ -1454,6 +1461,7 @@
                             $('input[name=daysPerWeek]').removeAttr('disabled');
                             $('input[name=totalDays]').removeAttr('disabled');
                             $('input[name=totalWeeks]').removeAttr('disabled');
+                            $('input[name=minutesPerDay]').removeAttr('disabled');
 
                             if (data.calendarReports != null) {
                                 reports = data.calendarReports;
@@ -1461,13 +1469,15 @@
                                     if (element.SchoolYear == schoolYear) {
                                         $('input[name=daysPerWeek]').val(element.DaysPerWeek);
                                         $('input[name=totalDays]').val(element.TotalDays);
-                                        $('input[name=totalWeeks').val(element.TotalWeeks);
+                                        $('input[name=totalWeeks]').val(element.TotalWeeks);
+                                        $('input[name=minutesPerDay]').val(element.MinutesPerDay);
                                     }
                                 });
                             } else {
                                 $('input[name=daysPerWeek]').val(1);
                                 $('input[name=totalDays]').val(52);
-                                $('input[name=totalWeeks').val(52);
+                                $('input[name=totalWeeks]').val(52);
+                                $('input[name=minutesPerDay]').val(60);
                             }
 
                             $('.child-ajax-loader').css('visibility', 'hidden');
@@ -1638,11 +1648,12 @@
                 var daysAWeek = $('input[name=daysPerWeek]').val();
                 var total = $('input[name=totalDays]').val();
                 var allWeeks = $('input[name=totalWeeks]').val();
+                var minutes = $('input[name=minutesPerDay]').val();
 
                 $.ajax({
                     type: 'GET',
                     url: '/Home/SaveCalendarReports',
-                    data: { SchoolYear: schoolYear, usd: usd, building: bId, daysPerWeek: daysAWeek, totalDays: total, totalWeeks: allWeeks },
+                    data: { SchoolYear: schoolYear, usd: usd, building: bId, daysPerWeek: daysAWeek, totalDays: total, totalWeeks: allWeeks, minutesPerDay : minutes },
                     dataType: 'json',
                     success: function (data) {
                         if (data.Result != "error") {

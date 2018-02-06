@@ -367,7 +367,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize(Roles = mis)]
-        public ActionResult SaveCalendarReports(int schoolYear, string usd, string building, int daysPerWeek, int totalDays, int totalWeeks)
+        public ActionResult SaveCalendarReports(int schoolYear, string usd, string building, int daysPerWeek, int totalDays, int totalWeeks, int minutesPerDay)
         {
 
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -379,6 +379,7 @@ namespace GreenbushIep.Controllers
                     reports.DaysPerWeek = daysPerWeek;
                     reports.TotalDays = totalDays;
                     reports.TotalWeeks = totalWeeks;
+                    reports.MinutesPerDay = minutesPerDay;
                 }
                 else
                 {
@@ -391,6 +392,7 @@ namespace GreenbushIep.Controllers
                     reports.DaysPerWeek = daysPerWeek;
                     reports.TotalDays = totalDays;
                     reports.TotalWeeks = totalWeeks;
+                    reports.MinutesPerDay = minutesPerDay;
 
                     db.tblCalendarReportings.Add(reports);
                 }
@@ -698,10 +700,15 @@ namespace GreenbushIep.Controllers
             StudentProcedureViewModel model = new StudentProcedureViewModel();
 
             tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
+            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+            string district = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault().USD;
 
             if (student != null)
             {
                 model.student = student;
+                model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year -1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                model.isDoc = db.tblDistricts.Where(d => d.USD == district).FirstOrDefault().DOC;
+
                 IEP theIEP = new IEP(student.UserID);
 
                 if (theIEP.draft != null)
@@ -792,12 +799,14 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentServices(int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            StudentServiceViewModel model = new StudentServiceViewModel();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
+                StudentServiceViewModel model = new StudentServiceViewModel();
+
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
+                tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
                 // Get the MIS id of the logged in teacher.
                 tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
@@ -806,22 +815,29 @@ namespace GreenbushIep.Controllers
                 if (services != null)
                 {
                     model.studentId = studentId;
-                    model.studentService = services;
+                    model.studentServices = services;
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.NoService == true && c.canHaveClass == false && c.Year >= DateTime.Now.Year).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
+                    model.IEPStartDate = iep.begin_date ?? DateTime.Now;
+                    model.IEPEndDate = iep.end_date ?? DateTime.Now;
+                    
                 }
                 else
                 {
                     model.studentId = studentId;
-                    model.studentService.Add(new tblService() { IEPid = iep.IEPid });
+                    model.studentServices.Add(new tblService() { IEPid = iep.IEPid });
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.NoService == true && c.canHaveClass == false && c.Year >= DateTime.Now.Year).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
+                    model.IEPStartDate = iep.begin_date ?? DateTime.Now;
+                    model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
 
                 return PartialView("_ModuleStudentServices", model);
