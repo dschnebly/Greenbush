@@ -30,11 +30,15 @@
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
                 <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="duplicateService" class="btn btn-default">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
         <input type="hidden" value="@Model.IEPEndDate.ToString("yyyy-MM-dd")" id="iepEndDate" />
-
+       end date @Model.IEPEndDate.ToString("yyyy-MM-dd")
+        start date @Model.IEPStartDate.ToString("yyyy-MM-dd")
+       
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
@@ -66,10 +70,10 @@
                                             <div class="form-group">
                                                 <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
                                                     <option value="2018">2017 - 2018</option>
-                                                    <option value="2019">2019 - 2020</option>
-                                                    <option value="2020">2020 - 2021</option>
+                                                    <option value="2019">2018 - 2019</option>
+                                                    <option value="2020">2019 - 2020</option>
                                                     <option value="2021">2020 - 2021</option>
-                                                    <option value="2022">2021 - 2022</option>
+                                                    <option value="2022">2021 - 2022</option>                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -420,6 +424,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                           
                         </form>
 
                     </div>
@@ -439,10 +445,14 @@
 <script>
     $('#serviceStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
     $('#serviceEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-
+   
+    
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
     var calendarArrayOfDates = JSON.parse(model);
 
+    var availableCalendarDays = '@Html.Raw(Json.Encode(Model.availableCalendarDays))';
+    var availableCalendarDaysArray = JSON.parse(availableCalendarDays);
+   
     var Reports = '@Html.Raw(Json.Encode(Model.calendarReportings))';
     var calendarReportsArray = JSON.parse(Reports);
 
@@ -450,6 +460,49 @@
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
          trigger: 'manual'
+    });
+
+    //duplicate service for next school year
+    $('#duplicateService').on('click', function () {
+        var fiscalYears = $('[name="fiscalYear"]');
+        var dupFiscalYear;
+        var dupServiceDaysPerWeek = 0;
+        var dupserviceMinutesPerDay = 0;
+        var dupFrequency =0;
+        var dupLocation='';
+        var dupServiceType = '';
+        var dupServiceProvider = '';
+
+        if (fiscalYears.length > 0)
+            dupFiscalYear = fiscalYears.last().val();
+            
+        var serviceDaysPerWeeks = $('[name="serviceDaysPerWeek"]');
+        if (serviceDaysPerWeeks.length > 0) 
+            dupServiceDaysPerWeek = serviceDaysPerWeeks.last().val();
+
+
+        var serviceMinutesPerDays = $('[name="serviceMinutesPerDay"]');
+        if (serviceMinutesPerDays.length > 0)
+            dupserviceMinutesPerDay = serviceMinutesPerDays.last().val();
+          
+        var Frequencys = $('[name="Frequency"]');
+        if (Frequencys.length > 0)
+            dupFrequency = Frequencys.find(":selected").last().val();
+
+        var Locations = $('[name="Location"]');
+        if (Locations.length > 0)
+            dupLocation = Locations.last().find(":selected").val();
+
+        var ServiceTypes = $('[name="ServiceType"]');
+        if (ServiceTypes.length > 0)
+            dupServiceType = ServiceTypes.last().find(":selected").val();
+
+        var serviceProviders = $('[name="serviceProvider"]');
+        if (serviceProviders.length > 0)
+            dupServiceProvider = serviceProviders.last().find(":selected").val();
+
+        duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay);
+
     });
 
     /* Event */
@@ -499,6 +552,9 @@
                          if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
                      }
                  }
+                 //check end data when fiscal year changed
+                 var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
+                 getEndOfSchoolYear(endDateElement, defaultYear, "iepEndDate", 6);
              });
 
             $(this).find("input[type=date]").on('input', function (e) {
@@ -693,6 +749,14 @@
                 });
             })
 
+
+             //setup end date
+            var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
+            var defaultYear = $(this).find("select[name='fiscalYear']").val();
+            var iepEndDate = $("#iepEndDate").val();
+             //if using iep end date as default, try to find the end of the selected school year
+            if (endDateElement.val() == iepEndDate)
+                getEndOfSchoolYear(endDateElement, defaultYear, "iepEndDate", 6);
          });
      }
      initService();
@@ -730,6 +794,344 @@
          }
 
          return false;
+     }
+
+     function getEndOfSchoolYear(element, selectedYear, dateElementName, startMonth)
+     {
+         var iepDate = $('#' + dateElementName).val();
+         var lastDay;
+         //var startMonth = 6;
+
+         var Month = 0;
+         var Day = 0;
+         var Year = 0;
+         
+         var iepEndMonth = 0;
+         var iepEndDay = 0;
+         var iepEndYear = 0;
+         var iepEndDateArr = iepDate.split('-');
+
+         if (iepEndDateArr.length > 0 && iepEndDateArr.length == 3)
+         {
+             iepEndYear = iepEndDateArr[0];
+             iepEndMonth = iepEndDateArr[1];
+             iepEndDay = iepEndDateArr[2];
+         }
+
+         var iepEDDate = new Date(iepEndYear, iepEndMonth - 1, iepEndDay);
+
+         for (var i = startMonth; i > 0; i--) {
+                 Month = 0, Day = 0,Year = 0;
+
+                 var dateFound = searchLastDay(selectedYear, i)
+                 if (dateFound != undefined) {
+                     Month = dateFound.Month;
+                     Day = dateFound.Day;
+                     Year = dateFound.Year;
+                     var dfDate = new Date(Year, Month - 1, Day);
+                     if (dfDate <= iepEDDate) {
+                         lastDay = dfDate;
+                         break;
+                     }
+                 }
+         }
+                  
+         if (lastDay != undefined) {
+             // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+             // January - 0, February - 1, etc.
+             var formattedDate = formatDate(lastDay);
+             element.val(formattedDate);                          
+         }
+     }
+
+     function searchLastDay(selectedYear, startMonth)
+     {
+         var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + ")]");
+         if (dates.length > 0) {
+             var lastItem = dates.length - 1;
+             var lastDay = dates[lastItem];
+             return lastDay;
+         }
+
+     }
+
+     function searchFirstDay(selectedYear, firstYearOfFiscalYear, startMonth) {
+         var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + " && @@.Year == " + firstYearOfFiscalYear + ")]");
+         if (dates.length > 0) {             
+             return dates[0];             
+         }
+
+     }
+
+     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay)
+     {
+         var nextYear = parseInt(dupFiscalYear) + 1;
+         
+         var cloneService = $("#defaultStudentService").clone();
+         cloneService.removeClass("hidden");
+         cloneService.removeAttr("id");
+
+         // count the number of services and increment our counter in the accordian view.
+         var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 1;
+         cloneService.children().children().prop("id", "accordion[" + serviceCount + "]");
+
+         // set up the accordian click event.
+         var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
+         serviceA.attr('href', '#collapse' + serviceCount);
+
+         cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+         $('.serviceContainer').append(cloneService);
+
+         initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay);
+     }
+
+     function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider,dupserviceMinutesPerDay) {
+         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
+
+             //set to next year
+             $(this).find("select[name='fiscalYear']").val(nextYear);
+             $(this).find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
+             $(this).find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
+             $(this).find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
+             $(this).find("select[name='Location']").val(dupLocation).prop('selected', true);
+             $(this).find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
+             $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+
+
+             $(this).find("select[name='fiscalYear']").on("change", function (e) {
+                 var year = $(this).val();
+
+                 for (var i = 0; i < calendarReportsArray.length; i++) {
+                     if (calendarReportsArray[i].SchoolYear == year) {
+                         var serviceDaysPerWeek = $(this).closest(".row").find("input[name='serviceDaysPerWeek']");
+                         var serviceMinutesPerDay = $(this).closest(".row").find("input[name='serviceMinutesPerDay']");
+
+                         serviceDaysPerWeek.prop("max", calendarReportsArray[i].DaysPerWeek);
+                         if (serviceDaysPerWeek.val() > calendarReportsArray[i].DaysPerWeek) { serviceDaysPerWeek.prop("value", calendarReportsArray[i].DaysPerWeek); }
+                         serviceMinutesPerDay.prop("max", calendarReportsArray[i].MinutesPerDay);
+                         if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
+                     }
+                 }
+                 //check end data when fiscal year changed
+                 var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
+                 getEndOfSchoolYear(endDateElement, defaultYear, "iepEndDate", 6);
+             });
+
+             $(this).find("input[type=date]").on('input', function (e) {
+                 if (e.target.value == '') {
+                     e.target.setCustomValidity('You must enter a calendar date');
+                     e.target.title = 'You must enter a calendar date';
+                     e.target.parentNode.classList.add('has-error');
+
+                     return;
+                 }
+
+                 var day = new Date(e.target.value).getUTCDay();
+                 var calendaryDay = e.target.value.split('-');
+
+                 // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+                 if (day == 0) {
+                     e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
+                     e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+                     e.target.parentNode.classList.add('has-error');
+                 } else if (day == 6) {
+                     e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
+                     e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+                     e.target.parentNode.classList.add('has-error');
+                 } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
+                     e.target.setCustomValidity('OH NOES! That is day is not is session.');
+                     e.target.title = 'OH NOES! That is day is not is session.';
+                     e.target.parentNode.classList.add('has-error');
+                 } else if (e.target.value < $('#iepStartDate').val() || e.target.value > $('#iepEndDate').val()) {
+                     e.target.setCustomValidity('OH NOES! That not in range of the IEP.');
+                     e.target.title = 'OH NOES! That not in range of the IEP.';
+                     e.target.parentNode.classList.add('has-error');
+                 }
+                 else {
+                     e.target.setCustomValidity('');
+                     e.target.title = '';
+                     e.target.parentNode.classList.remove('has-error');
+                 }
+
+             });
+
+             /* Binding */
+             /* Fires where the user deletes a service */
+             $(this).find("a i.deleteService").on("click", function (e) {
+
+                 if ($(e.target).hasClass('deleteService')) {
+                     e.stopPropagation();
+
+                     var answer = confirm('Are you sure you want to delete this student service?');
+                     var oneStudentService = $(e.target);
+                     var studentServiceId = $(e.target).closest('form').find("input[name=StudentSerivceId]").val();
+                     var alertBox = $(this).closest('.oneStudentService').prev();
+
+                     if (answer) {
+                         if (studentServiceId != 0) {
+                             $.ajax({
+                                 type: 'POST',
+                                 url: '/Home/DeleteStudentService',
+                                 data: { studentServiceId: studentServiceId },
+                                 dataType: "json",
+                                 success: function (data) {
+                                     if (data.Result == "success") {
+                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                                         $("#alertMessage .moreinfo").html('Student Service successfully deleted.');
+                                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                             $("#alertMessage").slideUp(500);
+                                         });
+                                     }
+                                     else {
+                                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                             $("#alertMessage .moreinfo").html(data.Message);
+                                             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                                 $("#alertMessage").slideUp(500);
+                                             });
+                                         }
+                                     }
+                                 },
+                                 error: function (data) {
+                                     console.log("Unable to delete the student goal.");
+                                 }
+                             });
+                         }
+                         else {
+                             oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                         }
+                     }
+                 }
+
+             });
+
+             $(this).find(".number-spinner button").on("click", function () {
+
+                 var btn = $(this),
+                    oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                    newValue = parseInt(oldValue);
+
+                 if (btn.attr('data-dir') == 'up') {
+                     if (newValue < 5) {
+                         newValue = newValue + 1;
+                     }
+                 } else {
+                     if (oldValue > 1) {
+                         newValue = newValue - 1;
+                     }
+                 }
+
+                 btn.closest('.number-spinner').find('input').val(newValue);
+             });
+
+             $(this).find("input[name='serviceDaysPerWeek']").on("change", function () {
+
+                 var min = $(this).attr("min");
+                 var max = $(this).attr("max");
+                 var number = $(this).val();
+
+                 if (number > max) {
+                     $(this).val(5);
+                 }
+                 else {
+                     $(this).val(1);
+                 }
+             })
+
+             $(this).find(".minute-spinner button").on("click", function () {
+
+                 var btn = $(this),
+                     maxValue = btn.closest('.minute-spinner').find('input').prop("max"),
+                     oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
+                     newValue = parseInt(oldValue);
+
+                 if (btn.attr('data-dir') == 'up') {
+                     if (newValue < maxValue) {
+                         newValue = newValue + 1;
+                     }
+                 } else {
+                     if (oldValue > 1) {
+                         newValue = newValue - 1;
+                     }
+                 }
+
+                 btn.closest('.minute-spinner').find('input').val(newValue);
+             });
+
+             $(this).find(".addServiceGoal").on("click", function () {
+
+                 var selectGoal = $(this).prev('select');
+                 var selectGoalSelectedTitle = $(selectGoal).find("option:selected").data('title');
+                 var selectGoalSelectedId = $(selectGoal).find("option:selected").attr('value');
+
+                 var goalCount = $(".serviceStudentGoal").length + 1;
+                 if (selectGoalSelectedId != -1) {
+                     $('option:selected', selectGoal).remove();
+
+                     var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;<i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i><input type="hidden" name="studentServiceGoal' + goalCount + '" value="' + selectGoalSelectedId + '" /></h3></div></div>';
+                     $(this).closest(".row").next(".row").find(".StudentGoals").append(attachGoal);
+
+                     initGoalEvents();
+                 }
+             });
+
+             $(this).find('.saveService').on("click", function () {
+
+                 var alertBox = $(this).closest('.oneStudentService').prev();
+                 var form = $(this).closest('.oneStudentService').find('form').serialize();
+
+                 $.ajax({
+                     type: 'POST',
+                     url: '/Home/SaveStudentService',
+                     data: form,
+                     dataType: 'json',
+                     success: function (data) {
+                         if (data.Result == "success") {
+                             $("#alertMessage .moreinfo").html(data.Message);
+                             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                 $("#alertMessage").slideUp(500);
+                             });
+                         }
+                         else {
+                             $("#alertMessage .moreinfo").html('Unable to save the Student Service. Try again later.');
+                             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                 $("#alertMessage").slideUp(500);
+                             });
+                         }
+                     },
+                     error: function (data) {
+                         $("#alertMessage .moreinfo").html('Unable to connect to the database.');
+                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                             $("#alertMessage").slideUp(500);
+                         });
+                     }
+                 });
+             })
+
+
+             //setup end date
+             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
+             var iepEndDate = $("#iepEndDate").val();
+             //if using iep end date as default, try to find the end of the selected school year
+             if (endDateElement.val() == iepEndDate)
+                 getEndOfSchoolYear(endDateElement, nextYear, "iepEndDate", 6);
+
+
+             //setup start date - find by first year of selected fiscal year
+             var firstDayNextYear = searchFirstDay(nextYear, nextYear -1, 8);
+             
+             var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
+             if (firstDayNextYear != undefined) {
+                 var Month = firstDayNextYear.Month;
+                 var Day = firstDayNextYear.Day;
+                 var  Year = firstDayNextYear.Year;
+                 var dfDate = new Date(Year, Month - 1, Day);
+                 var formattedDate = formatDate(dfDate);
+                 startDateElement.val(formattedDate);
+             }
+
+            
+
+         });
      }
 
 </script>
