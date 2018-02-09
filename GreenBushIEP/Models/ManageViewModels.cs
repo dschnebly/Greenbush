@@ -276,10 +276,11 @@ namespace GreenBushIEP.Models
         public List<tblLocation> serviceLocations { get; set; }
         public List<tblGoal> studentGoals { get; set; }
         public List<tblCalendar> calendar { get; set; }
+        public List<tblCalendar> availableCalendarDays { get; set; }
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
         public DateTime IEPEndDate { get; set; }
-
+       
         public StudentServiceViewModel()
         {
             studentId = 0;
@@ -289,9 +290,10 @@ namespace GreenBushIEP.Models
             serviceLocations = new List<tblLocation>();
             studentGoals = new List<tblGoal>();
             calendar = new List<tblCalendar>();
+            availableCalendarDays = new List<tblCalendar>();
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();
-            IEPEndDate = new DateTime();
+            IEPEndDate = new DateTime();           
         }
     }
 }
