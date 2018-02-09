@@ -1,0 +1,203 @@
+﻿
+<style>
+    .onoffswitch2 {
+        position: relative;
+        width: 90px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .onoffswitch2-checkbox {
+        display: none;
+    }
+
+    .onoffswitch2-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #999999;
+        border-radius: 5px;
+    }
+
+    .onoffswitch2-inner {
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        -moz-transition: margin 0.3s ease-in 0s;
+        -webkit-transition: margin 0.3s ease-in 0s;
+        -o-transition: margin 0.3s ease-in 0s;
+        transition: margin 0.3s ease-in 0s;
+    }
+
+        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch2-inner:before {
+            content: "YES";
+            padding-left: 10px;
+            background-color: #2FCCFF;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch2-inner:after {
+            content: "NO";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+    .onoffswitch2-switch {
+        display: block;
+        width: 18px;
+        margin: 0px;
+        background: #FFFFFF;
+        border: 2px solid #999999;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 68px;
+        -moz-transition: all 0.3s ease-in 0s;
+        -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s;
+        transition: all 0.3s ease-in 0s;
+        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+        right: 0px;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;">
+        <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
+    </h4>
+</div>
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-md-12">
+            If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
+            that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
+            the student's IEP or placement if it can demostrate a bona fide security or compelling penological interest that cannot otherwise
+            be accmomodated. The following laws and regulations are not required for the students in adult correctional factilites:
+            <ul>
+                <li>participation of students in state or local assemssmentsl and &lt;needs to be a statement on the IEP&gt;</li>
+                <li>
+                    transitions planning and services with respect to an disabled student whose eligibility for special education services will end,
+                    because of the student's age, before the student is eligible to be released from correctional facility based on consideration of the student's
+                    sentence and elibiglty for early release.
+                </li>
+            </ul>
+            <fieldset class="form-group">
+                <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
+                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox">
+                    <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
+                        <span class="onoffswitch2-inner"></span>
+                        <span class="onoffswitch2-switch"></span>
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="hidden" id="studentBirthdayAgeOver21">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Statement of Courses of Study</h3>
+                <p>
+                    &lt;name&gt; will workhis primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+                    He and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
+                    district and will be meaningful to his post secondary goal of working as an &lt; technician, ect.&gt; The courses he is enrolled in for school year
+                    and those which he has taken have allow him to explore areas of high interest and determine the type of skils he will need for different career fields.
+                </p>
+                <fieldset class="form-group">
+                    <label style="padding: 25px 0 15px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
+                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox">
+                        <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
+                            <span class="onoffswitch2-inner"></span>
+                            <span class="onoffswitch2-switch"></span>
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label style="padding: 25px 0 15px;">Do the courses of study ( and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
+                    <br />
+                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
+                        <label class="onoffswitch2-label" for="alignStudentPostGoals">
+                            <span class="onoffswitch2-inner"></span>
+                            <span class="onoffswitch2-switch"></span>
+                        </label>
+                    </div>
+                </fieldset>
+                <p>
+                    The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                    maintained in the counselor's office
+                </p>
+                <fieldset class="form-group">
+                    <label for="Duration">Anticipated Graduation Month/Year</label>
+                    <div class="input-group minute-spinner" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                        </span>
+                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="2018" min="2018" max="2048">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                        </span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <select class="form-control">
+                    <option>Graduate with a High School Diploma</option>
+                    <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    // fires when the user toggles the 21st birthday question.
+    $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
+        var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
+
+        $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
+        $("#studentBirthdayAgeOver21").toggleClass("hidden");
+    });
+</script>

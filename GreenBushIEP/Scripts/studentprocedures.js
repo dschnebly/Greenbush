@@ -551,6 +551,40 @@ $(".accom-mod-section").on('click', function (e) {
     });
 });
 
+$(".transition-section").on('click', function (e) {
+    var stId = $("#stid").val();
+
+    $('.ajax-loader').css("visibility", "visible");
+
+    $.ajax({
+        type: 'GET',
+        url: '/Home/StudentTransition',
+        data: { studentId: stId },
+        dataType: 'html',
+        success: function (data) {
+            if (data.length !== 0) {
+                $("#module-form-section").html(data);
+                $('#moduleSection').modal('show');
+            }
+            else {
+                $("#alertMessage .moreinfo").html('Server Error');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            }
+        },
+        error: function (data) {
+            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        },
+        complete: function () {
+            $('.ajax-loader').css("visibility", "hidden");
+        }
+    });
+});
+
 ///////////
 // Module Scripts
 ///////////

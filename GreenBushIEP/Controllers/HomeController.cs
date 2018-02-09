@@ -701,13 +701,14 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
             tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
-            string district = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault().USD;
+            tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+            tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
             if (student != null)
             {
                 model.student = student;
                 model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year -1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                model.isDoc = db.tblDistricts.Where(d => d.USD == district).FirstOrDefault().DOC;
+                model.isDoc = district.DOC;
 
                 IEP theIEP = new IEP(student.UserID);
 
@@ -924,6 +925,20 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { Result = "error", Message = "Unknown Error Occured." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = teacher)]
+        public ActionResult StudentTransition(int studentId)
+        {
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+            if(teacher != null)
+            {
+                return PartialView("_ModuleStudentTransition");
+            }
+
+            return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
         [Authorize(Roles = teacher)]
