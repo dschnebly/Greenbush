@@ -256,9 +256,10 @@ namespace GreenBushIEP.Models
         public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string AccDescription { get; set; }
-        public string LocationCode { get; set; }
-        public int? Frequency { get; set; }
-        public int Duration { get; set; }
+        public string LocationCode { get; set; } //not currently used
+        public string Location { get; set; }
+        public string Frequency { get; set; }
+        public string Duration { get; set; }
         public DateTime? AnticipatedStartDate { get; set; }
         public DateTime? AnticipatedEndDate { get; set; }
         public string Message { get; set; }

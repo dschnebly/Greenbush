@@ -1,0 +1,247 @@
+﻿
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
+</div>
+<div class="modal-body">
+
+        
+        <fieldset class="form-group">
+           
+            <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
+                
+        </fieldset>
+
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-12">
+            <label>Summary</label>
+            <div>
+                <textarea class="form-control" name="Summary" id="Summary" rows="3" style="font-size: 21px;"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row voffset1">
+        <div class="col-md-12">
+            <label>FBA Completion Date</label>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                       id="FBACompletionDate" name="FBACompletionDate" class="form-control" aria-describedby="basic-addon1" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="row oneStudentGoal " id="defaultgoal">
+        @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.HiddenFor(model => model.AccommodationID)
+            @Html.HiddenFor(model => model.IEPid)
+            @Html.HiddenFor(model => model.StudentId)*@
+
+
+            <div class="col-md-12 voffset2">
+                <div class="panel-group" id="accordion[0]">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
+                                    <span class="glyphicon glyphicon-road"></span><span class="studentGoalLabel" style="margin-left:5px;">Behavior</span>
+                                    <span class="pull-right">
+                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                    </span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse0" class="panel-collapse">
+                            <div class="panel-body">
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Definition of Behavior</h3>
+
+                                    </div>
+                                </div>
+
+                                <div class="row voffset2">
+                                    <div class="col-md-2">
+                                        <label for="Condition">Condition</label>
+                                        <div >
+
+                                            <input type="text" id="Condition" name="Condition" class="form-control" />
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-2">
+                                        <label for="Frequency">Frequency</label>
+                                        <div>
+                                            <input id="Frequency" name="Frequency" class="form-control" />
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-2">
+                                        <div class="form-group" name="Location">
+                                            <label for="Location">Location</label><br />
+                                            <div>
+                                                <input type="text" class="form-control" name="Location" id="Location">
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-2">
+                                        <div class="form-group" name="Duration">
+                                            <label for="Duration">Duration</label><br />
+                                            <div>
+                                                <input type="text" class="form-control" name="Duration" id="Duration">
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-2">
+                                        <div class="form-group" name="Intensity">
+                                            <label for="Intensity">Intensity</label><br />
+                                            <div>
+                                                <input type="text" class="form-control" name="Intensity" id="Intensity">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Function of Behavior</h3>
+
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-2">
+                                        
+                                        <div>
+                                            <select id="FunctionOfBehvior" class="form-control">
+                                                <option value="">Select Function</option>
+                                                <option value="A">Attention</option>
+                                                <option value="E">Escape</option>
+                                                <option value="ET">Escape to Tangible</option>
+                                                <option value="S">Sensory</option>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Replacement Behavior</h3>
+
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+
+                                        <div>
+                                            <input type="text" class="form-control" name="ReplacementBehavior" id="ReplacementBehavior">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Teaching Replacement Behavior</h3>
+
+                                    </div>
+                                </div>
+
+                                <div class="row voffset2">
+                                    <div class="col-md-3">
+                                        <label for="Intervention">Intervention</label>
+                                        <div>
+
+                                            <input type="text" id="Intervention" name="Intervention" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="ResponsibleStaff">Responsible Staff</label>
+                                        <div>
+                                            <input id="ResponsibleStaff" name="ResponsibleStaff" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group" name="Location">
+                                            <label for="Consequence_Reinforcement">Consequence/Reinforcement</label><br />
+                                            <div>
+                                                <input type="text" class="form-control" name="Consequence_Reinforcement" id="Consequence_Reinforcement">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group" name="Timeline">
+                                            <label for="Timeline">Timeline</label><br />
+                                            <div>
+                                                <input type="text" class="form-control" name="Timeline" id="Timeline">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Progress Monitoring</h3>
+
+                                    </div>
+                                </div>
+
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Collection">How will data be collected?</label>
+                                        <div>
+
+                                            <input type="text" id="Collection" name="Collection" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Review">When will the plan be reviewed??</label>
+                                        <div>
+
+                                            <input type="text" id="Review" name="Review" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="row">
+                                        <div class="form-group" id="saveGroup">
+                                            <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                                <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+    </div> <!--end oneStudentGoal-->
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+   
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetModuleMotorForm").trigger("reset");
+</script>

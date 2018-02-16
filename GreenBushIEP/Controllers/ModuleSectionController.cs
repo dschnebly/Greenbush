@@ -303,8 +303,8 @@ namespace GreenBushIEP.Controllers
             avm.AccomType = model.AccomType; 
             avm.AnticipatedEndDate = model.AnticipatedEndDate;
             avm.AnticipatedStartDate = model.AnticipatedStartDate;
-            avm.LocationCode = model.LocationCode;
-            avm.Duration = model.Duration.HasValue ? model.Duration.Value : 0;
+            avm.Location = model.Location;
+            avm.Duration = model.Duration;
             avm.Frequency = model.Frequency;
 
             if (ModelState.IsValid)
@@ -406,7 +406,7 @@ namespace GreenBushIEP.Controllers
 
                 AccomodationIEP.Duration = model.Duration;
                 AccomodationIEP.Frequency = model.Frequency;
-                AccomodationIEP.LocationCode = model.LocationCode;
+                AccomodationIEP.Location = model.Location;
                 AccomodationIEP.IEPid = model.IEPid;
 
                 if (model.AccommodationID == 0)

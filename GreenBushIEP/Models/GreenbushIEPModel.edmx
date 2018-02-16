@@ -12,14 +12,15 @@
           <Property Name="AccommodationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="Frequency" Type="int" />
-          <Property Name="Duration" Type="int" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="300" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="300" />
           <Property Name="LocationCode" Type="char" MaxLength="1" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="AccomType" Type="int" Nullable="false" />
           <Property Name="AnticipatedStartDate" Type="datetime" />
           <Property Name="AnticipatedEndDate" Type="datetime" />
+          <Property Name="Location" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="tblBuildingMapping">
           <Key>
@@ -1110,8 +1111,8 @@
           <Property Name="AccommodationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Frequency" Type="Int32" />
-          <Property Name="Duration" Type="Int32" />
+          <Property Name="Frequency" Type="String" />
+          <Property Name="Duration" Type="String" />
           <Property Name="LocationCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1119,6 +1120,7 @@
           <Property Name="AnticipatedStartDate" Type="DateTime" Precision="3" />
           <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
+          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
@@ -1635,6 +1637,7 @@
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="AnticipatedEndDate" ColumnName="AnticipatedEndDate" />
                 <ScalarProperty Name="AnticipatedStartDate" ColumnName="AnticipatedStartDate" />
                 <ScalarProperty Name="AccomType" ColumnName="AccomType" />
