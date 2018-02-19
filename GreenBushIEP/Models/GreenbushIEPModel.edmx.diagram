@@ -31,12 +31,12 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblServiceType" Width="1.5" PointX="17.5" PointY="9.25" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="17.625" PointY="12.5" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="2.625" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="0.75" PointY="3" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="13.625" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="17.625" PointY="12.375" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,14 +12,15 @@
           <Property Name="AccommodationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="Frequency" Type="int" />
-          <Property Name="Duration" Type="int" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="300" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="300" />
           <Property Name="LocationCode" Type="char" MaxLength="1" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="AccomType" Type="int" Nullable="false" />
           <Property Name="AnticipatedStartDate" Type="datetime" />
           <Property Name="AnticipatedEndDate" Type="datetime" />
+          <Property Name="Location" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="tblBuildingMapping">
           <Key>
@@ -519,6 +520,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -664,15 +666,15 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
+          <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
+          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
+          <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblAccommodations" EntityType="IndividualizedEducationProgramModel.tblAccommodation" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
           </AssociationSet>
-          <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
-          <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
-          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
-          <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           </EntityContainer>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -1103,35 +1105,6 @@
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
-        <EntityType Name="tblAccommodation">
-          <Key>
-            <PropertyRef Name="AccommodationID" />
-          </Key>
-          <Property Name="AccommodationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Frequency" Type="Int32" />
-          <Property Name="Duration" Type="Int32" />
-          <Property Name="LocationCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AccomType" Type="Int32" Nullable="false" />
-          <Property Name="AnticipatedStartDate" Type="DateTime" Precision="3" />
-          <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
-        </EntityType>
-        <Association Name="FK_tblAccommodations_LocationCode">
-          <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
-          <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLocation">
-              <PropertyRef Name="LocationCode" />
-            </Principal>
-            <Dependent Role="tblAccommodation">
-              <PropertyRef Name="LocationCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblBuildingMapping">
           <Key>
             <PropertyRef Name="USD" />
@@ -1175,6 +1148,36 @@
           <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="MinutesPerDay" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblAccommodation">
+          <Key>
+            <PropertyRef Name="AccommodationID" />
+          </Key>
+          <Property Name="AccommodationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Frequency" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LocationCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AccomType" Type="Int32" Nullable="false" />
+          <Property Name="AnticipatedStartDate" Type="DateTime" Precision="3" />
+          <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
+          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
+        </EntityType>
+        <Association Name="FK_tblAccommodations_LocationCode">
+          <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocation">
+              <PropertyRef Name="LocationCode" />
+            </Principal>
+            <Dependent Role="tblAccommodation">
+              <PropertyRef Name="LocationCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1632,23 +1635,6 @@
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="tblAccommodations">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
-              <MappingFragment StoreEntitySet="tblAccommodations">
-                <ScalarProperty Name="AnticipatedEndDate" ColumnName="AnticipatedEndDate" />
-                <ScalarProperty Name="AnticipatedStartDate" ColumnName="AnticipatedStartDate" />
-                <ScalarProperty Name="AccomType" ColumnName="AccomType" />
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblBuildingMappings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuildingMapping">
               <MappingFragment StoreEntitySet="tblBuildingMapping">
@@ -1690,6 +1676,24 @@
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="calendarReportingID" ColumnName="calendarReportingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccommodations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
+              <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AnticipatedEndDate" ColumnName="AnticipatedEndDate" />
+                <ScalarProperty Name="AnticipatedStartDate" ColumnName="AnticipatedStartDate" />
+                <ScalarProperty Name="AccomType" ColumnName="AccomType" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
