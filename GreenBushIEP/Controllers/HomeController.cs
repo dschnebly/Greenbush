@@ -943,6 +943,12 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = teacher)]
+        public ActionResult BehaviorPlan(int studentId)
+        {
+            return PartialView("_ModuleBehavior");
+        }
+
+        [Authorize(Roles = teacher)]
         public ActionResult Accommodations(int studentId)
         {
             var model = new AccomodationViewModel();

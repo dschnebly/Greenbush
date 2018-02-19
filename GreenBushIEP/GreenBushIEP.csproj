@@ -527,6 +527,7 @@
     <Content Include="Views\Home\_ModuleAccommodations.cshtml" />
     <Content Include="Views\Home\_AccommodationPartial.cshtml" />
     <Content Include="Views\Home\_ModuleStudentTransition.cshtml" />
+    <Content Include="Views\Home\_ModuleBehavior.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
