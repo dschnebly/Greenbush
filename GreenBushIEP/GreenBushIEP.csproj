@@ -372,6 +372,7 @@
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\Images\cloud_one.png" />
     <Content Include="Content\Images\cloud_three.png" />
+    <Content Include="Content\Images\copying-icon.gif" />
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
     <Content Include="Content\Images\green-crop2.jpg" />

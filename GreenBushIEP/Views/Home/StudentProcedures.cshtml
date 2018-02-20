@@ -1403,15 +1403,17 @@
 
                         <hr />
 
-                        <div class="row @(Model.studentAge < 13 ? "hidden" : String.Empty )">
-                            <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
-                            <br/>
-                            <div>
-                                <b>Reminder</b>
+                        <div class="row @(Model.studentAge > 13 ? "hidden" : String.Empty )">
+                            <div class="col-md-12">
+                                <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
+                                <br />
+                                <div>
+                                    <b>Reminder</b>
+                                </div>
+                                <div>Had student been invited to the IEP meeting?</div>
+                                <div>Do you have written permission to invite other outside agencies to the IEP?</div>
+                                <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
                             </div>
-                            <div>Had student been invited to the IEP meeting</div>
-                            <div>Do you have written permission to invite other outside agencies to the IEP</div>
-                            <div>Have other agencies represnting transition services been invited to the IEP meeting</div>
                         </div>
 
                         <div class="modal-footer">

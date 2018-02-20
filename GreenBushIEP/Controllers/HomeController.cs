@@ -933,10 +933,20 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentTransition(int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
 
-            if(teacher != null)
+            tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+            tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+
+            if (teacher != null && student != null)
             {
-                return PartialView("_ModuleStudentTransition");
+                StudentTransitionViewModel model = new StudentTransitionViewModel();
+                model.studentId = studentId;
+                model.student = student;
+                model.isDOC = district.DOC;
+
+                return PartialView("_ModuleStudentTransition", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });

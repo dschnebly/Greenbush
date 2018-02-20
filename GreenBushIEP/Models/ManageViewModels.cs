@@ -297,6 +297,20 @@ namespace GreenBushIEP.Models
             IEPEndDate = new DateTime();           
         }
     }
+
+    public class StudentTransitionViewModel
+    {
+        public int studentId { get; set; }
+        public tblUser student { get; set; }
+        public bool isDOC { get; set; }
+
+        public StudentTransitionViewModel()
+        {
+            studentId = 0;
+            student = new tblUser();
+            isDOC = false;
+        }
+    }
 }
 
 public class IEPStatus

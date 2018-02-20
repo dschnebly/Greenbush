@@ -1,5 +1,17 @@
-﻿
+﻿@using GreenBushIEP.Models
+@model StudentTransitionViewModel
+
 <style>
+    .DOC {
+        background-color: #ede;
+        margin-bottom: 25px;
+    }
+
+        .DOC div {
+            padding: 8px;
+            margin: 8px;
+        }
+
     .onoffswitch2 {
         position: relative;
         width: 90px;
@@ -100,7 +112,7 @@
 </div>
 <div class="modal-body">
 
-    <div class="row">
+    <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
         <div class="col-md-12">
             If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
             that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
@@ -127,77 +139,212 @@
         </div>
     </div>
 
-    <div class="hidden" id="studentBirthdayAgeOver21">
+    <div class="@(!Model.isDOC ? String.Empty : String.Empty )" id="studentBirthdayAgeOver21">
         <div class="row">
             <div class="col-md-12">
-                <h3>Statement of Courses of Study</h3>
-                <p>
-                    &lt;name&gt; will workhis primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
-                    He and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-                    district and will be meaningful to his post secondary goal of working as an &lt; technician, ect.&gt; The courses he is enrolled in for school year
-                    and those which he has taken have allow him to explore areas of high interest and determine the type of skils he will need for different career fields.
-                </p>
-                <fieldset class="form-group">
-                    <label style="padding: 25px 0 15px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
-                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                        <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox">
-                        <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
-                            <span class="onoffswitch2-inner"></span>
-                            <span class="onoffswitch2-switch"></span>
-                        </label>
+
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Service</a></li>
+                        <li role="presentation"><a href="#assessments" aria-controls="profile" role="tab" data-toggle="tab">Assessments</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <h3>Statement of Courses of Study</h3>
+                                    <p>
+                                        @(Model.student.FirstName) @(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+                                        He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
+                                        district and will be meaningful to his post secondary goal of working as an <input type="text" placeholder="technician, ect." />. The courses he/she is enrolled in for school year
+                                        and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
+                                    </p>
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
+                                        <br />
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="alignStudentPostGoals">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                    <p>
+                                        The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                                        maintained in the counselor's office
+                                    </p>
+
+                                    <div class="col-md-3">
+                                        <fieldset class="form-group">
+                                            <label for="Duration">Anticipated Graduation Month/Year</label>
+                                            <div class="input-group year-spinner" style="width: 200px;">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                </span>
+                                                <input type="number" name="graduationYear" class="form-control text-center" value="2018" min="2018" max="2048">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                </span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label>&nbsp;</label>
+                                            <select class="form-control">
+                                                <option>Graduate with a High School Diploma</option>
+                                                <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <fieldset class="form-group">
+                                            <label for="totalcredits">Total # of Credits required by district</label>
+                                            <input type="text" name="totalcredits" class="form-control" />
+                                        </fieldset>
+                                    </div>
+
+                                    <br />
+                                    <h4><b>Vocational Rehabilitation</b></h4>
+                                    <p>Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</p>
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group hidden" id="releaseObtained">
+                                        <label style="padding: 5px 0 10px;">Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="isConfidentailReleaseObtained">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="assessments">
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newgoal" class="btn btn-default">New Transition Assesssment&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="panel-group" id="accordion[0]">
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Assessment</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse0" class="panel-collapse">
+                                                <div class="panel-body">
+                                                    <div class="row">
+
+                                                        <div class="col-md-12">
+                                                            <textarea rows="3" style="width: 100%;" class="form-group"></textarea>
+                                                            <div>Completed</div><input type="datetime" vale="" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label style="padding: 25px 0 15px;">Do the courses of study ( and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
-                    <br />
-                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                        <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
-                        <label class="onoffswitch2-label" for="alignStudentPostGoals">
-                            <span class="onoffswitch2-inner"></span>
-                            <span class="onoffswitch2-switch"></span>
-                        </label>
-                    </div>
-                </fieldset>
-                <p>
-                    The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-                    maintained in the counselor's office
-                </p>
-                <fieldset class="form-group">
-                    <label for="Duration">Anticipated Graduation Month/Year</label>
-                    <div class="input-group minute-spinner" style="width: 200px;">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                        </span>
-                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="2018" min="2018" max="2048">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                        </span>
-                    </div>
-                </fieldset>
+                </div>
+
             </div>
+
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <select class="form-control">
-                    <option>Graduate with a High School Diploma</option>
-                    <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
-                </select>
-            </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
         </div>
-    </div>
 
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-</div>
+        <script>
+            $('#myTabs a').click(function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
 
-<script>
-    // Attach Event
-    // fires when the user toggles the 21st birthday question.
-    $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
-        var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
+            // Attach Event
+            // fires when the user toggles the 21st birthday question.
+            $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
+                var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
 
-        $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
-        $("#studentBirthdayAgeOver21").toggleClass("hidden");
-    });
-</script>
+                $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
+                $("#studentBirthdayAgeOver21").toggleClass("hidden");
+            });
+
+            // Attach Event
+            // fires when the user toggles Vocational Rehabilitation question.
+            $("input[name='isVocationalRehabiltiation']").on('click', function (event) {
+                var isVocationalRehabiltiation = $("input[name='isVocationalRehabiltiation']");
+
+                $("input[name='isVocationalRehabiltiation']").is(':checked', !isVocationalRehabiltiation.prop("checked"));
+                $("#releaseObtained").toggleClass("hidden");
+            });
+
+            // Attach Event
+            // fires when the user clicks the buttons next to the graduation month
+            $(".year-spinner button").on("click", function () {
+
+                var btn = $(this),
+                    maxValue = btn.closest('.year-spinner').find('input').prop("max"),
+                    oldValue = btn.closest('.year-spinner').find('input').val().trim(),
+                    newValue = parseInt(oldValue);
+
+                if (btn.attr('data-dir') == 'up') {
+                    if (newValue < maxValue) {
+                        newValue = newValue + 1;
+                    }
+                } else {
+                    if (oldValue > 1) {
+                        newValue = newValue - 1;
+                    }
+                }
+
+                btn.closest('.year-spinner').find('input').val(newValue);
+            });
+        </script>
