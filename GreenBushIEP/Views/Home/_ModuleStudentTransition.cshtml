@@ -2,105 +2,302 @@
 @model StudentTransitionViewModel
 
 <style>
-    .DOC {
-        background-color: #ede;
-        margin-bottom: 25px;
-    }
-
-        .DOC div {
-            padding: 8px;
-            margin: 8px;
-        }
-
-    .onoffswitch2 {
-        position: relative;
-        width: 90px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-    }
-
-    .onoffswitch2-checkbox {
-        display: none;
-    }
-
-    .onoffswitch2-label {
-        display: block;
-        overflow: hidden;
-        cursor: pointer;
-        border: 2px solid #999999;
-        border-radius: 5px;
-    }
-
-    .onoffswitch2-inner {
-        display: block;
-        width: 200%;
-        margin-left: -100%;
-        -moz-transition: margin 0.3s ease-in 0s;
-        -webkit-transition: margin 0.3s ease-in 0s;
-        -o-transition: margin 0.3s ease-in 0s;
-        transition: margin 0.3s ease-in 0s;
-    }
-
-        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
-            display: block;
-            float: left;
-            width: 50%;
-            height: 30px;
-            padding: 0;
-            line-height: 30px;
-            font-size: 14px;
-            color: white;
-            font-family: Trebuchet, Arial, sans-serif;
+        .courseOfStudyHeader {
             font-weight: bold;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+            margin-top: 0;
         }
 
-        .onoffswitch2-inner:before {
-            content: "YES";
-            padding-left: 10px;
-            background-color: #2FCCFF;
-            color: #FFFFFF;
+        .assessment-needs {
+            min-width: 18rem;
         }
 
-        .onoffswitch2-inner:after {
-            content: "NO";
-            padding-right: 10px;
-            background-color: #EEEEEE;
-            color: #999999;
+        .vcenter {
+            display: flex;
+            align-items: center;
+        }
+
+        .studentClass {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .new-button-min-width {
+            min-width: 25rem;
+        }
+
+        .activity-tabs li {
+            min-width: 15rem;
+        }
+
+        .activity-textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+
+        /* ---- all this for inline editable text box ---- */
+
+        .editableform {
+            margin-bottom: 0; /* overwrites bootstrap margin */
+        }
+
+            .editableform .control-group {
+                margin-bottom: 0; /* overwrites bootstrap margin */
+                white-space: nowrap; /* prevent wrapping buttons on new line */
+                line-height: 20px; /* overwriting bootstrap line-height. See #133 */
+            }
+
+            .editableform .form-control {
+                width: auto;
+                height: 30px;
+            }
+
+        .editable-buttons {
+            display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
+            vertical-align: top;
+            margin-left: 7px;
+            /* inline-block emulation for IE7*/
+            zoom: 1;
+            *display: inline;
+        }
+
+            .editable-buttons.editable-buttons-bottom {
+                display: block;
+                margin-top: 7px;
+                margin-left: 0;
+            }
+
+        .editable-input {
+            vertical-align: top;
+            display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
+            width: auto; /* bootstrap-responsive has width: 100% that breakes layout */
+            white-space: normal; /* reset white-space decalred in parent*/
+            /* display-inline emulation for IE7*/
+            zoom: 1;
+            *display: inline;
+        }
+
+        .editable-buttons .editable-cancel {
+            margin-left: 5px;
+        }
+
+        /*for jquery-ui buttons need set height to look more pretty*/
+        .editable-buttons button.ui-button-icon-only {
+            height: 24px;
+            width: 30px;
+        }
+
+        .editableform-loading {
+            background: url('../img/loading.gif') center center no-repeat;
+            height: 25px;
+            width: auto;
+            min-width: 25px;
+        }
+
+        .editable-inline .editableform-loading {
+            background-position: left 5px;
+        }
+
+        .editable-error-block {
+            max-width: 300px;
+            margin: 5px 0 0 0;
+            width: auto;
+            white-space: normal;
+        }
+
+            /*add padding for jquery ui*/
+            .editable-error-block.ui-state-error {
+                padding: 3px;
+            }
+
+        .editable-error {
+            color: red;
+        }
+
+        /* ---- For specific types ---- */
+
+        /* move datepicker icon to center of add-on button. See https://github.com/vitalets/x-editable/issues/183 */
+
+        .editable-checklist label {
+            white-space: nowrap;
+        }
+
+        /* set exact width of textarea to fit buttons toolbar */
+        .editable-wysihtml5 {
+            width: 566px;
+            height: 250px;
+        }
+
+        /* clear button shown as link in date inputs */
+        .editable-clear {
+            clear: both;
+            font-size: 0.9em;
+            text-decoration: none;
             text-align: right;
         }
 
-    .onoffswitch2-switch {
-        display: block;
-        width: 18px;
-        margin: 0px;
-        background: #FFFFFF;
-        border: 2px solid #999999;
-        border-radius: 5px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 68px;
-        -moz-transition: all 0.3s ease-in 0s;
-        -webkit-transition: all 0.3s ease-in 0s;
-        -o-transition: all 0.3s ease-in 0s;
-        transition: all 0.3s ease-in 0s;
-        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-    }
+        /* IOS-style clear button for text inputs */
+        .editable-clear-x {
+            background: url('../img/clear.png') center center no-repeat;
+            display: block;
+            width: 13px;
+            height: 13px;
+            position: absolute;
+            opacity: 0.6;
+            z-index: 100;
+            top: 50%;
+            right: 6px;
+            margin-top: -6px;
+        }
 
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
-        margin-left: 0;
-    }
+            .editable-clear-x:hover {
+                opacity: 1;
+            }
 
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
-        right: 0px;
-    }
+        .editable-pre-wrapped {
+            white-space: pre-wrap;
+        }
+
+        .editable-container.editable-popup {
+            max-width: none !important; /* without this rule poshytip/tooltip does not stretch */
+        }
+
+        .editable-container.popover {
+            width: auto; /* without this rule popover does not stretch */
+        }
+
+        .editable-container.editable-inline {
+            display: inline-block;
+            vertical-align: middle;
+            width: auto;
+            /* inline-block emulation for IE7*/
+            zoom: 1;
+            *display: inline;
+        }
+
+        .editable-container.ui-widget {
+            font-size: inherit; /* jqueryui widget font 1.1em too big, overwrite it */
+            z-index: 9990; /* should be less than select2 dropdown z-index to close dropdown first when click */
+        }
+
+        .editable-click,
+        a.editable-click,
+        a.editable-click:hover {
+            text-decoration: none;
+            border-bottom: dashed 1px #0088cc;
+        }
+
+            .editable-click.editable-disabled,
+            a.editable-click.editable-disabled,
+            a.editable-click.editable-disabled:hover {
+                color: #585858;
+                cursor: default;
+                border-bottom: none;
+            }
+
+        .editable-empty, .editable-empty:hover, .editable-empty:focus {
+            font-style: italic;
+            color: #DD1144;
+            /* border-bottom: none; */
+            text-decoration: none;
+        }
+
+        .editable-unsaved {
+            font-weight: bold;
+        }
+        /* ---- End editable textbox ---- */
+
+
+        .onoffswitch2 {
+            position: relative;
+            width: 90px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch2-checkbox {
+            display: none;
+        }
+
+        .onoffswitch2-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 5px;
+        }
+
+        .onoffswitch2-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            -moz-transition: margin 0.3s ease-in 0s;
+            -webkit-transition: margin 0.3s ease-in 0s;
+            -o-transition: margin 0.3s ease-in 0s;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+            .onoffswitch2-inner:before, .onoffswitch2-inner:after {
+                display: block;
+                float: left;
+                width: 50%;
+                height: 30px;
+                padding: 0;
+                line-height: 30px;
+                font-size: 14px;
+                color: white;
+                font-family: Trebuchet, Arial, sans-serif;
+                font-weight: bold;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            .onoffswitch2-inner:before {
+                content: "YES";
+                padding-left: 10px;
+                background-color: #2FCCFF;
+                color: #FFFFFF;
+            }
+
+            .onoffswitch2-inner:after {
+                content: "NO";
+                padding-right: 10px;
+                background-color: #EEEEEE;
+                color: #999999;
+                text-align: right;
+            }
+
+        .onoffswitch2-switch {
+            display: block;
+            width: 18px;
+            margin: 0px;
+            background: #FFFFFF;
+            border: 2px solid #999999;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 68px;
+            -moz-transition: all 0.3s ease-in 0s;
+            -webkit-transition: all 0.3s ease-in 0s;
+            -o-transition: all 0.3s ease-in 0s;
+            transition: all 0.3s ease-in 0s;
+            background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+            background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+            background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+            background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+            right: 0px;
+        }
 </style>
 
 <div class="modal-header">
@@ -113,7 +310,8 @@
 <div class="modal-body">
 
     <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
-        <div class="col-md-12">
+        <div class="col-md-12 well">
+
             If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
             that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
             the student's IEP or placement if it can demostrate a bona fide security or compelling penological interest that cannot otherwise
@@ -136,6 +334,7 @@
                     </label>
                 </div>
             </fieldset>
+
         </div>
     </div>
 
@@ -143,26 +342,338 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div>
+                <div class="row form-group" style="margin-bottom: 0px;">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                            <li class="active">
+                                <a href="#step-1">
+                                    <h4 class="list-group-item-heading">Step 1</h4>
+                                    <p class="list-group-item-text">Transition Assessments</p>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#step-2">
+                                    <h4 class="list-group-item-heading">Step 2</h4>
+                                    <p class="list-group-item-text">Transition Goals</p>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#step-3">
+                                    <h4 class="list-group-item-heading">Step 3</h4>
+                                    <p class="list-group-item-text">Transition Planning</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row setup-content" id="step-1">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Service</a></li>
-                        <li role="presentation"><a href="#assessments" aria-controls="profile" role="tab" data-toggle="tab">Assessments</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newAssessment" class="btn btn-default">New Transition Assesssment&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="panel-group" id="assessmentDefault">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="assessmentDefault" href="#collapse">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Transition Assessment - 2/15/2018</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse" class="panel-collapse collaspse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                                <label for="narrative">Narrative</label>
+                                                                <textarea rows="3" name="narrative" style="width: 100%;"></textarea>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label for="completed">Completed On&nbsp;&nbsp;</label>
+                                                            <div class="input-group" style="margin-bottom: 5px;">
+                                                                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" value="2018-02-16">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <label for="performance">Performance</label>
+                                                            <textarea rows="2" name="performance" style="width: 100%; margin-bottom: 5px;" class="form-group"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <h3>Statement of Courses of Study</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Needs</div>
+                                        <input type="text" class="form-control" name="transitionNeeds">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Strengths</div>
+                                        <input type="text" class="form-control" name="transitionStrengths">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Preferences</div>
+                                        <input type="text" class="form-control" name="transitionPreferences">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Interest</div>
+                                        <input type="text" class="form-control" name="transitionInterest">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button id="activate-step-2" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Transition Goals</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row setup-content" id="step-2">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Education/Training Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-education[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-education[0]" href="#collapseEducation">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Education/Training Goal</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseEducation" class="panel-collapse collaspse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select class="form-control">
+                                                                <option>After Graduation</option>
+                                                                <option>After leaving High School</option>
+                                                                <option>Upon completion of High School Program</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 vcenter" style="height: 49px;">
+                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
+                                                            <span>Will</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Empyloyment Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-employment[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-employment[0]" href="#collapseEmployment">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Employment Goal</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseEmployment" class="panel-collapse collaspse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select class="form-control">
+                                                                <option>After Graduation</option>
+                                                                <option>After leaving High School</option>
+                                                                <option>Upon completion of High School Program</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 vcenter" style="height: 49px;">
+                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
+                                                            <span>Will</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px; new-button-max-width">
+                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Independent Living&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-independent[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-independent[0]" href="#collapseIndependent">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Independent Living</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseIndependent" class="panel-collapse collaspse in">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <select class="form-control">
+                                                                <option>After Graduation</option>
+                                                                <option>After leaving High School</option>
+                                                                <option>Upon completion of High School Program</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 vcenter" style="height: 49px;">
+                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
+                                                            <span>Will</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4><strong>Transition Activity List</strong></h4>
+                                    <ul class="nav nav-tabs activity-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
+                                        <li><a data-toggle="tab" href="#services">Related Services</a></li>
+                                        <li><a data-toggle="tab" href="#skills">Daily Living Skills</a></li>
+                                        <li><a data-toggle="tab" href="#vocational">Functional Vocational</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="instructions" class="tab-pane fade in active">
+                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                        </div>
+                                        <div id="services" class="tab-pane fade in">
+                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                        </div>
+                                        <div id="skills" class="tab-pane fade in">
+                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                        </div>
+                                        <div id="vocational" class="tab-pane fade in">
+                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px;">Post Secondary Transition Services were reviewed and updated?</label>&nbsp;&nbsp;
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="alignStudentPostGoals">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Transition Planning</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row setup-content" id="step-3">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
                                     <p>
-                                        @(Model.student.FirstName) @(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+                                        @(@Model.student.FirstName)&nbsp;@(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
                                         He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-                                        district and will be meaningful to his post secondary goal of working as an <input type="text" placeholder="technician, ect." />. The courses he/she is enrolled in for school year
+                                        district and will be meaningful to his post secondary goal of working as an <a href="#" id="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;">Enter occupation</a>. The courses he/she is enrolled in for school year
                                         and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
                                     </p>
                                     <fieldset class="form-group">
@@ -177,10 +688,9 @@
                                     </fieldset>
                                     <fieldset class="form-group">
                                         <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
-                                        <br />
                                         <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="alignStudentPostGoals">
+                                            <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="onoffswitch2-checkbox">
+                                            <label class="onoffswitch2-label" for="isAlignStudentPostGoals">
                                                 <span class="onoffswitch2-inner"></span>
                                                 <span class="onoffswitch2-switch"></span>
                                             </label>
@@ -190,42 +700,40 @@
                                         The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
                                         maintained in the counselor's office
                                     </p>
+                                </div>
+                            </div>
 
-                                    <div class="col-md-3">
-                                        <fieldset class="form-group">
-                                            <label for="Duration">Anticipated Graduation Month/Year</label>
-                                            <div class="input-group year-spinner" style="width: 200px;">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                </span>
-                                                <input type="number" name="graduationYear" class="form-control text-center" value="2018" min="2018" max="2048">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                </span>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <fieldset class="form-group">
-                                            <label>&nbsp;</label>
-                                            <select class="form-control">
-                                                <option>Graduate with a High School Diploma</option>
-                                                <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
-                                            </select>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <fieldset class="form-group">
-                                            <label for="totalcredits">Total # of Credits required by district</label>
-                                            <input type="text" name="totalcredits" class="form-control" />
-                                        </fieldset>
-                                    </div>
-
-                                    <br />
-                                    <h4><b>Vocational Rehabilitation</b></h4>
-                                    <p>Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</p>
+                            <div class="row">
+                                <div class="col-md-3">
                                     <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
+                                        <label for="Duration">Anticipated Graduation Month/Year</label>
+                                        <div class="input-group">
+                                            <input type="month" name="graduationYear" class="form-control text-center" value="2018" min="2018" max="2048" style="width: 24rem;">
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset class="form-group">
+                                        <label>&nbsp;</label>
+                                        <select class="form-control">
+                                            <option>Graduate with a High School Diploma</option>
+                                            <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-3">
+                                    <fieldset class="form-group">
+                                        <label for="totalcredits">Total # of Credits required by district</label>
+                                        <input type="text" name="totalcredits" class="form-control" />
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:15px;">
+                                <div class="col-md-12">
+                                    <h4><b>Vocational Rehabilitation</b></h4>
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px;">Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</label>&nbsp;&nbsp;
                                         <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                                             <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox">
                                             <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
@@ -244,49 +752,6 @@
                                             </label>
                                         </div>
                                     </fieldset>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="assessments">
-                            <br />
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newgoal" class="btn btn-default">New Transition Assesssment&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <div class="panel-group" id="accordion[0]">
-
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Assessment</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse0" class="panel-collapse">
-                                                <div class="panel-body">
-                                                    <div class="row">
-
-                                                        <div class="col-md-12">
-                                                            <textarea rows="3" style="width: 100%;" class="form-group"></textarea>
-                                                            <div>Completed</div><input type="datetime" vale="" />
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
 
@@ -295,56 +760,81 @@
                 </div>
 
             </div>
-
         </div>
 
         <div class="modal-footer">
             <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
         </div>
+    </div>
 
-        <script>
-            $('#myTabs a').click(function (e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
+</div>
+<script src="~/Scripts/editable.js"></script>
+<script>
+    $(document).ready(function () {
 
-            // Attach Event
-            // fires when the user toggles the 21st birthday question.
-            $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
-                var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
+        var navListItems = $('ul.setup-panel li a'),
+            allWells = $('.setup-content');
 
-                $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
-                $("#studentBirthdayAgeOver21").toggleClass("hidden");
-            });
+        allWells.hide();
 
-            // Attach Event
-            // fires when the user toggles Vocational Rehabilitation question.
-            $("input[name='isVocationalRehabiltiation']").on('click', function (event) {
-                var isVocationalRehabiltiation = $("input[name='isVocationalRehabiltiation']");
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this).closest('li');
 
-                $("input[name='isVocationalRehabiltiation']").is(':checked', !isVocationalRehabiltiation.prop("checked"));
-                $("#releaseObtained").toggleClass("hidden");
-            });
+            if (!$item.hasClass('disabled')) {
+                navListItems.closest('li').removeClass('active');
+                $item.addClass('active');
+                allWells.hide();
+                $target.show();
+            }
+        });
 
-            // Attach Event
-            // fires when the user clicks the buttons next to the graduation month
-            $(".year-spinner button").on("click", function () {
+        $('ul.setup-panel li.active a').trigger('click');
 
-                var btn = $(this),
-                    maxValue = btn.closest('.year-spinner').find('input').prop("max"),
-                    oldValue = btn.closest('.year-spinner').find('input').val().trim(),
-                    newValue = parseInt(oldValue);
+        $('#activate-step-2').on('click', function (e) {
+            $('ul.setup-panel li:eq(1)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+            $(this).remove();
+        });
 
-                if (btn.attr('data-dir') == 'up') {
-                    if (newValue < maxValue) {
-                        newValue = newValue + 1;
-                    }
-                } else {
-                    if (oldValue > 1) {
-                        newValue = newValue - 1;
-                    }
-                }
+        $('#activate-step-3').on('click', function (e) {
+            $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+            $(this).remove();
+        });
 
-                btn.closest('.year-spinner').find('input').val(newValue);
-            });
-        </script>
+
+    });
+
+    $('ul.setup-panel li.active a').trigger('click');
+
+    //inline editable
+    $('#inline-occupation').editable({
+        type: 'text',
+        pk: 1,
+        name: 'occupation',
+        title: 'Enter occupation',
+        mode: 'inline'
+    });
+
+    // Attach Event
+    // fires when the user toggles the 21st birthday question.
+    $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
+        var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
+
+        $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
+        $("#studentBirthdayAgeOver21").toggleClass("hidden");
+    });
+
+    // Attach Event
+    // fires when the user toggles Vocational Rehabilitation question.
+    $("input[name='isVocationalRehabiltiation']").on('click', function (event) {
+        var isVocationalRehabiltiation = $("input[name='isVocationalRehabiltiation']");
+
+        $("input[name='isVocationalRehabiltiation']").is(':checked', !isVocationalRehabiltiation.prop("checked"));
+        $("#releaseObtained").toggleClass("hidden");
+    });
+
+
+</script>

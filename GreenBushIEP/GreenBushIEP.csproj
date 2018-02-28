@@ -438,6 +438,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\createstudent.js" />
+    <Content Include="Scripts\editable.js" />
     <Content Include="Scripts\jsonpath.js" />
     <Content Include="Scripts\fasw.transitions.js" />
     <Content Include="Scripts\fasw.transitions.min.js" />

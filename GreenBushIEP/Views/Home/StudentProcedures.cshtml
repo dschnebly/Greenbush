@@ -1083,7 +1083,7 @@
                     </div>
 
                 </li>
-                <li class="ui-state-default filter planning"> @*@((Model.isDoc) ? String.Empty : "hidden" )">*@
+                <li class="ui-state-default filter planning @((Model.studentAge > 13 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )">
 
                     <div class="hero-widget well">
                         <div class="icon">
@@ -1403,7 +1403,7 @@
 
                         <hr />
 
-                        <div class="row @(Model.studentAge > 13 ? "hidden" : String.Empty )">
+                        <div class="row @((Model.studentAge > 13 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
                                 <br />
