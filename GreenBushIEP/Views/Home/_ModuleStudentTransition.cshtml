@@ -2,302 +2,302 @@
 @model StudentTransitionViewModel
 
 <style>
-        .courseOfStudyHeader {
-            font-weight: bold;
-            margin-top: 0;
-        }
+    .courseOfStudyHeader {
+        font-weight: bold;
+        margin-top: 0;
+    }
 
-        .assessment-needs {
-            min-width: 18rem;
-        }
+    .assessment-needs {
+        min-width: 18rem;
+    }
 
-        .vcenter {
-            display: flex;
-            align-items: center;
-        }
+    .vcenter {
+        display: flex;
+        align-items: center;
+    }
 
-        .studentClass {
-            font-size: 14px;
-            font-weight: bold;
-        }
+    .studentClass {
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-        .new-button-min-width {
-            min-width: 25rem;
-        }
+    .new-button-min-width {
+        min-width: 25rem;
+    }
 
-        .activity-tabs li {
-            min-width: 15rem;
-        }
+    .activity-tabs li {
+        min-width: 15rem;
+    }
 
-        .activity-textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-        }
+    .activity-textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+    }
 
 
-        /* ---- all this for inline editable text box ---- */
+    /* ---- all this for inline editable text box ---- */
 
-        .editableform {
+    .editableform {
+        margin-bottom: 0; /* overwrites bootstrap margin */
+    }
+
+        .editableform .control-group {
             margin-bottom: 0; /* overwrites bootstrap margin */
+            white-space: nowrap; /* prevent wrapping buttons on new line */
+            line-height: 20px; /* overwriting bootstrap line-height. See #133 */
         }
 
-            .editableform .control-group {
-                margin-bottom: 0; /* overwrites bootstrap margin */
-                white-space: nowrap; /* prevent wrapping buttons on new line */
-                line-height: 20px; /* overwriting bootstrap line-height. See #133 */
-            }
-
-            .editableform .form-control {
-                width: auto;
-                height: 30px;
-            }
-
-        .editable-buttons {
-            display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
-            vertical-align: top;
-            margin-left: 7px;
-            /* inline-block emulation for IE7*/
-            zoom: 1;
-            *display: inline;
-        }
-
-            .editable-buttons.editable-buttons-bottom {
-                display: block;
-                margin-top: 7px;
-                margin-left: 0;
-            }
-
-        .editable-input {
-            vertical-align: top;
-            display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
-            width: auto; /* bootstrap-responsive has width: 100% that breakes layout */
-            white-space: normal; /* reset white-space decalred in parent*/
-            /* display-inline emulation for IE7*/
-            zoom: 1;
-            *display: inline;
-        }
-
-        .editable-buttons .editable-cancel {
-            margin-left: 5px;
-        }
-
-        /*for jquery-ui buttons need set height to look more pretty*/
-        .editable-buttons button.ui-button-icon-only {
-            height: 24px;
-            width: 30px;
-        }
-
-        .editableform-loading {
-            background: url('../img/loading.gif') center center no-repeat;
-            height: 25px;
+        .editableform .form-control {
             width: auto;
-            min-width: 25px;
+            height: 30px;
         }
 
-        .editable-inline .editableform-loading {
-            background-position: left 5px;
-        }
+    .editable-buttons {
+        display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
+        vertical-align: top;
+        margin-left: 7px;
+        /* inline-block emulation for IE7*/
+        zoom: 1;
+        *display: inline;
+    }
 
-        .editable-error-block {
-            max-width: 300px;
-            margin: 5px 0 0 0;
-            width: auto;
-            white-space: normal;
-        }
-
-            /*add padding for jquery ui*/
-            .editable-error-block.ui-state-error {
-                padding: 3px;
-            }
-
-        .editable-error {
-            color: red;
-        }
-
-        /* ---- For specific types ---- */
-
-        /* move datepicker icon to center of add-on button. See https://github.com/vitalets/x-editable/issues/183 */
-
-        .editable-checklist label {
-            white-space: nowrap;
-        }
-
-        /* set exact width of textarea to fit buttons toolbar */
-        .editable-wysihtml5 {
-            width: 566px;
-            height: 250px;
-        }
-
-        /* clear button shown as link in date inputs */
-        .editable-clear {
-            clear: both;
-            font-size: 0.9em;
-            text-decoration: none;
-            text-align: right;
-        }
-
-        /* IOS-style clear button for text inputs */
-        .editable-clear-x {
-            background: url('../img/clear.png') center center no-repeat;
+        .editable-buttons.editable-buttons-bottom {
             display: block;
-            width: 13px;
-            height: 13px;
-            position: absolute;
-            opacity: 0.6;
-            z-index: 100;
-            top: 50%;
-            right: 6px;
-            margin-top: -6px;
-        }
-
-            .editable-clear-x:hover {
-                opacity: 1;
-            }
-
-        .editable-pre-wrapped {
-            white-space: pre-wrap;
-        }
-
-        .editable-container.editable-popup {
-            max-width: none !important; /* without this rule poshytip/tooltip does not stretch */
-        }
-
-        .editable-container.popover {
-            width: auto; /* without this rule popover does not stretch */
-        }
-
-        .editable-container.editable-inline {
-            display: inline-block;
-            vertical-align: middle;
-            width: auto;
-            /* inline-block emulation for IE7*/
-            zoom: 1;
-            *display: inline;
-        }
-
-        .editable-container.ui-widget {
-            font-size: inherit; /* jqueryui widget font 1.1em too big, overwrite it */
-            z-index: 9990; /* should be less than select2 dropdown z-index to close dropdown first when click */
-        }
-
-        .editable-click,
-        a.editable-click,
-        a.editable-click:hover {
-            text-decoration: none;
-            border-bottom: dashed 1px #0088cc;
-        }
-
-            .editable-click.editable-disabled,
-            a.editable-click.editable-disabled,
-            a.editable-click.editable-disabled:hover {
-                color: #585858;
-                cursor: default;
-                border-bottom: none;
-            }
-
-        .editable-empty, .editable-empty:hover, .editable-empty:focus {
-            font-style: italic;
-            color: #DD1144;
-            /* border-bottom: none; */
-            text-decoration: none;
-        }
-
-        .editable-unsaved {
-            font-weight: bold;
-        }
-        /* ---- End editable textbox ---- */
-
-
-        .onoffswitch2 {
-            position: relative;
-            width: 90px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .onoffswitch2-checkbox {
-            display: none;
-        }
-
-        .onoffswitch2-label {
-            display: block;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid #999999;
-            border-radius: 5px;
-        }
-
-        .onoffswitch2-inner {
-            display: block;
-            width: 200%;
-            margin-left: -100%;
-            -moz-transition: margin 0.3s ease-in 0s;
-            -webkit-transition: margin 0.3s ease-in 0s;
-            -o-transition: margin 0.3s ease-in 0s;
-            transition: margin 0.3s ease-in 0s;
-        }
-
-            .onoffswitch2-inner:before, .onoffswitch2-inner:after {
-                display: block;
-                float: left;
-                width: 50%;
-                height: 30px;
-                padding: 0;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                font-family: Trebuchet, Arial, sans-serif;
-                font-weight: bold;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-            }
-
-            .onoffswitch2-inner:before {
-                content: "YES";
-                padding-left: 10px;
-                background-color: #2FCCFF;
-                color: #FFFFFF;
-            }
-
-            .onoffswitch2-inner:after {
-                content: "NO";
-                padding-right: 10px;
-                background-color: #EEEEEE;
-                color: #999999;
-                text-align: right;
-            }
-
-        .onoffswitch2-switch {
-            display: block;
-            width: 18px;
-            margin: 0px;
-            background: #FFFFFF;
-            border: 2px solid #999999;
-            border-radius: 5px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 68px;
-            -moz-transition: all 0.3s ease-in 0s;
-            -webkit-transition: all 0.3s ease-in 0s;
-            -o-transition: all 0.3s ease-in 0s;
-            transition: all 0.3s ease-in 0s;
-            background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-            background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-            background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-            background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        }
-
-        .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+            margin-top: 7px;
             margin-left: 0;
         }
 
-        .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
-            right: 0px;
+    .editable-input {
+        vertical-align: top;
+        display: inline-block; /* should be inline to take effect of parent's white-space: nowrap */
+        width: auto; /* bootstrap-responsive has width: 100% that breakes layout */
+        white-space: normal; /* reset white-space decalred in parent*/
+        /* display-inline emulation for IE7*/
+        zoom: 1;
+        *display: inline;
+    }
+
+    .editable-buttons .editable-cancel {
+        margin-left: 5px;
+    }
+
+    /*for jquery-ui buttons need set height to look more pretty*/
+    .editable-buttons button.ui-button-icon-only {
+        height: 24px;
+        width: 30px;
+    }
+
+    .editableform-loading {
+        background: url('../img/loading.gif') center center no-repeat;
+        height: 25px;
+        width: auto;
+        min-width: 25px;
+    }
+
+    .editable-inline .editableform-loading {
+        background-position: left 5px;
+    }
+
+    .editable-error-block {
+        max-width: 300px;
+        margin: 5px 0 0 0;
+        width: auto;
+        white-space: normal;
+    }
+
+        /*add padding for jquery ui*/
+        .editable-error-block.ui-state-error {
+            padding: 3px;
         }
+
+    .editable-error {
+        color: red;
+    }
+
+    /* ---- For specific types ---- */
+
+    /* move datepicker icon to center of add-on button. See https://github.com/vitalets/x-editable/issues/183 */
+
+    .editable-checklist label {
+        white-space: nowrap;
+    }
+
+    /* set exact width of textarea to fit buttons toolbar */
+    .editable-wysihtml5 {
+        width: 566px;
+        height: 250px;
+    }
+
+    /* clear button shown as link in date inputs */
+    .editable-clear {
+        clear: both;
+        font-size: 0.9em;
+        text-decoration: none;
+        text-align: right;
+    }
+
+    /* IOS-style clear button for text inputs */
+    .editable-clear-x {
+        background: url('../img/clear.png') center center no-repeat;
+        display: block;
+        width: 13px;
+        height: 13px;
+        position: absolute;
+        opacity: 0.6;
+        z-index: 100;
+        top: 50%;
+        right: 6px;
+        margin-top: -6px;
+    }
+
+        .editable-clear-x:hover {
+            opacity: 1;
+        }
+
+    .editable-pre-wrapped {
+        white-space: pre-wrap;
+    }
+
+    .editable-container.editable-popup {
+        max-width: none !important; /* without this rule poshytip/tooltip does not stretch */
+    }
+
+    .editable-container.popover {
+        width: auto; /* without this rule popover does not stretch */
+    }
+
+    .editable-container.editable-inline {
+        display: inline-block;
+        vertical-align: middle;
+        width: auto;
+        /* inline-block emulation for IE7*/
+        zoom: 1;
+        *display: inline;
+    }
+
+    .editable-container.ui-widget {
+        font-size: inherit; /* jqueryui widget font 1.1em too big, overwrite it */
+        z-index: 9990; /* should be less than select2 dropdown z-index to close dropdown first when click */
+    }
+
+    .editable-click,
+    a.editable-click,
+    a.editable-click:hover {
+        text-decoration: none;
+        border-bottom: dashed 1px #0088cc;
+    }
+
+        .editable-click.editable-disabled,
+        a.editable-click.editable-disabled,
+        a.editable-click.editable-disabled:hover {
+            color: #585858;
+            cursor: default;
+            border-bottom: none;
+        }
+
+    .editable-empty, .editable-empty:hover, .editable-empty:focus {
+        font-style: italic;
+        color: #DD1144;
+        /* border-bottom: none; */
+        text-decoration: none;
+    }
+
+    .editable-unsaved {
+        font-weight: bold;
+    }
+    /* ---- End editable textbox ---- */
+
+
+    .onoffswitch2 {
+        position: relative;
+        width: 90px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .onoffswitch2-checkbox {
+        display: none;
+    }
+
+    .onoffswitch2-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #999999;
+        border-radius: 5px;
+    }
+
+    .onoffswitch2-inner {
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        -moz-transition: margin 0.3s ease-in 0s;
+        -webkit-transition: margin 0.3s ease-in 0s;
+        -o-transition: margin 0.3s ease-in 0s;
+        transition: margin 0.3s ease-in 0s;
+    }
+
+        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch2-inner:before {
+            content: "YES";
+            padding-left: 10px;
+            background-color: #2FCCFF;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch2-inner:after {
+            content: "NO";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+    .onoffswitch2-switch {
+        display: block;
+        width: 18px;
+        margin: 0px;
+        background: #FFFFFF;
+        border: 2px solid #999999;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 68px;
+        -moz-transition: all 0.3s ease-in 0s;
+        -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s;
+        transition: all 0.3s ease-in 0s;
+        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+        right: 0px;
+    }
 </style>
 
 <div class="modal-header">
@@ -360,7 +360,13 @@
                             <li class="disabled">
                                 <a href="#step-3">
                                     <h4 class="list-group-item-heading">Step 3</h4>
-                                    <p class="list-group-item-text">Transition Planning</p>
+                                    <p class="list-group-item-text">Transition Services</p>
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#step-4">
+                                    <h4 class="list-group-item-heading">Step 4</h4>
+                                    <p class="list-group-item-text">Course of Study</p>
                                 </a>
                             </li>
                         </ul>
@@ -615,32 +621,6 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4><strong>Transition Activity List</strong></h4>
-                                    <ul class="nav nav-tabs activity-tabs">
-                                        <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-                                        <li><a data-toggle="tab" href="#services">Related Services</a></li>
-                                        <li><a data-toggle="tab" href="#skills">Daily Living Skills</a></li>
-                                        <li><a data-toggle="tab" href="#vocational">Functional Vocational</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div id="instructions" class="tab-pane fade in active">
-                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                        </div>
-                                        <div id="services" class="tab-pane fade in">
-                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                        </div>
-                                        <div id="skills" class="tab-pane fade in">
-                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                        </div>
-                                        <div id="vocational" class="tab-pane fade in">
-                                            <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
                                     <fieldset class="form-group">
                                         <label style="padding: 5px 0 10px;">Post Secondary Transition Services were reviewed and updated?</label>&nbsp;&nbsp;
                                         <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
@@ -656,7 +636,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Transition Planning</button>
+                                    <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Transition Services</button>
                                 </div>
                             </div>
 
@@ -664,6 +644,40 @@
                     </div>
                 </div>
                 <div class="row setup-content" id="step-3">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <label for="instructions">Instructions</label>
+                                    <div id="instructions" class="tab-pane fade in active">
+                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                    </div>
+                                    <label for="services">Related Services</label>
+                                    <div id="services" class="tab-pane fade in">
+                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                    </div>
+                                    <label for="skills">Daily Living Skills</label>
+                                    <div id="skills" class="tab-pane fade in">
+                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                    </div>
+                                    <label for="vocational">Functional Vocational</label>
+                                    <div id="vocational" class="tab-pane fade in">
+                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button id="activate-step-4" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Course of Study</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row setup-content" id="step-4">
                     <div class="col-xs-12">
                         <div class="col-md-12 well" style="background-color: transparent;">
 
@@ -804,6 +818,11 @@
             $(this).remove();
         });
 
+        $('#activate-step-4').on('click', function (e) {
+            $('ul.setup-panel li:eq(3)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-4"]').trigger('click');
+            $(this).remove();
+        });
 
     });
 
