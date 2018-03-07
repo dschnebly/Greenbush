@@ -32,7 +32,19 @@
     .activity-textarea {
         width: 100%;
         padding: 8px;
-        margin: 10px 0;
+        /*margin: 10px 0 ;*/
+    }
+
+    .newTransitionLabel {
+        margin-left: 8px;
+    }
+
+    #transitionAssessmentContainer {
+        margin-bottom: 20px;
+    }
+
+    .transitionAssessment {
+        margin-bottom: 10px;
     }
 
 
@@ -338,7 +350,7 @@
         </div>
     </div>
 
-    <div class="@(!Model.isDOC ? String.Empty : String.Empty )" id="studentBirthdayAgeOver21">
+    <div class="@(!Model.isDOC ? String.Empty : "hidden" )" id="studentBirthdayAgeOver21">
         <div class="row">
             <div class="col-md-12">
 
@@ -351,13 +363,13 @@
                                     <p class="list-group-item-text">Transition Assessments</p>
                                 </a>
                             </li>
-                            <li class="disabled">
+                            <li class="@(Model.goals.Count > 0 ? "active" : "disabled")">
                                 <a href="#step-2">
                                     <h4 class="list-group-item-heading">Step 2</h4>
                                     <p class="list-group-item-text">Transition Goals</p>
                                 </a>
                             </li>
-                            <li class="disabled">
+                            <li class="@(Model.services.Count > 0 ? "active" : "disabled")">
                                 <a href="#step-3">
                                     <h4 class="list-group-item-heading">Step 3</h4>
                                     <p class="list-group-item-text">Transition Services</p>
@@ -378,25 +390,25 @@
 
                             <div class="row">
                                 <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newAssessment" class="btn btn-default">New Transition Assesssment&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    <button id="newTransitionAssessment" class="btn btn-default">New Transition Assesssment&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="assessmentDefault">
+                                <div class="col-md-12" id="transitionAssessmentContainer">
+                                    <div class="panel-group hidden transitionAssessment" id="assessmentDefault">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a class="btnToggle" data-toggle="collapse" data-parent="assessmentDefault" href="#collapse">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Transition Assessment - 2/15/2018</span>
+                                                        <span class="glyphicon glyphicon-random"></span><span class="newTransitionLabel">Transition Assessment - </span><span class="transitionTitleDate">2/15/2018</span>
                                                         <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                            <i class="glyphicon glyphicon-trash deleteTransitionAssessment"></i>
                                                         </span>
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <div id="collapse" class="panel-collapse collaspse in">
+                                            <div id="collapse" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
@@ -411,7 +423,7 @@
                                                             <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                             <div class="input-group" style="margin-bottom: 5px;">
                                                                 <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" value="2018-02-16">
+                                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" value="">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-9">
@@ -423,6 +435,53 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if (Model.assessments.Count > 0)
+                                    {
+                                        foreach (var assessment in Model.assessments)
+                                        {
+                                            <div class="panel-group transitionAssessment" id="assessment@(assessment.TransitionAssementID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="assessment@(assessment.TransitionAssementID)" href="#collapseAssessment@(assessment.TransitionAssementID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="newTransitionLabel">Transition Assessment - </span><span>2/15/2018</span>
+                                                                <span class="pull-right">
+                                                                    <i class="glyphicon glyphicon-trash deleteTransitionAssessment"></i>
+                                                                </span>
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseAssessment@(assessment.TransitionAssementID)" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                                        <label for="narrative">Narrative</label>
+                                                                        <textarea rows="3" name="narrative" style="width: 100%;">@(assessment.Narrative)</textarea>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label for="completed">Completed On&nbsp;&nbsp;</label>
+                                                                    <div class="input-group" style="margin-bottom: 5px;">
+                                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" value="@(assessment.CompletedOn?.ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <label for="performance">Performance</label>
+                                                                    <textarea rows="2" name="performance" style="width: 100%; margin-bottom: 5px;" class="form-group">@(assessment.Performance)</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
                                 </div>
                             </div>
 
@@ -488,7 +547,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-education[0]" href="#collapseEducation">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Education/Training Goal</span>
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
                                                         <span class="pull-right">
                                                             <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                                         </span>
@@ -536,7 +595,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-employment[0]" href="#collapseEmployment">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Employment Goal</span>
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Employment Goal</span>
                                                         <span class="pull-right">
                                                             <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                                         </span>
@@ -572,7 +631,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px; new-button-max-width">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
                                     <button id="newgoal" class="btn btn-default new-button-min-width">New Independent Living&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                                 </div>
                             </div>
@@ -584,7 +643,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-independent[0]" href="#collapseIndependent">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:5px;">Independent Living</span>
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Independent Living</span>
                                                         <span class="pull-right">
                                                             <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                                         </span>
@@ -649,21 +708,220 @@
 
                             <div class="row">
                                 <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <label for="instructions">Instructions</label>
-                                    <div id="instructions" class="tab-pane fade in active">
-                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                    <button id="newInstructions" class="btn btn-default new-button-min-width">New Instruction&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-instructions[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-instructions[0]" href="#collapseInstructions">
+                                                        <span class="glyphicon glyphicon-random"></span><span class="studentTransitionInstruuction" style="margin-left:8px;">Instruction</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseInstructions" class="collapse">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="instructionDescription">Description</label>
+                                                            <div>
+                                                                <textarea id="instructionDescription" rows="3" name="instructionDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="instructionsFrequency">Frequency</label>
+                                                            <div>
+                                                                <input class="form-control" id="instructionsFrequency" maxlength="300" name="instructionsFrequency" type="text" value="once a week">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="instructionsDuration">Duration</label>
+                                                            <div>
+                                                                <input class="form-control" id="instructionsDuration" maxlength="300" name="instructionsDuration" type="text" value="30 minuets at a time">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="instructionsLocation">Location</label>
+                                                            <div>
+                                                                <input class="form-control" id="instructionsLocation" maxlength="300" name="instructionsLocation" type="text" value="where will the activity occur?">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label for="services">Related Services</label>
-                                    <div id="services" class="tab-pane fade in">
-                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newService" class="btn btn-default new-button-min-width">New Related Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-service[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-service[0]" href="#collapseService">
+                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Related Service</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseService" class="collapse">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="serviceDescription">Description</label>
+                                                            <div>
+                                                                <textarea id="serviceDescription" rows="3" name="instructionDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="serviceFrequency">Frequency</label>
+                                                            <div>
+                                                                <input class="form-control" id="serviceFrequency" maxlength="300" name="instructionsFrequency" type="text" value="once a week">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="serviceDuration">Duration</label>
+                                                            <div>
+                                                                <input class="form-control" id="serviceDuration" maxlength="300" name="instructionsDuration" type="text" value="30 minuets at a time">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="serviceLocation">Location</label>
+                                                            <div>
+                                                                <input class="form-control" id="serviceLocation" maxlength="300" name="instructionsLocation" type="text" value="where will the activity occur?">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label for="skills">Daily Living Skills</label>
-                                    <div id="skills" class="tab-pane fade in">
-                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newService" class="btn btn-default new-button-min-width">New Daily Living Skill&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-skill[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-skill[0]" href="#collapseSkill">
+                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Daily Living Skills</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseSkill" class="collapse">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="skillDescription">Description</label>
+                                                            <div>
+                                                                <textarea id="skillDescription" rows="3" name="skillDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="skillFrequency">Frequency</label>
+                                                            <div>
+                                                                <input class="form-control" id="skillFrequency" maxlength="300" name="skillFrequency" type="text" value="once a week">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="skillDuration">Duration</label>
+                                                            <div>
+                                                                <input class="form-control" id="skillDuration" maxlength="300" name="skillDuration" type="text" value="30 minuets at a time">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="skillLocation">Location</label>
+                                                            <div>
+                                                                <input class="form-control" id="skillLocation" maxlength="300" name="skillLocation" type="text" value="where will the activity occur?">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label for="vocational">Functional Vocational</label>
-                                    <div id="vocational" class="tab-pane fade in">
-                                        <textarea rows="3" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" style="margin-bottom: 12px;">
+                                    <button id="newVocational" class="btn btn-default new-button-min-width">New Functional Vocational&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group" id="accordion-vocational[0]">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-vocational[0]" href="#collapseVocational">
+                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Functional Vocational</span>
+                                                        <span class="pull-right">
+                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                                        </span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseVocational" class="collapse">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="vocationalDescription">Description</label>
+                                                            <div>
+                                                                <textarea id="vocationalDescription" rows="3" name="vocationalDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="vocationalFrequency">Frequency</label>
+                                                            <div>
+                                                                <input class="form-control" id="vocationalFrequency" maxlength="300" name="vocationalFrequency" type="text" value="once a week">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="vocationalDuration">Duration</label>
+                                                            <div>
+                                                                <input class="form-control" id="vocationalDuration" maxlength="300" name="vocationalDuration" type="text" value="30 minuets at a time">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label for="vocationalLocation">Location</label>
+                                                            <div>
+                                                                <input class="form-control" id="vocationalLocation" maxlength="300" name="vocationalLocation" type="text" value="where will the activity occur?">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -855,5 +1113,39 @@
         $("#releaseObtained").toggleClass("hidden");
     });
 
+    $("#newTransitionAssessment").on("click", function () {
+        var cloneAssessment = $("#assessmentDefault").clone();
+        cloneAssessment.removeClass("hidden");
+        cloneAssessment.removeAttr("id");
+        cloneAssessment.find(".transitionTitleDate").html(new Date(Date.now()).toLocaleString().split(',')[0]);
 
+        var assessmentCount = $(".transitionAssessment").not("#assessmentDefault").length + 1;
+        cloneAssessment.prop("id", "assessmentIndentity" + assessmentCount);
+        cloneAssessment.find(".transitionAssessment").prop("id", "assessment" + assessmentCount);
+        cloneAssessment.find('[data-parent="assessmentDefault"]').attr("data-parent", "assessmentIndentity" + assessmentCount).prop("href", "#collapseAssessment" + assessmentCount);
+        cloneAssessment.find(".panel-body").parent().prop("id", "collapseAssessment" + assessmentCount);
+
+        // close all but the last assessment.
+        $(".transitionAssessment").not("#assessmentDefault").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionAssessmentContainer").append(cloneAssessment);
+
+        initAssessments();
+    });
+
+    function initAssessments()
+    {
+        $('.transitionAssessment').not('#assessmentDefault').not('.bound').addClass('bound').each(function (index) {
+            
+            $(this).find(".deleteTransitionAssessment").on("click", function (e) {
+                e.stopPropagation();
+
+                var answer = confirm('Are you sure you want to delete this transition assessment?');
+                if (answer) {
+                    $(this).closest(".transitionAssessment").remove();
+                }
+            });
+
+        });
+    }
 </script>
