@@ -1,4 +1,7 @@
-﻿
+﻿@model GreenBushIEP.Models.BehaviorViewModel
+<style></style>
+
+<link href="/Content/chosen.css" rel="stylesheet" />
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
@@ -7,40 +10,40 @@
 </div>
 <div class="modal-body">
 
-        
-        <fieldset class="form-group">
-           
-            <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
-                
-        </fieldset>
 
-    <div class="row" style="margin-top:10px;">
-        <div class="col-md-12">
-            <label>Summary</label>
-            <div>
-                <textarea class="form-control" name="Summary" id="Summary" rows="3" style="font-size: 21px;"></textarea>
+    <fieldset class="form-group">
+
+        <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
+
+    </fieldset>
+
+    @*<div class="row" style="margin-top:10px;">
+            <div class="col-md-12">
+                <label>Summary</label>
+                <div>
+                    <textarea class="form-control" name="Summary" id="Summary" rows="3" style="font-size: 21px;"></textarea>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row voffset1">
-        <div class="col-md-12">
-            <label>FBA Completion Date</label>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+        <div class="row voffset1">
+            <div class="col-md-12">
+                <label>FBA Completion Date</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                       id="FBACompletionDate" name="FBACompletionDate" class="form-control" aria-describedby="basic-addon1" />
+                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                           id="FBACompletionDate" name="FBACompletionDate" class="form-control" aria-describedby="basic-addon1" />
+                </div>
             </div>
-        </div>
-    </div>
-    
+        </div>*@
+
     <div class="row oneStudentGoal " id="defaultgoal">
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {
             @Html.AntiForgeryToken()
-            @*@Html.HiddenFor(model => model.AccommodationID)
+            @Html.HiddenFor(model => model.BehaviorID)
             @Html.HiddenFor(model => model.IEPid)
-            @Html.HiddenFor(model => model.StudentId)*@
+            @Html.HiddenFor(model => model.StudentId)
 
 
             <div class="col-md-12 voffset2">
@@ -61,169 +64,207 @@
                             <div class="panel-body">
 
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Definition of Behavior</h3>
-
-                                    </div>
-                                </div>
-
                                 <div class="row voffset2">
-                                    <div class="col-md-2">
-                                        <label for="Condition">Condition</label>
-                                        <div >
-
-                                            <input type="text" id="Condition" name="Condition" class="form-control" />
-                                        </div>
-                                    </div>
-                                
-                                    <div class="col-md-2">
-                                        <label for="Frequency">Frequency</label>
-                                        <div>
-                                            <input id="Frequency" name="Frequency" class="form-control" />
-                                        </div>
-                                    </div>
-                                
-                                    <div class="col-md-2">
-                                        <div class="form-group" name="Location">
-                                            <label for="Location">Location</label><br />
-                                            <div>
-                                                <input type="text" class="form-control" name="Location" id="Location">
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="col-md-2">
-                                        <div class="form-group" name="Duration">
-                                            <label for="Duration">Duration</label><br />
-                                            <div>
-                                                <input type="text" class="form-control" name="Duration" id="Duration">
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="col-md-2">
-                                        <div class="form-group" name="Intensity">
-                                            <label for="Intensity">Intensity</label><br />
-                                            <div>
-                                                <input type="text" class="form-control" name="Intensity" id="Intensity">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col-md-12">
-                                        <h3>Function of Behavior</h3>
+                                        <label for="Collection">Strengths/Motivators</label>
+                                        <div>
 
+                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row voffset2">
-                                    <div class="col-md-2">
-                                        
+                                    <div class="col-md-12">
+                                        <label for="Collection">Behavior(s) of Concern</label>
                                         <div>
-                                            <select id="FunctionOfBehvior" class="form-control">
-                                                <option value="">Select Function</option>
-                                                <option value="A">Attention</option>
-                                                <option value="E">Escape</option>
-                                                <option value="ET">Escape to Tangible</option>
-                                                <option value="S">Sensory</option>
-                                            </select>                                            
+
+                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3>Replacement Behavior</h3>
+                                        <h3>Triggers</h3>
 
                                     </div>
                                 </div>
-                                <div class="row voffset2">
+                                <div class="row voffset1">
                                     <div class="col-md-12">
+                                        <label for="misTriggers">Possible triggers for behaviors</label>
+                                        <select name="SelectedTriggers" class="form-control chosen-select" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                            @if (Model.Triggers != null)
+                                            {
+                                                foreach (var trigger in Model.Triggers)
+                                                {
+                                                    string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
+                                                    <option value="@trigger.BehaviorTriggerTypeID" @selected>@trigger.BehaviorTriggerType</option>
+                                                }
+                                            }
+                                        </select>
+                                        <div id="divTriggerOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" />
 
-                                        <div>
-                                            <input type="text" class="form-control" name="ReplacementBehavior" id="ReplacementBehavior">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3>Teaching Replacement Behavior</h3>
+                                        <h3>Hypothesis</h3>
 
                                     </div>
                                 </div>
+                                <div class="row voffset1">
+                                    <div class="col-md-12">
+                                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                                        <select name="SelectedHypothesis" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                            @if (Model.HypothesisList != null)
+                                            {
+                                                foreach (var hypothesis in Model.HypothesisList)
+                                                {
+                                                    string selected = Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
+                                                    <option value="@hypothesis.BehaviorHypothesisTypeID" @selected>@hypothesis.BehaviorHypothesisType</option>
+                                                }
+                                            }
+                                        </select>
+                                        <div id="divHypothesisOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" />
 
-                                <div class="row voffset2">
-                                    <div class="col-md-3">
-                                        <label for="Intervention">Intervention</label>
-                                        <div>
-
-                                            <input type="text" id="Intervention" name="Intervention" class="form-control" />
                                         </div>
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <label for="ResponsibleStaff">Responsible Staff</label>
-                                        <div>
-                                            <input id="ResponsibleStaff" name="ResponsibleStaff" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group" name="Location">
-                                            <label for="Consequence_Reinforcement">Consequence/Reinforcement</label><br />
-                                            <div>
-                                                <input type="text" class="form-control" name="Consequence_Reinforcement" id="Consequence_Reinforcement">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group" name="Timeline">
-                                            <label for="Timeline">Timeline</label><br />
-                                            <div>
-                                                <input type="text" class="form-control" name="Timeline" id="Timeline">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3>Progress Monitoring</h3>
+                                        <h3>Strategies</h3>
 
                                     </div>
                                 </div>
-
-                                <div class="row voffset2">
+                                <div class="row voffset1">
                                     <div class="col-md-12">
-                                        <label for="Collection">How will data be collected?</label>
-                                        <div>
+                                        <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                                        <select name="SelectedStrategies" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                            @if (Model.Strategies != null)
+                                            {
+                                                foreach (var strategy in Model.Strategies)
+                                                {
+                                                    string selected = Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
+                                                    <option value="@strategy.BehaviorStrategyTypeID" @selected>@strategy.BehaviorStrategyType</option>
+                                                }
+                                            }
+                                        </select>
+                                        <div id="divStrategyOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" />
 
-                                            <input type="text" id="Collection" name="Collection" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Review">When will the plan be reviewed??</label>
-                                        <div>
 
-                                            <input type="text" id="Review" name="Review" class="form-control" />
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Targeted Behaviors</h3>
+
                                     </div>
                                 </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
+                                            <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
+                                            <li><a data-toggle="tab" href="#sectionC"><b>Behavior 3</b></a></li>
+                                        </ul>
 
-                                    <div class="row">
-                                        <div class="form-group" id="saveGroup">
-                                            <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                                <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                        <div class="tab-content container">
+                                            <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
+
+                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
+
+                                            </div>
+                                            <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
+
+                                            </div>
+                                            <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Crisis Management Plan</h3>
+
+                                    </div>
+                                </div>
+
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Crisis_Escalation">Escalation(describe what this looks like for student)</label>
+                                        <div>
+
+                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Crisis_Description">Crisis(describe what this looks like for student)</label>
+                                        <div>
+
+                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
+                                        <div>
+
+                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Crisis_Other">Other</label>
+                                        <div>
+
+                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label for="Collection">Follow school/district behavior policies/practice</label>
+                                        <div>
+
+                                            Plan is to be reviewed <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group" id="saveGroup">
+                                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                                            <button type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -239,9 +280,49 @@
 </div>
 
 <script>
-   
-
     // Attach Event
     // reset the form because jquery does not have built in reset functionality.
     $("#resetModuleMotorForm").trigger("reset");
+
+    $(document).ready(function () {
+
+        init();
+
+    });
+
+    function init() {
+
+        $(".chosen-select").chosen({ width: "100%" });
+
+        //$("#SelectedTriggers").change(function () {
+        //    var triggerValue = $("#SelectedTriggers option:selected").text();
+        //    if(triggerValue.includes("Other"))
+        //    {
+        //        $("#divTriggerOther").css('visibility', 'visible');
+        //    }
+        //    else
+        //    {
+        //        $("#divTriggerOther").css('visibility', 'hidden');
+        //    }
+
+
+        //});
+
+
+        //$("#SelectedHypothesis").change(function () {
+        //    var hyValue = $("#SelectedHypothesis option:selected").text();
+        //    if (hyValue.includes("Other")) {
+        //        $("#divHypothesisOther").css('visibility', 'visible');
+        //    }
+        //    else {
+        //        $("#divHypothesisOther").css('visibility', 'hidden');
+        //    }
+
+
+        //});
+
+
+    }
 </script>
+
+

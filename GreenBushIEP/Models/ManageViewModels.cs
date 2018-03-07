@@ -246,7 +246,7 @@ namespace GreenBushIEP.Models
         {
             AccomList = new List<tblAccommodation>();
             Locations = new List<System.Web.Mvc.SelectListItem>();
-        
+
         }
 
         public int StudentId { get; set; }
@@ -268,6 +268,54 @@ namespace GreenBushIEP.Models
 
     }
 
+    public class BehaviorViewModel
+    {
+        public BehaviorViewModel()
+        {
+            Triggers = new List<tblBehaviorTriggerType>();
+            HypothesisList = new List<tblBehaviorHypothesisType>();
+            Strategies = new List<tblBehaviorStrategyType>();
+            SelectedTriggers = new List<int>();
+            SelectedHypothesis = new List<int>();
+            SelectedStrategies = new List<int>();
+            TargetedBehaviors = new List<tblBehaviorBaseline>();
+            targetedBehavior1 = new tblBehaviorBaseline();
+            targetedBehavior2 = new tblBehaviorBaseline();
+            targetedBehavior3 = new tblBehaviorBaseline();
+        }
+
+        public int StudentId { get; set; }
+        public int BehaviorID { get; set; }
+        public int IEPid { get; set; }
+
+        public List<int> SelectedTriggers { get; set; }
+        public string TriggerOther { get; set; }
+
+        public List<int> SelectedHypothesis { get; set; }
+        public string HypothesisOther { get; set; }
+
+        public List<int> SelectedStrategies { get; set; }
+        public string StrategiesOther { get; set; }
+
+        public string StrengthMotivator { get; set; }
+        public string BehaviorConcern { get; set; } //not currently used
+        public string Crisis_Escalation { get; set; }
+        public string Crisis_Description { get; set; }
+        public string Crisis_Implementation { get; set; }
+        public string Crisis_Other { get; set; }
+        public string ReviewedBy { get; set; }
+        public string Message { get; set; }
+        public List<tblBehaviorTriggerType> Triggers { get; set; }
+        public List<tblBehaviorHypothesisType> HypothesisList { get; set; }
+        public List<tblBehaviorStrategyType> Strategies { get; set; }
+        public List<tblBehaviorBaseline> TargetedBehaviors { get; set; }
+
+        public tblBehaviorBaseline targetedBehavior1 { get; set; }
+        public tblBehaviorBaseline targetedBehavior2 { get; set; }
+        public tblBehaviorBaseline targetedBehavior3 { get; set; }
+
+    }
+
     public class StudentServiceViewModel
     {
         public int studentId { get; set; }
@@ -281,7 +329,7 @@ namespace GreenBushIEP.Models
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
         public DateTime IEPEndDate { get; set; }
-       
+
         public StudentServiceViewModel()
         {
             studentId = 0;
@@ -294,33 +342,21 @@ namespace GreenBushIEP.Models
             availableCalendarDays = new List<tblCalendar>();
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();
-            IEPEndDate = new DateTime();           
+            IEPEndDate = new DateTime();
         }
     }
 
     public class StudentTransitionViewModel
     {
-        public int transitionId { get; set; }
-        public int iepId { get; set; }
         public int studentId { get; set; }
         public tblUser student { get; set; }
         public bool isDOC { get; set; }
-        public tblTransition transition { get; set; }
-        public List<tblTransitionAssessment> assessments { get; set; }
-        public List<tblTransitionGoal> goals { get; set; }
-        public List<tblTransitionService> services { get; set; }
 
         public StudentTransitionViewModel()
         {
-            transitionId = 0;
-            iepId = 0;
             studentId = 0;
             student = new tblUser();
             isDOC = false;
-            tblTransition transition = new tblTransition();
-            List<tblTransitionAssessment> assessments = new List<tblTransitionAssessment>();
-            List<tblTransitionGoal> goals = new List<tblTransitionGoal>();
-            List<tblTransitionService> services = new List<tblTransitionService>();
         }
     }
 }
