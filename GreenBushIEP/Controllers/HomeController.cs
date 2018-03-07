@@ -954,8 +954,63 @@ namespace GreenbushIep.Controllers
 
         [Authorize(Roles = teacher)]
         public ActionResult BehaviorPlan(int studentId)
-        {
-            return PartialView("_ModuleBehavior");
+        {            
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            List<SelectListItem> locationList = new List<SelectListItem>();
+            if (iep != null)
+            {
+                var model = new BehaviorViewModel();
+                model.StudentId = studentId;
+                model.IEPid = iep.IEPid;
+
+                tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.IEPid == iep.IEPid).FirstOrDefault();
+                if (BehaviorIEP != null)
+                {
+                    model.BehaviorID = BehaviorIEP.BehaviorID;
+                    model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
+                    model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
+                    model.Crisis_Description = BehaviorIEP.Crisis_Description;
+                    model.Crisis_Escalation = BehaviorIEP.Crisis_Escalation;
+                    model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
+                    model.Crisis_Other = BehaviorIEP.Crisis_Other;
+                    model.ReviewedBy = BehaviorIEP.ReviewedBy;
+                    model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
+                    var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                    if(triggerOther != null)
+                        model.TriggerOther = triggerOther.OtherDescription;
+
+                    model.SelectedStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorStrategyTypeID).ToList();
+                    var stratOther = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                    if(stratOther != null)
+                    model.StrategiesOther = stratOther.OtherDescription;
+
+                    model.SelectedHypothesis = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorHypothesisTypeID).ToList();
+                    var hypoOther = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                    if(hypoOther != null)
+                        model.HypothesisOther = hypoOther.OtherDescription;
+
+                    var targetedBehaviors = db.tblBehaviorBaselines.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).ToList();
+                    if (targetedBehaviors.Any())
+                    {
+                        if (targetedBehaviors[0] != null)
+                            model.targetedBehavior1 = targetedBehaviors[0];
+                        if (targetedBehaviors[1] != null)
+                            model.targetedBehavior2 = targetedBehaviors[1];
+                        if (targetedBehaviors[2] != null)
+                            model.targetedBehavior3 = targetedBehaviors[2];
+                    }
+
+
+                }
+
+                model.Triggers = db.tblBehaviorTriggerTypes.ToList();
+                model.HypothesisList = db.tblBehaviorHypothesisTypes.ToList();
+                model.Strategies = db.tblBehaviorStrategyTypes.ToList();
+
+                return PartialView("_ModuleBehavior", model);
+            }
+
+            return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
         [Authorize(Roles = teacher)]
@@ -1011,6 +1066,7 @@ namespace GreenbushIep.Controllers
 
             return Json(new { result = true }, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpPost]
         [Authorize]

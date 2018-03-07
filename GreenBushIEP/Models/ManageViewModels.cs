@@ -268,6 +268,54 @@ namespace GreenBushIEP.Models
 
     }
 
+    public class BehaviorViewModel
+    {
+        public BehaviorViewModel()
+        {
+            Triggers = new List<tblBehaviorTriggerType>();
+            HypothesisList = new List<tblBehaviorHypothesisType>();
+            Strategies = new List<tblBehaviorStrategyType>();
+            SelectedTriggers = new List<int>();
+            SelectedHypothesis = new List<int>();
+            SelectedStrategies = new List<int>();
+            TargetedBehaviors = new List<tblBehaviorBaseline>();
+            targetedBehavior1 = new tblBehaviorBaseline();
+            targetedBehavior2 = new tblBehaviorBaseline();
+            targetedBehavior3 = new tblBehaviorBaseline();
+        }
+
+        public int StudentId { get; set; }
+        public int BehaviorID { get; set; }
+        public int IEPid { get; set; }
+
+        public List<int> SelectedTriggers { get; set; }
+        public string TriggerOther { get; set; }
+
+        public List<int> SelectedHypothesis { get; set; }
+        public string HypothesisOther { get; set; }
+
+        public List<int> SelectedStrategies { get; set; }
+        public string StrategiesOther { get; set; }
+
+        public string StrengthMotivator { get; set; }
+        public string BehaviorConcern { get; set; } //not currently used
+        public string Crisis_Escalation { get; set; }
+        public string Crisis_Description { get; set; }
+        public string Crisis_Implementation { get; set; }
+        public string Crisis_Other { get; set; }
+        public string ReviewedBy { get; set; }
+        public string Message { get; set; }
+        public List<tblBehaviorTriggerType> Triggers { get; set; }
+        public List<tblBehaviorHypothesisType> HypothesisList { get; set; }
+        public List<tblBehaviorStrategyType> Strategies { get; set; }
+        public List<tblBehaviorBaseline> TargetedBehaviors { get; set; }
+
+        public tblBehaviorBaseline targetedBehavior1 { get; set; }
+        public tblBehaviorBaseline targetedBehavior2 { get; set; }
+        public tblBehaviorBaseline targetedBehavior3 { get; set; }
+
+    }
+
     public class StudentServiceViewModel
     {
         public int studentId { get; set; }

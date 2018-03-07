@@ -22,6 +22,87 @@
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
         </EntityType>
+        <EntityType Name="tblBehaviorBaselines">
+          <Key>
+            <PropertyRef Name="BehaviorBaselineID" />
+          </Key>
+          <Property Name="BehaviorBaselineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="BehaviorID" Type="int" Nullable="false" />
+          <Property Name="Behavior" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Baseline" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorHypothesis">
+          <Key>
+            <PropertyRef Name="BehaviorHypothesisID" />
+          </Key>
+          <Property Name="BehaviorHypothesisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="BehaviorID" Type="int" Nullable="false" />
+          <Property Name="BehaviorHypothesisTypeID" Type="int" Nullable="false" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorHypothesisTypes">
+          <Key>
+            <PropertyRef Name="BehaviorHypothesisTypeID" />
+          </Key>
+          <Property Name="BehaviorHypothesisTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BehaviorHypothesisType" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviors">
+          <Key>
+            <PropertyRef Name="BehaviorID" />
+          </Key>
+          <Property Name="BehaviorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="StrengthMotivator" Type="nvarchar" MaxLength="1000" />
+          <Property Name="BehaviorConcern" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Crisis_Escalation" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Crisis_Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Crisis_Implementation" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Crisis_Other" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ReviewedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorStrategies">
+          <Key>
+            <PropertyRef Name="BehaviorStrategyID" />
+          </Key>
+          <Property Name="BehaviorStrategyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="BehaviorID" Type="int" Nullable="false" />
+          <Property Name="BehaviorStrategyTypeID" Type="int" Nullable="false" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorStrategyTypes">
+          <Key>
+            <PropertyRef Name="BehaviorStrategyTypeID" />
+          </Key>
+          <Property Name="BehaviorStrategyTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BehaviorStrategyType" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorTriggers">
+          <Key>
+            <PropertyRef Name="BehaviorTriggerID" />
+          </Key>
+          <Property Name="BehaviorTriggerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="BehaviorID" Type="int" Nullable="false" />
+          <Property Name="BehaviorTriggerTypeID" Type="int" Nullable="false" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBehaviorTriggerTypes">
+          <Key>
+            <PropertyRef Name="BehaviorTriggerTypeID" />
+          </Key>
+          <Property Name="BehaviorTriggerTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BehaviorTriggerType" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblBuildingMapping">
           <Key>
             <PropertyRef Name="USD" />
@@ -454,9 +535,9 @@
         </EntityType>
         <EntityType Name="tblTransitionAssessments">
           <Key>
-            <PropertyRef Name="TransitionAessementID" />
+            <PropertyRef Name="TransitionAssementID" />
           </Key>
-          <Property Name="TransitionAessementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransitionAssementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransitionID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Narrative" Type="nvarchar" MaxLength="1000" />
@@ -504,9 +585,9 @@
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
-            <PropertyRef Name="tblTransitionServiceID" />
+            <PropertyRef Name="TransitionServiceID" />
           </Key>
-          <Property Name="tblTransitionServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransitionServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransitionID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="ServiceType" Type="nvarchar" MaxLength="50" />
@@ -615,6 +696,14 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="Self.tblBehaviorHypothesisTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviors" EntityType="Self.tblBehaviors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorStrategies" EntityType="Self.tblBehaviorStrategies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorStrategyTypes" EntityType="Self.tblBehaviorStrategyTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorTriggers" EntityType="Self.tblBehaviorTriggers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBehaviorTriggerTypes" EntityType="Self.tblBehaviorTriggerTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBuildingMapping" EntityType="Self.tblBuildingMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBuildings" EntityType="Self.tblBuildings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendar" EntityType="Self.tblCalendar" Schema="dbo" store:Type="Tables" />
@@ -741,10 +830,18 @@
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
           </AssociationSet>
-          <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
           <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
+          <EntitySet Name="tblBehaviorBaselines" EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" />
+          <EntitySet Name="tblBehaviorHypothesis" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" />
+          <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesisType" />
+          <EntitySet Name="tblBehaviorStrategies" EntityType="IndividualizedEducationProgramModel.tblBehaviorStrategy" />
+          <EntitySet Name="tblBehaviorStrategyTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorStrategyType" />
+          <EntitySet Name="tblBehaviorTriggers" EntityType="IndividualizedEducationProgramModel.tblBehaviorTrigger" />
+          <EntitySet Name="tblBehaviorTriggerTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" />
+          <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
+          <EntitySet Name="tblBehaviors" EntityType="IndividualizedEducationProgramModel.tblBehavior" />
           </EntityContainer>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -1248,19 +1345,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tblTransitionAssessment">
-          <Key>
-            <PropertyRef Name="TransitionAessementID" />
-          </Key>
-          <Property Name="TransitionAessementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransitionID" Type="Int32" Nullable="false" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Narrative" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="CompletedOn" Type="DateTime" Precision="3" />
-          <Property Name="Performance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="tblTransitionGoal">
           <Key>
             <PropertyRef Name="TransitionGoalID" />
@@ -1298,15 +1382,109 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="tblBehaviorBaseline">
+          <Key>
+            <PropertyRef Name="BehaviorBaselineID" />
+          </Key>
+          <Property Name="BehaviorBaselineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorID" Type="Int32" Nullable="false" />
+          <Property Name="Behavior" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Baseline" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblBehaviorHypothesi">
+          <Key>
+            <PropertyRef Name="BehaviorHypothesisID" />
+          </Key>
+          <Property Name="BehaviorHypothesisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorID" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorHypothesisTypeID" Type="Int32" Nullable="false" />
+          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblBehaviorHypothesisType">
+          <Key>
+            <PropertyRef Name="BehaviorHypothesisTypeID" />
+          </Key>
+          <Property Name="BehaviorHypothesisTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BehaviorHypothesisType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblBehaviorStrategy">
+          <Key>
+            <PropertyRef Name="BehaviorStrategyID" />
+          </Key>
+          <Property Name="BehaviorStrategyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorID" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorStrategyTypeID" Type="Int32" Nullable="false" />
+          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblBehaviorStrategyType">
+          <Key>
+            <PropertyRef Name="BehaviorStrategyTypeID" />
+          </Key>
+          <Property Name="BehaviorStrategyTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BehaviorStrategyType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblBehaviorTrigger">
+          <Key>
+            <PropertyRef Name="BehaviorTriggerID" />
+          </Key>
+          <Property Name="BehaviorTriggerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorID" Type="Int32" Nullable="false" />
+          <Property Name="BehaviorTriggerTypeID" Type="Int32" Nullable="false" />
+          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblBehaviorTriggerType">
+          <Key>
+            <PropertyRef Name="BehaviorTriggerTypeID" />
+          </Key>
+          <Property Name="BehaviorTriggerTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BehaviorTriggerType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTransitionAssessment">
+          <Key>
+            <PropertyRef Name="TransitionAssementID" />
+          </Key>
+          <Property Name="TransitionAssementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransitionID" Type="Int32" Nullable="false" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Narrative" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CompletedOn" Type="DateTime" Precision="3" />
+          <Property Name="Performance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
-            <PropertyRef Name="tblTransitionServiceID" />
+            <PropertyRef Name="TransitionServiceID" />
           </Key>
-          <Property Name="tblTransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransitionID" Type="Int32" Nullable="false" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblBehavior">
+          <Key>
+            <PropertyRef Name="BehaviorID" />
+          </Key>
+          <Property Name="BehaviorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="StrengthMotivator" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="BehaviorConcern" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Escalation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Implementation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Other" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1829,20 +2007,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransitionAssessments">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionAssessment">
-              <MappingFragment StoreEntitySet="tblTransitionAssessments">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Performance" ColumnName="Performance" />
-                <ScalarProperty Name="CompletedOn" ColumnName="CompletedOn" />
-                <ScalarProperty Name="Narrative" ColumnName="Narrative" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
-                <ScalarProperty Name="TransitionAessementID" ColumnName="TransitionAessementID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTransitionGoals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionGoal">
               <MappingFragment StoreEntitySet="tblTransitionGoals">
@@ -1882,6 +2046,92 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorBaselines">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorBaseline">
+              <MappingFragment StoreEntitySet="tblBehaviorBaselines">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Baseline" ColumnName="Baseline" />
+                <ScalarProperty Name="Behavior" ColumnName="Behavior" />
+                <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="BehaviorBaselineID" ColumnName="BehaviorBaselineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorHypothesis">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorHypothesi">
+              <MappingFragment StoreEntitySet="tblBehaviorHypothesis">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
+                <ScalarProperty Name="BehaviorHypothesisTypeID" ColumnName="BehaviorHypothesisTypeID" />
+                <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="BehaviorHypothesisID" ColumnName="BehaviorHypothesisID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorHypothesisTypes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorHypothesisType">
+              <MappingFragment StoreEntitySet="tblBehaviorHypothesisTypes">
+                <ScalarProperty Name="BehaviorHypothesisType" ColumnName="BehaviorHypothesisType" />
+                <ScalarProperty Name="BehaviorHypothesisTypeID" ColumnName="BehaviorHypothesisTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorStrategies">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorStrategy">
+              <MappingFragment StoreEntitySet="tblBehaviorStrategies">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
+                <ScalarProperty Name="BehaviorStrategyTypeID" ColumnName="BehaviorStrategyTypeID" />
+                <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="BehaviorStrategyID" ColumnName="BehaviorStrategyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorStrategyTypes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorStrategyType">
+              <MappingFragment StoreEntitySet="tblBehaviorStrategyTypes">
+                <ScalarProperty Name="BehaviorStrategyType" ColumnName="BehaviorStrategyType" />
+                <ScalarProperty Name="BehaviorStrategyTypeID" ColumnName="BehaviorStrategyTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorTriggers">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorTrigger">
+              <MappingFragment StoreEntitySet="tblBehaviorTriggers">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
+                <ScalarProperty Name="BehaviorTriggerTypeID" ColumnName="BehaviorTriggerTypeID" />
+                <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="BehaviorTriggerID" ColumnName="BehaviorTriggerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviorTriggerTypes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorTriggerType">
+              <MappingFragment StoreEntitySet="tblBehaviorTriggerTypes">
+                <ScalarProperty Name="BehaviorTriggerType" ColumnName="BehaviorTriggerType" />
+                <ScalarProperty Name="BehaviorTriggerTypeID" ColumnName="BehaviorTriggerTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransitionAssessments">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionAssessment">
+              <MappingFragment StoreEntitySet="tblTransitionAssessments">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Performance" ColumnName="Performance" />
+                <ScalarProperty Name="CompletedOn" ColumnName="CompletedOn" />
+                <ScalarProperty Name="Narrative" ColumnName="Narrative" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
+                <ScalarProperty Name="TransitionAssementID" ColumnName="TransitionAssementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblTransitionServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
               <MappingFragment StoreEntitySet="tblTransitionServices">
@@ -1891,7 +2141,24 @@
                 <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
-                <ScalarProperty Name="tblTransitionServiceID" ColumnName="tblTransitionServiceID" />
+                <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBehaviors">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehavior">
+              <MappingFragment StoreEntitySet="tblBehaviors">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ReviewedBy" ColumnName="ReviewedBy" />
+                <ScalarProperty Name="Crisis_Other" ColumnName="Crisis_Other" />
+                <ScalarProperty Name="Crisis_Implementation" ColumnName="Crisis_Implementation" />
+                <ScalarProperty Name="Crisis_Description" ColumnName="Crisis_Description" />
+                <ScalarProperty Name="Crisis_Escalation" ColumnName="Crisis_Escalation" />
+                <ScalarProperty Name="BehaviorConcern" ColumnName="BehaviorConcern" />
+                <ScalarProperty Name="StrengthMotivator" ColumnName="StrengthMotivator" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

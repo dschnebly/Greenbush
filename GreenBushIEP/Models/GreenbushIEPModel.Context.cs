@@ -56,10 +56,18 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
-        public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
+        public virtual DbSet<tblBehaviorBaseline> tblBehaviorBaselines { get; set; }
+        public virtual DbSet<tblBehaviorHypothesi> tblBehaviorHypothesis { get; set; }
+        public virtual DbSet<tblBehaviorHypothesisType> tblBehaviorHypothesisTypes { get; set; }
+        public virtual DbSet<tblBehaviorStrategy> tblBehaviorStrategies { get; set; }
+        public virtual DbSet<tblBehaviorStrategyType> tblBehaviorStrategyTypes { get; set; }
+        public virtual DbSet<tblBehaviorTrigger> tblBehaviorTriggers { get; set; }
+        public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
+        public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
+        public virtual DbSet<tblBehavior> tblBehaviors { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

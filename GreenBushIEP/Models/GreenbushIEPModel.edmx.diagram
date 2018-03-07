@@ -37,10 +37,18 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="13.625" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="17.625" PointY="12.375" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" Width="1.5" PointX="13.375" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" Width="1.5" PointX="5.375" PointY="14.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransition" Width="1.5" PointX="7.375" PointY="16.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="9.375" PointY="16.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" Width="1.5" PointX="11.75" PointY="16.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" Width="1.5" PointX="13.75" PointY="16.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesisType" Width="1.5" PointX="15.75" PointY="16.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorStrategy" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorStrategyType" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorTrigger" Width="1.5" PointX="17.75" PointY="16.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" Width="1.5" PointX="4.75" PointY="18.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="9.375" PointY="19.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehavior" Width="1.5" PointX="11.375" PointY="19.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
