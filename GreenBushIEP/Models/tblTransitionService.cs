@@ -14,7 +14,7 @@ namespace GreenBushIEP.Models
     
     public partial class tblTransitionService
     {
-        public int TransitionServiceID { get; set; }
+        public int tblTransitionServiceID { get; set; }
         public int TransitionID { get; set; }
         public int IEPid { get; set; }
         public string ServiceType { get; set; }

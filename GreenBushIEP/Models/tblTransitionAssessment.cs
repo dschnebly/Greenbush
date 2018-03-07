@@ -14,7 +14,7 @@ namespace GreenBushIEP.Models
     
     public partial class tblTransitionAssessment
     {
-        public int TransitionAssementID { get; set; }
+        public int TransitionAessementID { get; set; }
         public int TransitionID { get; set; }
         public int IEPid { get; set; }
         public string Narrative { get; set; }
