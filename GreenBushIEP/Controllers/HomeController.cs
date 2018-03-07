@@ -932,19 +932,26 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = teacher)]
         public ActionResult StudentTransition(int studentId)
         {
-            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
 
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+            // is student in DOC?
+            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
             tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
             tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
-            if (teacher != null && student != null)
+            if (iep != null)
             {
                 StudentTransitionViewModel model = new StudentTransitionViewModel();
+
                 model.studentId = studentId;
                 model.student = student;
                 model.isDOC = district.DOC;
+                model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault();
+                model.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == iep.IEPid).ToList();
+                model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
+                model.services = db.tblTransitionServices.Where(t => t.IEPid == iep.IEPid).ToList();
 
                 return PartialView("_ModuleStudentTransition", model);
             }

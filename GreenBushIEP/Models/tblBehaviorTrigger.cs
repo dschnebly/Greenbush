@@ -12,15 +12,13 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTransitionAssessment
+    public partial class tblBehaviorTrigger
     {
-        public int TransitionAssementID { get; set; }
-        public int TransitionID { get; set; }
+        public int BehaviorTriggerID { get; set; }
         public int IEPid { get; set; }
-        public string Narrative { get; set; }
-        public Nullable<System.DateTime> CompletedOn { get; set; }
-        public string Performance { get; set; }
+        public int BehaviorID { get; set; }
+        public int BehaviorTriggerTypeID { get; set; }
+        public string OtherDescription { get; set; }
         public System.DateTime Create_Date { get; set; }
-        public System.DateTime Update_Date { get; set; }
     }
 }
