@@ -348,15 +348,24 @@ namespace GreenBushIEP.Models
 
     public class StudentTransitionViewModel
     {
+        public int iepId { get; set; }
         public int studentId { get; set; }
         public tblUser student { get; set; }
         public bool isDOC { get; set; }
+        public List<tblTransitionAssessment> assessments { get; set; }
+        public List<tblTransitionGoal> goals { get; set; }
+        public List<tblTransitionService> services { get; set; }
+
 
         public StudentTransitionViewModel()
         {
+            iepId = 0;
             studentId = 0;
             student = new tblUser();
             isDOC = false;
+            assessments = new List<tblTransitionAssessment>();
+            goals = new List<tblTransitionGoal>();
+            services = new List<tblTransitionService>();
         }
     }
 }

@@ -63,7 +63,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBehaviorStrategyType> tblBehaviorStrategyTypes { get; set; }
         public virtual DbSet<tblBehaviorTrigger> tblBehaviorTriggers { get; set; }
         public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }

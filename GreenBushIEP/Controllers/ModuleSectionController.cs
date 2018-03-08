@@ -730,6 +730,18 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditTransitionAssessements(FormCollection collection)
         {
+            if (ValidateRequest)
+            {
+                try
+                {
+
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
             return Json(new { Result = "failure", Message = "The Student Transition Assessment was not added." }, JsonRequestBehavior.AllowGet);
         }
     }

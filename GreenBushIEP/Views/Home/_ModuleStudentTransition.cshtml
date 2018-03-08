@@ -393,6 +393,7 @@
                             {
                                 @Html.Hidden("studentId", Model.studentId)
                                 @Html.Hidden("IEPid", Model.iepId)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                 <div class="row">
                                     <div class="col-md-12" style="margin-bottom: 12px;">
