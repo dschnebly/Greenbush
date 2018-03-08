@@ -547,5 +547,11 @@ namespace GreenBushIEP.Controllers
 
             return RedirectToAction("StudentProcedures", "Home", new { stid = Convert.ToInt32(collection[1]) });
         }
+
+        [HttpPost]
+        public ActionResult EditTransitionAssessements(FormCollection collection)
+        {
+            return Json(new { Result = "failure", Message = "The Student Transition Assessment was not added." }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
