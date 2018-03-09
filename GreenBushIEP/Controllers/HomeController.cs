@@ -932,19 +932,25 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = teacher)]
         public ActionResult StudentTransition(int studentId)
         {
-            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
-
-            tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-            tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-
-            if (teacher != null && student != null)
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            if (iep != null)
             {
+                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+                tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+
+                tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+                tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+
                 StudentTransitionViewModel model = new StudentTransitionViewModel();
                 model.studentId = studentId;
                 model.student = student;
                 model.isDOC = district.DOC;
+                model.iepId = iep.IEPid;
+                model.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
+                model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
+                model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
+                model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault();
 
                 return PartialView("_ModuleStudentTransition", model);
             }

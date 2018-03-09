@@ -734,15 +734,71 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iedId = Convert.ToInt32(collection["IEPid"]);
+                    int i = 2;
 
+                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+                    transition.IEPid = iedId;
+                    transition.Assessment_Needs = collection["transitionNeeds"].ToString();
+                    transition.Assessment_Strengths = collection["transitionStrengths"].ToString();
+                    transition.Assessment_Prefrences = collection["transitionPreferences"].ToString();
+                    transition.Assessment_Interest = collection["transitionInterest"].ToString();
+                    transition.Create_Date = DateTime.Now;
+                    transition.Update_Date = DateTime.Now;
+
+                    if (iedId == 0)
+                    {
+                        db.tblTransitions.Add(transition);
+                    }
+                    db.SaveChanges();
+
+                    while (i < collection.Count - 4)
+                    {
+                        int asmtId = Convert.ToInt32(collection[i++]);
+
+                        tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault();
+                        assessment  = assessment ?? new tblTransitionAssessment(); 
+                        assessment.Narrative = collection[i++].ToString();
+                        assessment.CompletedOn = Convert.ToDateTime(collection[i++]);
+                        assessment.Performance = collection[i++].ToString();
+                        assessment.IEPid = transition.IEPid;
+                        assessment.Create_Date = DateTime.Now;
+                        assessment.Update_Date = DateTime.Now;
+
+                        if (assessment.TransitionAssementID == 0)
+                        {
+                            db.tblTransitionAssessments.Add(assessment);
+                        }
+
+                        db.SaveChanges();
+                    }
                 }
                 catch (Exception e)
                 {
-
+                    throw new Exception("Unable to save changes to Transition Assessments: " + e.InnerException.ToString());
                 }
+
+                return Json(new { Result = "success", Message = "The Student Transition Assessment was updated." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "failure", Message = "The Student Transition Assessment was not added." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTransitionAssessments(int assessmentId)
+        {
+            tblTransitionAssessment assessmentToRemove = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == assessmentId).FirstOrDefault();
+
+            if(assessmentToRemove != null)
+            {
+                db.tblTransitionAssessments.Remove(assessmentToRemove);
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Student Transition Assessment was successfully deleted." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Transition Assessment was not deleted." }, JsonRequestBehavior.AllowGet);
         }
     }
 }

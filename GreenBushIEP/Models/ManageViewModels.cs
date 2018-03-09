@@ -352,6 +352,7 @@ namespace GreenBushIEP.Models
         public int studentId { get; set; }
         public tblUser student { get; set; }
         public bool isDOC { get; set; }
+        public tblTransition transition { get; set; }
         public List<tblTransitionAssessment> assessments { get; set; }
         public List<tblTransitionGoal> goals { get; set; }
         public List<tblTransitionService> services { get; set; }
@@ -363,6 +364,7 @@ namespace GreenBushIEP.Models
             studentId = 0;
             student = new tblUser();
             isDOC = false;
+            transition = new tblTransition();
             assessments = new List<tblTransitionAssessment>();
             goals = new List<tblTransitionGoal>();
             services = new List<tblTransitionService>();
