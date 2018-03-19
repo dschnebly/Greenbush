@@ -21,9 +21,9 @@
         font-weight: bold;
     }
 
-    .new-button-min-width {
+    /*.new-button-min-width {
         min-width: 25rem;
-    }
+    }*/
 
     .activity-tabs li {
         min-width: 15rem;
@@ -310,6 +310,13 @@
     .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
         right: 0px;
     }
+
+    #transitionEducationGoalContainer, #transitionEmploymentGoalContainer, #transitionIndependentGoalContainer,
+    #transitionInstructionServiceContainer, #transitionRelatedServiceContainer, #transitionDailyServiceContainer, #transitionFunctionalServiceContainer {
+        padding: 10px;
+        box-shadow: 0px 0px 0px 2px #f5f5f5;
+        margin: 10px 0;
+    }
 </style>
 
 <div class="modal-header">
@@ -466,7 +473,7 @@
                                                                 </a>
                                                             </h4>
                                                         </div>
-                                                        <div id="collapseAssessment@(assessment.TransitionAssementID)" class="panel-collapse collapse">
+                                                        <div id="collapseAssessment@(assessment.TransitionAssementID)" class="panel-collapse collapse in">
                                                             <div class="panel-body">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
@@ -549,47 +556,40 @@
                     <div class="col-xs-12">
                         <div class="col-md-12 well" style="background-color: transparent;">
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Education/Training Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-education[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-education[0]" href="#collapseEducation">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseEducation" class="panel-collapse collaspse in">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <select class="form-control">
-                                                                <option>After Graduation</option>
-                                                                <option>After leaving High School</option>
-                                                                <option>Upon completion of High School Program</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2 vcenter" style="height: 49px;">
-                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
-                                                            <span>Will</span>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
-                                                        </div>
-                                                    </div>
+                            <!-- Default Goal Template -->
+                            <div class="panel-group transitionGoal hidden" id="transitionGoalDefault">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <input type="hidden" name="transitionGoalId" id="transitionGoalId" value="0" />
+                                        <input type="hidden" name="transitionGoalType" id="transitionGoalType" value="" />
+                                        <h4 class="panel-title">
+                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionGoalDefault" href="#collapse">
+                                                <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
+                                                <span class="pull-right">
+                                                    <i class="glyphicon glyphicon-trash deleteTransitionGoal"></i>
+                                                </span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <select class="form-control" id="transitionGoalGraduation" name="transitionGoalGraduation">
+                                                        <option>After Graduation</option>
+                                                        <option>After leaving High School</option>
+                                                        <option>Upon completion of High School Program</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 vcenter" style="height: 49px;">
+                                                    <span class="transitionGoalStudentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
+                                                    <span>Will</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" id="transitionGoalBehavior" name="transitionGoalBehavior" placeholder="Behavior" title="Behavior" value="" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" id="transitionGoalHow" name="transitionGoalHow" placeholder="Where and How" title="Where and How" value="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -597,122 +597,206 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Empyloyment Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
+                            @using (Html.BeginForm("EditTransitionGoals", "ModuleSection", null, FormMethod.Post, new { id = "transitionGoalForm" }))
+                            {
+                                @Html.Hidden("studentId", Model.studentId)
+                                @Html.Hidden("IEPid", Model.iepId)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-employment[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-employment[0]" href="#collapseEmployment">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Employment Goal</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseEmployment" class="panel-collapse collaspse in">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <select class="form-control">
-                                                                <option>After Graduation</option>
-                                                                <option>After leaving High School</option>
-                                                                <option>Upon completion of High School Program</option>
-                                                            </select>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="newEducationGoal" class="btn btn-default new-button-min-width" type="button">New Education/Training Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionEducationGoalContainer">
+                                        @if (Model.goals.Count > 0 && Model.goals.First() != null)
+                                        {
+                                            foreach (var goal in Model.goals.Where(g => g.GoalType == "education"))
+                                            {
+                                                <div class="panel-group transitionEducation" id="transitionEducationIndentity@(goal.TransitionGoalID)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionEducationId@(goal.TransitionGoalID)" id="transitionEducationId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                            <input type="hidden" name="transitionGoalTypeEducation@(goal.TransitionGoalID)" id="transitionGoalTypeEducation@(goal.TransitionGoalID)" value="education">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionEducationIndentity@(goal.TransitionGoalID)" href="#collapseTransitionEducation@(goal.TransitionGoalID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteTransitionGoal"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
                                                         </div>
-                                                        <div class="col-md-2 vcenter" style="height: 49px;">
-                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
-                                                            <span>Will</span>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
+                                                        <div id="collapseTransitionEducation@(goal.TransitionGoalID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <select class="form-control" id="transitionEducationGraduation@(goal.TransitionGoalID)" name="transitionEducationGraduation@(goal.TransitionGoalID)">
+                                                                            <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                            <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                            <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                        <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                        <span>Will</span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionEducationBehavior@(goal.TransitionGoalID)" name="transitionEducationBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newgoal" class="btn btn-default new-button-min-width">New Independent Living&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="newEmploymentGoal" class="btn btn-default new-button-min-width" type="button">New Employment Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-independent[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-independent[0]" href="#collapseIndependent">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentGoalLabel" style="margin-left:8px;">Independent Living</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseIndependent" class="panel-collapse collaspse in">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <select class="form-control">
-                                                                <option>After Graduation</option>
-                                                                <option>After leaving High School</option>
-                                                                <option>Upon completion of High School Program</option>
-                                                            </select>
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionEmploymentGoalContainer">
+                                        @if (Model.goals.Count > 0 && Model.goals.First() != null)
+                                        {
+                                            foreach (var goal in Model.goals.Where(g => g.GoalType == "employment"))
+                                            {
+                                                <div class="panel-group transitionEmployment" id="transitionEmploymentIndentity@(goal.TransitionGoalID)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionEmploymentId@(goal.TransitionGoalID)" id="transitionEmploymentId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                            <input type="hidden" name="transitionGoalTypeEmployment@(goal.TransitionGoalID)" id="transitionGoalTypeEmployment@(goal.TransitionGoalID)" value="employment">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionEmploymentIndentity@(goal.TransitionGoalID)" href="#collapseTransitionEmployment@(goal.TransitionGoalID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Employment Goal</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteTransitionGoal"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
                                                         </div>
-                                                        <div class="col-md-2 vcenter" style="height: 49px;">
-                                                            <span class="studentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
-                                                            <span>Will</span>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Behavior" title="Behavior" class="form-control" value="" />
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <input type="text" placeholder="Where and How" title="Where and How" class="form-control" value="" />
+                                                        <div id="collapseTransitionEmployment@(goal.TransitionGoalID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <select class="form-control" id="transitionEmploymentGraduation@(goal.TransitionGoalID)" name="transitionEmploymentGraduation@(goal.TransitionGoalID)">
+                                                                            <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                            <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                            <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                        <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                        <span>Will</span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionEmploymentBehavior@(goal.TransitionGoalID)" name="transitionEmploymentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px;">Post Secondary Transition Services were reviewed and updated?</label>&nbsp;&nbsp;
-                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="alignStudentPostGoals">
-                                                <span class="onoffswitch2-inner"></span>
-                                                <span class="onoffswitch2-switch"></span>
-                                            </label>
-                                        </div>
-                                    </fieldset>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="newIndependentGoal" class="btn btn-default new-button-min-width" type="button">New Independent Living&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Transition Services</button>
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionIndependentGoalContainer">
+                                        @if (Model.goals.Count > 0 && Model.goals.First() != null)
+                                        {
+                                            foreach (var goal in Model.goals.Where(g => g.GoalType == "independent"))
+                                            {
+                                                <div class="panel-group transitionIndependent" id="transitionIndependentIndentity1">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionIndependentId@(goal.TransitionGoalID)" id="transitionIndependentId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                            <input type="hidden" name="transitionGoalTypeIndependent@(goal.TransitionGoalID)" id="transitionGoalTypeIndependent@(goal.TransitionGoalID)" value="independent">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle collapsed" data-toggle="collapse" data-parent="transitionIndependentIndentity@(goal.TransitionGoalID)" href="#collapseTransitionIndependent@(goal.TransitionGoalID)" aria-expanded="false">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Independent Living</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteTransitionGoal"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseTransitionIndependent@(goal.TransitionGoalID)" class="panel-collapse collapse in" aria-expanded="true">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <select class="form-control" id="transitionIndependentGraduation@(goal.TransitionGoalID)" name="transitionIndependentGraduation@(goal.TransitionGoalID)">
+                                                                            <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                            <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                            <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                        <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                        <span>Will</span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionIndependentBehavior@(goal.TransitionGoalID)" name="transitionIndependentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input class="form-control" type="text" id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <fieldset class="form-group">
+                                            <label style="padding: 5px 0 10px;">Post Secondary Transition Services were reviewed and updated?</label>&nbsp;&nbsp;
+                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="alignStudentPostGoals" id="alignStudentPostGoals" class="onoffswitch2-checkbox" @(Model.transition.Services_Reviewed ? "checked='checked'" : String.Empty)>
+                                                <label class="onoffswitch2-label" for="alignStudentPostGoals">
+                                                    <span class="onoffswitch2-inner"></span>
+                                                    <span class="onoffswitch2-switch"></span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Add Transition Services</button>
+                                    </div>
+                                </div>
+                            }
 
                         </div>
                     </div>
@@ -721,53 +805,46 @@
                     <div class="col-xs-12">
                         <div class="col-md-12 well" style="background-color: transparent;">
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newInstructions" class="btn btn-default new-button-min-width">New Instruction&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-instructions[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-instructions[0]" href="#collapseInstructions">
-                                                        <span class="glyphicon glyphicon-random"></span><span class="studentTransitionInstruuction" style="margin-left:8px;">Instruction</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseInstructions" class="collapse">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label for="instructionDescription">Description</label>
-                                                            <div>
-                                                                <textarea id="instructionDescription" rows="3" name="instructionDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="instructionsFrequency">Frequency</label>
-                                                            <div>
-                                                                <input class="form-control" id="instructionsFrequency" maxlength="300" name="instructionsFrequency" type="text" value="once a week">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="instructionsDuration">Duration</label>
-                                                            <div>
-                                                                <input class="form-control" id="instructionsDuration" maxlength="300" name="instructionsDuration" type="text" value="30 minuets at a time">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="instructionsLocation">Location</label>
-                                                            <div>
-                                                                <input class="form-control" id="instructionsLocation" maxlength="300" name="instructionsLocation" type="text" value="where will the activity occur?">
-                                                            </div>
-                                                        </div>
+                            <!-- Default Service Template -->
+                            <div class="panel-group transitionService hidden" id="transitionServiceDefault">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <input type="hidden" name="transitionServiceId" id="transitionServiceId" value="0" />
+                                        <input type="hidden" name="transitionServiceType" id="transitionServiceType" value="" />
+                                        <h4 class="panel-title">
+                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionServiceDefault" href="#collapse">
+                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Service</span>
+                                                <span class="pull-right">
+                                                    <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                </span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="transitionServiceDescription">Description</label>
+                                                    <div>
+                                                        <textarea id="transitionServiceDescription" rows="3" name="transitionServiceDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                    <div>
+                                                        <input class="form-control" id="transitionServiceFrequency" maxlength="300" name="transitionServiceFrequency" type="text" placeholder="once a week" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="transitionServiceDuration">Duration</label>
+                                                    <div>
+                                                        <input class="form-control" id="transitionServiceDuration" maxlength="300" name="transitionServiceDuration" type="text" placeholder="30 minuets at a time" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="transitionServiceLocation">Location</label>
+                                                    <div>
+                                                        <input class="form-control" id="transitionServiceLocation" maxlength="300" name="transitionServiceLocation" type="text" placeholder="where will the activity occur?" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -776,177 +853,279 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newService" class="btn btn-default new-button-min-width">New Related Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                                </div>
-                            </div>
+                            @using (Html.BeginForm("EditTransitionServices", "ModuleSection", null, FormMethod.Post, new { id = "transitionServiceForm" }))
+                            {
+                                @Html.Hidden("studentId", Model.studentId)
+                                @Html.Hidden("IEPid", Model.iepId)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-service[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-service[0]" href="#collapseService">
-                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Related Service</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseService" class="collapse">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label for="serviceDescription">Description</label>
-                                                            <div>
-                                                                <textarea id="serviceDescription" rows="3" name="instructionDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="newInstructions" class="btn btn-default new-button-min-width" type="button">New Instruction Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionInstructionServiceContainer">
+
+                                        @if (Model.services.Count > 0 && Model.services.First() != null)
+                                        {
+                                            foreach (var service in Model.services.Where(s => s.ServiceType == "instruction"))
+                                            {
+                                                <div class="panel-group transitionInstructionService" id="transitionInstructionServiceIndentity@(service.TransitionServiceID)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionInstructionServiceId@(service.TransitionServiceID)" id="transitionInstructionServiceId@(service.TransitionServiceID)" value="@(service.TransitionServiceID)">
+                                                            <input type="hidden" name="transitionInstructionerviceType@(service.TransitionServiceID)" id="transitionInstructionServiceType@(service.TransitionServiceID)" value="instruction">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionInstructionIndentity@(service.TransitionServiceID)" href="#collapseTransitionInstruction@(service.TransitionServiceID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Instruction Service</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <label for="serviceFrequency">Frequency</label>
-                                                            <div>
-                                                                <input class="form-control" id="serviceFrequency" maxlength="300" name="instructionsFrequency" type="text" value="once a week">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="serviceDuration">Duration</label>
-                                                            <div>
-                                                                <input class="form-control" id="serviceDuration" maxlength="300" name="instructionsDuration" type="text" value="30 minuets at a time">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="serviceLocation">Location</label>
-                                                            <div>
-                                                                <input class="form-control" id="serviceLocation" maxlength="300" name="instructionsLocation" type="text" value="where will the activity occur?">
+                                                        <div id="collapseTransitionInstruction@(service.TransitionServiceID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDescription">Description</label>
+                                                                        <div>
+                                                                            <textarea id="transitionInstructionServiceDescription@(service.TransitionServiceID)" rows="3" name="transitionInstructionServiceDescription@(service.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(service.ServiceDescription)</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceFrequency">Frequency</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionInstructionServiceFrequency@(service.TransitionServiceID)" maxlength="300" name="transitionInstructionServiceFrequency@(service.TransitionServiceID)1" type="text" placeholder="once a week" value="@(service.Frequency)" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDuration">Duration</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="300" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(service.Duration)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceLocation">Location</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionInstructionServiceLocation1" maxlength="300" name="transitionInstructionServiceLocation@(service.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(service.Location)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
+
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newService" class="btn btn-default new-button-min-width">New Daily Living Skill&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-bottom: 12px;">
+                                        <button id="newRelated" class="btn btn-default new-button-min-width" type="button">New Related Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-skill[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-skill[0]" href="#collapseSkill">
-                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Daily Living Skills</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseSkill" class="collapse">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label for="skillDescription">Description</label>
-                                                            <div>
-                                                                <textarea id="skillDescription" rows="3" name="skillDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionRelatedServiceContainer">
+
+                                        @if (Model.services.Count > 0 && Model.services.First() != null)
+                                        {
+                                            foreach (var related in Model.services.Where(s => s.ServiceType == "related"))
+                                            {
+                                                <div class="panel-group transitionRelatedService" id="transitionRelatedIndentity@(related.TransitionServiceID)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionRelatedServiceId@(related.TransitionServiceID)" id="transitionRelatedServiceId@(related.TransitionServiceID)" value="@(related.TransitionServiceID)">
+                                                            <input type="hidden" name="transitionRelatedServiceType@(related.TransitionServiceID)" id="transitionRelatedServiceType@(related.TransitionServiceID)" value="related">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionRelatedIndentity1" href="#collapseTransitionRelated@(related.TransitionServiceID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Related Service</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <label for="skillFrequency">Frequency</label>
-                                                            <div>
-                                                                <input class="form-control" id="skillFrequency" maxlength="300" name="skillFrequency" type="text" value="once a week">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="skillDuration">Duration</label>
-                                                            <div>
-                                                                <input class="form-control" id="skillDuration" maxlength="300" name="skillDuration" type="text" value="30 minuets at a time">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="skillLocation">Location</label>
-                                                            <div>
-                                                                <input class="form-control" id="skillLocation" maxlength="300" name="skillLocation" type="text" value="where will the activity occur?">
+                                                        <div id="collapseTransitionRelated@(related.TransitionServiceID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDescription">Description</label>
+                                                                        <div>
+                                                                            <textarea id="transitionRelatedServiceDescription@(related.TransitionServiceID)" rows="3" name="transitionRelatedServiceDescription@(related.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(related.ServiceDescription)</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceFrequency">Frequency</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionRelatedServiceFrequency@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceFrequency@(related.TransitionServiceID)" type="text" placeholder="once a week" value="@(related.Frequency)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDuration">Duration</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionRelatedServiceDuration@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceDuration@(related.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(related.Duration)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceLocation">Location</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionRelatedServiceLocation@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceLocation@(related.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(related.Location)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
+
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12" style="margin-bottom: 12px;">
-                                    <button id="newVocational" class="btn btn-default new-button-min-width">New Functional Vocational&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-bottom: 12px;">
+                                        <button id="newSkill" class="btn btn-default new-button-min-width" type="button">New Daily Living Skill Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel-group" id="accordion-vocational[0]">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion-vocational[0]" href="#collapseVocational">
-                                                        <span class="glyphicon glyphicon-random"></span><span style="margin-left:8px;">Functional Vocational</span>
-                                                        <span class="pull-right">
-                                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                        </span>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseVocational" class="collapse">
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label for="vocationalDescription">Description</label>
-                                                            <div>
-                                                                <textarea id="vocationalDescription" rows="3" name="vocationalDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
-                                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionDailyServiceContainer">
+
+                                        @if (Model.services.Count > 0 && Model.services.First() != null)
+                                        {
+                                            foreach (var daily in Model.services.Where(s => s.ServiceType == "daily"))
+                                            {
+                                                <div class="panel-group transitionDailyService bound" id="transitionDailyIndentity1">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionDailyServiceId@(daily.TransitionServiceID)" id="transitionDailyServiceId@(daily.TransitionServiceID)" value="@(daily.TransitionServiceID)">
+                                                            <input type="hidden" name="transitionDailyServiceType@(daily.TransitionServiceID)" id="transitionDailyServiceType@(daily.TransitionServiceID)" value="daily">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionDailyIndentity@(daily.TransitionServiceID)" href="#collapseTransitionDaily@(daily.TransitionServiceID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Daily Living Skills Service</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <label for="vocationalFrequency">Frequency</label>
-                                                            <div>
-                                                                <input class="form-control" id="vocationalFrequency" maxlength="300" name="vocationalFrequency" type="text" value="once a week">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="vocationalDuration">Duration</label>
-                                                            <div>
-                                                                <input class="form-control" id="vocationalDuration" maxlength="300" name="vocationalDuration" type="text" value="30 minuets at a time">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label for="vocationalLocation">Location</label>
-                                                            <div>
-                                                                <input class="form-control" id="vocationalLocation" maxlength="300" name="vocationalLocation" type="text" value="where will the activity occur?">
+                                                        <div id="collapseTransitionDaily@(daily.TransitionServiceID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDescription">Description</label>
+                                                                        <div>
+                                                                            <textarea id="transitionDailyServiceDescription@(daily.TransitionServiceID)" rows="3" name="transitionDailyServiceDescription@(daily.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(daily.ServiceDescription)</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceFrequency">Frequency</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionDailyServiceFrequency@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceFrequency@(daily.TransitionServiceID)" type="text" placeholder="once a week" value="@(daily.Frequency)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDuration">Duration</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionDailyServiceDuration@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceDuration@(daily.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(daily.Duration)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceLocation">Location</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionDailyServiceLocation@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceLocation@(daily.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(daily.Location)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
+
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button id="activate-step-4" class="btn btn-primary btn-lg" style="margin-top: 20px;">Add Course of Study</button>
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-bottom: 12px;">
+                                        <button id="newVocational" class="btn btn-default new-button-min-width" type="button">New Functional Vocational Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
                                 </div>
-                            </div>
 
+                                <div class="row">
+                                    <div class="col-md-12" id="transitionFunctionalServiceContainer">
+
+
+                                        @if (Model.services.Count > 0 && Model.services.First() != null)
+                                        {
+                                            foreach (var vocational in Model.services.Where(s => s.ServiceType == "vocational"))
+                                            {
+                                                <div class="panel-group transitionVocationalService bound" id="transitionVocationalIndentity@(vocational.TransitionID)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <input type="hidden" name="transitionVocationalServiceId@(vocational.TransitionID)" id="transitionVocationalServiceId@(vocational.TransitionID)" value="@(vocational.TransitionID)">
+                                                            <input type="hidden" name="transitionVocationalServiceType@(vocational.TransitionID)" id="transitionVocationalServiceType@(vocational.TransitionID)" value="vocational">
+                                                            <h4 class="panel-title">
+                                                                <a class="btnToggle" data-toggle="collapse" data-parent="transitionVocationalIndentity@(vocational.TransitionID)" href="#collapseTransitionVoctional@(vocational.TransitionID)">
+                                                                    <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Functional Vocational Service</span>
+                                                                    <span class="pull-right">
+                                                                        <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapseTransitionVoctional@(vocational.TransitionID)" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDescription">Description</label>
+                                                                        <div>
+                                                                            <textarea id="transitionVocationalServiceDescription@(vocational.TransitionID)" rows="3" name="transitionVocationalServiceDescription@(vocational.TransitionID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(vocational.ServiceDescription)</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceFrequency">Frequency</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionVocationalServiceFrequency@(vocational.TransitionID)" maxlength="300" name="transitionVocationalServiceFrequency@(vocational.TransitionID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceDuration">Duration</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionVocationalServiceDuration@(vocational.TransitionID)" maxlength="300" name="transitionVocationalServiceDuration@(vocational.TransitionID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="transitionServiceLocation">Location</label>
+                                                                        <div>
+                                                                            <input class="form-control" id="transitionVocationalServiceLocation@(vocational.TransitionID)" maxlength="300" name="transitionVocationalServiceLocation@(vocational.TransitionID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="activate-step-4" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Add Course of Study</button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -954,94 +1133,108 @@
                     <div class="col-xs-12">
                         <div class="col-md-12 well" style="background-color: transparent;">
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
-                                    <p>
-                                        @(@Model.student.FirstName)&nbsp;@(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
-                                        He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-                                        district and will be meaningful to his post secondary goal of working as an <a href="#" id="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;">Enter occupation</a>. The courses he/she is enrolled in for school year
-                                        and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
-                                    </p>
-                                    <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
-                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
-                                                <span class="onoffswitch2-inner"></span>
-                                                <span class="onoffswitch2-switch"></span>
-                                            </label>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
-                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="isAlignStudentPostGoals">
-                                                <span class="onoffswitch2-inner"></span>
-                                                <span class="onoffswitch2-switch"></span>
-                                            </label>
-                                        </div>
-                                    </fieldset>
-                                    <p>
-                                        The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-                                        maintained in the counselor's office
-                                    </p>
-                                </div>
-                            </div>
+                            @using (Html.BeginForm("EditTransitionStudy", "ModuleSection", null, FormMethod.Post, new { id = "transitionStudyForm" }))
+                            {
+                                @Html.Hidden("studentId", Model.studentId)
+                                @Html.Hidden("IEPid", Model.iepId)
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <fieldset class="form-group">
-                                        <label for="Duration">Anticipated Graduation Month/Year</label>
-                                        <div class="input-group">
-                                            <input type="month" name="graduationYear" class="form-control text-center" value="03-2018" style="width: 24rem;">
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group">
-                                        <label>&nbsp;</label>
-                                        <select class="form-control">
-                                            <option>Graduate with a High School Diploma</option>
-                                            <option>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
-                                        </select>
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-3">
-                                    <fieldset class="form-group">
-                                        <label for="totalcredits">Total # of Credits required by district</label>
-                                        <input type="text" name="totalcredits" class="form-control" />
-                                    </fieldset>
-                                </div>
-                            </div>
 
-                            <div class="row" style="margin-top:15px;">
-                                <div class="col-md-12">
-                                    <h4><b>Vocational Rehabilitation</b></h4>
-                                    <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px;">Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</label>&nbsp;&nbsp;
-                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
-                                                <span class="onoffswitch2-inner"></span>
-                                                <span class="onoffswitch2-switch"></span>
-                                            </label>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="form-group hidden" id="releaseObtained">
-                                        <label style="padding: 5px 0 10px;">Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
-                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                            <input type="checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="onoffswitch2-checkbox">
-                                            <label class="onoffswitch2-label" for="isConfidentailReleaseObtained">
-                                                <span class="onoffswitch2-inner"></span>
-                                                <span class="onoffswitch2-switch"></span>
-                                            </label>
-                                        </div>
-                                    </fieldset>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
+                                        <p>
+                                            @(@Model.student.FirstName)&nbsp;@(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+                                            He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
+                                            district and will be meaningful to his post secondary goal of working as an <a href="#" id="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;">Enter occupation</a>. The courses he/she is enrolled in for school year
+                                            and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
+                                        </p>
+                                        <fieldset class="form-group">
+                                            <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
+                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox" @(Model.transition.Planning_Facilitate ? "checked='checked'" : "" )>
+                                                <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
+                                                    <span class="onoffswitch2-inner"></span>
+                                                    <span class="onoffswitch2-switch"></span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
+                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="onoffswitch2-checkbox" @(Model.transition.Planning_Align ? "checked='checked'" : "" )>
+                                                <label class="onoffswitch2-label" for="isAlignStudentPostGoals">
+                                                    <span class="onoffswitch2-inner"></span>
+                                                    <span class="onoffswitch2-switch"></span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                        <p>
+                                            The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                                            maintained in the counselor's office
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
 
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <fieldset class="form-group">
+                                            <label for="Duration">Anticipated Graduation Month/Year</label>
+                                            <div class="input-group">
+                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear)-0@(Model.transition.Planning_GraduationMonth)" style="width: 24rem;">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label>&nbsp;</label>
+                                            <select class="form-control" name="planningCompletion" id="planningCompletion">
+                                                <option @(Model.transition.Planning_Completion == "Graduate with a High School Diploma" ? "selected='selected'" : "")>Graduate with a High School Diploma</option>
+                                                <option @(Model.transition.Planning_Completion == "Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age" ? "selected='selected'" : "")>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <fieldset class="form-group">
+                                            <label for="totalcredits">Total # of Credits required by district</label>
+                                            <input type="text" name="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-md-12">
+                                        <h4><b>Vocational Rehabilitation</b></h4>
+                                        <fieldset class="form-group">
+                                            <label style="padding: 5px 0 10px;">Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</label>&nbsp;&nbsp;
+                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox" @(Model.transition.Planning_BenefitKRS ? "checked='checked'" : "" )>
+                                                <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
+                                                    <span class="onoffswitch2-inner"></span>
+                                                    <span class="onoffswitch2-switch"></span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group @(Model.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
+                                            <label style="padding: 5px 0 10px;">Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
+                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="onoffswitch2-checkbox" @(Model.transition.Planning_ConsentPrior ? "checked='checked'" : "" )>
+                                                <label class="onoffswitch2-label" for="isConfidentailReleaseObtained">
+                                                    <span class="onoffswitch2-inner"></span>
+                                                    <span class="onoffswitch2-switch"></span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>
+                                    </div>
+                                </div>
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -1092,7 +1285,7 @@
                 data: formData.serialize(),
                 success: function (data) {
                     if (data.Result == "success") {
-                        console.log("Assessment successfull updated.");
+                        console.log("Assessments successfull updated.");
                     }
                     else {
                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1110,23 +1303,118 @@
 
             $('ul.setup-panel li:eq(1)').removeClass('disabled');
             $('ul.setup-panel li a[href="#step-2"]').trigger('click');
-            //$(this).remove();
         });
 
         $('#activate-step-3').on('click', function (e) {
+
+            var formData = $('#transitionGoalForm');
+
+            $.ajax({
+                type: 'POST',
+                url: '/ModuleSection/EditTransitionGoals',
+                dataType: "json",
+                data: formData.serialize(),
+                success: function (data) {
+                    if (data.Result == "success") {
+                        console.log("Goals successfull updated.");
+                    }
+                    else {
+                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log("Unable to delete the student goal.");
+                }
+            });
+
             $('ul.setup-panel li:eq(2)').removeClass('disabled');
             $('ul.setup-panel li a[href="#step-3"]').trigger('click');
-            //$(this).remove();
         });
 
         $('#activate-step-4').on('click', function (e) {
+
+            var formData = $('#transitionServiceForm');
+
+            $.ajax({
+                type: 'POST',
+                url: '/ModuleSection/EditTransitionServices',
+                dataType: "json",
+                data: formData.serialize(),
+                success: function (data) {
+                    if (data.Result == "success") {
+                        console.log("Services successfull updated.");
+                    }
+                    else {
+                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log("Unable to delete the student goal.");
+                }
+            });
+
             $('ul.setup-panel li:eq(3)').removeClass('disabled');
             $('ul.setup-panel li a[href="#step-4"]').trigger('click');
-            //$(this).remove();
         });
 
+        $('#saveFinish').on('click', function (e) {
+
+            var formData = $('#transitionStudyForm');
+
+            $.ajax({
+                type: 'POST',
+                url: '/ModuleSection/EditTransitionStudy',
+                dataType: "json",
+                data: formData.serialize(),
+                success: function (data) {
+                    if (data.Result == "success") {
+                        console.log("Course of Study successfull updated.");
+                        $('#moduleSection').modal('hide');
+                    }
+                    else {
+                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log("There was an error saving the Course of Study");
+                }
+            });
+        });
+
+        $(".transitionAssessment").not(':last-child').find(".panel-collapse.in").collapse("hide");
+
+        $(".transitionEducation").not(':last-child').find(".panel-collapse.in").collapse("hide");
+        $(".transitionEmployment").not(':last-child').find(".panel-collapse.in").collapse("hide");
+        $(".transitionIndependent").not(':last-child').find(".panel-collapse.in").collapse("hide");
+
+        $(".transitionInstructionService").not(':last-child').find(".panel-collapse.in").collapse("hide");
+        $(".transitionRelatedService").not(':last-child').find(".panel-collapse.in").collapse("hide");
+        $(".transitionDailyService").not(':last-child').find(".panel-collapse.in").collapse("hide");
+        $(".transitionVocationalService").not(':last-child').find(".panel-collapse.in").collapse("hide");
 
         initAssessments();
+        initEducation();
+        initEmployment();
+        initIndependent();
+        initInstruction();
+        initRelated();
+        initSkill();
+        initVocational();
     });
 
     $('ul.setup-panel li.active a').trigger('click');
@@ -1158,6 +1446,9 @@
         $("#releaseObtained").toggleClass("hidden");
     });
 
+
+    // assessment
+
     $("#newTransitionAssessment").on("click", function () {
 
         var cloneAssessment = $("#assessmentDefault").clone();
@@ -1184,6 +1475,7 @@
     });
 
     function initAssessments() {
+
         $('.transitionAssessment').not('#assessmentDefault').not('.bound').addClass('bound').each(function (index) {
 
             // when user delete transition assessment trash
@@ -1197,7 +1489,6 @@
 
                     if (asmId == 0) {
                         $(this).closest(".transitionAssessment").remove();
-                        //$(".transitionAssessment:last").not("#assessmentDefault").find(".panel-collapse").collapse("show");
                     }
                     else {
                         $.ajax({
@@ -1208,7 +1499,80 @@
                             success: function (data) {
                                 if (data.Result == "success") {
                                     deleteAssessment.remove();
-                                   //$(".transitionAssessment:last").not("#assessmentDefault").find(".panel-collapse").collapse("show");
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+    }
+
+    // goals
+
+    $("#newEducationGoal").on("click", function () {
+
+        var cloneEducation = $("#transitionGoalDefault").clone();
+        cloneEducation.removeClass("hidden transitionGoal");
+        cloneEducation.addClass("transitionEducation");
+        cloneEducation.removeAttr("id");
+
+        var educationCount = $(".transitionEducation").length + 1;
+        cloneEducation.prop("id", "transitionEducationIndentity" + educationCount);
+        cloneEducation.find("#transitionGoalId").prop("id", "transitionEducationId" + educationCount).prop("name", "transitionEducationId" + educationCount);
+        cloneEducation.find("#transitionGoalType").prop("id", "transitionGoalTypeEducation" + educationCount).prop("name", "transitionGoalTypeEducation" + educationCount).val("education");
+        cloneEducation.find(".transitionGoalLabel").text("Education/Training Goal");
+        cloneEducation.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionEducationIndentity" + educationCount).prop("href", "#collapseTransitionEducation" + educationCount);
+        cloneEducation.find(".panel-body").parent().prop("id", "collapseTransitionEducation" + educationCount);
+        cloneEducation.find("#transitionGoalGraduation").prop("id", "transitionEducationGraduation" + educationCount).attr("name", "transitionEducationGraduation" + educationCount);
+        cloneEducation.find("#transitionGoalBehavior").prop("id", "transitionEducationBehavior" + educationCount).attr("name", "transitionEducationBehavior" + educationCount);
+        cloneEducation.find("#transitionGoalHow").prop("id", "transitionEducationCompleted" + educationCount).attr("name", "transitionEducationCompleted" + educationCount);
+
+        // close all but the last assessment.
+        $(".transitionEducation").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionEducationGoalContainer").append(cloneEducation);
+
+        initEducation();
+    });
+
+    function initEducation() {
+
+        $('.transitionEducation').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition assessment trash
+            $(this).find(".deleteTransitionGoal").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionEducation");
+                var answer = confirm('Are you sure you want to delete this education goal?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionEducation").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionGoal',
+                            data: { goalId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
                                 }
                                 else {
                                     if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1228,5 +1592,451 @@
             });
 
         });
+
     }
+
+    $("#newEmploymentGoal").on("click", function () {
+
+        var cloneEmployment = $("#transitionGoalDefault").clone();
+        cloneEmployment.removeClass("hidden transitionGoal");
+        cloneEmployment.addClass("transitionEmployment");
+        cloneEmployment.removeAttr("id");
+
+        var employmentCount = $(".transitionEmployment").length + 1;
+        cloneEmployment.prop("id", "transitionEmploymentIndentity" + employmentCount);
+        cloneEmployment.find("#transitionGoalId").prop("id", "transitionEmploymentId" + employmentCount).prop("name", "transitionEmploymentId" + employmentCount);
+        cloneEmployment.find("#transitionGoalType").prop("id", "transitionGoalTypeEmployment" + employmentCount).prop("name", "transitionGoalTypeEmployment" + employmentCount).val("employment");
+        cloneEmployment.find(".transitionGoalLabel").text("Employment Goal");
+        cloneEmployment.find('[data-parent="transitionGoalDefault"]').attr("data-parent", "transitionEmploymentIndentity" + employmentCount).prop("href", "#collapseTransitionEmployment" + employmentCount);
+        cloneEmployment.find(".panel-body").parent().prop("id", "collapseTransitionEmployment" + employmentCount);
+        cloneEmployment.find("#transitionGoalGraduation").prop("id", "transitionEmploymentGraduation" + employmentCount).attr("name", "transitionEmploymentGraduation" + employmentCount);
+        cloneEmployment.find("#transitionGoalBehavior").prop("id", "transitionEmploymentBehavior" + employmentCount).attr("name", "transitionEmploymentBehavior" + employmentCount);
+        cloneEmployment.find("#transitionGoalHow").prop("id", "transitionEmploymentCompleted" + employmentCount).attr("name", "transitionEmploymentCompleted" + employmentCount);
+
+        // close all but the last assessment.
+        $(".transitionEmployment").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionEmploymentGoalContainer").append(cloneEmployment);
+
+        initEmployment();
+    });
+
+    function initEmployment() {
+
+        $('.transitionEmployment').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition assessment trash
+            $(this).find(".deleteTransitionGoal").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionEmployment");
+                var answer = confirm('Are you sure you want to delete this employement goal?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionEmployment").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionGoal',
+                            data: { goalId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
+    $("#newIndependentGoal").on("click", function () {
+
+        var cloneIndependent = $("#transitionGoalDefault").clone();
+        cloneIndependent.removeClass("hidden transitionGoal");
+        cloneIndependent.addClass("transitionIndependent");
+        cloneIndependent.removeAttr("id");
+
+        var independentCount = $(".transitionIndependent").length + 1;
+        cloneIndependent.prop("id", "transitionIndependentIndentity" + independentCount);
+        cloneIndependent.find("#transitionGoalId").prop("id", "transitionIndependentId" + independentCount).prop("name", "transitionIndependentId" + independentCount);
+        cloneIndependent.find("#transitionGoalType").prop("id", "transitionGoalTypeIndependent" + independentCount).prop("name", "transitionGoalTypeIndependent" + independentCount).val("independent");
+        cloneIndependent.find(".transitionGoalLabel").text("Independent Living");
+        cloneIndependent.find('[data-parent="transitionGoalDefault"]').attr("data-parent", "transitionIndependentIndentity" + independentCount).prop("href", "#collapseTransitionIndependent" + independentCount);
+        cloneIndependent.find(".panel-body").parent().prop("id", "collapseTransitionIndependent" + independentCount);
+        cloneIndependent.find("#transitionGoalGraduation").prop("id", "transitionIndependentGraduation" + independentCount).attr("name", "transitionIndependentGraduation" + independentCount);
+        cloneIndependent.find("#transitionGoalBehavior").prop("id", "transitionIndependentBehavior" + independentCount).attr("name", "transitionIndependentBehavior" + independentCount);
+        cloneIndependent.find("#transitionGoalHow").prop("id", "transitionIndependentCompleted" + independentCount).attr("name", "transitionIndependentCompleted" + independentCount);
+
+        // close all but the last assessment.
+        $(".transitionIndependent").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionIndependentGoalContainer").append(cloneIndependent);
+
+        initIndependent();
+    });
+
+    function initIndependent() {
+
+        $('.transitionIndependent').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition assessment trash
+            $(this).find(".deleteTransitionGoal").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionIndependent");
+                var answer = confirm('Are you sure you want to delete this independent goal?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionIndependent").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionGoal',
+                            data: { goalId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
+    // services
+
+    $("#newInstructions").on("click", function () {
+
+        var cloneInstruction = $("#transitionServiceDefault").clone();
+        cloneInstruction.removeClass("hidden transitionService");
+        cloneInstruction.addClass("transitionInstructionService");
+        cloneInstruction.removeAttr("id");
+
+        var instructionCount = $(".transitionInstructionService").length + 1;
+        cloneInstruction.prop("id", "transitionInstructionIndentity" + instructionCount);
+        cloneInstruction.find("#transitionServiceId").prop("id", "transitionInstructionServiceId" + instructionCount).prop("name", "transitionInstructionServiceId" + instructionCount);
+        cloneInstruction.find("#transitionServiceType").prop("id", "transitionInstructionServiceType" + instructionCount).prop("name", "transitionInstructionServiceType" + instructionCount).val("instruction");
+        cloneInstruction.find(".transitionServiceLabel").text("Instruction Service");
+        cloneInstruction.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionInstructionIndentity" + instructionCount).prop("href", "#collapseTransitionInstruction" + instructionCount);
+        cloneInstruction.find(".panel-body").parent().prop("id", "collapseTransitionInstruction" + instructionCount);
+        cloneInstruction.find("#transitionServiceDescription").prop("id", "transitionInstructionServiceDescription" + instructionCount).attr("name", "transitionInstructionServiceDescription" + instructionCount);
+        cloneInstruction.find("#transitionServiceFrequency").prop("id", "transitionInstructionServiceFrequency" + instructionCount).attr("name", "transitionInstructionServiceFrequency" + instructionCount);
+        cloneInstruction.find("#transitionServiceDuration").prop("id", "transitionInstructionServiceDuration" + instructionCount).attr("name", "transitionInstructionServiceDuration" + instructionCount);
+        cloneInstruction.find("#transitionServiceLocation").prop("id", "transitionInstructionServiceLocation" + instructionCount).attr("name", "transitionInstructionServiceLocation" + instructionCount);
+
+        // close all but the last assessment.
+        $(".transitionInstructionService").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionInstructionServiceContainer").append(cloneInstruction);
+
+        initInstruction();
+    });
+
+    function initInstruction() {
+
+        $('.transitionInstructionService').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition service trash
+            $(this).find(".deleteService").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionInstructionService");
+                var answer = confirm('Are you sure you want to delete this instruction service?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionInstructionService").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionService',
+                            data: { serviceId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
+    $("#newRelated").on("click", function () {
+
+        var cloneRelated = $("#transitionServiceDefault").clone();
+        cloneRelated.removeClass("hidden transitionService");
+        cloneRelated.addClass("transitionRelatedService");
+        cloneRelated.removeAttr("id");
+
+        var relatedCount = $(".transitionRelatedService").length + 1;
+        cloneRelated.prop("id", "transitionRelatedIndentity" + relatedCount);
+        cloneRelated.find("#transitionServiceId").prop("id", "transitionRelatedServiceId" + relatedCount).prop("name", "transitionRelatedServiceId" + relatedCount);
+        cloneRelated.find("#transitionServiceType").prop("id", "transitionRelatedServiceType" + relatedCount).prop("name", "transitionRelatedServiceType" + relatedCount).val("related");
+        cloneRelated.find(".transitionServiceLabel").text("Related Service");
+        cloneRelated.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionRelatedIndentity" + relatedCount).prop("href", "#collapseTransitionRelated" + relatedCount);
+        cloneRelated.find(".panel-body").parent().prop("id", "collapseTransitionRelated" + relatedCount);
+        cloneRelated.find("#transitionServiceDescription").prop("id", "transitionRelatedServiceDescription" + relatedCount).attr("name", "transitionRelatedServiceDescription" + relatedCount);
+        cloneRelated.find("#transitionServiceFrequency").prop("id", "transitionRelatedServiceFrequency" + relatedCount).attr("name", "transitionRelatedServiceFrequency" + relatedCount);
+        cloneRelated.find("#transitionServiceDuration").prop("id", "transitionRelatedServiceDuration" + relatedCount).attr("name", "transitionRelatedServiceDuration" + relatedCount);
+        cloneRelated.find("#transitionServiceLocation").prop("id", "transitionRelatedServiceLocation" + relatedCount).attr("name", "transitionRelatedServiceLocation" + relatedCount);
+
+        // close all but the last assessment.
+        $(".transitionRelatedService").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionRelatedServiceContainer").append(cloneRelated);
+
+        initRelated();
+    });
+
+    function initRelated() {
+
+        $('.transitionRelatedService').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition service trash
+            $(this).find(".deleteService").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionRelatedService");
+                var answer = confirm('Are you sure you want to delete this related service?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionRelatedService").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionService',
+                            data: { serviceId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
+    $("#newSkill").on("click", function () {
+
+        var cloneDaily = $("#transitionServiceDefault").clone();
+        cloneDaily.removeClass("hidden transitionService");
+        cloneDaily.addClass("transitionDailyService");
+        cloneDaily.removeAttr("id");
+
+        var dailyCount = $(".transitionDailyService").length + 1;
+        cloneDaily.prop("id", "transitionDailyIndentity" + dailyCount);
+        cloneDaily.find("#transitionServiceId").prop("id", "transitionDailyServiceId" + dailyCount).prop("name", "transitionDailyServiceId" + dailyCount);
+        cloneDaily.find("#transitionServiceType").prop("id", "transitionDailyServiceType" + dailyCount).prop("name", "transitionDailyServiceType" + dailyCount).val("daily");
+        cloneDaily.find(".transitionServiceLabel").text("Daily Living Skills Service");
+        cloneDaily.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionDailyIndentity" + dailyCount).prop("href", "#collapseTransitionDaily" + dailyCount);
+        cloneDaily.find(".panel-body").parent().prop("id", "collapseTransitionDaily" + dailyCount);
+        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionDailyServiceDescription" + dailyCount).attr("name", "transitionDailyServiceDescription" + dailyCount);
+        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionDailyServiceFrequency" + dailyCount).attr("name", "transitionDailyServiceFrequency" + dailyCount);
+        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionDailyServiceDuration" + dailyCount).attr("name", "transitionDailyServiceDuration" + dailyCount);
+        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionDailyServiceLocation" + dailyCount).attr("name", "transitionDailyServiceLocation" + dailyCount);
+
+        // close all but the last assessment.
+        $(".transitionDailyService").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionDailyServiceContainer").append(cloneDaily);
+
+        initSkill();
+    });
+
+    function initSkill() {
+
+        $('.transitionDailyService').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition service trash
+            $(this).find(".deleteService").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionDailyService");
+                var answer = confirm('Are you sure you want to delete this related service?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionDailyService").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionService',
+                            data: { serviceId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
+    $("#newVocational").on("click", function () {
+
+        var cloneDaily = $("#transitionServiceDefault").clone();
+        cloneDaily.removeClass("hidden transitionService");
+        cloneDaily.addClass("transitionVocationalService");
+        cloneDaily.removeAttr("id");
+
+        var vocationalCount = $(".transitionVocationalService").length + 1;
+        cloneDaily.prop("id", "transitionVocationalIndentity" + vocationalCount);
+        cloneDaily.find("#transitionServiceId").prop("id", "transitionVocationalServiceId" + vocationalCount).prop("name", "transitionVocationalServiceId" + vocationalCount);
+        cloneDaily.find("#transitionServiceType").prop("id", "transitionVocationalServiceType" + vocationalCount).prop("name", "transitionVocationalServiceType" + vocationalCount).val("vocational");
+        cloneDaily.find(".transitionServiceLabel").text("Functional Vocational Service");
+        cloneDaily.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionVocationalIndentity" + vocationalCount).prop("href", "#collapseTransitionVoctional" + vocationalCount);
+        cloneDaily.find(".panel-body").parent().prop("id", "collapseTransitionVoctional" + vocationalCount);
+        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionVocationalServiceDescription" + vocationalCount).attr("name", "transitionVocationalServiceDescription" + vocationalCount);
+        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionVocationalServiceFrequency" + vocationalCount).attr("name", "transitionVocationalServiceFrequency" + vocationalCount);
+        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionVocationalServiceDuration" + vocationalCount).attr("name", "transitionVocationalServiceDuration" + vocationalCount);
+        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionVocationalServiceLocation" + vocationalCount).attr("name", "transitionVocationalServiceLocation" + vocationalCount);
+
+        // close all but the last assessment.
+        $(".transitionVocationalService").find(".panel-collapse.in").collapse("hide");
+
+        $("#transitionFunctionalServiceContainer").append(cloneDaily);
+
+        initVocational();
+    });
+
+    function initVocational() {
+
+        $('.transitionVocationalService').not('.bound').addClass('bound').each(function (index) {
+
+            // when user delete transition service trash
+            $(this).find(".deleteService").on("click", function (e) {
+                e.stopPropagation();
+
+                var deleteAssessment = $(this).closest(".transitionVocationalService");
+                var answer = confirm('Are you sure you want to delete this functional vocational service?');
+                if (answer) {
+                    var id = $(this).closest(".panel-heading").find("input:hidden:first").val();
+
+                    if (id == 0) {
+                        $(this).closest(".transitionVocationalService").remove();
+                    }
+                    else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ModuleSection/DeleteTransitionService',
+                            data: { serviceId: id },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.Result == "success") {
+                                    deleteAssessment.remove();
+                                }
+                                else {
+                                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                                        $("#alertMessage .moreinfo").html(data.Message);
+                                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                            $("#alertMessage").slideUp(500);
+                                        });
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Unable to delete the student goal.");
+                            }
+                        });
+                    }
+                }
+
+            });
+        });
+
+    }
+
 </script>

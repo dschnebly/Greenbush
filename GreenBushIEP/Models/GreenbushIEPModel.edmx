@@ -22,6 +22,16 @@
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
         </EntityType>
+        <EntityType Name="tblAssistiveTechnology">
+          <Key>
+            <PropertyRef Name="AssistiveTechnologyID" />
+          </Key>
+          <Property Name="AssistiveTechnologyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="RequireAssistiveTechnology" Type="bit" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblBehaviorBaselines">
           <Key>
             <PropertyRef Name="BehaviorBaselineID" />
@@ -590,6 +600,9 @@
           <Property Name="TransitionServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransitionID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="300" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="300" />
+          <Property Name="Location" Type="nvarchar" MaxLength="300" />
           <Property Name="ServiceType" Type="nvarchar" MaxLength="50" />
           <Property Name="ServiceDescription" Type="nvarchar" MaxLength="1000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
@@ -696,6 +709,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAssistiveTechnology" EntityType="Self.tblAssistiveTechnology" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="Self.tblBehaviorHypothesisTypes" Schema="dbo" store:Type="Tables" />
@@ -839,9 +853,10 @@
           <EntitySet Name="tblBehaviorTriggerTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
           <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
-          <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblBehaviors" EntityType="IndividualizedEducationProgramModel.tblBehavior" />
+          <EntitySet Name="tblAssistiveTechnologies" EntityType="IndividualizedEducationProgramModel.tblAssistiveTechnology" />
+          <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
           </EntityContainer>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -1447,18 +1462,6 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblTransitionService">
-          <Key>
-            <PropertyRef Name="TransitionServiceID" />
-          </Key>
-          <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransitionID" Type="Int32" Nullable="false" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="tblTransitionAssessment">
           <Key>
             <PropertyRef Name="TransitionAssementID" />
@@ -1485,6 +1488,31 @@
           <Property Name="Crisis_Implementation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Crisis_Other" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ReviewedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblAssistiveTechnology">
+          <Key>
+            <PropertyRef Name="AssistiveTechnologyID" />
+          </Key>
+          <Property Name="AssistiveTechnologyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="RequireAssistiveTechnology" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblTransitionService">
+          <Key>
+            <PropertyRef Name="TransitionServiceID" />
+          </Key>
+          <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransitionID" Type="Int32" Nullable="false" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Frequency" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -2118,19 +2146,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransitionServices">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
-              <MappingFragment StoreEntitySet="tblTransitionServices">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
-                <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTransitionAssessments">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionAssessment">
               <MappingFragment StoreEntitySet="tblTransitionAssessments">
@@ -2159,6 +2174,33 @@
                 <ScalarProperty Name="StrengthMotivator" ColumnName="StrengthMotivator" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="BehaviorID" ColumnName="BehaviorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAssistiveTechnologies">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAssistiveTechnology">
+              <MappingFragment StoreEntitySet="tblAssistiveTechnology">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RequireAssistiveTechnology" ColumnName="RequireAssistiveTechnology" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="AssistiveTechnologyID" ColumnName="AssistiveTechnologyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTransitionServices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
+              <MappingFragment StoreEntitySet="tblTransitionServices">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
+                <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

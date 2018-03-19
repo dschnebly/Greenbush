@@ -12,17 +12,12 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTransitionService
+    public partial class tblAssistiveTechnology
     {
-        public int TransitionServiceID { get; set; }
-        public int TransitionID { get; set; }
+        public int AssistiveTechnologyID { get; set; }
         public int IEPid { get; set; }
-        public string Frequency { get; set; }
-        public string Duration { get; set; }
-        public string Location { get; set; }
-        public string ServiceType { get; set; }
-        public string ServiceDescription { get; set; }
+        public Nullable<bool> RequireAssistiveTechnology { get; set; }
+        public string Description { get; set; }
         public System.DateTime Create_Date { get; set; }
-        public System.DateTime Update_Date { get; set; }
     }
 }

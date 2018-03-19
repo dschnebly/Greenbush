@@ -757,8 +757,7 @@ namespace GreenBushIEP.Controllers
                     {
                         int asmtId = Convert.ToInt32(collection[i++]);
 
-                        tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault();
-                        assessment  = assessment ?? new tblTransitionAssessment(); 
+                        tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault() ?? new tblTransitionAssessment();
                         assessment.Narrative = collection[i++].ToString();
                         assessment.CompletedOn = Convert.ToDateTime(collection[i++]);
                         assessment.Performance = collection[i++].ToString();
@@ -790,7 +789,7 @@ namespace GreenBushIEP.Controllers
         {
             tblTransitionAssessment assessmentToRemove = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == assessmentId).FirstOrDefault();
 
-            if(assessmentToRemove != null)
+            if (assessmentToRemove != null)
             {
                 db.tblTransitionAssessments.Remove(assessmentToRemove);
                 db.SaveChanges();
@@ -799,6 +798,172 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "failure", Message = "The Student Transition Assessment was not deleted." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult EditTransitionGoals(FormCollection collection)
+        {
+            if (ValidateRequest)
+            {
+                try
+                {
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iedId = Convert.ToInt32(collection["IEPid"]);
+                    int i = 2;
+
+                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+                    while (i < collection.Count - 2)
+                    {
+                        var transitionGoalID = Convert.ToInt32(collection[i++]);
+                        tblTransitionGoal transitionGoal = db.tblTransitionGoals.Where(g => g.IEPid == iedId && g.TransitionGoalID == transitionGoalID).FirstOrDefault() ?? new tblTransitionGoal();
+
+                        transitionGoal.IEPid = iedId;
+                        transitionGoal.TransitionID = transition.TransitionID;
+                        transitionGoal.GoalType = collection[i++].ToString();
+                        transitionGoal.CompletetionType = collection[i++].ToString();
+                        transitionGoal.Behavior = collection[i++].ToString();
+                        transitionGoal.WhereAndHow = collection[i++].ToString();
+                        transitionGoal.Create_Date = DateTime.Now;
+                        transitionGoal.Update_Date = DateTime.Now;
+
+                        if (transitionGoalID == 0)
+                        {
+                            db.tblTransitionGoals.Add(transitionGoal);
+                        }
+                    }
+
+                    if (i < collection.Count)
+                    {
+                        transition.Services_Reviewed = collection[i++] == "on" ? true : false; ;
+                    }
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = "The Student Transition Goals were added." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to Transition Assessments: " + e.InnerException.ToString());
+                }
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Transition Goals were not added." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTransitionGoal(int goalId)
+        {
+
+            tblTransitionGoal goalToRemove = db.tblTransitionGoals.Where(g => g.TransitionGoalID == goalId).FirstOrDefault();
+
+            if (goalToRemove != null)
+            {
+                db.tblTransitionGoals.Remove(goalToRemove);
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Student Transition Goal was successfully deleted." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Transition Goal was not deleted." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult EditTransitionServices(FormCollection collection)
+        {
+            if (ValidateRequest)
+            {
+                try
+                {
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iedId = Convert.ToInt32(collection["IEPid"]);
+                    int i = 2;
+
+                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+                    while (i < collection.Count - 2)
+                    {
+                        var transitionServiceID = Convert.ToInt32(collection[i++]);
+                        tblTransitionService transitionService = db.tblTransitionServices.Where(s => s.IEPid == iedId && s.TransitionServiceID == transitionServiceID).FirstOrDefault() ?? new tblTransitionService();
+
+                        transitionService.IEPid = iedId;
+                        transitionService.TransitionID = transition.TransitionID;
+                        transitionService.ServiceType = collection[i++].ToString();
+                        transitionService.ServiceDescription = collection[i++].ToString();
+                        transitionService.Frequency = collection[i++].ToString();
+                        transitionService.Duration = collection[i++].ToString();
+                        transitionService.Location = collection[i++].ToString();
+                        transitionService.Create_Date = DateTime.Now;
+                        transitionService.Update_Date = DateTime.Now;
+
+                        if (transitionServiceID == 0)
+                        {
+                            db.tblTransitionServices.Add(transitionService);
+                        }
+
+                        db.SaveChanges();
+                    }
+
+                    return Json(new { Result = "success", Message = "The Student Transition Services were added." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to Transition Services: " + e.InnerException.ToString());
+                }
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Transition Services were not added." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTransitionService(int serviceId)
+        {
+
+            tblTransitionService serviceToRemove = db.tblTransitionServices.Where(s => s.TransitionServiceID == serviceId).FirstOrDefault();
+
+            if (serviceToRemove != null)
+            {
+                db.tblTransitionServices.Remove(serviceToRemove);
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Student Transition Service was successfully deleted." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Transition Service was not deleted." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult EditTransitionStudy(FormCollection collection)
+        {
+            if (ValidateRequest)
+            {
+                try
+                {
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iedId = Convert.ToInt32(collection["IEPid"]);
+                    int i = 2;
+
+                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+
+                    transition.Planning_Facilitate = collection[i++] == "on" ? true : false;
+                    transition.Planning_Align = collection[i++] == "on" ? true : false;
+                    DateTime graduationDate = Convert.ToDateTime(collection[i++]);
+                    transition.Planning_GraduationMonth = graduationDate.Month;
+                    transition.Planning_GraduationYear = graduationDate.Year;
+                    transition.Planning_Completion = collection[i++].ToString();
+                    transition.Planning_Credits = Convert.ToInt32(collection[i++]);
+                    transition.Planning_BenefitKRS = collection[i++] == "on" ? true : false;
+                    transition.Planning_ConsentPrior = collection[i++] == "on" ? true : false;
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to Transition Study: " + e.InnerException.ToString());
+                }
+            }
+
+            return Json(new { Result = "failure", Message = "The Student Course of Study was not added." }, JsonRequestBehavior.AllowGet);
         }
     }
 }
