@@ -1152,6 +1152,165 @@ namespace GreenbushIep.Controllers
             return View("NoticeOfMeeting", viewModel);
         }
 
+
+
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult IEPAmendment(int id)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+            };
+
+            return View("Form/IEPAmendment", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ManiDetermReview(int id)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+            };
+
+            return View("Form/ManiDetermReview", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult IEPMtgConsent(int id)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+            };
+
+            return View("Form/IEPMtgConsent", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult IEPMtgExcusal(int id)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+            };
+
+            return View("Form/IEPMtgExcusal", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ParentsRights(int id)
+        {
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+            };
+
+            return View("Form/ParentsRights", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult SamplePublicNotice(int id)
+        {
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+            };
+
+            return View("Form/SamplePublicNotice", viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult SOPExample(int id)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            StudentLegalView viewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+            };
+
+            return View("Form/SOPExample", viewModel);
+        }
+
+        public ActionResult IEPForms(int stid)
+        {
+            IEPFormViewModel model = new IEPFormViewModel();
+
+            tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
+            if (student != null)
+            {
+                model.IEPForms = GetForms();
+                model.StudentId = stid;
+                model.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
+            }
+
+            return View(model);
+        }
+
+
+        private List<SelectListItem> GetForms()
+        {
+            List<SelectListItem> forms = new List<SelectListItem>();
+            forms.Add(new SelectListItem { Text = "Parents Rights-English", Value = "ParentsRights" });
+            forms.Add(new SelectListItem { Text = "Notice Of Meeting", Value = "NoticeOfMeeting" });
+            forms.Add(new SelectListItem { Text = "Prior Written Notice - Evaluation -English", Value = "RequestConsent" });
+            forms.Add(new SelectListItem { Text = "Prior Written Notice - Identification", Value = "PriorWrittenNoticeId" });
+
+            forms.Add(new SelectListItem { Text = "Revocation of Consent-Particular Services", Value = "RevPartSvscConsent" });
+            forms.Add(new SelectListItem { Text = "Prior Written Notice-Revocation of Particular Services", Value = "RevPartSvscPWN" });
+            forms.Add(new SelectListItem { Text = "Revocation of Consent-All Services", Value = "RevAllSvscConsent" });
+            forms.Add(new SelectListItem { Text = "Prior Written Notice-Revocation of All Services", Value = "RevAllSvscPWN" });
+
+            forms.Add(new SelectListItem { Text = "Sample Public Notice (Child Find)", Value = "SamplePublicNotice" });
+            forms.Add(new SelectListItem { Text = "IEP Meeting-Consent to Invite Representative of Non-Educational Agency", Value = "IEPMtgConsent" });
+            forms.Add(new SelectListItem { Text = "IEP Meeting-Excusal from Attendance Form", Value = "IEPMtgExcusal" });
+            forms.Add(new SelectListItem { Text = "IEP Amendment Form", Value = "IEPAmendment" });
+            forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
+            forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
+            forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
+            //forms.Add(new SelectListItem { Text = "Re-evaluation Not Needed Agreement Form 8-05", Value = "IEPReEvalNotNeeded" });
+
+            return forms;
+        }
+
+
+
+
         [HttpGet]
         public ActionResult PrintIEP(int id, int status = 0)
         {

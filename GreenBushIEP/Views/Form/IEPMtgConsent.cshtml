@@ -1,0 +1,354 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentLegalView
+
+@{
+    ViewBag.Title = "CONSENT TO INVITE REPRESENTATIVE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+
+}
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    .fadeInToBackground {
+        background: #525659;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .fadeOutToBackground {
+        background: #fff;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+        width: 900px;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    /* Font Definitions */
+    @@font-face {
+        font-family: Wingdings;
+    }
+
+    @@font-face {
+        font-family: "Cambria Math";
+    }
+
+    @@font-face {
+        font-family: "Arial Narrow";
+    }
+
+    @@font-face {
+        font-family: Tahoma;
+    }
+
+    @@font-face {
+        font-family: "Zapf Dingbats";
+    }
+
+    /* Style Definitions */
+    p.MsoNormal, li.MsoNormal, div.MsoNormal {
+         margin:0in;
+	    margin-bottom:.0001pt;
+	    text-align:left;
+	    font-size:12.0pt;
+	    font-family:"Times New Roman",serif;
+    }
+
+    h1 {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h2 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h3 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        page-break-after: avoid;
+        font-size: 14.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+    }
+
+    h4 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: 700;
+    }
+
+    h6 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+    }
+
+
+  
+    .WordSection1
+    {
+        text-align:left;
+        font-family:"Times New Roman",serif;
+    }
+
+
+
+    /* List Definitions */
+    ol {
+        margin-bottom: 0in;
+    }
+
+    ul {
+        margin-bottom: 0in;
+    }
+
+    @@page {
+        margin: 0;
+    }
+
+    @@media print {
+        @@page {
+            margin: 0;
+        }
+
+        body {
+            margin: 1.4cm;
+            overflow: visible;
+        }
+
+        .transition-page-scaleUpCenter {
+            border: none !important;
+        }
+
+        #backtoportal {
+            display: none;
+        }
+
+        #printbutton {
+            display: none;
+        }
+
+        footer {
+            display: none;
+        }
+    }
+</style>
+<div class="transition-page" style="margin-bottom: 45px; display: none;">
+    <div class="container" style="min-height: 1250px; width: 725px;">
+        @Html.Partial("_PrintHeaderPartial")
+        <div class="row">
+            <div class="col-md-12">
+                <div align="center">
+                    <div class=WordSection1>
+                        <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
+                            CONSENT TO INVITE REPRESENTATIVE
+                        </p>
+                        <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
+                            OF NONEDUCATIONAL AGENCY
+                        </p>
+                        <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
+                            TO IEP MEETING
+                        </p>
+                        <p>
+                            I, the parent (or adult student) identified below, have been informed that
+                        </p>
+                        <p>
+                            <u>USD @(String.Format(@schoolDistrict).PadRight(68 - String.Format(@schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u>
+                            
+                            
+                            
+                        </p>
+                        <p>
+                            (Participating Agency)
+                        </p>
+                        <p>
+                            <span><input type="checkbox" /></span> may be providing or paying for certain transition services for my child; 
+                        </p>
+                        <p align="center">- OR -</p>
+                        <p>
+                            <span><input type="checkbox" /></span> may be providing or paying for certain transition services for my child (or
+                            me) and
+                        </p>
+                        <p>
+                            I have been further informed that:
+                        </p>
+                        <ul type="none">
+                            <li>
+                                It is appropriate for a representative of the above agency to attend an
+                                IEP meeting at which transition services will be discussed; and
+                            </li>
+                        </ul>
+                        <ul type="none">
+                            <li>
+                                Information in my child’s (or in my) education records, including the
+                                IEP, that is relevant to the development of postsecondary goals,
+                                transition assessments and transition services may need to be disclosed
+                                to the representative of the above agency at the IEP meeting; and this
+                                disclosure can be made only with my consent which I understand must be
+                                voluntarily given and may be revoked at any time;
+                            </li>
+                        </ul>
+                        <p align="center">
+                            <u></u>
+                        </p>
+                        <p align="center">
+                            <u>CONSENT</u>
+                        </p>
+                        <p>
+                            Having been informed as stated above, I give my consent for the school
+                            district to:
+                        </p>
+                        <p>
+                            (a) invite a representative of the above agency to attend the IEP meeting
+                            scheduled for _______________ and
+                        </p>
+                        <p>
+                            (b) to disclose at the meeting to the agency representative any information
+                            contained in my child’s (or my) education records that is relevant to the
+                            development of postsecondary goals, transition assessments and/or
+                            transition services.
+                        </p>
+                        <p>
+                            __________________________________________ Date: ______________________
+                        </p>
+                        <p>
+                            (Parent/Adult Student signature)
+                        </p>
+
+                    </div>
+
+
+                </div><!--end center-->
+            </div><!--end col md 12-->
+
+        </div><!--endrow -->
+    </div><!--end container-->
+</div><!--end tran-->
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/requestconsent.js"></var>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.classList += ' ' + 'fadeInToBackground';
+
+    var el = document.getElementsByClassName("body-content")[0], c = el.style;
+    c.borderLeft = "1px solid #000";
+    c.borderRight = "1px solid #000";
+    c.boxShadow = "10px 10px 25px #333";
+    c.position = "relative";
+    c.top = "15px";
+    c.backgroundColor = "#ffffff";
+    c.marginBottom = "75px";
+
+    setTimeout(function () {
+        var tp = document.getElementsByClassName("transition-page")[0];
+        tp.style.display = "block";
+
+        var className = 'transition-page-scaleUpCenter';
+        if (el.classList) {
+            el.classList.add(className);
+        } else {
+            el.className += ' ' + className;
+        }
+    }, 200);
+</script>
+

@@ -1,0 +1,804 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentLegalView
+
+@{
+    ViewBag.Title = "IEP Team Considerations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+
+}
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    .fadeInToBackground {
+        background: #525659;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .fadeOutToBackground {
+        background: #fff;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+        width: 900px;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    /* Font Definitions */
+    @@font-face {
+        font-family: Wingdings;
+    }
+
+    @@font-face {
+        font-family: "Cambria Math";
+    }
+
+    @@font-face {
+        font-family: "Arial Narrow";
+    }
+
+    @@font-face {
+        font-family: Tahoma;
+    }
+
+    @@font-face {
+        font-family: "Zapf Dingbats";
+    }
+
+    /* Style Definitions */
+    p.MsoNormal, li.MsoNormal, div.MsoNormal {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        text-align: left;
+        ;
+    }
+
+    h1 {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h2 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        font-weight:700;
+    }
+
+    h3 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        page-break-after: avoid;
+        font-size: 14.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+    }
+
+    h4 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: 700;
+    }
+
+    h6 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+    }
+
+    p.MsoHeading7, li.MsoHeading7, div.MsoHeading7 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 11.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: bold;
+    }
+
+    p.MsoHeader, li.MsoHeader, div.MsoHeader {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoFooter, li.MsoFooter, div.MsoFooter {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align: left;
+    }
+
+    p.MsoBlockText, li.MsoBlockText, div.MsoBlockText {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 13.5pt;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align: left;
+    }
+
+    p.MsoAcetate, li.MsoAcetate, div.MsoAcetate {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 8.0pt;
+        font-family: "Tahoma",sans-serif;
+    }
+
+    p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        text-align:left;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+
+
+    /* List Definitions */
+    ol {
+        margin-bottom: 0in;
+    }
+
+    ul {
+        margin-bottom: 0in;
+    }
+
+    @@page {
+        margin: 0;
+    }
+
+    @@media print {
+        @@page {
+            margin: 0;
+        }
+
+        body {
+            margin: 1.4cm;
+            overflow: visible;
+        }
+
+        .transition-page-scaleUpCenter {
+            border: none !important;
+        }
+
+        #backtoportal {
+            display: none;
+        }
+
+        #printbutton {
+            display: none;
+        }
+
+        footer {
+            display: none;
+        }
+    }
+</style>
+<div class="transition-page" style="margin-bottom: 45px; display: none;">
+    <div class="container" style="min-height: 1250px; width: 725px;">
+        @Html.Partial("_PrintHeaderPartial")
+        <div class="row">
+            <div class="col-md-12">
+                <div align="center">
+                    <div class=WordSection1>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
+0in;margin-left:0in;margin-bottom:.0001pt'>
+                            Student Name:  @(String.Format(Model.StudentFormattedName).PadRight(68 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))                           IEP
+                            Meeting Date:  <img width=201 height=1 id="Group 2519"
+                                                src="IEP_Team_Considerations_files/image002.gif">
+                        </p>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;
+margin-left:22.55pt'>
+                            <span style='font-size:7.0pt;line-height:107%;font-family:
+"Times New Roman",serif'></span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
+margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
+                            <b>
+                                <span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
+                                    IEP Team
+                                    Considerations
+                                </span>
+                            </b>
+                        </p>
+
+                        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                            <span style='font-size:4.0pt;line-height:107%;font-family:"Cambria",serif'></span><span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'>
+                                (The
+                                child’s IEP must reflect these considerations.)
+                            </span><span style='font-size:
+16.0pt;line-height:107%;font-family:"Cambria",serif'></span>
+                        </p>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-55.1pt;margin-bottom:
+5.75pt;margin-left:0in'>
+                            <img width=680 height=1 id="Group 2520"
+                                 src="IEP_Team_Considerations_files/image003.gif">
+                        </p>
+
+                        <table class=TableGrid border=0 cellspacing=0 cellpadding=0 width=0
+                               style='width:509.6pt;border-collapse:collapse'>
+                            <tr style='height:68.5pt'>
+                                <td width=679 valign=top style='width:509.6pt;border:double black 2.25pt;
+  border-bottom:solid black 1.0pt;padding:2.3pt 5.75pt 0in 5.5pt;height:68.5pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        What are
+                                        the strengths of the child?
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                            <tr style='height:67.7pt'>
+                                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
+  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:67.7pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        How have
+                                        the child’s strengths been utilized to address the child’s needs on the IEP?
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                            <tr style='height:66.5pt'>
+                                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
+  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:66.5pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        What are
+                                        the parents’ concerns, if any, for enhancing the education of their child?
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:67.55pt'>
+                                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
+  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:67.55pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        How are
+                                        the parents’ concerns for the education of their child addressed on the IEP?
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                            <tr style='height:81.15pt'>
+                                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
+  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:81.15pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  99%'>
+                                        Are there any potential harmful effects of the recommended placement on
+                                        the student and/or the quality of services for the student?  (Do the positive
+                                        effects of the placement outweigh the potential harmful effects?)
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                            <tr style='height:81.0pt'>
+                                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
+  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:81.0pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  99%'>
+                                        Will the child participate in regular physical education or does the
+                                        child require specially designed adapted physical education? (Children with
+                                        disabilities only.)
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                            <tr style='height:95.55pt'>
+                                <td width=679 valign=top style='width:509.6pt;border:double black 2.25pt;
+  border-top:none;padding:2.3pt 5.75pt 0in 5.5pt;height:95.55pt'>
+                                    <p class=MsoNormal style='margin-bottom:.1pt;line-height:99%'>
+                                        Are extended
+                                        school year services necessary since the benefits accrued to the child during
+                                        the regular school term will be significantly jeopardized as a result of a
+                                        break in educational programming? (Children with disabilities only.)
+                                    </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'> </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
+margin-left:-.75pt'>
+                            <span style='font-size:10.0pt;line-height:107%'>
+                                Sample Form
+                                Special
+                                Education Services
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
+margin-left:-.75pt'>
+                            <span style='font-size:10.0pt;line-height:107%'>
+                                Revised
+                                6/5/07                                                                                                           Kansas
+                                State Department of Education
+                            </span>
+                        </p>
+
+                        <table class=TableGrid border=0 cellspacing=0 cellpadding=0 width=0
+                               style='width:508.65pt;border-collapse:collapse'>
+                            <tr style='height:57.75pt'>
+                                <td width=366 valign=top style='width:274.6pt;border:double black 1.5pt;
+  border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.55pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <b>
+                                            <span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
+                                                IEP
+                                                Team Consideration of
+                                            </span>
+                                        </b>
+                                    </p>
+                                    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center'>
+                                        <b>
+                                            <span style='font-size:16.0pt;line-height:107%;
+  font-family:"Cambria",serif'>Evaluation Results and Special Factors</span>
+                                        </b>
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:double black 1.5pt;border-left:
+  none;border-bottom:double black 1.5pt;border-right:solid black 1.0pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
+  margin-bottom:0in;margin-left:.8pt;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'></span>
+                                    </p>
+                                </td>
+                                <td width=210 style='width:157.45pt;border:double black 1.5pt;border-left:
+  none;padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+                                    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center'>
+                                        <span style='font-size:12.0pt;line-height:107%;font-family:
+  "Cambria",serif'>If yes, where is this need addressed in the IEP?</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:74.15pt'>
+                                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
+  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:74.15pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        Have the needs of the child which
+                                        were identified in the most recent evaluation of the child, including
+                                        observed needs and the child’s performance on general State and district-wide
+                                        assessments, been considered in the development of the child’s IEP?
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:74.15pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes       No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:74.15pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:72.65pt'>
+                                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.65pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        Does the child’s behavior impede his
+                                        or her learning or that of others?<span style='font-size:10.0pt;line-height:
+  107%'></span>
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.65pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes       No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:72.65pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:100.45pt'>
+                                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
+  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:100.45pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt;line-height:99%'>
+                                        If the child is blind
+                                        or visually impaired, does evaluation of the child’s reading and writing
+                                        skills, needs, and appropriate reading and writing media (including an
+                                        evaluation of the child’s future needs for instruction in Braille or the use
+                                        of Braille), indicate that instruction in Braille or the use of Braille is
+                                        appropriate for the child? 
+                                    </p>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>(Children with disabilities only.)</p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:100.45pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes       No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:100.45pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:72.5pt'>
+                                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.5pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        Does the child have limited English
+                                        proficiency?
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.5pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes       No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:72.5pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:72.5pt'>
+                                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.5pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        Does the child have any special
+                                        communication needs?
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:72.5pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes       No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:72.5pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:100.6pt'>
+                                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
+  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:100.6pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        If the child is deaf or hard of
+                                        hearing, does the child have any special communication needs relating to
+                                        opportunities for direct communications with peers and professional personnel
+                                        in the child’s language and communication mode, academic level, or
+                                        opportunities for direct instruction in the child’s language and
+                                        communication mode?  (Children with disabilities only.)
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:100.6pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes        No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:100.6pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:73.1pt'>
+                                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
+  border-bottom:double black 1.5pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:73.1pt'>
+                                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.1pt;margin-bottom:.0001pt'>
+                                        Does the child require any assistive
+                                        technology devices or services in order to be involved, and to progress in
+                                        the general curriculum or to be educated in a less restrictive environment?
+                                        (Children with disabilities only.)
+                                    </p>
+                                </td>
+                                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
+  border-bottom:double black 1.5pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
+  height:73.1pt'>
+                                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
+  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+                                        <span style='font-size:10.0pt;line-height:107%'>Yes        No</span>
+                                    </p>
+                                </td>
+                                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
+  none;border-bottom:double black 1.5pt;border-right:double black 1.5pt;
+  padding:2.25pt 4.1pt 0in 5.3pt;height:73.1pt'>
+                                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                                        <span style='font-size:10.0pt;line-height:107%'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:34.05pt;
+margin-left:22.55pt'>
+                            <span style='font-size:5.0pt;line-height:107%;font-family:
+"Times New Roman",serif'></span>
+                        </p>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
+margin-left:-.75pt'>
+                            <span style='font-size:10.0pt;line-height:107%'>
+                                Sample Form
+                                Special
+                                Education Services
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
+margin-left:-.75pt'>
+                            <span style='font-size:10.0pt;line-height:107%'>
+                                Revised
+                                6/5/07                                                                                                           Kansas
+                                State Department of Education
+                            </span>
+                        </p>
+
+                    </div>
+
+
+
+
+                </div><!--end center-->
+            </div><!--end col md 12-->
+
+        </div><!--endrow -->
+    </div><!--end container-->
+</div><!--end tran-->
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/requestconsent.js"></var>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.classList += ' ' + 'fadeInToBackground';
+
+    var el = document.getElementsByClassName("body-content")[0], c = el.style;
+    c.borderLeft = "1px solid #000";
+    c.borderRight = "1px solid #000";
+    c.boxShadow = "10px 10px 25px #333";
+    c.position = "relative";
+    c.top = "15px";
+    c.backgroundColor = "#ffffff";
+    c.marginBottom = "75px";
+
+    setTimeout(function () {
+        var tp = document.getElementsByClassName("transition-page")[0];
+        tp.style.display = "block";
+
+        var className = 'transition-page-scaleUpCenter';
+        if (el.classList) {
+            el.classList.add(className);
+        } else {
+            el.className += ' ' + className;
+        }
+    }, 200);
+</script>
+

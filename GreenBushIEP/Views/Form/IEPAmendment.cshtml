@@ -1,0 +1,704 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentLegalView
+
+@{
+    ViewBag.Title = "IEP Amendment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section stylesheets {
+      @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    .fadeInToBackground {
+        background: #525659;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+        }
+
+    .fadeOutToBackground {
+        background: #fff;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+        width: 900px;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    /* Font Definitions */
+    @@font-face {
+        font-family: Wingdings;
+    }
+
+    @@font-face {
+        font-family: "Cambria Math";
+    }
+
+    @@font-face {
+        font-family: "Arial Narrow";
+    }
+
+    @@font-face {
+        font-family: Tahoma;
+    }
+
+    @@font-face {
+        font-family: "Zapf Dingbats";
+    }
+
+    /* Style Definitions */
+    p.MsoNormal, li.MsoNormal, div.MsoNormal {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        text-align:left;;
+    }
+
+    h1 {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h2 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h3 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        page-break-after: avoid;
+        font-size: 14.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+    }
+
+    h4 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight:700;
+    }
+
+    h6 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+    }
+
+    p.MsoHeading7, li.MsoHeading7, div.MsoHeading7 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 11.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: bold;
+    }
+
+    p.MsoHeader, li.MsoHeader, div.MsoHeader {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoFooter, li.MsoFooter, div.MsoFooter {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align:left;
+    }
+
+    p.MsoBlockText, li.MsoBlockText, div.MsoBlockText {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 13.5pt;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align:left;
+    }
+
+    p.MsoAcetate, li.MsoAcetate, div.MsoAcetate {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 8.0pt;
+        font-family: "Tahoma",sans-serif;
+    }
+
+    p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    .MsoNormal{
+        font-size:11.0pt; 
+        font-family:"Calibri",sans-serif;
+    }
+
+    /* List Definitions */
+    ol {
+        margin-bottom: 0in;
+    }
+
+    ul {
+        margin-bottom: 0in;
+    }
+
+    @@page {
+        margin: 0;
+    }
+
+    @@media print {
+        @@page {
+            margin: 0;
+        }
+
+        body {
+            margin: 1.4cm;
+            overflow: visible;
+        }
+
+        .transition-page-scaleUpCenter {
+            border: none !important;
+        }
+
+#backtoportal {
+        display: none;
+    }
+
+#printbutton {
+    display: none;
+        }
+
+    footer {
+        display: none;
+    }
+    }
+</style>
+<div class="transition-page" style="margin-bottom: 45px; display: none;">
+    <div class="container" style="min-height: 1250px; width: 725px;">
+        @Html.Partial("_PrintHeaderPartial")
+        <div class="row">
+            <div class="col-md-12">
+                <div align="center">
+                    <div class=WordSection1>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
+                                IEP
+                                AMENDMENT BETWEEN<o:p></o:p>
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
+                                ANNUAL
+                                IEP MEETINGS<o:p></o:p>
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-size:14.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                        </p>
+
+                        <p class=MsoNormal><u>@(String.Format(Model.StudentFormattedName).PadRight(75 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></p>
+
+                        <p class=MsoNormal>
+                            <span style='font-size:10.0pt;
+font-family:"Calibri",sans-serif'>
+                                <span style='mso-tab-count:2'>                                </span>Name
+                                of Student<o:p></o:p>
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <b style=''><span style='font-size:14.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></b>
+                        </p>
+
+                        <p class=MsoNormal>
+                            <span style='font-size:11.0pt; font-family:"Calibri",sans-serif'>
+                                We
+                                understand that this student’s IEP must be reviewed at least annually at an IEP
+                                meeting. However, after the annual IEP meeting for a school year, the law permits
+                                a student’s IEP to be amended without an IEP meeting if the school
+                                representative and the parent or educational decision maker for the student
+                                agree that a meeting is not needed.<o:p></o:p>
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <b style=''><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></b>
+                        </p>
+
+                        <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;border:none;mso-border-top-alt:solid windowtext .5pt;
+ mso-border-bottom-alt:solid windowtext .5pt;mso-yfti-tbllook:480;mso-padding-alt: 0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;mso-border-insidev:
+ .5pt solid windowtext'>
+                            <tr style=''>
+                                <td width=590 valign=top style='width:6.15in;border:none;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-size:11.0pt; font-family:"Calibri",sans-serif'>
+                                            Description of proposed IEP Change(s)<b style=''></b>and effective date(s)<b style=''>:<o:p></o:p></b>
+                                        </span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style=''>
+                                <td width=590 valign=top style='width:6.15in;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2'>
+                                <td width=590 valign=top style='width:6.15in;border:none;border-bottom:solid windowtext 1.0pt;  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3'>
+                                <td width=590 valign=top style='width:6.15in;border:none;border-bottom:solid windowtext 1.0pt;  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:4;'>
+                                <td width=590 valign=top style='width:6.15in;border:none;border-bottom:solid windowtext 1.0pt;  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                    <p class=MsoNormal>
+                                        <b style=''>
+                                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-size:8.0pt;font-family:"Calibri",sans-serif'>
+                                (Use
+                                additional pages if necessary. Changes in services must specify the frequency,
+                                location and duration of the change of services.)<o:p></o:p>
+                            </span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                        </p>
+
+                        <p class=MsoNormal align=center style='text-align:center'>
+                            <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                        </p>
+
+                        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
+                               style='width:6.0in;margin-left:.9pt;border-collapse:collapse;'>
+                            <tr style=''>
+                                <td width=42 style='width:31.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>We<o:p></o:p></span></p>
+                                </td>
+                                <td width=90 style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                         <input type="checkbox" />&nbsp;<span style='font-family:"Calibri",sans-serif'>agree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                                    </p>
+                                    <p class=MsoNormal>
+                                         <input type="checkbox" />&nbsp;<span style='font-family:"Calibri",sans-serif'>disagree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                                    </p>
+                                </td>
+                                <td width=444 colspan=2 style='width:333.0pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-family:"Calibri",sans-serif'>
+                                            to
+                                            amend this student’s IEP as described above <b style=''><span style='text-transform:uppercase'>and</span></b>
+                                        </span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:9.9pt'>
+                                <td width=42 style='width:31.5pt;padding:0in 5.4pt 0in 5.4pt;height:9.9pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-size:5.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                    </p>
+                                </td>
+                                <td width=90 style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt;height:9.9pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-size:5.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                    </p>
+                                </td>
+                                <td width=348 style='width:261.0pt;padding:0in 5.4pt 0in 5.4pt;height:9.9pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-size:5.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                    </p>
+                                </td>
+                                <td width=96 style='width:1.0in;padding:0in 5.4pt 0in 5.4pt;height:9.9pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-size:5.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;'>
+                                <td width=42 style='width:31.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-family:"Calibri",sans-serif'>
+                                            We<span style=''></span>
+                                        </span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                                    </p>
+                                </td>
+                                <td width=90 style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <input type="checkbox" />&nbsp;<span style='font-family:"Calibri",sans-serif'>do<o:p></o:p></span>
+                                    </p>
+                                    <p class=MsoNormal>
+                                        <input type="checkbox" />&nbsp;<span style='font-family:"Calibri",sans-serif'>do not</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                                    </p>
+                                </td>
+                                <td width=348 style='width:261.0pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal>
+                                        <span style='font-family:"Calibri",sans-serif'>
+                                            wish
+                                            to convene an IEP meeting<o:p></o:p>
+                                        </span>
+                                    </p>
+                                </td>
+                                <td width=96 style='width:1.0in;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal>
+                            <b style=''>
+                                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                            </b>
+                        </p>
+
+                        <p class=MsoNormal>
+                            <b style=''>
+                                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                            </b>
+                        </p>
+
+                        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                               style='border-collapse:collapse;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+                            <tr style=''>
+                                <td width=325 valign=top style='width:243.9pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal align=right style='text-align:right'>
+                                        <span style='font-family:"Calibri",sans-serif'>Date:<o:p></o:p></span>
+                                    </p>
+                                </td>
+                                <td width=197 valign=top style='width:2.05in;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                            </tr>
+                            <tr style=';'>
+                                <td width=325 valign=top style='width:243.9pt;border:none;mso-border-top-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal align=center style='text-align:center'>
+                                        <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                                            (Parent/Legal
+                                            Decision Maker)<o:p></o:p>
+                                        </span>
+                                    </p>
+                                </td>
+                                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                                <td width=197 valign=top style='width:2.05in;border:none;mso-border-top-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal>
+                            <b style=''>
+                                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                            </b>
+                        </p>
+
+                        <p class=MsoNormal>
+                            <b style=''>
+                                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                            </b>
+                        </p>
+
+                        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                               style='border-collapse:collapse;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+                            <tr style=''>
+                                <td width=325 valign=top style='width:243.9pt;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal align=right style='text-align:right'>
+                                        <span style='font-family:"Calibri",sans-serif'>Date:<o:p></o:p></span>
+                                    </p>
+                                </td>
+                                <td width=197 valign=top style='width:2.05in;border:none;border-bottom:solid windowtext 1.0pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                            </tr>
+                            <tr style=';'>
+                                <td width=325 valign=top style='width:243.9pt;border:none;mso-border-top-alt:  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal align=center style='text-align:center'>
+                                        <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                                            (Authorized
+                                            District Representative)<o:p></o:p>
+                                        </span>
+                                    </p>
+                                </td>
+                                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                                <td width=197 valign=top style='width:2.05in;border:none;mso-border-top-alt:  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class=MsoNormal>
+                            <b style=''>
+                                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                            </b>
+                        </p>
+
+                        <p class=MsoNormal>
+                            <span style='font-size:11.0pt;
+font-family:"Calibri",sans-serif'>
+                                A prior written notice form accompanies this
+                                agreement, and includes information the school is required to give to parents
+                                before implementing any proposed change to their child’s IEP.<span style=''></span>If consent is needed for any proposed change,
+                                a parent must give consent by signing in the consent portion of the attached
+                                form before the change may be implemented.<o:p></o:p>
+                            </span>
+                        </p>
+
+                    </div>
+
+
+
+
+
+                </div><!--end center-->
+            </div><!--end col md 12-->
+
+        </div><!--endrow -->
+    </div><!--end container-->
+</div><!--end tran-->
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/requestconsent.js"></var>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.classList += ' ' + 'fadeInToBackground';
+
+    var el = document.getElementsByClassName("body-content")[0], c = el.style;
+    c.borderLeft = "1px solid #000";
+    c.borderRight = "1px solid #000";
+    c.boxShadow = "10px 10px 25px #333";
+    c.position = "relative";
+    c.top = "15px";
+    c.backgroundColor = "#ffffff";
+    c.marginBottom = "75px";
+
+    setTimeout(function () {
+        var tp = document.getElementsByClassName("transition-page")[0];
+        tp.style.display = "block";
+
+        var className = 'transition-page-scaleUpCenter';
+        if (el.classList) {
+            el.classList.add(className);
+        } else {
+            el.className += ' ' + className;
+        }
+    }, 200);
+</script>

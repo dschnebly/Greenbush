@@ -4,7 +4,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.Web.WebPages.Html;
 
 namespace GreenBushIEP.Models
 {
@@ -208,6 +208,18 @@ namespace GreenBushIEP.Models
         public tblStudentInfo studentInfo { get; set; }
         public tblUser teacher { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
+    }
+
+    public class IEPFormViewModel
+    {
+        public IEPFormViewModel()
+        {
+            IEPForms = new List<System.Web.Mvc.SelectListItem>();
+        }
+
+        public List<System.Web.Mvc.SelectListItem> IEPForms { get; set; }
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
     }
 
     public class ModuleAcademicViewModel

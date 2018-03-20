@@ -1,0 +1,1057 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentLegalView
+
+@{
+    ViewBag.Title = "Summary Of Performance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+
+}
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
+<style>
+    .fadeInToBackground {
+        background: #525659;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .fadeOutToBackground {
+        background: #fff;
+        transition: background .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out;
+        -webkit-transition: background .25s ease-in-out;
+    }
+
+    .glyphicon-remove-circle:hover {
+        cursor: pointer;
+    }
+
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+        width: 900px;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    /* Font Definitions */
+    @@font-face {
+        font-family: Wingdings;
+    }
+
+    @@font-face {
+        font-family: "Cambria Math";
+    }
+
+    @@font-face {
+        font-family: "Arial Narrow";
+    }
+
+    @@font-face {
+        font-family: Tahoma;
+    }
+
+    @@font-face {
+        font-family: "Zapf Dingbats";
+    }
+
+    /* Style Definitions */
+    p.MsoNormal, li.MsoNormal, div.MsoNormal {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family:"Arial",sans-serif;
+        text-align: left;
+        ;
+    }
+
+    h1 {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: none;
+        font-weight:700;
+    }
+
+    h2 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 11.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-decoration: underline;
+    }
+
+    h3 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        page-break-after: avoid;
+        font-size: 14.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+    }
+
+    h4 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: 700;
+    }
+
+    h6 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+    }
+
+    p.MsoHeading7, li.MsoHeading7, div.MsoHeading7 {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        text-align: center;
+        line-height: 12.0pt;
+        page-break-after: avoid;
+        border: none;
+        padding: 0in;
+        font-size: 11.0pt;
+        font-family: "Times New Roman",serif;
+        color: black;
+        font-weight: bold;
+    }
+
+    p.MsoHeader, li.MsoHeader, div.MsoHeader {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoFooter, li.MsoFooter, div.MsoFooter {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family: "Times New Roman",serif;
+    }
+
+    p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
+        margin-top: 0in;
+        margin-right: 8.0pt;
+        margin-bottom: 0in;
+        margin-left: 0in;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align: left;
+    }
+
+    p.MsoBlockText, li.MsoBlockText, div.MsoBlockText {
+        margin-top: 0in;
+        margin-right: -1.0pt;
+        margin-bottom: 0in;
+        margin-left: 13.5pt;
+        margin-bottom: .0001pt;
+        line-height: 12.0pt;
+        font-size: 9.0pt;
+        font-family: "Arial",sans-serif;
+        color: black;
+        text-align: left;
+    }
+
+    p.MsoAcetate, li.MsoAcetate, div.MsoAcetate {
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 8.0pt;
+        font-family:"Arial",sans-serif;
+    }
+
+    p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family:"Arial",sans-serif;
+    }
+
+    p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        text-align:left;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+       font-family:"Arial",sans-serif;
+    }
+
+    p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+        font-family:"Arial",sans-serif;
+    }
+
+    p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        font-size: 10.0pt;
+       font-family:"Arial",sans-serif;
+    }
+
+    .MsoNormal{
+        font-family:"Arial",sans-serif;
+    }
+
+    /* List Definitions */
+    ol {
+        margin-bottom: 0in;
+    }
+
+    ul {
+        margin-bottom: 0in;
+    }
+
+    @@page {
+        margin: 0;
+    }
+
+    @@media print {
+        @@page {
+            margin: 0;
+        }
+
+        body {
+            margin: 1.4cm;
+            overflow: visible;
+        }
+
+        .transition-page-scaleUpCenter {
+            border: none !important;
+        }
+
+        #backtoportal {
+            display: none;
+        }
+
+        #printbutton {
+            display: none;
+        }
+
+        footer {
+            display: none;
+        }
+    }
+</style>
+<div class="transition-page" style="margin-bottom: 45px; display: none;">
+    <div class="container" style="min-height: 1250px; width: 725px;">
+        @Html.Partial("_PrintHeaderPartial")
+        <div class="row">
+            <div class="col-md-12">
+                <div align="center">
+
+                    <div class="WordSection1">
+                        <p align="center" class="MsoNormal" style='margin-bottom:0in;margin-bottom:.0001pt; text-align:center;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'>SUMMARY OF PERFORMANCE (SOP)</span></b></p>
+                        <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:3.5pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p align="center" class="MsoNormal" style='margin-bottom:0in;margin-bottom:.0001pt; text-align:center;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'>Guidance for Developing the SOP</span></b></p>
+                        <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:3.5pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.1pt; margin-left:0in;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height: 107%'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <h1 align="left" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;text-align:left;text-indent:-.5pt;line-height:103%'><span style='font-size:11.0pt;line-height:103%;font-family:"Arial",sans-serif; mso-fareast-font-family:Arial'>Purpose</span></h1>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The Summary of Performance (SOP) is required under the reauthorization of the Individuals with Disabilities Education Act of 2004. The language as stated in IDEA 2004 regarding the SOP is as follows</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:22.8pt;margin-bottom: .2pt;margin-left:36.5pt'>
+                            <span style='mso-no-proof:yes'>
+                                
+                                <![if !vml]><img height="25" src="~/Content/Images/legal_image.jpg" width="33"><![endif]>
+                            </span>For a child whose eligibility under special education terminates due to graduation with a regular diploma, or due to exceeding the age of eligibility, the local education agency “shall provide the child with a summary of the child’s academic achievement and functional performance, which shall include recommendations on how to assist the child in meeting the child’s postsecondary goals” §Sec. 300.305(e)(3).
+                        </p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The Summary of Performance, with the accompanying documentation, is important to assist the student in the transition from high school to higher education, training and/or employment. This information is necessary under Section 504 of the Rehabilitation Act and the Americans with Disabilities Act to help establish a student’s eligibility for reasonable accommodations and supports in <i style='mso-bidi-font-style: normal'>postsecondary</i> settings. It is also useful for the Vocational Rehabilitation Comprehensive Assessment process. The information about students' current level of functioning is intended to help postsecondary institutions consider accommodations for access. <i style='mso-bidi-font-style: normal'>These recommendations should not imply that any individual who qualified for special education in high school will automatically qualify for services in</i> <i style='mso-bidi-font-style:normal'>the postsecondary education or the employment setting. Postsecondary settings will continue to make eligibility</i> <i style='mso-bidi-font-style:normal'>decisions on a case-by-case basis.</i></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The SOP is most useful when <b style='mso-bidi-font-weight:normal'>linked with the IEP process</b> and the student has the opportunity to actively participate in the development of this document.<span style='mso-spacerun:yes'>&nbsp;</span> During the high school years the student will work on ways to address gaps between skill levels and the chosen career path or specific job.<span style='mso-spacerun:yes'>&nbsp;</span> Many of these gaps will be addressed through instruction, work experiences, and accommodations.<span style='mso-spacerun:yes'>&nbsp;</span> <b style='mso-bidi-font-weight: normal'>The SOP needs to articulate the degree to which these gaps still exist for the student upon exiting from high school and the accommodations that narrow or close the gaps</b>.</p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.45pt; margin-left:0in;text-indent:0in;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The SOP <b style='mso-bidi-font-weight: normal'>must</b> be completed during the final year of a student’s high school education.<span style='mso-spacerun:yes'>&nbsp;</span> However, the SOP may be part of a portfolio process that begins at age 14 or before. The timing of completion of the SOP may vary depending on the student’s postsecondary goals. If a student is transitioning to higher education, the SOP, with additional documentation, may be necessary as the student applies to a college or university. Likewise, this information may be necessary as a student applies for services from state agencies such as vocational rehabilitation. In some instances, it may be most appropriate to wait until the spring of a student’s final year to provide an agency or employer the most updated information on the performance of the student.</p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:338.8pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <h1>
+                            <span style='mso-no-proof:yes'>
+                                
+                                <![if !vml]><img height="27" src="~/Content/Images/legal_image.jpg" width="36"><![endif]>
+                            </span><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-weight: normal'><span style='mso-spacerun:yes'>&nbsp;</span></span>= legal requirement to be included in the SOP<span style='font-size:10.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Arial",sans-serif;mso-fareast-font-family:Arial'></span>
+                        </h1>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <h2 style='margin-left:-.25pt'>Part 1: Student Information <span style='font-weight:normal'><span style='mso-spacerun:yes'>&nbsp;</span></span></h2>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>This section contains student contact and demographic information that will be helpful to future service providers and to post-school surveyors who will contact students after graduation. A school contact person is also listed. Complete and up-to-date information is crucial to the followup process.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The completion of the Summary of Performance may require the input from a number of school personnel including the special education teacher, regular education teacher, school psychologist or related services personnel.<span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;line-height:103%'><b style='mso-bidi-font-weight:normal'>Part 2: Student’s Measurable Postsecondary Goals and Recommendations to Assist the Student in Meeting his/her Postsecondary Goals:</b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='mso-spacerun:yes'>&nbsp;</span></b></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>Students aged 14 and above (or younger, when deemed appropriate by the IEP team) have measurable postsecondary goals (based upon age appropriate transition assessments) related to education or training, employment, and where appropriate, independent living skills.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>These goals are the desired postsecondary outcomes of the student. This section should be completed using information from the student’s recent transition IEP as well as updated information provided by the student. The information may be filled out independently by the student or completed with the student through an interview.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>
+                            <span style='mso-no-proof:yes'>
+                                
+                                <![if !vml]><img height="25" src="~/Content/Images/legal_image.jpg" width="33"><![endif]>
+                            </span><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:103%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span> <b style='mso-bidi-font-weight:normal'>Recommendations to assist the student in meeting postsecondary goals –</b> This section should present suggestions for accommodations, adaptive devices, assistive services, compensatory strategies, and/or collateral support services, to enhance access in a post-high school environment, including higher education, training, employment, independent living and/or community participation<i style='mso-bidi-font-style:normal'>.</i><span style='mso-spacerun:yes'>&nbsp;</span> The recommendations can relate to the student’s educational goals, community participation, employment, and/or independent living. Words of caution when filling out this section, employers and colleges have different expectations and obligations.<span style='mso-spacerun:yes'>&nbsp;</span> Do not recommend things in the SOP that colleges and employers aren’t required to provide. Postsecondary providers will continue to make eligibility decisions on a case by case basis and the recommendations do not imply that the service a student qualified for in high school would automatically be the rule in post-secondary services.
+                        </p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:406.0pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <h2 style='margin-left:-.25pt'>
+                            Part 3: <span style='mso-no-proof:yes'>
+                               
+                                <![if !vml]><img height="25" src="~/Content/Images/legal_image.jpg" width="33"><![endif]>
+                            </span><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:103%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman";font-weight: normal'><span style='mso-spacerun:yes'>&nbsp;</span></span><span style='mso-spacerun:yes'>&nbsp;</span>Academic Achievement and Functional Performance
+                        </h2>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The Present Level of Academic Achievement and Functional Performance section of the IEP offers a chance to integrate data to provide a current picture of the student’s strengths and needs.<span style='mso-spacerun:yes'>&nbsp;</span> This section includes academic and functional levels of performance. Next to each specified area, please complete the student’s present level of performance, for example, grade level, standard scores, strengths and needs, and the accommodations, modifications and assistive technology that were <b style='mso-bidi-font-weight:normal'>essential</b> in high school to assist the student in achieving progress and why they are needed. Please leave blank any section that is not applicable. <b style='mso-bidi-font-weight:normal'></b><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;line-height:103%'>
+                            <span style='mso-no-proof:yes'>
+                                
+                                <![if !vml]><img height="25" src="~/Content/Images/legal_image.jpg" width="33"><![endif]>
+                            </span><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:103%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span><b style='mso-bidi-font-weight:normal'>Academic Achievement</b> – <b style='mso-bidi-font-weight:normal'>This should include reading, math, writing, and other related academic skills. What are the student’s present levels? Include: strengths, needs, necessary accommodations, modifications, assistive technology, etc.</b><span style='mso-spacerun:yes'>&nbsp;</span> Multiple sources of assessment data must be considered to develop a complete picture of a student’s academic ability, such as CBM, district or state assessments, teacher made assessments or standardized assessments.<span style='mso-spacerun:yes'>&nbsp;</span> For a student with significant needs, this information should reflect his or her performance on functional academic tasks, which may include recognition of safety signs for reading, next-dollar strategy for math, and production of a signature for written language.<span style='mso-spacerun:yes'>&nbsp;</span> <b style='mso-bidi-font-weight:normal'>Remember that the purpose of the document is to help the next service provider to better understand how to help the student. What do you think is the most relevant information to convey? How does the student’s disability affect his/her performance in academic activities?</b>
+                        </p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='mso-spacerun:yes'>&nbsp;</span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;line-height:103%'>
+                            <span style='mso-no-proof:yes'>
+                               
+                                <![if !vml]><img height="25" src="~/Content/Images/legal_image.jpg" width="33"><![endif]>
+                            </span><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:103%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span><b style='mso-bidi-font-weight:normal'>Functional Performance</b> – <b style='mso-bidi-font-weight:normal'>This could include present levels for general ability, problem solving skills, attention, organization, communication, social skills, behaviors, independent living skills, self-advocacy skills, career/vocational skills/experience, and any additional functional information that relates to the student’s measurable postsecondary goals. How does the student’s disability affect their performance in daily activities?</b>
+                        </p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The functional area of <b style='mso-bidi-font-weight:normal'>social skills and behavior</b> should include data-based statements about the student’s adaptive and problematic behaviors, including information from standardized tests, and data based on direct observations of the student.<span style='mso-spacerun:yes'>&nbsp;</span> Scores on any formal social skills curriculum the student participated in.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The area of <b style='mso-bidi-font-weight: normal'>independent living skills</b> includes self-care, leisure skills, personal safety, transportation, banking, and budgeting.<span style='mso-spacerun:yes'>&nbsp;</span> Information for this area will come from evaluation data or anecdotal information provided by the student, and by service providers who have supported the student if life skills instruction or supervised the student in living experiences.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The area of <b style='mso-bidi-font-weight: normal'>environmental access/mobility</b> addresses students with physical challenges.<span style='mso-spacerun:yes'>&nbsp;</span> Information could come from recent assistive technology assessments in school and at work, anecdotal data from observations, feedback from employer, etc.<span style='mso-spacerun:yes'>&nbsp;</span> Develop a statement highlighting the ideal physical access environment for living, school, and work.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>The area of <b style='mso-bidi-font-weight: normal'>self-determination and self-advocacy</b> is a key component for successful transition.<span style='mso-spacerun:yes'>&nbsp;</span> This is the ability to identify and articulate postsecondary goals, learning strengths and needs; independence and ability to ask for assistance with meeting needs.<span style='mso-spacerun:yes'>&nbsp;</span> Data can be collected through formal assessments and/or demonstration of skills through student led IEPs and student presentation of information to employers, etc.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>In the area of <b style='mso-bidi-font-weight:normal'>career/vocational/transition/employment</b> it may be helpful to begin with a brief summary of information about the student’s career interests, work values, and temperaments that can be gleaned by reviewing results from career and transition assessments.<span style='mso-spacerun:yes'>&nbsp;</span> Include career development milestones, such as career exploration, work history, job shadowing, or internships, etc.; courses that targeted the development of career and vocational skills.<span style='mso-spacerun:yes'>&nbsp;</span> How do the student’s experiences, skills and assessment results relate to the post-school outcomes?</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <h2 style='margin-left:-.25pt'>Part 4: OPTIONAL<span style='font-weight:normal'></span></h2>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:3.25pt; margin-left:0in;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-size:8.0pt;mso-bidi-font-size:11.0pt;line-height: 107%'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>A description of the student’s disability and the assessments used to diagnose the disability will be helpful to the next provider and may eliminate the need for additional assessments to confirm the diagnoses for eligibility determination for services.</p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:3.2pt; margin-left:0in;text-indent:0in;line-height:107%'><span style='font-size:8.0pt; mso-bidi-font-size:11.0pt;line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-left:-.25pt'>Information about the student’s experiences in school, the community and work will be helpful to determine the student’s capabilities, skills and needs.</p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='mso-spacerun:yes'>&nbsp;</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><u style='text-underline: black'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'>Criteria for Content in the Summary of Performance</span></u></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Information facilitates the transfer of critical information that leads to effective and successful participation in all postsecondary settings/domains:<span style='mso-spacerun:yes'>&nbsp;</span> work, education, community, and home.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Information incorporates achievements and up-to-date academic, personal, career, and employment levels of performance.</span></p>
+                        <p class="MsoNormal" style='margin-left:0in;text-indent:0in;line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Student goals are included and are provided as much as possible in the student’s own language or terms (so that he or she will recognize and remember) and are based on current or recent assessment findings.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Information is based on direct, firsthand input from the student and other transition team members and stakeholders:<span style='mso-spacerun:yes'>&nbsp;</span> teachers, parents, siblings, adult service providers, etc.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Data and information, including disabilities, are written in functional terms rather than school system jargon.</span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:0in;text-indent:0in;line-height:107%'><span style='font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Accommodations are presented in functional terms, preferably in the student’s own language</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Content includes information specifically requested by (or which typically is required or used by) the student, adult service providers, postsecondary education and training personnel.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Information is written and/or presented (in some cases, it could include photographs or illustrations) in ways that are easily understood and are immediately useful for students, adult service providers, postsecondary education personnel, and/or employers.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Artifacts, documentation, and other items that are attached are identified within the SOP content, preferably in a highly visible space.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Signatures by the student and other team members verify that the contents have been explained and agreed upon.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:13.8pt;text-indent:-13.8pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span style='font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span> <![endif]><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Information presents an accurate depiction of the student, even if additional space is needed—the form should fit the student, not the other way around.</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Times New Roman",serif;mso-fareast-font-family: "Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:-.25pt'><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>(Leconte, P.J. (2006).<span style='mso-spacerun:yes'>&nbsp;</span> The evolution of career, vocational, and transition assessment:<span style='mso-spacerun:yes'>&nbsp;</span> Implications for the</span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:-.25pt'><span style='font-family:"Times New Roman",serif; mso-fareast-font-family:"Times New Roman"'>Summary of Performance.<span style='mso-spacerun:yes'>&nbsp;</span> <i style='mso-bidi-font-style:normal'>Career Development for Exceptional Individuals.</i> Vol. 29, Number 2, Fall 2006, pp. 114-124.)</span></p>
+                    </div><span style='font-size:11.0pt;line-height:103%;font-family:"Arial",sans-serif; mso-fareast-font-family:Arial;color:black;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'><br clear="all" style='page-break-before:always; mso-break-type:section-break'></span>
+                    <div class="WordSection2">
+                        <h1 style='margin-right:5.75pt'><span style='font-size:14.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>My Summary of Performance</span></h1>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Name: _______________________________________________________________ Date of Birth: ______________________<span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Address:________________________________________________________________________________________________</span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;line-height:103%'><span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (Street)<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (Town, state)<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> (Zip code)</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Telephone Number:_____________________________________________ Year of Graduation/Exit: _____________________</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Current School: ____________________________________ City: __________________________________________________</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Primary Language or mode of communication: _________________________________________________________________</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.25pt;margin-bottom:.0001pt;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>School Representative Contact: Name: _____________________________________ Title: _____________________________</span></b></p>
+                        <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:6.65pt; margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p align="center" style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:.25pt; margin-bottom:.0001pt;line-height:107%'><span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>School: ___________________________ E-mail: _________________________ Telephone Number: _________________</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.5pt; margin-left:-.75pt;text-indent:0in;line-height:104%;tab-stops:center 384.9pt'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:104%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>My Goals for one year after high school: <span style='mso-tab-count: 1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></b> <span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:104%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="TableGrid" style='width:90%;margin-left:-5.4pt;border-collapse:collapse;mso-yfti-tbllook: 1184;mso-padding-alt:2.3pt 5.75pt 0in 5.4pt' width="0">
+                            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:27.4pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:27.4pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Learning</span></b></p>
+                                </td>
+                                <td style='width:545.5pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:27.4pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:1;height:40.8pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:40.8pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:545.5pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:40.8pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Recommendations to assist me in meeting my goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;height:27.35pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:27.35pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Working</span></b></p>
+                                </td>
+                                <td style='width:545.5pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:27.35pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3;height:40.85pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:40.85pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:545.5pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:40.85pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Recommendations to assist me in meeting my goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:4;height:27.35pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:27.35pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Living</span></b></p>
+                                </td>
+                                <td style='width:545.5pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:27.35pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes;height:40.8pt'>
+                                <td style='width:113.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.3pt 5.75pt 0in 5.4pt;height:40.8pt' valign="top" width="151">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:545.5pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.3pt 5.75pt 0in 5.4pt;height:40.8pt' valign="top" width="727">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Recommendations to assist me in meeting my goal:</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.5pt; margin-left:-.25pt;line-height:104%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:104%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>My performance in academic content areas:</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="TableGrid" style='width:90%;margin-left:-5.4pt;border-collapse:collapse;mso-yfti-tbllook: 1184;mso-padding-alt:1.9pt 4.55pt 0in 5.4pt' width="0">
+                            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:49.35pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:49.35pt' valign="top" width="199">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:1.3pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:1.3pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:.85pt; margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Academic Content Area</span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:49.35pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:1.4pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:1.1pt; margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Present Level of Performance</span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:1.05pt; margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(grade level, standard scores, strengths, needs)</span></b> <span style='font-size: 10.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'></span></p>
+                                </td>
+                                <td style='width:221.45pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:49.35pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:100%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:100%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Essential accommodations, assistive technology, or modifications utilized in high school, and why needed.</span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:1.3pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:1;height:44.5pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:44.5pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:3.25pt; margin-left:0in;text-indent:0in;line-height:100%'><b style='mso-bidi-font-weight: normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height: 100%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Reading</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height: 100%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(Basic reading/decoding; reading comprehension; reading speed)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:44.5pt' valign="top" width="384">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:44.5pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;height:46.25pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:46.25pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:3.35pt; margin-left:0in;text-indent:0in;line-height:normal'><b style='mso-bidi-font-weight: normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Math</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>(Calculation skills, algebraic problem solving; quantitative reasoning)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:46.25pt' valign="top" width="384">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:46.25pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3;height:35.9pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:35.9pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:.75pt;margin-bottom: 3.25pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph; text-indent:0in;line-height:100%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:100%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Language</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:100%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>(written expression, speaking, spelling)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:35.9pt' valign="top" width="384">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:35.9pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:4;height:62.75pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:62.75pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Learning Skills</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>(class participation, note</span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.1pt; margin-left:0in;text-indent:0in;line-height:99%'><span style='font-size:8.5pt; mso-bidi-font-size:11.0pt;line-height:99%;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>taking, keyboarding, organization, homework management, time management, study skills, test-taking skills)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:62.75pt' valign="top" width="384">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:62.75pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes;height:42.15pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 4.55pt 0in 5.4pt;height:42.15pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:99%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:99%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Other Academic Areas</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:99%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>(Science, social studies, etc.)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:42.15pt' valign="top" width="384">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 4.55pt 0in 5.4pt;height:42.15pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.5pt; margin-left:-.25pt;line-height:104%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:104%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>My performance in functional areas:</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="TableGrid" style='width:90%;margin-left:-5.4pt;border-collapse:collapse;mso-yfti-tbllook: 1184;mso-padding-alt:1.9pt 5.25pt 0in 5.4pt' width="0">
+                            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:54.25pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:54.25pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:.3pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Functional Areas</span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.75pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:54.25pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:.2pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Present Level of Performance</span></b></p>
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:.25pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(grade level, standard scores, strengths, needs)</span></b> <span style='font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'></span></p>
+                                </td>
+                                <td style='width:221.45pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:54.25pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:99%'><b style='mso-bidi-font-weight:normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Essential accommodations, assistive technology, or modifications utilized in high school, and why needed.</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:1;height:83.55pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:83.55pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>Social Skills and Behavior</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>(Interactions with teachers/peers, level of initiation in <b style='mso-bidi-font-weight:normal'></b>asking for assistance, responsiveness to <b style='mso-bidi-font-weight:normal'></b>services and accommodations, <b style='mso-bidi-font-weight:normal'></b>degree of involvement in extracurricular <b style='mso-bidi-font-weight:normal'></b>activities, confidence and <b style='mso-bidi-font-weight:normal'></b>persistence as a learner,) <b style='mso-bidi-font-weight:normal'></b></span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:83.55pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:3.1pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:83.55pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;height:42.0pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.1pt; margin-left:0in;text-indent:0in;line-height:normal'><b style='mso-bidi-font-weight: normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Independent Living Skills</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(Self-care, leisure skills, personal safety, transportation, banking, budgeting) <b style='mso-bidi-font-weight:normal'></b></span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3;height:42.0pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:0in;text-indent:0in;line-height:normal'><b style='mso-bidi-font-weight: normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Environmental Access/Mobility</span></b> <span style='font-size:8.5pt;mso-bidi-font-size: 11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(assistive technology, mobility, transportation)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:42.0pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:4;height:62.75pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Self-Determination/Self-Advocacy</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Skills</span></b></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.05pt; margin-left:0in;text-indent:0in;line-height:normal'><span style='font-size: 8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>(Ability to identify and articulate postsecondary goals, learning strengths and needs;</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:5;height:52.45pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:52.45pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>Career-Vocational/Transition/ Employment</span></b> <span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>(Career interests, career exploration, job training, employment experiences and supports)</span></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:52.45pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:52.45pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes;height:62.75pt'>
+                                <td style='width:149.4pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="199">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:8.5pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Additional important considerations</span></b> <span style='font-size:8.5pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>that can assist in making <b style='mso-bidi-font-weight:normal'></b>decisions about disability determination <b style='mso-bidi-font-weight:normal'></b>and needed accommodations (e.g., medical problems, family concerns, sleep disturbance) <b style='mso-bidi-font-weight:normal'></b></span></p>
+                                </td>
+                                <td style='width:288.05pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="384">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:2.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:221.45pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:1.9pt 5.25pt 0in 5.4pt;height:62.75pt' valign="top" width="295">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <h2 style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:-.25pt; margin-bottom:.0001pt;line-height:107%'><span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>Date this Summary was completed: ________________________</span></h2>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:1.05pt; margin-left:0in;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height: 107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Team participants providing input into the Summary of Performance</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="TableGrid" style='width:90%;margin-left:-4.55pt;border-collapse:collapse;mso-yfti-tbllook: 1184;mso-padding-alt:2.5pt .9pt 0in 0in' width="0">
+                            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:25.45pt'>
+                                <td style='width:346.6pt;border:solid black 1.0pt; padding:2.5pt .9pt 0in 0in;height:25.45pt' valign="top" width="462">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Name<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Title</span></b> <span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.75pt;border:solid black 1.0pt; border-left:none;mso-border-left-alt:solid black 1.0pt;padding:2.5pt .9pt 0in 0in; height:25.45pt' valign="top" width="414">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>Name<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;</span> <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Title</span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:1;height:37.55pt'>
+                                <td style='width:346.6pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black 1.0pt;padding:2.5pt .9pt 0in 0in; height:37.55pt' valign="top" width="462">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Student</span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.75pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black 1.0pt;mso-border-left-alt:solid black 1.0pt; padding:2.5pt .9pt 0in 0in;height:37.55pt' valign="top" width="414">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Parent(s)</span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;height:37.7pt'>
+                                <td style='width:346.6pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black 1.0pt;padding:2.5pt .9pt 0in 0in; height:37.7pt' valign="top" width="462">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Teacher</span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.75pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black 1.0pt;mso-border-left-alt:solid black 1.0pt; padding:2.5pt .9pt 0in 0in;height:37.7pt' valign="top" width="414">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span> <span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Teacher</span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes;height:37.7pt'>
+                                <td style='width:346.6pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black 1.0pt;padding:2.5pt .9pt 0in 0in; height:37.7pt' valign="top" width="462">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Other Service Provider<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.75pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black 1.0pt;mso-border-left-alt:solid black 1.0pt; padding:2.5pt .9pt 0in 0in;height:37.7pt' valign="top" width="414">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:5.4pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:-.85pt;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;text-indent:0in;line-height:107%'><span style='font-size: 10.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Other Service Provider<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                    </div><span style='font-size:11.0pt;line-height:103%;font-family:"Arial",sans-serif; mso-fareast-font-family:Arial;color:black;mso-ansi-language:EN-US;mso-fareast-language: EN-US;mso-bidi-language:AR-SA'><br clear="all" style='page-break-before:always; mso-break-type:section-break'></span>
+                    <div class="WordSection3">
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><u style='text-underline: black'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height: 107%;font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>OPTIONAL</span></u></b> <b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size: 11.0pt;line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.5pt; margin-left:-.25pt;line-height:104%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:104%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Documentation of special needs:<span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="TableGrid" style='width:90%;margin-left:-4.4pt;border-collapse:collapse;mso-yfti-tbllook: 1184;mso-padding-alt:2.25pt 5.75pt 0in 5.2pt' width="0">
+                            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:40.25pt'>
+                                <td colspan="3" style='width:656.8pt;border:solid black 1.0pt; background:#F2F2F2;padding:2.25pt 5.75pt 0in 5.2pt;height:40.25pt' valign="top" width="876">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><i style='mso-bidi-font-style:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></i><b style='mso-bidi-font-weight: normal'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'>The most recent copy of assessment reports that diagnose and clearly identify my special needs and/or that will assist in postsecondary planning are identified and attached.</span></b></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:1;height:28.9pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black 1.0pt;mso-border-alt:solid black .5pt; mso-border-top-alt:solid black 1.0pt;padding:2.25pt 5.75pt 0in 5.2pt; height:28.9pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Type of Documentation</span></b> <span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black 1.0pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;mso-border-top-alt:solid black 1.0pt; padding:2.25pt 5.75pt 0in 5.2pt;height:28.9pt' valign="top" width="413">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:.4pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Assessment Name</span></b> <span style='font-size:12.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black 1.0pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;mso-border-top-alt:solid black 1.0pt; padding:2.25pt 5.75pt 0in 5.2pt;height:28.9pt' valign="top" width="204">
+                                    <p align="center" class="MsoNormal" style='margin-top:0in;margin-right:0in; margin-bottom:0in;margin-left:1.6pt;margin-bottom:.0001pt;text-align:center; text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Dates Administered</span></b> <span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:2;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Psychological/Cognitive</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:3;height:26.2pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Neuropsychological</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:4;height:26.05pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Medical/Physical</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:5;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Communication</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:6;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Adaptive Behavior</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:7;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Social/Interpersonal</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:8;height:24.85pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:24.85pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Communication/Speech/ Language</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt; line-height:107%;font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:24.85pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:24.85pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:9;height:38.4pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:38.4pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Multi-Tiered System of Supports</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>(MTSS/RTI)</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:38.4pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:38.4pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:10;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Career/Vocational/ Transition</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:11;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Community-based assessments</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:12;height:26.05pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Self-determination assessments</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.05pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:13;height:26.2pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Assistive technology</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.2pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:14;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Classroom observations</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:15;height:26.15pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;mso-bidi-font-size:11.0pt;line-height:107%; font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'>Other</span></b></p>
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:26.15pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                            <tr style='mso-yfti-irow:16;mso-yfti-lastrow:yes;height:16.6pt'>
+                                <td style='width:194.15pt;border:solid black 1.0pt; border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt; padding:2.25pt 5.75pt 0in 5.2pt;height:16.6pt' valign="top" width="259">
+                                    <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:310.0pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:16.6pt' valign="top" width="413">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                                <td style='width:152.65pt;border-top:none;border-left: none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt; mso-border-top-alt:solid black .5pt;mso-border-left-alt:solid black .5pt; mso-border-alt:solid black .5pt;padding:2.25pt 5.75pt 0in 5.2pt;height:16.6pt' valign="top" width="204">
+                                    <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:0in; margin-left:.2pt;margin-bottom:.0001pt;text-indent:0in;line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:12.95pt; margin-left:-.25pt;line-height:104%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:104%;font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri'>Additional information about my strengths, interests, preferences, or needs to support a successful transition to postsecondary services (e.g.:<span style='mso-spacerun:yes'>&nbsp;</span> work experiences, on-the-job experiences, school experiences such as extra-curricular activities, community experiences, etc).</span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:12.6pt; margin-left:0in;text-indent:0in;line-height:107%'><b style='mso-bidi-font-weight: normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height: 107%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%;font-family: "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><span style='mso-spacerun:yes'>&nbsp;</span></span></b></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'>
+                           
+                            <![if !vml]> <span style='mso-ignore:vglayout'></span>
+                        </p>
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td height="0" width="94"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><img height="6" src="SOPExample_files/image006.gif" width="868"></td>
+                            </tr>
+                        </table><![endif]><!--[if gte vml 1]></o:wrapblock><![endif]--><br clear="all" style='mso-ignore:vglayout'>
+                        <span style='font-family:"Calibri",sans-serif;mso-fareast-font-family:Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span>
+                        <p></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                        <p class="MsoNormal" style='margin-top:0in;margin-right:0in;margin-bottom:.25pt; margin-left:-.25pt;line-height:103%'><span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>(Modified from a template developed by the National Transition Documentation Summit (2005).<span style='mso-spacerun:yes'>&nbsp;</span> Retrieved on June 27, 2008 from<span style='mso-spacerun:yes'>&nbsp;</span></span> <a href="http://www.unr.edu/educ/ceds/sop.template.pdf"><span style='font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri;color:blue'>http://www.unr.edu/educ/ceds/sop.template.pdf</span></a> <a href="http://www.unr.edu/educ/ceds/sop.template.pdf"><span style='font-family: "Calibri",sans-serif;mso-fareast-font-family:Calibri;color:black;text-decoration: none;text-underline:none'></span></a><span style='font-family:"Calibri",sans-serif; mso-fareast-font-family:Calibri'>; and the Oklahoma State Department of Education (OSDE Form 15)).</span></p>
+                        <p class="MsoNormal" style='margin:0in;margin-bottom:.0001pt;text-indent:0in; line-height:107%'><span style='font-family:"Calibri",sans-serif;mso-fareast-font-family: Calibri'><span style='mso-spacerun:yes'>&nbsp;</span></span></p>
+                    </div>
+
+
+
+
+
+                </div><!--end center-->
+            </div><!--end col md 12-->
+
+        </div><!--endrow -->
+    </div><!--end container-->
+</div><!--end tran-->
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/requestconsent.js"></var>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.classList += ' ' + 'fadeInToBackground';
+
+    var el = document.getElementsByClassName("body-content")[0], c = el.style;
+    c.borderLeft = "1px solid #000";
+    c.borderRight = "1px solid #000";
+    c.boxShadow = "10px 10px 25px #333";
+    c.position = "relative";
+    c.top = "15px";
+    c.backgroundColor = "#ffffff";
+    c.marginBottom = "75px";
+
+    setTimeout(function () {
+        var tp = document.getElementsByClassName("transition-page")[0];
+        tp.style.display = "block";
+
+        var className = 'transition-page-scaleUpCenter';
+        if (el.classList) {
+            el.classList.add(className);
+        } else {
+            el.className += ' ' + className;
+        }
+    }, 200);
+</script>
+
