@@ -1197,7 +1197,7 @@
                                     <div class="col-md-3">
                                         <fieldset class="form-group">
                                             <label for="totalcredits">Total # of Credits required by district</label>
-                                            <input type="text" name="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
+                                            <input type="text" name="totalcredits" id="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
                                         </fieldset>
                                     </div>
                                 </div>
@@ -1415,6 +1415,12 @@
         initRelated();
         initSkill();
         initVocational();
+
+        $("input[name='isVocationalRehabiltiation']").change(function() {
+            if (!this.checked) {
+                $("input[name='isConfidentailReleaseObtained']").prop('checked', false);
+            }
+        });
     });
 
     $('ul.setup-panel li.active a').trigger('click');

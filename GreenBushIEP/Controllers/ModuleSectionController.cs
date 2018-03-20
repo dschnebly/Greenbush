@@ -939,19 +939,18 @@ namespace GreenBushIEP.Controllers
                 {
                     int studentId = Convert.ToInt32(collection["studentId"]);
                     int iedId = Convert.ToInt32(collection["IEPid"]);
-                    int i = 2;
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
 
-                    transition.Planning_Facilitate = collection[i++] == "on" ? true : false;
-                    transition.Planning_Align = collection[i++] == "on" ? true : false;
-                    DateTime graduationDate = Convert.ToDateTime(collection[i++]);
+                    transition.Planning_Facilitate = collection["isFocusFunctionalAchievement"] == "on" ? true : false;
+                    transition.Planning_Align = collection["isAlignStudentPostGoals"] == "on" ? true : false;
+                    DateTime graduationDate = (!string.IsNullOrEmpty(collection["graduationYear"])) ? Convert.ToDateTime(collection["graduationYear"]) : DateTime.Now;
                     transition.Planning_GraduationMonth = graduationDate.Month;
                     transition.Planning_GraduationYear = graduationDate.Year;
-                    transition.Planning_Completion = collection[i++].ToString();
-                    transition.Planning_Credits = Convert.ToInt32(collection[i++]);
-                    transition.Planning_BenefitKRS = collection[i++] == "on" ? true : false;
-                    transition.Planning_ConsentPrior = collection[i++] == "on" ? true : false;
+                    transition.Planning_Completion = (collection["planningCompletion"] != null) ? collection["planningCompletion"].ToString() : String.Empty ;
+                    transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0 ;
+                    transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
+                    transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
 
                     db.SaveChanges();
 
