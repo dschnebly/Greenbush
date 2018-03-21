@@ -510,6 +510,125 @@ namespace GreenBushIEP.Controllers
         }
 
         [HttpPost]
+        public ActionResult EditOtherConsiderations(tblOtherConsideration model, FormCollection collection)
+        {
+            int studentId = 0;
+
+
+            try
+            {
+                Int32.TryParse(collection["StudentId"].ToString(), out studentId);
+
+                model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
+                model.Parental_Concerns_flag = collection["Parental_Concerns_flag"] == "on" ? true : false;
+                model.ExtendedSchoolYear_RegressionRisk = collection["ExtendedSchoolYear_RegressionRisk"] == "on" ? true : false;
+                model.ExtendedSchoolYear_SeverityRisk = collection["ExtendedSchoolYear_SeverityRisk"] == "on" ? true : false;
+                var dwa = collection["DistrictWideAssessments"];
+                switch (dwa)
+                {
+                    case "1":
+                        model.DistrictAssessment_NoAccommodations_flag = true;
+                        break;
+                    case "2":
+                        model.DistrictAssessment_WithAccommodations_flag = true;
+                        break;
+                    case "3":
+                        model.DistrictAssessment_Alternative_flag = true;
+                        break;
+                    case "4":
+                        model.DistrictAssessment_GradeNotAssessed = true;
+                        break;
+                }
+                var swa = collection["StateWideAssessments"];
+                switch (swa)
+                {
+                    case "1":
+                        model.StateAssessment_NoAccommodations_flag = true;
+                        break;
+                    case "2":
+                        model.StateAssessment_WithAccommodations_flag = true;
+                        break;
+                    case "3":
+                        model.StateAssessment_RequiredCompleted = true;
+                        break;
+                    
+                }
+
+                var tp = collection["TransporationPlan"];
+                switch (tp)
+                {
+                    case "1":
+                        model.Transporation_NotEligible = true;
+                        break;
+                    case "2":
+                        model.Transporation_Required = true;
+                        break;
+                    case "3":
+                        model.Transporation_AttendOtherBuilding = true;
+                        break;
+                    case "4":
+                        model.Transporation_Other_flag = true;
+                        break;
+
+                }
+
+                
+                //find existing if updating
+                tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
+
+                if (OC == null)
+                {
+                    model.Create_Date = DateTime.Now;
+                    db.tblOtherConsiderations.Add(model);
+                    db.SaveChanges();
+                }
+                else 
+                {
+
+                    OC.AssistiveTechnology_Description =  model.AssistiveTechnology_Description;
+                    OC.AssistiveTechnology_Require = model.AssistiveTechnology_Require;
+                    OC.DistrictAssessment_NoAccommodations_flag =  model.DistrictAssessment_NoAccommodations_flag  ;
+                    OC.DistrictAssessment_NoAccommodations_desc = model.DistrictAssessment_NoAccommodations_desc;
+                    OC.DistrictAssessment_WithAccommodations_flag = model.DistrictAssessment_WithAccommodations_flag;
+                    OC.DistrictAssessment_WithAccommodations_desc = model.DistrictAssessment_WithAccommodations_desc;
+                    OC.DistrictAssessment_Alternative_flag = model.DistrictAssessment_Alternative_flag;
+                    OC.DistrictAssessment_Alternative_desc = model.DistrictAssessment_Alternative_desc;
+                    OC.DistrictAssessment_GradeNotAssessed = model.DistrictAssessment_GradeNotAssessed;
+                    OC.StateAssessment_NoAccommodations_flag = model.StateAssessment_NoAccommodations_flag;
+                    OC.StateAssessment_NoAccommodations_desc = model.StateAssessment_NoAccommodations_desc;
+                    OC.StateAssessment_WithAccommodations_flag = model.StateAssessment_WithAccommodations_flag;
+                    OC.StateAssessment_WithAccommodations_desc = model.StateAssessment_WithAccommodations_desc;
+                    OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
+                    OC.Transporation_NotEligible = model.Transporation_NotEligible;
+                    OC.Transporation_Required = model.Transporation_Required;
+                    OC.Transporation_AttendOtherBuilding = model.Transporation_AttendOtherBuilding;
+                    OC.Transporation_Other_flag = model.Transporation_Other_flag;
+                    OC.Transporation_Other_desc = model.Transporation_Other_desc;
+                    OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
+                    OC.ExtendedSchoolYear_Necessary = model.ExtendedSchoolYear_Necessary;
+                    OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
+                    OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;
+                    OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;
+                    OC.Parental_Concerns_flag = model.Parental_Concerns_flag;
+                    OC.Parental_Concerns_Desc = model.Parental_Concerns_Desc;
+                    OC.Create_Date = DateTime.Now; ;
+
+                    db.SaveChanges();
+                    return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
+                }
+            
+         }
+        catch(Exception ex)
+        {
+          string errorMessage = ex.Message;
+        }
+
+        throw new Exception("Unable to save changes to Other Considerations Module" );
+
+        }
+            
+
+        [HttpPost]
         public ActionResult EditAccom(AccomodationViewModel model)
         {
             int studentId = model.StudentId;
