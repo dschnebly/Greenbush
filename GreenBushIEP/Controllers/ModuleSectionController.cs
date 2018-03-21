@@ -605,7 +605,6 @@ namespace GreenBushIEP.Controllers
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
                     OC.Transporation_Other_desc = model.Transporation_Other_desc;
                     OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
-                    OC.ExtendedSchoolYear_Necessary = model.ExtendedSchoolYear_Necessary;
                     OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
                     OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;
                     OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;

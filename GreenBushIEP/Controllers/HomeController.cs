@@ -1116,6 +1116,7 @@ namespace GreenbushIep.Controllers
             thePlan.ReadingNoConcern = false;
             thePlan.SocialNoConcern = false;
             thePlan.WrittenNoConcern = false;
+            thePlan.RequireAssistiveTechnology = false;
 
             if (thePlan != null)
             {
