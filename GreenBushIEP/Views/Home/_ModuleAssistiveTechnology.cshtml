@@ -1,0 +1,85 @@
+﻿@model GreenBushIEP.Models.tblIEPHealth
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-phone" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Assistive Technology</h4>
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("EditAssistiveTechnology", "ModuleSection", FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IEPHealthID)
+
+        
+        <fieldset class="form-group">
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label>&nbsp;&nbsp;
+            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="RequireAssistiveTechnology" id="RequireAssistiveTechnology" class="onoffswitch2-checkbox" @(Model.HearingImparied != null ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="RequireAssistiveTechnology">
+                    <span class="onoffswitch2-inner"></span>
+                    <span class="onoffswitch2-switch"></span>
+                </label>
+            </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display: @(Model.HearingImparied.HasValue ? "block;" : "none;")">
+                    *if Yes, please explain<br />
+                    <textarea class="form-control" id="RequireAssistiveTechnologyExplain" name="RequireAssistiveTechnologyExplain" type="text" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                </p>
+            </div>
+        </fieldset>
+      
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12" style="text-align:center;">
+                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+
+<script>
+    // Attach Event
+    //reset the form to default database/brand new values.
+    $("input[name='HealthNoConcerns']").on('click', function (event) {
+        
+            $("input[name='RequireAssistiveTechnology']").prop('checked', false);
+            $("#RequireAssistiveTechnologyExplain").val('');
+           $("#RequireAssistiveTechnologyExplain p").hide();
+        }
+    });
+
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetForm").trigger("reset");
+
+    // Attach Event
+    // if an option other than no concern is selected than turn off noconcern
+    //$("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
+    //    $("input[name='HealthNoConcerns']").prop('checked', false)
+    //});
+    //$("input[name='HealthDiagnosis']").on('click', function (event) {
+    //    $("input[name='HealthNoConcerns']").prop('checked', false)
+    //});
+
+    //// Attach Event
+    //// if radio button is selected than show text box.
+    //$("input:radio[name=MeetNeedBy]").on('click', function (event) {
+    //    if ($("input:radio[name=MeetNeedBy]:checked").val() == 3) {
+    //        $("#MeetByOtherTextArea p").show();
+    //    }
+    //    else {
+    //        $("#MeetByOtherTextArea p").hide();
+    //    }
+    //});
+</script>

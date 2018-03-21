@@ -16,27 +16,7 @@
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
 
     </fieldset>
-
-    @*<div class="row" style="margin-top:10px;">
-            <div class="col-md-12">
-                <label>Summary</label>
-                <div>
-                    <textarea class="form-control" name="Summary" id="Summary" rows="3" style="font-size: 21px;"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row voffset1">
-            <div class="col-md-12">
-                <label>FBA Completion Date</label>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                           id="FBACompletionDate" name="FBACompletionDate" class="form-control" aria-describedby="basic-addon1" />
-                </div>
-            </div>
-        </div>*@
-
+       
     <div class="row oneStudentGoal " id="defaultgoal">
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {

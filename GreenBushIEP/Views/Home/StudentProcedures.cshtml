@@ -1080,6 +1080,21 @@
                     </div>
 
                 </li>
+                <li class="ui-state-default filter planning">
+
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
+                        </div>
+                        <div class="text">
+                            <label class="text-muted">Other Considerations</label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg other-considerations-section" data-view="OtherConsiderationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
+                        </div>
+                    </div>
+
+                </li>
             </ul>
         </div>
 
@@ -1397,7 +1412,38 @@
                                 <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
                             </div>
                         </div>
+                        <hr />
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
+
+                                <label style="font-size: 16px; font-weight: normal;">Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label>&nbsp;&nbsp;
+                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="truefalseSwitchRequireAssistiveTechnology" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
+                                    <label class="truefalseswitch-label" for="truefalseSwitchRequireAssistiveTechnology">
+                                        <span class="truefalseswitch-inner"></span>
+                                        <span class="truefalseswitch-switch"></span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-blackboard"></i> Extended School Year</h5>
+                                
+                                <p>Are extended school year services necessary for @Model.student.FirstName?</p>
+
+                                <div class="form-check">
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Yes" value="1" >Yes</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_No" value="2" >No</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Uk" value="3" >Unknown</label><br />
+
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="modal-footer">
                             <button id="saveplan" type="submit" class="btn btn-default btn-lg" data-dismiss="modal">Save Plan</button>
                         </div>

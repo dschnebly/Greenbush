@@ -326,6 +326,22 @@ namespace GreenBushIEP.Models
 
     }
 
+    //public class OtherConsiderationViewModel
+    //{
+    //    public OtherConsiderationViewModel()
+    //    {
+    //        OtherConsideration = new tblOtherConsideration();
+            
+    //    }
+
+    //    public int StudentId { get; set; }
+    //    public int IEPid { get; set; }
+    //    public string StudentName { get; set; }
+    //    public tblOtherConsideration OtherConsideration { get; set; }
+    //    public string Message { get; set; }
+
+    //}
+
     public class StudentServiceViewModel
     {
         public int studentId { get; set; }
