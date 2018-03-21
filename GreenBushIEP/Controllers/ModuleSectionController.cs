@@ -1,8 +1,5 @@
 ﻿using GreenBushIEP.Models;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -30,16 +27,12 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.Concerns = !HealthIEP.NoConcerns;
                         HealthIEP.ProgressTowardGenEd = collection["HealthProgressTowardGenEd"] == "on" ? true : false;
                         HealthIEP.Diagnosis = collection["HealthDiagnosis"] == "on" ? true : false;
-                        //HealthIEP.Medications = collection["HealthMedications"] == "on" ? true : false;
-                        //HealthIEP.MedicationDescription = collection["MedicationDescription"].ToString();
                         HealthIEP.HearingImparied = (!String.IsNullOrEmpty(collection["HearingImpaired"])) ? true : false;
                         HealthIEP.HearingDate = Convert.ToDateTime(collection["HearingDate"]);
                         HealthIEP.HearingResult = Convert.ToInt32(collection["HearingResult"]);
                         HealthIEP.VisionImparied = collection["VisionImparied"] == "on" ? true : false;
                         HealthIEP.VisionDate = Convert.ToDateTime(collection["VisionDate"]);
                         HealthIEP.VisionResult = Convert.ToInt32(collection["VisionResult"]);
-                        //HealthIEP.MedicaidEligible = (!String.IsNullOrEmpty(collection["MedicaidEligible"])) ? true : false;
-                        //HealthIEP.AdditionalHealthInfo = collection["AdditionalHealthInfo"].ToString();
                         HealthIEP.LevelOfPerformance = collection["LevelOfPerformance"].ToString();
                         HealthIEP.AreaOfNeedDescription = collection["AreaOfNeedDescription"].ToString();
                         HealthIEP.MeetNeedBy = Convert.ToInt32(collection["MeetNeedBy"]);
@@ -566,14 +559,10 @@ namespace GreenBushIEP.Controllers
 
         private int EditAccomodation(tblAccommodation AccomodationIEP, AccomodationViewModel model)
         {
-            // tblIEP IEP = db.tblIEPs.Where(i => i.IEPAccomodationID == AccomodationIEP.IEPid).FirstOrDefault();
             AccomodationIEP.IEPid = model.IEPid;
 
             try
             {
-                //int accomType = 0;
-                //Int32.TryParse(model.AccomType, out accomType);
-
                 AccomodationIEP.AccomType = model.AccomType;
                 AccomodationIEP.Description = model.AccDescription;
 
