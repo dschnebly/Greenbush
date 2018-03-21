@@ -1,0 +1,68 @@
+﻿@model  GreenBushIEP.Models.IEPFormViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-folder-open" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Forms</h4>
+</div>
+<div class="modal-body">
+    @Html.Hidden("stid", Model.StudentId)
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter = 1;
+                        foreach (var form in Model.IEPForms)
+                        {
+                            <tr>
+                                <td><label class="text-muted">@form.Text</label></td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-lg printForm" id="@form.Value"><i class="fa fa-print"></i> Print Form</button>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+
+                    }
+                </tbody>
+            </table>
+            <div class="ajax-loader">
+                <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+            </div>
+        </div>
+    </div>
+    <div class="ajax-loader">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
+<script>
+
+    $(".printForm").on("click", function (e) {
+        var id = $("#stid").val();
+
+        if (id) {
+            $('.ajax-loader').css("visibility", "visible");
+
+            var pageName = this.id;
+            window.location.href = '/Home/' + pageName + '/' + id;
+        }
+        else {
+            $("#alertMessage .moreinfo").html('Server Error');
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        }
+    });
+
+</script>

@@ -1178,7 +1178,23 @@ namespace GreenbushIep.Controllers
             return View("NoticeOfMeeting", viewModel);
         }
 
+        [HttpGet]
+        [Authorize(Roles = teacher)]
+        public ActionResult IEPFormModule(int studentId)
+        {
 
+            IEPFormViewModel viewModel = new IEPFormViewModel();
+
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+            if (student != null)
+            {
+                viewModel.IEPForms = GetForms();
+                viewModel.StudentId = studentId;
+                viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
+            }
+
+            return PartialView("_IEPFormModule", viewModel);
+        }
 
 
         [HttpGet]
@@ -1261,7 +1277,7 @@ namespace GreenbushIep.Controllers
             {
             };
 
-            return View("Form/ParentsRights", viewModel);
+            return View("~/Views/Form/ParentsRights.cshtml", viewModel);
         }
 
         [HttpGet]

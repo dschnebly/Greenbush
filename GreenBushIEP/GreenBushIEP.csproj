@@ -578,7 +578,8 @@
     <Content Include="Views\Form\IEPTeamConsider.cshtml" />
     <Content Include="Views\Form\SamplePublicNotice.cshtml" />
     <Content Include="Views\Form\SOPExample.cshtml" />
-    <Content Include="Views\Home\_ModuleOtherConsiderations.cshtml" />
+    <Content Include="Views\Home\_IEPFormModule.cshtml" />
+    <Content Include="Views\Form\ParentsRights.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
