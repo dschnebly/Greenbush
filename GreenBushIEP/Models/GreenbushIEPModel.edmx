@@ -22,16 +22,6 @@
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
         </EntityType>
-        <EntityType Name="tblAssistiveTechnology">
-          <Key>
-            <PropertyRef Name="AssistiveTechnologyID" />
-          </Key>
-          <Property Name="AssistiveTechnologyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="RequireAssistiveTechnology" Type="bit" />
-          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Create_Date" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="tblBehaviorBaselines">
           <Key>
             <PropertyRef Name="BehaviorBaselineID" />
@@ -453,6 +443,40 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblOtherConsiderations">
+          <Key>
+            <PropertyRef Name="OtherConsiderationID" />
+          </Key>
+          <Property Name="OtherConsiderationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="AssistiveTechnology_Require" Type="bit" />
+          <Property Name="AssistiveTechnology_Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DistrictAssessment_NoAccommodations_flag" Type="bit" />
+          <Property Name="DistrictAssessment_NoAccommodations_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DistrictAssessment_WithAccommodations_flag" Type="bit" />
+          <Property Name="DistrictAssessment_WithAccommodations_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DistrictAssessment_Alternative_flag" Type="bit" />
+          <Property Name="DistrictAssessment_Alternative_desc" Type="bit" />
+          <Property Name="DistrictAssessment_GradeNotAssessed" Type="bit" />
+          <Property Name="StateAssessment_NoAccommodations_flag" Type="bit" />
+          <Property Name="StateAssessment_NoAccommodations_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="StateAssessment_WithAccommodations_flag" Type="bit" />
+          <Property Name="StateAssessment_WithAccommodations_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="StateAssessment_RequiredCompleted" Type="bit" />
+          <Property Name="Transporation_NotEligible" Type="bit" />
+          <Property Name="Transporation_Required" Type="bit" />
+          <Property Name="Transporation_AttendOtherBuilding" Type="bit" />
+          <Property Name="Transporation_Other_flag" Type="bit" />
+          <Property Name="Transporation_Other_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RegularEducation_NotParticipate" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ExtendedSchoolYear_Necessary" Type="nvarchar" MaxLength="20" />
+          <Property Name="ExtendedSchoolYear_RegressionRisk" Type="bit" />
+          <Property Name="ExtendedSchoolYear_SeverityRisk" Type="bit" />
+          <Property Name="ExtendedSchoolYear_Justification" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Parental_Concerns_flag" Type="bit" />
+          <Property Name="Parental_Concerns_Desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblProviders">
           <Key>
             <PropertyRef Name="ProviderID" />
@@ -676,7 +700,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -709,7 +732,6 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblAssistiveTechnology" EntityType="Self.tblAssistiveTechnology" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="Self.tblBehaviorHypothesisTypes" Schema="dbo" store:Type="Tables" />
@@ -739,6 +761,7 @@
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOtherConsiderations" EntityType="Self.tblOtherConsiderations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
@@ -855,8 +878,8 @@
           <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblBehaviors" EntityType="IndividualizedEducationProgramModel.tblBehavior" />
-          <EntitySet Name="tblAssistiveTechnologies" EntityType="IndividualizedEducationProgramModel.tblAssistiveTechnology" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
+          <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
           </EntityContainer>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -1491,16 +1514,6 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblAssistiveTechnology">
-          <Key>
-            <PropertyRef Name="AssistiveTechnologyID" />
-          </Key>
-          <Property Name="AssistiveTechnologyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="RequireAssistiveTechnology" Type="Boolean" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
             <PropertyRef Name="TransitionServiceID" />
@@ -1515,6 +1528,40 @@
           <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblOtherConsideration">
+          <Key>
+            <PropertyRef Name="OtherConsiderationID" />
+          </Key>
+          <Property Name="OtherConsiderationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="AssistiveTechnology_Require" Type="Boolean" />
+          <Property Name="AssistiveTechnology_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_NoAccommodations_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_WithAccommodations_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_Alternative_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_Alternative_desc" Type="Boolean" />
+          <Property Name="DistrictAssessment_GradeNotAssessed" Type="Boolean" />
+          <Property Name="StateAssessment_NoAccommodations_flag" Type="Boolean" />
+          <Property Name="StateAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StateAssessment_WithAccommodations_flag" Type="Boolean" />
+          <Property Name="StateAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StateAssessment_RequiredCompleted" Type="Boolean" />
+          <Property Name="Transporation_NotEligible" Type="Boolean" />
+          <Property Name="Transporation_Required" Type="Boolean" />
+          <Property Name="Transporation_AttendOtherBuilding" Type="Boolean" />
+          <Property Name="Transporation_Other_flag" Type="Boolean" />
+          <Property Name="Transporation_Other_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RegularEducation_NotParticipate" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendedSchoolYear_Necessary" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendedSchoolYear_RegressionRisk" Type="Boolean" />
+          <Property Name="ExtendedSchoolYear_SeverityRisk" Type="Boolean" />
+          <Property Name="ExtendedSchoolYear_Justification" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Parental_Concerns_flag" Type="Boolean" />
+          <Property Name="Parental_Concerns_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2177,17 +2224,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblAssistiveTechnologies">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAssistiveTechnology">
-              <MappingFragment StoreEntitySet="tblAssistiveTechnology">
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RequireAssistiveTechnology" ColumnName="RequireAssistiveTechnology" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="AssistiveTechnologyID" ColumnName="AssistiveTechnologyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTransitionServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
               <MappingFragment StoreEntitySet="tblTransitionServices">
@@ -2201,6 +2237,41 @@
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
                 <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOtherConsiderations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
+              <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Parental_Concerns_Desc" ColumnName="Parental_Concerns_Desc" />
+                <ScalarProperty Name="Parental_Concerns_flag" ColumnName="Parental_Concerns_flag" />
+                <ScalarProperty Name="ExtendedSchoolYear_Justification" ColumnName="ExtendedSchoolYear_Justification" />
+                <ScalarProperty Name="ExtendedSchoolYear_SeverityRisk" ColumnName="ExtendedSchoolYear_SeverityRisk" />
+                <ScalarProperty Name="ExtendedSchoolYear_RegressionRisk" ColumnName="ExtendedSchoolYear_RegressionRisk" />
+                <ScalarProperty Name="ExtendedSchoolYear_Necessary" ColumnName="ExtendedSchoolYear_Necessary" />
+                <ScalarProperty Name="RegularEducation_NotParticipate" ColumnName="RegularEducation_NotParticipate" />
+                <ScalarProperty Name="Transporation_Other_desc" ColumnName="Transporation_Other_desc" />
+                <ScalarProperty Name="Transporation_Other_flag" ColumnName="Transporation_Other_flag" />
+                <ScalarProperty Name="Transporation_AttendOtherBuilding" ColumnName="Transporation_AttendOtherBuilding" />
+                <ScalarProperty Name="Transporation_Required" ColumnName="Transporation_Required" />
+                <ScalarProperty Name="Transporation_NotEligible" ColumnName="Transporation_NotEligible" />
+                <ScalarProperty Name="StateAssessment_RequiredCompleted" ColumnName="StateAssessment_RequiredCompleted" />
+                <ScalarProperty Name="StateAssessment_WithAccommodations_desc" ColumnName="StateAssessment_WithAccommodations_desc" />
+                <ScalarProperty Name="StateAssessment_WithAccommodations_flag" ColumnName="StateAssessment_WithAccommodations_flag" />
+                <ScalarProperty Name="StateAssessment_NoAccommodations_desc" ColumnName="StateAssessment_NoAccommodations_desc" />
+                <ScalarProperty Name="StateAssessment_NoAccommodations_flag" ColumnName="StateAssessment_NoAccommodations_flag" />
+                <ScalarProperty Name="DistrictAssessment_GradeNotAssessed" ColumnName="DistrictAssessment_GradeNotAssessed" />
+                <ScalarProperty Name="DistrictAssessment_Alternative_desc" ColumnName="DistrictAssessment_Alternative_desc" />
+                <ScalarProperty Name="DistrictAssessment_Alternative_flag" ColumnName="DistrictAssessment_Alternative_flag" />
+                <ScalarProperty Name="DistrictAssessment_WithAccommodations_desc" ColumnName="DistrictAssessment_WithAccommodations_desc" />
+                <ScalarProperty Name="DistrictAssessment_WithAccommodations_flag" ColumnName="DistrictAssessment_WithAccommodations_flag" />
+                <ScalarProperty Name="DistrictAssessment_NoAccommodations_desc" ColumnName="DistrictAssessment_NoAccommodations_desc" />
+                <ScalarProperty Name="DistrictAssessment_NoAccommodations_flag" ColumnName="DistrictAssessment_NoAccommodations_flag" />
+                <ScalarProperty Name="AssistiveTechnology_Description" ColumnName="AssistiveTechnology_Description" />
+                <ScalarProperty Name="AssistiveTechnology_Require" ColumnName="AssistiveTechnology_Require" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="OtherConsiderationID" ColumnName="OtherConsiderationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -35,6 +35,40 @@
     });
 
     // Attach Event
+    // fires when the "forms" folder button was clicked.
+    $('#IEPForms').not('.bound').addClass('bound'), on("click", function (e) {
+        var id = getUrlParameter('stid');
+
+        $.ajax({
+            type: 'GET',
+            url: '/Home/IEPFormModule',
+            data: { studentId: stId },
+            dataType: 'html',
+            success: function (data) {
+                if (data.length !== 0) {
+                    $("#module-form-section").html(data);
+                    $('#moduleSection').modal('show');
+                }
+                else {
+                    $("#alertMessage .moreinfo").html('Server Error');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            },
+            error: function (data) {
+                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            },
+            complete: function () {
+                $('.ajax-loader').css("visibility", "hidden");
+            }
+        });
+    });
+
+    // Attach Event
     // fires when the "form" notice of meeting button was clicked.
     $('#NoticeOfMeeting').not('.bound').addClass('bound').on("click", function (e) {
         var id = getUrlParameter('stid');

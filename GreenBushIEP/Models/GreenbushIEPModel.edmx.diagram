@@ -48,8 +48,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransition" Width="1.625" PointX="6.75" PointY="19.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" Width="1.5" PointX="4.875" PointY="17.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehavior" Width="1.5" PointX="13.375" PointY="12.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAssistiveTechnology" Width="1.5" PointX="9.375" PointY="19.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="11.375" PointY="19.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="9" PointY="19.875" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" Width="3.125" PointX="11" PointY="19.875" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
