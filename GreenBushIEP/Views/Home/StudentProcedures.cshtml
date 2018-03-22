@@ -1417,13 +1417,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
-
+                                
                                 <label style="font-size: 16px; font-weight: normal;">Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="truefalseSwitchRequireAssistiveTechnology" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchRequireAssistiveTechnology">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
+                                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="RequireAssistiveTechnology" id="RequireAssistiveTechnology" class="onoffswitch2-checkbox" @(Model.studentPlan.RequireAssistiveTechnology ? "checked" : String.Empty ) />
+                                    <label class="onoffswitch2-label" for="RequireAssistiveTechnology">
+                                        <span class="onoffswitch2-inner"></span>
+                                        <span class="onoffswitch2-switch"></span>
                                     </label>
                                 </div>
 
@@ -1436,9 +1436,9 @@
                                 <p>Are extended school year services necessary for @Model.student.FirstName?</p>
 
                                 <div class="form-check">
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Yes" value="1" >Yes</label><br />
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_No" value="2" >No</label><br />
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Uk" value="3" >Unknown</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Yes" value="1" @(Model.studentPlan.ExtendYear == 1 ? "checked" : String.Empty) >Yes</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_No" value="0" @(Model.studentPlan.ExtendYear == 0 ? "checked" : String.Empty) >No</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Uk" value="-1" @(Model.studentPlan.ExtendYear == -1 ? "checked" : String.Empty) >Unknown</label><br />
 
                                 </div>
                             </div>

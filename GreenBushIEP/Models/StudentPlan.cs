@@ -62,6 +62,8 @@ namespace GreenBushIEP.Models
         public bool WrittenTier3 { get; set; }
         public bool WrittenNeed { get; set; }
         public bool isDOC { get; set; }
+        public int ExtendYear { get; set; }
+        public bool RequireAssistiveTechnology { get; set; }
 
         // Create the student's plan
         public StudentPlan()
@@ -240,6 +242,17 @@ namespace GreenBushIEP.Models
                         isDOC = district.DOC;
                     }
                 }
+
+                tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
+                if(otherConsideration != null)
+                {
+                    int extendYear = 0;
+                    Int32.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out extendYear);
+                    this.ExtendYear = extendYear;
+                    this.RequireAssistiveTechnology = otherConsideration.AssistiveTechnology_Require.HasValue ? otherConsideration.AssistiveTechnology_Require.Value : false;
+                }
+
+                
             }
         }
 
@@ -360,6 +373,16 @@ namespace GreenBushIEP.Models
                     studentWritten.InstructionalTier1 = this.WrittenTier1;
                     studentWritten.InstructionalTier2 = this.WrittenTier2;
                     studentWritten.InstructionalTier3 = this.WrittenTier3;
+                }
+                db.SaveChanges();
+
+                tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
+
+                if (otherConsideration != null)
+                {
+                    otherConsideration.ExtendedSchoolYear_Necessary = this.ExtendYear.ToString();
+                    otherConsideration.AssistiveTechnology_Require = this.RequireAssistiveTechnology;
+                    
                 }
                 db.SaveChanges();
             }
