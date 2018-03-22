@@ -220,6 +220,18 @@ namespace GreenBushIEP.Models
         public string StudentName { get; set; }
     }
 
+    public class IEPFormFileViewModel
+    {
+        public int studentId { get; set; }
+        public string fileName { get; set; }
+
+        public IEPFormFileViewModel()
+        {
+            studentId = 0;
+            fileName = string.Empty;
+        }
+    }
+
     public class ModuleAcademicViewModel
     {
         public ModuleAcademicViewModel()

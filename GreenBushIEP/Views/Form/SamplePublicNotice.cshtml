@@ -1,707 +1,344 @@
-﻿@using GreenBushIEP.Models
-@model GreenBushIEP.Models.StudentLegalView
+﻿<div>
+    <div class=WordSection1>
 
-@{
-    ViewBag.Title = "SAMPLE PUBLIC NOTICE";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-}
-@section stylesheets {
-    @Styles.Render("~/Content/transition.css")
-}
-
-<style>
-    .fadeInToBackground {
-        background: #525659;
-        transition: background .25s ease-in-out;
-        -moz-transition: background .25s ease-in-out;
-        -webkit-transition: background .25s ease-in-out;
-    }
-
-    .fadeOutToBackground {
-        background: #fff;
-        transition: background .25s ease-in-out;
-        -moz-transition: background .25s ease-in-out;
-        -webkit-transition: background .25s ease-in-out;
-    }
-
-    .glyphicon-remove-circle:hover {
-        cursor: pointer;
-    }
-
-    .transition-page-scaleUpCenter {
-        -webkit-animation: scaleUpCenter .4s ease-out both;
-        animation: scaleUpCenter .4s ease-out both;
-        width: 900px;
-    }
-
-    .transition-page-scaleDownCenter {
-        -webkit-animation: scaleDownCenter .4s ease-in both;
-        animation: scaleDownCenter .4s ease-in both;
-    }
-
-    @@-webkit-keyframes scaleUpCenter {
-        from {
-            opacity: 0;
-            -webkit-transform: scale(.7);
-        }
-    }
-
-    @@keyframes scaleUpCenter {
-        from {
-            opacity: 0;
-            -webkit-transform: scale(.7);
-            transform: scale(.7);
-        }
-    }
-
-    @@-webkit-keyframes scaleDownCenter {
-        from {
-        }
-
-        to {
-            opacity: 0;
-            -webkit-transform: scale(.7);
-        }
-    }
-
-    @@keyframes scaleDownCenter {
-        from {
-        }
-
-        to {
-            opacity: 0;
-            -webkit-transform: scale(.7);
-            transform: scale(.7);
-        }
-    }
-
-    /* Font Definitions */
-    @@font-face {
-        font-family: Wingdings;
-    }
-
-    @@font-face {
-        font-family: "Cambria Math";
-    }
-
-    @@font-face {
-        font-family: "Arial Narrow";
-    }
-
-    @@font-face {
-        font-family: Tahoma;
-    }
-
-    @@font-face {
-        font-family: "Zapf Dingbats";
-    }
-
-    /* Style Definitions */
-    p.MsoNormal, li.MsoNormal, div.MsoNormal {
-        margin: 0in;
-        margin-bottom: .0001pt;
-        font-size: 11.0pt;
-        font-family: "Calibri",sans-serif;
-        text-align: left;
-        ;
-    }
-
-    h1 {
-       margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:11.1pt;
-	margin-bottom:.0001pt;
-	
-	font-size:14.0pt;
-	font-family:"Cambria",serif;
-	
-    }
-
-    h2 {
-        margin-top: 0in;
-        margin-right: 8.0pt;
-        margin-bottom: 0in;
-        margin-left: 0in;
-        margin-bottom: .0001pt;
-        text-align: center;
-        line-height: 12.0pt;
-        page-break-after: avoid;
-        font-size: 11.0pt;
-        font-family: "Arial",sans-serif;
-        color: black;
-        text-decoration: underline;
-    }
-
-    h3 {
-        margin-top: 0in;
-        margin-right: 8.0pt;
-        margin-bottom: 0in;
-        margin-left: 0in;
-        margin-bottom: .0001pt;
-        text-align: center;
-        page-break-after: avoid;
-        font-size: 14.0pt;
-        font-family: "Arial",sans-serif;
-        color: black;
-    }
-
-    h4 {
-        margin-top: 0in;
-        margin-right: 8.0pt;
-        margin-bottom: 0in;
-        margin-left: 0in;
-        margin-bottom: .0001pt;
-        text-align: center;
-        line-height: 12.0pt;
-        page-break-after: avoid;
-        border: none;
-        padding: 0in;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-        color: black;
-        font-weight: 700;
-    }
-
-    h6 {
-        margin-top: 0in;
-        margin-right: 8.0pt;
-        margin-bottom: 0in;
-        margin-left: 0in;
-        margin-bottom: .0001pt;
-        text-align: center;
-        line-height: 12.0pt;
-        page-break-after: avoid;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-        color: black;
-    }
-
-    p.MsoHeading7, li.MsoHeading7, div.MsoHeading7 {
-        margin-top: 0in;
-        margin-right: 8.0pt;
-        margin-bottom: 0in;
-        margin-left: 0in;
-        margin-bottom: .0001pt;
-        text-align: center;
-        line-height: 12.0pt;
-        page-break-after: avoid;
-        border: none;
-        padding: 0in;
-        font-size: 11.0pt;
-        font-family: "Times New Roman",serif;
-        color: black;
-        font-weight: bold;
-    }
-
-    p.MsoHeader, li.MsoHeader, div.MsoHeader {
-        margin: 0in;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-    p.MsoFooter, li.MsoFooter, div.MsoFooter {
-        margin: 0in;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-    p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
-        margin-top: 0in;
-        margin-right: 0in;
-        margin-bottom: 0in;
-        margin-left: 5.0pt;
-        margin-bottom: .0001pt;
-        font-size: 12.0pt;
-        font-family: "Calibri",sans-serif;
-        text-align: left;
-    }
-
-    p.MsoBlockText, li.MsoBlockText, div.MsoBlockText {
-        margin-top: 0in;
-        margin-right: -1.0pt;
-        margin-bottom: 0in;
-        margin-left: 13.5pt;
-        margin-bottom: .0001pt;
-        line-height: 12.0pt;
-        font-size: 9.0pt;
-        font-family: "Arial",sans-serif;
-        color: black;
-        text-align: left;
-    }
-
-    p.MsoAcetate, li.MsoAcetate, div.MsoAcetate {
-        margin: 0in;
-        margin-bottom: .0001pt;
-        font-size: 8.0pt;
-        font-family: "Tahoma",sans-serif;
-    }
-
-    p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph {
-        margin-top: 0in;
-        margin-right: 0in;
-        margin-bottom: 0in;
-        margin-left: .5in;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-    p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst {
-        margin-top: 0in;
-        margin-right: 0in;
-        margin-bottom: 0in;
-        text-align: left;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-    p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle {
-        margin-top: 0in;
-        margin-right: 0in;
-        margin-bottom: 0in;
-        margin-left: .5in;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-    p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast {
-        margin-top: 0in;
-        margin-right: 0in;
-        margin-bottom: 0in;
-        margin-left: .5in;
-        margin-bottom: .0001pt;
-        font-size: 10.0pt;
-        font-family: "Times New Roman",serif;
-    }
-
-
-
-    /* List Definitions */
-    ol {
-        margin-bottom: 0in;
-    }
-
-    ul {
-        margin-bottom: 0in;
-    }
-
-    @@page {
-        margin: 0;
-    }
-
-    @@media print {
-        @@page {
-            margin: 0;
-        }
-
-        body {
-            margin: 1.4cm;
-            overflow: visible;
-        }
-
-        .transition-page-scaleUpCenter {
-            border: none !important;
-        }
-
-        #backtoportal {
-            display: none;
-        }
-
-        #printbutton {
-            display: none;
-        }
-
-        footer {
-            display: none;
-        }
-    }
-</style>
-<div class="transition-page" style="margin-bottom: 45px; display: none;">
-    <div class="container" style="min-height: 1250px; width: 725px;">
-        @Html.Partial("_PrintHeaderPartial")
-        <div class="row">
-            <div class="col-md-12">
-                <div align="center">
-                    <div class=WordSection1>
-
-                        <h1 align=center style='margin-top:1.9pt;text-align:center'>
-                            <span style='letter-spacing:-.05pt'>SAMPLE PUBLIC</span> <span style='letter-spacing:
+        <h1 align=center style='margin-top:1.9pt;text-align:center'>
+            <span style='letter-spacing:-.05pt'>SAMPLE PUBLIC</span> <span style='letter-spacing:
 -.1pt'>NOTICE</span><span style='font-weight:normal'><o:p></o:p></span>
-                        </h1>
+        </h1>
 
-                        <p class=MsoNormal>
-                            <b>
-                                <span style='font-size:14.0pt;font-family:"Cambria",serif;'><o:p>&nbsp;</o:p></span>
-                            </b>
-                        </p>
+        <p class=MsoNormal>
+            <b>
+                <span style='font-size:14.0pt;font-family:"Cambria",serif;'><o:p>&nbsp;</o:p></span>
+            </b>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.4pt'>
-                            <b>
-                                <span style='font-size:17.0pt;font-family:"Cambria",serif;'><o:p>&nbsp;</o:p></span>
-                            </b>
-                        </p>
+        <p class=MsoNormal style='margin-top:.4pt'>
+            <b>
+                <span style='font-size:17.0pt;font-family:"Cambria",serif;'><o:p>&nbsp;</o:p></span>
+            </b>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt;'>
-                            <span style='font-size:12.0pt;'>
-                                To:<span style=''></span>
-                            </span><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:
+        <p class=MsoNormal style='margin-left:5.0pt;'>
+            <span style='font-size:12.0pt;'>
+                To:<span style=''></span>
+            </span><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:
 -.05pt'>&lt;Newspapers,</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>radio,</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>radio,</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:
 -.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>community</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>bulletin</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>
-                                    boards,
-                                </span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>community</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>bulletin</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>
+                    boards,
+                </span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;
 '>etc.&gt;</span>
-                            </i><span style='font-size:12.0pt;
+            </i><span style='font-size:12.0pt;
 '><o:p></o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <i style=''>
-                                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <i style=''>
+                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt;'>
-                            <span style='font-size:12.0pt;letter-spacing:-.05pt;
+        <p class=MsoNormal style='margin-left:5.0pt;'>
+            <span style='font-size:12.0pt;letter-spacing:-.05pt;
 '>From:<span style=''></span></span><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;LEA&gt;</span>
-                            </i><span style='font-size:
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;LEA&gt;</span>
+            </i><span style='font-size:
 12.0pt;'><o:p></o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <i style=''>
-                                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <i style=''>
+                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoBodyText style=''>
-                            <span style=''>
-                                Re:<span style=''></span>
-                            </span>Special<span style='letter-spacing:-.05pt'>education</span><span style='letter-spacing:
+        <p class=MsoBodyText style=''>
+            <span style=''>
+                Re:<span style=''></span>
+            </span>Special<span style='letter-spacing:-.05pt'>education</span><span style='letter-spacing:
 -.1pt'></span>child<span style='letter-spacing:-.1pt'> </span><span style='letter-spacing:-.05pt'>find</span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
+        <p class=MsoNormal><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
 
-                        <p class=MsoNormal style='margin-top:.5pt'>
-                            <span style='font-size:17.5pt;
+        <p class=MsoNormal style='margin-top:.5pt'>
+            <span style='font-size:17.5pt;
 '><o:p>&nbsp;</o:p></span>
-                        </p>
+        </p>
 
-                        <h1 align=center style='margin-top:0in;margin-right:99.9pt;margin-bottom:0in;
+        <h1 align=center style='margin-top:0in;margin-right:99.9pt;margin-bottom:0in;
 margin-left:111.1pt;margin-bottom:.0001pt;text-align:center'>
-                            <span style='letter-spacing:-.05pt'>SEARCH</span>TO <span style='letter-spacing:
+            <span style='letter-spacing:-.05pt'>SEARCH</span>TO <span style='letter-spacing:
 -.05pt'>FIND</span><span style='letter-spacing:-.1pt'>CHILDREN</span><span style='letter-spacing:-.05pt'></span>IN <span style='letter-spacing:-.05pt'>NEED</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>OF</span><span style='letter-spacing:1.3pt'></span><span style='letter-spacing:-.05pt'>SPECIAL</span><span style='letter-spacing:-.1pt'>EDUCATION</span><span style='font-weight:normal'><o:p></o:p></span>
-                        </h1>
+        </h1>
 
-                        <p class=MsoBodyText style='margin-top:12.35pt'>
-                            The<span style='letter-spacing:
+        <p class=MsoBodyText style='margin-top:12.35pt'>
+            The<span style='letter-spacing:
 -.2pt'></span><i style=''>
-                                &lt;LEA&gt;<span style='letter-spacing:-.1pt'></span>
-                            </i>is<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>seeking</span><span style='letter-spacing:-.25pt'>
-                            </span>to<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:
+                &lt;LEA&gt;<span style='letter-spacing:-.1pt'></span>
+            </i>is<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>seeking</span><span style='letter-spacing:-.25pt'>
+            </span>to<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:
 -.05pt'>identify</span><span style='letter-spacing:-.3pt'> </span>every<span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>student</span><span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.1pt'>from</span><span style='letter-spacing:-.05pt'>birth</span><span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>through</span><span style='letter-spacing:.25pt'>
-                            </span>age<span style='letter-spacing:-.2pt'> </span>21<span style='letter-spacing:
+            </span>age<span style='letter-spacing:-.2pt'> </span>21<span style='letter-spacing:
 -.3pt'></span><span style='letter-spacing:-.05pt'>who </span>lives<span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>within</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>the</span><span style='letter-spacing:2.05pt;mso-font-width:99%'></span><span style='letter-spacing:-.05pt'>boundaries</span><span style='letter-spacing:
 -.15pt'></span><span style='letter-spacing:-.05pt'>of</span><span style='letter-spacing:.05pt'></span><i style=''>
-                                &lt;LEA<span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>boundaries&gt;</span><span style='letter-spacing:.05pt'></span>
-                            </i><span style='letter-spacing:-.05pt'>
-                                who
-                            </span>has<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:
+                &lt;LEA<span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>boundaries&gt;</span><span style='letter-spacing:.05pt'></span>
+            </i><span style='letter-spacing:-.05pt'>
+                who
+            </span>has<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:
 -.05pt'>developmental</span><span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>delays</span><span style='letter-spacing:-.15pt'>
-                            </span>or<span style='letter-spacing:-.2pt'> </span>may<span style='letter-spacing:
+            </span>or<span style='letter-spacing:-.2pt'> </span>may<span style='letter-spacing:
 -.1pt'></span><span style='letter-spacing:-.05pt'>be</span><span style='letter-spacing:-.15pt'></span>in<span style='letter-spacing:-.05pt'>
-                                need
-                            </span><span style='letter-spacing:-.15pt'> </span>of<span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>special</span><span style='letter-spacing:3.55pt'></span>education.<span style='letter-spacing:
+                need
+            </span><span style='letter-spacing:-.15pt'> </span>of<span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>special</span><span style='letter-spacing:3.55pt'></span>education.<span style='letter-spacing:
 -.15pt'></span><span style='letter-spacing:-.1pt'>If</span><span style='letter-spacing:-.05pt'></span>you<span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:-.05pt'>have</span>a<span style='letter-spacing:-.15pt'>
-                            </span><span style='letter-spacing:-.05pt'>child or know</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>of</span>
-                            a<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>child</span><span style='letter-spacing:-.25pt'></span><span style='letter-spacing:-.05pt'>who</span>
-                            you<span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:
+            </span><span style='letter-spacing:-.05pt'>child or know</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>of</span>
+            a<span style='letter-spacing:-.2pt'> </span><span style='letter-spacing:-.05pt'>child</span><span style='letter-spacing:-.25pt'></span><span style='letter-spacing:-.05pt'>who</span>
+            you<span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:
 -.05pt'>think</span><span style='letter-spacing:-.15pt'> </span>has<span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>development</span><span style='letter-spacing:-.1pt'></span>delays<span style='letter-spacing:-.25pt'>
-                            </span>or<span style='letter-spacing:2.25pt;'> </span><span style='letter-spacing:-.05pt'>special</span><span style='letter-spacing:-.25pt'>
-                            </span><span style='letter-spacing:-.05pt'>needs,</span><span style='letter-spacing:
+            </span>or<span style='letter-spacing:2.25pt;'> </span><span style='letter-spacing:-.05pt'>special</span><span style='letter-spacing:-.25pt'>
+            </span><span style='letter-spacing:-.05pt'>needs,</span><span style='letter-spacing:
 -.35pt'></span><span style='letter-spacing:-.05pt'>contact:</span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <span style='font-size:11.5pt;
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <span style='font-size:11.5pt;
 '><o:p>&nbsp;</o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;Director</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Special</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Education</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>or</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;'>person&gt;</span>
-                            </i><span style='font-size:12.0pt;'>,</span><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;Director</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Special</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Education</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>or</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;'>person&gt;</span>
+            </i><span style='font-size:12.0pt;'>,</span><span style='font-size:12.0pt;'><o:p></o:p></span>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;<span class=GramE>title</span></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>person&gt;</span>
-                            </i><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;<span class=GramE>title</span></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>person&gt;</span>
+            </i><span style='font-size:12.0pt;'><o:p></o:p></span>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <i style=''>
-                                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <i style=''>
+                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <span class=GramE>
-                                <span style='font-size:12.0pt;'>at</span>
-                            </span><span style='font-size:12.0pt;'>
-                                :<span style='letter-spacing:
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <span class=GramE>
+                <span style='font-size:12.0pt;'>at</span>
+            </span><span style='font-size:12.0pt;'>
+                :<span style='letter-spacing:
 2.45pt'></span><i style=''>
-                                    <span style='letter-spacing:
+                    <span style='letter-spacing:
 -.05pt'>&lt;phone number</span><span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:-.05pt'>and</span> <span style='letter-spacing:-.05pt'>other</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>information</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>for</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>designated</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>person&gt;</span>
-                                </i>
-                            </span><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+                </i>
+            </span><span style='font-size:12.0pt;'><o:p></o:p></span>
+        </p>
 
-                        <p class=MsoNormal>
-                            <i style=''>
-                                <span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal>
+            <i style=''>
+                <span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoBodyText>
-                            Areas of special education include: birth through age two (infant-toddler), early childhood - disability, developmentally delayed, visual impairments including blindness, hearing impairments including deafness, deaf-blindness, autism, traumatic brain injury, emotional disturbance, specific learning disabilities, intellectual disability, multiple disabilities, orthopedic impairments, other health impairments,speech or language impairments, and gifted. 
-                        </p>
+        <p class=MsoBodyText>
+            Areas of special education include: birth through age two (infant-toddler), early childhood - disability, developmentally delayed, visual impairments including blindness, hearing impairments including deafness, deaf-blindness, autism, traumatic brain injury, emotional disturbance, specific learning disabilities, intellectual disability, multiple disabilities, orthopedic impairments, other health impairments,speech or language impairments, and gifted.
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <span style='font-size:11.5pt;
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <span style='font-size:11.5pt;
 '><o:p>&nbsp;</o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoBodyText>
-                            <span style='letter-spacing:-.05pt'>Parents are advised that all special education services are designed to offer the utmost in educational opportunities for each qualifying student,as well as to provide assistance and support in the areas of physical, mental, emotional, and social growth. State and federal laws are followed in providing each student witha free appropriate public education in the least restrictive environment. </span>
-                        </p>
+        <p class=MsoBodyText>
+            <span style='letter-spacing:-.05pt'>Parents are advised that all special education services are designed to offer the utmost in educational opportunities for each qualifying student,as well as to provide assistance and support in the areas of physical, mental, emotional, and social growth. State and federal laws are followed in providing each student witha free appropriate public education in the least restrictive environment. </span>
+        </p>
 
-                        <p class=MsoNormal><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
+        <p class=MsoNormal><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <span style='font-size:12.0pt;
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <span style='font-size:12.0pt;
 letter-spacing:-.05pt'>Call:</span><span style='font-size:12.0pt;letter-spacing:2.55pt'></span><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.05pt'>&lt;Director</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:
+                <span style='font-size:12.0pt;;letter-spacing:-.05pt'>&lt;Director</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:
 -.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Special</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Education</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>or</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>
-                                    contact
-                                </span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Special</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>Education</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>or</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>
+                    contact
+                </span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;
 '>person&gt;</span>
-                            </i><span style='font-size:12.0pt;
+            </i><span style='font-size:12.0pt;
 '>,</span><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;<span class=GramE>title</span></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
-                            </i><i style=''>
-                                <span style='font-size:12.0pt;letter-spacing:-.05pt'>person&gt;</span>
-                            </i><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>&lt;<span class=GramE>title</span></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.15pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>of</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>designated</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.2pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>contact</span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.1pt'></span>
+            </i><i style=''>
+                <span style='font-size:12.0pt;letter-spacing:-.05pt'>person&gt;</span>
+            </i><span style='font-size:12.0pt;'><o:p></o:p></span>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.1pt'>
-                            <i style=''>
-                                <span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal style='margin-top:.1pt'>
+            <i style=''>
+                <span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoNormal style='margin-left:5.0pt'>
-                            <span class=GramE>
-                                <span style='font-size:12.0pt;'>at</span>
-                            </span><span style='font-size:12.0pt;'>
-                                :<span style='letter-spacing:2.45pt'></span><i style=''>
-                                    <span style='letter-spacing:-.05pt'>&lt;phone number</span><span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:-.05pt'>and</span> <span style='letter-spacing:-.05pt'>other</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>information</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>for</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>designated</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>person&gt;</span>
-                                </i>
-                            </span><span style='font-size:12.0pt;'><o:p></o:p></span>
-                        </p>
+        <p class=MsoNormal style='margin-left:5.0pt'>
+            <span class=GramE>
+                <span style='font-size:12.0pt;'>at</span>
+            </span><span style='font-size:12.0pt;'>
+                :<span style='letter-spacing:2.45pt'></span><i style=''>
+                    <span style='letter-spacing:-.05pt'>&lt;phone number</span><span style='letter-spacing:-.15pt'> </span><span style='letter-spacing:-.05pt'>and</span> <span style='letter-spacing:-.05pt'>other</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>information</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>for</span><span style='letter-spacing:-.1pt'></span><span style='letter-spacing:-.05pt'>designated</span><span style='letter-spacing:-.15pt'></span><span style='letter-spacing:-.05pt'>contact</span><span style='letter-spacing:-.2pt'></span><span style='letter-spacing:-.05pt'>person&gt;</span>
+                </i>
+            </span><span style='font-size:12.0pt;'><o:p></o:p></span>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:.6pt'>
-                            <i style=''>
-                                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
-                            </i>
-                        </p>
+        <p class=MsoNormal style='margin-top:.6pt'>
+            <i style=''>
+                <span style='font-size:11.5pt;'><o:p>&nbsp;</o:p></span>
+            </i>
+        </p>
 
-                        <p class=MsoBodyText>
-                            <span class=GramE>if you havea child or know of a child who may need special education services. </span>
-                        </p>
+        <p class=MsoBodyText>
+            <span class=GramE>if you havea child or know of a child who may need special education services. </span>
+        </p>
 
-                        <p class=MsoNormal><span style='font-size:10.0pt;'><o:p>&nbsp;</o:p></span></p>
+        <p class=MsoNormal><span style='font-size:10.0pt;'><o:p>&nbsp;</o:p></span></p>
 
-                        <p class=MsoNormal><span style='font-size:10.0pt;'><o:p>&nbsp;</o:p></span></p>
+        <p class=MsoNormal><span style='font-size:10.0pt;'><o:p>&nbsp;</o:p></span></p>
 
-                        <p class=MsoNormal style='margin-top:.2pt'>
-                            <span style='font-size:13.5pt;'><o:p>&nbsp;</o:p></span>
-                        </p>
+        <p class=MsoNormal style='margin-top:.2pt'>
+            <span style='font-size:13.5pt;'><o:p>&nbsp;</o:p></span>
+        </p>
 
-                        <p class=MsoNormal style='margin-top:3.55pt;line-height:11.7pt;'>
-                            <span style='font-size:10.0pt;font-family:"Cambria",serif;'>
-                                Sample<span style='letter-spacing:-.7pt'></span>Notice<span style=''>                                                                                   </span>Early
-                                Childhood, <span style='letter-spacing:-.05pt'>Special</span><span style='letter-spacing:-.55pt'></span><span style='letter-spacing:-.05pt'>
-                                    Education,
-                                    and Title
-                                </span><span style='letter-spacing:-.65pt'> </span><span style='letter-spacing:-.05pt'>Services</span>
-                            </span><span style='font-size:
+        <p class=MsoNormal style='margin-top:3.55pt;line-height:11.7pt;'>
+            <span style='font-size:10.0pt;font-family:"Cambria",serif;'>
+                Sample<span style='letter-spacing:-.7pt'></span>Notice<span style=''>                                                                                   </span>Early
+                Childhood, <span style='letter-spacing:-.05pt'>Special</span><span style='letter-spacing:-.55pt'></span><span style='letter-spacing:-.05pt'>
+                    Education,
+                    and Title
+                </span><span style='letter-spacing:-.65pt'> </span><span style='letter-spacing:-.05pt'>Services</span>
+            </span><span style='font-size:
 10.0pt;font-family:"Cambria",serif;'><o:p></o:p></span>
-                        </p>
+        </p>
 
-                        <p class=MsoNormal style='line-height:11.7pt;'>
-                            <span style='font-size:10.0pt;font-family:"Cambria",serif;;letter-spacing:-.05pt'>
-                                June
-                                2017
-                            </span><span style='font-size:10.0pt;font-family:"Cambria",serif;'>
-                                <span style=''>                                                                                                                         </span><span style='letter-spacing:-.05pt'>Kansas</span><span style='letter-spacing:-.4pt'> </span><span style='letter-spacing:-.05pt'>State</span><span style='letter-spacing:-.4pt'> </span><span style='letter-spacing:-.05pt'>Department</span><span style='letter-spacing:
+        <p class=MsoNormal style='line-height:11.7pt;'>
+            <span style='font-size:10.0pt;font-family:"Cambria",serif;;letter-spacing:-.05pt'>
+                June
+                2017
+            </span><span style='font-size:10.0pt;font-family:"Cambria",serif;'>
+                <span style=''>                                                                                                                         </span><span style='letter-spacing:-.05pt'>Kansas</span><span style='letter-spacing:-.4pt'> </span><span style='letter-spacing:-.05pt'>State</span><span style='letter-spacing:-.4pt'> </span><span style='letter-spacing:-.05pt'>Department</span><span style='letter-spacing:
 -.35pt'></span>of<span style='letter-spacing:-.4pt'> </span><span style='letter-spacing:-.05pt'>Education</span>
-                            </span><span style='font-size:
+            </span><span style='font-size:
 10.0pt;font-family:"Cambria",serif;'><o:p></o:p></span>
-                        </p>
+        </p>
 
-                    </div>
-
-
+    </div>
 
 
 
-                </div><!--end center-->
-            </div><!--end col md 12-->
 
-        </div><!--endrow -->
-    </div><!--end container-->
-</div><!--end tran-->
-<!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/requestconsent.js"></var>
 
-<script>
-    var body = document.getElementsByTagName("body")[0];
-    body.classList += ' ' + 'fadeInToBackground';
-
-    var el = document.getElementsByClassName("body-content")[0], c = el.style;
-    c.borderLeft = "1px solid #000";
-    c.borderRight = "1px solid #000";
-    c.boxShadow = "10px 10px 25px #333";
-    c.position = "relative";
-    c.top = "15px";
-    c.backgroundColor = "#ffffff";
-    c.marginBottom = "75px";
-
-    setTimeout(function () {
-        var tp = document.getElementsByClassName("transition-page")[0];
-        tp.style.display = "block";
-
-        var className = 'transition-page-scaleUpCenter';
-        if (el.classList) {
-            el.classList.add(className);
-        } else {
-            el.className += ' ' + className;
-        }
-    }, 200);
-</script>
-
+</div>

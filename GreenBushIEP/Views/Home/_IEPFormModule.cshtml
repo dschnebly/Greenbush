@@ -55,7 +55,7 @@
             $('.ajax-loader').css("visibility", "visible");
 
             var pageName = this.id;
-            window.location.href = '/Home/' + pageName + '/' + id;
+            window.location.href = '/Home/IEPFormFile?id=' +  id + '&fileName=' + pageName;
         }
         else {
             $("#alertMessage .moreinfo").html('Server Error');

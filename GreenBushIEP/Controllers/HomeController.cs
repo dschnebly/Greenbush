@@ -1195,6 +1195,17 @@ namespace GreenbushIep.Controllers
             return PartialView("_IEPFormModule", viewModel);
         }
 
+        [HttpGet]
+        [Authorize(Roles = teacher)]
+        public ActionResult IEPFormFile (int id, string fileName)
+        {
+            IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
+            viewModel.studentId = id;
+            viewModel.fileName = fileName;
+
+            return View("_IEPFormsFile", viewModel);
+        }
+
 
         [HttpGet]
         [Authorize]

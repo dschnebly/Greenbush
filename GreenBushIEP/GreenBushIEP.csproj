@@ -415,6 +415,7 @@
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
     <Content Include="Content\Images\green-crop2.jpg" />
+    <Content Include="Content\Images\legal_image.jpg" />
     <Content Include="Content\Images\loading-icon.gif" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\misadministrator.jpg" />
@@ -580,6 +581,12 @@
     <Content Include="Views\Form\SOPExample.cshtml" />
     <Content Include="Views\Home\_IEPFormModule.cshtml" />
     <Content Include="Views\Form\ParentsRights.cshtml" />
+    <Content Include="Views\Home\_IEPFormsFile.cshtml" />
+    <Content Include="Views\Form\PriorWrittenNoticeId.cshtml" />
+    <Content Include="Views\Form\RevPartSvscConsent.cshtml" />
+    <Content Include="Views\Form\RevPartSvscPWN.cshtml" />
+    <Content Include="Views\Form\ManiDetermReview.cshtml" />
+    <Content Include="Views\Form\RevAllSvscPWN.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
