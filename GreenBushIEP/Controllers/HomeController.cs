@@ -1057,23 +1057,24 @@ namespace GreenbushIep.Controllers
         {
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-            
+
             if (iep != null)
             {
                 //model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
-                    model = oc.FirstOrDefault();            
+                    model = oc.FirstOrDefault();
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
             string studentName = "";
             if (student != null)
                 studentName = string.Format("{0}", student.FirstName);
-            
+
             ViewBag.StudentName = studentName;
             ViewBag.StudentId = studentId;
+
             return PartialView("_ModuleOtherConsiderations", model);
         }
 
@@ -1198,7 +1199,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize(Roles = teacher)]
-        public ActionResult IEPFormFile (int id, string fileName)
+        public ActionResult IEPFormFile(int id, string fileName)
         {
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
             viewModel.studentId = id;
