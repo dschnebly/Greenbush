@@ -456,7 +456,7 @@
           <Property Name="DistrictAssessment_WithAccommodations_flag" Type="bit" />
           <Property Name="DistrictAssessment_WithAccommodations_desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="DistrictAssessment_Alternative_flag" Type="bit" />
-          <Property Name="DistrictAssessment_Alternative_desc" Type="bit" />
+          <Property Name="DistrictAssessment_Alternative_desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="DistrictAssessment_GradeNotAssessed" Type="bit" />
           <Property Name="StateAssessment_NoAccommodations_flag" Type="bit" />
           <Property Name="StateAssessment_NoAccommodations_desc" Type="nvarchar" MaxLength="1000" />
@@ -1542,7 +1542,7 @@
           <Property Name="DistrictAssessment_WithAccommodations_flag" Type="Boolean" />
           <Property Name="DistrictAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DistrictAssessment_Alternative_flag" Type="Boolean" />
-          <Property Name="DistrictAssessment_Alternative_desc" Type="Boolean" />
+          <Property Name="DistrictAssessment_Alternative_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DistrictAssessment_GradeNotAssessed" Type="Boolean" />
           <Property Name="StateAssessment_NoAccommodations_flag" Type="Boolean" />
           <Property Name="StateAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />

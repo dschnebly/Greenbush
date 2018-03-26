@@ -23,7 +23,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> DistrictAssessment_WithAccommodations_flag { get; set; }
         public string DistrictAssessment_WithAccommodations_desc { get; set; }
         public Nullable<bool> DistrictAssessment_Alternative_flag { get; set; }
-        public Nullable<bool> DistrictAssessment_Alternative_desc { get; set; }
+        public string DistrictAssessment_Alternative_desc { get; set; }
         public Nullable<bool> DistrictAssessment_GradeNotAssessed { get; set; }
         public Nullable<bool> StateAssessment_NoAccommodations_flag { get; set; }
         public string StateAssessment_NoAccommodations_desc { get; set; }
