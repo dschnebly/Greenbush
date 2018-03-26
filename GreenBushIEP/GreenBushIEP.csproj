@@ -588,6 +588,7 @@
     <Content Include="Views\Form\ManiDetermReview.cshtml" />
     <Content Include="Views\Form\RevAllSvscPWN.cshtml" />
     <Content Include="Views\Form\RevAllSvscConsent.cshtml" />
+    <Content Include="Views\Home\_ModuleOtherConsiderations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
