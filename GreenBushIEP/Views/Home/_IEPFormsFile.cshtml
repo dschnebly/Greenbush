@@ -253,7 +253,8 @@
             <div class="col-md-12">
                 <div align="center">
                     <div class="col-md-12">
-                        @Html.Raw(File.ReadAllText(Server.MapPath("~/Views/Form/" + Model.fileName + ".cshtml")))
+                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml")
+                        @*@Html.Raw(File.ReadAllText(Server.MapPath("~/Views/Form/" + Model.fileName + ".cshtml")))*@
                     </div>
                 </div>
             </div>
@@ -297,12 +298,10 @@
 
             var content = document.getElementsByClassName('body-content');
             content[0].classList.add('transition-page-scaleDownCenter');
-            document.getElementsByTagName('body')[0].classList.remove("fadeInToBackground");
-            document.getElementsByTagName('body')[0].classList.add("fadeOutToBackground");
 
             setTimeout(function () {
                 window.location = document.getElementById('backtoportal').getAttribute("href");
-            }, 325);
+            }, 100);
         }
 
     });
