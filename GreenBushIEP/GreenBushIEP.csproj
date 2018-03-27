@@ -270,6 +270,9 @@
     <Compile Include="Models\IEP.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StudentPlan.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblAccommodation.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
