@@ -1,4 +1,8 @@
-﻿<div>
+﻿@{
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+}
+
+<div>
     <div class=WordSection1>
         <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
             CONSENT TO INVITE REPRESENTATIVE
@@ -13,7 +17,7 @@
             I, the parent (or adult student) identified below, have been informed that
         </p>
         <p>
-            <u>USD @(String.Format(@schoolDistrict).PadRight(68 - String.Format(@schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u>
+            <u>USD @(String.Format(schoolDistrict).PadRight(68 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u>
 
 
 

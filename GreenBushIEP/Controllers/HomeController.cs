@@ -1143,41 +1143,153 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult RequestConsent(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult RequestConsent(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
 
-            return View("RequestConsent", viewModel);
-        }
+        //    return View("RequestConsent", viewModel);
+        //}
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult NoticeOfMeeting(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult NoticeOfMeeting(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
 
-            return View("NoticeOfMeeting", viewModel);
-        }
+        //    return View("NoticeOfMeeting", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult IEPAmendment(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
+
+        //    return View("Form/IEPAmendment", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult ManiDetermReview(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
+
+        //    return View("Form/ManiDetermReview", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult IEPMtgConsent(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
+
+        //    return View("Form/IEPMtgConsent", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult IEPMtgExcusal(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
+
+        //    return View("Form/IEPMtgExcusal", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult ParentsRights(int id)
+        //{
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //    };
+
+        //    return View("~/Views/Form/ParentsRights.cshtml", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult SamplePublicNotice(int id)
+        //{
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //    };
+
+        //    return View("Form/SamplePublicNotice", viewModel);
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult SOPExample(int id)
+        //{
+        //    tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+        //    tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+        //    StudentLegalView viewModel = new StudentLegalView()
+        //    {
+        //        student = student,
+        //        teacher = teacher,
+        //        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+        //        contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+        //    };
+
+        //    return View("Form/SOPExample", viewModel);
+        //}
 
         [HttpGet]
         [Authorize(Roles = teacher)]
@@ -1204,121 +1316,20 @@ namespace GreenbushIep.Controllers
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
             viewModel.studentId = id;
             viewModel.fileName = fileName;
+            
+            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+            StudentLegalView fileViewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList()
+            };
+
+            viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
-        }
-
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult IEPAmendment(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
-
-            return View("Form/IEPAmendment", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult ManiDetermReview(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
-
-            return View("Form/ManiDetermReview", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult IEPMtgConsent(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
-
-            return View("Form/IEPMtgConsent", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult IEPMtgExcusal(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
-
-            return View("Form/IEPMtgExcusal", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult ParentsRights(int id)
-        {
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-            };
-
-            return View("~/Views/Form/ParentsRights.cshtml", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult SamplePublicNotice(int id)
-        {
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-            };
-
-            return View("Form/SamplePublicNotice", viewModel);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult SOPExample(int id)
-        {
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault(); //== tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-            StudentLegalView viewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-            };
-
-            return View("Form/SOPExample", viewModel);
         }
 
         public ActionResult IEPForms(int stid)
@@ -1335,7 +1346,6 @@ namespace GreenbushIep.Controllers
 
             return View(model);
         }
-
 
         private List<SelectListItem> GetForms()
         {

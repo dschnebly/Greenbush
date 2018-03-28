@@ -253,18 +253,16 @@
             <div class="col-md-12">
                 <div align="center">
                     <div class="col-md-12">
-                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml")
-                        @*@Html.Raw(File.ReadAllText(Server.MapPath("~/Views/Form/" + Model.fileName + ".cshtml")))*@
+                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
 
-    // $(function(){ });
+    // this is the equivalent to $(function(){ });
     document.addEventListener("DOMContentLoaded", function (event) {
 
         var body = document.getElementsByTagName("body")[0];

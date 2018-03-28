@@ -1,4 +1,11 @@
-﻿<div>
+﻿@{
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+}
+
+<div>
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='text-align:center'>
@@ -10,7 +17,7 @@
         </p>
 
         <p class=MsoNormal align=center style='text-align:center'>
-            <span style='font-family:"Calibri",sans-serif'>USD # <u>@(String.Format(Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "").PadRight(25 - String.Format(Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "").Length, ' ').Replace(" ", "\u00A0"))</u></span>
+            <span style='font-family:"Calibri",sans-serif'>USD # <u>@(String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u></span>
         </p>
 
         <p class=MsoNormal align=center style='text-align:center'>
@@ -23,7 +30,7 @@
 
         <p class=MsoNormal>
             <u>
-                <span style='font-family:"Calibri",sans-serif'>@(String.Format(Model.StudentFormattedName).PadRight(100 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
+                <span style='font-family:"Calibri",sans-serif'>@(String.Format(studentFormattedName).PadRight(100 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
             <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(80, ' ').Replace(" ", "\u00A0"))</span></u>
         </p>
@@ -43,7 +50,7 @@
 
         <p class=MsoNormal>
             <u>
-                <span style='font-family:"Calibri",sans-serif'>@(String.Format(Model.ContactFormattedName).PadRight(100 - String.Format(Model.ContactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
+                <span style='font-family:"Calibri",sans-serif'>@(String.Format(contactFormattedName).PadRight(100 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
             <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(78, ' ').Replace(" ", "\u00A0"))</span></u>
         </p>
@@ -63,7 +70,7 @@
 
         <p class=MsoNormal>
             <u>
-                <span style='font-family:"Calibri",sans-serif'>@(String.Format(Model.TeacherFormattedName).PadRight(100 - String.Format(Model.TeacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
+                <span style='font-family:"Calibri",sans-serif'>@(String.Format(teacherFormattedName).PadRight(100 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
             <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(80, ' ').Replace(" ", "\u00A0"))</span></u>
         </p>

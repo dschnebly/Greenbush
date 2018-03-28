@@ -1,4 +1,12 @@
-﻿<div>
+﻿@{
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+}
+
+
+<div>
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
@@ -15,7 +23,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:150%'>
             STUDENT NAME:
-            <u><b>@(String.Format(Model.StudentFormattedName).PadRight(100 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>
+            <u><b>@(String.Format(studentFormattedName).PadRight(100 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>
             SCHOOL DISTRICT:
             <u><b>@(String.Format("{0}", schoolDistrict).PadRight(100 - schoolDistrict.Length, ' ').Replace(" ", "\u00A0"))</b></u>
@@ -27,7 +35,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             Effective <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(20, ' ').Replace(" ", "\u00A0"))</u>,
-            I, <u>@(String.Format(Model.ContactFormattedName).PadRight(95 - String.Format(Model.ContactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
+            I, <u>@(String.Format(contactFormattedName).PadRight(95 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
             having authority under
         </p>
 
@@ -139,7 +147,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             As the
-            school representative on this student’s IEP team, I, <u>@(String.Format(Model.TeacherFormattedName).PadRight(103 - String.Format(Model.TeacherFormattedName).Length, ' ').Replace(" ", "\u00A0")) </u>,
+            school representative on this student’s IEP team, I, <u>@(String.Format(teacherFormattedName).PadRight(103 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0")) </u>,
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:

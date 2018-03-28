@@ -553,9 +553,9 @@
     <Content Include="Views\Home\EditUser.cshtml" />
     <Content Include="Views\Home\CreateUser.cshtml" />
     <Content Include="Views\Home\CreateStudent.cshtml" />
-    <Content Include="Views\Home\RequestConsent.cshtml" />
+    <Content Include="Views\Form\RequestConsent.cshtml" />
     <Content Include="Views\Home\EditStudent.cshtml" />
-    <Content Include="Views\Home\NoticeOfMeeting.cshtml" />
+    <Content Include="Views\Form\NoticeOfMeeting.cshtml" />
     <Content Include="Views\Home\StudentIEP.cshtml" />
     <Content Include="Views\Home\PrintIEP.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />

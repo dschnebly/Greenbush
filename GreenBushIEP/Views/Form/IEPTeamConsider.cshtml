@@ -1,9 +1,13 @@
-﻿<div>
+﻿@{
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+}
+
+<div>
     <div class=WordSection1>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
 0in;margin-left:0in;margin-bottom:.0001pt'>
-            Student Name:  @(String.Format(Model.StudentFormattedName).PadRight(68 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))                           IEP
+            Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))                           IEP
             Meeting Date:  <img width=201 height=1 id="Group 2519"
                                 src="IEP_Team_Considerations_files/image002.gif">
         </p>

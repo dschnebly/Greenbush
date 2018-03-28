@@ -224,23 +224,13 @@ namespace GreenBushIEP.Models
     {
         public int studentId { get; set; }
         public string fileName { get; set; }
-
-        //public StudentLegalView()
-        //{
-        //    student = new tblUser();
-        //    studentInfo = new tblStudentInfo();
-        //    contacts = new List<tblStudentRelationship>();
-        //}
-
-        //public tblUser student { get; set; }
-        //public tblStudentInfo studentInfo { get; set; }
-        //public tblUser teacher { get; set; }
-        //public List<tblStudentRelationship> contacts { get; set; }
+        public StudentLegalView fileModel { get; set; }
 
         public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;
+            fileModel = new StudentLegalView();
         }
     }
 

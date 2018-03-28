@@ -1,4 +1,9 @@
-﻿<div>
+﻿@{
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+}
+
+
+<div>
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='text-align:center'>
@@ -19,7 +24,7 @@
             <span style='font-size:14.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
-        <p class=MsoNormal><u>@(String.Format(Model.StudentFormattedName).PadRight(75 - String.Format(Model.StudentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></p>
+        <p class=MsoNormal><u>@(String.Format(studentFormattedName).PadRight(75 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></p>
 
         <p class=MsoNormal>
             <span style='font-size:10.0pt; font-family:"Calibri",sans-serif'>
