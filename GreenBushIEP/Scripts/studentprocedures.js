@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿/// <reference path="jsonpath.js" />
+$(function () {
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
@@ -229,7 +230,6 @@ $('#saveplan').on('click', function () {
     !$("input[name='WrittenNoConcern']").is(':checked') ? $("#WrittenWidget").removeClass("widgetDisabled") : $("#WrittenWidget").addClass("widgetDisabled");
 });
 
-
 // Attach Event
 // Motor
 $("input[name='MotorNoConcern']").on('click', function (event) {
@@ -327,7 +327,6 @@ $("input[name='ReadingNeed']").on('click', function (event) {
         $("input[name='ReadingNoConcern']").prop('checked', false);
     }
 });
-
 
 // Attach Event
 // Math
@@ -444,6 +443,7 @@ $(".iep-form-section").on("click", function (e) {
             $('.ajax-loader').css("visibility", "hidden");
         }
     });
+
 });
 
 $(".module-section").on("click", function (e) {
