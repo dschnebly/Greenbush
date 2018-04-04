@@ -241,3 +241,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/.nuget/NuGet.exe
+/.nuget/NuGet.targets

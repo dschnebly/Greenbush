@@ -68,13 +68,13 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
             <div class="form-check">
-                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 21px;" maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Area of need which impacts performance</label>
             <div class="form-check">
-                <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" style="font-size: 21px;"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -88,7 +88,7 @@
                 <br />
                 <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
@@ -96,7 +96,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="reset" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values.">Reset</button>
                     <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                 </div>
             </div>
@@ -150,5 +150,17 @@
         else {
             $("#MeetByOtherTextArea p").hide();
         }
-    });
+	});
+
+	/* Binding */
+	/* tooltips */
+	$('[data-toggle="tooltip"]').tooltip({
+		trigger: 'manual'
+	});
+
+	///* Event */
+	///* When a user clicks on the question mark icon we turn on tooltips */
+	$('.tooltip-help').on('click', function () {
+		$('[data-toggle="tooltip"]').tooltip('toggle');
+	});
 </script>

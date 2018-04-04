@@ -39,13 +39,13 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 21px;"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 21px;"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -59,7 +59,7 @@
                 <br />
                 <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;") ">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit.">@(Model.MeetNeedByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
@@ -67,7 +67,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="button" class="btn btn-default" id="resetModuleMotorForm">Reset</button>
+                    <button type="reset" class="btn btn-default" id="resetModuleMotorForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values.">Reset</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
@@ -119,5 +119,17 @@
 
     // Attach Event
     // reset the form because jquery does not have built in reset functionality.
-    $("#resetModuleMotorForm").trigger("reset");
+	$("#resetModuleMotorForm").trigger("reset");
+
+	/* Binding */
+	/* tooltips */
+	$('[data-toggle="tooltip"]').tooltip({
+		trigger: 'manual'
+	});
+
+	///* Event */
+	///* When a user clicks on the question mark icon we turn on tooltips */
+	$('.tooltip-help').on('click', function () {
+		$('[data-toggle="tooltip"]').tooltip('toggle');
+	});
 </script>
