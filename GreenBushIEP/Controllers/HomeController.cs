@@ -947,10 +947,10 @@ namespace GreenbushIep.Controllers
                 model.student = student;
                 model.isDOC = district.DOC;
                 model.iepId = iep.IEPid;
-                model.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
-                model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
-                model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).DefaultIfEmpty().ToList();
-                model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault();
+                model.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == iep.IEPid).ToList();
+                model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).ToList();
+                model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
+                model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
 
                 return PartialView("_ModuleStudentTransition", model);
             }
@@ -1005,8 +1005,6 @@ namespace GreenbushIep.Controllers
                         if (targetedBehaviors[2] != null)
                             model.targetedBehavior3 = targetedBehaviors[2];
                     }
-
-
                 }
 
                 model.Triggers = db.tblBehaviorTriggerTypes.ToList();

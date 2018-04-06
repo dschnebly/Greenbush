@@ -20,7 +20,8 @@ namespace GreenBushIEP.Models
         public string Assessment_Strengths { get; set; }
         public string Assessment_Prefrences { get; set; }
         public string Assessment_Interest { get; set; }
-        public bool Services_Reviewed { get; set; }
+        public bool CommunityParticipation { get; set; }
+        public string CommunityParticipation_Description { get; set; }
         public bool Planning_Facilitate { get; set; }
         public bool Planning_Align { get; set; }
         public Nullable<int> Planning_GraduationMonth { get; set; }
