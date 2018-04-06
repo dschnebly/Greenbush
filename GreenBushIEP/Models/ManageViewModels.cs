@@ -289,7 +289,6 @@ namespace GreenBushIEP.Models
         public string Message { get; set; }
         public List<tblAccommodation> AccomList { get; set; }
         public List<System.Web.Mvc.SelectListItem> Locations { get; set; }
-
     }
 
     public class BehaviorViewModel
@@ -337,24 +336,7 @@ namespace GreenBushIEP.Models
         public tblBehaviorBaseline targetedBehavior1 { get; set; }
         public tblBehaviorBaseline targetedBehavior2 { get; set; }
         public tblBehaviorBaseline targetedBehavior3 { get; set; }
-
     }
-
-    //public class OtherConsiderationViewModel
-    //{
-    //    public OtherConsiderationViewModel()
-    //    {
-    //        OtherConsideration = new tblOtherConsideration();
-            
-    //    }
-
-    //    public int StudentId { get; set; }
-    //    public int IEPid { get; set; }
-    //    public string StudentName { get; set; }
-    //    public tblOtherConsideration OtherConsideration { get; set; }
-    //    public string Message { get; set; }
-
-    //}
 
     public class StudentServiceViewModel
     {

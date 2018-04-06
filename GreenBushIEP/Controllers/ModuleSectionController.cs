@@ -551,7 +551,7 @@ namespace GreenBushIEP.Controllers
                     case "3":
                         model.StateAssessment_RequiredCompleted = true;
                         break;
-                    
+
                 }
 
                 var tp = collection["TransporationPlan"];
@@ -572,7 +572,7 @@ namespace GreenBushIEP.Controllers
 
                 }
 
-                
+
                 //find existing if updating
                 tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
 
@@ -582,12 +582,12 @@ namespace GreenBushIEP.Controllers
                     db.tblOtherConsiderations.Add(model);
                     db.SaveChanges();
                 }
-                else 
+                else
                 {
 
-                    OC.AssistiveTechnology_Description =  model.AssistiveTechnology_Description;
+                    OC.AssistiveTechnology_Description = model.AssistiveTechnology_Description;
                     OC.AssistiveTechnology_Require = model.AssistiveTechnology_Require;
-                    OC.DistrictAssessment_NoAccommodations_flag =  model.DistrictAssessment_NoAccommodations_flag  ;
+                    OC.DistrictAssessment_NoAccommodations_flag = model.DistrictAssessment_NoAccommodations_flag;
                     OC.DistrictAssessment_NoAccommodations_desc = model.DistrictAssessment_NoAccommodations_desc;
                     OC.DistrictAssessment_WithAccommodations_flag = model.DistrictAssessment_WithAccommodations_flag;
                     OC.DistrictAssessment_WithAccommodations_desc = model.DistrictAssessment_WithAccommodations_desc;
@@ -615,17 +615,17 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                     return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
                 }
-            
-         }
-        catch(Exception ex)
-        {
-          string errorMessage = ex.Message;
+
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.Message;
+            }
+
+            throw new Exception("Unable to save changes to Other Considerations Module");
+
         }
 
-        throw new Exception("Unable to save changes to Other Considerations Module" );
-
-        }
-            
 
         [HttpPost]
         public ActionResult EditAccom(AccomodationViewModel model)
@@ -845,17 +845,17 @@ namespace GreenBushIEP.Controllers
                     int iedId = Convert.ToInt32(collection["IEPid"]);
                     int i = 2;
 
-                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault() ?? new tblTransition();
                     transition.IEPid = iedId;
                     transition.Assessment_Needs = collection["transitionNeeds"].ToString();
                     transition.Assessment_Strengths = collection["transitionStrengths"].ToString();
                     transition.Assessment_Prefrences = collection["transitionPreferences"].ToString();
                     transition.Assessment_Interest = collection["transitionInterest"].ToString();
-                    transition.Create_Date = DateTime.Now;
                     transition.Update_Date = DateTime.Now;
 
-                    if (iedId == 0)
+                    if (transition.TransitionID == 0)
                     {
+                        transition.Create_Date = DateTime.Now;
                         db.tblTransitions.Add(transition);
                     }
                     db.SaveChanges();
@@ -865,15 +865,16 @@ namespace GreenBushIEP.Controllers
                         int asmtId = Convert.ToInt32(collection[i++]);
 
                         tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault() ?? new tblTransitionAssessment();
+                        assessment.TransitionID = transition.TransitionID;
                         assessment.Narrative = collection[i++].ToString();
                         assessment.CompletedOn = Convert.ToDateTime(collection[i++]);
                         assessment.Performance = collection[i++].ToString();
                         assessment.IEPid = transition.IEPid;
-                        assessment.Create_Date = DateTime.Now;
                         assessment.Update_Date = DateTime.Now;
 
                         if (assessment.TransitionAssementID == 0)
                         {
+                            assessment.Create_Date = DateTime.Now;
                             db.tblTransitionAssessments.Add(assessment);
                         }
 
@@ -930,18 +931,13 @@ namespace GreenBushIEP.Controllers
                         transitionGoal.CompletetionType = collection[i++].ToString();
                         transitionGoal.Behavior = collection[i++].ToString();
                         transitionGoal.WhereAndHow = collection[i++].ToString();
-                        transitionGoal.Create_Date = DateTime.Now;
                         transitionGoal.Update_Date = DateTime.Now;
 
                         if (transitionGoalID == 0)
                         {
+                            transitionGoal.Create_Date = DateTime.Now;
                             db.tblTransitionGoals.Add(transitionGoal);
                         }
-                    }
-
-                    if (i < collection.Count)
-                    {
-                        transition.Services_Reviewed = collection[i++] == "on" ? true : false; ;
                     }
 
                     db.SaveChanges();
@@ -983,10 +979,11 @@ namespace GreenBushIEP.Controllers
                 {
                     int studentId = Convert.ToInt32(collection["studentId"]);
                     int iedId = Convert.ToInt32(collection["IEPid"]);
+                    int serviceCount = collection.Count - 4;
                     int i = 2;
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
-                    while (i < collection.Count - 2)
+                    while (i < serviceCount)
                     {
                         var transitionServiceID = Convert.ToInt32(collection[i++]);
                         tblTransitionService transitionService = db.tblTransitionServices.Where(s => s.IEPid == iedId && s.TransitionServiceID == transitionServiceID).FirstOrDefault() ?? new tblTransitionService();
@@ -998,13 +995,22 @@ namespace GreenBushIEP.Controllers
                         transitionService.Frequency = collection[i++].ToString();
                         transitionService.Duration = collection[i++].ToString();
                         transitionService.Location = collection[i++].ToString();
-                        transitionService.Create_Date = DateTime.Now;
                         transitionService.Update_Date = DateTime.Now;
 
                         if (transitionServiceID == 0)
                         {
+                            transitionService.Create_Date = DateTime.Now;
                             db.tblTransitionServices.Add(transitionService);
                         }
+
+                        db.SaveChanges();
+                    }
+
+                    // for catching the Community Participation info at the end of the form.
+                    if(i < collection.Count)
+                    {
+                        transition.CommunityParticipation = collection["isCommunityParticipation"] == "on" ? true : false;
+                        transition.CommunityParticipation_Description = collection["communityParticipationDesc"].ToString();
 
                         db.SaveChanges();
                     }
@@ -1054,8 +1060,8 @@ namespace GreenBushIEP.Controllers
                     DateTime graduationDate = (!string.IsNullOrEmpty(collection["graduationYear"])) ? Convert.ToDateTime(collection["graduationYear"]) : DateTime.Now;
                     transition.Planning_GraduationMonth = graduationDate.Month;
                     transition.Planning_GraduationYear = graduationDate.Year;
-                    transition.Planning_Completion = (collection["planningCompletion"] != null) ? collection["planningCompletion"].ToString() : String.Empty ;
-                    transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0 ;
+                    transition.Planning_Completion = (collection["planningCompletion"] != null) ? collection["planningCompletion"].ToString() : String.Empty;
+                    transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
 

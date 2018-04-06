@@ -792,14 +792,6 @@ namespace GreenBushIEP.Controllers
             tblOrganizationMapping userToRemove = db.tblOrganizationMappings.Where(u => u.AdminID == teacher.UserID && u.UserID == id).SingleOrDefault();
             if (userToRemove != null)
             {
-                //db.tblOrganizationMappings.Add(
-                //    new tblOrganizationMapping
-                //    {
-                //        AdminID = submitter.UserID,
-                //        UserID = id
-                //    });
-                //db.SaveChanges();
-
                 db.tblOrganizationMappings.Remove(userToRemove);
                 db.SaveChanges();
 

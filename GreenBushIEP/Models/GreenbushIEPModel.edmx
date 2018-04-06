@@ -614,7 +614,8 @@
           <Property Name="Assessment_Strengths" Type="nvarchar" MaxLength="1000" />
           <Property Name="Assessment_Prefrences" Type="nvarchar" MaxLength="1000" />
           <Property Name="Assessment_Interest" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Services_Reviewed" Type="bit" Nullable="false" />
+          <Property Name="CommunityParticipation" Type="bit" Nullable="false" />
+          <Property Name="CommunityParticipation_Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="Planning_Facilitate" Type="bit" Nullable="false" />
           <Property Name="Planning_Align" Type="bit" Nullable="false" />
           <Property Name="Planning_GraduationMonth" Type="int" />
@@ -877,7 +878,6 @@
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
-          <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
           <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
@@ -892,6 +892,7 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1501,29 +1502,6 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblTransition">
-          <Key>
-            <PropertyRef Name="TransitionID" />
-          </Key>
-          <Property Name="TransitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Assessment_Needs" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Strengths" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Prefrences" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Interest" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Services_Reviewed" Type="Boolean" Nullable="false" />
-          <Property Name="Planning_Facilitate" Type="Boolean" Nullable="false" />
-          <Property Name="Planning_Align" Type="Boolean" Nullable="false" />
-          <Property Name="Planning_GraduationMonth" Type="Int32" />
-          <Property Name="Planning_GraduationYear" Type="Int32" />
-          <Property Name="Planning_Completion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Planning_Credits" Type="Int32" />
-          <Property Name="Planning_BenefitKRS" Type="Boolean" Nullable="false" />
-          <Property Name="Planning_ParentIntials" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Planning_ConsentPrior" Type="Boolean" Nullable="false" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
             <PropertyRef Name="TransitionServiceID" />
@@ -1585,6 +1563,30 @@
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <EntityType Name="tblTransition">
+          <Key>
+            <PropertyRef Name="TransitionID" />
+          </Key>
+          <Property Name="TransitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Assessment_Needs" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Strengths" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Prefrences" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Interest" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CommunityParticipation" Type="Boolean" Nullable="false" />
+          <Property Name="CommunityParticipation_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Planning_Facilitate" Type="Boolean" Nullable="false" />
+          <Property Name="Planning_Align" Type="Boolean" Nullable="false" />
+          <Property Name="Planning_GraduationMonth" Type="Int32" />
+          <Property Name="Planning_GraduationYear" Type="Int32" />
+          <Property Name="Planning_Completion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Planning_Credits" Type="Int32" />
+          <Property Name="Planning_BenefitKRS" Type="Boolean" Nullable="false" />
+          <Property Name="Planning_ParentIntials" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Planning_ConsentPrior" Type="Boolean" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2241,30 +2243,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransitions">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
-              <MappingFragment StoreEntitySet="tblTransitions">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Planning_ConsentPrior" ColumnName="Planning_ConsentPrior" />
-                <ScalarProperty Name="Planning_ParentIntials" ColumnName="Planning_ParentIntials" />
-                <ScalarProperty Name="Planning_BenefitKRS" ColumnName="Planning_BenefitKRS" />
-                <ScalarProperty Name="Planning_Credits" ColumnName="Planning_Credits" />
-                <ScalarProperty Name="Planning_Completion" ColumnName="Planning_Completion" />
-                <ScalarProperty Name="Planning_GraduationYear" ColumnName="Planning_GraduationYear" />
-                <ScalarProperty Name="Planning_GraduationMonth" ColumnName="Planning_GraduationMonth" />
-                <ScalarProperty Name="Planning_Align" ColumnName="Planning_Align" />
-                <ScalarProperty Name="Planning_Facilitate" ColumnName="Planning_Facilitate" />
-                <ScalarProperty Name="Services_Reviewed" ColumnName="Services_Reviewed" />
-                <ScalarProperty Name="Assessment_Interest" ColumnName="Assessment_Interest" />
-                <ScalarProperty Name="Assessment_Prefrences" ColumnName="Assessment_Prefrences" />
-                <ScalarProperty Name="Assessment_Strengths" ColumnName="Assessment_Strengths" />
-                <ScalarProperty Name="Assessment_Needs" ColumnName="Assessment_Needs" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTransitionServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
               <MappingFragment StoreEntitySet="tblTransitionServices">
@@ -2308,6 +2286,31 @@
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tblTransitions">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
+              <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Planning_ConsentPrior" ColumnName="Planning_ConsentPrior" />
+                <ScalarProperty Name="Planning_ParentIntials" ColumnName="Planning_ParentIntials" />
+                <ScalarProperty Name="Planning_BenefitKRS" ColumnName="Planning_BenefitKRS" />
+                <ScalarProperty Name="Planning_Credits" ColumnName="Planning_Credits" />
+                <ScalarProperty Name="Planning_Completion" ColumnName="Planning_Completion" />
+                <ScalarProperty Name="Planning_GraduationYear" ColumnName="Planning_GraduationYear" />
+                <ScalarProperty Name="Planning_GraduationMonth" ColumnName="Planning_GraduationMonth" />
+                <ScalarProperty Name="Planning_Align" ColumnName="Planning_Align" />
+                <ScalarProperty Name="Planning_Facilitate" ColumnName="Planning_Facilitate" />
+                <ScalarProperty Name="CommunityParticipation_Description" ColumnName="CommunityParticipation_Description" />
+                <ScalarProperty Name="CommunityParticipation" ColumnName="CommunityParticipation" />
+                <ScalarProperty Name="Assessment_Interest" ColumnName="Assessment_Interest" />
+                <ScalarProperty Name="Assessment_Prefrences" ColumnName="Assessment_Prefrences" />
+                <ScalarProperty Name="Assessment_Strengths" ColumnName="Assessment_Strengths" />
+                <ScalarProperty Name="Assessment_Needs" ColumnName="Assessment_Needs" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
