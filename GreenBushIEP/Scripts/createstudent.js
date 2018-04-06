@@ -19,6 +19,8 @@ function init() {
 
     //set up the bootstrap datepicker
     //var date_input = $('input[name="dob"]'); //our date input has the name "dob"
+
+	$('#dob').mask("99/99/9999", {});
    
     $(".chosen-select").chosen({
         disable_search_threshold: 10,

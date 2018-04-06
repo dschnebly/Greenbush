@@ -56,13 +56,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance:</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Academic.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Academic.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance:</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Academic.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit."  style="font-size: 21px;">@(Model.Academic.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -76,7 +76,7 @@
                             <br />
                             <p style="display:@(Model.Academic.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.Academic.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit."  style="font-size: 21px;">@(Model.Academic.MeetNeedByOtherDescription)</textarea>
                         </div>
                         <br />
                     </fieldset>
@@ -109,13 +109,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Reading.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit."  style="font-size: 21px;">@(Model.Reading.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Reading.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Reading.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -129,7 +129,7 @@
                             <br />
                             <p style="display:@(Model.Reading.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.Reading.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Reading.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
@@ -153,21 +153,21 @@
                     <fieldset>
                         <label style="font-size: 20px; padding: 25px 0 15px;">Math Instructional Levels (multi-select options)</label>
                         <div class="form-check">
-                            <label class="radio-inline"><input type="radio" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier1 ? "checked" : String.Empty) />Tier 1 core/basic instruction</label><br />
-                            <label class="radio-inline"><input type="radio" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier2 ? "checked" : String.Empty) />Tier 2 group instruction</label><br />
-                            <label class="radio-inline"><input type="radio" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier3 ? "checked" : String.Empty) />Tier 3 individual/intensive instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier1 ? "checked" : String.Empty) />Tier 1 core/basic instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier2 ? "checked" : String.Empty) />Tier 2 group instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.Math.InstructionalTier3 ? "checked" : String.Empty) />Tier 3 individual/intensive instruction</label><br />
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Math.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Math.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Math.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Math.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -181,7 +181,7 @@
                             <br />
                             <p style="display:@(Model.Math.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.Math.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Math.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
@@ -206,21 +206,21 @@
                     <fieldset>
                         <label style="font-size: 20px; padding: 25px 0 15px;">Written Instructional Levels (multi-select options)</label>
                         <div class="form-check">
-                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier1 ? "checked" : String.Empty) />Tier 1 core/basic instruction</label><br />
-                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier2 ? "checked" : String.Empty) />Tier 2 group instruction</label><br />
-                            <label class="radio-inline"><input type="radio" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier3 ? "checked" : String.Empty) />Tier 3 individual/intensive instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier1 ? "checked" : String.Empty) />Tier 1 core/basic instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier2 ? "checked" : String.Empty) />Tier 2 group instruction</label><br />
+                            <label class="radio-inline"><input type="checkbox" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.Written.InstructionalTier3 ? "checked" : String.Empty) />Tier 3 individual/intensive instruction</label><br />
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Written.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Written.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Written.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Written.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -234,7 +234,7 @@
                             <br />
                             <p style="display:@(Model.Written.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.Written.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Written.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
@@ -447,5 +447,17 @@
 
     // Attach Event
     // reset the form because jquery does not have built in reset functionality.
-    $("#resetModuleAcademicForm").trigger("reset");
+	$("#resetModuleAcademicForm").trigger("reset");
+
+	/* Binding */
+	/* tooltips */
+	$('[data-toggle="tooltip"]').tooltip({
+		trigger: 'manual'
+	});
+
+	///* Event */
+	///* When a user clicks on the question mark icon we turn on tooltips */
+	$('.tooltip-help').on('click', function () {
+		$('[data-toggle="tooltip"]').tooltip('toggle');
+	});
 </script>
