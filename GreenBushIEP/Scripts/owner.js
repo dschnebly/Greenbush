@@ -1,5 +1,6 @@
 ﻿$(function () {
     function init() {
+
         // attach Event
         // fires when a user clicks on the main new system user button
         $("#user-toggle .user-toggle-item button").on("click", function () {
@@ -46,6 +47,16 @@
         // fires where the button on an alert message is clicked
         $("#alertMessage button").on("click", function (e) {
             $(e.currentTarget).parent().hide();
+        });
+
+        // attach event
+        // fires when the modal is closed. removes the checkbox option if still checked.
+        $("#assignBuilding").on('hidden.bs.modal', function (e) {
+            var checkBox = $(this).find("a.selector");
+            if (checkBox.hasClass('selected')) {
+                checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+            }
         });
 
         //////////////////////////////////////////////////////

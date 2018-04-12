@@ -547,53 +547,55 @@ namespace GreenbushIep.Controllers
                 switch (view)
                 {
                     case "HealthModule":
-                        var healthModel = new tblIEPHealth();
-                        if (iep != null)
+                        tblIEPHealth healthModel = db.tblIEPHealths.Where(h => h.IEPid == iep.IEPHealthID).FirstOrDefault();
+                        if (healthModel == null)
                         {
-                            healthModel = db.tblIEPHealths.Where(h => h.IEPid == iep.IEPHealthID).FirstOrDefault();
+                            healthModel = new tblIEPHealth();
                         }
 
-                        return PartialView("_ModuleHealthSection", healthModel);
+                        return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
                     case "AcademicModule":
-                        var academicModel = new ModuleAcademicViewModel();
-                        if (iep != null)
-                        {
-                            academicModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == iep.IEPAcademicID).FirstOrDefault();
-                            academicModel.Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault();
-                            academicModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault();
-                            academicModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault();
-                        }
+                        ModuleAcademicViewModel academicModel = new ModuleAcademicViewModel();
+                        academicModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == iep.IEPAcademicID).FirstOrDefault();
+                        academicModel.Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault();
+                        academicModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault();
+                        academicModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault();
+
+                        if (academicModel.Academic == null) { academicModel.Academic = new tblIEPAcademic(); }
+                        if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); }
+                        if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); }
+                        if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); }
 
                         return PartialView("_ModuleAcademicSection", academicModel);
                     case "MotorModule":
-                        var motorModel = new tblIEPMotor();
-                        if (iep != null)
+                        tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPid == iep.IEPMotorID).FirstOrDefault();
+                        if (motorModel == null)
                         {
-                            motorModel = db.tblIEPMotors.Where(m => m.IEPid == iep.IEPMotorID).FirstOrDefault();
+                            motorModel = new tblIEPMotor();
                         }
 
                         return PartialView("_ModuleMotorSection", motorModel);
                     case "CommunicationModule":
-                        var communicationModel = new tblIEPCommunication();
-                        if (iep != null)
+                        tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPid == iep.IEPCommunicationID).FirstOrDefault();
+                        if (communicationModel == null)
                         {
-                            communicationModel = db.tblIEPCommunications.Where(c => c.IEPid == iep.IEPCommunicationID).FirstOrDefault();
+                            communicationModel = new tblIEPCommunication();
                         }
 
                         return PartialView("_ModuleCommunicationSection", communicationModel);
                     case "SocialModule":
-                        var socialModel = new tblIEPSocial();
-                        if (iep != null)
+                        tblIEPSocial socialModel = db.tblIEPSocials.Where(s => s.IEPSocialID == iep.IEPSocialID).FirstOrDefault();
+                        if (socialModel == null)
                         {
-                            socialModel = db.tblIEPSocials.Where(s => s.IEPSocialID == iep.IEPSocialID).FirstOrDefault();
+                            socialModel = new tblIEPSocial();
                         }
 
                         return PartialView("_ModuleSocialSection", socialModel);
                     case "GeneralIntelligenceModule":
-                        var intelligenceModel = new tblIEPIntelligence();
-                        if (iep != null)
+                        tblIEPIntelligence intelligenceModel = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == iep.IEPIntelligenceID).FirstOrDefault();
+                        if (intelligenceModel == null)
                         {
-                            intelligenceModel = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == iep.IEPIntelligenceID).FirstOrDefault();
+                            intelligenceModel = new tblIEPIntelligence();
                         }
 
                         return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
@@ -1165,7 +1167,7 @@ namespace GreenbushIep.Controllers
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
             viewModel.studentId = id;
             viewModel.fileName = fileName;
-            
+
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             StudentLegalView fileViewModel = new StudentLegalView()

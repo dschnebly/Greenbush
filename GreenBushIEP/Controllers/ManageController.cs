@@ -142,7 +142,6 @@ namespace GreenBushIEP.Controllers
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
                     // Create New User 
-                    // tblUser
                     tblUser student = new tblUser()
                     {
                         RoleID = "5",
@@ -169,7 +168,7 @@ namespace GreenBushIEP.Controllers
                     tblStudentInfo studentInfo = new tblStudentInfo()
                     {
                         UserID = student.UserID,
-                        KIDSID = Convert.ToInt32(collection["kidsid"]),
+                        KIDSID = Convert.ToInt64(collection["kidsid"]),
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
                         USD = collection["misDistrict"],
                         BuildingID = collection["AttendanceBuildingId"],
@@ -411,7 +410,7 @@ namespace GreenBushIEP.Controllers
             if (info != null)
             {
                 info.UserID = student.UserID;
-                info.KIDSID = Convert.ToInt32(collection["kidsid"]);
+                info.KIDSID = Convert.ToInt64(collection["kidsid"]);
                 info.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                 info.USD = collection["misDistrict"];
                 info.BuildingID = collection["AttendanceBuildingId"];
@@ -574,7 +573,7 @@ namespace GreenBushIEP.Controllers
 
             model.user = db.tblUsers.Where(u => u.UserID == id).SingleOrDefault();
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.user.UserID == bm.UserID select d).Distinct().ToList();
+            model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.user.UserID == bm.UserID && bm.BuildingID == "0" select d).Distinct().ToList();
             model.districts = (model.submitter.RoleID == "1") ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
             model.buildings = (from bm in db.tblBuildingMappings
                                join b in db.tblBuildings on bm.USD equals b.USD
@@ -821,10 +820,8 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get districts. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
         [HttpGet]
+        [Authorize]
         public ActionResult GetAllStudentsInDistrict(int id)
         {
             tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);

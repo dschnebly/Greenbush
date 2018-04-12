@@ -17,5 +17,6 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string BuildingID { get; set; }
         public int UserID { get; set; }
+        public int ID { get; set; }
     }
 }

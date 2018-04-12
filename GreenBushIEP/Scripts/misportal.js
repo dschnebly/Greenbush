@@ -175,9 +175,10 @@
                     if (data.Result === "success") {
                         var buildings = data.Message;
 
+                        $("#selectedDistrict").find('option').remove();
                         $.each(buildings, function (key, value) {
                             // throw away the key. It's simply an index counter for the returned array.
-                            $("#selectedDistrict").find('option').remove().end().append($("<option></option>").attr("value", value.USD).text(value.DistrictName));
+                            $("#selectedDistrict").find('option').end().append($("<option></option>").attr("value", value.USD).text(value.DistrictName));
                         });
 
                         // fire off the selected building event by selecting an option in the newly created list.

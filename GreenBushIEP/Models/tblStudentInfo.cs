@@ -15,7 +15,7 @@ namespace GreenBushIEP.Models
     public partial class tblStudentInfo
     {
         public int UserID { get; set; }
-        public int KIDSID { get; set; }
+        public long KIDSID { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string USD { get; set; }
         public string BuildingID { get; set; }

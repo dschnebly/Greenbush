@@ -666,7 +666,7 @@
 									</div>
 									<div class="col-md-6">
 										<label for="misDistrict">District</label>
-										<select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="min-height: 49px; display: none;" data-validate="true">
+										<select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true">
 											@if (Model.districts != null)
 											{
 												foreach (var district in Model.districts)
@@ -1022,9 +1022,6 @@
 	</div>
 </div>
 
-<!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createstudent.js"></var>
-
 <!-- student contact template file -->
 <div id="contact-template" style="display: none;">
 	<div class="row">
@@ -1170,6 +1167,9 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/createstudent.js"></var>
+
+<!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/bootstrap-datepicker.min.js"></var>
 
 <script>
@@ -1189,9 +1189,9 @@
 		head.appendChild(script);
 	}
 
-	//loadScript("/Scripts/createstudent.js", function () {
-		//console.log("loaded");
-	//});
+	loadScript("/Scripts/jquery.maskedinput.min.js", function () {
+	    console.log("loaded maskedinput");
+	});
 </script>
 
 
@@ -1201,6 +1201,4 @@
 	@Scripts.Render("~/Scripts/bootstrap-datepicker.min.js")
 	@Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 	@Scripts.Render("~/Scripts/createstudent.js")
-
-
 }

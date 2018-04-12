@@ -478,9 +478,13 @@
 								<i class="fa fa-child" aria-hidden="true"></i>
 							}
 
-							<text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>               <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+							<text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>               
+                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
 								<span class="glyphicon glyphicon glyphicon-trash"></span>
 							</button>
+                            <button type="button" title="Assign this System User to a Building" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                <span class="fa fa-building-o" aria-hidden="true"></span>
+                            </button>
 
 							@if (user.RoleID == "5")
 							{
@@ -498,8 +502,6 @@
 		}
 	}
 </div>
-
-
 
 <!-- Modal -->
 <div class="modal-dialog">
@@ -576,6 +578,4 @@
 	@Scripts.Render("~/Scripts/fasw.transitions.js")
 	@Scripts.Render("~/Scripts/misportal.js")
 	@Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-
-
 }

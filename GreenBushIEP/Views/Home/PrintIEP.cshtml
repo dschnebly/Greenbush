@@ -251,12 +251,6 @@
                             <input type="checkbox" id="HealthMedications" name="HealthMedications" @(Model.studentHealth.Medications ? "checked" : String.Empty )>
                             <label for="HealthMedications">Takes Medications</label>
                         </div>
-                        <div class="form-check" id="TakesMedicationsTextArea">
-                            <p style="padding: 5px 0 0 0;">
-                                Does this student take medication? If yes, please explain<br>
-                                <textarea class="form-control" id="MedicationDescription" name="MedicationDescription" rows="3">@(Model.studentHealth.MedicationDescription)</textarea>
-                            </p>
-                        </div>
                     </div>
                     <fieldset class="form-group">
                         <label>Does the student have a hearing impairment?</label>&nbsp;&nbsp;
@@ -295,18 +289,6 @@
                             <label class="radio-inline"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty )>Failed</label>
                             <label class="radio-inline"><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty )>Unable to Test</label>
                         </legend>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label>Is this student medicaid eligible?</label>&nbsp;&nbsp;
-                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                            <input type="checkbox" name="MedicaidEligible" id="MedicaidEligible" @(Model.studentHealth.MedicaidEligible == true ? "checked" : String.Empty )>
-                        </div>
-                        <div class="form-check" id="AdditionalHealthInfoTextArea">
-                            <p style="padding: 5px 0 0 0;">
-                                If yes, please explain<br>
-                                <textarea class="form-control" id="AdditionalHealthInfo" name="AdditionalHealthInfo" rows="3">@(Model.studentHealth.AdditionalHealthInfo)</textarea>
-                            </p>
-                        </div>
                     </fieldset>
                     <fieldset class="form-group">
                         <label style="padding: 15px 0 5px;">Present Level of Performance</label>
