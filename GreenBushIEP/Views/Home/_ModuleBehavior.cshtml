@@ -1,5 +1,10 @@
 ﻿@model GreenBushIEP.Models.BehaviorViewModel
-<style></style>
+
+@{ 
+    bool showTriggerOther = false;
+    bool showHypothesisOther = false;
+    bool showStrategyOther = false;
+}
 
 <link href="/Content/chosen.css" rel="stylesheet" />
 
@@ -49,7 +54,7 @@
                                         <label for="Collection">Strengths/Motivators</label>
                                         <div>
 
-                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" />
+                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +63,7 @@
                                         <label for="Collection">Behavior(s) of Concern</label>
                                         <div>
 
-                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" />
+                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -78,12 +83,16 @@
                                                 {
                                                     string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
                                                     <option value="@trigger.BehaviorTriggerTypeID" @selected>@trigger.BehaviorTriggerType</option>
+                                                    if(selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
+                                                    {
+                                                        showTriggerOther = true;
+                                                    }
                                                 }
                                             }
                                         </select>
-                                        <div id="divTriggerOther" class="voffset2">
+                                        <div id="divTriggerOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" />
+                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
 
                                         </div>
                                     </div>
@@ -104,12 +113,16 @@
                                                 {
                                                     string selected = Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
                                                     <option value="@hypothesis.BehaviorHypothesisTypeID" @selected>@hypothesis.BehaviorHypothesisType</option>
+                                                    if (selected == "selected=selected" && @hypothesis.BehaviorHypothesisType == "Other")
+                                                    {
+                                                        showHypothesisOther = true;
+                                                    }
                                                 }
                                             }
                                         </select>
-                                        <div id="divHypothesisOther" class="voffset2">
+                                        <div id="divHypothesisOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" />
+                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000" />
 
                                         </div>
                                     </div>
@@ -131,12 +144,16 @@
                                                 {
                                                     string selected = Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
                                                     <option value="@strategy.BehaviorStrategyTypeID" @selected>@strategy.BehaviorStrategyType</option>
+                                                    if (selected == "selected=selected" && @strategy.BehaviorStrategyType == "Other")
+                                                    {
+                                                        showStrategyOther = true;
+                                                    }
                                                 }
                                             }
                                         </select>
-                                        <div id="divStrategyOther" class="voffset2">
+                                        <div id="divStrategyOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" />
+                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
 
                                         </div>
                                     </div>
@@ -183,10 +200,9 @@
 
                                 <div class="row voffset2">
                                     <div class="col-md-12">
-                                        <label for="Crisis_Escalation">Escalation(describe what this looks like for student)</label>
+                                        <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
                                         <div>
-
-                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" />
+                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
 
@@ -194,10 +210,9 @@
                                 </div>
                                 <div class="row voffset2">
                                     <div class="col-md-12">
-                                        <label for="Crisis_Description">Crisis(describe what this looks like for student)</label>
+                                        <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
                                         <div>
-
-                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" />
+                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
                                         </div>
                                     </div>
 
@@ -208,8 +223,7 @@
                                     <div class="col-md-12">
                                         <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
                                         <div>
-
-                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" />
+                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +232,7 @@
                                         <label for="Crisis_Other">Other</label>
                                         <div>
 
-                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" />
+                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
                                         </div>
                                     </div>
 
@@ -231,7 +245,7 @@
                                         <label for="Collection">Follow school/district behavior policies/practice</label>
                                         <div>
 
-                                            Plan is to be reviewed <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" />
+                                            Plan is to be reviewed <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy"  data-toggle = "tooltip" data-placement = "bottom" title = "100 character limit." maxlength="100"/>
                                         </div>
                                     </div>
                                 </div>
@@ -268,38 +282,75 @@
 
         init();
 
+        /* Binding */
+        /* tooltips */
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'manual'
+        });
+
+        /* Event */
+        /* When a user clicks on the question mark icon we turn on tooltips */
+        $('.tooltip-help').on('click', function () {
+            $('[data-toggle="tooltip"]').tooltip('toggle');
+        });
+
     });
 
     function init() {
 
+        var showTrigger = '@showTriggerOther';
+        var showHypothesis = '@showHypothesisOther';
+        var showStrategyOther = '@showStrategyOther';
+
         $(".chosen-select").chosen({ width: "100%" });
 
-        //$("#SelectedTriggers").change(function () {
-        //    var triggerValue = $("#SelectedTriggers option:selected").text();
-        //    if(triggerValue.includes("Other"))
-        //    {
-        //        $("#divTriggerOther").css('visibility', 'visible');
-        //    }
-        //    else
-        //    {
-        //        $("#divTriggerOther").css('visibility', 'hidden');
-        //    }
+        if (showTrigger == "True")
+            $("#divTriggerOther").show();
+        else
+            $("#divTriggerOther").hide();
+
+        if (showHypothesis == "True")
+            $("#divHypothesisOther").show();
+        else
+            $("#divHypothesisOther").hide();
 
 
-        //});
+        if (showStrategyOther == "True")
+            $("#divStrategyOther").show();
+        else
+            $("#divStrategyOther").css('visibility', 'hidden');
 
+        $("#SelectedStrategies").change(function () {
+            var triggerValue = $("#SelectedStrategies option:selected").text();
+            if (triggerValue.includes("Other")) {
+                $("#divStrategyOther").show();
+            }
+            else {
+                $("#divStrategyOther").hide();
+            }
+        });
 
-        //$("#SelectedHypothesis").change(function () {
-        //    var hyValue = $("#SelectedHypothesis option:selected").text();
-        //    if (hyValue.includes("Other")) {
-        //        $("#divHypothesisOther").css('visibility', 'visible');
-        //    }
-        //    else {
-        //        $("#divHypothesisOther").css('visibility', 'hidden');
-        //    }
-
-
-        //});
+        $("#SelectedTriggers").change(function () {
+            var triggerValue = $("#SelectedTriggers option:selected").text();
+            if(triggerValue.includes("Other"))
+            {
+                $("#divTriggerOther").show();
+            }
+            else
+            {
+                $("#divTriggerOther").hide();
+            }
+        });
+        
+        $("#SelectedHypothesis").change(function () {
+            var hyValue = $("#SelectedHypothesis option:selected").text();
+            if (hyValue.includes("Other")) {
+                $("#divHypothesisOther").show();
+            }
+            else {
+                $("#divHypothesisOther").hide();
+            }
+        });
 
 
     }
