@@ -1378,24 +1378,27 @@
                                 <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
                             </div>
                         </div>
-                        <hr />
+                        <hr class="@((Model.studentAge > 12 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )" />
 
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
-
-                                <label style="font-size: 16px; font-weight: normal;">Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label>&nbsp;&nbsp;
-                                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="RequireAssistiveTechnology" id="RequireAssistiveTechnology" class="onoffswitch2-checkbox" @(Model.studentPlan.RequireAssistiveTechnology ? "checked" : String.Empty ) />
-                                    <label class="onoffswitch2-label" for="RequireAssistiveTechnology">
-                                        <span class="onoffswitch2-inner"></span>
-                                        <span class="onoffswitch2-switch"></span>
+                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>
+                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="RequireAssistiveTechnology" id="RequireAssistiveTechnology" class="truefalseswitch-checkbox" @(Model.studentPlan.RequireAssistiveTechnology ? "checked" : String.Empty ) />
+                                    <label class="truefalseswitch-label" for="RequireAssistiveTechnology">
+                                        <span class="truefalseswitch-inner"></span>
+                                        <span class="truefalseswitch-switch"></span>
                                     </label>
                                 </div>
-
+                                <div style="margin: 20px 0 0 0;">
+                                    Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <hr />
+
+                        <div class="row" style="margin-bottom: 20px;">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-blackboard"></i> Extended School Year</h5>
 
