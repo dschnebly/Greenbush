@@ -14,7 +14,7 @@ namespace GreenBushIEP.Models
 
         public StudentGoal(int? goalId = null)
         {  
-            if (goalId != null)
+            if (goalId != null && goalId != 0)
             {
                 this.goal = db.tblGoals.Where(g => g.goalID == goalId).FirstOrDefault();
                 this.benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goalId).ToList();

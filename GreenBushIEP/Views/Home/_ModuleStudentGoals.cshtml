@@ -1164,6 +1164,11 @@
                     var studentGoal = $(this).closest('.StudentGoal');
                     var studentGoalId = studentGoal.find("input[name='StudentGoalId']").prop("value");
 
+                    // this is a new goal. just remove it from the ui.
+                    if (studentGoalId == 0) {
+                        return studentGoal.remove();
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: '/ModuleSection/DeleteStudentGoal',
@@ -1320,6 +1325,10 @@
                 if (confirm("Would you like to delete this Benchmark?")) {
                     var studentBenchmark = $(this).parents('.StudentGoalBenchmark')
                     var studentBenchmarkId = studentBenchmark.find('input:hidden:first').prop("value");
+
+                    if (studentBenchmarkId == 0) {
+                        return studentBenchmark.remove();
+                    }
 
                     $.ajax({
                         type: 'POST',
