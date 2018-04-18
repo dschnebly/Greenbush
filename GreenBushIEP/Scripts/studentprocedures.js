@@ -75,8 +75,14 @@ $(function () {
         var stId = $("#stid").val();
         var startDate = $(this).val().toString('MM/dd/yyyy');
 
-        $("#IEPBeginDate").attr('disabled', true);
-        $("#IEPEndDate").attr('disabled', true);
+        if ($("#IEPBeginDate").val() > $("#IEPEndDate").val()) {
+            $("#IEPBeginDate").val($("#IEPBeginDate").data("old"));
+
+            return alert("The beginning date can't start before the ending date.");
+        }
+
+        $("#IEPBeginDate").attr('disabled', false);
+        $("#IEPEndDate").attr('disabled', false);
 
         $.ajax({
             type: 'GET',
@@ -86,20 +92,18 @@ $(function () {
             success: function (data) {
                 if (data.Result === 'success') {
                     console.log("date successfully updated.");
+
+                    $("#IEPBeginDate").data("old", $("#IEPBeginDate").val());
                 } else {
-                    $("#alertMessage .moreinfo").html('Server Error');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
+                    alert("The date you entered was invalid. Please try again.");
                 }
             },
             error: function (data) {
-                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
+                alert("Unable to connect to the server or other related network problem. Please contact your admin.");
             },
             complete: function () {
+                $("#IEPBeginDate").val($("#IEPBeginDate").data("old"));
+
                 $("#IEPBeginDate").attr('disabled', false);
                 $("#IEPEndDate").attr('disabled', false);
             }
@@ -112,6 +116,12 @@ $(function () {
         var stId = $("#stid").val();
         var endDate = $(this).val().toString('MM/dd/yyyy');
 
+        if ($("#IEPBeginDate").val() > $("#IEPEndDate").val()) {
+            $("#IEPEndDate").val($("#IEPEndDate").data("old"));
+
+            return alert("The ending date can't end before the start date.");
+        }
+
         $("#IEPBeginDate").attr('disabled', true);
         $("#IEPEndDate").attr('disabled', true);
 
@@ -123,20 +133,18 @@ $(function () {
             success: function (data) {
                 if (data.Result === 'success') {
                     console.log("date successfully updated.");
+
+                    $("#IEPEndDate").data("old", $("#IEPEndDate").val());
                 } else {
-                    $("#alertMessage .moreinfo").html('Server Error');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
+                    alert("The date you entered was invalid. Please try again.");
                 }
             },
             error: function (data) {
-                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
+                alert("Unable to connect to the server or other related network problem. Please contact your admin.");
             },
             complete: function () {
+                $("#IEPEndDate").val($("#IEPEndDate").data("old"));
+
                 $("#IEPBeginDate").attr('disabled', false);
                 $("#IEPEndDate").attr('disabled', false);
             }
@@ -419,7 +427,7 @@ $(".iep-form-section").on("click", function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/IEPFormModule',
-        data: { studentId: stId},
+        data: { studentId: stId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {

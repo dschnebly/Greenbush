@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using System.Globalization;
 
 namespace GreenbushIep.Controllers
 {
@@ -739,18 +740,22 @@ namespace GreenbushIep.Controllers
 
             if (iep != null)
             {
-                if (start)
+                DateTime result;
+                if (DateTime.TryParseExact(iepDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
                 {
-                    iep.begin_date = Convert.ToDateTime(iepDate);
-                }
-                else
-                {
-                    iep.end_date = Convert.ToDateTime(iepDate);
-                }
+                    if (start)
+                    {
+                        iep.begin_date = result;
+                    }
+                    else
+                    {
+                        iep.end_date = result;
+                    }
 
-                db.SaveChanges();
+                    db.SaveChanges();
 
-                return Json(new { Result = "success", Message = "IEP Beginning Date was updated" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", Message = "IEP Beginning Date was updated" }, JsonRequestBehavior.AllowGet);
+                }
             }
 
             return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);

@@ -112,13 +112,15 @@
                                                 </button>
                                                 <input type="hidden" name="StudentGoalSelectedModule0" data-bind="bs-drp-sel-value" value="1">
                                                 <ul class="dropdown-menu" role="menu" style="">
-                                                    <li data-value="1"><a href="#">Motor</a></li>
-                                                    <li data-value="2"><a href="#">Social-Emotional</a></li>
-                                                    <li data-value="3"><a href="#">General Intelligence</a></li>
-                                                    <li data-value="4"><a href="#">Academic Performance</a></li>
-                                                    <li data-value="5"><a href="#">Reading</a></li>
-                                                    <li data-value="6"><a href="#">Math</a></li>
-                                                    <li data-value="7"><a href="#">Written Language</a></li>
+                                                    <li data-value="1"><a href="#">Health</a></li>
+                                                    <li data-value="2"><a href="#">Motor</a></li>
+                                                    <li data-value="3"><a href="#">Communication</a></li>
+                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>
+                                                    <li data-value="5"><a href="#">General Intelligence</a></li>
+                                                    <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                    <li data-value="7"><a href="#">Reading</a></li>
+                                                    <li data-value="8"><a href="#">Math</a></li>
+                                                    <li data-value="9"><a href="#">Written Language</a></li>
                                                 </ul>
                                             </div>
                                             <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle" placeholder="Enter a new student benchmark" />
@@ -428,13 +430,15 @@
                                                         </button>
                                                         <input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.goalID)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
                                                         <ul class="dropdown-menu" role="menu" style="">
-                                                            <li data-value="1"><a href="#">Motor</a></li>
-                                                            <li data-value="2"><a href="#">Social-Emotional</a></li>
-                                                            <li data-value="3"><a href="#">General Intelligence</a></li>
-                                                            <li data-value="4"><a href="#">Academic Performance</a></li>
-                                                            <li data-value="5"><a href="#">Reading</a></li>
-                                                            <li data-value="6"><a href="#">Math</a></li>
-                                                            <li data-value="7"><a href="#">Written Language</a></li>
+                                                            <li data-value="1"><a href="#">Health</a></li>
+                                                            <li data-value="2"><a href="#">Motor</a></li>
+                                                            <li data-value="3"><a href="#">Communication</a></li>
+                                                            <li data-value="4"><a href="#">Social-Emotional</a></li>
+                                                            <li data-value="5"><a href="#">General Intelligence</a></li>
+                                                            <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                            <li data-value="7"><a href="#">Reading</a></li>
+                                                            <li data-value="8"><a href="#">Math</a></li>
+                                                            <li data-value="9"><a href="#">Written Language</a></li>
                                                         </ul>
                                                     </div>
                                                     <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle" placeholder="Enter a new student goal" value="@(studentGoal.goal.Title)" />
@@ -442,7 +446,7 @@
                                             </div>
                                             <label for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
                                             <div class="form-group">
-                                                <textarea class="form-control StudentGoalAnnualGoal" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true"  maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@(studentGoal.goal.AnnualGoal)</textarea>
+                                                <textarea class="form-control StudentGoalAnnualGoal" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@(studentGoal.goal.AnnualGoal)</textarea>
                                             </div>
                                             <label for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                             <div class="form-group">
