@@ -172,7 +172,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-key" aria-hidden="true"></i>
                     </span>
-                    @Html.EditorFor(model => model.user.TeacherID, new { htmlAttributes = new { @class = "form-control", id = "teacherId", Name = "teacherId", placeholder = "Teacher Id if applicable", title = "The Teacher Id" } })
+                    @Html.EditorFor(model => model.user.TeacherID, new { htmlAttributes = new { @class = "form-control", id = "teacherId", Name = "teacherId", placeholder = "Teacher Id if applicable", title = "The Teacher Id", maxlength = 20 } })
                     @Html.ValidationMessageFor(model => model.user.TeacherID, "", new { @class = "text-danger" })
                 </div>
             </div>

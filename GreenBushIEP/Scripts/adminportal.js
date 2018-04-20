@@ -1,5 +1,6 @@
 ﻿$(function () {
     function init() {
+
         // attach Event
         // fires when a user clicks on the main new system user button
         $("#user-toggle .user-toggle-item button").on("click", function () {
@@ -50,7 +51,7 @@
 
         // attach event
         // fires when you click yes on the module confirmRemoval.
-        $('#confirmRemoval button[type=submit]').on('click', function (e) {
+        $('#removeUser').on('click', function (e) {
             var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
 
             $.ajax({
@@ -399,6 +400,7 @@
             });
         }
     }
+
     init();
 
     //SET UP FOR TRANSITIONS

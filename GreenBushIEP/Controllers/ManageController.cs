@@ -759,16 +759,17 @@ namespace GreenBushIEP.Controllers
         public ActionResult RemoveFromList(int id)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-            tblOrganizationMapping boss = db.tblOrganizationMappings.Where(u => u.UserID == submitter.UserID).SingleOrDefault();
-            tblOrganizationMapping userToRemove = db.tblOrganizationMappings.Where(u => u.UserID == id).SingleOrDefault();
+            tblOrganizationMapping boss = db.tblOrganizationMappings.Where(u => u.UserID == submitter.UserID).FirstOrDefault();
+            tblOrganizationMapping userToRemove = db.tblOrganizationMappings.Where(u => u.AdminID == submitter.UserID && u.UserID == id).SingleOrDefault();
 
-            if (userToRemove != null)
+            if (userToRemove != null && boss != null)
             {
                 db.tblOrganizationMappings.Add(
                     new tblOrganizationMapping
                     {
                         AdminID = boss.AdminID,
-                        UserID = id
+                        UserID = id,
+                        USD = userToRemove.USD
                     });
                 db.SaveChanges();
 
