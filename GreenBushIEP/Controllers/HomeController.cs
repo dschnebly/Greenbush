@@ -972,51 +972,51 @@ namespace GreenbushIep.Controllers
             List<SelectListItem> locationList = new List<SelectListItem>();
             if (iep != null)
             {
-                var model = new BehaviorViewModel();
-                model.StudentId = studentId;
-                model.IEPid = iep.IEPid;
+                var model = GetBehaviorModel(studentId, iep.IEPid);
+                //model.StudentId = studentId;
+                //model.IEPid = iep.IEPid;
 
-                tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.IEPid == iep.IEPid).FirstOrDefault();
-                if (BehaviorIEP != null)
-                {
-                    model.BehaviorID = BehaviorIEP.BehaviorID;
-                    model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
-                    model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
-                    model.Crisis_Description = BehaviorIEP.Crisis_Description;
-                    model.Crisis_Escalation = BehaviorIEP.Crisis_Escalation;
-                    model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
-                    model.Crisis_Other = BehaviorIEP.Crisis_Other;
-                    model.ReviewedBy = BehaviorIEP.ReviewedBy;
-                    model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
-                    var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                    if (triggerOther != null)
-                        model.TriggerOther = triggerOther.OtherDescription;
+                //tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.IEPid == iep.IEPid).FirstOrDefault();
+                //if (BehaviorIEP != null)
+                //{
+                //    model.BehaviorID = BehaviorIEP.BehaviorID;
+                //    model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
+                //    model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
+                //    model.Crisis_Description = BehaviorIEP.Crisis_Description;
+                //    model.Crisis_Escalation = BehaviorIEP.Crisis_Escalation;
+                //    model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
+                //    model.Crisis_Other = BehaviorIEP.Crisis_Other;
+                //    model.ReviewedBy = BehaviorIEP.ReviewedBy;
+                //    model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
+                //    var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                //    if (triggerOther != null)
+                //        model.TriggerOther = triggerOther.OtherDescription;
 
-                    model.SelectedStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorStrategyTypeID).ToList();
-                    var stratOther = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                    if (stratOther != null)
-                        model.StrategiesOther = stratOther.OtherDescription;
+                //    model.SelectedStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorStrategyTypeID).ToList();
+                //    var stratOther = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                //    if (stratOther != null)
+                //        model.StrategiesOther = stratOther.OtherDescription;
 
-                    model.SelectedHypothesis = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorHypothesisTypeID).ToList();
-                    var hypoOther = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                    if (hypoOther != null)
-                        model.HypothesisOther = hypoOther.OtherDescription;
+                //    model.SelectedHypothesis = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorHypothesisTypeID).ToList();
+                //    var hypoOther = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                //    if (hypoOther != null)
+                //        model.HypothesisOther = hypoOther.OtherDescription;
 
-                    var targetedBehaviors = db.tblBehaviorBaselines.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).ToList();
-                    if (targetedBehaviors.Any())
-                    {
-                        if (targetedBehaviors[0] != null)
-                            model.targetedBehavior1 = targetedBehaviors[0];
-                        if (targetedBehaviors[1] != null)
-                            model.targetedBehavior2 = targetedBehaviors[1];
-                        if (targetedBehaviors[2] != null)
-                            model.targetedBehavior3 = targetedBehaviors[2];
-                    }
-                }
+                //    var targetedBehaviors = db.tblBehaviorBaselines.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).ToList();
+                //    if (targetedBehaviors.Any())
+                //    {
+                //        if (targetedBehaviors[0] != null)
+                //            model.targetedBehavior1 = targetedBehaviors[0];
+                //        if (targetedBehaviors[1] != null)
+                //            model.targetedBehavior2 = targetedBehaviors[1];
+                //        if (targetedBehaviors[2] != null)
+                //            model.targetedBehavior3 = targetedBehaviors[2];
+                //    }
+                //}
 
-                model.Triggers = db.tblBehaviorTriggerTypes.ToList();
-                model.HypothesisList = db.tblBehaviorHypothesisTypes.ToList();
-                model.Strategies = db.tblBehaviorStrategyTypes.ToList();
+                //model.Triggers = db.tblBehaviorTriggerTypes.ToList();
+                //model.HypothesisList = db.tblBehaviorHypothesisTypes.ToList();
+                //model.Strategies = db.tblBehaviorStrategyTypes.ToList();
 
                 return PartialView("_ModuleBehavior", model);
             }
@@ -1234,6 +1234,11 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
+
+            // Get the MIS id of the logged in teacher.
+            tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
+            tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
+
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
 
@@ -1255,9 +1260,12 @@ namespace GreenbushIep.Controllers
                          join math in db.tblIEPMaths
                              on iep.IEPMathID equals math.IEPMathID
                          join written in db.tblIEPWrittens
-                             on iep.IEPWrittenID equals written.IEPWrittenID
+                             on iep.IEPWrittenID equals written.IEPWrittenID                           
                          where iep.UserID == student.UserID && iep.IepStatus == iepStatus
                          select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
+
+            
+            
 
             if (query.Count() == 1)
             {
@@ -1272,8 +1280,53 @@ namespace GreenbushIep.Controllers
                     studentAcademic = query.SingleOrDefault().academics,
                     studentReading = query.SingleOrDefault().reading,
                     studentMath = query.SingleOrDefault().math,
-                    studentWritten = query.SingleOrDefault().written
+                    studentWritten = query.SingleOrDefault().written,
+                    locations = db.tblLocations.ToList(),
+                    serviceTypes = db.tblServiceTypes.ToList(),
+                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList(),
+                    studentFirstName = string.Format("{0}", student.FirstName),
+                    studentLastName = string.Format("{0}", student.LastName)
+
+
+
                 };
+
+                //student goalds
+                if (theIEP != null && theIEP.draft != null)
+                {
+                    theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
+                    foreach (var goal in theIEP.studentGoals)
+                    { 
+                        theIEP.studentGoalBenchmarks.AddRange( db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
+                    }
+
+                    theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
+                    theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
+                    var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.draft.IEPid).FirstOrDefault();
+                    theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.draft.IEPid);
+                    theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.draft.IEPid).FirstOrDefault();
+
+                    StudentTransitionViewModel stvw = new StudentTransitionViewModel();
+                    stvw.studentId = student.UserID;
+                    stvw.student = student;
+                    stvw.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == theIEP.draft.IEPid).ToList();
+                    stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.draft.IEPid).ToList();
+                    stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
+                    stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.draft.IEPid).FirstOrDefault() ?? new tblTransition();
+
+                    theIEP.studentTransition = stvw;
+                    if (student != null)
+                    {
+
+                        tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+                        tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+                        tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+
+                        theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+
+                        stvw.isDOC = district.DOC;
+                    }
+                }
 
                 return View("PrintIEP", theIEP);
             }
@@ -1314,16 +1367,75 @@ namespace GreenbushIep.Controllers
 
         protected override void OnException(ExceptionContext filterContext)
         {
+            
+            TempData["Error"] = filterContext.Exception.InnerException;
             filterContext.ExceptionHandled = true;
 
             // Redirect on error:
-            filterContext.Result = RedirectToAction("Index", "Home");
+            filterContext.Result = RedirectToAction("Index", "Error");
 
             // OR set the result without redirection:
             //filterContext.Result = new ViewResult
             //{
-            //    ViewName = "~/Views/Error/Index.cshtml"
+              //  ViewName = "~/Views/Error/Index.cshtml"
+                
             //};
+
+            
+        }
+
+       
+
+
+        private BehaviorViewModel GetBehaviorModel(int studentId, int iepId)
+        {
+            var model = new BehaviorViewModel();
+            model.StudentId = studentId;
+            model.IEPid = iepId;
+
+            tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.IEPid == iepId).FirstOrDefault();
+            if (BehaviorIEP != null)
+            {
+                model.BehaviorID = BehaviorIEP.BehaviorID;
+                model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
+                model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
+                model.Crisis_Description = BehaviorIEP.Crisis_Description;
+                model.Crisis_Escalation = BehaviorIEP.Crisis_Escalation;
+                model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
+                model.Crisis_Other = BehaviorIEP.Crisis_Other;
+                model.ReviewedBy = BehaviorIEP.ReviewedBy;
+                model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
+                var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                if (triggerOther != null)
+                    model.TriggerOther = triggerOther.OtherDescription;
+
+                model.SelectedStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorStrategyTypeID).ToList();
+                var stratOther = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                if (stratOther != null)
+                    model.StrategiesOther = stratOther.OtherDescription;
+
+                model.SelectedHypothesis = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorHypothesisTypeID).ToList();
+                var hypoOther = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
+                if (hypoOther != null)
+                    model.HypothesisOther = hypoOther.OtherDescription;
+
+                var targetedBehaviors = db.tblBehaviorBaselines.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).ToList();
+                if (targetedBehaviors.Any())
+                {
+                    if (targetedBehaviors[0] != null)
+                        model.targetedBehavior1 = targetedBehaviors[0];
+                    if (targetedBehaviors[1] != null)
+                        model.targetedBehavior2 = targetedBehaviors[1];
+                    if (targetedBehaviors[2] != null)
+                        model.targetedBehavior3 = targetedBehaviors[2];
+                }
+            }
+
+            model.Triggers = db.tblBehaviorTriggerTypes.ToList();
+            model.HypothesisList = db.tblBehaviorHypothesisTypes.ToList();
+            model.Strategies = db.tblBehaviorStrategyTypes.ToList();
+
+            return model;
         }
 
     }

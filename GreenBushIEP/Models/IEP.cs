@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GreenBushIEP.Models
@@ -18,6 +19,32 @@ namespace GreenBushIEP.Models
         public tblIEPReading studentReading { get; set; }
         public tblIEPMath studentMath { get; set; }
         public tblIEPWritten studentWritten { get; set; }
+
+        public List<tblGoal> studentGoals { get; set; }
+        public List<tblGoalBenchmark> studentGoalBenchmarks { get; set; }
+        public List<tblService> studentServices { get; set; }
+        public List<tblLocation> locations { get; set; }
+        public List<tblServiceType> serviceTypes { get; set; }
+        public List<tblProvider> serviceProviders { get; set; }
+        public List<tblAccommodation> accommodations { get; set; }
+        public BehaviorViewModel studentBehavior { get; set; }
+        public tblOtherConsideration studentOtherConsiderations { get; set; }
+        public StudentTransitionViewModel studentTransition { get; set; }
+        public string studentFirstName { get; set; }
+        public string studentLastName { get; set; }
+        public int studentAge { get; set; }
+
+        public IEP()
+        {
+            studentGoals = new List<tblGoal>();
+            studentGoalBenchmarks = new List<tblGoalBenchmark>();
+            studentServices = new List<tblService>();
+            locations = new List<tblLocation>();
+            serviceTypes = new List<tblServiceType>();
+            serviceProviders = new List<tblProvider>();
+            accommodations = new List<tblAccommodation>();
+        }
+
 
         public IEP(int? stid = null)
         {

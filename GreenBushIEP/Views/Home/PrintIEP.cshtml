@@ -58,6 +58,7 @@
 
     .section-break {
         border-top: 1px solid black !important;
+        page-break-before: always;
     }
 
     .module-page {
@@ -164,16 +165,19 @@
             width: 8.333333333333332%;
         }
 
+        
         @@page {
             size: 5.5in 8.5in;
             margin: 0 -6cm;
+            counter-increment: page;
+            
         }
 
         @@page:left {
             @@bottom-left {
                 margin: 10pt 0 30pt 0;
                 border-top: .25pt solid #666;
-                content: "My IEP";
+                content: counter(page) " of " counter(pages);
                 font-size: 9pt;
                 color: #333;
             }
@@ -234,6 +238,8 @@
             </div>
         </div>
         <div class="module-page">
+            <div class="text-center"><h3>@Model.studentFirstName @Model.studentLastName</h3></div>
+
             <h3 class="text-center">HEALTH</h3>
             @if (!Model.studentHealth.NoConcerns)
             {
@@ -325,6 +331,9 @@
                 </div>
             }
         </div>
+
+
+
         <hr class="section-break" />
         <div>
             <h3 class="text-center">MOTOR</h3>
@@ -446,7 +455,7 @@
         </div>
         <hr class="section-break" />
         <div>
-            <h3 class="text-center">SOCIAL/EMOTIONAL</h3>
+            <h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
             @if (!Model.studentSocial.NoConcerns)
             {
                 <div style="font-size:12pt;  color: #333;">
@@ -524,7 +533,7 @@
         </div>
         <hr class="section-break" />
         <div>
-            <h3 class="text-center">INTELLIGENCE</h3>
+            <h3 class="text-center">GENERAL INTELLIGENCE</h3>
             @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
             {
                 <div style="font-size:12pt;  color: #333;">
@@ -576,7 +585,7 @@
         </div>
         <hr class="section-break" />
         <div>
-            <h3 class="text-center">ACADEMICS</h3>
+            <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
             @if (!Model.studentAcademic.NoConcerns)
             {
                 <div style="font-size:12pt;  color: #333;">
@@ -819,9 +828,1700 @@
                 </div>
             }
         </div>
-    </div>
-</div>
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
+            @if (Model.accommodations != null && Model.accommodations.Count() > 0)
+            {
+                <div class="col-md-12">
+                    <div class="panel-group">
 
+                        <div class="panel-default">
+
+                            @foreach (var accom in Model.accommodations)
+                            {
+                                <div class="">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="AccType">Type</label>
+                                                <div class="form-check" style="margin-left:8px">
+                                                    <label class="radio-inline"><input type="radio" value=1 style="position: relative; right: 5px;" @(accom.AccomType == 1 ? "checked=checked" : String.Empty )>Accommodation</label><br />
+                                                    <label class="radio-inline"><input type="radio" value=2 style="position: relative; right: 5px;" @(accom.AccomType == 2 ? "checked=checked" : String.Empty )>Modification</label><br />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label>Description:</label>
+                                                <div>
+                                                    <textarea class="form-control">@accom.Description</textarea>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label>Frequency</label>
+                                                <div>
+                                                    <textarea class="form-control">@accom.Frequency</textarea>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label>Duration</label>
+                                                <div>
+                                                    <textarea class="form-control">@accom.Duration</textarea>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row voffset4">
+
+                                                    <div class="col-md-3">
+                                                        <label for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                        <div class="input-group">
+
+                                                            @if (accom.AnticipatedStartDate.HasValue)
+                                                            {
+                                                                <span>@accom.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")</span>
+
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="AnticipatedEndDate">Anticipated End Date</label>
+                                                        <div class="input-group">
+
+                                                            @if (accom.AnticipatedEndDate.HasValue)
+                                                            {
+                                                                <span>@accom.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")</span>
+
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group" name="Location">
+                                                            <label for="Location">Location</label><br />
+                                                            <div class="form-group">
+                                                                <span>@accom.Location</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            } <!--end for each-->
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no accommodations at this time.</p>
+                </div>
+            }
+
+        </div><!--end accommodations-->
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">BEHAVIOR PLAN</h3>
+            @if (Model.studentBehavior != null)
+            {
+                <div id="collapse0" class="panel-collapse">
+                    <div class="panel-body">
+
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Collection">Strengths/Motivators</label>
+                                <div>
+
+                                    <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.studentBehavior.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Collection">Behavior(s) of Concern</label>
+                                <div>
+
+                                    <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.studentBehavior.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Triggers</h3>
+
+                            </div>
+                        </div>
+                        <div class="row voffset1">
+                            <div class="col-md-12">
+                                <label for="misTriggers">Possible triggers for behaviors</label>
+
+                                @if (Model.studentBehavior.Triggers != null)
+                                {
+                                    var showTriggerOther = false;
+
+                                    foreach (var hypothesis in Model.studentBehavior.Triggers)
+                                    {
+
+                                        var selected = "";
+                                        if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
+                                        {
+                                            selected = hypothesis.BehaviorTriggerType;
+
+                                            if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
+                                            {
+                                                showTriggerOther = true;
+                                            }
+
+                                            <text>@selected</text>
+                                            <br />
+                                        }
+
+                                    }
+                                    if (showTriggerOther)
+                                    {
+                                        <div id="divHypothesisOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.studentBehavior.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+
+                                        </div>
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Hypothesis</h3>
+
+                            </div>
+                        </div>
+                        <div class="row voffset1">
+                            <div class="col-md-12">
+                                <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+
+                                @if (Model.studentBehavior.HypothesisList != null)
+                                {
+                                    var showHypothesisOther = false;
+
+                                    foreach (var hypothesis in Model.studentBehavior.HypothesisList)
+                                    {
+
+                                        var selected = "";
+                                        if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
+                                        {
+                                            selected = hypothesis.BehaviorHypothesisType;
+
+                                            if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
+                                            {
+                                                showHypothesisOther = true;
+                                            }
+
+                                            <text>@selected</text>
+                                            <br />
+                                        }
+
+                                    }
+                                    if (showHypothesisOther)
+                                    {
+                                        <div id="divHypothesisOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.studentBehavior.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+
+                                        </div>
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Strategies</h3>
+
+                            </div>
+                        </div>
+                        <div class="row voffset1">
+                            <div class="col-md-12">
+                                <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+
+                                @if (Model.studentBehavior.Strategies != null)
+                                {
+                                    var showStrategyOther = false;
+
+                                    foreach (var strategy in Model.studentBehavior.Strategies)
+                                    {
+
+                                        var selected = "";
+                                        if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
+                                        {
+                                            selected = strategy.BehaviorStrategyType;
+
+                                            if (selected != "" && strategy.BehaviorStrategyType == "Other")
+                                            {
+                                                showStrategyOther = true;
+                                            }
+
+                                            <text>@selected</text><br />
+                                        }
+
+                                    }
+                                    if (showStrategyOther)
+                                    {
+                                        <div id="divStrategyOther" class="voffset2">
+                                            <label>Other Description</label>
+                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.studentBehavior.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+
+                                        </div>
+                                    }
+
+
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Targeted Behaviors</h3>
+
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
+
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.studentBehavior.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.studentBehavior.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.studentBehavior.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Crisis Management Plan</h3>
+
+                            </div>
+                        </div>
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
+                                <div>
+                                    <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.studentBehavior.Crisis_Escalation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
+                                <div>
+                                    <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.studentBehavior.Crisis_Description" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
+                                <div>
+                                    <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.studentBehavior.Crisis_Implementation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Crisis_Other">Other</label>
+                                <div>
+
+                                    <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.studentBehavior.Crisis_Other" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label for="Collection">Follow school/district behavior policies/practice</label>
+                                <div>
+
+                                    Plan is to be reviewed <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.studentBehavior.ReviewedBy" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there is no Behavior Plan at this time.</p>
+                </div>
+            }
+
+
+        </div><!--end behavior plan-->
+        @if (Model.studentTransition != null && (Model.studentAge > 12 || (Model.studentTransition.isDOC && Model.studentAge > 20)))
+        {
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">TRANSITION PLAN</h3>
+
+                <div class="row setup-content" id="step-1">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionAssessmentContainer">
+
+                                    @if (Model.studentTransition.assessments.Count > 0)
+                                    {
+                                        foreach (var assessment in Model.studentTransition.assessments)
+                                        {
+                                            <div class="panel-group transitionAssessment" id="assessment@(assessment.TransitionAssementID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" id="transitionAssessmentId@(assessment.TransitionAssementID)" name="transitionAssessmentId@(assessment.TransitionAssementID)" value="@(assessment.TransitionAssementID)" />
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="assessment@(assessment.TransitionAssementID)" href="#collapseAssessment@(assessment.TransitionAssementID)">
+                                                                <span class="glyphicon glyphicon-random"></span>  <span class="newTransitionLabel">Transition Assessment - </span><span class="transitionTitleDate">@(assessment.Create_Date.ToString("M/d/yyyy"))</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseAssessment@(assessment.TransitionAssementID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                                        <label for="narrative">Narrative</label>
+                                                                        <textarea rows="3" name="transitionAssessmentNarrative@(assessment.TransitionAssementID)" id="transitionAssessmentNarrative@(assessment.TransitionAssementID)" style="width: 100%;">@(assessment.Narrative)</textarea>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label for="completed">Completed On&nbsp;&nbsp;</label>
+                                                                    <div class="input-group" style="margin-bottom: 5px;">
+                                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                                        <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="transitionAssessmentCompleted@(assessment.TransitionAssementID)" name="transitionAssessmentCompleted@(assessment.TransitionAssementID)" class="form-control" aria-describedby="basic-addon1" value="@(assessment.CompletedOn?.ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <label for="performance">Performance</label>
+                                                                    <textarea rows="2" name="transitionAssessmentPerformance@(assessment.TransitionAssementID)" style="width: 100%; margin-bottom: 5px;" class="form-group">@(assessment.Performance)</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Needs</div>
+                                        <input type="text" class="form-control" name="transitionNeeds" value="@(Model.studentTransition.transition.Assessment_Needs)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Strengths</div>
+                                        <input type="text" class="form-control" name="transitionStrengths" value="@(Model.studentTransition.transition.Assessment_Strengths)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Preferences</div>
+                                        <input type="text" class="form-control" name="transitionPreferences" value="@(Model.studentTransition.transition.Assessment_Prefrences)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-addon assessment-needs">Transition Interest</div>
+                                        <input type="text" class="form-control" name="transitionInterest" value="@(Model.studentTransition.transition.Assessment_Interest)">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row setup-content" id="step-2">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionEducationGoalContainer">
+                                    @if (Model.studentTransition.goals.Count > 0)
+                                    {
+                                        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "education"))
+                                        {
+                                            <div class="panel-group transitionEducation" id="transitionEducationIndentity@(goal.TransitionGoalID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionEducationId@(goal.TransitionGoalID)" id="transitionEducationId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                        <input type="hidden" name="transitionGoalTypeEducation@(goal.TransitionGoalID)" id="transitionGoalTypeEducation@(goal.TransitionGoalID)" value="education">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionEducationIndentity@(goal.TransitionGoalID)" href="#collapseTransitionEducation@(goal.TransitionGoalID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionEducation@(goal.TransitionGoalID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <select class="form-control" id="transitionEducationGraduation@(goal.TransitionGoalID)" name="transitionEducationGraduation@(goal.TransitionGoalID)">
+                                                                        <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                        <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                        <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                    <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                    <span>Will</span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionEducationBehavior@(goal.TransitionGoalID)" name="transitionEducationBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionEmploymentGoalContainer">
+                                    @if (Model.studentTransition.goals.Count > 0)
+                                    {
+                                        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "employment"))
+                                        {
+                                            <div class="panel-group transitionEmployment" id="transitionEmploymentIndentity@(goal.TransitionGoalID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionEmploymentId@(goal.TransitionGoalID)" id="transitionEmploymentId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                        <input type="hidden" name="transitionGoalTypeEmployment@(goal.TransitionGoalID)" id="transitionGoalTypeEmployment@(goal.TransitionGoalID)" value="employment">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionEmploymentIndentity@(goal.TransitionGoalID)" href="#collapseTransitionEmployment@(goal.TransitionGoalID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Employment Goal</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionEmployment@(goal.TransitionGoalID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <select class="form-control" id="transitionEmploymentGraduation@(goal.TransitionGoalID)" name="transitionEmploymentGraduation@(goal.TransitionGoalID)">
+                                                                        <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                        <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                        <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                    <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                    <span>Will</span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionEmploymentBehavior@(goal.TransitionGoalID)" name="transitionEmploymentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionIndependentGoalContainer">
+                                    @if (Model.studentTransition.goals.Count > 0)
+                                    {
+                                        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "independent"))
+                                        {
+                                            <div class="panel-group transitionIndependent" id="transitionIndependentIndentity1">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionIndependentId@(goal.TransitionGoalID)" id="transitionIndependentId@(goal.TransitionGoalID)" value="@(goal.TransitionGoalID)">
+                                                        <input type="hidden" name="transitionGoalTypeIndependent@(goal.TransitionGoalID)" id="transitionGoalTypeIndependent@(goal.TransitionGoalID)" value="independent">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle collapsed" data-toggle="collapse" data-parent="transitionIndependentIndentity@(goal.TransitionGoalID)" href="#collapseTransitionIndependent@(goal.TransitionGoalID)" aria-expanded="false">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Independent Living</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionIndependent@(goal.TransitionGoalID)" class="panel-collapse collapse in" aria-expanded="true">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <select class="form-control" id="transitionIndependentGraduation@(goal.TransitionGoalID)" name="transitionIndependentGraduation@(goal.TransitionGoalID)">
+                                                                        <option @(goal.CompletetionType == "After Graduation" ? "selected='selected'" : String.Empty )>After Graduation</option>
+                                                                        <option @(goal.CompletetionType == "After leaving High School" ? "selected='selected'" : String.Empty )>After leaving High School</option>
+                                                                        <option @(goal.CompletetionType == "Upon completion of High School Program" ? "selected='selected'" : String.Empty )>Upon completion of High School Program</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-2 vcenter" style="height: 49px;">
+                                                                    <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
+                                                                    <span>Will</span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionIndependentBehavior@(goal.TransitionGoalID)" name="transitionIndependentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input class="form-control" type="text" id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row setup-content" id="step-3">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well" style="background-color: transparent;">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><b>Post Secondary Transition Services reviewed annually.</b></h5>
+                                    <br />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 addiontionalServiceInfo">
+                                    Instruction is the use of formal techniques to impact knowledge.  It is typically in schools through academic instruction, general education classes, tutoring, etc. Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionInstructionServiceContainer">
+
+                                    @if (Model.studentTransition.services.Count > 0)
+                                    {
+                                        foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
+                                        {
+                                            <div class="panel-group transitionInstructionService" id="transitionInstructionServiceIndentity@(service.TransitionServiceID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionInstructionServiceId@(service.TransitionServiceID)" id="transitionInstructionServiceId@(service.TransitionServiceID)" value="@(service.TransitionServiceID)">
+                                                        <input type="hidden" name="transitionInstructionerviceType@(service.TransitionServiceID)" id="transitionInstructionServiceType@(service.TransitionServiceID)" value="instruction">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionInstructionIndentity@(service.TransitionServiceID)" href="#collapseTransitionInstruction@(service.TransitionServiceID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Instruction Service</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionInstruction@(service.TransitionServiceID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDescription">Description</label>
+                                                                    <div>
+                                                                        <textarea id="transitionInstructionServiceDescription@(service.TransitionServiceID)" rows="3" name="transitionInstructionServiceDescription@(service.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(service.ServiceDescription)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionInstructionServiceFrequency@(service.TransitionServiceID)" maxlength="300" name="transitionInstructionServiceFrequency@(service.TransitionServiceID)1" type="text" placeholder="once a week" value="@(service.Frequency)" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDuration">Duration</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="300" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(service.Duration)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceLocation">Location</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionInstructionServiceLocation1" maxlength="300" name="transitionInstructionServiceLocation@(service.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(service.Location)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 addiontionalServiceInfo">
+                                    Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionRelatedServiceContainer">
+
+                                    @if (Model.studentTransition.services.Count > 0)
+                                    {
+                                        foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
+                                        {
+                                            <div class="panel-group transitionRelatedService" id="transitionRelatedIndentity@(related.TransitionServiceID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionRelatedServiceId@(related.TransitionServiceID)" id="transitionRelatedServiceId@(related.TransitionServiceID)" value="@(related.TransitionServiceID)">
+                                                        <input type="hidden" name="transitionRelatedServiceType@(related.TransitionServiceID)" id="transitionRelatedServiceType@(related.TransitionServiceID)" value="related">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionRelatedIndentity1" href="#collapseTransitionRelated@(related.TransitionServiceID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Related Service</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionRelated@(related.TransitionServiceID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDescription">Description</label>
+                                                                    <div>
+                                                                        <textarea id="transitionRelatedServiceDescription@(related.TransitionServiceID)" rows="3" name="transitionRelatedServiceDescription@(related.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(related.ServiceDescription)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionRelatedServiceFrequency@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceFrequency@(related.TransitionServiceID)" type="text" placeholder="once a week" value="@(related.Frequency)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDuration">Duration</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionRelatedServiceDuration@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceDuration@(related.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(related.Duration)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceLocation">Location</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionRelatedServiceLocation@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceLocation@(related.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(related.Location)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12 addiontionalServiceInfo">
+                                    Daily living skills are those activities that adults do every day (e.g. preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionDailyServiceContainer">
+
+                                    @if (Model.studentTransition.services.Count > 0)
+                                    {
+                                        foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
+                                        {
+                                            <div class="panel-group transitionDailyService" id="transitionDailyIndentity1">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionDailyServiceId@(daily.TransitionServiceID)" id="transitionDailyServiceId@(daily.TransitionServiceID)" value="@(daily.TransitionServiceID)">
+                                                        <input type="hidden" name="transitionDailyServiceType@(daily.TransitionServiceID)" id="transitionDailyServiceType@(daily.TransitionServiceID)" value="daily">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionDailyIndentity@(daily.TransitionServiceID)" href="#collapseTransitionDaily@(daily.TransitionServiceID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Daily Living Skills Service</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionDaily@(daily.TransitionServiceID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDescription">Description</label>
+                                                                    <div>
+                                                                        <textarea id="transitionDailyServiceDescription@(daily.TransitionServiceID)" rows="3" name="transitionDailyServiceDescription@(daily.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(daily.ServiceDescription)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionDailyServiceFrequency@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceFrequency@(daily.TransitionServiceID)" type="text" placeholder="once a week" value="@(daily.Frequency)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDuration">Duration</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionDailyServiceDuration@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceDuration@(daily.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(daily.Duration)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceLocation">Location</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionDailyServiceLocation@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceLocation@(daily.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(daily.Location)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionFunctionalServiceContainer">
+
+                                    @if (Model.studentTransition.services.Count > 0)
+                                    {
+                                        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
+                                        {
+                                            <div class="panel-group transitionVocationalService" id="transitionVocationalIndentity@(vocational.TransitionServiceID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionVocationalServiceId@(vocational.TransitionServiceID)" id="transitionVocationalServiceId@(vocational.TransitionServiceID)" value="@(vocational.TransitionServiceID)">
+                                                        <input type="hidden" name="transitionVocationalServiceType@(vocational.TransitionServiceID)" id="transitionVocationalServiceType@(vocational.TransitionServiceID)" value="vocational">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionVocationalIndentity@(vocational.TransitionServiceID)" href="#collapseTransitionVoctional@(vocational.TransitionServiceID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Functional Vocational Service</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionVoctional@(vocational.TransitionServiceID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDescription">Description</label>
+                                                                    <div>
+                                                                        <textarea id="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(vocational.ServiceDescription)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDuration">Duration</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceLocation">Location</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12" id="transitionLeisureServiceContainer">
+
+                                    @if (Model.studentTransition.services.Count > 0)
+                                    {
+                                        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
+                                        {
+                                            <div class="panel-group transitionLeisureService" id="transitionLeisureIndentity@(vocational.TransitionServiceID)">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <input type="hidden" name="transitionLeisureServiceId@(vocational.TransitionServiceID)" id="transitionLeisureServiceId@(vocational.TransitionServiceID)" value="@(vocational.TransitionServiceID)">
+                                                        <input type="hidden" name="transitionLeisureServiceType@(vocational.TransitionServiceID)" id="transitionLeisureServiceType@(vocational.TransitionServiceID)" value="leisure">
+                                                        <h4 class="panel-title">
+                                                            <a class="btnToggle" data-toggle="collapse" data-parent="transitionLeisureIndentity@(vocational.TransitionServiceID)" href="#collapseTransitionLeisure@(vocational.TransitionServiceID)">
+                                                                <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Recreation and Leisure Service</span>
+
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTransitionLeisure@(vocational.TransitionServiceID)" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDescription">Description</label>
+                                                                    <div>
+                                                                        <textarea id="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(vocational.ServiceDescription)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceFrequency">Frequency</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceDuration">Duration</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label for="transitionServiceLocation">Location</label>
+                                                                    <div>
+                                                                        <input class="form-control" id="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4><b>Community Participation</b></h4>
+                                    <fieldset class="form-group">
+                                        <label style="padding: 5px 0 10px; font-weight: normal;">Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.  These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g. Girl Scouts or 4-H activities), community work experiences, and counseling services.</label>&nbsp;&nbsp;
+                                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                            <input type="checkbox" name="isCommunityParticipation" id="isCommunityParticipation" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.CommunityParticipation ? "checked='checked'" : "" )>
+                                            <label class="onoffswitch2-label" for="isCommunityParticipation">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
+                                        <textarea class="form-control @(Model.studentTransition.transition.CommunityParticipation ?  String.Empty : "hidden")" style="width: 100%; margin: 25px 0 0 0;" name="communityParticipationDesc" id="communityParticipationDesc">@(Model.studentTransition.transition.CommunityParticipation_Description)</textarea>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!--end transition-->
+        }
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">OTHER CONSIDERATIONS</h3>
+            @if (Model.studentOtherConsiderations != null)
+            {
+                var showExtendYear = Model.studentOtherConsiderations.ExtendedSchoolYear_Necessary == "1" ? true : false;
+
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label style="font-size: 20px;">Assistive Technology</label>
+                    </div>
+                </div>
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <fieldset class="form-group">
+                                    <label>Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label>&nbsp;&nbsp;
+                                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                        <input type="checkbox" name="AssistiveTechnology_Require" id="AssistiveTechnology_Require" class="onoffswitch2-checkbox" @(Model.studentOtherConsiderations.AssistiveTechnology_Require != null && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value ? "checked" : String.Empty ) />
+                                        <label class="onoffswitch2-label" for="AssistiveTechnology_Require">
+                                            <span class="onoffswitch2-inner"></span>
+                                            <span class="onoffswitch2-switch"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check" id="AssistiveTechnology_Text">
+                                        <p id="AT_Desc" style="display: @(Model.studentOtherConsiderations.AssistiveTechnology_Require.HasValue && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value ? "block;" : "none;")">
+                                            <input class="form-control" id="AssistiveTechnology_Description" name="AssistiveTechnology_Description" type="text" value="@(Model.studentOtherConsiderations.AssistiveTechnology_Description)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                        </p>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Assessments</label>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 15px; ">Participation in District-Wide Assessments</label>
+                                <label>When the student's age or grade level is being assess, the IEP team has determined the following options(s) to be most appropriate.  In considering the unique curricular needs of the student, the IEP team may select multiple options below.  The intent is that all students will be part of the District accountability system as appropriate.</label>
+                                <div class="form-check">
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_NoAccommodations_flag" value="1" @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_WithAccommodations_flag" value="2" @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_Alternative_flag" value="3" @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "checked" : String.Empty)>Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_GradeNotAssessed" value="4" @(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "checked" : String.Empty)>Grade in which student is enrolled is not being assessed.</label><br />
+                                </div>
+                                <div class="form-check voffset2" id="DistrictAssessment_TextArea">
+                                    <p id="DA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                    <p id="DA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                    <p id="DA_Alt_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 15px; ">Participation in State Assessments</label>
+                                <label>Changes occur annually in the grade or age level administration of Kansas State Assessments. In planning to meet the needs of the student, the IEP team has determined the student will participate as indicated below:</label>
+
+                                <div class="form-check">
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_NoAccom" value="1" @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_WithAccom" value="2" @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="3" @(Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty)>Student has completed all required State Assessments.</label><br />
+
+                                </div>
+                                <div class="form-check voffset2" id="StateAssessment_TextArea">
+
+                                    <p id="SA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                    <p id="SA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Transportation Plan</label>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? "checked" : String.Empty)>The student is not eligible for transportation.</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.studentOtherConsiderations.Transporation_AttendOtherBuilding.HasValue && Model.studentOtherConsiderations.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                                <div class="form-check voffset2" id="TransporationPlan_TextArea">
+                                    <p id="TP_Other_Desc" style="display: @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" value="@(Model.studentOtherConsiderations.Transporation_Other_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Regular Education Environment</label>
+                                <p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label>
+                                    To what extent, if any, will the child not participate with non-identified children in general education classes, the general education curriculum, extracurricular activities, and other non academic activities?
+                                </label>
+                                <div>
+                                    <textarea class="form-control" name="RegularEducation_NotParticipate" id="RegularEducation_NotParticipate" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.studentOtherConsiderations.RegularEducation_NotParticipate)</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                if (@showExtendYear)
+                {
+
+                    <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Extended School Year</label>
+                                <p>The IEP team has enough information to determine that @Model.studentFirstName does require extended school term services.</p>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty)> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
+                                    <label class="radio-inline"><input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty)> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
+
+                                </div>
+
+                                <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
+                                    <label>Severity Justification/Reasoning:</label>
+                                    <textarea class="form-control" name="ExtendedSchoolYear_Justification" id="ExtendedSchoolYear_Justification" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                }
+
+                <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Parental Concerns</label>
+                            </div>
+                        </div>
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <fieldset class="form-group">
+                                    <label style="">The parent(s)/legal education decision maker has concerns for enhancing the education of @Model.studentFirstName</label>&nbsp;&nbsp;
+                                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                        <input type="checkbox" name="Parental_Concerns_flag" id="Parental_Concerns_flag" class="onoffswitch2-checkbox" @(Model.studentOtherConsiderations.Parental_Concerns_flag != null && Model.studentOtherConsiderations.Parental_Concerns_flag.Value ? "checked" : String.Empty ) />
+                                        <label class="onoffswitch2-label" for="Parental_Concerns_flag">
+                                            <span class="onoffswitch2-inner"></span>
+                                            <span class="onoffswitch2-switch"></span>
+                                        </label>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label style="font-size: 20px;">Considerations</label>
+                            </div>
+                        </div>
+
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <p>The parent(s)/legal education decision maker will be informed of (@Model.studentFirstName)'s progress in writing at least one time every quarter.</p>
+
+                                <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
+                                <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
+                            </div>
+                        </div>
+            }
+        </div><!--end other consid-->
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center">GOALS</h3>
+            @if (Model.studentGoals != null)
+            {
+                foreach (var sGoal in Model.studentGoals)
+                {
+                    var progQ1 = "";
+                    var progQ2 = "";
+                    var progQ3 = "";
+                    var progQ4 = "";
+
+                    var ddlText = "";
+                    switch (sGoal.Module)
+                    {
+                        case "1": { ddlText = "Health"; break; }
+                        case "2": { ddlText = "Motor"; break; }
+                        case "3": { ddlText = "Communication"; break; }
+                        case "4": { ddlText = "Social-Emotional"; break; }
+                        case "5": { ddlText = "General Intelligence"; break; }
+                        case "6": { ddlText = "Academic Performance"; break; }
+                        case "7": { ddlText = "Reading"; break; }
+                        case "8": { ddlText = "Math"; break; }
+                        case "9": { ddlText = "Written Language"; break; }
+                    } //end switch
+
+                    switch (sGoal.Progress_Quarter1)
+                    {
+                        case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
+                        case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                        case "3": { progQ1 = "Goal Met (indicate date)"; break; }
+                    } //end switch
+
+                    switch (sGoal.Progress_Quarter2)
+                    {
+                        case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
+                        case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                        case "3": { progQ2 = "Goal Met (indicate date)"; break; }
+                    } //end switch
+
+                    switch (sGoal.Progress_Quarter3)
+                    {
+                        case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
+                        case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                        case "3": { progQ3 = "Goal Met (indicate date)"; break; }
+                    } //end switch
+
+                    switch (sGoal.Progress_Quarter4)
+                    {
+                        case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
+                        case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                        case "3": { progQ4 = "Goal Met (indicate date)"; break; }
+                    } //end switch
+
+                    <div>
+                        <div class="panel-group" id="accordion0">
+                            <div class="panel-default">
+                                <div class="panel-heading" style="padding-top:8px;">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion0" href="#collapse0">
+                                            <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@sGoal.Title </span>
+                                           
+                                        </a>
+                                    </h4>
+                                </div>
+
+                                <div class="form-group" style="padding:2px;">
+                                    <label for="StudentGoalTitle">Student Goal</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="height: 49px;">
+                                                <span data-bind="bs-drp-sel-label">@ddlText</span>
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+
+                                        </div>
+                                        <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle" value="@sGoal.Title" />
+                                    </div>
+
+                                </div>
+                                <label for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                                <div class="form-group" style="padding:2px;">
+                                    <textarea class="form-control StudentGoalAnnualGoal" name="StudentGoalAnnualGoal0" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@sGoal.AnnualGoal</textarea>
+                                </div>
+                                <label for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                <div class="form-group" style="padding:2px;">
+                                    <input type="text" class="form-control" name="StudentGoalBaseline0" value="@sGoal.Baseline" />
+                                </div>
+                                <label for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label><br />
+                                <div class="form-group" style="padding:2px;">
+                                    <input type="text" class="form-control" name="StudentGoalStateStandards0" value="@sGoal.StateStandards" />
+                                </div>
+
+                                <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: transparent;">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th class="text-center" colspan="4"><i class="ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
+                                        </tr>
+                                        <tr class="PTAGDisplay ">
+                                            <th>
+                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup></div>
+                                                <div class="date">
+                                                    <input type="text" class="form-control" name="ReportAnnualGoalDate10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" value="@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup></div>
+                                                <div class="date">
+                                                    <input type="text" class="form-control" name="ReportAnnualGoalDate20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" value="@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup></div>
+                                                <div class="date">
+                                                    <input type="text" class="form-control" name="ReportAnnualGoalDate30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" value="@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup></div>
+                                                <div class="date">
+                                                    <input type="text" class="form-control" name="ReportAnnualGoalDate40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" value="@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="PTAGDisplay ">
+                                        <tr>
+                                            <td>
+                                                <div class="input-group input-append">
+                                                    <span>@progQ1</span>
+
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-append">
+                                                    <span>@progQ2</span>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-append">
+                                                    <span>@progQ3</span>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-append">
+                                                    <span>@progQ4</span>
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                <div class="form-group shortTermComments">
+                                                    <textarea name="reportOfAnnualGoalComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter1</textarea>
+                                                    <textarea name="reportOfAnnualGoalComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter2</textarea>
+                                                    <textarea name="reportOfAnnualGoalComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter3</textarea>
+                                                    <textarea name="reportOfAnnualGoalComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter4</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
+                                {
+                                    foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
+                                    {
+                                        var ddlText2 = "";
+                                        var gbProgQ1 = "";
+                                        var gbProgQ2 = "";
+                                        var gbProgQ3 = "";
+                                        var gbProgQ4 = "";
+                                        var isChecked = "glyphicon-unchecked";
+
+                                        if (gb.TransitionActivity)
+                                        {
+                                            isChecked = "glyphicon-check";
+                                        }
+
+                                        switch (gb.Method)
+                                        {
+                                            case 1: { ddlText2 = "Written Observation"; break; }
+                                            case 2: { ddlText2 = "Written Performance"; break; }
+                                            case 3: { ddlText2 = "Oral Performance"; break; }
+                                            case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+                                            case 5: { ddlText2 = "Time Sample"; break; }
+                                            case 6: { ddlText2 = "Demonstration/Performance"; break; }
+                                            case 7: { ddlText2 = "Other"; break; }
+                                        } //end switch
+
+                                        switch (gb.Progress_Quarter1)
+                                        {
+                                            case "1": { gbProgQ1 = "Not applicable during this grading period"; break; }
+                                            case "2": { gbProgQ1 = "No progress made"; break; }
+                                            case "3": { gbProgQ1 = "Little progress made"; break; }
+                                            case "4": { gbProgQ1 = "Progress made; Objective not yet met"; break; }
+                                            case "5": { gbProgQ1 = "Objective met"; break; }
+
+                                        } //end switch
+
+                                        switch (gb.Progress_Quarter2)
+                                        {
+                                            case "1": { gbProgQ2 = "Not applicable during this grading period"; break; }
+                                            case "2": { gbProgQ2 = "No progress made"; break; }
+                                            case "3": { gbProgQ2 = "Little progress made"; break; }
+                                            case "4": { gbProgQ2 = "Progress made; Objective not yet met"; break; }
+                                            case "5": { gbProgQ2 = "Objective met"; break; }
+
+                                        } //end switch
+
+                                        switch (gb.Progress_Quarter3)
+                                        {
+                                            case "1": { gbProgQ3 = "Not applicable during this grading period"; break; }
+                                            case "2": { gbProgQ3 = "No progress made"; break; }
+                                            case "3": { gbProgQ3 = "Little progress made"; break; }
+                                            case "4": { gbProgQ3 = "Progress made; Objective not yet met"; break; }
+                                            case "5": { gbProgQ3 = "Objective met"; break; }
+
+                                        } //end switch
+
+                                        switch (gb.Progress_Quarter4)
+                                        {
+                                            case "1": { gbProgQ4 = "Not applicable during this grading period"; break; }
+                                            case "2": { gbProgQ4 = "No progress made"; break; }
+                                            case "3": { gbProgQ4 = "Little progress made"; break; }
+                                            case "4": { gbProgQ4 = "Progress made; Objective not yet met"; break; }
+                                            case "5": { gbProgQ4 = "Objective met"; break; }
+
+                                        } //end switch
+
+                                        <label class="input-labels" style="padding: 2px;">Short Term Benchmark(s)</label>
+
+                                        <label class="input-labels pull-right" style="padding-top:2px;margin-right: 15px;">T.A.</label>
+                                        <div class="StudentGoalBenchmarks">
+                                            <div class="StudentGoalBenchmark " id="defaultObjective">
+
+                                                <div class="form-group" style="padding:2px;">
+                                                    <div class="input-group" style="background-color: #F9F9F9;">
+                                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="height: 49px;">
+                                                                <span data-bind="bs-drp-sel-label">@ddlText2</span>
+                                                                <span class="caret"></span>
+                                                                <span class="sr-only">Toggle Dropdown</span>
+                                                            </button>
+
+                                                        </div>
+                                                        <input type="text" name="StudentBenchGoalTitle0" class="form-control StudentGoalTitle" value="@gb.ObjectiveBenchmark" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
+                                                                <span class="glyphicon @isChecked"></span>
+                                                            </button>
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="slideReportProgress">
+                                                    <table class="table table-bordered table-bordered table-responsive">
+                                                        <thead class="thead-inverse" style="background-color: transparent;">
+                                                            <tr>
+                                                                <th class="text-center" colspan="4">Reports of Progress</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>
+                                                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup></div>
+                                                                    <div class="col-md-9 date">
+                                                                        <input type="text" class="form-control" name="reportOfProgressQuarter10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup></div>
+                                                                    <div class="col-md-9 date">
+                                                                        <input type="text" class="form-control" name="reportOfProgressQuarter20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter2.Date.ToShortDateString()" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup></div>
+                                                                    <div class="col-md-9 date">
+                                                                        <input type="text" class="form-control" name="reportOfProgressQuarter30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter3.Date.ToShortDateString()" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup></div>
+                                                                    <div class="col-md-9 date">
+                                                                        <input type="text" class="form-control" name="reportOfProgressQuarter40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter4.Date.ToShortDateString()" />
+                                                                    </div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <span>@gbProgQ1</span>
+
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <span>@gbProgQ2</span>
+
+
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <span>@gbProgQ3</span>
+
+
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <span>@gbProgQ4</span>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                                    <div class="form-group shortTermComments">
+                                                                        <textarea name="reportOfProgressShortTermComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter1</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter2</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter3</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter4</textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }//end foreach short term bench
+                                }
+
+                            </div> <!--end panel default-->
+                        </div><!--end panel group-->
+                    </div><!--end col md 12-->
+                }//end for goals
+
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no goals at this time.</p>
+                </div>
+            }
+        </div><!--end section break-->
+
+        <hr class="section-break" />
+        <div>
+            <h3 class="text-center"> SERVICES</h3>
+            @if (Model.studentServices != null && Model.studentServices.Count() > 0)
+            {
+
+                foreach (var service in Model.studentServices)
+                {
+                    <div class="row oneStudentService">
+                        <div class="col-md-12">
+                            <div class="panel-group">
+
+                                <div class="panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
+                                        </h4>
+                                    </div>
+                                    <div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label for="fiscalYear">Fiscal Year</label>
+                                                    <div class="form-group">
+                                                        @switch (@service.SchoolYear)
+                                                        {
+                                                            case 2018: <text>2017 - 2018</text>; break;
+                                                            case 2019: <text>2018 - 2019</text>; break;
+                                                            case 2020: <text>2019 - 2020</text>; break;
+                                                            case 2021: <text>2020 - 2021</text>; break;
+                                                            case 2022: <text>2021 - 2022</text>; break;
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="Frequency">Initiation Date</label>
+                                                    <div class="input-group">
+                                                        <span>@(service.StartDate.ToString("yyyy-MM-dd"))</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="Frequency">End Date</label>
+                                                    <div class="input-group">
+                                                        <span>@(service.EndDate.ToString("yyyy - MM - dd"))</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="Days">Days per Week</label>
+                                                    <span>@service.DaysPerWeek</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="Duration">Minutes per Day</label>
+                                                    <span>@service.Minutes</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label for="Frequency">Frequency</label>
+                                                    <div class="input-group">
+                                                        <div class="form-group">
+
+                                                            @switch (@service.Frequency)
+                                                            {
+                                                                case 1: <text>Every week(1)</text>; break;
+                                                                case 2: <text>Every 2 weeks(2)</text>; break;
+                                                                case 3: <text>Every 3 weeks(3)</text>; break;
+                                                                case 4: <text>Every 4 weeks(4)</text>; break;
+                                                                case 8: <text>Every 8 weeks(8)</text>; break;
+                                                                case 9: <text>Every 9 weeks(9)</text>; break;
+                                                                case 12: <text>Every 12 weeks(12)</text>; break;
+                                                                case 18: <text>Every 18 weeks(18)</text>; break;
+                                                                case 19: <text>3 out of 4 weeks(19)</text>; break;
+                                                                case 99: <text>1 day per year(99)</text>; break;
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="Location">Location</label>
+                                                    <div class="input-group">
+
+                                                        <div class="form-group">
+
+                                                            @if (Model.locations.Count > 0)
+                                                            {
+                                                                foreach (var serviceLocation in Model.locations)
+                                                                {
+                                                                    if (service.LocationCode == serviceLocation.LocationCode)
+                                                                    {
+                                                                        <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
+                                                                    }
+                                                                }
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="ServiceType">Service Type</label>
+                                                    <div class="form-group">
+
+                                                        @if (Model.serviceTypes.Count > 0)
+                                                        {
+                                                            foreach (var serviceType in Model.serviceTypes)
+                                                            {
+                                                                if (serviceType.ServiceCode == service.ServiceCode)
+                                                                {
+                                                                    <text>(@serviceType.ServiceCode) @serviceType.Name</text>
+                                                                }
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="serviceProvider">Provider</label>
+                                                    <div class="form-group">
+
+                                                        @if (Model.serviceProviders.Count > 0)
+                                                        {
+                                                            foreach (var serviceProvider in Model.serviceProviders)
+                                                            {
+                                                                if (service.ProviderID == serviceProvider.ProviderID)
+                                                                {
+                                                                    <text>@serviceProvider.Name</text>
+
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>&nbsp;</text>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 StudentGoals">
+                                                    <br />
+                                                    <label>List of Attached Goals</label>
+                                                    <hr style="margin-top: 0;" />
+                                                    @if (Model.studentGoals.Count > 0)
+                                                    {
+                                                        foreach (var goal in Model.studentGoals)
+                                                        {
+                                                            if (goal.hasSerivce && goal.tblServices.Where(o => o.ServiceID == service.ServiceID).Count() > 0)
+                                                            {
+                                                                <text>@goal.Title.ToString()</text><br />
+                                                            }
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>The team has determined that there are no services at this time.</p>
+                </div>
+            }
+
+        </div> <!--end services-->
+
+        <br /><br />
+        
+    </div><!--end overall-->
+</div>
 <script>
     var body = document.getElementsByTagName("body")[0];
     body.classList += ' ' + 'fadeInToBackground';
@@ -842,7 +2542,8 @@
         var className = 'transition-page-scaleUpCenter';
         if (el.classList) {
             el.classList.add(className);
-        } else {
+        }
+        else {
             el.className += ' ' + className;
         }
     }, 200);
