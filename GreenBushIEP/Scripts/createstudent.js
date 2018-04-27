@@ -20,8 +20,8 @@ function init() {
     //set up the bootstrap datepicker
     var date_input = $('input[name="dob"]'); //our date input has the name "dob"
 
-	//$('#dob').mask("99/99/9999", {});
-   
+    //$('#dob').mask("99/99/9999", {});
+
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
@@ -29,7 +29,7 @@ function init() {
     });
 
     $("#submitForm").on('click', function () {
-        document.forms[0].submit();
+        document.forms[2].submit();
     });
 
     $('#buildingIds').hide();
@@ -38,15 +38,9 @@ function init() {
 
     // loads the building script
     $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
-        //$('#buildingIds').show();
     });
 
-    var link = document.createElement("a");
     link.href = "/Scripts/bootstrap-datepicker.min.js";
-
-    // loads the building script
-    $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
-    });
 
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
@@ -56,14 +50,6 @@ function init() {
         var $target = $(e.target);
         if ($target.parent().hasClass('disabled')) {
             return false;
-        }
-    });
-
-    $(".next-step").click(function (e) {
-        if (tabValidates()) {
-            var $active = $('.wizard .nav-tabs li.active');
-            $active.next().removeClass('disabled');
-            nextTab($active);
         }
     });
 
@@ -85,10 +71,6 @@ function init() {
     });
 
     $('#misDistrict').change(function (e) {
-        // assign the userid to the id value in the form.
-        //var districtId = $(e.relatedTarget).data('id');
-       // $(e.currentTarget).find('input[name="misDistrict"]').val(userId);
-        //var districtId = $('#selectedDistrict option:first-child').attr("selected", "selected").val();
         var districtIds = '';
         var districtNums = new Array();
         var districtArr = $("#misDistrict").val();
@@ -97,8 +79,8 @@ function init() {
 
             for (i = 0; i < districtArr.length; i++) {
                 var districtAdd = districtArr[i];
-                districtNums.push(districtAdd);                
-            }            
+                districtNums.push(districtAdd);
+            }
             districtIds = districtNums.join(',');
         }
 
@@ -136,18 +118,15 @@ function init() {
 }
 
 
-function tabValidates()
-{
+function tabValidates() {
     var validates = true;
     var stepId = $('.wizard .nav-tabs li.active a').attr('href');
     var $inputs = $(stepId + " :input[data-validate='true']");
 
-    console.log($inputs);
-
     $inputs.each(function () {
         var input = $(this);
         var is_valid = input.val();
-        if (is_valid == "" || is_valid == null) {
+        if (is_valid === "" || is_valid === null) {
             if (input.is("select")) {
                 $(this).next().addClass('contact-tooltip');
                 input.addClass('contact-tooltip');
@@ -168,30 +147,150 @@ function tabValidates()
 function initContacts() {
 
     $('.add-contact').each(function (index) {
-       
+
         $(this).not('.bound').addClass('bound').on("click", function (e) {
             if ($(this).find('i').hasClass("glyphicon-plus")) {
+
                 // clone and unhide the contact template.
                 var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
-                var count = $("#numberOfContacts").val();
-                count++;
-                $("#numberOfContacts").val(count);
+                //var count = $("#student-contacts .student-contact").length; //$("#numberOfContacts").val();
+
                 // new contact id.
+                //newContact.find("#relationshipId").val(count).attr("name", "contacts[#].relationshipId").attr("id", "contacts[#].relationshipId");
                 newContact.html(newContact.html().replace(/\[#\]/g, '[' + ++index + ']'));
                 newContact.find(".contact-button").removeClass("contact-button").addClass("add-contact").removeClass("btn-info").addClass('btn-danger');
 
                 // rebind the recently added contact.
                 initContacts();
-
-                
             } else {
                 $(this).unbind("click").parents(".student-contact").fadeOut(300, function () {
                     $(this).remove();
-                    var count = $("#numberOfContacts").val();
-                    count--;
-                    $("#numberOfContacts").val(count);
                 });
             }
         });
+
     });
 }
+
+$("#next2").on("click", function () {
+
+    var theForm = document.getElementById("createNewStudent")
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/CreateStudent',
+            type: 'POST',
+            data: $("#createNewStudent").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+
+                    // create a new student id and add it to the contacts form here.
+                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});
+
+$("#next3").on("click", function () {
+
+    var theForm = document.getElementById("createStudentContacts")
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/CreateStudentContacts',
+            type: 'POST',
+            data: $("#createStudentContacts").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+
+                    // add student id to the avatar form here.
+                    $("form:eq(2)").find("input[name='studentId']").val(data.Message);
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});
+
+$("#next4").on("click", function () {
+
+    var theForm = document.getElementById("editStudent");
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/EditStudent',
+            type: 'POST',
+            data: $("#editStudent").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});
+
+$("#next5").on("click", function () {
+
+    var theForm = document.getElementById("editStudentContacts");
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/EditStudentContacts',
+            type: 'POST',
+            data: $("#editStudentContacts").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});

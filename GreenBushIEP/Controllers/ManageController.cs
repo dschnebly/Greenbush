@@ -133,7 +133,7 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/CreateStudent
         [HttpPost]
-        public ActionResult CreateStudent(HttpPostedFileBase adminpersona, FormCollection collection)
+        public JsonResult CreateStudent(HttpPostedFileBase adminpersona, FormCollection collection)
         {
             if (ModelState.IsValid)
             {
@@ -150,18 +150,17 @@ namespace GreenBushIEP.Controllers
                         Email = collection["email"]
                     };
 
-                    // UPLOAD the image
-                    if (adminpersona != null && adminpersona.ContentLength > 0)
+                    // try catch. If the email is the same as another student show error gracefully.
+                    try
                     {
-                        var fileName = Path.GetFileName(adminpersona.FileName);
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
-                        student.ImageURL = fileName;
-                        adminpersona.SaveAs(path);
+                        db.tblUsers.Add(student);
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
                     }
 
-                    // try catch. If the email is the same as another student show error gracefully.
-                    db.tblUsers.Add(student);
-                    db.SaveChanges();
 
                     // Create New StudentInfo
                     // tblStudentInfo
@@ -182,85 +181,21 @@ namespace GreenBushIEP.Controllers
                         Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F"
                     };
 
-                    db.tblStudentInfoes.Add(studentInfo);
-                    db.SaveChanges();
-
-                    // Create new Relationship table - add student contact and their relationships
-                    // tblRelationships
-                    int i = studentInfo.Gender == "M" ? 11 : 12;
-                                       
-                    int count = 0; //first contact
-                    int totalContacts = 0;
-                    foreach(var collectionItem in collection)
+                    try
                     {
-                        if(collectionItem.ToString() == "contacts[0].ContactFirstName")
-                        {
-                            i = count;
-                        }
-                        if (collectionItem.ToString().Contains("ContactFirstName"))
-                        {
-                            totalContacts++;
-                        }
-                        count++;
+                        db.tblStudentInfoes.Add(studentInfo);
+                        db.SaveChanges();
                     }
-                    
-                    for (int j = 0; j < totalContacts; j++)
+                    catch (Exception e)
                     {
-                        
-                            tblStudentRelationship contact = new tblStudentRelationship()
-                            {
-                                RealtionshipID = 0,
-                                UserID = student.UserID,
-                                FirstName = collection[i].ToString(),
-                                MiddleName = collection[i + 1].ToString(),
-                                LastName = collection[i + 2].ToString(),
-                                Realtionship = collection[i + 3].ToString(),
-                                Address1 = collection[i + 4].ToString(),
-                                Address2 = collection[i + 5].ToString(),
-                                City = collection[i + 6].ToString(),
-                                State = collection[i + 7].ToString(),
-                                Zip = collection[i + 8].ToString(),
-                                Phone = collection[i + 9].ToString(),
-                                Email = collection[i + 10].ToString()
-                            };
-
-
-                            if (collection.AllKeys.Contains(string.Format("contacts[{0}].PrimaryContact", j)))
-                            {
-                                //worst code in awhile.
-                                if (i + 10 < collection.Count - 1)
-                                {
-                                    if (collection[i + 11] == "on")
-                                    {
-                                        // this is the primary contact.
-                                        contact.PrimaryContact = 1;
-                                        i += 12;
-                                    }
-                                    else
-                                    {
-                                        i += 11;
-                                    }
-                                }
-                                else
-                                {
-                                    i += 11;
-                                }
-                            }
-                        else
-                        {
-                            i += 11;
-                        }
-
-                            db.tblStudentRelationships.Add(contact);
-                            db.SaveChanges();
-                        
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
                     }
 
                     // save to organization chart
                     // save the user to all the districts that was selected.
                     // tblOrganizationMapping and tblBuildingMapping
                     var districtValues = collection["misDistrict"];
-                    
+
                     if (!string.IsNullOrEmpty(districtValues))
                     {
                         string[] districtArray = districtValues.Split(','); ;
@@ -280,10 +215,19 @@ namespace GreenBushIEP.Controllers
                             district.USD = usd;
                             district.UserID = student.UserID;
 
-                            db.tblBuildingMappings.Add(district);
-                            db.SaveChanges();
+                            try
+                            {
+                                db.tblBuildingMappings.Add(district);
+                                db.SaveChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                            }
                         }
                     }
+
+                    return Json(new { Result = "success", Message = student.UserID });
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -298,15 +242,111 @@ namespace GreenBushIEP.Controllers
                     // Combine the original exception message with the new one.
                     var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
-                    // Throw a new DbEntityValidationException with the improved exception message.
-                    //throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
                     Console.Write(exceptionMessage);
                 }
-                catch (Exception e)
+
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
+        }
+
+        [HttpPost]
+        public JsonResult CreateStudentContacts(FormCollection collection)
+        {
+            if (ModelState.IsValid)
+            {
+                try
                 {
-                    Console.Write(e.Message);
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                    tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+                    int j = 0;
+                    int loopCounter = 0;
+                    while (j < collection.Count - 1)
+                    {
+                        tblStudentRelationship contact = new tblStudentRelationship()
+                        {
+                            RealtionshipID = 0,
+                            UserID = studentId,
+                            FirstName = collection[++j].ToString(),
+                            MiddleName = collection[++j].ToString(),
+                            LastName = collection[++j].ToString(),
+                            Realtionship = collection[++j].ToString(),
+                            Address1 = collection[++j].ToString(),
+                            Address2 = collection[++j].ToString(),
+                            City = collection[++j].ToString(),
+                            State = collection[++j].ToString(),
+                            Zip = collection[++j].ToString(),
+                            Phone = collection[++j].ToString(),
+                            Email = collection[++j].ToString(),
+                        };
+
+                        /////////////////////////////
+                        // This whole if block is due to the fact that checkbox false values are NOT passed to our collection
+                        // and the checkbox is the last value in the collection fields.
+                        /////////////////////////////
+                        if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
+                        {
+                            if (collection.GetKey(j) == string.Format("contacts[{0}].PrimaryContact", loopCounter))
+                            {
+                                contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
+                            }
+                            else { j--; }
+                        }
+
+                        try
+                        {
+                            db.tblStudentRelationships.Add(contact);
+                            db.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            return Json(new { Result = "error", Message = "There was an error while trying to add the student's contacts. \n\n" + e.InnerException.ToString() });
+                        }
+
+                        loopCounter++;
+                    }
+
+                    return Json(new { Result = "success", Message = student.UserID });
                 }
-                
+                catch (DbEntityValidationException ex)
+                {
+                    // Retrieve the error messages as a list of strings.
+                    var errorMessages = ex.EntityValidationErrors
+                            .SelectMany(x => x.ValidationErrors)
+                            .Select(x => x.ErrorMessage);
+
+                    // Join the list to a single string.
+                    var fullErrorMessage = string.Join("; ", errorMessages);
+
+                    // Combine the original exception message with the new one.
+                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                    Console.Write(exceptionMessage);
+                }
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to create the student's contacts. Please try again or contact your administrator." });
+        }
+
+        [HttpPost]
+        public ActionResult CreateStudentAvatar(HttpPostedFileBase adminpersona, FormCollection collection)
+        {
+            int studentId = Convert.ToInt32(collection["studentId"]);
+
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+            if (student != null)
+            {
+                //// UPLOAD the image
+                if (adminpersona != null && adminpersona.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(adminpersona.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
+                    student.ImageURL = fileName;
+                    adminpersona.SaveAs(path);
+                }
             }
 
             return RedirectToAction("Portal", "Home");
@@ -371,42 +411,41 @@ namespace GreenBushIEP.Controllers
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.student.UserID == bm.UserID select d).Distinct().ToList();
             model.districts = (model.submitter.RoleID == "1") ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
-            //model.buildings = (from bm in db.tblBuildingMappings
-            //                   join b in db.tblBuildings on bm.USD equals b.USD
-            //                   where bm.UserID == model.student.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
-            //                   select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
-            foreach (var d in model.selectedDistrict) {
-                var districtBuildings = (from b in db.tblBuildings 
-                                   where b.USD == d.USD && b.Active == 1 
-                               select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+            foreach (var d in model.selectedDistrict)
+            {
+                var districtBuildings = (from b in db.tblBuildings
+                                         where b.USD == d.USD && b.Active == 1
+                                         select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
                 model.buildings.AddRange(districtBuildings);
             }
-            
+
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
             return View("~/Views/Home/EditStudent.cshtml", model);
         }
 
         // POST: Manage/EditStudent
-        public ActionResult EditStudent(HttpPostedFileBase adminpersona, FormCollection collection, StudentDetailsViewModel model)
+        [HttpPost]
+        public JsonResult EditStudent(FormCollection collection)
         {
-            int id = Convert.ToInt32(collection["id"]);
+            int studentId = Convert.ToInt32(collection["id"]);
 
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
             if (student != null)
             {
                 student.FirstName = collection["firstname"];
                 student.LastName = collection["lastname"];
                 student.Email = collection["email"];
                 student.RoleID = "5";
-                student.ImageURL = student.ImageURL;
+            }
+            else
+            {
+                return Json(new { Result = "error", Message = "There was an error while trying to edit the user." });
             }
 
-            db.SaveChanges();
-
-            tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == id).FirstOrDefault();
+            tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
             if (info != null)
             {
                 info.UserID = student.UserID;
@@ -423,147 +462,153 @@ namespace GreenBushIEP.Controllers
                 info.Grade = Convert.ToInt32(collection["studentGrade"]);
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
             }
-
-            db.SaveChanges();
-
-
-            // UPLOAD the image
-            if (adminpersona != null && adminpersona.ContentLength > 0)
+            else
             {
-                var fileName = Path.GetFileName(adminpersona.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
-                student.ImageURL = fileName;
-                adminpersona.SaveAs(path);
+                return Json(new { Result = "error", Message = "There was an error while trying to edit the user." });
             }
 
-            db.SaveChanges();
-            
-            
-            int totalContacts = Convert.ToInt32(collection["numberOfContacts"]);
-            
-            int primaryContactId = -1;
-            int contactId = -1;
-            List<int> contactList = new List<int>();
-
-            foreach (var collectionItem in collection)
+            try
             {
-                if (collectionItem.ToString().StartsWith("contact[") || collectionItem.ToString().StartsWith("contacts["))
-                {
-                    //contacts[3].ContactFirstName
-                    int startIndex = collectionItem.ToString().IndexOf("[") + 1;
-                    int endIndex = collectionItem.ToString().IndexOf("]");
-                    string num = collectionItem.ToString().Substring(startIndex, endIndex - startIndex);
-                    int pcRid = -1;
-                    Int32.TryParse(num, out pcRid);
-                    
-                    if (collectionItem.ToString().Contains("PrimaryContact"))
-                    {                    
-                        primaryContactId = pcRid;
-                    }
-
-                    if (pcRid != contactId)
-                    {
-                        //add list
-                        contactList.Add(pcRid);
-                        
-                        contactId = pcRid;
-                    }
-                    
-                }
-            
-            }
-
-            foreach(var contactItem in contactList)
-            {
-                var existingContact = db.tblStudentRelationships.Where(r => r.UserID == student.UserID && r.RealtionshipID == contactItem).FirstOrDefault();
-               
-                if (existingContact != null)
-                {
-                    //update
-                    string contactStr = string.Format("contact[{0}].", contactItem);
-
-                    existingContact.FirstName = collection[contactStr + "FirstName"] != null ? collection[contactStr + "FirstName"].ToString() : "";
-                    existingContact.MiddleName = collection[contactStr + "MiddleName"] != null ? collection[contactStr + "MiddleName"].ToString() : "";
-                    existingContact.LastName = collection[contactStr + "LastName"] != null ? collection[contactStr + "LastName"].ToString() : "";
-                    existingContact.Phone = collection[contactStr + "Phone"] != null ? collection[contactStr + "Phone"].ToString() : "";
-                    existingContact.Realtionship = collection[contactStr + "Realtionship"] != null ? collection[contactStr + "Realtionship"].ToString() : "";
-                    existingContact.Address1 = collection[contactStr + "Address1"] != null ? collection[contactStr + "Address1"].ToString() : "";
-                    existingContact.Address2 = collection[contactStr + "Address2"] != null ? collection[contactStr + "Address2"].ToString() : "";
-                    existingContact.State = collection[contactStr + "ContactState"] != null ? collection[contactStr + "ContactState"].ToString() : "";
-                    existingContact.City = collection[contactStr + "City"] != null ? collection[contactStr + "City"].ToString() : "";
-                    existingContact.Zip = collection[contactStr + "Zip"] != null ? collection[contactStr + "Zip"].ToString() : "";
-                    existingContact.Email = collection[contactStr + "Email"] != null ? collection[contactStr + "Email"].ToString() : "";
-                    if (contactItem == primaryContactId)
-                    {
-                        existingContact.PrimaryContact = 1;
-                    }
-                    else
-                    {
-                        existingContact.PrimaryContact = 0;
-                    }
-                }
-                else
-                {
-                    string contactStr = string.Format("contacts[{0}].", contactItem);
-
-                    tblStudentRelationship contact = new tblStudentRelationship()
-                    {
-                        RealtionshipID = 0,
-                        UserID = student.UserID,
-                        FirstName = collection[contactStr + "ContactFirstName"] != null ? collection[contactStr + "ContactFirstName"].ToString() : "",
-                        MiddleName = collection[contactStr + "ContactMiddleName"] != null ? collection[contactStr + "ContactMiddleName"].ToString() : "",
-                        LastName = collection[contactStr + "ContactLastName"] != null ? collection[contactStr + "ContactLastName"].ToString() : "",
-                        Realtionship = collection[contactStr + "ContactRealtionship"] != null ? collection[contactStr + "ContactRealtionship"].ToString() : "",
-                        Address1 = collection[contactStr + "ContactStreetAddress1"] != null ? collection[contactStr + "ContactStreetAddress1"].ToString() : "",
-                        Address2 = collection[contactStr + "ContactStreetAddress2"] != null ? collection[contactStr + "ContactStreetAddress2"].ToString() : "",
-                        City = collection[contactStr + "ContactCity"] != null ? collection[contactStr + "ContactCity"].ToString() : "",
-                        State = collection[contactStr + "ContactState"] != null ? collection[contactStr + "ContactState"].ToString() : "",
-                        Zip = collection[contactStr + "ContactZipCode"] != null ? collection[contactStr + "ContactZipCode"].ToString() : "",
-                        Phone = collection[contactStr + "ContactPhoneNumber"] != null ? collection[contactStr + "ContactPhoneNumber"].ToString() : "",
-                        Email = collection[contactStr + "ContactEmail"] != null ? collection[contactStr + "ContactEmail"].ToString() : ""
-                    };
-
-                    if (contactItem == primaryContactId)
-                    {
-                        contact.PrimaryContact = 1;
-                    }
-                    else
-                    {
-                        contact.PrimaryContact = 0;
-                    }
-
-                    db.tblStudentRelationships.Add(contact);
-
-                }
-                
                 db.SaveChanges();
-
             }
-
-            // remove all mapping. Blow it all away.
-            db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == id));
-            db.SaveChanges();
-
-            List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
-            if (collection["misDistrict"] != null)
+            catch (Exception e)
             {
-                foreach (string usd in collection["misDistrict"].ToString().Split(','))
-                {
-                    mappings.Add(new tblBuildingMapping()
-                    {
-                        BuildingID = "0",
-                        UserID = student.UserID,
-                        USD = usd
-                    });
-                }
+                return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
             }
 
-            // add back the connections to the database.
-            db.tblBuildingMappings.AddRange(mappings);
-            db.SaveChanges();
+            return Json(new { Result = "success", Message = student.UserID });
+        }
+
+        // POST: Manage/EditStudentContancts
+        [HttpPost]
+        public JsonResult EditStudentContacts(FormCollection collection)
+        {
+            int studentId = Convert.ToInt32(collection["id"]);
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+            if (student != null)
+            {
+                try
+                {
+                    // BLOW AWAY all the relationships to the students.
+                    List<tblStudentRelationship> relationships = db.tblStudentRelationships.Where(r => r.UserID == student.UserID).ToList();
+                    db.tblStudentRelationships.RemoveRange(relationships);
+                    db.SaveChanges();
+
+                    int j = 0;
+                    while (++j < collection.Count - 1)
+                    {
+                        int startIndex = collection.GetKey(j).ToString().IndexOf("[") + 1;
+                        int endIndex = collection.GetKey(j).ToString().IndexOf("]");
+                        string relId = collection.GetKey(j).ToString().Substring(startIndex, endIndex - startIndex);
+
+                        tblStudentRelationship contact = new tblStudentRelationship()
+                        {
+                            RealtionshipID = 0,
+                            UserID = studentId,
+                            FirstName = collection[j].ToString(),
+                            MiddleName = collection[++j].ToString(),
+                            LastName = collection[++j].ToString(),
+                            Realtionship = collection[++j].ToString(),
+                            Address1 = collection[++j].ToString(),
+                            Address2 = collection[++j].ToString(),
+                            City = collection[++j].ToString(),
+                            State = collection[++j].ToString(),
+                            Zip = collection[++j].ToString(),
+                            Phone = collection[++j].ToString(),
+                            Email = collection[++j].ToString(),
+                        };
+
+                        /////////////////////////////
+                        // This whole if block is due to the fact that checkbox false values are NOT passed to our collection
+                        // and the checkbox is the last value in the collection fields.
+                        /////////////////////////////
+                        if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
+                        {
+                            if (collection.GetKey(j) == string.Format("contact[{0}].PrimaryContact", relId))
+                            {
+                                contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
+                            }
+                            else { j--; }
+                        }
+
+                        try
+                        {
+                            db.tblStudentRelationships.Add(contact);
+                            db.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            return Json(new { Result = "error", Message = "There was an error while trying to edit the student's contacts. \n\n" + e.InnerException.ToString() });
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to edit the student's contacts. \n\n" + e.InnerException.ToString() });
+                }
+
+                return Json(new { Result = "success", Message = "yup" });
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to edit the student's contacts." });
+        }
+
+        [HttpPost]
+        public ActionResult EditStudentAvatar(HttpPostedFileBase adminpersona, FormCollection collection)
+        {
+            int studentId = Convert.ToInt32(collection["id"]);
+
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+            if (student != null)
+            {
+                // UPLOAD the image
+                if (adminpersona != null && adminpersona.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(adminpersona.FileName);
+                    var random = Guid.NewGuid() + fileName;
+                    var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), random);
+                    if (!Directory.Exists(Server.MapPath("~/Content/Files/")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Content/Files/"));
+                    }
+                    student.ImageURL = random;
+                    adminpersona.SaveAs(path);
+                }
+
+                db.SaveChanges();
+            }
 
             return RedirectToAction("Portal", "Home");
         }
+
+        // POST: Manage/EditStudent
+        //public ActionResult EditStudent(HttpPostedFileBase adminpersona, FormCollection collection, StudentDetailsViewModel model)
+        //{
+        //    // remove all mapping. Blow it all away.
+        //    db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == id));
+        //    db.SaveChanges();
+
+        //    List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
+        //    if (collection["misDistrict"] != null)
+        //    {
+        //        foreach (string usd in collection["misDistrict"].ToString().Split(','))
+        //        {
+        //            mappings.Add(new tblBuildingMapping()
+        //            {
+        //                BuildingID = "0",
+        //                UserID = student.UserID,
+        //                USD = usd
+        //            });
+        //        }
+        //    }
+
+        //    // add back the connections to the database.
+        //    db.tblBuildingMappings.AddRange(mappings);
+        //    db.SaveChanges();
+
+        //    return RedirectToAction("Portal", "Home");
+        //}
 
         // GET: Manage/Edit/5
         [HttpGet]
@@ -923,7 +968,7 @@ namespace GreenBushIEP.Controllers
 
                 if (!string.IsNullOrEmpty(ids))
                 {
-                    
+
 
                     string[] usdIds = ids.Split(',');
                     foreach (var usdId in usdIds)
