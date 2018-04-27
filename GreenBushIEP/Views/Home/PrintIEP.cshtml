@@ -267,17 +267,17 @@
         </div>
         
         <div class="module-page">
-            <div class="header text-center"><h3>@Model.studentFirstName @Model.studentLastName</h3></div>
+            <div class="header"><h3>@Model.studentFirstName @Model.studentLastName</h3></div>
 
             <h3 class="text-center">HEALTH</h3>
             
             @if (!Model.studentHealth.NoConcerns)
             {
-                <div>
+                
 
                     <div>
                         <img src="@(Model.studentHealth.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
-                        <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.studentHealth.ProgressTowardGenEd ? "checked" : String.Empty )>
+                        <input type="checkbox" @(Model.studentHealth.ProgressTowardGenEd ? "checked" : String.Empty )>
                         <label for="HealthProgressTowardGenEd">Health Concerns progressing with General Education Supports</label>
                     </div>
                     <div>
@@ -285,12 +285,11 @@
                         <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.studentHealth.Diagnosis ? "checked" : String.Empty )>
                         <label for="HealthDiagnosis">Has a Diagnosis</label>
                     </div>
-                    <div>
+                    <div class="voffset">
                         <img src="@(Model.studentHealth.Medications ? @imageChecked : @imageNotChecked)" class='imgCheck' />
                         <input type="checkbox" id="HealthMedications" name="HealthMedications" @(Model.studentHealth.Medications ? "checked" : String.Empty )>
                         <label for="HealthMedications">Takes Medications</label>
                     </div>
-
 
                     <fieldset class="form-group">
                         <label>Does the student have a hearing impairment?</label><br/>
@@ -303,14 +302,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
-                        <div style="border-bottom: 0; margin-bottom: 0;">
-                            <p><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</p>
+                        <div><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</div>
+                        <div class="form-check">
                             <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 1 ? "checked" : String.Empty ) />Pass</label>
                             <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 0 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 0 ? "checked" : String.Empty ) />Failed</label>
                             <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group" style="margin-top:10px;">
+                    <fieldset class="form-group">
                         <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.VisionImparied ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty ) />
                         <div class="form-check">
                             <p>
@@ -318,16 +317,17 @@
                             </p>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group" id="VisualImpairmentInfo">
+                    <fieldset class="form-group" >
 
-                        <p><label>Visual Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</p>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 1 ? "checked" : String.Empty ) />Pass</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty ) />Failed</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
-                        
+                        <div><label>Visual Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</div>
+                        <div class="form-check  voffset">
+                            <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 1 ? "checked" : String.Empty ) />Pass</label>
+                            <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty ) />Failed</label>
+                            <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
+                        </div>
                     </fieldset>
-                    <fieldset class="form-group" style="padding-top:10px">
-                        <br /><br /><label>Present Level of Performance</label>
+                    <fieldset class="form-group" >
+                        <label>Present Level of Performance</label>
                         <div class="form-check">
                             <p class="form-control" type="text" rows="3">@(Model.studentHealth.LevelOfPerformance)</p>
                         </div>
@@ -353,7 +353,7 @@
                             
                         </div>
                     </fieldset>
-                </div>
+              
             }
             else
             {
@@ -380,7 +380,7 @@
                 </div>
                 <fieldset class="form-group">
                     <p><label>Team will consider participation in:</label></p>
-                    <div class="form-check"  style="margin-bottom:8px;">
+                    <div class="form-check"  style="padding-left:10px;padding-bottom:8px;">
                         <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty )/>General Education P.E.</label><br>
                         <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty )/>Adaptive P.E.</label><br>
                         <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty )/>Modified P.E</label><br>
@@ -388,7 +388,7 @@
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label >Present Level of Performance</label>
+                    <label>Present Level of Performance</label>
                     <div class="form-check">
                         <p class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3">@(Model.studentMotor.LevelOfPerformance)</p>
                     </div>
@@ -407,8 +407,7 @@
                         <label class="radio-inline"><img src="@(Model.studentMotor.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label><br>
                     </div>
                     <div class="form-check" id="MeetByOtherTextArea">
-                        <br>
-                        <p style="display: block; ">
+                        <p>
                             If other, please explain
                         </p>
                             <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" >@(Model.studentMotor.MeetNeedByOtherDescription)</p>
@@ -472,11 +471,9 @@
                         <label class="radio-inline"><img src="@(Model.studentCommunication.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleCommunicationMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentCommunication.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label><br>
                     </div>
                     <div class="form-check" id="MeetByOtherTextArea">
-                        <br>
-                        <p style="display: block;">
-                            If other, please explain<br>
+                        <p>If other, please explain</p>
                             <p class="form-control" name="ModuleCommunicationMeetNeedByOtherDescription" id="ModuleCommunicationMeetNeedByOtherDescription" rows="3">@(Model.studentCommunication.MeetNeedByOtherDescription)</p>
-                        </p>
+                       
                     </div>
                 </fieldset>
             </div>
@@ -555,11 +552,8 @@
                 <label class="radio-inline"><img src="@(Model.studentSocial.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleSocialMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentSocial.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label><br>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
-              
-                <p>
-                    If other, please explain<br>
-                    <textarea class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3">@(Model.studentSocial.MeedNeedByOtherDescription)</textarea>
-                </p>
+                <p>If other, please explain</p>
+                <p class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3">@(Model.studentSocial.MeedNeedByOtherDescription)</p>                
             </div>
         </fieldset>
     </div>
@@ -609,11 +603,9 @@
                 <label class="radio-inline"><img src="@(Model.studentIntelligence.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label><br>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
+                <p>If other, please explain</p>
+                <p class="form-control" name="ModuleIntelligenceMeetNeedByOtherDescription" id="ModuleIntelligenceMeetNeedByOtherDescription" rows="3">@(Model.studentIntelligence.MeetNeedByOtherDescription)</p>
                 
-                <p>
-                    If other, please explain<br>
-                    <p class="form-control" name="ModuleIntelligenceMeetNeedByOtherDescription" id="ModuleIntelligenceMeetNeedByOtherDescription" rows="3">@(Model.studentIntelligence.MeetNeedByOtherDescription)</p>
-                </p>
             </div>
         </fieldset>
     </div>
@@ -663,11 +655,8 @@
                 <label class="radio-inline"><img src="@(Model.studentAcademic.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleAcademicMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentAcademic.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label>*<br>
             </div>
             <div class="form-check" id="AcademicMeetByOtherTextArea">
-                <br>
-                <p>
-                    If other, please explain<br>
-                    <p class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3">@(Model.studentAcademic.MeetNeedByOtherDescription)</p>
-                </p>
+                <p>If other, please explain</p>
+                <p class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3">@(Model.studentAcademic.MeetNeedByOtherDescription)</p>                
             </div>
             <br>
         </fieldset>
@@ -726,11 +715,8 @@
                 <label class="radio-inline"><img src="@(Model.studentReading.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleReadingMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentReading.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label>*<br>
             </div>
             <div class="form-check" id="ReadingMeetByOtherTextArea">
-                <br>
-                <p>
-                    If other, please explain<br>
-                    <p class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3">@(Model.studentReading.MeetNeedByOtherDescription)</p>
-                </p>
+                <p>If other, please explain</p>
+                <p class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3">@(Model.studentReading.MeetNeedByOtherDescription)</p>
             </div>
         </fieldset>
     </div>
@@ -777,13 +763,13 @@
         <fieldset class="form-group">
             <label>Present Level of Performance</label>
             <div class="form-check">
-                <p class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3">@(Model.studentMath.LevelOfPerformance)</p>
+                <p class="form-control">@(Model.studentMath.LevelOfPerformance)</p>
             </div>
         </fieldset>
         <fieldset class="form-group">
             <label>Area of Need which impacts performance</label>
             <div class="form-check">
-                <p class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3">@(Model.studentMath.AreaOfNeedDescription)</p>
+                <p class="form-control">@(Model.studentMath.AreaOfNeedDescription)</p>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -800,11 +786,8 @@
                 </label>*<br>
             </div>
             <div class="form-check" id="MathMeetByOtherTextArea">
-                <br>
-                <p style="display:none;">
-                    If other, please explain<br>
-                    <p class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3">@(Model.studentMath.MeetNeedByOtherDescription)</p>
-                </p>
+                <p>If other, please explain</p>
+                <p class="form-control">@(Model.studentMath.MeetNeedByOtherDescription)</p>                
             </div>
         </fieldset>
     </div>
@@ -851,7 +834,7 @@
         <fieldset class="form-group">
             <label>Area of Need which impacts performance</label>
             <div class="form-check">
-                <p class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3">@(Model.studentWritten.AreaOfNeedDescription)</p>
+                <p class="form-control">@(Model.studentWritten.AreaOfNeedDescription)</p>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -862,11 +845,8 @@
                 <label class="radio-inline"><img src="@(Model.studentWritten.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /> <input type="radio" name="ModuleWrittenMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentWritten.MeetNeedBy == 3 ? "checked" : String.Empty)/>Other</label>*<br>
             </div>
             <div class="form-check" id="WrittenMeetByOtherTextArea">
-              
-                <p>
-                    If other, please explain<br>
-                    <p class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3">@(Model.studentWritten.MeetNeedByOtherDescription)</p>
-                </p>
+                <p>If other, please explain</p>
+                <p class="form-control">@(Model.studentWritten.MeetNeedByOtherDescription)</p>                
             </div>
         </fieldset>
     </div>
@@ -892,7 +872,7 @@
                     {
                     <div style="padding-top:10px">
                         <div class="panel-body">
-                            <div class="row">
+                            <div class="row voffset">
                                 <div class="col-md-12">
                                     <label for="AccType">Type</label>
                                     <div class="form-check" style="margin-left:8px">
@@ -937,24 +917,21 @@
                                             <label for="AnticipatedStartDate">Anticipated Start Date</label>
                                             @if (accom.AnticipatedStartDate.HasValue)
                                             {
-                                                <span>@accom.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")</span>
-
-                                            }
-                                           
+                                                <p>@accom.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")</p>
+                                            }                                           
                                         </div>
                                         <div class="col-md-3" style="padding-top:8px">
                                             <label for="AnticipatedEndDate">Anticipated End Date</label>
                                             @if (accom.AnticipatedEndDate.HasValue)
                                             {
-                                                <span>@accom.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")</span>
+                                                <p>@accom.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")</p>
 
                                             }
                                             
                                         </div>
                                         <div class="col-md-3" style="padding-top:8px">
                                             <div class="form-group" name="Location">
-                                                <label for="Location">Location</label><p>@accom.Location</p>
-                                               
+                                                <label for="Location">Location</label><p>@accom.Location</p>                                               
                                             </div>
                                         </div>
                                     </div>
@@ -1007,8 +984,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label>Triggers</label>
-
+                    <label class="underline">Triggers</label>
                 </div>
             </div>
             <div class="row voffset1">
@@ -1053,7 +1029,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <label>Hypothesis</label>
+                    <label class="underline">Hypothesis</label>
 
                 </div>
             </div>
@@ -1099,7 +1075,7 @@
             
             <div class="row">
                 <div class="col-md-12">
-                    <label>Strategies</label>
+                    <label class="underline">Strategies</label>
 
                 </div>
             </div>
@@ -1141,19 +1117,12 @@
                 </div>
             </div>
 
-
-
-            <div class="row" style="padding-top:8px">
+            <div class="row voffset">                
                 <div class="col-md-12">
-                    <label>Targeted Behaviors</label>
-
-                </div>
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
-                    <p>
-                        <table class="table" style="width:80%">
+                    <label class="underline">Targeted Behaviors</label>
+                    <span>Choose up to three targeted behaviors and supporting baseline data for each:</span>
+                    <div>
+                        <table class="table dont-break">
                             <thead>
                                 <tr>
                                     <th scope="col">Behavior 1</th>
@@ -1169,7 +1138,7 @@
                                 <td>@Model.studentBehavior.targetedBehavior1.Baseline</td>
                             </tr>
                         </table>
-                        <table class="table" style="width:80%">
+                        <table class="table dont-break" >
                             <thead>
                                 <tr>
                                     <th scope="col">Behavior 2</th>
@@ -1185,7 +1154,7 @@
                                 <td>@Model.studentBehavior.targetedBehavior2.Baseline</td>
                             </tr>
                         </table>
-                        <table class="table" style="width:80%">
+                        <table class="table dont-break">
                             <thead>
                                 <tr>
                                     <th scope="col">Behavior 3</th>
@@ -1201,7 +1170,7 @@
                                 <td>@Model.studentBehavior.targetedBehavior3.Baseline</td>
                             </tr>
                         </table>
-                    </p>
+                    </div>
                 </div>
             </div>
 
@@ -1312,7 +1281,7 @@
                                                     <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                                <fieldset class="form-group" >
                                                                     <label for="narrative">Narrative</label>
                                                                     <p rows="3" name="transitionAssessmentNarrative@(assessment.TransitionAssementID)" id="transitionAssessmentNarrative@(assessment.TransitionAssementID)" style="width: 100%;">@(assessment.Narrative)</p>
                                                                 </fieldset>
@@ -1821,7 +1790,7 @@
                                 <div class="col-md-12">
                                     <h4><b>Community Participation</b></h4>
                                     <fieldset class="form-group">
-                                        <label style="padding: 5px 0 10px; font-weight: normal;">Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.  These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g. Girl Scouts or 4-H activities), community work experiences, and counseling services.</label><br />
+                                        <label style="font-weight: normal;">Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.  These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g. Girl Scouts or 4-H activities), community work experiences, and counseling services.</label><br />
                                         <img src="@(Model.studentTransition.transition.CommunityParticipation ? @imageSliderChecked : @imageSliderNotChecked)" />
                                         @*<div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                                             <input type="checkbox" name="isCommunityParticipation" id="isCommunityParticipation" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.CommunityParticipation ? "checked='checked'" : "" ) />
