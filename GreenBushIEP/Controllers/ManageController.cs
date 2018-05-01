@@ -448,10 +448,29 @@ namespace GreenBushIEP.Controllers
             tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
             if (info != null)
             {
+                // remove all mapping. Blow it all away.
+                db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == studentId));
+                db.SaveChanges();
+
+                List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
+                if (collection["misDistrict"] != null)
+                {
+                    foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                    {
+                        mappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = "0",
+                            UserID = student.UserID,
+                            USD = usd
+                        });
+                    }
+                }
+                // add back the connections to the database.
+                db.tblBuildingMappings.AddRange(mappings);
+
                 info.UserID = student.UserID;
                 info.KIDSID = Convert.ToInt64(collection["kidsid"]);
                 info.DateOfBirth = Convert.ToDateTime(collection["dob"]);
-                info.USD = collection["misDistrict"];
                 info.BuildingID = collection["AttendanceBuildingId"];
                 info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                 info.Ethicity = collection["ethnic"];
@@ -581,34 +600,6 @@ namespace GreenBushIEP.Controllers
 
             return RedirectToAction("Portal", "Home");
         }
-
-        // POST: Manage/EditStudent
-        //public ActionResult EditStudent(HttpPostedFileBase adminpersona, FormCollection collection, StudentDetailsViewModel model)
-        //{
-        //    // remove all mapping. Blow it all away.
-        //    db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == id));
-        //    db.SaveChanges();
-
-        //    List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
-        //    if (collection["misDistrict"] != null)
-        //    {
-        //        foreach (string usd in collection["misDistrict"].ToString().Split(','))
-        //        {
-        //            mappings.Add(new tblBuildingMapping()
-        //            {
-        //                BuildingID = "0",
-        //                UserID = student.UserID,
-        //                USD = usd
-        //            });
-        //        }
-        //    }
-
-        //    // add back the connections to the database.
-        //    db.tblBuildingMappings.AddRange(mappings);
-        //    db.SaveChanges();
-
-        //    return RedirectToAction("Portal", "Home");
-        //}
 
         // GET: Manage/Edit/5
         [HttpGet]

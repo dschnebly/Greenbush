@@ -605,14 +605,14 @@
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation" class="disabled">
+                        <li role="presentation">
                             <a href="#step2" data-toggle="tab" aria-controls="step3" role="tab" title="Step 2">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-home"></i>
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation" class="disabled">
+                        <li role="presentation">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -696,7 +696,7 @@
                                             {
                                                 foreach (var building in Model.buildings)
                                                 {
-                                                    string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
+                                                    string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected" : "";
                                                     <option value="@building.BuildingID" @selected>@building.BuildingName</option>
                                                 }
                                             }

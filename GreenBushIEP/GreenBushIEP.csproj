@@ -544,7 +544,6 @@
     <Content Include="Views\Home\AdminPortal.cshtml" />
     <Content Include="Views\Home\Agreement.cshtml" />
     <Content Include="Views\Home\OwnerPortal.cshtml" />
-    <Content Include="Views\Home\Portal.cshtml" />
     <Content Include="Views\Home\StudentProcedures.cshtml" />
     <Content Include="Views\Home\TeacherPortal.cshtml" />
     <Content Include="Views\Home\TeacherStudentsRole.cshtml" />
