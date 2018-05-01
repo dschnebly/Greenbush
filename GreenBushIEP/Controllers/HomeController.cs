@@ -8,6 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using iTextSharp.text.html.simpleparser;
+using HtmlAgilityPack;
 
 namespace GreenbushIep.Controllers
 {
@@ -1365,10 +1371,118 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
-        protected override void OnException(ExceptionContext filterContext)
+        [Authorize]
+        [ValidateInput(false)]
+        public FileResult DownloadPDF(FormCollection collection)
         {
             
-            TempData["Error"] = filterContext.Exception.InnerException;
+            string HTMLContent = collection["printText"];
+            string studentName = collection["studentName"];
+            string studentId = collection["studentId"];
+
+            if (!string.IsNullOrEmpty(HTMLContent))
+            {
+                int id = 0;
+                Int32.TryParse(studentId, out id);
+                
+                tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Agreement = true;
+                }
+
+                db.SaveChanges();
+
+
+                var cssText = @"<style>
+                                .header{color:white;}
+                                .input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}
+                                .transitionServiceLabel, .underline{ text-decoration: underline;}
+                                .transition-break{page-break-before:always;}
+                                td { padding: 10px;}th{font-weight:600;}
+                                table{width:600px;border-spacing: 10px;}
+                                .module-page {font-size:11pt;}label{font-weight:800;}
+                                h3{font-weight:600;font-size:14pt;width:100%;text-align:center;padding:15px;}
+                                p{padding:10px}
+                                .section-break{page-break-after:always;color:white;background-color:white}
+                                .funkyradio{padding-bottom:15px;}
+                                .radio-inline{font-weight:normal;}
+                                .form-group{margin-top:5px;margin-bottom:5px}
+                                .voffset{padding-bottom:8px;}
+                                .form-check{margin-left:10px;}
+                                .dont-break{margin-top:10px;page-break-inside: avoid;}
+                                </style>";
+                string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
+                
+                HtmlDocument doc = new HtmlDocument();
+                doc.OptionWriteEmptyNodes = true;
+                doc.OptionFixNestedTags = true;
+                doc.LoadHtml(cssText + "<div class='module-page'>" + result + "</div>" );
+                string cleanHTML = doc.DocumentNode.OuterHtml;
+
+                using (var cssMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cssText)))
+                {
+                    using (var htmlMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cleanHTML)))
+                    {
+                        using (MemoryStream stream = new System.IO.MemoryStream())
+                        {
+                            using (MemoryStream stream2 = new System.IO.MemoryStream())
+                            {       
+                                    Document pdfDoc = new Document(PageSize.LETTER, 36, 36, 50, 50);
+                                    
+
+                                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                                    pdfDoc.Open();
+
+                                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, htmlMemoryStream, cssMemoryStream);
+                                    pdfDoc.Close();
+
+                                    byte[] fileIn = stream.ToArray();
+                                    var printFile = AddPageNumber(fileIn, studentName);
+
+                                    return File(printFile, "application/pdf", "IEP.pdf");
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+
+        }
+
+        byte[] AddPageNumber(byte[] fileIn, string studentName)
+        {
+            byte[] bytes = fileIn; 
+            byte[] fileOut = null;
+            Font blackFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
+            Font grayFont = FontFactory.GetFont("Arial", 75, Font.NORMAL, new BaseColor(245, 245, 245));
+            using (MemoryStream stream = new MemoryStream())
+            {
+                PdfReader reader = new PdfReader(bytes);
+                using (PdfStamper stamper = new PdfStamper(reader, stream))
+                {
+                    int pages = reader.NumberOfPages;
+                    
+                    for (int i = 1; i <= pages; i++)
+                    {
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 85f, 750f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("{0}", DateTime.Now.ToShortDateString()), blackFont), 85f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Page {0} of {1}",i.ToString(), pages.ToString()), blackFont), 568f, 15f, 0);
+                    }
+                }
+                fileOut = stream.ToArray();
+            }
+            
+            return fileOut;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+
+            TempData["Error"] = filterContext.Exception.Message;
             filterContext.ExceptionHandled = true;
 
             // Redirect on error:
@@ -1383,10 +1497,7 @@ namespace GreenbushIep.Controllers
 
             
         }
-
-       
-
-
+        
         private BehaviorViewModel GetBehaviorModel(int studentId, int iepId)
         {
             var model = new BehaviorViewModel();
