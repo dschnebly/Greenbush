@@ -12,7 +12,6 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
-using iTextSharp.text.html.simpleparser;
 using HtmlAgilityPack;
 
 namespace GreenbushIep.Controllers
@@ -459,6 +458,7 @@ namespace GreenbushIep.Controllers
                                  Email = u.Email,
                                  Password = u.Password,
                                  ImageURL = u.ImageURL,
+                                 Archive = u.Archive,
                              }).Distinct().ToList();
 
                 var info = (from i in db.tblStudentInfoes
