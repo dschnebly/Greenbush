@@ -177,7 +177,7 @@ namespace GreenBushIEP.Models
 
             // Add Intelligence Table
             this.studentIntelligence = new tblIEPIntelligence();
-            this.studentIntelligence.IEPIntelligenceID = IEPID;
+            this.studentIntelligence.IEPid = IEPID;
             this.studentIntelligence.Concerns = false;
 
             try
