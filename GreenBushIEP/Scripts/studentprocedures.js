@@ -26,6 +26,11 @@ $(function () {
     });
     /* end tooltips */
 
+    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+        $("#modal-studentPlanning").modal('show');
+    }
+
     // Attach Event
     // fires when the "form" evaluation consent button was clicked. *if the teacher wants to reprint the consent form
     $('#EvaluationConsent').not('.bound').addClass('bound').on("click", function (e) {
@@ -218,6 +223,12 @@ $(window).on('shown.bs.modal', function (e) {
 ///////////
 //
 // Student Planning
+
+if($("#modal-studentPlanning").hasClass("needsPlan")){
+    $("#modal-studentPlanning").on('hidden.bs.modal', function () {
+        $('*[data-target="#modal-studentPlanning"]').addClass("pulse animated");
+    });
+}
 
 // Attach Event
 // Save Plan button clicked.

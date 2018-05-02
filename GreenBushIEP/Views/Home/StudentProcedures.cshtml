@@ -715,6 +715,52 @@
             }
         }
 
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        @@-webkit-keyframes pulse {
+            from {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(2.5, 2.5, 2.5);
+                transform: scale3d(2.5, 2.5, 2.5);
+            }
+
+            to {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @@keyframes pulse {
+            from {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(2.5, 2.5, 2.5);
+                transform: scale3d(2.5, 2.5, 2.5);
+            }
+
+            to {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        .pulse {
+            -webkit-animation-name: pulse;
+            animation-name: pulse;
+        }
+
         @@media (min-width: 768px) {
             .modal-fullscreen .modal-dialog {
                 width: 750px;
@@ -1385,7 +1431,7 @@
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
                                 <label style="font-size: 16px; font-weight: normal;">Concerns</label>
                                 <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="RequireAssistiveTechnology" id="RequireAssistiveTechnology" class="truefalseswitch-checkbox" @(Model.studentPlan.RequireAssistiveTechnology ? "checked" : String.Empty ) />
+                                    <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="RequireAssistiveTechnology" @(Model.studentPlan.RequireAssistiveTechnology ? String.Empty : "checked" )>
                                     <label class="truefalseswitch-label" for="RequireAssistiveTechnology">
                                         <span class="truefalseswitch-inner"></span>
                                         <span class="truefalseswitch-switch"></span>
