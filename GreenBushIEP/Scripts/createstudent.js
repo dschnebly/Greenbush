@@ -162,6 +162,8 @@ function initContacts() {
 
                 // rebind the recently added contact.
                 initContacts();
+
+                return false;
             } else {
                 $(this).unbind("click").parents(".student-contact").fadeOut(300, function () {
                     $(this).remove();

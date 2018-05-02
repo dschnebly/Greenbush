@@ -188,7 +188,7 @@ namespace GreenBushIEP.Models
             catch(Exception e)
             {
                 this.draft.IepStatus = IEPStatus.DELETED;
-                throw new System.ArgumentException("Failed to create the Itellegince table");
+                throw new System.ArgumentException("Failed to create the Intelligence table");
             }
 
             // Add Academic Table
