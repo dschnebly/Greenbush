@@ -185,7 +185,7 @@ namespace GreenBushIEP.Models
                 db.tblIEPIntelligences.Add(this.studentIntelligence);
                 IntelligenceID = db.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 this.draft.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Itellegince table");
