@@ -177,7 +177,7 @@ namespace GreenBushIEP.Models
 
             // Add Intelligence Table
             this.studentIntelligence = new tblIEPIntelligence();
-            this.studentIntelligence.IEPIntelligenceID = IEPID;
+            this.studentIntelligence.IEPid = IEPID;
             this.studentIntelligence.Concerns = false;
 
             try
@@ -185,10 +185,10 @@ namespace GreenBushIEP.Models
                 db.tblIEPIntelligences.Add(this.studentIntelligence);
                 IntelligenceID = db.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 this.draft.IepStatus = IEPStatus.DELETED;
-                throw new System.ArgumentException("Failed to create the Itellegince table");
+                throw new System.ArgumentException("Failed to create the Intelligence table");
             }
 
             // Add Academic Table

@@ -120,6 +120,7 @@ namespace GreenBushIEP.Models
             this.WrittenTier3 = false;
             this.WrittenNeed = false;
             this.isDOC = false;
+            this.RequireAssistiveTechnology = false;
         }
 
         // Read the student's plan
@@ -251,8 +252,6 @@ namespace GreenBushIEP.Models
                     this.ExtendYear = extendYear;
                     this.RequireAssistiveTechnology = otherConsideration.AssistiveTechnology_Require.HasValue ? otherConsideration.AssistiveTechnology_Require.Value : false;
                 }
-
-                
             }
         }
 
