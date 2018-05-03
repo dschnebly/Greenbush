@@ -302,8 +302,8 @@
           <Key>
             <PropertyRef Name="IEPIntelligenceID" />
           </Key>
-          <Property Name="IEPid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IEPIntelligenceID" Type="int" Nullable="false" />
+          <Property Name="IEPIntelligenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Concerns" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
@@ -495,6 +495,7 @@
           <Property Name="ProviderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="tblRoles">
           <Key>
@@ -547,8 +548,8 @@
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="StudentLanguage" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="ParentLanguage" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="StudentLanguage" Type="nvarchar" MaxLength="10" />
+          <Property Name="ParentLanguage" Type="nvarchar" MaxLength="10" />
           <Property Name="Ethicity" Type="nvarchar" MaxLength="50" />
           <Property Name="Race" Type="nvarchar" MaxLength="50" />
           <Property Name="FundSource" Type="nvarchar" MaxLength="50" />
@@ -859,7 +860,6 @@
           <EntitySet Name="tblIEPAcademics" EntityType="IndividualizedEducationProgramModel.tblIEPAcademic" />
           <EntitySet Name="tblIEPCommunications" EntityType="IndividualizedEducationProgramModel.tblIEPCommunication" />
           <EntitySet Name="tblIEPHealths" EntityType="IndividualizedEducationProgramModel.tblIEPHealth" />
-          <EntitySet Name="tblIEPIntelligences" EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" />
           <EntitySet Name="tblIEPMaths" EntityType="IndividualizedEducationProgramModel.tblIEPMath" />
           <EntitySet Name="tblIEPMotors" EntityType="IndividualizedEducationProgramModel.tblIEPMotor" />
           <EntitySet Name="tblIEPReadings" EntityType="IndividualizedEducationProgramModel.tblIEPReading" />
@@ -894,6 +894,7 @@
           <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
           <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
+          <EntitySet Name="tblIEPIntelligences" EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1190,20 +1191,6 @@
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
-        <EntityType Name="tblIEPIntelligence">
-          <Key>
-            <PropertyRef Name="IEPIntelligenceID" />
-          </Key>
-          <Property Name="IEPid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPIntelligenceID" Type="Int32" Nullable="false" />
-          <Property Name="Concerns" Type="Boolean" Nullable="false" />
-          <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeed" Type="Boolean" />
-        </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
             <PropertyRef Name="IEPMathID" />
@@ -1389,6 +1376,7 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
+          <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblRole">
           <Key>
@@ -1548,8 +1536,8 @@
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StudentLanguage" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="ParentLanguage" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1588,6 +1576,20 @@
           <Property Name="Agreement" Type="Boolean" />
           <Property Name="Archive" Type="Boolean" />
           <Property Name="TeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblIEPIntelligence">
+          <Key>
+            <PropertyRef Name="IEPIntelligenceID" />
+          </Key>
+          <Property Name="IEPIntelligenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Concerns" Type="Boolean" Nullable="false" />
+          <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedBy" Type="Int32" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1920,21 +1922,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblIEPIntelligences">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
-              <MappingFragment StoreEntitySet="tblIEPIntelligence">
-                <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
-                <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
-                <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
-                <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
-                <ScalarProperty Name="Concerns" ColumnName="Concerns" />
-                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblIEPMaths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMath">
               <MappingFragment StoreEntitySet="tblIEPMath">
@@ -2122,6 +2109,7 @@
           <EntitySetMapping Name="tblProviders">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProvider">
               <MappingFragment StoreEntitySet="tblProviders">
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
@@ -2311,6 +2299,21 @@
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblIEPIntelligences">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
+              <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
+                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
+                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
+                <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
+                <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
+                <ScalarProperty Name="Concerns" ColumnName="Concerns" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

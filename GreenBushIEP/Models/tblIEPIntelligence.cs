@@ -14,8 +14,8 @@ namespace GreenBushIEP.Models
     
     public partial class tblIEPIntelligence
     {
-        public int IEPid { get; set; }
         public int IEPIntelligenceID { get; set; }
+        public int IEPid { get; set; }
         public bool Concerns { get; set; }
         public bool ProgressTowardGenEd { get; set; }
         public string LevelOfPerformance { get; set; }

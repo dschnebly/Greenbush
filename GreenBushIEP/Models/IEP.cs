@@ -84,7 +84,7 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPs.Add(this.draft);
-                IEPID = db.SaveChanges();
+                db.SaveChanges();
             }
             catch
             {
@@ -93,7 +93,7 @@ namespace GreenBushIEP.Models
 
             // Adding Health Table
             this.studentHealth = new tblIEPHealth();
-            this.studentHealth.IEPid = IEPID;
+            this.studentHealth.IEPid = this.draft.IEPid;
             this.studentHealth.NoConcerns = true;
             this.studentHealth.Concerns = false;
             this.studentHealth.Diagnosis = false;
@@ -106,7 +106,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPHealths.Add(this.studentHealth);
-                HealthID = db.SaveChanges();
+                db.SaveChanges();
+
+                HealthID = this.studentHealth.IEPHealthID;
             }
             catch
             {
@@ -116,7 +118,7 @@ namespace GreenBushIEP.Models
 
             // Adding Motor Table
             this.studentMotor = new tblIEPMotor();
-            this.studentMotor.IEPid = IEPID;
+            this.studentMotor.IEPid = this.draft.IEPid;
             this.studentMotor.NoConcerns = true;
             this.studentMotor.ProgressTowardGenEd = false;
             this.studentMotor.Needs = false;
@@ -125,7 +127,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPMotors.Add(this.studentMotor);
-                MotorID = db.SaveChanges();
+                db.SaveChanges();
+
+                MotorID = this.studentMotor.IEPMotorID;
             }
             catch
             {
@@ -135,7 +139,7 @@ namespace GreenBushIEP.Models
 
             // Add Communication Table
             this.studentCommunication = new tblIEPCommunication();
-            this.studentCommunication.IEPid = IEPID;
+            this.studentCommunication.IEPid = this.draft.IEPid;
             this.studentCommunication.NoConcerns = true;
             this.studentCommunication.ProgressTowardGenEd = false;
             this.studentCommunication.SpeechImpactPerformance = false;
@@ -145,7 +149,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPCommunications.Add(this.studentCommunication);
-                CommunicationID = db.SaveChanges();
+                db.SaveChanges();
+
+                CommunicationID = this.studentCommunication.IEPCommunicationID;
             }
             catch
             {
@@ -155,7 +161,7 @@ namespace GreenBushIEP.Models
 
             // Add Social Table
             this.studentSocial = new tblIEPSocial();
-            this.studentSocial.IEPid = IEPID;
+            this.studentSocial.IEPid = this.draft.IEPid;
             this.studentSocial.NoConcerns = true;
             this.studentSocial.ProgressTowardGenEd = false;
             this.studentSocial.AreaOfNeed = false;
@@ -167,7 +173,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPSocials.Add(this.studentSocial);
-                SocialID = db.SaveChanges();
+                db.SaveChanges();
+
+                SocialID = this.studentSocial.IEPSocialID;
             }
             catch
             {
@@ -177,13 +185,15 @@ namespace GreenBushIEP.Models
 
             // Add Intelligence Table
             this.studentIntelligence = new tblIEPIntelligence();
-            this.studentIntelligence.IEPid = IEPID;
+            this.studentIntelligence.IEPid = this.draft.IEPid;
             this.studentIntelligence.Concerns = false;
 
             try
             {
                 db.tblIEPIntelligences.Add(this.studentIntelligence);
-                IntelligenceID = db.SaveChanges();
+                db.SaveChanges();
+
+                IntelligenceID = this.studentIntelligence.IEPIntelligenceID;
             }
             catch(Exception e)
             {
@@ -193,14 +203,16 @@ namespace GreenBushIEP.Models
 
             // Add Academic Table
             this.studentAcademic = new tblIEPAcademic();
-            this.studentAcademic.IEPid = IEPID;
+            this.studentAcademic.IEPid = this.draft.IEPid;
             this.studentAcademic.NoConcerns = true;
             this.studentAcademic.AreaOfNeed = false;
 
             try
             {
                 db.tblIEPAcademics.Add(this.studentAcademic);
-                AcademicID = db.SaveChanges();
+                db.SaveChanges();
+
+                AcademicID = this.studentAcademic.IEPAcademicID;
             }
             catch
             {
@@ -210,7 +222,7 @@ namespace GreenBushIEP.Models
 
             // Add Reading Table
             this.studentReading = new tblIEPReading();
-            this.studentReading.IEPid = IEPID;
+            this.studentReading.IEPid = this.draft.IEPid;
             this.studentReading.NoConcerns = true;
             this.studentReading.ProgressTowardGenEd = false;
             this.studentReading.InstructionalTier1 = false;
@@ -221,7 +233,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPReadings.Add(this.studentReading);
-                ReadingID = db.SaveChanges();
+                db.SaveChanges();
+
+                ReadingID = this.studentReading.IEPReadingID;
             }
             catch
             {
@@ -231,7 +245,7 @@ namespace GreenBushIEP.Models
 
             // Add Math Table
             this.studentMath = new tblIEPMath();
-            this.studentMath.IEPid = IEPID;
+            this.studentMath.IEPid = this.draft.IEPid;
             this.studentMath.NoConcerns = true;
             this.studentMath.ProgressTowardGenEd = false;
             this.studentMath.InstructionalTier1 = false;
@@ -242,7 +256,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPMaths.Add(this.studentMath);
-                MathID = db.SaveChanges();
+                db.SaveChanges();
+
+                MathID = this.studentMath.IEPMathID;
             }
             catch
             {
@@ -252,7 +268,7 @@ namespace GreenBushIEP.Models
 
             // Add Written Table
             this.studentWritten = new tblIEPWritten();
-            this.studentWritten.IEPid = IEPID;
+            this.studentWritten.IEPid = this.draft.IEPid;
             this.studentWritten.NoConcerns = true;
             this.studentWritten.ProgressTowardGenEd = false;
             this.studentWritten.InstructionalTier1 = false;
@@ -263,7 +279,9 @@ namespace GreenBushIEP.Models
             try
             {
                 db.tblIEPWrittens.Add(this.studentWritten);
-                WrittenID = db.SaveChanges();
+                db.SaveChanges();
+
+                WrittenID = this.studentWritten.IEPWrittenID;
             }
             catch
             {
