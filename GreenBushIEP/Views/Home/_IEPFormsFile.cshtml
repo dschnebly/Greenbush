@@ -206,6 +206,10 @@
         margin-bottom: 0in;
     }
 
+    li{
+        margin: 1em 0;
+    }
+
     @@page {
         margin: 0;
     }
@@ -235,6 +239,17 @@
         footer {
             display: none;
         }
+
+        input[type=text], textarea {
+          background: transparent;
+            border-top: transparent !important;
+            border-left: transparent !important;
+            border-right: transparent !important;
+            border-bottom: 1px solid !important;
+            font-weight: 200;
+            color: white;
+            padding-left: 0;
+        }
     }
 </style>
 <div class="transition-page" style="margin-bottom: 45px; display: none;">
@@ -251,7 +266,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div align="center">
+                <div align="left">
                     <div class="col-md-12">
                         @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel)
                     </div>

@@ -1,6 +1,6 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.ToString() : 0;
+    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.Value.ToString() : " ";
 }
 
 <div>
