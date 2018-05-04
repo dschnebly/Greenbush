@@ -206,6 +206,7 @@ namespace GreenBushIEP.Models
         public tblStudentInfo studentInfo { get; set; }
         public tblUser teacher { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
+        public string building { get; set; }
     }
 
     public class IEPFormViewModel
