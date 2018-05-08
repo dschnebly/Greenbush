@@ -164,12 +164,25 @@ namespace GreenbushIep.Controllers
                 List<tblProvider> listOfProviders = new List<tblProvider>();
                 tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
+
                 if (MIS != null)
                 {
                     listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).ToList();
-                }
 
-                return PartialView("_ModuleServiceProviders", listOfProviders);
+					var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+										   join districts in db.tblDistricts
+												on buildingMaps.USD equals districts.USD
+										   where buildingMaps.UserID == MIS.UserID
+										   select districts).Distinct().ToList();
+
+					foreach (var district in MISDistrictList)
+					{
+
+					}
+
+				}
+
+				return PartialView("_ModuleServiceProviders", listOfProviders);
             }
 
             // Unknow user or view.

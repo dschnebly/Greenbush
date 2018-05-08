@@ -18,15 +18,14 @@
 
         <p class=MsoNormal style='tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
-                Student’s Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><span style=''></span> Date:
-                <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(48, ' ').Replace(" ", "\u00A0"))</u>
-            </span>
+                Student's Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><span style=''></span> Date:
+                <input type="text"/>            </span>
         </p>
 
         <p class=MsoNormal style='line-height:16.0pt;tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
                 School:
-                <u>@(String.Format(Model.building).PadRight(90 - String.Format(Model.building).Length, ' ').Replace(" ", "\u00A0"))</u>
+                <u>@(String.Format(Model.building).PadRight(80 - String.Format(Model.building).Length, ' ').Replace(" ", "\u00A0"))</u>
                 Grade:
                 <u>@(String.Format(studentGrade).PadRight(55 - String.Format(studentGrade).Length, ' ').Replace(" ", "\u00A0"))</u>
 
@@ -53,23 +52,23 @@ mso-fareast-font-family:Arial'>
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'><span style='font-family:"Arial",sans-serif;'><o:p>&nbsp;</o:p></span></p>
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
-                A.<span style=''></span>Student’s behavior<o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p>
+                A.<span style=''></span>Student's behavior<o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p>
             </span>
         </p>
 
        
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
-                B.<span style=''></span>Student’s IEP
+                B.<span style=''></span>Student.s IEP
             </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
         </p>
 
       
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 C.<span style=''></span>Teacher observation of the student
             </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
@@ -77,7 +76,7 @@ mso-fareast-font-family:Arial'>
 
        
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 D. <span style=''></span>Relevant information provided by the parent
             </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
@@ -85,7 +84,7 @@ mso-fareast-font-family:Arial'>
 
 
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 E. <span style=''></span>Any other relevant information.
             </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
@@ -144,7 +143,7 @@ tab-stops:list .25in'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
 58.5pt 81.0pt'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
-        <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;
+        <p class='MsoNormal page-break' style='margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;
 tab-stops:list .25in'>
             <![if !supportLists]><b style=''>
                 <span style='font-family:"Arial",sans-serif;mso-fareast-font-family:Arial'>
@@ -188,7 +187,7 @@ tab-stops:list .25in'>
 font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
-        <p class=MsoNormal style='margin-left:81.0pt;text-indent:-.25in;line-height:16.0pt;mso-list:l14 level2 lfo16;tab-stops:list 81.0pt left 1.25in'>
+        <p class=MsoNormal style='margin-left:81.0pt;line-height:16.0pt;mso-list:l14 level2 lfo16;tab-stops:list 81.0pt left 1.25in'>
             <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
                 the student will be returned to the
                 placement specified in his/her IEP, unless: (a) the school and parent(s) agree to
@@ -202,7 +201,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
             <span style='font-size:12.0pt;font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
-        <p class=MsoNormal style='margin-left:81.0pt;text-indent:-.25in;line-height:
+        <p class=MsoNormal style='margin-left:81.0pt;line-height:
 16.0pt;mso-list:l14 level2 lfo16;tab-stops:list 81.0pt left 1.25in'>
             <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
                 the team will conduct a functional
@@ -214,18 +213,14 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 
         <p class=MsoNormal style='margin-left:1.0in;line-height:16.0pt;mso-list:skip;tab-stops:1.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
-        <p class=MsoNormal style='margin-left:63.0pt;line-height:16.0pt;mso-list:skip;tab-stops:81.0pt'>
-            <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
-                <span style=''>   </span><span class=GramE>the</span> team will review the existing behavior intervention plan
-                and modify it, as necessary, to address <o:p></o:p>
-            </span>
-        </p>
+		<p class=MsoNormal style='margin-left:81.0pt;line-height:16.0pt;mso-list:skip;tab-stops:81.0pt'>
+			<input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+				the team will review the existing behavior intervention plan and modify it, as necessary, to address the
+			 behavior that resulted in the disciplinary removal.<o:p></o:p>
+			</span>
+		</p>
 
-        <p class=MsoNormal style='margin-left:1.0in;mso-list:skip;tab-stops:81.0pt'>
-            <span style='font-family:"Arial",sans-serif'>
-                <span style=''>   </span><span class=GramE>the</span> behavior that resulted in the disciplinary removal.<o:p></o:p>
-            </span>
-        </p>
+       
 
         <p class=MsoNormal style='margin-left:1.0in;mso-list:skip;tab-stops:1.25in'><o:p>&nbsp;</o:p></p>
 
@@ -252,12 +247,12 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-left:1.25in;text-indent:-1.25in;line-height:
+        <p class=MsoNormal style='margin-left:1.25in;line-height:
 16.0pt;'>
             <span style='font-family:"Arial",sans-serif'>
                 <span style=''></span>
             </span><input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
-                <span style=''>   </span>disciplinary
+                <span style=''>  </span>disciplinary
                 removal may occur, but the school district must continue to make a free
                 appropriate public education (FAPE) available to the student in a manner which
                 enables the student to continue to participate in the general education
@@ -272,7 +267,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-left:1.25in;text-indent:-1.25in;tab-stops:
+        <p class=MsoNormal style='margin-left:1.25in;;tab-stops:
 .5in 1.0in'>
             <span style='font-family:"Arial",sans-serif'>
                 <span style=''></span>
@@ -307,19 +302,19 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         <div>
             <table style="width:50%" class="pull-left" cellspacing="0">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
             </table>
             <table style="width:50%" class="pull-right">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
 
             </table>
         </div>
@@ -331,19 +326,19 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         <div>
             <table style="width:50%" class="pull-left" cellspacing="0">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
             </table>
             <table style="width:50%" class="pull-right">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
-                <tr><td>_________________</td><td>_________________</td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
 
             </table>
         </div>
