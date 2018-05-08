@@ -716,6 +716,7 @@ namespace GreenbushIep.Controllers
             if (student != null)
             {
                 model.student = student;
+                model.birthDate = info.DateOfBirth;
                 model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 model.isDoc = district.DOC;
 
@@ -738,34 +739,33 @@ namespace GreenbushIep.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult UpdateIEPDates(int stId, string iepDate, bool start = true)
-        //{
-        //    tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
+        [HttpGet]
+        [Authorize]
+        public ActionResult UpdateIEPDates(int stId, string IEPStartDate, string IEPEndDate)
+        {
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
 
-        //    if (iep != null)
-        //    {
-        //        DateTime result;
-        //        if (DateTime.TryParseExact(iepDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
-        //        {
-        //            if (start)
-        //            {
-        //                iep.begin_date = result;
-        //            }
-        //            else
-        //            {
-        //                iep.end_date = result;
-        //            }
+            if (iep != null)
+            {
+                DateTime startDate;
+                DateTime endDate;
+                if (DateTime.TryParseExact(IEPStartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
+                {
+                    if (DateTime.TryParseExact(IEPEndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate))
+                    {
+                        iep.begin_date = startDate;
+                        iep.end_date = endDate;
 
-        //            db.SaveChanges();
+                        db.SaveChanges();
+                    }
 
-        //            return Json(new { Result = "success", Message = "IEP Beginning Date was updated" }, JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
+                    return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
+                }
+            }
 
-        //    return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
-        //}
+
+            return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         [Authorize]
