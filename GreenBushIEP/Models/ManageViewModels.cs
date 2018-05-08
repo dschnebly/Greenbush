@@ -98,6 +98,26 @@ namespace GreenBushIEP.Models
         public List<tblCalendar> calendarDays { get; set; }
     }
 
+    public class MISProviderViewModel
+    {
+        public List<tblDistrict> districts { get; set; }
+        public List<tblProvider> listOfProviders { get; set; }
+
+        public MISProviderViewModel()
+        {
+           listOfProviders = new List<tblProvider>();
+           districts = new List<tblDistrict>();
+        }
+    }
+
+    public class ProviderViewModel
+    {
+        public string Name { get; set; }
+        public int ProviderID { get; set; }
+        public string ProviderCode { get; set; }
+
+            }
+
     public class Student
     {
         public int UserID { get; set; }

@@ -161,15 +161,26 @@ namespace GreenbushIep.Controllers
 
             if (view == "ServiceProviderModule")
             {
+                MISProviderViewModel model = new MISProviderViewModel();
                 List<tblProvider> listOfProviders = new List<tblProvider>();
                 tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
+
                 if (MIS != null)
                 {
-                    listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).ToList();
-                }
+                    listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).OrderBy(o => o.Name).ToList();
 
-                return PartialView("_ModuleServiceProviders", listOfProviders);
+					var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+										   join districts in db.tblDistricts
+												on buildingMaps.USD equals districts.USD
+										   where buildingMaps.UserID == MIS.UserID
+										   select districts).Distinct().ToList();
+
+					model.listOfProviders = listOfProviders;
+                    model.districts = MISDistrictList;
+				}
+
+				return PartialView("_ModuleServiceProviders", model);
             }
 
             // Unknow user or view.
@@ -178,31 +189,83 @@ namespace GreenbushIep.Controllers
 
         [HttpPost]
         [Authorize(Roles = mis)]
-        public ActionResult UpdateProvidersList(string name, int pk, string value)
+        public ActionResult UpdateProvidersList(int pk, string providerName, int[] providerDistrict, string providerCode)
         {
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            
             if (owner != null)
             {
                 tblProvider provider = db.tblProviders.Where(p => p.ProviderID == pk).SingleOrDefault();
                 if (provider != null)
                 {
-                    provider.Name = value.ToString();
+
+                    provider.Name = providerName;
+                    provider.ProviderCode = providerCode;
 
                     db.SaveChanges();
 
-                    return Json(new { Result = "success", id = provider.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                    foreach (var existingPD in provider.tblProviderDistricts.ToList())
+                        db.tblProviderDistricts.Remove(existingPD);
+
+                    db.SaveChanges();
+
+                    foreach (var district in providerDistrict)
+                    {
+                        tblProviderDistrict pd = new tblProviderDistrict();
+                        pd.ProviderID = provider.ProviderID;
+                        pd.USD = district.ToString();
+
+                        db.tblProviderDistricts.Add(pd);
+                        db.SaveChanges();
+                    }
+                    
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.Name });
+
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    tblProvider providerName = new tblProvider();
-                    providerName.Name = value.ToString();
-                    providerName.UserID = owner.UserID;
+                    tblProvider newProvider = new tblProvider();
+                    newProvider.Name = providerName;
+                    newProvider.ProviderCode = providerCode;
+                    newProvider.UserID = owner.UserID;
 
-                    db.tblProviders.Add(providerName);
+                    
 
-                    db.SaveChanges();
+                    //can't have duplicate provider code
+                    tblProvider dup = db.tblProviders.Where(p => p.ProviderCode == providerCode).SingleOrDefault();
 
-                    return Json(new { Result = "success", id = providerName.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                    if (dup == null)
+                    {
+                        db.tblProviders.Add(newProvider);
+                        db.SaveChanges();
+
+                        int newProvderId = newProvider.ProviderID;
+
+                        //add to tblProviderDistricts
+                        if (newProvderId > 0)
+                        {
+                            foreach (var district in providerDistrict)
+                            {
+                                tblProviderDistrict pd = new tblProviderDistrict();
+                                pd.ProviderID = newProvderId;
+                                pd.USD = district.ToString();
+
+                                db.tblProviderDistricts.Add(pd);
+                                db.SaveChanges();
+                            }
+
+                        }
+                        
+                    }
+                    else
+                    {
+                        return Json(new { Result = "error", id = pk, errors = "Provider code already exists"}, JsonRequestBehavior.AllowGet);
+                    }
+
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.Name });
+
+                    return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
                 }
             }
 
@@ -219,16 +282,30 @@ namespace GreenbushIep.Controllers
                 tblProvider provider = db.tblProviders.Where(p => p.ProviderID == providerId).SingleOrDefault();
                 if (provider != null)
                 {
+                    foreach (var existingPD in provider.tblProviderDistricts.ToList())
+                        db.tblProviderDistricts.Remove(existingPD);
+                    
                     db.tblProviders.Remove(provider);
                     db.SaveChanges();
 
-                    return Json(new { Result = "success", id = provider.ProviderID, errors = "" }, JsonRequestBehavior.AllowGet);
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.Name });
+
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { Result = "error", id = providerId, errors = "Unknown Provider Name." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "error", id = providerId, errors = "Unknown error." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetProviderDistrict(int providerId)
+        {
+            var districts = db.tblProviderDistricts.Where(o => o.ProviderID == providerId).Select(o => o.USD).ToList();
+
+            return Json(new { Result = "success", districts = districts }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

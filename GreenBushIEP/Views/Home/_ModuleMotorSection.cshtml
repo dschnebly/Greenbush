@@ -30,10 +30,9 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Team will consider participation in:</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 ? "checked" : String.Empty)>General Education P.E.</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Adaptive P.E.</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Modified P.E</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="4" style="position: relative; right: 5px;" @(Model.Participation == 4 ? "checked" : String.Empty)>Student has previously met P.E. Requirements</label>
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 ? "checked" : String.Empty)>No Special Education Supports Needed</label><br />
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed</label><br />
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has Met P.E. Requirements</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
