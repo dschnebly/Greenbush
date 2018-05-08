@@ -1,7 +1,6 @@
-﻿@using GreenBushIEP.Models
-@model List<tblProvider>
+﻿@model GreenBushIEP.Models.MISProviderViewModel
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<link href="~/Content/chosen.css" rel="stylesheet" />
 <style>
     .list-group-item i.glyphicon-trash,
     .list-group-item i.glyphicon-pencil {
@@ -42,6 +41,154 @@
     .editable-click, a.editable-click, a.editable-click:hover {
         border-bottom: 0;
     }
+
+    #providerModal {
+        display: block !important;
+        z-index: 1065;
+        position: relative;
+        width: 57%;
+        margin: auto;
+        position: relative;
+        top: -250px;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #999;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-radius: 6px;
+        outline: 0;
+        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        height: auto !important;
+    }
+
+        #providerModal.modal.fade #providerModal.modal-dialog {
+            -webkit-transition: -webkit-transform .3s ease-out;
+            -o-transition: -o-transform .3s ease-out;
+            transition: transform .3s ease-out;
+            -webkit-transform: translate(0, -25%);
+            -ms-transform: translate(0, -25%);
+            -o-transform: translate(0, -25%);
+            transform: translate(0, -25%);
+        }
+
+        #providerModal.modal.in #providerModal.modal-dialog {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -o-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
+
+        #providerModal.modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #providerModal.modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 10px;
+        }
+
+        #providerModal.modal-content {
+            position: relative;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+
+        #providerModal.modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1040;
+            background-color: #000;
+        }
+
+            #providerModal.modal-backdrop.fade {
+                filter: alpha(opacity=0);
+                opacity: 0;
+            }
+
+            #providerModal.modal-backdrop.in {
+                filter: alpha(opacity=50);
+                opacity: .5;
+            }
+
+        #providerModal.modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+            #providerModal.modal-header .close {
+                margin-top: -2px;
+            }
+
+        #providerModal.modal-title {
+            margin: 0;
+            line-height: 1.42857143;
+        }
+
+        #providerModal.modal-body {
+            position: relative;
+            padding: 15px;
+        }
+
+        #providerModal.modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+
+            #providerModal.modal-footer .btn + .btn {
+                margin-bottom: 0;
+                margin-left: 5px;
+            }
+
+            #providerModal.modal-footer .btn-group .btn + .btn {
+                margin-left: -1px;
+            }
+
+            #providerModal.modal-footer .btn-block + .btn-block {
+                margin-left: 0;
+            }
+
+        #providerModal.modal-scrollbar-measure {
+            position: absolute;
+            top: -9999px;
+            width: 50px;
+            height: 50px;
+            overflow: scroll;
+        }
+
+    @@media (min-width: 768px) {
+        #providerModal.modal-dialog {
+            width: 600px;
+            margin: 30px auto;
+        }
+
+        #providerModal.modal-content {
+            -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        }
+
+        #providerModal.modal-sm {
+            width: 300px;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        #providerModal.modal-lg {
+            width: 900px;
+        }
 </style>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
@@ -55,125 +202,266 @@
         </div>
         <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+            <span class="moreinfo"><strong>Results!</strong> </span>
         </div>
         <div class="row">
             <ul class="list-group">
                 <li class="head">List of Providers</li>
-                @if (Model != null && Model.Count > 0)
+                @if (Model != null && Model.listOfProviders.Count > 0)
                 {
-                    foreach (var provider in Model)
+                    foreach (var provider in Model.listOfProviders)
                     {
-                        <li class="list-group-item"><a href="#" data-name="ProviderName" data-pk="@provider.ProviderID" data-type="text" data-title="Enter Provider name" data-value="@provider.Name" class="editme editable editable-click">@provider.Name</a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>
+                        <li class="list-group-item"><span>@provider.Name: @provider.ProviderCode </span><i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.Name", "@provider.ProviderCode");'></i></li>
                     }
                 }
 
             </ul>
+
+        </div>
+        <!-- Modal -->
+        <div id="providerModal" class="modal hidden" data-backdrop-limit="1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-parent="#moduleSection" style="display: none !important;">
+            <div class="modal-header">
+                <button type="button" class="close closeChildModal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Add Provider</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 district-selection">
+                    <input type="hidden" id="providerId" name="providerId" class="form-control" value="0" />
+                    <label>Name</label><br />
+                    <input type="text" id="providerName" name="providerName" class="form-control" /><br />
+                    <label>District</label><br />
+                    <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
+                        @if (Model.districts != null)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+
+                                <option value="@district.USD">@district.DistrictName</option>
+                            }
+                        }
+                    </select>
+
+                    <label>Code</label><br />
+                    <input type="text" id="providerCode" name="providerCode" class="form-control" /><br />
+
+                </div>
+
+            </div>
+            <div class="modal-footer" style="border: 0 !important;">
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="updateProviderBtn" onclick="updateProvider();">Save</button>
+                <button type="button" class="btn btn-default btn-lg closeChildModal" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
 
     </div>
-    <div class="child-ajax-loader">
-        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-    </div>
+    <!-- end Modal -->
 </div>
+
 <script>
+    var selectedDistricts = "";
+
     $(document).ready(function () {
+
+
         function init() {
             $('.child-ajax-loader').css('visibility', 'hidden');
 
-            $("#addProvider").on('click', function (e) {
-                var listgroupitem = '<li class="list-group-item"><a href="#" data-name="ProviderName" data-pk="0" data-type="text" data-title="Enter Provider name" class="editme editable editable-click"></a><i class="glyphicon glyphicon-trash pull-right btn btn-default"></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default"></i></li>';
+            $(".chosen-select")
+                .chosen({
+                    disable_search_threshold: 10,
+                    no_results_text: "Oops, nothing found!",
+                    width: "100%"
+                }).change(function (e, params) {
+                    selectedDistricts = $(".chosen-select").chosen().val();
+                });
 
-                $('ul.list-group').append(listgroupitem);
-                initProvider();
+            $("#addProvider").on('click', function (e) {
+
+                var $m1 = $('#moduleSection');
+                var $innermodal = $m1.find(".modal");
+                $m1.after($innermodal);
+
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', 1050).addClass('modal-stack');
+                    $innermodal.removeAttr('style');
+                }, 0);
+
             });
 
-            function initProvider() {
+            $('.closeChildModal').on('click', function () {
+                closeModal();
+                return false;
+            });
 
-                $.fn.editable.defaults.mode = 'inline';
-
-                // init the list of providers.
-                $('.editme').addClass("bound").editable({
-                    type: 'text',
-                    url: '/Home/UpdateProvidersList',
-                    ajaxOptions: {
-                        dataType: 'json' //assuming json response
-                    },
-                    success: function (data, config) {
-                        if (data && data.id) {
-                            //set pk
-                            $(this).attr('data-pk', data.id);
-                            //remove unsaved class
-                            $(this).removeClass('editable-unsaved');
-                        } else if (data && data.errors) {
-                            //server-side validation error, response like {"errors": {"username": "username already exist"} }
-                            config.error.call(this, data.errors);
-                        }
-                    },
-                    error: function (errors) {
-                        var msg = '';
-                        msg = '<strong>Oh SNAP!</strong> Server Error or the resource cannot be found.';
-                        $('.moreinfo').html(msg);
-                        $('#alertMessage').show();
-                    }
-                });
-
-                initalizeRow();
-            }
-
-            function initalizeRow() {
-                $('.glyphicon-trash').not(".bound").addClass("bound").on('click', function (e) {
-                    var answer = confirm("Do you really want to delete this Service Provider?")
-
-                    if (answer) {
-
-                        var li = $(this).closest('li');
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/DeleteProviderName',
-                            dataType: 'json',
-                            data: { providerId: $(this).closest('li').find('a').attr('data-pk') },
-                            async: false,
-                            success: function (data) {
-                                console.log(data);
-                                if (data.Result === "success") {
-                                    li.remove();
-                                }
-                                else {
-                                    $("#alertMessage .moreinfo").html(data.errors);
-                                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                        $("#alertMessage").slideUp(500);
-                                    });
-                                }
-                            },
-                            error: function (data) {
-                                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                    $("#alertMessage").slideUp(500);
-                                });
-                            }
-                        });
-
-                    }
-                });
-
-                $('.glyphicon-pencil').not(".bound").addClass("bound").on('click', function (e) {
-                    e.stopPropagation();
-                    $(this).siblings(".editme").editable('toggle');
-                });
-
-                $('.close').on('click', function (e) {
-                    $(this).parent().hide();
-                });
-            }
-
-            initProvider();
         }
 
         // Prevent race conditions.
         loadScript("//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js", init);
+
+
     });
 
+    function deleteProvider(id) {
+        if (confirm("Do you really want to delete this Service Provider?")) {
+            $.post('@Url.Action("DeleteProviderName", "Home")', { providerId: id }, function (response) {
+                if (!$.isEmptyObject(response)) {
+                    if (response.Result == "success") {
+                        //update list
+                        updateProviderList(response.providerList);
+                    }
+                    else {
+                        clearModal();
+                        closeModal();
+                        $("#alertMessage .moreinfo").html(response.errors);
+                        $("#alertMessage")
+                            .fadeTo(3000, 500)
+                            .slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                    }
+
+                }
+            });
+        }
+    }
+
+    function editProvider(id, name, code) {
+        var providerId = id;
+        var providerName = name;
+        var providerCode = code;
+
+        //get districts
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetProviderDistrict',
+            data: { providerId: parseInt(providerId) },
+            dataType: 'json',
+            success: function (data) {
+                if (data.length !== 0) {
+                    edit(providerId, providerName, providerCode, data.districts);
+                }
+                else {
+                    $("#alertMessage .moreinfo").html('Server Error');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            },
+            error: function (data) {
+                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            },
+            complete: function () {
+                $('.ajax-loader').css("visibility", "hidden");
+            }
+        });
+    }
+
+    function edit(providerId, name, code, districts) {
+
+        $("#providerName").val(name);
+        $("#misDistrict").val(districts).trigger("chosen:updated");
+        selectedDistricts = districts;
+        $("#providerCode").val(code);
+        $("#providerId").val(providerId);
+
+        var $m1 = $('#moduleSection');
+        var $innermodal = $m1.find(".modal");
+        $m1.after($innermodal);
+
+
+        var zIndex = 1040 + (10 * $('.modal:visible').length);
+        $(this).css('z-index', zIndex);
+        setTimeout(function () {
+            $('.modal-backdrop').not('.modal-stack').css('z-index', 1050).addClass('modal-stack');
+            $innermodal.removeAttr('style');
+        }, 0);
+    }
+
+    function updateProvider() {
+        var name = $("#providerName").val();
+        var district = selectedDistricts;
+        var code = $("#providerCode").val();
+        var id = $("#providerId").val();
+        var errors = "";
+        if (name == "" || name == undefined) {
+            errors += "Name is required. ";
+        }
+
+        if (code == "" || code == undefined) {
+            errors += "Provider Code is required. ";
+        }
+
+        if (selectedDistricts == "" || selectedDistricts == undefined) {
+            errors += "District is required. ";
+        }
+
+        if (errors != "") {
+            alert(errors);
+
+            return;
+        }
+
+        $.post('@Url.Action("UpdateProvidersList", "Home")', { pk: id, providerName: name, providerDistrict: district, providerCode: code }, function (response) {
+            if (!$.isEmptyObject(response)) {
+                if (response.Result == "success") {
+                    updateProviderList(response.providerList);
+                }
+                else {
+                    clearModal();
+                    closeModal();
+                    $("#alertMessage .moreinfo").html(response.errors);
+                    $("#alertMessage")
+                        .fadeTo(3000, 500)
+                        .slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                }
+
+            }
+        });
+    }
+
+    function clearModal() {
+        $("#providerName").val("");
+        $("#misDistrict").val("").trigger('chosen:updated');;
+        selectedDistricts = "";
+        $("#providerCode").val("");
+        $("#providerId").val(0);
+    }
+
+
+    function closeModal() {
+        clearModal();
+        var $m2 = $('#providerModal');
+        var $m1 = $('#moduleSection').find(".container-fluid");
+
+        $m1.before($m2);
+        $m2.attr('style', 'display: none !important');
+
+        $('.modal-stack').css('z-index', 1049).removeClass('modal-stack');
+    }
+
+    function updateProviderList(providerList) {
+        $('ul.list-group').empty();
+
+        $('ul.list-group').append("<li class='head'>List of Providers</li>");
+
+        providerList.forEach(function (provider) {
+            var listgroupitem = '<li class="list-group-item"><span>' + provider.Name + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + provider.Name + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
+
+            $('ul.list-group').append(listgroupitem);
+        });
+        clearModal();
+        closeModal();
+        
+        return false;
+    }
+    
     function loadScript(url, callback) {
         // adding the script tag to the head as suggested before
         var head = document.getElementsByTagName('head')[0];
