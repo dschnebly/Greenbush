@@ -51,6 +51,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="17.375" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUser" Width="1.5" PointX="19.375" PointY="15.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" Width="1.5" PointX="3" PointY="23.125" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
