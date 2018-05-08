@@ -18,6 +18,7 @@ namespace GreenBushIEP.Models
         public tblProvider()
         {
             this.tblServices = new HashSet<tblService>();
+            this.tblProviderDistricts = new HashSet<tblProviderDistrict>();
         }
     
         public int ProviderID { get; set; }
@@ -27,5 +28,7 @@ namespace GreenBushIEP.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblService> tblServices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblProviderDistrict> tblProviderDistricts { get; set; }
     }
 }

@@ -521,6 +521,10 @@
                 transform: scale(1);
                 opacity: 1;
             }
+            
+       input[type=date] {
+           margin-right: 20px;
+       }
 
 
         /**** Vertically Centers the Modal Popup ****/
@@ -887,13 +891,12 @@
             <div class="btn-group btn-group-primary col-md-2">
                 <label class="btn btn-square-toround btn-xl btn-bordered-warning" data-toggle="modal"><span class="glyphicon glyphicon-chevron-right"></span> DRAFT </label>
             </div>
-            <span class="form-group-sm col-md-4">
+            <span class="form-group col-md-8">
                 <label for="IEPBeginDate">Beginning Date:&nbsp;&nbsp;</label>
                 <input type="date" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
-            </span>
-            <span class="form-group-sm col-md-4">
                 <label for="IEPEndDate">Ending Date:&nbsp;&nbsp;</label>
                 <input type="date" name="IEPEndDate" id="IEPEndDate" value="@(Model.studentIEP.draft.end_date != null ? Model.studentIEP.draft.end_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.end_date != null ? Model.studentIEP.draft.end_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
+                <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </span>
             <div class="col-md-2 pull-right" style="padding-left: 0;padding-right: 0;width: 165px;">
                 <div class="btn-group">

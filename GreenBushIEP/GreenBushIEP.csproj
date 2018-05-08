@@ -385,6 +385,9 @@
     <Compile Include="Models\tblProvider.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblProviderDistrict.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblRole.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

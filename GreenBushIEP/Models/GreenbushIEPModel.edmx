@@ -488,6 +488,14 @@
           <Property Name="Parental_Concerns_Desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblProviderDistricts">
+          <Key>
+            <PropertyRef Name="ProviderDistrictID" />
+          </Key>
+          <Property Name="ProviderDistrictID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProviderID" Type="int" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblProviders">
           <Key>
             <PropertyRef Name="ProviderID" />
@@ -675,6 +683,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblProviderDistricts_ProviderID">
+          <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="1" />
+          <End Role="tblProviderDistricts" Type="Self.tblProviderDistricts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProviders">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblProviderDistricts">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblServices_GoalID">
           <End Role="tblGoals" Type="Self.tblGoals" Multiplicity="1" />
           <End Role="tblServiceGoals" Type="Self.tblServiceGoals" Multiplicity="*" />
@@ -776,6 +796,7 @@
           <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOtherConsiderations" EntityType="Self.tblOtherConsiderations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProviderDistricts" EntityType="Self.tblProviderDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
@@ -791,6 +812,10 @@
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
             <End Role="tblLocations" EntitySet="tblLocations" />
             <End Role="tblAccommodations" EntitySet="tblAccommodations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="Self.FK_tblProviderDistricts_ProviderID">
+            <End Role="tblProviders" EntitySet="tblProviders" />
+            <End Role="tblProviderDistricts" EntitySet="tblProviderDistricts" />
           </AssociationSet>
           <AssociationSet Name="FK_tblServices_GoalID" Association="Self.FK_tblServices_GoalID">
             <End Role="tblGoals" EntitySet="tblGoals" />
@@ -895,6 +920,11 @@
           <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
           <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <EntitySet Name="tblIEPIntelligences" EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" />
+          <EntitySet Name="tblProviderDistricts" EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" />
+          <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID">
+            <End Role="tblProvider" EntitySet="tblProviders" />
+            <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1377,6 +1407,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
           <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
         </EntityType>
         <EntityType Name="tblRole">
           <Key>
@@ -1591,6 +1622,27 @@
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
+        <EntityType Name="tblProviderDistrict">
+          <Key>
+            <PropertyRef Name="ProviderDistrictID" />
+          </Key>
+          <Property Name="ProviderDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
+        </EntityType>
+        <Association Name="FK_tblProviderDistricts_ProviderID">
+          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblProviderDistrict" Role="tblProviderDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProvider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblProviderDistrict">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2314,6 +2366,15 @@
                 <ScalarProperty Name="Concerns" ColumnName="Concerns" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProviderDistricts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProviderDistrict">
+              <MappingFragment StoreEntitySet="tblProviderDistricts">
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="ProviderDistrictID" ColumnName="ProviderDistrictID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

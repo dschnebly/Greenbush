@@ -70,6 +70,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblIEPIntelligence> tblIEPIntelligences { get; set; }
+        public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
