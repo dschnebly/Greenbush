@@ -1,6 +1,7 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.ToString() : 0;
+    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.Value.ToString() : " ";
+   
 }
 
 <div>
@@ -17,15 +18,15 @@
 
         <p class=MsoNormal style='tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
-                Student’s Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><span style=''></span>Date:
-                <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(50, ' ').Replace(" ", "\u00A0"))</u>
+                Student’s Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><span style=''></span> Date:
+                <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(48, ' ').Replace(" ", "\u00A0"))</u>
             </span>
         </p>
 
         <p class=MsoNormal style='line-height:16.0pt;tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
                 School:
-                <u><span style=''>   </span><span style=''>                                                                               </span></u><span style=''></span>
+                <u>@(String.Format(Model.building).PadRight(90 - String.Format(Model.building).Length, ' ').Replace(" ", "\u00A0"))</u>
                 Grade:
                 <u>@(String.Format(studentGrade).PadRight(55 - String.Format(studentGrade).Length, ' ').Replace(" ", "\u00A0"))</u>
 
@@ -33,14 +34,9 @@
             </span>
         </p>
 
-        <p class=MsoNormal>
-            <u>
-                <span style='font-size:11.0pt;
-font-family:"Arial",sans-serif'><o:p><span style='text-decoration:none'>&nbsp;</span></o:p></span>
-            </u>
-        </p>
+       
 
-        <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;
+        <p class=MsoNormal style='margin-top:15px;margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;
 tab-stops:list .25in'>
             <![if !supportLists]><b>
                 <span style='font-family:"Arial",sans-serif;
@@ -59,128 +55,42 @@ mso-fareast-font-family:Arial'>
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
             <span style='font-family:"Arial",sans-serif;'>
-                A.<span style=''></span>Student’s behavior<o:p></o:p>
+                A.<span style=''></span>Student’s behavior<o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p>
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'><span style='font-family:"Arial",sans-serif;'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'><span style='font-family:"Arial",sans-serif;'><o:p>&nbsp;</o:p></span></p>
+       
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
             <span style='font-family:"Arial",sans-serif;'>
                 B.<span style=''></span>Student’s IEP
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p></o:p></span></b>
+            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
         </p>
 
-        <p class=MsoNormal style='margin-left:.25in'>
-            <b style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b>
-        </p>
-
-        <p class=MsoNormal style='margin-left:.25in'>
-            <b style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></b>
-        </p>
-
-
-        <p class=MsoNormal style='margin-left:27.0pt;'>
-            <span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-left:27.0pt;'>
-            <span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-left:27.0pt;'>
-            <span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
+      
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
             <span style='font-family:"Arial",sans-serif;'>
                 C.<span style=''></span>Teacher observation of the student
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p></o:p></span></b>
+            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
         </p>
 
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
+       
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
             <span style='font-family:"Arial",sans-serif;'>
                 D. <span style=''></span>Relevant information provided by the parent
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p></o:p></span></b>
+            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
         </p>
 
 
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''>
-            <span style='font-family:"Arial",sans-serif'>
-                <span style=''></span><o:p></o:p>
-            </span>
-        </p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal style=''><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;text-indent:.25in'>
             <span style='font-family:"Arial",sans-serif;'>
                 E. <span style=''></span>Any other relevant information.
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p></o:p></span></b>
+            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
         </p>
 
-
-        <p class=MsoNormal style='margin-left:.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
         <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;tab-stops:list .25in'>
             <![if !supportLists]><b style=''>
@@ -201,7 +111,7 @@ mso-fareast-font-family:Arial'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
 58.5pt 81.0pt'>
             <span style='font-family:"Arial",sans-serif'>
-                YES     <span style=''></span>or<span style=''>     </span>NO<o:p></o:p>
+                <input type="checkbox" /> YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /> NO<o:p></o:p>
             </span>
         </p>
 
@@ -227,7 +137,7 @@ tab-stops:list .25in'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
 58.5pt 81.0pt'>
             <span style='font-family:"Arial",sans-serif'>
-                YES     <span style=''></span>or<span style=''>     </span>NO<o:p></o:p>
+                <input type="checkbox" /> YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /> NO<o:p></o:p>
             </span>
         </p>
 
@@ -441,7 +351,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 
         <p class=MsoNormal style='line-height:23.0pt;tab-stops:81.0pt 117.0pt 2.0in 148.5pt'>
             <span style='font-family:"Arial",sans-serif'>
-                Attachments:<span style=''>      </span>YES<span style=''>     </span>or<span style=''>    </span>NO<o:p></o:p>
+                Attachments:<span style=''>      </span><input type="checkbox" /> YES<span style=''>     </span>or<span style=''>    </span><input type="checkbox" /> NO<o:p></o:p>
             </span>
         </p>
 

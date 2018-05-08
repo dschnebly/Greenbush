@@ -1181,6 +1181,8 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+
+
             StudentLegalView fileViewModel = new StudentLegalView()
             {
                 student = student,
@@ -1188,6 +1190,12 @@ namespace GreenbushIep.Controllers
                 studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
                 contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList()
             };
+
+            if (fileViewModel.studentInfo != null)
+            {
+                tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
+                fileViewModel.building = building != null ? building.BuildingName: "";
+            }
 
             viewModel.fileModel = fileViewModel;
 
@@ -1204,6 +1212,7 @@ namespace GreenbushIep.Controllers
                 model.IEPForms = GetForms();
                 model.StudentId = stid;
                 model.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
+                
             }
 
             return View(model);

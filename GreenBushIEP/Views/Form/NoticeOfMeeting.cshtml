@@ -19,53 +19,30 @@
  480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
         <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
             <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
+               
                 <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:
-  11.0pt'><o:p>&nbsp;</o:p></span>
-                    </b>
-                </p>
-                <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:
-  11.0pt'>To:<u>&nbsp;&nbsp;@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(73 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
-</b><span style='font-size:11.0pt'><o:p></o:p></span>
-</p>
+                     <span style='font-size:  11.0pt'><b>To:</b> <u>@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(73 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+                    <span style='font-size:11.0pt'><o:p></o:p></span></p>
 <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
     <span style='font-size:11.0pt'>
         <span style='mso-tab-count:1'>       </span>(Parent/Legal
         Educational Decision Maker)<o:p></o:p>
     </span>
 </p>
-<p class=MsoNormal style='tab-stops:lined 261.0pt'>
-    <s>
-        <span style='font-size:
-  11.0pt'><o:p><span style='text-decoration:none'>&nbsp;</span></o:p></span>
-    </s>
-</p>
 </td>
-<td width=322 valign=top style='width:241.4pt;padding:0in 5.4pt 0in 5.4pt'>
-    <h2 style='text-indent:27.0pt'>
-        <span style='text-decoration:none;text-line-through:
-  none'><o:p>&nbsp;</o:p></span>
-    </h2>
-    <h2>
-        <p class="MsoNormal" style="tab-stops:lined 261.0pt">
-            <b>
-                <span style="font-size:
-  11.0pt"><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-        <span style='text-decoration:none;text-line-through:none'>
-            <span style='text-decoration:none;text-line-through:none'><b>Date:</b></span>
-        </span><span style='font-weight:normal;mso-bidi-font-weight:bold;text-decoration:none;
-  text-line-through:none'>
-            <span style='text-decoration:none;text-line-through:
-  none'><u>&nbsp;&nbsp;<b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(79, ' ').Replace(" ", "\u00A0"))</b></u></span>
-</span><span style='text-decoration:
-  none;text-line-through:none'><o:p></o:p></span>
-</h2>
-</td>
+            <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
+
+                <p class=MsoNormal style='tab-stops:lined 261.0pt'>
+                    <span style='font-size:  11.0pt'><b>Date:</b> <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(45, ' ').Replace(" ", "\u00A0"))</u></span>
+                    <span style='font-size:11.0pt'><o:p></o:p></span>
+                </p>
+                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+                    <span style='font-size:11.0pt'>
+                        <span style='mso-tab-count:1'>       </span>&nbsp;<o:p></o:p>
+                    </span>
+                </p>
+            </td>
+
 </tr>
 <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
     <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
@@ -78,9 +55,9 @@
         <p class=MsoNormal style='tab-stops:lined 261.0pt'>
             <b>
                 <span style='font-size:
-  11.0pt'>On be half of:</span>
+  11.0pt'>On be half of: </span>
             </b><span style='font-size:11.0pt;mso-bidi-font-weight:
-  bold'><u>&nbsp;&nbsp;<b>@(String.Format(teacherFormattedName).PadRight(56 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+  bold'><u><b>@(String.Format(teacherFormattedName).PadRight(56 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
     <span style='font-size:11.0pt'>
@@ -112,7 +89,7 @@
             <span style='font-size:
     11.0pt'>
                 Proposed meeting date, time and
-                place:____________________________________________________
+                place:<textarea class="form-control" cols="100" rows="4"></textarea>
             </span>
         </b>
     </p>
@@ -122,7 +99,7 @@
     mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span>
     </p>
 
-    <p class=MsoNormal style='tab-stops:lined 6.25in'><span style='font-size:11.0pt'>______________________________________________________________________________________</span></p>
+   
 
     <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
 
@@ -143,13 +120,12 @@
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in;
       height:99.9pt'>
                 <p class=MsoNormal>
-                    <a name=Check1></a><span style='font-size:14.0pt;
-      font-family:"Courier New"'>&#9633;</span><span style='font-size:14.0pt'><o:p></o:p></span>
+                    <input type='checkbox' />
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
       height:99.9pt'>
-                <p class=MsoBodyText2>
+                <p class=MsoNormal>
                     The results of the evaluation or reevaluation of your
                     child are now available.<span style='mso-spacerun:yes'>  </span>By law, we
                     must meet with you to review the evaluation results for your child, including
@@ -158,13 +134,10 @@
                     determine, with your input:
                 </p>
                 <p class=MsoNormal><span style='font-size:6.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
-                <p class=MsoNormal style='margin-top:0in;margin-right:-12.6pt;margin-bottom:
-      0in;margin-left:.7in;margin-bottom:.0001pt;text-indent:-.25in'>
+                <p class=MsoNormal>
                     <b>
                         <span style='font-size:9.0pt'>
-                            <span style='mso-spacerun:yes'>  </span>1) your
-                            child’s academic achievement, functional performance<i style='mso-bidi-font-style:
-      normal'>,</i>and<i style='mso-bidi-font-style:normal'> </i>educational needs;
+                          1) your child’s academic achievement, functional performance, and educational needs;
                         </span>
                     </b>
                 </p>
@@ -198,7 +171,7 @@
         </tr>
     </table>
 
-    <p class=MsoNormal>
+    <p class=MsoNormal style="margin-top:8px">
         <b style='mso-bidi-font-weight:normal'>
             <u>
                 MEETING TO DEVELOP
@@ -207,7 +180,7 @@
         </b><span style='mso-spacerun:yes'></span>
     </p>
 
-    <p class=MsoBodyText3>
+    <p class=MsoNormal>
         As the parent of an exceptional child, you are entitled
         to a 10-day prior written notice of any meeting to discuss the needs of your
         child and develop an individualized education program (IEP).<span style='mso-spacerun:yes'></span>You may consent to hold the meeting with less
@@ -220,14 +193,14 @@
         <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
                 <p class=MsoNormal>
-                    <span style='font-size:14.0pt;font-family:"Courier New";
-      color:black'>&#9633;</span><a name=Check2></a><span style='font-size:14.0pt'><o:p></o:p></span>
+                   <input type='checkbox' />
+      
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
                 <p class=MsoNormal>
                     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
-      letter-spacing:-.1pt'>&nbsp;If it is determined that your child is eligible,</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Times",serif;
+      letter-spacing:-.1pt'>If it is determined that your child is eligible,</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Times",serif;
       letter-spacing:-.1pt'>or continues to be eligible,</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>
                         for
                         special education and related services,
@@ -263,8 +236,7 @@
         <tr style='mso-yfti-irow:1'>
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
                 <p class=MsoNormal>
-                    <a name=Check3></a><span style='font-size:14.0pt;
-      font-family:"Courier New"'>&#9633;</span><span style='font-size:14.0pt'><o:p></o:p></span>
+                    <input type='checkbox' />
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
@@ -281,8 +253,7 @@
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in;
       height:4.55pt'>
                 <p class=MsoNormal>
-                    <a name=Check4></a><span style='font-size:14.0pt;
-      font-family:"Courier New"'>&#9633;</span><span style='font-size:14.0pt'><o:p></o:p></span>
+                    <input type='checkbox' />
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
@@ -302,7 +273,7 @@
         <tr style='mso-yfti-irow:3'>
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
                 <p class=MsoNormal>
-                    <span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span><span style='font-size:14.0pt'><o:p></o:p></span>
+                    <input type='checkbox' />
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
@@ -334,7 +305,7 @@
             <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in;
       height:28.35pt'>
                 <p class=MsoNormal>
-                    <span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span><span style='font-size:14.0pt'><o:p></o:p></span>
+                    <input type='checkbox' />
                 </p>
             </td>
             <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
@@ -349,83 +320,70 @@
 
     <p class=MsoNormal>
         <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            As
-            required by federal
-        </span><span style='font-size:10.0pt'>and state</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'></span><span style='font-size:10.0pt'>law</span><span style='font-size:10.0pt;mso-bidi-font-size:
-    12.0pt'>
-            , in addition to you, we will have the following people at our IEP
-            meeting:
+            As required by federal
+        </span><span style='font-size:10.0pt'>and state law, in addition to you, we will have the following people at our IEP meeting:
         </span><span style='font-size:10.0pt'><o:p></o:p></span>
     </p>
 
-    <p class=MsoNormal style='margin-left:45.0pt;text-indent:-45.0pt;tab-stops:
-    .5in 6.25in'>
+    <p class=MsoNormal style='text-indent:.25in'>
         <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            <span style='mso-tab-count:1'></span>1.<span style='mso-spacerun:yes'></span>A general education teacher of your child;
+            <span style='mso-tab-count:1'></span>1. A general education teacher of your child;
         </span><span style='font-size:10.0pt'><o:p></o:p></span>
     </p>
 
+    <p class=MsoNormal style='text-indent:.25in'>
+        <span>2. A special education teacher of your child;</span>
+    </p>
+
+    <p class=MsoNormal style='text-indent:.25in'>
+        <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>3. A school representative;</span>
+    </p>
+
+    <p class='MsoNormal page-break'  style='display:block; text-indent:.25in;font-size:10.0pt;'>
+        
+            4. If this is an initial IEP, a representative of the Part C system (Early Intervention Program for Infants  
+        
+    </p>
+    <p class=MsoNormal style='display:block; text-indent:.4in;font-size:10.0pt;'>
+
+        with Disabilities) if your child is transitioning from Part C to Part B, and you have requested participation of a Part C 
+
+    </p>
+    <p class=MsoNormal style='display:block; text-indent:.4in;font-size:10.0pt;'>
+
+ representative.
+
+    </p>
     <p class=MsoNormal>
-        <span style='font-size:10.0pt;mso-bidi-font-size:6.0pt'>&nbsp;</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            <span style='mso-tab-count:
-    1'></span>2.<span style='mso-spacerun:yes'>  </span>A special
-            education teacher of your child;
-        </span><span style='font-size:10.0pt'><o:p></o:p></span>
-    </p>
-
-    <p class=MsoNormal style='margin-left:.5in'>
-        <span style='font-size:10.0pt;
-    mso-bidi-font-size:12.0pt'>
-            3.<span style='mso-spacerun:yes'>  </span>A school
-            representative;<o:p></o:p>
+       <span style="display: inline-block;text-indent:.25in"> 5. Student <input type="text"/> As
+            required by federal and state regulations, the district invites your son/daughter 
         </span>
     </p>
-
-    <p class=MsoNormal style='text-indent:.5in'>
-        <span style='font-size:10.0pt'>
-            4.<span style='mso-spacerun:yes'></span>If this is an initial IEP, a representative
-            of the Part C system (Early Intervention Program for Infants and <span style='mso-tab-count:1'></span><span style='mso-tab-count:1'>                </span><span style='mso-spacerun:yes'></span>Toddlers with Disabilities) if your child
-            is transitioning from Part C to Part B, and you have requested <span style='mso-tab-count:1'></span><span style='mso-spacerun:yes'>  </span><span style='mso-tab-count:1'></span><span style='mso-spacerun:yes'></span>participation of a Part C representative. <o:p></o:p>
+    <p class=MsoNormal>
+        <span style="display: inline-block;text-indent:.4in">
+            
+            to attend the IEP meeting when postsecondary goals and transition services will
+            be considered. Postsecondary goals
         </span>
     </p>
-
-    <p class=MsoNormal style='margin-right:-.25in;tab-stops:.5in lined 6.75in'>
-        <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            &nbsp;<span style='mso-tab-count:1'></span>5.<span style='mso-spacerun:yes'></span>Student
-        </span><span style='font-size:10.0pt;
-    mso-bidi-font-size:6.0pt'>
-            ____________________________________________________________________________As
-            required by
-        </span><span style='font-size:10.0pt'>federal and state</span><span style='font-size:10.0pt;mso-bidi-font-size:6.0pt'></span><span style='font-size:10.0pt'>regulations</span><span style='font-size:10.0pt;
-    mso-bidi-font-size:6.0pt'>
-            , the district invites your son/daughter to attend
-            the IEP meeting when postsecondary goals and
-        </span><span style='font-size:10.0pt;
-    mso-bidi-font-size:6.0pt;font-family:"Times",serif'>
-            transition services will
-            be considered
-        </span><span style='font-size:10.0pt;mso-bidi-font-size:6.0pt'>
-            .<span style='mso-spacerun:yes'></span>
-        </span><span style='font-size:10.0pt'>
-            Postsecondary
-            goals and
-        </span><span style='font-size:10.0pt;mso-bidi-font-size:6.0pt'>
-            transition services can be considered at any age,
-        </span><span style='font-size:10.0pt'>
-            but must be included in the first IEP to be in effect
-            when your child reaches age 14.
+    <p class=MsoNormal>
+        <span style="display: inline-block;text-indent:.4in">
+            and transition services can be considered at any age,
+            but must be included in the first IEP to be in effect when your
         </span>
     </p>
-
-    <p class=MsoNormal style='margin-right:-.25in;tab-stops:.5in lined 6.75in'>
-        <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            <span style='mso-tab-count:
-    1'></span>6.<span style='mso-spacerun:yes'>  </span>Other(s)
-            who can help explain the evaluation results or who have knowledge or
-        </span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Times",serif'>special</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            expertise regarding your
-            child or services that may be needed.
+    <p class=MsoNormal>
+        <span style="display: inline-block;text-indent:.4in">
+        child reaches age 14.
         </span>
+    </p>
+    <p class=MsoNormal style='text-indent:.25in'>
+        6. Other(s) who can help explain the evaluation results or who have knowledge or special expertise regarding your child 
+        
+    </p>
+    <p class=MsoNormal style='text-indent:.4in'>
+        or services that may be needed.
+
     </p>
 
     <p class=MsoNormal>
@@ -434,8 +392,8 @@
 
     <p class=MsoNormal>
         <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            ___________________________________________(position)
-            ___________________________________(position )
+            <input type="text" /> (position)
+            <input type="text" /> (position )
         </span><span style='font-size:
     10.0pt'><o:p></o:p></span>
     </p>
@@ -446,8 +404,8 @@
 
     <p class=MsoNormal style='tab-stops:.5in 3.5in lined 6.25in'>
         <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-            ___________________________________________(position)
-            ___________________________________(position )<o:p></o:p>
+            <input type="text" /> (position)
+            <input type="text" /> (position )<o:p></o:p>
         </span>
     </p>
 
@@ -462,14 +420,10 @@
         <p class=MsoBlockText style='margin-right:0in;border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
             <span style='font-size:
-    10.0pt;font-family:"Times",serif'>If necessary, and with your consent, s</span><span style='font-size:10.0pt'>
-                taff from other agencies that may be able to provide
-                appropriate
-            </span><span style='font-size:10.0pt;font-family:"Times",serif'>transition</span><span style='font-size:10.0pt'>services</span><span style='font-size:10.0pt;
-    font-family:"Times",serif'>/linkages</span><span style='font-size:10.0pt'>
-                will
-                be invited to our meeting.<span style='mso-spacerun:yes'>  </span>The agencies
-                they represent are shown below:<o:p></o:p>
+    10.0pt;font-family:"Times",serif'>If necessary, and with your consent, staff from other agencies that may be able to provide
+                appropriate transition services/linkages will
+                be invited to our meeting.The agencies
+                they represent are shown below:
             </span>
         </p>
 
@@ -481,8 +435,7 @@
         <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
             <span style='font-size:10.0pt'>
-                ______________________________________________<span style='mso-spacerun:yes'>
-                </span>_________________________________________________<o:p></o:p>
+                <input type="text" />
             </span>
         </p>
 
@@ -517,15 +470,15 @@
     </p>
 
     <p class=MsoNormal>
-        <span style='font-size:10.0pt'>&nbsp;</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>&nbsp;&nbsp;@(String.Format(teacherFormattedName).PadRight(103 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>at____________________________________immediately.</span>
+        <span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(teacherFormattedName).PadRight(103 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>at <input type="text" /> immediately.</span>
     </p>
 
     <p class=MsoNormal style='tab-stops:261.0pt'>
         <span style='font-size:10.0pt;
-    mso-bidi-font-size:12.0pt'>(School Contact)<span style='mso-tab-count:1'>                                                                                     </span>(Phone)</span>
+    mso-bidi-font-size:12.0pt'>(School Contact)<span style='mso-tab-count:1'>                                                                             </span>(Phone)</span>
     </p>
 
-    <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+    <div style='margin-top:15px;mso-element:para-border-div;border:solid windowtext 1.0pt;
     mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
 
         <p class=MsoNormal align=center style='text-align:center;border:none;
@@ -541,7 +494,7 @@
     6.0pt'>&nbsp;</span>
         </p>
 
-        <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
+        <p class=MsoNormal style='margin-left:9.0pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
             <span style='mso-tab-count:1'></span><span style='font-size:10.0pt;mso-bidi-font-size:
     12.0pt'>
@@ -565,7 +518,7 @@
 
     </div>
 
-    <p class=MsoNormal align=center style='text-align:center'>
+    <p class=MsoNormal align=center style='margin-top:8px;text-align:center'>
         <b style='mso-bidi-font-weight:
     normal'><span style='font-size:11.0pt'>ADDITIONAL INFORMATION<o:p></o:p></span></b>
     </p>
@@ -592,11 +545,7 @@
 
         <p class=MsoNormal align=center style='text-align:center;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <a name="OLE_LINK1"></a><a name="OLE_LINK2">
-                <span style='mso-bookmark:OLE_LINK1'>
-                    <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
-                </span>
-            </a>
+            <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
         </p>
 
         <p class=MsoNormal align=center style='text-align:center;border:none;
@@ -613,10 +562,7 @@
             <span style='mso-bookmark:
     OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'>
-                    I, <u>
-                        <span style='mso-tab-count:
-    1'></span>
-                    </u>,<span style='mso-spacerun:yes'></span>
+                    I, <input type="text" />,<span style='mso-spacerun:yes'></span>
                 </span>
             </span><span style='mso-bookmark:OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
@@ -631,41 +577,24 @@
 
         <p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <span style='mso-bookmark:OLE_LINK2'>
-                <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span> hand
-                    delivered,<span style='mso-spacerun:yes'>  </span>
-                </span>
+            <input type='checkbox' /> hand delivered,
             </span><span style='mso-bookmark:OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'>
                     <span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
                 </span>
             </span><span style='mso-bookmark:OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span> mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
+                    <input type='checkbox' /> mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
                 </span>
             </span><span style='mso-bookmark:
     OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='font-size:14.0pt;
-    font-family:"Courier New"'>&#9633;</span> other ___________________
+                    <input type='checkbox' /> other <input type="text" />
                 </span>
             </span>
         </p>
 
-        <p class=MsoNormal style='text-indent:67.5pt;tab-stops:310.5pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <span style='mso-bookmark:OLE_LINK2'>
-                <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='mso-tab-count:1'></span>
-                </span>
-            </span><span style='mso-bookmark:OLE_LINK2'>
-                <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='font-size:8.0pt'>(specify)</span>
-                </span>
-            </span>
-        </p>
-
+      
         <p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
             <span style='mso-bookmark:
@@ -677,22 +606,14 @@
             <span style='mso-bookmark:OLE_LINK2'>
                 <span style='mso-bookmark:OLE_LINK1'>
                     this notice
-                    to <u><span style='mso-tab-count:1'>                                                                      </span></u><span style='mso-spacerun:yes'></span>on <u><span style='mso-tab-count:1'>                                      </span></u>.
+                    to <input type="text" /> on <input type="text" />.
                 </span>
             </span>
         </p>
 
-        <p class=MsoNormal style='text-indent:1.75in;tab-stops:351.0pt 401.25pt;
-    border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:
-    1.0pt 4.0pt 1.0pt 4.0pt'>
-            <span style='mso-bookmark:OLE_LINK2'>
-                <span style='mso-bookmark:OLE_LINK1'>
-                    <span style='font-size:8.0pt;mso-bidi-font-size:
-    12.0pt'>
-                        (Name)<span style='mso-tab-count:1'>                                                                            </span>(Date)<span style='mso-tab-count:1'></span><o:p></o:p>
-                    </span>
-                </span>
-            </span>
+        <p class=MsoNormal style='text-indent:.75in;tab-stops:351.0pt 401.25pt;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>(Name)<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>(Date)<span style='mso-tab-count:1'></span><o:p></o:p>
+                   
+            
         </p>
 
     </div>
@@ -707,7 +628,7 @@
     </p>
 
     <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-    mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+    mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;' class="page-break">
 
         <p class=MsoNormal align=center style='text-align:center;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
@@ -717,7 +638,7 @@
         </p>
 
         <p class=MsoNormal align=center style='text-align:center;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;'>
             <b>
                 <span style='font-size:11.0pt'>ACKNOWLEDGMENT</span>
             </b><span style='font-size:11.0pt'><o:p></o:p></span>
@@ -725,31 +646,37 @@
 
         <p class=MsoNormal style='border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <a name=Check7></a><span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-                <span style='mso-spacerun:yes'></span>I plan to attend the meeting as scheduled
-            </span>
+            
+               <input type='checkbox' /> I plan to attend the meeting as scheduled
+            
         </p>
 
         <p class=MsoNormal style='margin-left:27.0pt;text-indent:-27.0pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <a name=Check8></a><span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-                <span style='mso-spacerun:yes'></span>I am unable to attend the meeting as
+            
+               <input type='checkbox' /> I am unable to attend the meeting as
                 scheduled and would like to schedule the meeting at another date, time or
-                place.<span style='mso-spacerun:yes'>  </span>I am available to attend a
+                place.
+            
+        </p>
+
+        <p class=MsoNormal style='margin-left:27.0pt;text-indent:-27.0pt;border:none;
+    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+            <input type="checkbox"/> I am available to attend a
                 meeting on the following dates and times:
-            </span>
+            
         </p>
 
         <p class=MsoNormal style='border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>_______________________________________________________________________________</p>
+    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><input type="text" width="100"/></p>
 
         <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-            <span style='font-size:14.0pt;font-family:"Courier New"'>&#9633;</span><span style='font-size:10.0pt;mso-bidi-font-size:6.0pt'>
-                <span style='mso-spacerun:yes'></span>I consent to waive my right to a 10-day
+            
+               <input type='checkbox' /> I consent to waive my right to a 10-day
                 prior written notice of the meeting to develop, review or revise the IEP for my
-                child.<o:p></o:p>
-            </span>
+                child.
+            
         </p>
 
         @foreach (var contact in Model.contacts)
@@ -760,7 +687,7 @@
         5.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span>
             </p>
 
-            <p class=MsoNormal style='border:none;mso-border-alt:solid windowtext .5pt;
+            <p class=MsoNormal style='text-indent:.4in;border:none;mso-border-alt:solid windowtext .5pt;
         padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                 <span style='font-size:
         10.0pt;mso-bidi-font-size:12.0pt'>__________________________________________________Date_________________________</span>
