@@ -1,5 +1,5 @@
-﻿/// <reference path="jsonpath.js" />
-$(function () {
+﻿$(function () {
+
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
@@ -74,6 +74,9 @@ $(function () {
         }
     });
 
+    $("#IEPBeginDate").datepicker();
+    $("#IEPEndDate").datepicker();
+
     // Attach Event
     // when the user clicks the Save Dates button
     $("#IEPDates").on("click", function () {
@@ -96,8 +99,6 @@ $(function () {
         var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
         var startDiff = parseInt(daysToStart / 365);
         var endDiff = parseInt(daysToEnd / 365);
-
-        alert(startDiff); alert(endDiff);
  
 
         if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {

@@ -108,6 +108,40 @@
                                                 <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPEndDate.ToString("yyyy-MM-dd"))">
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <label for="Location">Location</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="Location" style="border-color: #ccc; display: inline-block;">
+                                                        @if (Model.serviceLocations.Count > 0)
+                                                        {
+                                                            foreach (var serviceLocation in Model.serviceLocations)
+                                                            {
+                                                                <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="Frequency">Frequency</label>
+                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                                <option value="1">Every week (1)</option>
+                                                <option value="2">Every 2 weeks (2)</option>
+                                                <option value="3">Every 3 weeks (3)</option>
+                                                <option value="4">Every 4 weeks (4)</option>
+                                                <option value="8">Every 8 weeks (8)</option>
+                                                <option value="9">Every 9 weeks (9)</option>
+                                                <option value="12">Every 12 weeks (12)</option>
+                                                <option value="18">Every 18 weeks (18)</option>
+                                                <option value="19">3 out of 4 weeks (19)</option>
+                                                <option value="99">1 day per year (99)</option>
+                                            </select>
+                                        </div>
                                         <div class="col-md-2">
                                             <label for="Days">Days per Week</label>
                                             <div class="input-group number-spinner">
@@ -132,40 +166,6 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label for="Frequency">Frequency</label>
-                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
-                                                <option value="1">Every week (1)</option>
-                                                <option value="2">Every 2 weeks (2)</option>
-                                                <option value="3">Every 3 weeks (3)</option>
-                                                <option value="4">Every 4 weeks (4)</option>
-                                                <option value="8">Every 8 weeks (8)</option>
-                                                <option value="9">Every 9 weeks (9)</option>
-                                                <option value="12">Every 12 weeks (12)</option>
-                                                <option value="18">Every 18 weeks (18)</option>
-                                                <option value="19">3 out of 4 weeks (19)</option>
-                                                <option value="99">1 day per year (99)</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="Location">Location</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                <div class="form-group">
-                                                    <select class="form-control" name="Location" style="border-color: #ccc; display: inline-block;">
-                                                        @if (Model.serviceLocations.Count > 0)
-                                                        {
-                                                            foreach (var serviceLocation in Model.serviceLocations)
-                                                            {
-                                                        <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-md-3">
                                             <label for="ServiceType">Service Type</label>
                                             <div class="form-group">
@@ -174,7 +174,7 @@
                                                     {
                                                         foreach (var serviceType in Model.serviceTypes)
                                                         {
-                                                    <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                            <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
                                                         }
                                                     }
                                                 </select>
@@ -188,7 +188,7 @@
                                                     {
                                                         foreach (var serviceProvider in Model.serviceProviders)
                                                         {
-                                                    <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
+                                                            <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
                                                         }
                                                     }
                                                     else
@@ -290,28 +290,21 @@
                                                     <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("yyyy-MM-dd"))">
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                <label for="Days">Days per Week</label>
-                                                <div class="input-group number-spinner">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                    </span>
-                                                    <input type="number" name="serviceDaysPerWeek" class="form-control text-center" value="@(service.DaysPerWeek)" min="1" max="5">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="Duration">Minutes per Day </label>
-                                                <div class="input-group minute-spinner">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
-                                                    </span>
-                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
-                                                    </span>
+                                            <div class="col-md-4">
+                                                <label for="Location">Location</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                    <div class="form-group">
+                                                        <select class="form-control" name="Location" style="border-color: #ccc; display: inline-block;">
+                                                            @if (Model.serviceLocations.Count > 0)
+                                                            {
+                                                                foreach (var serviceLocation in Model.serviceLocations)
+                                                                {
+                                                                    <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -335,21 +328,28 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="Location">Location</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                    <div class="form-group">
-                                                        <select class="form-control" name="Location" style="border-color: #ccc; display: inline-block;">
-                                                            @if (Model.serviceLocations.Count > 0)
-                                                            {
-                                                                foreach (var serviceLocation in Model.serviceLocations)
-                                                                {
-                                                            <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
-                                                                }
-                                                            }
-                                                        </select>
-                                                    </div>
+                                            <div class="col-md-2">
+                                                <label for="Days">Days per Week</label>
+                                                <div class="input-group number-spinner">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                    </span>
+                                                    <input type="number" name="serviceDaysPerWeek" class="form-control text-center" value="@(service.DaysPerWeek)" min="1" max="5">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="Duration">Minutes per Day </label>
+                                                <div class="input-group minute-spinner">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                    </span>
+                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
