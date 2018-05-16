@@ -56,7 +56,6 @@ namespace GreenBushIEP.Models
 
         public IEP CreateNewIEP(int stid)
         {
-            int IEPID;
             int HealthID;
             int MotorID;
             int CommunicationID;
@@ -198,7 +197,7 @@ namespace GreenBushIEP.Models
             catch(Exception e)
             {
                 this.draft.IepStatus = IEPStatus.DELETED;
-                throw new System.ArgumentException("Failed to create the Intelligence table");
+                throw new System.ArgumentException("Failed to create the Intelligence table: " + e.InnerException.Message.ToString());
             }
 
             // Add Academic Table
