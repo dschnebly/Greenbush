@@ -765,14 +765,21 @@
                 });
             })
 
-
             //setup end date
             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
             var defaultYear = $(this).find("select[name='fiscalYear']").val();
             var iepEndDate = $("#iepEndDate").val();
+
             //if using iep end date as default, try to find the end of the selected school year
             if (endDateElement.val() == iepEndDate)
                 getEndOfSchoolYear(endDateElement, defaultYear, "iepEndDate", 6);
+
+            var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+            if (is_safari || is_explorer) {
+                $("#serviceStartDate").datepicker();
+                $("#serviceEndDate").datepicker();
+            }
         });
     }
     initService();

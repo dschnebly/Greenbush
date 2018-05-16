@@ -74,9 +74,6 @@
         }
     });
 
-    $("#IEPBeginDate").datepicker();
-    $("#IEPEndDate").datepicker();
-
     // Attach Event
     // when the user clicks the Save Dates button
     $("#IEPDates").on("click", function () {
@@ -158,6 +155,14 @@
             }
         });
     });
+
+    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+    alert(is_safari);
+    if (is_safari || is_explorer) {
+        $("#IEPBeginDate").datepicker();
+        $("#IEPEndDate").datepicker();
+    }
 });
 
 function getParameterByName(name, url) {

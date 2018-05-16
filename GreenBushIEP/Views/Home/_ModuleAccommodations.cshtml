@@ -25,23 +25,23 @@
     </h4>
 </div>
 
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12" style="margin-bottom: 12px;">
-                <button id="newgoal" class="btn btn-default">New Accommodation/Modification&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-            </div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 12px;">
+            <button id="newgoal" class="btn btn-default">New Accommodation/Modification&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+        </div>
+    </div>
+
+
+
+    <div class="container goalContainer">
+
+        <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
         </div>
 
-      
-
-        <div class="container goalContainer">
-
-            <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
-                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
-            </div>          
-          
-            <div id="ExistingAccommodations" style="margin: 5px;">
+        <div id="ExistingAccommodations" style="margin: 5px;">
             @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
             {
                 <table class="table-striped col-md-12">
@@ -54,393 +54,395 @@
                         </tr>
                     }
                 </table>
-              }
-            </div>
+            }
+        </div>
 
-    <div class="row oneStudentGoal hidden" id="defaultgoal">
-        @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.AccommodationID)
-            @Html.HiddenFor(model => model.IEPid)
-            @Html.HiddenFor(model => model.StudentId)
+        <div class="row oneStudentGoal hidden" id="defaultgoal">
+            @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.AccommodationID)
+                @Html.HiddenFor(model => model.IEPid)
+                @Html.HiddenFor(model => model.StudentId)
 
 
-            <div class="col-md-12">
-                <div class="panel-group" id="accordion[0]">
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion[0]">
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="btnToggle"  data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0" >
-                                    <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
-                                    <span class="pull-right">
-                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                    </span>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse0" class="panel-collapse">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="AccType">Type</label>
-                                        <div class="form-check" style="margin-left:8px">
-                                            <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;">Accommodation</label><br />
-                                            <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
+                                        <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
+                                        <span class="pull-right">
+                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                        </span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse0" class="panel-collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="AccType">Type</label>
+                                            <div class="form-check" style="margin-left:8px">
+                                                <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;">Accommodation</label><br />
+                                                <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label>Description:</label>
-                                        <div>
-                                            @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit." })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row voffset2" >
-                                    <div class="col-md-12">
-                                        <label>Frequency</label>
-                                        <div>
-                                            @Html.TextBoxFor(x => x.Frequency, new { @class = "form-control", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit." })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label>Duration</label>
-                                        <div>
-                                            @Html.TextBoxFor(x => x.Duration, new { @class = "form-control", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit." })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row voffset4">
-                                            
-                                            <div class="col-md-3">
-                                                <label for="AnticipatedStartDate">Anticipated Start Date</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                           id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" />
-                                                </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <label for="AnticipatedEndDate">Anticipated End Date</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                    <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                           id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                           class="form-control" aria-describedby="basic-addon1" />
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="row voffset2">
+                                        <div class="col-md-12">
+                                            <label>Description:</label>
+                                            <div>
+                                                @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit." })
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" name="Location">
-                                                    <label for="Location">Location</label><br />
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="Location" id="Location" value="" data-toggle = "tooltip" data-placement = "bottom" title = "300 character limit.">
+                                        </div>
+                                    </div>
+                                    <div class="row voffset2">
+                                        <div class="col-md-12">
+                                            <label>Frequency</label>
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Frequency, new { @class = "form-control", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit." })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row voffset2">
+                                        <div class="col-md-12">
+                                            <label>Duration</label>
+                                            <div>
+                                                @Html.TextBoxFor(x => x.Duration, new { @class = "form-control", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit." })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row voffset4">
+
+                                                <div class="col-md-3">
+                                                    <label for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control" aria-describedby="basic-addon1" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="AnticipatedEndDate">Anticipated End Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                               id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                               class="form-control" aria-describedby="basic-addon1" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group" name="Location">
+                                                        <label for="Location">Location</label><br />
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="Location" id="Location" value="" data-toggle="tooltip" data-placement="bottom" title="300 character limit.">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="form-group" id="saveGroup">
-                                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                                            <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+
+                                    <div class="row">
+                                        <div class="form-group" id="saveGroup">
+                                            <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                                <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
-
                 </div>
-            </div>
 
-        }
+            }
         </div> <!--end oneStudentGoal-->
-        
-      </div><!--end container student goal-->
-        
-    </div>
- 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-        </div>
 
-        <script>
-          
-            $('#accomStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-            $('#accomEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+    </div><!--end container student goal-->
 
-            /* Binding */
-            /* tooltips */
-            $('[data-toggle="tooltip"]').tooltip({
-                trigger: 'manual'
-            });
+</div>
 
-            /* Event */
-            /* When a user clicks on the question mark icon we turn on tooltips */
-            $('.tooltip-help').on('click', function () {
-                $('[data-toggle="tooltip"]').tooltip('toggle');
-            });
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+</div>
 
-            $("#resetModuleAccForm").trigger("reset");
-                     
+<script>
 
-            /* Event */
-            /* when clicking on the New Student Goal button */
-            $('#newgoal').on('click', function () {
-                var cloneGoal = $("#defaultgoal").clone();
-                cloneGoal.removeClass("hidden");
-                cloneGoal.attr('id', 'defaultgoal_X');
-                var saveButton = cloneGoal.find('#btnSubmit');
+    $('#accomStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+    $('#accomEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
 
-                saveButton.click(function () {
-                    var buttonVal = $(this).attr('accom-id');
-                    if (buttonVal == undefined)
-                        _save(0);
-                    else
-                        _save(buttonVal);
+    /* Binding */
+    /* tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'manual'
+    });
 
-                });
+    /* Event */
+    /* When a user clicks on the question mark icon we turn on tooltips */
+    $('.tooltip-help').on('click', function () {
+        $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
 
-                //clear location list when form has existing accommodations
-                cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
-
-                $("#ExistingAccommodations").append(cloneGoal);
-                initGoal(cloneGoal);
-
-                return false;
-            });
-                       
-
-            $(".deleteGoal").click(function () {
-                _deleteRow($(this));
-            });
-
-                      
-            
-            function _save(elementValue)
-            {                
-                event.preventDefault();
-                var element = $("#defaultgoal_X");
-                if(elementValue != 0)
-                    element = $("#defaultgoal_" + elementValue);
-                var datastring = element.find('select, textarea, input').serialize();
-                var accomType = $('input[name=AccomType]:checked').val();
-                datastring = datastring + "&AccomType=" + accomType;
-                var url = '/ModuleSection/EditAccom';
-                                
-                $.ajax({
-                    type: 'POST',
-                        url: url,
-                    data: datastring,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
-                            _showAlert("The Accommodation/Modification has been saved.");
-
-                            if (data.isNew) {
-                                var cloneGoal = element; //.clone();
+    $("#resetModuleAccForm").trigger("reset");
 
 
-                                cloneGoal.attr('id', 'defaultgoal_' + data.id);
-                                var deleteButton = cloneGoal.find('.deleteGoal');
-                                deleteButton.attr('accom-id', data.id);
-                                deleteButton.click(function () {
-                                    _deleteRow(deleteButton);
-                                });
+    /* Event */
+    /* when clicking on the New Student Goal button */
+    $('#newgoal').on('click', function () {
+        var cloneGoal = $("#defaultgoal").clone();
+        cloneGoal.removeClass("hidden");
+        cloneGoal.attr('id', 'defaultgoal_X');
+        var saveButton = cloneGoal.find('#btnSubmit');
 
-                                var saveButton = cloneGoal.find('#btnSubmit');
-                                saveButton.attr('accom-id', data.id);
-                                saveButton.attr('id', "btnSave_" + data.id);
+        saveButton.click(function () {
+            var buttonVal = $(this).attr('accom-id');
+            if (buttonVal == undefined)
+                _save(0);
+            else
+                _save(buttonVal);
 
-                                //collapse panel collapse0
-                                var togglePanel = cloneGoal.find('#collapse0');
-                                togglePanel.attr('id', "collapse" + data.id);
-                                var toggleButton = cloneGoal.find('.btnToggle');
-                                
-                                toggleButton.attr("href", "#collapse" + data.id);
-                                
-                                var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
-                                
+        });
 
-                                //cloneGoal.append('<input type="hidden" name="IEPid" id="IEPid" value="' + data.iep + '" />');
+        //clear location list when form has existing accommodations
+        cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
-                            }
-                        }
-                        else {
-                            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                                $("#alertMessage .moreinfo").html(data.error);
-                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                    $("#alertMessage").slideUp(500);
-                                });
-                            }
-                        }
-                    },
-                    error: function (data) {
-                        console.log("Unable to delete the student goal.");
+        $("#ExistingAccommodations").append(cloneGoal);
+        initGoal(cloneGoal);
+
+        return false;
+    });
+
+
+    $(".deleteGoal").click(function () {
+        _deleteRow($(this));
+    });
+
+
+
+    function _save(elementValue) {
+        event.preventDefault();
+        var element = $("#defaultgoal_X");
+        if (elementValue != 0)
+            element = $("#defaultgoal_" + elementValue);
+        var datastring = element.find('select, textarea, input').serialize();
+        var accomType = $('input[name=AccomType]:checked').val();
+        datastring = datastring + "&AccomType=" + accomType;
+        var url = '/ModuleSection/EditAccom';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: datastring,
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    _showAlert("The Accommodation/Modification has been saved.");
+
+                    if (data.isNew) {
+                        var cloneGoal = element; //.clone();
+
+
+                        cloneGoal.attr('id', 'defaultgoal_' + data.id);
+                        var deleteButton = cloneGoal.find('.deleteGoal');
+                        deleteButton.attr('accom-id', data.id);
+                        deleteButton.click(function () {
+                            _deleteRow(deleteButton);
+                        });
+
+                        var saveButton = cloneGoal.find('#btnSubmit');
+                        saveButton.attr('accom-id', data.id);
+                        saveButton.attr('id', "btnSave_" + data.id);
+
+                        //collapse panel collapse0
+                        var togglePanel = cloneGoal.find('#collapse0');
+                        togglePanel.attr('id', "collapse" + data.id);
+                        var toggleButton = cloneGoal.find('.btnToggle');
+
+                        toggleButton.attr("href", "#collapse" + data.id);
+
+                        var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
+
+
+                        //cloneGoal.append('<input type="hidden" name="IEPid" id="IEPid" value="' + data.iep + '" />');
+
                     }
-                });
-
-
-            }
-
-            function _update(id) {
-
-                event.preventDefault();
-                var element = $("#defaultgoal_X");
-                if (id != 0)
-                    element = $("#defaultgoal_" + id);
-
-                var datastring = element.find('select, textarea, input').serialize();
-                var accomType = $('input[name=AccomType]:checked').val();
-                datastring = datastring + "&AccomType=" + accomType;
-                var url = '/ModuleSection/UpdateAccom';
-
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: datastring,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.success) {
-                            _showAlert("The Accommodation/Modification has been updated.");
-                        }
-                        else {
-                            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                                $("#alertMessage .moreinfo").html(data.error);
-                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                    $("#alertMessage").slideUp(500);
-                                });
-                            }
-                        }
-                    },
-                    error: function (data) {
-                        console.log("Unable to delete the student goal.");
-                    }
-                });
-
-
-            }
-
-            function initGoal(element) {
-                element.addClass('bound').each(function (index) {
-
-                    $(this).find("input[type=date]").on('input', function (e) {
-
-                        var day = new Date(e.target.value).getUTCDay();
-                        
-                        // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-                        if (day == 0) {
-                            var error = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-                            e.target.setCustomValidity(error);
-                            e.target.title = error;
-                            e.target.parentNode.classList.add('has-error');
-                            _showAlert(error);
-                        } else if (day == 6) {
-                            var error = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-                            e.target.setCustomValidity(error);
-                            e.target.title = error;
-                            e.target.parentNode.classList.add('has-error');
-                            _showAlert(error);
-                        } else {
-
-                            e.target.setCustomValidity('');
-                            e.target.title = '';
-                            e.target.parentNode.classList.remove('has-error');
-                        }
-
-                    });
-
-
-
-                    $(this).find(".number-spinner button").on("click", function () {
-                        var btn = $(this),
-                            oldValue = btn.closest('.number-spinner').find('input').val().trim(),
-                            newValue = parseInt(oldValue);
-
-                        if (btn.attr('data-dir') == 'up') {
-                            if (newValue < 5) {
-                                newValue = newValue + 1;
-                            }
-                        } else {
-                            if (oldValue > 1) {
-                                newValue = newValue - 1;
-                            }
-                        }
-
-                        btn.closest('.number-spinner').find('input').val(newValue);
-                        return false;
-                    });
-
-
-                    $(this).find(".minute-spinner button").on("click", function () {
-                        var btn = $(this),
-                            oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
-                            newValue = parseInt(oldValue);
-
-                        if (btn.attr('data-dir') == 'up') {
-                            if (newValue < 720) {
-                                newValue = newValue + 1;
-                            }
-                        } else {
-                            if (oldValue > 1) {
-                                newValue = newValue - 1;
-                            }
-                        }
-
-                        btn.closest('.minute-spinner').find('input').val(newValue);
-                        return false;
-                    });
-
-                    
-                });
-            }
-
-            function _deleteRow(element)
-            {
-                var dataId = element.attr('accom-id');
-
-                if (confirm("Do you really want to delete this Accommodation/Modification?")) {
-                   
-                    if (dataId != undefined && dataId != null) {
-                        $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
-                            if (response.result != undefined && response.result) {
-                                
-                                var container = $("#defaultgoal_" + dataId);
-                                container.remove();
-                                           
-                            }
-                            else {
-                                _showAlert("There was a problem deleting the Accommodation or Modification.") ;
-                            }
-                               
-             
+                }
+                else {
+                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                        $("#alertMessage .moreinfo").html(data.error);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
                         });
                     }
                 }
+            },
+            error: function (data) {
+                console.log("Unable to delete the student goal.");
             }
+        });
 
-            function _showAlert(message)
-            {
+        var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+        if (is_safari || is_explorer) {
+            $("#AnticipatedStartDate").datepicker();
+            $("#AnticipatedEndDate").datepicker();
+        }
+    }
 
-                if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                    $("#alertMessage .moreinfo").html(message);
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
+    function _update(id) {
+
+        event.preventDefault();
+        var element = $("#defaultgoal_X");
+        if (id != 0)
+            element = $("#defaultgoal_" + id);
+
+        var datastring = element.find('select, textarea, input').serialize();
+        var accomType = $('input[name=AccomType]:checked').val();
+        datastring = datastring + "&AccomType=" + accomType;
+        var url = '/ModuleSection/UpdateAccom';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: datastring,
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    _showAlert("The Accommodation/Modification has been updated.");
                 }
+                else {
+                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                        $("#alertMessage .moreinfo").html(data.error);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                }
+            },
+            error: function (data) {
+                console.log("Unable to delete the student goal.");
             }
+        });
 
-        </script>
+
+    }
+
+    function initGoal(element) {
+        element.addClass('bound').each(function (index) {
+
+            $(this).find("input[type=date]").on('input', function (e) {
+
+                var day = new Date(e.target.value).getUTCDay();
+
+                // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+                if (day == 0) {
+                    var error = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+                    e.target.setCustomValidity(error);
+                    e.target.title = error;
+                    e.target.parentNode.classList.add('has-error');
+                    _showAlert(error);
+                } else if (day == 6) {
+                    var error = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+                    e.target.setCustomValidity(error);
+                    e.target.title = error;
+                    e.target.parentNode.classList.add('has-error');
+                    _showAlert(error);
+                } else {
+
+                    e.target.setCustomValidity('');
+                    e.target.title = '';
+                    e.target.parentNode.classList.remove('has-error');
+                }
+
+            });
+
+
+
+            $(this).find(".number-spinner button").on("click", function () {
+                var btn = $(this),
+                    oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                    newValue = parseInt(oldValue);
+
+                if (btn.attr('data-dir') == 'up') {
+                    if (newValue < 5) {
+                        newValue = newValue + 1;
+                    }
+                } else {
+                    if (oldValue > 1) {
+                        newValue = newValue - 1;
+                    }
+                }
+
+                btn.closest('.number-spinner').find('input').val(newValue);
+                return false;
+            });
+
+
+            $(this).find(".minute-spinner button").on("click", function () {
+                var btn = $(this),
+                    oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
+                    newValue = parseInt(oldValue);
+
+                if (btn.attr('data-dir') == 'up') {
+                    if (newValue < 720) {
+                        newValue = newValue + 1;
+                    }
+                } else {
+                    if (oldValue > 1) {
+                        newValue = newValue - 1;
+                    }
+                }
+
+                btn.closest('.minute-spinner').find('input').val(newValue);
+                return false;
+            });
+
+
+        });
+    }
+
+    function _deleteRow(element) {
+        var dataId = element.attr('accom-id');
+
+        if (confirm("Do you really want to delete this Accommodation/Modification?")) {
+
+            if (dataId != undefined && dataId != null) {
+                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
+                    if (response.result != undefined && response.result) {
+
+                        var container = $("#defaultgoal_" + dataId);
+                        container.remove();
+
+                    }
+                    else {
+                        _showAlert("There was a problem deleting the Accommodation or Modification.");
+                    }
+
+
+                });
+            }
+        }
+    }
+
+    function _showAlert(message) {
+
+        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+            $("#alertMessage .moreinfo").html(message);
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        }
+    }
+
+</script>

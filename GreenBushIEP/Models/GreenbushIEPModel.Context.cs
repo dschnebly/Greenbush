@@ -56,7 +56,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
-        public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
@@ -66,11 +65,13 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
-        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
-        public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblIEPIntelligence> tblIEPIntelligences { get; set; }
         public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
+        public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
+        public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
+        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
