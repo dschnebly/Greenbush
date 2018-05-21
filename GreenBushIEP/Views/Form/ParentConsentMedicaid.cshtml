@@ -1,5 +1,6 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
 }
 
 
@@ -86,7 +87,7 @@
         <table>
             <tr>
                 <td><u><input type="text" value="@studentFormattedName"/></u></td>
-                <td><u><input type="text"/></u></td>
+                <td><u><input type="text" value="@dobStr"/></u></td>
                 <td><u><u><input type="text" /></u></td>
             </tr>
             <tr>
