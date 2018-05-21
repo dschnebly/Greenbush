@@ -770,9 +770,9 @@ namespace GreenBushIEP.Controllers
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
 
                     studentGoal.goal.IEPid = iepId;
-                    studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
                     studentGoal.goal.Module = collection[++j].ToString();
                     studentGoal.goal.Title = collection[++j].ToString();
+                    studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
                     studentGoal.goal.AnnualGoal = collection[++j].ToString();
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();

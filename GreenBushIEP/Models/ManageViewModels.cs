@@ -203,6 +203,7 @@ namespace GreenBushIEP.Models
             hasplan = false;
             student = new tblUser();
             studentPlan = new StudentPlan(student.UserID);
+            birthDate = new DateTime();
         }
 
         public bool isDoc { get; set; }
@@ -211,6 +212,7 @@ namespace GreenBushIEP.Models
         public tblUser student { get; set; }
         public IEP studentIEP { get; set; }
         public StudentPlan studentPlan { get; set; }
+        public DateTime birthDate { get; set; }
     }
 
     public class StudentLegalView

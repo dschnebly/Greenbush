@@ -1,5 +1,5 @@
-﻿/// <reference path="jsonpath.js" />
-$(function () {
+﻿$(function () {
+
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
@@ -80,118 +80,88 @@ $(function () {
         var stId = $("#stid").val();
         var startDate = $("#IEPBeginDate").val().toString('MM/dd/yyyy');
         var endDate = $("#IEPEndDate").val().toString('MM/dd/yyyy');
+        var birthDate = $("#studentBirthDate").val();
+
+        if (startDate > endDate) {
+            $("#IEPBeginDate").addClass("date-error");
+            $("#IEPEndDate").addClass("date-error");
+
+            return alert("The iep can't end before it started. Please try again.");
+        }
+
+        var a = new Date(startDate);
+        var b = new Date(endDate);
+        var c = new Date(birthDate);
+        var daysToStart = (a - c) / 1000 / 60 / 60 / 24;
+        var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
+        var startDiff = parseInt(daysToStart / 365);
+        var endDiff = parseInt(daysToEnd / 365);
+ 
+
+        if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
+            $("#IEPBeginDate").addClass("date-error");
+            $("#IEPEndDate").addClass("date-error");
+
+            return alert("Either the Beginning Date or the Ending Date were not in the correct format. Please try again.");
+        }
+
+        //If the student is over 21 or under 3, notify the teacher but let them save regardless.
+        if (startDiff < 3)
+        {
+            $("#IEPBeginDate").addClass("date-error");
+
+            if(!confirm('The student will be younger than 3 when this IEP starts. Please be aware that this could be an issue.'))
+            {
+                return;
+            }
+        }
+
+        if (endDiff > 21)
+        {
+            $("#IEPEndDate").addClass("date-error");
+
+            if(!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.'))
+            {
+                return;
+            }
+        }
 
         $("#IEPBeginDate").attr('disabled', true);
         $("#IEPEndDate").attr('disabled', true);
 
-        if (startDate > endDate) {
-            $("#IEPBeginDate").attr('disabled', false);
-            $("#IEPEndDate").attr('disabled', false);
+        $.ajax({
+            type: 'GET',
+            url: '/Home/UpdateIEPDates',
+            data: { Stid: stId, IEPStartDate: startDate, IEPEndDate: endDate },
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result === 'success') {
+                    $("#IEPBeginDate").removeClass("date-error");
+                    $("#IEPEndDate").removeClass("date-error");
 
-            return alert("The beginning date can't start after the ending date.");
-        }
+                } else {
+                    alert("The date you entered was invalid. Please try again.");
+                }
+            },
+            error: function (data) {
+                $("#IEPBeginDate").addClass("date-error");
+                $("#IEPEndDate").addClass("date-error");
 
-        var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-        var a = new Date(startDate);
-        var b = new Date(endDate);
-        var days = (b - a) / 1000 / 60 / 60 / 24;
-        var diff = parseInt(days/365);
-
-        //If the student is over 21 or under 3, notify the teacher but let them save regardless.
-        if (diff < 3 || diff > 21)
-        {
-            alert("NOT SO FAST BUB!");
-            $("#IEPBeginDate").addClass("has-error");
-            $("#IEPEndDate").addClass("has-error");
-        }
-
-        $("#IEPBeginDate").attr('disabled', false);
-        $("#IEPEndDate").attr('disabled', false);
+                alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+            },
+            complete: function () {
+                $("#IEPBeginDate").attr('disabled', false);
+                $("#IEPEndDate").attr('disabled', false);
+            }
+        });
     });
 
-    // Attach Event
-    // when the user changes the beginning date
-    //$("#IEPBeginDate").blur(function (e) {
-    //    var stId = $("#stid").val();
-    //    var startDate = $(this).val().toString('MM/dd/yyyy');
-
-    //    if ($("#IEPBeginDate").val() > $("#IEPEndDate").val()) {
-    //        $("#IEPBeginDate").val($("#IEPBeginDate").data("old"));
-
-    //        return alert("The beginning date can't start before the ending date.");
-    //    }
-
-    //    $("#IEPBeginDate").attr('disabled', false);
-    //    $("#IEPEndDate").attr('disabled', false);
-
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: '/Home/UpdateIEPDates',
-    //        data: { Stid: stId, IepDate: startDate, Start: true },
-    //        dataType: 'json',
-    //        success: function (data) {
-    //            if (data.Result === 'success') {
-    //                console.log("date successfully updated.");
-
-    //                $("#IEPBeginDate").data("old", $("#IEPBeginDate").val());
-    //            } else {
-    //                alert("The date you entered was invalid. Please try again.");
-    //            }
-    //        },
-    //        error: function (data) {
-    //            alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-    //        },
-    //        complete: function () {
-    //            $("#IEPBeginDate").val($("#IEPBeginDate").data("old"));
-
-    //            $("#IEPBeginDate").attr('disabled', false);
-    //            $("#IEPEndDate").attr('disabled', false);
-    //        }
-    //    });
-    //});
-
-    // Attach Event
-    // when the user changes the beginning date
-    //$("#IEPEndDate").blur(function (e) {
-    //    var stId = $("#stid").val();
-    //    var endDate = $(this).val().toString('MM/dd/yyyy');
-
-    //    if ($("#IEPBeginDate").val() > $("#IEPEndDate").val()) {
-    //        $("#IEPEndDate").val($("#IEPEndDate").data("old"));
-
-    //        return alert("The ending date can't end before the start date.");
-    //    }
-
-    //    $("#IEPBeginDate").attr('disabled', true);
-    //    $("#IEPEndDate").attr('disabled', true);
-
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: '/Home/UpdateIEPDates',
-    //        data: { Stid: stId, IepDate: endDate, Start: false },
-    //        dataType: 'json',
-    //        success: function (data) {
-    //            if (data.Result === 'success') {
-    //                console.log("date successfully updated.");
-
-    //                $("#IEPEndDate").data("old", $("#IEPEndDate").val());
-    //            } else {
-    //                alert("The date you entered was invalid. Please try again.");
-    //            }
-    //        },
-    //        error: function (data) {
-    //            alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-    //        },
-    //        complete: function () {
-    //            $("#IEPEndDate").val($("#IEPEndDate").data("old"));
-
-    //            $("#IEPBeginDate").attr('disabled', false);
-    //            $("#IEPEndDate").attr('disabled', false);
-    //        }
-    //    });
-    //});
-
+    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+    if (is_safari || is_explorer) {
+        $("#IEPBeginDate").datepicker();
+        $("#IEPEndDate").datepicker();
+    }
 });
 
 function getParameterByName(name, url) {

@@ -68,6 +68,8 @@ namespace GreenBushIEP.Controllers
                     FirstName = collection["firstname"],
                     LastName = collection["lastname"],
                     Email = collection["email"],
+                    Create_Date = DateTime.Now,
+                    Update_Date = DateTime.Now,
                     Password = RandomPassword.Generate(8),
                 };
 
@@ -147,7 +149,9 @@ namespace GreenBushIEP.Controllers
                         RoleID = "5",
                         FirstName = collection["firstname"],
                         LastName = collection["lastname"],
-                        Email = collection["email"]
+                        Email = collection["email"],
+                        Create_Date = DateTime.Now,
+                        Update_Date = DateTime.Now,
                     };
 
                     // try catch. If the email is the same as another student show error gracefully.
@@ -178,7 +182,9 @@ namespace GreenBushIEP.Controllers
                         Race = collection["race"],
                         Grade = Convert.ToInt32(collection["studentGrade"]),
                         Status = "PENDING",
-                        Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F"
+                        Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+                        Create_Date = DateTime.Now,
+                        Update_Date = DateTime.Now,
                     };
 
                     try

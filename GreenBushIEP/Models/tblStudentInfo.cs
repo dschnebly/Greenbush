@@ -31,5 +31,7 @@ namespace GreenBushIEP.Models
         public string AssignedUSD { get; set; }
         public string County { get; set; }
         public Nullable<int> Grade { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }

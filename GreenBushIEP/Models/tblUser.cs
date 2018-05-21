@@ -27,5 +27,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> Agreement { get; set; }
         public Nullable<bool> Archive { get; set; }
         public string TeacherID { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }
