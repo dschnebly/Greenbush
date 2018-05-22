@@ -28,6 +28,98 @@
             top: 45%;
             left: 40%;
         }
+
+ /*//////////////////////////////////////
+    ///  User Toggle Buttons Starts Here
+    //////////////////////////////////////*/
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle:focus {
+            outline: none;
+        }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+            margin-bottom: 10px;
+        }
+
+    #add-student-user i {
+        padding: 0;
+    }
+
+    #user-toggle {
+        margin-right: 20px;
+    }
+
+        #user-toggle .user-toggle-item {
+            display: inline-block;
+        }
+
+        #user-toggle button:first-child {
+            margin-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item button:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #user-toggle .user-toggle-item ul {
+            display: inline-block;
+            list-style-type: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            top: 10px;
+            padding-right: 12px;
+        }
+
+            #user-toggle .user-toggle-item ul li {
+                display: inline-block;
+                float: left;
+                padding-left: 15px;
+            }
+
+            #user-toggle .user-toggle-item ul.show-buttons {
+                display: inline-block;
+                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
+                -moz-animation: fadein 1s; /* Firefox < 16
+                -ms-animation: fadein 1s; /* Internet Explorer
+                -o-animation: fadein 1s; /* Opera < 12.1
+                animation: fadein 1s;*/
+            }
+
+            #user-toggle .user-toggle-item ul.hide-buttons {
+                display: none;
+            }
+
 </style>
 
 <h2>@ViewBag.Title</h2>
@@ -43,6 +135,19 @@
         <a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
     </h3>
     <hr>
+    <div class="row voffset1" >
+        <div class="col-md-12">
+            <div id="user-toggle" class="pull-right">
+                <div class="user-toggle-item">
+                    <button id="add-student-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-child" title="Working with a Student"></i></button>
+                    <ul id="student-actions" class="hide-buttons">
+                        <li><a href="/Manage/CreateStudent" title="Create New Student" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row" style="display: none;">
         <div class="col-xs-12">
             <div class="input-group c-search">
@@ -90,7 +195,9 @@
     </div>
 </div>
 
-@section scripts {
-    @Scripts.Render("~/Scripts/portal.js")
-    @Scripts.Render("~/Scripts/fasw.transitions.js")
-}
+
+
+        @section scripts {
+            @Scripts.Render("~/Scripts/portal.js")
+            @Scripts.Render("~/Scripts/fasw.transitions.js")
+        }

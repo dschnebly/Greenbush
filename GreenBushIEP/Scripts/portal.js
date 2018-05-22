@@ -1,6 +1,14 @@
 ﻿$(function () {
     function init() {
 
+        // attach Event
+        // fires when a user clicks on the main new system user button
+        $("#user-toggle .user-toggle-item button").on("click", function () {
+            $(this).parent().find("ul").toggleClass("show-buttons hide-buttons");
+        })
+
+
+
         $(".listrap").listrap().on("selection-changed", function (event, selection) {
             console.log(selection);
         });
