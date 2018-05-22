@@ -205,9 +205,9 @@ namespace GreenBushIEP.Models
                     this.ReadingNeed = studentReading.AreaOfNeed;
                     this.ReadingNoConcern = studentReading.NoConcerns;
                     this.ReadingProgress = studentReading.ProgressTowardGenEd;
-                    this.ReadingTier1 = studentReading.InstructionalTier1;
-                    this.ReadingTier2 = studentReading.InstructionalTier2;
-                    this.ReadingTier3 = studentReading.InstructionalTier3;
+                    //this.ReadingTier1 = studentReading.InstructionalTier1;
+                    //this.ReadingTier2 = studentReading.InstructionalTier2;
+                    //this.ReadingTier3 = studentReading.InstructionalTier3;
                 }
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
@@ -217,9 +217,9 @@ namespace GreenBushIEP.Models
                     this.MathNeed = studentMath.AreaOfNeed;
                     this.MathNoConcern = studentMath.NoConcerns;
                     this.MathProgress = studentMath.ProgressTowardGenEd;
-                    this.MathTier1 = studentMath.InstructionalTier1;
-                    this.MathTier2 = studentMath.InstructionalTier2;
-                    this.MathTier3 = studentMath.InstructionalTier3;
+                    //this.MathTier1 = studentMath.InstructionalTier1;
+                    //this.MathTier2 = studentMath.InstructionalTier2;
+                    //this.MathTier3 = studentMath.InstructionalTier3;
                 }
 
                 tblIEPWritten studentWritten = db.tblIEPWrittens.FirstOrDefault(s => s.IEPWrittenID == studentIEP.IEPWrittenID);
@@ -229,9 +229,9 @@ namespace GreenBushIEP.Models
                     this.WrittenNeed = studentWritten.AreaOfNeed;
                     this.WrittenNoConcern = studentWritten.NoConcerns;
                     this.WrittenProgress = studentWritten.ProgressTowardGenEd;
-                    this.WrittenTier1 = studentWritten.InstructionalTier1;
-                    this.WrittenTier2 = studentWritten.InstructionalTier2;
-                    this.WrittenTier3 = studentWritten.InstructionalTier3;
+                    //this.WrittenTier1 = studentWritten.InstructionalTier1;
+                    //this.WrittenTier2 = studentWritten.InstructionalTier2;
+                    //this.WrittenTier3 = studentWritten.InstructionalTier3;
                 }
 
                 tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();

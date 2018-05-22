@@ -37,6 +37,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBehaviorStrategyType> tblBehaviorStrategyTypes { get; set; }
         public virtual DbSet<tblBehaviorTrigger> tblBehaviorTriggers { get; set; }
         public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
+        public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
         public virtual DbSet<tblBuilding> tblBuildings { get; set; }
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
@@ -47,6 +48,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblIEPAcademic> tblIEPAcademics { get; set; }
         public virtual DbSet<tblIEPCommunication> tblIEPCommunications { get; set; }
         public virtual DbSet<tblIEPHealth> tblIEPHealths { get; set; }
+        public virtual DbSet<tblIEPIntelligence> tblIEPIntelligences { get; set; }
         public virtual DbSet<tblIEPMath> tblIEPMaths { get; set; }
         public virtual DbSet<tblIEPMotor> tblIEPMotors { get; set; }
         public virtual DbSet<tblIEPReading> tblIEPReadings { get; set; }
@@ -56,21 +58,19 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
+        public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
+        public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
+        public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
+        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
         public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
-        public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
-        public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
-        public virtual DbSet<tblIEPIntelligence> tblIEPIntelligences { get; set; }
-        public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
-        public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
-        public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
-        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
+        public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

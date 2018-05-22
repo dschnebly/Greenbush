@@ -223,7 +223,7 @@
           <Property Name="AnnualGoal" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="hasSerivce" Type="bit" Nullable="false" />
           <Property Name="Baseline" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="StateStandards" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StateStandards" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -320,9 +320,9 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="NoConcerns" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="bit" />
+          <Property Name="InstructionalTier2" Type="bit" />
+          <Property Name="InstructionalTier3" Type="bit" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
@@ -353,9 +353,9 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="NoConcerns" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="bit" />
+          <Property Name="InstructionalTier2" Type="bit" />
+          <Property Name="InstructionalTier3" Type="bit" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
@@ -420,9 +420,9 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="NoConcerns" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="bit" />
+          <Property Name="InstructionalTier2" Type="bit" />
+          <Property Name="InstructionalTier3" Type="bit" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
@@ -888,6 +888,7 @@
           <EntitySet Name="tblBehaviorStrategyTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorStrategyType" />
           <EntitySet Name="tblBehaviorTriggers" EntityType="IndividualizedEducationProgramModel.tblBehaviorTrigger" />
           <EntitySet Name="tblBehaviorTriggerTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" />
+          <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
           <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
@@ -898,6 +899,7 @@
           <EntitySet Name="tblIEPAcademics" EntityType="IndividualizedEducationProgramModel.tblIEPAcademic" />
           <EntitySet Name="tblIEPCommunications" EntityType="IndividualizedEducationProgramModel.tblIEPCommunication" />
           <EntitySet Name="tblIEPHealths" EntityType="IndividualizedEducationProgramModel.tblIEPHealth" />
+          <EntitySet Name="tblIEPIntelligences" EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" />
           <EntitySet Name="tblIEPMaths" EntityType="IndividualizedEducationProgramModel.tblIEPMath" />
           <EntitySet Name="tblIEPMotors" EntityType="IndividualizedEducationProgramModel.tblIEPMotor" />
           <EntitySet Name="tblIEPReadings" EntityType="IndividualizedEducationProgramModel.tblIEPReading" />
@@ -907,17 +909,27 @@
           <EntitySet Name="tblLanguages" EntityType="IndividualizedEducationProgramModel.tblLanguage" />
           <EntitySet Name="tblLocations" EntityType="IndividualizedEducationProgramModel.tblLocation" />
           <EntitySet Name="tblOrganizationMappings" EntityType="IndividualizedEducationProgramModel.tblOrganizationMapping" />
+          <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
+          <EntitySet Name="tblProviderDistricts" EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" />
           <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <EntitySet Name="tblRoles" EntityType="IndividualizedEducationProgramModel.tblRole" />
+          <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
           <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
+          <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
+          <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
+          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID">
+            <End Role="tblProvider" EntitySet="tblProviders" />
+            <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
           </AssociationSet>
           <AssociationSet Name="FK_tblServices_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID">
             <End Role="tblProvider" EntitySet="tblProviders" />
@@ -927,18 +939,6 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
-          <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
-          <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
-          <EntitySet Name="tblIEPIntelligences" EntityType="IndividualizedEducationProgramModel.tblIEPIntelligence" />
-          <EntitySet Name="tblProviderDistricts" EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" />
-          <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID">
-            <End Role="tblProvider" EntitySet="tblProviders" />
-            <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
-          </AssociationSet>
-          <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
-          <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
-          <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
-          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1060,6 +1060,17 @@
           <Property Name="BehaviorTriggerTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BehaviorTriggerType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblBuildingMapping">
+          <Key>
+            <PropertyRef Name="USD" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="tblBuilding">
           <Key>
             <PropertyRef Name="BuildingID" />
@@ -1159,7 +1170,7 @@
           <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
           <Property Name="Baseline" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1235,6 +1246,20 @@
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
+        <EntityType Name="tblIEPIntelligence">
+          <Key>
+            <PropertyRef Name="IEPIntelligenceID" />
+          </Key>
+          <Property Name="IEPIntelligenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Concerns" Type="Boolean" Nullable="false" />
+          <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedBy" Type="Int32" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeed" Type="Boolean" />
+        </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
             <PropertyRef Name="IEPMathID" />
@@ -1243,9 +1268,9 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="NoConcerns" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="Boolean" />
+          <Property Name="InstructionalTier2" Type="Boolean" />
+          <Property Name="InstructionalTier3" Type="Boolean" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1276,9 +1301,9 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="NoConcerns" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="Boolean" />
+          <Property Name="InstructionalTier2" Type="Boolean" />
+          <Property Name="InstructionalTier3" Type="Boolean" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1343,9 +1368,9 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="NoConcerns" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier1" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
-          <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
+          <Property Name="InstructionalTier1" Type="Boolean" />
+          <Property Name="InstructionalTier2" Type="Boolean" />
+          <Property Name="InstructionalTier3" Type="Boolean" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1378,6 +1403,49 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblOtherConsideration">
+          <Key>
+            <PropertyRef Name="OtherConsiderationID" />
+          </Key>
+          <Property Name="OtherConsiderationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="AssistiveTechnology_Require" Type="Boolean" />
+          <Property Name="AssistiveTechnology_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_NoAccommodations_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_WithAccommodations_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_Alternative_flag" Type="Boolean" />
+          <Property Name="DistrictAssessment_Alternative_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictAssessment_GradeNotAssessed" Type="Boolean" />
+          <Property Name="StateAssessment_NoAccommodations_flag" Type="Boolean" />
+          <Property Name="StateAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StateAssessment_WithAccommodations_flag" Type="Boolean" />
+          <Property Name="StateAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="StateAssessment_RequiredCompleted" Type="Boolean" />
+          <Property Name="Transporation_NotEligible" Type="Boolean" />
+          <Property Name="Transporation_Required" Type="Boolean" />
+          <Property Name="Transporation_AttendOtherBuilding" Type="Boolean" />
+          <Property Name="Transporation_Other_flag" Type="Boolean" />
+          <Property Name="Transporation_Other_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RegularEducation_NotParticipate" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendedSchoolYear_Necessary" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendedSchoolYear_RegressionRisk" Type="Boolean" />
+          <Property Name="ExtendedSchoolYear_SeverityRisk" Type="Boolean" />
+          <Property Name="ExtendedSchoolYear_Justification" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Parental_Concerns_flag" Type="Boolean" />
+          <Property Name="Parental_Concerns_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblProviderDistrict">
+          <Key>
+            <PropertyRef Name="ProviderDistrictID" />
+          </Key>
+          <Property Name="ProviderDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProviderID" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
+        </EntityType>
         <EntityType Name="tblProvider">
           <Key>
             <PropertyRef Name="ProviderID" />
@@ -1385,9 +1453,9 @@
           <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
           <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
         </EntityType>
         <EntityType Name="tblRole">
           <Key>
@@ -1395,6 +1463,14 @@
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblServiceFrequency">
+          <Key>
+            <PropertyRef Name="FrequencyCode" />
+          </Key>
+          <Property Name="FrequencyCode" Type="Int32" Nullable="false" />
+          <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblService">
           <Key>
@@ -1423,6 +1499,30 @@
           <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStudentInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="KIDSID" Type="Int64" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullDayKG" Type="Boolean" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="County" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -1470,49 +1570,6 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblTransitionService">
-          <Key>
-            <PropertyRef Name="TransitionServiceID" />
-          </Key>
-          <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransitionID" Type="Int32" Nullable="false" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Frequency" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Duration" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <Association Name="FK_tblAccommodations_LocationCode">
-          <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
-          <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLocation">
-              <PropertyRef Name="LocationCode" />
-            </Principal>
-            <Dependent Role="tblAccommodation">
-              <PropertyRef Name="LocationCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblServices_ProviderID">
-          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
-          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblProvider">
-              <PropertyRef Name="ProviderID" />
-            </Principal>
-            <Dependent Role="tblService">
-              <PropertyRef Name="ProviderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="tblServiceGoals">
-          <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
-          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
-        </Association>
         <EntityType Name="tblTransition">
           <Key>
             <PropertyRef Name="TransitionID" />
@@ -1537,115 +1594,18 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblBuildingMapping">
+        <EntityType Name="tblTransitionService">
           <Key>
-            <PropertyRef Name="USD" />
-            <PropertyRef Name="BuildingID" />
-            <PropertyRef Name="UserID" />
+            <PropertyRef Name="TransitionServiceID" />
           </Key>
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="tblIEPIntelligence">
-          <Key>
-            <PropertyRef Name="IEPIntelligenceID" />
-          </Key>
-          <Property Name="IEPIntelligenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransitionID" Type="Int32" Nullable="false" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Concerns" Type="Boolean" Nullable="false" />
-          <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeed" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="tblProviderDistrict">
-          <Key>
-            <PropertyRef Name="ProviderDistrictID" />
-          </Key>
-          <Property Name="ProviderDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProviderID" Type="Int32" Nullable="false" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
-        </EntityType>
-        <Association Name="FK_tblProviderDistricts_ProviderID">
-          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
-          <End Type="IndividualizedEducationProgramModel.tblProviderDistrict" Role="tblProviderDistrict" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblProvider">
-              <PropertyRef Name="ProviderID" />
-            </Principal>
-            <Dependent Role="tblProviderDistrict">
-              <PropertyRef Name="ProviderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tblOtherConsideration">
-          <Key>
-            <PropertyRef Name="OtherConsiderationID" />
-          </Key>
-          <Property Name="OtherConsiderationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="AssistiveTechnology_Require" Type="Boolean" />
-          <Property Name="AssistiveTechnology_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictAssessment_NoAccommodations_flag" Type="Boolean" />
-          <Property Name="DistrictAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictAssessment_WithAccommodations_flag" Type="Boolean" />
-          <Property Name="DistrictAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictAssessment_Alternative_flag" Type="Boolean" />
-          <Property Name="DistrictAssessment_Alternative_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictAssessment_GradeNotAssessed" Type="Boolean" />
-          <Property Name="StateAssessment_NoAccommodations_flag" Type="Boolean" />
-          <Property Name="StateAssessment_NoAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="StateAssessment_WithAccommodations_flag" Type="Boolean" />
-          <Property Name="StateAssessment_WithAccommodations_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="StateAssessment_RequiredCompleted" Type="Boolean" />
-          <Property Name="Transporation_NotEligible" Type="Boolean" />
-          <Property Name="Transporation_Required" Type="Boolean" />
-          <Property Name="Transporation_AttendOtherBuilding" Type="Boolean" />
-          <Property Name="Transporation_Other_flag" Type="Boolean" />
-          <Property Name="Transporation_Other_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RegularEducation_NotParticipate" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ExtendedSchoolYear_Necessary" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ExtendedSchoolYear_RegressionRisk" Type="Boolean" />
-          <Property Name="ExtendedSchoolYear_SeverityRisk" Type="Boolean" />
-          <Property Name="ExtendedSchoolYear_Justification" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Parental_Concerns_flag" Type="Boolean" />
-          <Property Name="Parental_Concerns_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblServiceFrequency">
-          <Key>
-            <PropertyRef Name="FrequencyCode" />
-          </Key>
-          <Property Name="FrequencyCode" Type="Int32" Nullable="false" />
-          <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblStudentInfo">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="KIDSID" Type="Int64" Nullable="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FullDayKG" Type="Boolean" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="County" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Grade" Type="Int32" />
+          <Property Name="Frequency" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1669,6 +1629,46 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <Association Name="FK_tblAccommodations_LocationCode">
+          <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLocation">
+              <PropertyRef Name="LocationCode" />
+            </Principal>
+            <Dependent Role="tblAccommodation">
+              <PropertyRef Name="LocationCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProviderDistricts_ProviderID">
+          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblProviderDistrict" Role="tblProviderDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProvider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblProviderDistrict">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblServices_ProviderID">
+          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProvider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblService">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tblServiceGoals">
+          <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1814,6 +1814,16 @@
               <MappingFragment StoreEntitySet="tblBehaviorTriggerTypes">
                 <ScalarProperty Name="BehaviorTriggerType" ColumnName="BehaviorTriggerType" />
                 <ScalarProperty Name="BehaviorTriggerTypeID" ColumnName="BehaviorTriggerTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBuildingMappings">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuildingMapping">
+              <MappingFragment StoreEntitySet="tblBuildingMapping">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2000,6 +2010,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblIEPIntelligences">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
+              <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
+                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
+                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
+                <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
+                <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
+                <ScalarProperty Name="Concerns" ColumnName="Concerns" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblIEPMaths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMath">
               <MappingFragment StoreEntitySet="tblIEPMath">
@@ -2149,6 +2174,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblOtherConsiderations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
+              <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Parental_Concerns_Desc" ColumnName="Parental_Concerns_Desc" />
+                <ScalarProperty Name="Parental_Concerns_flag" ColumnName="Parental_Concerns_flag" />
+                <ScalarProperty Name="ExtendedSchoolYear_Justification" ColumnName="ExtendedSchoolYear_Justification" />
+                <ScalarProperty Name="ExtendedSchoolYear_SeverityRisk" ColumnName="ExtendedSchoolYear_SeverityRisk" />
+                <ScalarProperty Name="ExtendedSchoolYear_RegressionRisk" ColumnName="ExtendedSchoolYear_RegressionRisk" />
+                <ScalarProperty Name="ExtendedSchoolYear_Necessary" ColumnName="ExtendedSchoolYear_Necessary" />
+                <ScalarProperty Name="RegularEducation_NotParticipate" ColumnName="RegularEducation_NotParticipate" />
+                <ScalarProperty Name="Transporation_Other_desc" ColumnName="Transporation_Other_desc" />
+                <ScalarProperty Name="Transporation_Other_flag" ColumnName="Transporation_Other_flag" />
+                <ScalarProperty Name="Transporation_AttendOtherBuilding" ColumnName="Transporation_AttendOtherBuilding" />
+                <ScalarProperty Name="Transporation_Required" ColumnName="Transporation_Required" />
+                <ScalarProperty Name="Transporation_NotEligible" ColumnName="Transporation_NotEligible" />
+                <ScalarProperty Name="StateAssessment_RequiredCompleted" ColumnName="StateAssessment_RequiredCompleted" />
+                <ScalarProperty Name="StateAssessment_WithAccommodations_desc" ColumnName="StateAssessment_WithAccommodations_desc" />
+                <ScalarProperty Name="StateAssessment_WithAccommodations_flag" ColumnName="StateAssessment_WithAccommodations_flag" />
+                <ScalarProperty Name="StateAssessment_NoAccommodations_desc" ColumnName="StateAssessment_NoAccommodations_desc" />
+                <ScalarProperty Name="StateAssessment_NoAccommodations_flag" ColumnName="StateAssessment_NoAccommodations_flag" />
+                <ScalarProperty Name="DistrictAssessment_GradeNotAssessed" ColumnName="DistrictAssessment_GradeNotAssessed" />
+                <ScalarProperty Name="DistrictAssessment_Alternative_desc" ColumnName="DistrictAssessment_Alternative_desc" />
+                <ScalarProperty Name="DistrictAssessment_Alternative_flag" ColumnName="DistrictAssessment_Alternative_flag" />
+                <ScalarProperty Name="DistrictAssessment_WithAccommodations_desc" ColumnName="DistrictAssessment_WithAccommodations_desc" />
+                <ScalarProperty Name="DistrictAssessment_WithAccommodations_flag" ColumnName="DistrictAssessment_WithAccommodations_flag" />
+                <ScalarProperty Name="DistrictAssessment_NoAccommodations_desc" ColumnName="DistrictAssessment_NoAccommodations_desc" />
+                <ScalarProperty Name="DistrictAssessment_NoAccommodations_flag" ColumnName="DistrictAssessment_NoAccommodations_flag" />
+                <ScalarProperty Name="AssistiveTechnology_Description" ColumnName="AssistiveTechnology_Description" />
+                <ScalarProperty Name="AssistiveTechnology_Require" ColumnName="AssistiveTechnology_Require" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="OtherConsiderationID" ColumnName="OtherConsiderationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProviderDistricts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProviderDistrict">
+              <MappingFragment StoreEntitySet="tblProviderDistricts">
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="ProviderDistrictID" ColumnName="ProviderDistrictID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblProviders">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProvider">
               <MappingFragment StoreEntitySet="tblProviders">
@@ -2164,6 +2233,15 @@
               <MappingFragment StoreEntitySet="tblRoles">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblServiceFrequencies">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceFrequency">
+              <MappingFragment StoreEntitySet="tblServiceFrequency">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="FrequencyCode" ColumnName="FrequencyCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2192,6 +2270,31 @@
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudentInfoes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
+              <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
+                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="FullDayKG" ColumnName="FullDayKG" />
+                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="Ethicity" ColumnName="Ethicity" />
+                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
+                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2244,30 +2347,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTransitionServices">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
-              <MappingFragment StoreEntitySet="tblTransitionServices">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
-                <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="tblServiceGoals" TypeName="IndividualizedEducationProgramModel.tblServiceGoals" StoreEntitySet="tblServiceGoals">
-            <EndProperty Name="tblService">
-              <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-            </EndProperty>
-            <EndProperty Name="tblGoal">
-              <ScalarProperty Name="goalID" ColumnName="GoalID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
@@ -2293,106 +2372,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblBuildingMappings">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuildingMapping">
-              <MappingFragment StoreEntitySet="tblBuildingMapping">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblIEPIntelligences">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
-              <MappingFragment StoreEntitySet="tblIEPIntelligence">
-                <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
-                <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
-                <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
-                <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
-                <ScalarProperty Name="Concerns" ColumnName="Concerns" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblProviderDistricts">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProviderDistrict">
-              <MappingFragment StoreEntitySet="tblProviderDistricts">
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
-                <ScalarProperty Name="ProviderDistrictID" ColumnName="ProviderDistrictID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblOtherConsiderations">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
-              <MappingFragment StoreEntitySet="tblOtherConsiderations">
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Parental_Concerns_Desc" ColumnName="Parental_Concerns_Desc" />
-                <ScalarProperty Name="Parental_Concerns_flag" ColumnName="Parental_Concerns_flag" />
-                <ScalarProperty Name="ExtendedSchoolYear_Justification" ColumnName="ExtendedSchoolYear_Justification" />
-                <ScalarProperty Name="ExtendedSchoolYear_SeverityRisk" ColumnName="ExtendedSchoolYear_SeverityRisk" />
-                <ScalarProperty Name="ExtendedSchoolYear_RegressionRisk" ColumnName="ExtendedSchoolYear_RegressionRisk" />
-                <ScalarProperty Name="ExtendedSchoolYear_Necessary" ColumnName="ExtendedSchoolYear_Necessary" />
-                <ScalarProperty Name="RegularEducation_NotParticipate" ColumnName="RegularEducation_NotParticipate" />
-                <ScalarProperty Name="Transporation_Other_desc" ColumnName="Transporation_Other_desc" />
-                <ScalarProperty Name="Transporation_Other_flag" ColumnName="Transporation_Other_flag" />
-                <ScalarProperty Name="Transporation_AttendOtherBuilding" ColumnName="Transporation_AttendOtherBuilding" />
-                <ScalarProperty Name="Transporation_Required" ColumnName="Transporation_Required" />
-                <ScalarProperty Name="Transporation_NotEligible" ColumnName="Transporation_NotEligible" />
-                <ScalarProperty Name="StateAssessment_RequiredCompleted" ColumnName="StateAssessment_RequiredCompleted" />
-                <ScalarProperty Name="StateAssessment_WithAccommodations_desc" ColumnName="StateAssessment_WithAccommodations_desc" />
-                <ScalarProperty Name="StateAssessment_WithAccommodations_flag" ColumnName="StateAssessment_WithAccommodations_flag" />
-                <ScalarProperty Name="StateAssessment_NoAccommodations_desc" ColumnName="StateAssessment_NoAccommodations_desc" />
-                <ScalarProperty Name="StateAssessment_NoAccommodations_flag" ColumnName="StateAssessment_NoAccommodations_flag" />
-                <ScalarProperty Name="DistrictAssessment_GradeNotAssessed" ColumnName="DistrictAssessment_GradeNotAssessed" />
-                <ScalarProperty Name="DistrictAssessment_Alternative_desc" ColumnName="DistrictAssessment_Alternative_desc" />
-                <ScalarProperty Name="DistrictAssessment_Alternative_flag" ColumnName="DistrictAssessment_Alternative_flag" />
-                <ScalarProperty Name="DistrictAssessment_WithAccommodations_desc" ColumnName="DistrictAssessment_WithAccommodations_desc" />
-                <ScalarProperty Name="DistrictAssessment_WithAccommodations_flag" ColumnName="DistrictAssessment_WithAccommodations_flag" />
-                <ScalarProperty Name="DistrictAssessment_NoAccommodations_desc" ColumnName="DistrictAssessment_NoAccommodations_desc" />
-                <ScalarProperty Name="DistrictAssessment_NoAccommodations_flag" ColumnName="DistrictAssessment_NoAccommodations_flag" />
-                <ScalarProperty Name="AssistiveTechnology_Description" ColumnName="AssistiveTechnology_Description" />
-                <ScalarProperty Name="AssistiveTechnology_Require" ColumnName="AssistiveTechnology_Require" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="OtherConsiderationID" ColumnName="OtherConsiderationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblServiceFrequencies">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceFrequency">
-              <MappingFragment StoreEntitySet="tblServiceFrequency">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Label" ColumnName="Label" />
-                <ScalarProperty Name="FrequencyCode" ColumnName="FrequencyCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblStudentInfoes">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
-              <MappingFragment StoreEntitySet="tblStudentInfo">
+          <EntitySetMapping Name="tblTransitionServices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
+              <MappingFragment StoreEntitySet="tblTransitionServices">
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="County" ColumnName="County" />
-                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
-                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="FullDayKG" ColumnName="FullDayKG" />
-                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
-                <ScalarProperty Name="Race" ColumnName="Race" />
-                <ScalarProperty Name="Ethicity" ColumnName="Ethicity" />
-                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
-                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="TransitionID" ColumnName="TransitionID" />
+                <ScalarProperty Name="TransitionServiceID" ColumnName="TransitionServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2417,6 +2409,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="tblServiceGoals" TypeName="IndividualizedEducationProgramModel.tblServiceGoals" StoreEntitySet="tblServiceGoals">
+            <EndProperty Name="tblService">
+              <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+            </EndProperty>
+            <EndProperty Name="tblGoal">
+              <ScalarProperty Name="goalID" ColumnName="GoalID" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

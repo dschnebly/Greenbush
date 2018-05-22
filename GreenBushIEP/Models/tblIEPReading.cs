@@ -18,9 +18,9 @@ namespace GreenBushIEP.Models
         public int IEPid { get; set; }
         public bool NoConcerns { get; set; }
         public bool ProgressTowardGenEd { get; set; }
-        public bool InstructionalTier1 { get; set; }
-        public bool InstructionalTier2 { get; set; }
-        public bool InstructionalTier3 { get; set; }
+        public Nullable<bool> InstructionalTier1 { get; set; }
+        public Nullable<bool> InstructionalTier2 { get; set; }
+        public Nullable<bool> InstructionalTier3 { get; set; }
         public bool AreaOfNeed { get; set; }
         public string LevelOfPerformance { get; set; }
         public string AreaOfNeedDescription { get; set; }

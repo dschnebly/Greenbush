@@ -17,8 +17,8 @@ namespace GreenBushIEP.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblProvider()
         {
-            this.tblServices = new HashSet<tblService>();
             this.tblProviderDistricts = new HashSet<tblProviderDistrict>();
+            this.tblServices = new HashSet<tblService>();
         }
     
         public int ProviderID { get; set; }
@@ -27,8 +27,8 @@ namespace GreenBushIEP.Models
         public string ProviderCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblService> tblServices { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblProviderDistrict> tblProviderDistricts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblService> tblServices { get; set; }
     }
 }

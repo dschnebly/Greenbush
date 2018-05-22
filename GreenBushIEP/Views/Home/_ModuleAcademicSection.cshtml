@@ -32,7 +32,7 @@
                 <li role="presentation" style="background-color: #eeeeee;"><a href="#reading" style="border-radius:0; @(Model.Reading.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="reading" role="tab" data-toggle="tab">Reading</a></li>
                 <li role="presentation" style="background-color: #eeeeee;"><a href="#math" style="border-radius:0; @(Model.Math.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="math" role="tab" data-toggle="tab">Math</a></li>
                 <li role="presentation" style="background-color: #eeeeee;"><a href="#written" style="border-radius:0; @(Model.Written.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="written" role="tab" data-toggle="tab">Written Language</a></li>
-                <li role="presentation" style="background-color: #eeeeee;" class="active"><a href="#academic" style="border-radius:0; @(Model.Academic.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="academic" role="tab" data-toggle="tab">Academical/Functional</a></li>
+                <li role="presentation" style="background-color: #eeeeee;" class="active"><a href="#academic" style="border-radius:0; @(Model.Academic.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="academic" role="tab" data-toggle="tab">Academic/Functional</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -56,13 +56,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance:</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Academic.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Academic.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance:</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit."  style="font-size: 21px;">@(Model.Academic.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Academic.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -95,7 +95,7 @@
                         </div>
                         <div class="funkyradio-primary">
                             <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.Reading.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
+                            <label for="ModuleReadingAreaOfNeed">Area of need which impacts performance in general education</label>
                         </div>
                     </div>
                     <fieldset>
@@ -109,13 +109,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3"  maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit."  style="font-size: 21px;">@(Model.Reading.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Reading.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Reading.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Reading.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -129,7 +129,7 @@
                             <br />
                             <p style="display:@(Model.Reading.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Reading.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" style="font-size: 21px;">@(Model.Reading.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
@@ -161,13 +161,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Math.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Math.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Math.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.Math.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -200,7 +200,7 @@
                         </div>
                         <div class="funkyradio-primary">
                             <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.Written.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamnce in general education</label>
+                            <label for="ModuleWrittenAreaOfNeed">Area of need which impacts performance in general education</label>
                         </div>
                     </div>
                     <fieldset>
@@ -214,13 +214,13 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Written.LevelOfPerformance)</textarea>
+                            <textarea class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.Written.LevelOfPerformance)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which impacts performance</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
-                            <textarea class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3"   maxlength="1000" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." style="font-size: 21px;">@(Model.Written.AreaOfNeedDescription)</textarea>
+                            <textarea class="form-control" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3" Dstyle="font-size: 21px;">@(Model.Written.AreaOfNeedDescription)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">

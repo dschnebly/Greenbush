@@ -374,7 +374,7 @@
                                     </div>
                                     <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                         <button type="reset" class="btn btn-default">Reset</button>
-                                        <button type="button" class="saveStudentGoal btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                        <button type="button" class="saveStudentGoal btn btn-primary">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -699,7 +699,7 @@
                                             </div>
                                             <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                                 <button type="reset" class="btn btn-default">Reset</button>
-                                                <button type="button" class="saveStudentGoal btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                <button type="button" class="saveStudentGoal btn btn-primary">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -785,7 +785,7 @@
                                         <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
                                             <thead class="thead-inverse">
                                                 <tr>
-                                                    <th class="text-center" colspan="4"><i class="glyphicon glyphicon-minus ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
+                                                    <th class="text-center" colspan="4"><i class="glyphicon glyphicon-plus ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
                                                 </tr>
                                                 <tr class="PTAGDisplay hidden">
                                                     <th>
@@ -1016,7 +1016,7 @@
                                         </div>
                                         <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                             <button type="reset" class="btn btn-default">Reset</button>
-                                            <button type="button" class="saveStudentGoal btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                            <button type="button" class="saveStudentGoal btn btn-primary">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1143,10 +1143,10 @@
                 if (title != "") {
                     $(this).parentsUntil('.StudentGoal ').find('.studentGoalLabel').text(title);
                 } else {
-                    $(this).val('Student Goal');
-                    $(this).parentsUntil('.oneStudentGoal ').find('.studentGoalLabel').text('Student Goal');
-                    $(this).focus();
-                    alert("The goal title cannot be blank");
+                   // $(this).val('Student Goal');
+                    //$(this).parentsUntil('.oneStudentGoal ').find('.studentGoalLabel').text('Student Goal');
+                    //$(this).focus();
+                    //alert("The goal title cannot be blank");
                 }
             });
 
