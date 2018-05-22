@@ -27,6 +27,7 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
         public virtual DbSet<tblBehaviorBaseline> tblBehaviorBaselines { get; set; }
         public virtual DbSet<tblBehaviorHypothesi> tblBehaviorHypothesis { get; set; }

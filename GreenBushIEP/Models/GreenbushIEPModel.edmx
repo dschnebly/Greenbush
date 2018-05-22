@@ -248,8 +248,8 @@
           <Property Name="NoConcerns" Type="bit" Nullable="false" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -292,8 +292,8 @@
           <Property Name="HealthCarePlan" Type="bit" />
           <Property Name="AdditionalHealthInfo" Type="nvarchar" MaxLength="1000" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="AreaOfNeed" Type="bit" />
@@ -306,8 +306,8 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="Concerns" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="AreaOfNeed" Type="bit" />
@@ -324,8 +324,8 @@
           <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
           <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -339,8 +339,8 @@
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="Needs" Type="bit" Nullable="false" />
           <Property Name="Participation" Type="int" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="AreaOfNeed" Type="bit" />
@@ -357,8 +357,8 @@
           <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
           <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -401,8 +401,8 @@
           <Property Name="TypicalForAge" Type="bit" />
           <Property Name="SocialDeficit" Type="bit" />
           <Property Name="OtherInformation" Type="bit" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedByGoal" Type="bit" />
           <Property Name="MeetNeedByGoalDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="MeetNeedByAccomidation" Type="bit" />
@@ -424,8 +424,8 @@
           <Property Name="InstructionalTier2" Type="bit" Nullable="false" />
           <Property Name="InstructionalTier3" Type="bit" Nullable="false" />
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -673,7 +673,7 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="255" />
           <Property Name="City" Type="nvarchar" MaxLength="255" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" />
           <Property Name="RoleID" Type="nvarchar" MaxLength="50" />
           <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
@@ -1185,8 +1185,8 @@
           <Property Name="NoConcerns" Type="Boolean" Nullable="false" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -1229,8 +1229,8 @@
           <Property Name="HealthCarePlan" Type="Boolean" />
           <Property Name="AdditionalHealthInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
@@ -1247,8 +1247,8 @@
           <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
           <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -1262,8 +1262,8 @@
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
           <Property Name="Needs" Type="Boolean" Nullable="false" />
           <Property Name="Participation" Type="Int32" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
@@ -1280,8 +1280,8 @@
           <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
           <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -1324,8 +1324,8 @@
           <Property Name="TypicalForAge" Type="Boolean" />
           <Property Name="SocialDeficit" Type="Boolean" />
           <Property Name="OtherInformation" Type="Boolean" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedByGoal" Type="Boolean" />
           <Property Name="MeetNeedByGoalDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedByAccomidation" Type="Boolean" />
@@ -1347,8 +1347,8 @@
           <Property Name="InstructionalTier2" Type="Boolean" Nullable="false" />
           <Property Name="InstructionalTier3" Type="Boolean" Nullable="false" />
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -1556,8 +1556,8 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="Concerns" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
@@ -1659,7 +1659,7 @@
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
