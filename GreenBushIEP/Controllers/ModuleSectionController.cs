@@ -164,7 +164,7 @@ namespace GreenBushIEP.Controllers
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("Unable to save changes to Communication Module: " + e.InnerException);
+                        throw new Exception("Unable to save changes to Social-Emotion Module: " + e.InnerException);
                     }
                 }
             }
