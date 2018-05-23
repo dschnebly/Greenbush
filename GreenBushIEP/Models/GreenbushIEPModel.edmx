@@ -222,7 +222,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="AnnualGoal" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="hasSerivce" Type="bit" Nullable="false" />
-          <Property Name="Baseline" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Baseline" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="StateStandards" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -895,7 +895,6 @@
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
-          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <EntitySet Name="tblIEPAcademics" EntityType="IndividualizedEducationProgramModel.tblIEPAcademic" />
           <EntitySet Name="tblIEPCommunications" EntityType="IndividualizedEducationProgramModel.tblIEPCommunication" />
           <EntitySet Name="tblIEPHealths" EntityType="IndividualizedEducationProgramModel.tblIEPHealth" />
@@ -935,6 +934,7 @@
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <AssociationSet Name="tblServiceGoals" Association="IndividualizedEducationProgramModel.tblServiceGoals">
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
@@ -1158,34 +1158,6 @@
           <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblGoal">
-          <Key>
-            <PropertyRef Name="goalID" />
-          </Key>
-          <Property Name="goalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
-          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -1665,6 +1637,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblGoal">
+          <Key>
+            <PropertyRef Name="goalID" />
+          </Key>
+          <Property Name="goalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
+          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
+        </EntityType>
         <Association Name="tblServiceGoals">
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
@@ -1917,34 +1917,6 @@
                 <ScalarProperty Name="Method" ColumnName="Method" />
                 <ScalarProperty Name="goalID" ColumnName="goalID" />
                 <ScalarProperty Name="goalBenchmarkID" ColumnName="goalBenchmarkID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblGoals">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
-              <MappingFragment StoreEntitySet="tblGoals">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
-                <ScalarProperty Name="ProgressDescription_Quarter3" ColumnName="ProgressDescription_Quarter3" />
-                <ScalarProperty Name="ProgressDescription_Quarter2" ColumnName="ProgressDescription_Quarter2" />
-                <ScalarProperty Name="ProgressDescription_Quarter1" ColumnName="ProgressDescription_Quarter1" />
-                <ScalarProperty Name="ProgressDate_Quarter4" ColumnName="ProgressDate_Quarter4" />
-                <ScalarProperty Name="ProgressDate_Quarter3" ColumnName="ProgressDate_Quarter3" />
-                <ScalarProperty Name="ProgressDate_Quarter2" ColumnName="ProgressDate_Quarter2" />
-                <ScalarProperty Name="ProgressDate_Quarter1" ColumnName="ProgressDate_Quarter1" />
-                <ScalarProperty Name="Progress_Quarter4" ColumnName="Progress_Quarter4" />
-                <ScalarProperty Name="Progress_Quarter3" ColumnName="Progress_Quarter3" />
-                <ScalarProperty Name="Progress_Quarter2" ColumnName="Progress_Quarter2" />
-                <ScalarProperty Name="Progress_Quarter1" ColumnName="Progress_Quarter1" />
-                <ScalarProperty Name="StateStandards" ColumnName="StateStandards" />
-                <ScalarProperty Name="Baseline" ColumnName="Baseline" />
-                <ScalarProperty Name="hasSerivce" ColumnName="hasSerivce" />
-                <ScalarProperty Name="AnnualGoal" ColumnName="AnnualGoal" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Module" ColumnName="Module" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="goalID" ColumnName="goalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2406,6 +2378,34 @@
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGoals">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
+              <MappingFragment StoreEntitySet="tblGoals">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
+                <ScalarProperty Name="ProgressDescription_Quarter3" ColumnName="ProgressDescription_Quarter3" />
+                <ScalarProperty Name="ProgressDescription_Quarter2" ColumnName="ProgressDescription_Quarter2" />
+                <ScalarProperty Name="ProgressDescription_Quarter1" ColumnName="ProgressDescription_Quarter1" />
+                <ScalarProperty Name="ProgressDate_Quarter4" ColumnName="ProgressDate_Quarter4" />
+                <ScalarProperty Name="ProgressDate_Quarter3" ColumnName="ProgressDate_Quarter3" />
+                <ScalarProperty Name="ProgressDate_Quarter2" ColumnName="ProgressDate_Quarter2" />
+                <ScalarProperty Name="ProgressDate_Quarter1" ColumnName="ProgressDate_Quarter1" />
+                <ScalarProperty Name="Progress_Quarter4" ColumnName="Progress_Quarter4" />
+                <ScalarProperty Name="Progress_Quarter3" ColumnName="Progress_Quarter3" />
+                <ScalarProperty Name="Progress_Quarter2" ColumnName="Progress_Quarter2" />
+                <ScalarProperty Name="Progress_Quarter1" ColumnName="Progress_Quarter1" />
+                <ScalarProperty Name="StateStandards" ColumnName="StateStandards" />
+                <ScalarProperty Name="Baseline" ColumnName="Baseline" />
+                <ScalarProperty Name="hasSerivce" ColumnName="hasSerivce" />
+                <ScalarProperty Name="AnnualGoal" ColumnName="AnnualGoal" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="goalID" ColumnName="goalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

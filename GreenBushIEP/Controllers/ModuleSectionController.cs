@@ -241,9 +241,9 @@ namespace GreenBushIEP.Controllers
                         viewModel.Reading.NoConcerns = collection["ModuleReadingNoConcern"] == "on" ? true : false;
                         viewModel.Reading.ProgressTowardGenEd = collection["ModuleReadingProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Reading.AreaOfNeed = collection["ModuleReadingAreaOfNeed"] == "on" ? true : false;
-                        viewModel.Reading.InstructionalTier1 = collection["ModuleReadingInstructionalTier1"] == "on" ? true : false;
-                        viewModel.Reading.InstructionalTier2 = collection["ModuleReadingInstructionalTier2"] == "on" ? true : false;
-                        viewModel.Reading.InstructionalTier3 = collection["ModuleReadingInstructionalTier3"] == "on" ? true : false;
+                        //viewModel.Reading.InstructionalTier1 = collection["ModuleReadingInstructionalTier1"] == "on" ? true : false;
+                        //viewModel.Reading.InstructionalTier2 = collection["ModuleReadingInstructionalTier2"] == "on" ? true : false;
+                        //viewModel.Reading.InstructionalTier3 = collection["ModuleReadingInstructionalTier3"] == "on" ? true : false;
                         viewModel.Reading.LevelOfPerformance = collection["ModuleReadingLevelOfPerformance"].ToString();
                         viewModel.Reading.AreaOfNeedDescription = collection["ModuleReadingAreaOfNeedDescription"].ToString();
                         viewModel.Reading.MeetNeedBy = Convert.ToInt32(collection["ModuleReadingMeetNeedBy"]);
@@ -252,9 +252,9 @@ namespace GreenBushIEP.Controllers
                         viewModel.Math.NoConcerns = collection["ModuleMathNoConcern"] == "on" ? true : false;
                         viewModel.Math.ProgressTowardGenEd = collection["ModuleMathProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Math.AreaOfNeed = collection["ModuleMathAreaOfNeed"] == "on" ? true : false;
-                        viewModel.Math.InstructionalTier1 = collection["ModuleMathInstructionalTier1"] == "on" ? true : false;
-                        viewModel.Math.InstructionalTier2 = collection["ModuleMathInstructionalTier2"] == "on" ? true : false;
-                        viewModel.Math.InstructionalTier3 = collection["ModuleMathInstructionalTier3"] == "on" ? true : false;
+                        //viewModel.Math.InstructionalTier1 = collection["ModuleMathInstructionalTier1"] == "on" ? true : false;
+                        //viewModel.Math.InstructionalTier2 = collection["ModuleMathInstructionalTier2"] == "on" ? true : false;
+                        //viewModel.Math.InstructionalTier3 = collection["ModuleMathInstructionalTier3"] == "on" ? true : false;
                         viewModel.Math.LevelOfPerformance = collection["ModuleMathLevelOfPerformance"].ToString();
                         viewModel.Math.AreaOfNeedDescription = collection["ModuleMathAreaOfNeedDescription"].ToString();
                         viewModel.Math.MeetNeedBy = Convert.ToInt32(collection["ModuleMathMeetNeedBy"]);
@@ -263,9 +263,9 @@ namespace GreenBushIEP.Controllers
                         viewModel.Written.NoConcerns = collection["ModuleWrittenNoConcern"] == "on" ? true : false;
                         viewModel.Written.ProgressTowardGenEd = collection["ModuleWrittenProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Written.AreaOfNeed = collection["ModuleWrittenAreaOfNeed"] == "on" ? true : false;
-                        viewModel.Written.InstructionalTier1 = collection["ModuleWrittenInstructionalTier1"] == "on" ? true : false;
-                        viewModel.Written.InstructionalTier2 = collection["ModuleWrittenInstructionalTier2"] == "on" ? true : false;
-                        viewModel.Written.InstructionalTier3 = collection["ModuleWrittenInstructionalTier3"] == "on" ? true : false;
+                        //viewModel.Written.InstructionalTier1 = collection["ModuleWrittenInstructionalTier1"] == "on" ? true : false;
+                        //viewModel.Written.InstructionalTier2 = collection["ModuleWrittenInstructionalTier2"] == "on" ? true : false;
+                        //viewModel.Written.InstructionalTier3 = collection["ModuleWrittenInstructionalTier3"] == "on" ? true : false;
                         viewModel.Written.LevelOfPerformance = collection["ModuleWrittenLevelOfPerformance"].ToString();
                         viewModel.Written.AreaOfNeedDescription = collection["ModuleWrittenAreaOfNeedDescription"].ToString();
                         viewModel.Written.MeetNeedBy = Convert.ToInt32(collection["ModuleWrittenMeetNeedBy"]);
