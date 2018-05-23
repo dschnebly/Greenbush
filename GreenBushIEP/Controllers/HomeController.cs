@@ -789,6 +789,8 @@ namespace GreenbushIep.Controllers
             tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
             tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
             tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+            bool enableAccommodations = false;
+            bool enableBehaviorPlan = false;
 
             if (student != null)
             {
@@ -804,6 +806,41 @@ namespace GreenbushIep.Controllers
                     model.hasplan = true;
                     model.studentIEP = theIEP;
                     model.studentPlan = new StudentPlan(student.UserID);
+
+                    //check if any module has accommodations checked or behavior plan
+                    if (db.tblIEPAcademics.Where(o => o.IEPid ==  theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && o.BehaviorInterventionPlan).Any())
+                        enableBehaviorPlan = true;
+                    
+                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                        enableAccommodations = true;
+
+
+                    model.hasAccommodations = enableAccommodations;
+                    model.needsBehaviorPlan = enableBehaviorPlan;
                 }
                 else
                 {
@@ -811,6 +848,8 @@ namespace GreenbushIep.Controllers
                     model.studentIEP = theIEP.CreateNewIEP(stid);
                     model.studentPlan = new StudentPlan();
                 }
+
+               
             }
 
             return View(model);

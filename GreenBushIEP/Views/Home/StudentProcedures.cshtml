@@ -156,14 +156,22 @@
         }
 
         .widgetDisabled {
-            opacity: 0.65;
-            cursor: not-allowed;
+            opacity: 0.65;           
         }
 
-            .widgetDisabled div div button {
-                cursor: not-allowed;
-                pointer-events: none;
-            }
+        .needsAttention {
+            /*background-color: #5b4b89 !important;*/
+            /*opacity: 0.65;*/
+            border-color:#a00000 !important;
+            border-width: 2px;                                           
+        }
+
+        .needsAttentionIcon {
+            color: #a00000;
+            font-size: 25px;
+            top: 2px;
+            margin-top: -20px;
+        }
 
         dt {
             padding: 8px 0 0 0;
@@ -199,7 +207,7 @@
             .iep, .iep > .well .options button {
                 border: 1px solid #45906D;
             }
-
+                    
         .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
             margin-bottom: 5px;
             visibility: visible;
@@ -860,8 +868,7 @@
 }
 
 <div class="transition-page">
-    <h2>My Student's Procedures</h2>
-
+   
     <div class="container" style="overflow:hidden; margin: 0 auto 75px;">
 
         <div class="row">
@@ -1018,22 +1025,7 @@
                     </div>
 
                 </li>
-                <li class="ui-state-default filter legal ">
-
-                    <div class="hero-widget well">
-                        <div class="icon">
-                            <i class="glyphicon glyphicon-folder-open"></i>
-                        </div>
-                        <div class="text">
-                            <var>&nbsp;</var>
-                            <label class="text-muted">Forms</label>
-                        </div>
-                        <div class="options">
-                            <button type="button" class="btn btn-default btn-lg iep-form-section" id="IEPFormsModule"><i class="glyphicon glyphicon-search"></i> View</button>
-                        </div>
-                    </div>
-
-                </li>
+               
                 <li class="ui-state-default filter planning">
 
                     <div class="hero-widget well">
@@ -1064,9 +1056,13 @@
                     </div>
 
                 </li>
-                <li class="ui-state-default filter planning">
+                <li class="ui-state-default filter planning  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
 
-                    <div class="hero-widget well">
+                    <div class="hero-widget well  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
+                        @if (Model.hasAccommodations)
+                        {
+                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
+                        }
                         <div class="icon">
                             <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="top: 15px;"></i>
                         </div>
@@ -1079,9 +1075,13 @@
                     </div>
 
                 </li>
-                <li class="ui-state-default filter planning">
+                <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
 
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
+                        @if (Model.needsBehaviorPlan)
+                        {
+                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
+                        }
                         <div class="icon">
                             <i class="glyphicon glyphicon-road" aria-hidden="true" style="top: 15px;"></i>
                         </div>
@@ -1120,6 +1120,22 @@
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg other-considerations-section" data-view="OtherConsiderationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
+                        </div>
+                    </div>
+
+                </li>
+                <li class="ui-state-default filter legal ">
+
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-folder-open"></i>
+                        </div>
+                        <div class="text">
+                            <var>&nbsp;</var>
+                            <label class="text-muted">Forms</label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg iep-form-section" id="IEPFormsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
 

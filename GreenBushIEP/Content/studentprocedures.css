@@ -144,13 +144,9 @@
 
     .widgetDisabled {
         opacity: 0.65;
-        cursor: not-allowed;
+       
     }
-
-        .widgetDisabled div div button {
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+    
 
     dt {
         padding: 8px 0 0 0;

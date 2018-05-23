@@ -213,6 +213,8 @@ namespace GreenBushIEP.Models
         public IEP studentIEP { get; set; }
         public StudentPlan studentPlan { get; set; }
         public DateTime birthDate { get; set; }
+        public bool hasAccommodations { get; set; }
+        public bool needsBehaviorPlan { get; set; }
     }
 
     public class StudentLegalView
