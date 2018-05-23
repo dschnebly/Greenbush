@@ -1190,17 +1190,6 @@
                                     <label><input type="radio" name="HealthVisionResult" value="-1" @(Model.studentPlan.HealthVisionResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
                                 </div>
                             </div>
-                            <div class="col-md-2 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 13px;">Does the student have a visual impairment?</h6>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="radio" name="HealthVisionImparied" value="1" @(Model.studentPlan.HealthVisionImparied == true ? "checked" : String.Empty) />&nbsp;Yes</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="radio" name="HealthVisionImparied" value="0" @(Model.studentPlan.HealthVisionImparied == false ? "checked" : String.Empty) />&nbsp;No</label>
-                                </div>
-                            </div>
                         </div>
 
                         <hr />
@@ -1359,18 +1348,6 @@
                                 <div>
                                     <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />Concerns</label>
                                     <label><input type="checkbox" name="ReadingProgress" @(Model.studentPlan.ReadingProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                    <h6 style="font-weight: bold; margin-left: 1px; font-size: 14px;">Reading Instructional Levels (multi-select options)</h6>
-                                    <ul style="list-style: none;">
-                                        <li>
-                                            <label><input type="checkbox" name="ReadingTier1" @(Model.studentPlan.ReadingTier1 ? "checked" : String.Empty ) />Tier 1 Core/Basic Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="ReadingTier2" @(Model.studentPlan.ReadingTier2 ? "checked" : String.Empty ) />Tier 2 Group Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="ReadingTier3" @(Model.studentPlan.ReadingTier3 ? "checked" : String.Empty ) />Tier 3 Individual/Intensive Instruction</label>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="checkbox isAcademicPerformanceConcern">
                                     <label><input type="checkbox" name="ReadingNeed" @(Model.studentPlan.ReadingNeed ? "checked" : String.Empty ) />Area of need which impacts performance in General Education</label>
@@ -1381,18 +1358,6 @@
                                 <div>
                                     <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />Concerns</label>
                                     <label><input type="checkbox" name="MathProgress" @(Model.studentPlan.MathProgress ? "checked=checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                    <h6 style="font-weight: bold; margin-left: 15px; font-size: 14px;">Math Instructional Levels (multi-select options)</h6>
-                                    <ul style="list-style: none;">
-                                        <li>
-                                            <label><input type="checkbox" name="MathTier1" @(Model.studentPlan.MathTier1 ? "checked=checked" : String.Empty ) />Tier 1 Core/Basic Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="MathTier2" @(Model.studentPlan.MathTier2 ? "checked=checked" : String.Empty ) />Tier 2 Group Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="MathTier3" @(Model.studentPlan.MathTier3 ? "checked=checked" : String.Empty ) />Tier 3 Individual/Intensive Instruction</label>
-                                        </li>
-                                    </ul>
                                     <div class="checkbox isAcademicPerformanceConcern">
                                         <label><input type="checkbox" name="MathNeed" @(Model.studentPlan.MathNeed ? "checked=checked" : String.Empty ) />Area of Need which impacts performance in General Education</label>
                                     </div>
@@ -1403,18 +1368,6 @@
                                 <div>
                                     <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />Concerns</label>
                                     <label><input type="checkbox" name="WrittenProgress" @(Model.studentPlan.WrittenProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                    <h6 style="font-weight: bold; margin-left: 15px; font-size: 14px;">Written Instructional Levels (multi-select options)</h6>
-                                    <ul style="list-style: none;">
-                                        <li>
-                                            <label><input type="checkbox" name="WrittenTier1" @(Model.studentPlan.WrittenTier1 ? "checked" : String.Empty ) />Tier 1 Core/Basic Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="WrittenTier2" @(Model.studentPlan.WrittenTier2 ? "checked" : String.Empty ) />Tier 2 Group Instruction</label>
-                                        </li>
-                                        <li>
-                                            <label><input type="checkbox" name="WrittenTier3" @(Model.studentPlan.WrittenTier3 ? "checked" : String.Empty ) />Tier 3 Individual/Intensive Instruction</label>
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="checkbox isAcademicPerformanceConcern">
                                     <label><input type="checkbox" name="WrittenNeed" @(Model.studentPlan.WrittenNeed ? "checked" : String.Empty ) />Area of Need which impacts performance in General Education</label>
