@@ -475,7 +475,7 @@ $(".module-section").on("click", function (e) {
     var tId = $("#tid").val();
     var stId = $("#stid").val();
     var ModuleView = $(e.currentTarget).data("view");
-
+    alert(stId);
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({

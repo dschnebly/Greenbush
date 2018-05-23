@@ -45,21 +45,12 @@ namespace GreenBushIEP.Models
         public bool AcademicProgressTowardGenEd { get; set; }
         public bool ReadingNoConcern { get; set; }
         public bool ReadingProgress { get; set; }
-        public bool ReadingTier1 { get; set; }
-        public bool ReadingTier2 { get; set; }
-        public bool ReadingTier3 { get; set; }
         public bool ReadingNeed { get; set; }
         public bool MathNoConcern { get; set; }
         public bool MathProgress { get; set; }
-        public bool MathTier1 { get; set; }
-        public bool MathTier2 { get; set; }
-        public bool MathTier3 { get; set; }
         public bool MathNeed { get; set; }
         public bool WrittenNoConcern { get; set; }
         public bool WrittenProgress { get; set; }
-        public bool WrittenTier1 { get; set; }
-        public bool WrittenTier2 { get; set; }
-        public bool WrittenTier3 { get; set; }
         public bool WrittenNeed { get; set; }
         public bool isDOC { get; set; }
         public int ExtendYear { get; set; }
@@ -103,21 +94,12 @@ namespace GreenBushIEP.Models
             this.AcademicProgressTowardGenEd = false;
             this.ReadingNoConcern = true;
             this.ReadingProgress = false;
-            this.ReadingTier1 = false;
-            this.ReadingTier2 = false;
-            this.ReadingTier3 = false;
             this.ReadingNeed = false;
             this.MathNoConcern = true;
             this.MathProgress = false;
-            this.MathTier1 = false;
-            this.MathTier2 = false;
-            this.MathTier3 = false;
             this.MathNeed = false;
             this.WrittenNoConcern = true;
             this.WrittenProgress = false;
-            this.WrittenTier1 = false;
-            this.WrittenTier2 = false;
-            this.WrittenTier3 = false;
             this.WrittenNeed = false;
             this.isDOC = false;
             this.RequireAssistiveTechnology = false;
@@ -205,9 +187,6 @@ namespace GreenBushIEP.Models
                     this.ReadingNeed = studentReading.AreaOfNeed;
                     this.ReadingNoConcern = studentReading.NoConcerns;
                     this.ReadingProgress = studentReading.ProgressTowardGenEd;
-                    //this.ReadingTier1 = studentReading.InstructionalTier1;
-                    //this.ReadingTier2 = studentReading.InstructionalTier2;
-                    //this.ReadingTier3 = studentReading.InstructionalTier3;
                 }
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
@@ -217,9 +196,6 @@ namespace GreenBushIEP.Models
                     this.MathNeed = studentMath.AreaOfNeed;
                     this.MathNoConcern = studentMath.NoConcerns;
                     this.MathProgress = studentMath.ProgressTowardGenEd;
-                    //this.MathTier1 = studentMath.InstructionalTier1;
-                    //this.MathTier2 = studentMath.InstructionalTier2;
-                    //this.MathTier3 = studentMath.InstructionalTier3;
                 }
 
                 tblIEPWritten studentWritten = db.tblIEPWrittens.FirstOrDefault(s => s.IEPWrittenID == studentIEP.IEPWrittenID);
@@ -229,9 +205,6 @@ namespace GreenBushIEP.Models
                     this.WrittenNeed = studentWritten.AreaOfNeed;
                     this.WrittenNoConcern = studentWritten.NoConcerns;
                     this.WrittenProgress = studentWritten.ProgressTowardGenEd;
-                    //this.WrittenTier1 = studentWritten.InstructionalTier1;
-                    //this.WrittenTier2 = studentWritten.InstructionalTier2;
-                    //this.WrittenTier3 = studentWritten.InstructionalTier3;
                 }
 
                 tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();
@@ -343,9 +316,6 @@ namespace GreenBushIEP.Models
                     studentReading.AreaOfNeed = this.ReadingNeed;
                     studentReading.NoConcerns = this.ReadingNoConcern;
                     studentReading.ProgressTowardGenEd = this.ReadingProgress;
-                    studentReading.InstructionalTier1 = this.ReadingTier1;
-                    studentReading.InstructionalTier2 = this.ReadingTier2;
-                    studentReading.InstructionalTier3 = this.ReadingTier3;
                 }
                 db.SaveChanges();
 
@@ -356,9 +326,6 @@ namespace GreenBushIEP.Models
                     studentMath.AreaOfNeed = this.MathNeed;
                     studentMath.NoConcerns = this.MathNoConcern;
                     studentMath.ProgressTowardGenEd = this.MathProgress;
-                    studentMath.InstructionalTier1 = this.MathTier1;
-                    studentMath.InstructionalTier2 = this.MathTier2;
-                    studentMath.InstructionalTier3 = this.MathTier3;
                 }
                 db.SaveChanges();
 
@@ -369,9 +336,6 @@ namespace GreenBushIEP.Models
                     studentWritten.AreaOfNeed = this.WrittenNeed;
                     studentWritten.NoConcerns = this.WrittenNoConcern;
                     studentWritten.ProgressTowardGenEd = this.WrittenProgress;
-                    studentWritten.InstructionalTier1 = this.WrittenTier1;
-                    studentWritten.InstructionalTier2 = this.WrittenTier2;
-                    studentWritten.InstructionalTier3 = this.WrittenTier3;
                 }
                 db.SaveChanges();
 

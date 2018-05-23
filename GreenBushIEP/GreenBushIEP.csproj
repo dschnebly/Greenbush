@@ -520,7 +520,6 @@
     <Content Include="Scripts\fasw.transitions.js" />
     <Content Include="Scripts\fasw.transitions.min.js" />
     <Content Include="Scripts\home.js" />
-    <Content Include="Content\ThisisGREENBUSH.pdf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="App_Browser\generic.browser" />
@@ -535,7 +534,6 @@
     <None Include="GreenbushIEP.pubxml" />
     <EntityDeploy Include="Models\GreenbushIEPModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GreenbushIEPModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\GreenbushIEPModel.edmx.diagram">
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
