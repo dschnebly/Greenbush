@@ -265,8 +265,8 @@
           <Property Name="Deaf" Type="bit" Nullable="false" />
           <Property Name="LimitedEnglish" Type="bit" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AreaOfNeedDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
+          <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="AreaOfNeed" Type="bit" />
@@ -1185,8 +1185,8 @@
           <Property Name="Deaf" Type="Boolean" Nullable="false" />
           <Property Name="LimitedEnglish" Type="Boolean" Nullable="false" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
-          <Property Name="LevelOfPerformance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />

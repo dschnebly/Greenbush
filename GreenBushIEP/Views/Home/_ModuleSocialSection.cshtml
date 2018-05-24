@@ -42,15 +42,15 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Does this student's behavior impede the learning of self or others?</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? "checked" : String.Empty)>Yes</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? String.Empty : "checked")>No</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "yes", Model.BehaviorImepedeLearning)Yes</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "no", !Model.BehaviorImepedeLearning)No</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Does this student require a Behavior Intervention Plan?</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? "checked" : String.Empty)>Yes</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? String.Empty : "checked")>No</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "yes", Model.BehaviorInterventionPlan)Yes</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "no", !Model.BehaviorInterventionPlan)No</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
