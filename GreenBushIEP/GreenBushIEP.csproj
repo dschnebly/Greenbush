@@ -275,6 +275,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\GreenbushIEPModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -534,6 +539,7 @@
     <None Include="GreenbushIEP.pubxml" />
     <EntityDeploy Include="Models\GreenbushIEPModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GreenbushIEPModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\GreenbushIEPModel.edmx.diagram">
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>

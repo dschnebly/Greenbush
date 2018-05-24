@@ -767,6 +767,7 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.AnnualGoal = collection[++j].ToString();
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();
+                    studentGoal.goal.EvaluationProcedures = Convert.ToInt32(collection[++j]);
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;

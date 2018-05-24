@@ -238,6 +238,7 @@
           <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="EvaluationProcedures" Type="int" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -1663,6 +1664,7 @@
           <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EvaluationProcedures" Type="Int32" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
         </EntityType>
         <Association Name="tblServiceGoals">
@@ -2384,6 +2386,7 @@
           <EntitySetMapping Name="tblGoals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
               <MappingFragment StoreEntitySet="tblGoals">
+                <ScalarProperty Name="EvaluationProcedures" ColumnName="EvaluationProcedures" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
