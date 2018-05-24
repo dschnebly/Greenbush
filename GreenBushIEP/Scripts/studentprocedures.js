@@ -86,7 +86,7 @@
             $("#IEPBeginDate").addClass("date-error");
             $("#IEPEndDate").addClass("date-error");
 
-            return alert("The iep can't end before it started. Please try again.");
+            return alert("The IEP can't end before it started. Please try again.");
         }
 
         var a = new Date(startDate);
@@ -124,7 +124,32 @@
             {
                 return;
             }
-        }
+		}
+
+
+		var dayStart = a.getUTCDay(); //start date
+		var dayEnd = b.getUTCDay(); //end date
+		// Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+		if (dayStart == 0 || dayStart == 6) {
+			$("#IEPBeginDate").addClass("date-error");
+			return alert("Please select a Weekday for the Beginning Date.");
+		}
+		else {
+			$("#IEPBeginDate").removeClass("date-error");
+		}
+
+		// Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+		if (dayEnd == 0 || dayEnd == 6) {
+			$("#IEPEndDate").addClass("date-error");
+			return alert("Please select a Weekday for the Ending Date.");
+		}
+		else {
+			$("#IEPEndDate").removeClass("date-error");
+		}
+
+		var numDays = days_between(a, b);
+		if(numDays > 365)
+			return alert("The IEP Beginning and Ending date range can't be over a year. Please try another selection.");
 
         $("#IEPBeginDate").attr('disabled', true);
         $("#IEPEndDate").attr('disabled', true);
@@ -163,6 +188,23 @@
         $("#IEPEndDate").datepicker();
     }
 });
+
+function days_between(date1, date2) {
+
+	// The number of milliseconds in one day
+	var ONE_DAY = 1000 * 60 * 60 * 24
+
+	// Convert both dates to milliseconds
+	var date1_ms = date1.getTime()
+	var date2_ms = date2.getTime()
+
+	// Calculate the difference in milliseconds
+	var difference_ms = Math.abs(date1_ms - date2_ms)
+
+	// Convert back to days and return
+	return Math.round(difference_ms / ONE_DAY)
+
+}
 
 function getParameterByName(name, url) {
     if (!url) {
@@ -232,7 +274,7 @@ $(window).on('shown.bs.modal', function (e) {
 
 if ($("#modal-studentPlanning").hasClass("needsPlan")) {
     $("#modal-studentPlanning").on('hidden.bs.modal', function () {
-        $('*[data-target="#modal-studentPlanning"]').addClass("pulse animated");
+        //$('*[data-target="#modal-studentPlanning"]').addClass("pulse animated");
     });
 }
 
