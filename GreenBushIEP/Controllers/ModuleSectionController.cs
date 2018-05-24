@@ -796,9 +796,9 @@ namespace GreenBushIEP.Controllers
                             if (benchmark != null)
                             {
                                 benchmark.goalID = studentGoal.goal.goalID;
-                                benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0: 0;
+                                benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
                                 benchmark.ObjectiveBenchmark = collection[++j].ToString();
-                                benchmark.TransitionActivity = (collection[++j] == "true") ? true : false;
+                                benchmark.TransitionActivity = (collection[++j].ToLower() ==  "true") ? true : false;
                                 benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
