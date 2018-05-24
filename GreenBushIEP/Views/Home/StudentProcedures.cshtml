@@ -879,7 +879,7 @@
                         <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
                         <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("dd/MM/yyyy"))" />
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
-                        <a data-toggle="modal" data-target="#modal-studentPlanning" style="cursor: pointer; color: #000; display: block; text-align: center; line-height: 1.8; text-decoration:underline;">Your Student Plan</a>
+                        
                     </div>
                 </div>
             </div>
@@ -895,9 +895,10 @@
             <div class="col-md-12">
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
                     <ul class="navigation">
-                        <li class="pull-right">
-                            <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
-                        </li>
+						<li class="pull-right">
+							<button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+							<button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
+						</li>
                     </ul>
                 </div>
             </div>
