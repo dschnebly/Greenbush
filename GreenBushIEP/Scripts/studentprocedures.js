@@ -272,12 +272,6 @@ $(window).on('shown.bs.modal', function (e) {
 //
 // Student Planning
 
-if ($("#modal-studentPlanning").hasClass("needsPlan")) {
-    $("#modal-studentPlanning").on('hidden.bs.modal', function () {
-        //$('*[data-target="#modal-studentPlanning"]').addClass("pulse animated");
-    });
-}
-
 // Attach Event
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
