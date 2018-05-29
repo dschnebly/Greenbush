@@ -254,6 +254,21 @@ function formatDate(date) {
     return ([year, month, day].join('-')).toString();
 }
 
+// Prevents the user from using the back button
+window.history.pushState({ page: 1 }, "", "");
+window.onpopstate = function (event) {
+
+    // "event" object seems to contain value only when the back button is clicked
+    // and if the pop state event fires due to clicks on a button
+    // or a link it comes up as "undefined" 
+
+    if (event) {
+        // Code to handle back button or prevent from navigation
+        event.preventDefault();
+        history.go(1);
+    }
+}
+
 /** fixing the bootstrap modal overlay bug **/
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
