@@ -80,7 +80,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapse0" class="panel-collapse">
+                            <div id="collapse0" class="panel-collapse in">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -196,42 +196,51 @@
 
     $("#resetModuleAccForm").trigger("reset");
 
-
     /* Event */
     /* when clicking on the New Student Goal button */
     $('#newgoal').on('click', function () {
+        $.each($("div.panel-collapse").not('#defaultgoal'), function (index) {
+            $(this).collapse('hide');
+        });
+
+        var goalCount = $('.oneStudentGoal').not("#defaultgoal").length;
         var cloneGoal = $("#defaultgoal").clone();
         cloneGoal.removeClass("hidden");
         cloneGoal.attr('id', 'defaultgoal_X');
-        var saveButton = cloneGoal.find('#btnSubmit');
 
+        // reset the id values of the panel and accordian elements
+        cloneGoal.find('div.panel-group').attr('id', 'accordion[' + goalCount + ']');
+        cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
+
+        var link = cloneGoal.find('h4 a');
+        link.attr('href', '#collapse' + goalCount);
+        link.attr('data-parent', 'accordion[' + goalCount + ']');
+        var panelCollapse = cloneGoal.find("#collapse0").prop("id", "collapse" + goalCount);
+
+        panelCollapse.collapse('show');
+
+        var saveButton = cloneGoal.find('#btnSubmit');
         saveButton.click(function () {
             var buttonVal = $(this).attr('accom-id');
             if (buttonVal == undefined)
                 _save(0);
             else
                 _save(buttonVal);
-
         });
 
         //clear location list when form has existing accommodations
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
         $("#ExistingAccommodations").append(cloneGoal);
+
         initGoal(cloneGoal);
 
         return false;
     });
 
-
-    $(".deleteGoal").click(function () {
-        _deleteRow($(this));
-    });
-
-
-
     function _save(elementValue) {
         event.preventDefault();
+
         var element = $("#defaultgoal_X");
         if (elementValue != 0)
             element = $("#defaultgoal_" + elementValue);
@@ -250,8 +259,7 @@
                     _showAlert("The Accommodation/Modification has been saved.");
 
                     if (data.isNew) {
-                        var cloneGoal = element; //.clone();
-
+                        var cloneGoal = element;
 
                         cloneGoal.attr('id', 'defaultgoal_' + data.id);
                         var deleteButton = cloneGoal.find('.deleteGoal');
@@ -339,7 +347,8 @@
     }
 
     function initGoal(element) {
-        element.addClass('bound').each(function (index) {
+
+        element.not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
 
             $(this).find("input[type=date]").on('input', function (e) {
 
@@ -367,8 +376,6 @@
 
             });
 
-
-
             $(this).find(".number-spinner button").on("click", function () {
                 var btn = $(this),
                     oldValue = btn.closest('.number-spinner').find('input').val().trim(),
@@ -387,7 +394,6 @@
                 btn.closest('.number-spinner').find('input').val(newValue);
                 return false;
             });
-
 
             $(this).find(".minute-spinner button").on("click", function () {
                 var btn = $(this),
@@ -408,6 +414,15 @@
                 return false;
             });
 
+            $(this).find(".panel-title a").on("click", function () {
+                $(".panel-collapse").each(function () {
+                    $(this).collapse('hide');
+                });
+            });
+;
+            $(this).find(".deleteGoal").on("click", function () {
+                _deleteRow($(this));
+            });
 
         });
     }
@@ -418,19 +433,27 @@
         if (confirm("Do you really want to delete this Accommodation/Modification?")) {
 
             if (dataId != undefined && dataId != null) {
-                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
+                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response)
+                {
                     if (response.result != undefined && response.result) {
 
-                        var container = $("#defaultgoal_" + dataId);
-                        container.remove();
+                        $(element).closest('.oneStudentGoal').remove();
 
                     }
-                    else {
+                    else
+                    {
+
                         _showAlert("There was a problem deleting the Accommodation or Modification.");
+
                     }
-
-
                 });
+            }
+            else // it's a new accomodation
+            {
+                var currentGoal = $(element).closest('.oneStudentGoal');
+                var previousGoal = currentGoal.prev(".oneStudentGoal:visible").find(".panel-collapse");
+                currentGoal.remove();
+                return previousGoal.collapse('show');
             }
         }
     }
@@ -444,5 +467,11 @@
             });
         }
     }
+
+    $(document).ready(function () {
+        $(".oneStudentGoal").each(function () {
+            initGoal($(this));
+        });
+    });
 
 </script>
