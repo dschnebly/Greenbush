@@ -50,6 +50,7 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
             <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 4 ? "checked" : String.Empty)>No needs to address</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
