@@ -49,7 +49,6 @@
             <div class="col-md-12" style="margin-bottom: 12px;">
                 <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 <button id="duplicateService" class="btn btn-default">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
@@ -534,6 +533,9 @@
     /* Event */
     /* when clicking on the New Student Goal button */
     $('#newService').on('click', function () {
+        $.each($("div.collapse"), function (index) {
+            $(this).collapse('hide');
+        });
 
         var cloneService = $("#defaultStudentService").clone();
         cloneService.removeClass("hidden");
@@ -547,8 +549,11 @@
         var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
         serviceA.attr('href', '#collapse' + serviceCount);
 
-        cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+        var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+
         $('.serviceContainer').append(cloneService);
+
+        panelCollapse.collapse('show');
 
         initService();
     });
@@ -634,7 +639,10 @@
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.Result == "success") {
+                                        var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                                        previousService.collapse('show');
+
                                         $("#alertMessage .moreinfo").html('Student Service successfully deleted.');
                                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                                             $("#alertMessage").slideUp(500);
@@ -655,7 +663,9 @@
                             });
                         }
                         else {
+                            var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                             oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                            previousService.collapse('show');
                         }
                     }
                 }
@@ -882,6 +892,10 @@
     }
 
     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay) {
+        $.each($("div.collapse"), function (index) {
+            $(this).collapse('hide');
+        });
+
         var nextYear = parseInt(dupFiscalYear) + 1;
 
         var cloneService = $("#defaultStudentService").clone();
@@ -896,8 +910,11 @@
         var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
         serviceA.attr('href', '#collapse' + serviceCount);
 
-        cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+        var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+
         $('.serviceContainer').append(cloneService);
+
+        panelCollapse.collapse("show");
 
         initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay);
     }
@@ -993,7 +1010,10 @@
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.Result == "success") {
+                                        var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                                        previousService.collapse('show');
+
                                         $("#alertMessage .moreinfo").html('Student Service successfully deleted.');
                                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                                             $("#alertMessage").slideUp(500);
@@ -1014,7 +1034,9 @@
                             });
                         }
                         else {
+                            var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                             oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                            previousService.collapse('show');
                         }
                     }
                 }

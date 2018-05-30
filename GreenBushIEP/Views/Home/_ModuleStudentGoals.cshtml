@@ -821,7 +821,7 @@
         var panelCollapse = cloneGoal.find("#collapse0").prop("id", "collapse" + goalCount);
 
         // remove uncessary elements because of id restrictions
-        var whatever = cloneGoal.find('#defaultObjective').removeClass('hidden').removeAttr('id');
+        cloneGoal.find('#defaultObjective').removeClass('hidden').removeAttr('id');
         $('#StudentGoals').append(cloneGoal);
 
         panelCollapse.collapse('show');
