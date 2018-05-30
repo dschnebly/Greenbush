@@ -35,6 +35,8 @@
         }
 </style>
 
+<link href="/Content/chosen.css" rel="stylesheet" />
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
@@ -192,7 +194,7 @@
                                                     }
                                                     else
                                                     {
-                                                    <option value="-1">-- No providers currently available --</option>
+                                                        <option value="-1">-- No providers currently available --</option>
                                                     }
                                                 </select>
                                             </div>
@@ -203,25 +205,16 @@
                                             <label>Attach a Goal</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                <select class="form-control" id="studentGoalsSelect">
-                                                    <option value="-1">-- Add a student goal to the service --</option>
+                                                <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" multiple="multiple" data-validate="true">
                                                     @if (Model.studentGoals.Count > 0)
                                                     {
                                                         foreach (var goal in Model.studentGoals)
                                                         {
-                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                            <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
                                                         }
                                                     }
                                                 </select>
-                                                <span class="input-group-addon btn btn-default addServiceGoal"><i class="glyphicon glyphicon-plus"></i></span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 StudentGoals">
-                                            <br />
-                                            <label>List of Attached Goals</label>
-                                            <hr style="margin-top: 0;" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -359,7 +352,7 @@
                                                         {
                                                             foreach (var serviceType in Model.serviceTypes)
                                                             {
-                                                        <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                                <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -373,12 +366,12 @@
                                                         {
                                                             foreach (var serviceProvider in Model.serviceProviders)
                                                             {
-                                                        <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.Name</option>
+                                                                <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.Name</option>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                        <option value="-1">-- No providers currently available --</option>
+                                                            <option value="-1">-- No providers currently available --</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -389,45 +382,19 @@
                                                 <label>Attach a Goal</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                    <select class="form-control" id="studentGoalsSelect">
-                                                        <option value="-1">-- Add a student goal to the service --</option>
+                                                    <select id="studentGoalsSelect" name="studentGoalsSelect" class="form-control chosen-select" data-placeholder="Choose a goal..." multiple="multiple" data-validate="true">
                                                         @if (Model.studentGoals.Count > 0)
                                                         {
                                                             foreach (var goal in Model.studentGoals)
                                                             {
                                                                 if (!service.tblGoals.Contains(goal))
                                                                 {
-                                                        <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
                                                                 }
                                                             }
                                                         }
                                                     </select>
-                                                    <span class="input-group-addon btn btn-default addServiceGoal"><i class="glyphicon glyphicon-plus"></i></span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 StudentGoals">
-                                                <br />
-                                                <label>List of Attached Goals</label>
-                                                <hr style="margin-top: 0;" />
-                                                @if (service.tblGoals.Count > 0)
-                                                {
-                                                    foreach (var goal in service.tblGoals)
-                                                    {
-                                                <div class="panel panel-info autocollapse serviceStudentGoal" data-id="@(goal.goalID)" data-title="@(goal.Title)" style="margin: 5px 0">
-                                                    <div class="panel-heading clickable">
-                                                        <h3 class="panel-title">
-                                                            <i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;
-                                                            <i class="fa fa-trophy"></i>&nbsp;@goal.Title.ToString()
-                                                            <i class="pull-right glyphicon glyphicon-remove deletegoal"></i>
-                                                            <input type="hidden" name="studentServiceGoal@(goal.goalID)" value="@goal.goalID" />
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                    }
-                                                }
-
                                             </div>
                                         </div>
                                         <div class="row">
@@ -462,7 +429,7 @@
 <script>
     $('#serviceStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
     $('#serviceEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-
+    //$(".chosen-select").chosen({ width: "100%" });
 
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
     var calendarArrayOfDates = JSON.parse(model);
@@ -618,8 +585,6 @@
 
             });
 
-            /* Binding */
-            /* Fires where the user deletes a service */
             $(this).find("a i.deleteService").on("click", function (e) {
 
                 if ($(e.target).hasClass('deleteService')) {
@@ -703,7 +668,7 @@
                 else {
                     $(this).val(1);
                 }
-            })
+            });
 
             $(this).find(".minute-spinner button").on("click", function () {
 
@@ -723,23 +688,6 @@
                 }
 
                 btn.closest('.minute-spinner').find('input').val(newValue);
-            });
-
-            $(this).find(".addServiceGoal").on("click", function () {
-
-                var selectGoal = $(this).prev('select');
-                var selectGoalSelectedTitle = $(selectGoal).find("option:selected").data('title');
-                var selectGoalSelectedId = $(selectGoal).find("option:selected").attr('value');
-
-                var goalCount = $(".serviceStudentGoal").length + 1;
-                if (selectGoalSelectedId != -1) {
-                    $('option:selected', selectGoal).remove();
-
-                    var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;<i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i><input type="hidden" name="studentServiceGoal' + goalCount + '" value="' + selectGoalSelectedId + '" /></h3></div></div>';
-                    $(this).closest(".row").next(".row").find(".StudentGoals").append(attachGoal);
-
-                    initGoalEvents();
-                }
             });
 
             $(this).find('.saveService').on("click", function () {
@@ -773,7 +721,16 @@
                         });
                     }
                 });
-            })
+            });
+
+            /* Closes all the other panel groups except the one you clicked on */
+            $(this).find(".panel-title a").on("click", function () {
+                $(".collapse").each(function () {
+                    $(this).collapse('hide');
+                });
+            });
+
+            $(this).find('.chosen-select').chosen({ width: "100%" });
 
             //setup end date
             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
@@ -930,7 +887,14 @@
             $(this).find("select[name='Location']").val(dupLocation).prop('selected', true);
             $(this).find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
             $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+            $(this).find('.chosen-select').chosen({ width: "100%" });
 
+            /* Closes all the other panel groups except the one you clicked on */
+            $(this).find(".panel-title a").on("click", function () {
+                $(".collapse").each(function () {
+                    $(this).collapse('hide');
+                });
+            });
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
                 var year = $(this).val();
@@ -1145,7 +1109,6 @@
                     }
                 });
             })
-
 
             //setup end date
             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
