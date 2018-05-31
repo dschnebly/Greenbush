@@ -256,7 +256,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    _showAlert("The Accommodation/Modification has been saved.");
+                    _showAlert("The Accommodation/Modification has been saved.", true);
 
                     if (data.isNew) {
                         var cloneGoal = element;
@@ -327,7 +327,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    _showAlert("The Accommodation/Modification has been updated.");
+                    _showAlert("The Accommodation/Modification has been updated.", true);
                 }
                 else {
                     if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -360,13 +360,13 @@
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
-                    _showAlert(error);
+                    _showAlert(error , false);
                 } else if (day == 6) {
                     var error = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
-                    _showAlert(error);
+                    _showAlert(error, false);
                 } else {
 
                     e.target.setCustomValidity('');
@@ -443,7 +443,7 @@
                     else
                     {
 
-                        _showAlert("There was a problem deleting the Accommodation or Modification.");
+                        _showAlert("There was a problem deleting the Accommodation or Modification.", false);
 
                     }
                 });
@@ -458,9 +458,11 @@
         }
     }
 
-    function _showAlert(message) {
+    function _showAlert(message, positive) {
 
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
+            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
             $("#alertMessage .moreinfo").html(message);
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);
