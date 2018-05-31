@@ -264,9 +264,9 @@
                         cloneGoal.attr('id', 'defaultgoal_' + data.id);
                         var deleteButton = cloneGoal.find('.deleteGoal');
                         deleteButton.attr('accom-id', data.id);
-                        deleteButton.click(function () {
-                            _deleteRow(deleteButton);
-                        });
+                        //deleteButton.click(function () {
+                        //    _deleteRow(deleteButton);
+                        //});
 
                         var saveButton = cloneGoal.find('#btnSubmit');
                         saveButton.attr('accom-id', data.id);
