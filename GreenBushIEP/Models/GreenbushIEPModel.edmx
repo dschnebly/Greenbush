@@ -542,7 +542,7 @@
           <Property Name="Frequency" Type="int" Nullable="false" />
           <Property Name="DaysPerWeek" Type="tinyint" Nullable="false" />
           <Property Name="Minutes" Type="smallint" Nullable="false" />
-          <Property Name="ProviderID" Type="int" Nullable="false" />
+          <Property Name="ProviderID" Type="int" />
           <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
@@ -721,7 +721,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblServices_ProviderID">
-          <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="1" />
+          <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="0..1" />
           <End Role="tblServices" Type="Self.tblServices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblProviders">
@@ -914,7 +914,6 @@
           <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <EntitySet Name="tblRoles" EntityType="IndividualizedEducationProgramModel.tblRole" />
           <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
-          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
           <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
@@ -931,11 +930,12 @@
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
           </AssociationSet>
+          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
+          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <AssociationSet Name="FK_tblServices_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID">
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
-          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <AssociationSet Name="tblServiceGoals" Association="IndividualizedEducationProgramModel.tblServiceGoals">
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
@@ -1445,26 +1445,6 @@
           <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblService">
-          <Key>
-            <PropertyRef Name="ServiceID" />
-          </Key>
-          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Frequency" Type="Int32" Nullable="false" />
-          <Property Name="DaysPerWeek" Type="Byte" Nullable="false" />
-          <Property Name="Minutes" Type="Int16" Nullable="false" />
-          <Property Name="ProviderID" Type="Int32" Nullable="false" />
-          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
-          <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
-        </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
             <PropertyRef Name="ServiceCode" />
@@ -1626,18 +1606,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblServices_ProviderID">
-          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
-          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblProvider">
-              <PropertyRef Name="ProviderID" />
-            </Principal>
-            <Dependent Role="tblService">
-              <PropertyRef Name="ProviderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblGoal">
           <Key>
             <PropertyRef Name="goalID" />
@@ -1667,6 +1635,38 @@
           <Property Name="EvaluationProcedures" Type="Int32" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
         </EntityType>
+        <EntityType Name="tblService">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Frequency" Type="Int32" Nullable="false" />
+          <Property Name="DaysPerWeek" Type="Byte" Nullable="false" />
+          <Property Name="Minutes" Type="Int16" Nullable="false" />
+          <Property Name="ProviderID" Type="Int32" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
+          <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+        </EntityType>
+        <Association Name="FK_tblServices_ProviderID">
+          <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProvider">
+              <PropertyRef Name="ProviderID" />
+            </Principal>
+            <Dependent Role="tblService">
+              <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="tblServiceGoals">
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
@@ -2219,25 +2219,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblServices">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
-              <MappingFragment StoreEntitySet="tblServices">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
-                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
-                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
-                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblServiceTypes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
               <MappingFragment StoreEntitySet="tblServiceTypes">
@@ -2409,6 +2390,25 @@
                 <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="goalID" ColumnName="goalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblServices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
+              <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -185,16 +185,13 @@
                                             <label for="serviceProvider">Provider</label>
                                             <div class="form-group">
                                                 <select class="form-control" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
+                                                    <option value="-1">-- No providers currently available --</option>
                                                     @if (Model.serviceProviders.Count > 0)
                                                     {
                                                         foreach (var serviceProvider in Model.serviceProviders)
                                                         {
                                                             <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
                                                         }
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="-1">-- No providers currently available --</option>
                                                     }
                                                 </select>
                                             </div>
@@ -362,16 +359,13 @@
                                                 <label for="serviceProvider">Provider</label>
                                                 <div class="form-group">
                                                     <select class="form-control" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
+                                                        <option value="-1">-- No providers currently available --</option>
                                                         @if (Model.serviceProviders.Count > 0)
                                                         {
                                                             foreach (var serviceProvider in Model.serviceProviders)
                                                             {
                                                                 <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.Name</option>
                                                             }
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="-1">-- No providers currently available --</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -387,10 +381,10 @@
                                                         {
                                                             foreach (var goal in Model.studentGoals)
                                                             {
-                                                                if (!service.tblGoals.Contains(goal))
-                                                                {
-                                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
-                                                                }
+                                                                string selectString = String.Empty;
+                                                                selectString = service.tblGoals.Contains(goal) ? "selected" : String.Empty;
+
+                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()" @selectString>@goal.Title.ToString()</option>
                                                             }
                                                         }
                                                     </select>

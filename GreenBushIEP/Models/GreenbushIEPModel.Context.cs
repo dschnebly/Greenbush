@@ -62,7 +62,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
-        public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
@@ -72,6 +71,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
+        public virtual DbSet<tblService> tblServices { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

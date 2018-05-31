@@ -1001,6 +1001,9 @@ namespace GreenbushIep.Controllers
                     service.Create_Date = DateTime.Now;
                     service.Update_Date = DateTime.Now;
 
+                    // nullable serviceId
+                    service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID ;
+
                     for (int i = 11; i < collection.Count; i++)
                     {
                         int goalId = Convert.ToInt32(collection[i]);
@@ -1024,6 +1027,9 @@ namespace GreenbushIep.Controllers
                     service.LocationCode = collection["location"];
                     service.Update_Date = DateTime.Now;
                     service.tblGoals.Clear();
+
+                    // nullable serviceId
+                    service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
 
                     for (int i = 11; i < collection.Count; i++)
                     {
