@@ -156,14 +156,14 @@
         }
 
         .widgetDisabled {
-            opacity: 0.65;           
+            opacity: 0.65;
         }
 
         .needsAttention {
             /*background-color: #5b4b89 !important;*/
             /*opacity: 0.65;*/
-            border-color:#a00000 !important;
-            border-width: 1px;                                           
+            border-color: #a00000 !important;
+            border-width: 1px;
         }
 
         .needsAttentionIcon {
@@ -208,11 +208,11 @@
                 border: 1px solid #45906D;
             }
 
-    .filter  > .well {
-        background-color: transparent;
-    }
-			
-                    
+        .filter > .well {
+            background-color: transparent;
+        }
+
+
         .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
             margin-bottom: 5px;
             visibility: visible;
@@ -873,7 +873,7 @@
 }
 
 <div class="transition-page">
-   
+
     <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
 
         <div class="row">
@@ -884,7 +884,6 @@
                         <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
                         <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("dd/MM/yyyy"))" />
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
-                        
                     </div>
                 </div>
             </div>
@@ -900,14 +899,15 @@
             <div class="col-md-12">
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
                     <ul class="navigation">
-						<li class="pull-right">
-							<button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
-							<button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
-						</li>
+                        <li class="pull-right">
+                            <button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
+
         <div class="row" style="margin-top: 15px;">
             <div class="btn-group btn-group-primary col-md-2">
                 <label class="btn btn-square-toround btn-xl btn-bordered-warning" data-toggle="modal"><span class="glyphicon glyphicon-chevron-right"></span> DRAFT </label>
@@ -1031,7 +1031,6 @@
                     </div>
 
                 </li>
-               
                 <li class="ui-state-default filter planning iep">
 
                     <div class="hero-widget well">

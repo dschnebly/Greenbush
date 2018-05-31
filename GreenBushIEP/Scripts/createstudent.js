@@ -13,6 +13,14 @@
             document.getElementById("avatarImage").src = oFREvent.target.result;
         };
     });
+
+    // hooks up the dates on safari and explorer with a datepicker.
+    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
+    if (is_safari || is_explorer) {
+        $("#IEPBeginDate").datepicker();
+        $("#IEPEndDate").datepicker();
+    }
 });
 
 function init() {

@@ -639,7 +639,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label" for="dob">Date of Birth</label>
-                                                    @Html.TextBoxFor(model => model.student.DateOfBirth, format: Model.student.DateOfBirth.ToString("MM/dd/yyyy"), htmlAttributes: new { @class = "form-control", id = "dob", placeholder = "MM-DD-YYYY  e.g. 08-25-1977", Name = "dob" })
+                                                    <input type="date" id="dob" name="dob" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" placeholder="MM/dd/YYYY  e.g. 08/25/1977">
                                                 </div>
                                             </div>
                                         </div>
