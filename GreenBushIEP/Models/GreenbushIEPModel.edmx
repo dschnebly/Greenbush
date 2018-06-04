@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IndividualizedEducationProgramModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="tblAccommodations">
           <Key>
             <PropertyRef Name="AccommodationID" />
@@ -39,8 +29,8 @@
           <Property Name="BehaviorBaselineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="BehaviorID" Type="int" Nullable="false" />
-          <Property Name="Behavior" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Baseline" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Behavior" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Baseline" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesis">
@@ -51,7 +41,7 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="BehaviorID" Type="int" Nullable="false" />
           <Property Name="BehaviorHypothesisTypeID" Type="int" Nullable="false" />
-          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesisTypes">
@@ -67,13 +57,13 @@
           </Key>
           <Property Name="BehaviorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="StrengthMotivator" Type="nvarchar" MaxLength="1000" />
-          <Property Name="BehaviorConcern" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Crisis_Escalation" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Crisis_Description" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Crisis_Implementation" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Crisis_Other" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ReviewedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="StrengthMotivator" Type="nvarchar" MaxLength="2000" />
+          <Property Name="BehaviorConcern" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Crisis_Escalation" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Crisis_Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Crisis_Implementation" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Crisis_Other" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ReviewedBy" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -85,7 +75,7 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="BehaviorID" Type="int" Nullable="false" />
           <Property Name="BehaviorStrategyTypeID" Type="int" Nullable="false" />
-          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategyTypes">
@@ -103,7 +93,7 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="BehaviorID" Type="int" Nullable="false" />
           <Property Name="BehaviorTriggerTypeID" Type="int" Nullable="false" />
-          <Property Name="OtherDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorTriggerTypes">
@@ -252,7 +242,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -268,7 +258,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
@@ -296,7 +286,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
@@ -310,7 +300,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
         </EntityType>
         <EntityType Name="tblIEPMath">
@@ -343,7 +333,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
         </EntityType>
         <EntityType Name="tblIEPReading">
@@ -361,7 +351,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPs">
           <Key>
@@ -408,7 +398,7 @@
           <Property Name="MeetNeedByGoalDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="MeetNeedByAccomidation" Type="bit" />
           <Property Name="MeetNeedByOther" Type="bit" />
-          <Property Name="MeedNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeedNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="SkillDeficit" Type="bit" Nullable="false" />
           <Property Name="MeetNeedBy" Type="int" />
           <Property Name="AreaOfNeed" Type="bit" />
@@ -428,7 +418,7 @@
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
           <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblLanguages">
           <Key>
@@ -605,9 +595,9 @@
           <Property Name="TransitionAssementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransitionID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="Narrative" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Narrative" Type="nvarchar" MaxLength="2000" />
           <Property Name="CompletedOn" Type="datetime" />
-          <Property Name="Performance" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Performance" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -620,8 +610,8 @@
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="GoalType" Type="nvarchar" MaxLength="50" />
           <Property Name="CompletetionType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Behavior" Type="nvarchar" MaxLength="1000" />
-          <Property Name="WhereAndHow" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Behavior" Type="nvarchar" MaxLength="2000" />
+          <Property Name="WhereAndHow" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -631,17 +621,17 @@
           </Key>
           <Property Name="TransitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="Assessment_Needs" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Assessment_Strengths" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Assessment_Prefrences" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Assessment_Interest" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Assessment_Needs" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Assessment_Strengths" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Assessment_Prefrences" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Assessment_Interest" Type="nvarchar" MaxLength="2000" />
           <Property Name="CommunityParticipation" Type="bit" Nullable="false" />
-          <Property Name="CommunityParticipation_Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CommunityParticipation_Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="Planning_Facilitate" Type="bit" Nullable="false" />
           <Property Name="Planning_Align" Type="bit" Nullable="false" />
           <Property Name="Planning_GraduationMonth" Type="int" />
           <Property Name="Planning_GraduationYear" Type="int" />
-          <Property Name="Planning_Completion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Planning_Completion" Type="nvarchar" MaxLength="2000" />
           <Property Name="Planning_Credits" Type="int" />
           <Property Name="Planning_BenefitKRS" Type="bit" Nullable="false" />
           <Property Name="Planning_ParentIntials" Type="nvarchar" MaxLength="10" />
@@ -656,11 +646,11 @@
           <Property Name="TransitionServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransitionID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="Frequency" Type="nvarchar" MaxLength="300" />
-          <Property Name="Duration" Type="nvarchar" MaxLength="300" />
-          <Property Name="Location" Type="nvarchar" MaxLength="300" />
+          <Property Name="Frequency" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Location" Type="nvarchar" MaxLength="2000" />
           <Property Name="ServiceType" Type="nvarchar" MaxLength="50" />
-          <Property Name="ServiceDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ServiceDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -777,7 +767,6 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
@@ -879,7 +868,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="sysdiagrams" EntityType="IndividualizedEducationProgramModel.sysdiagram" />
           <EntitySet Name="tblAccommodations" EntityType="IndividualizedEducationProgramModel.tblAccommodation" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" />
@@ -896,6 +884,7 @@
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
+          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <EntitySet Name="tblIEPAcademics" EntityType="IndividualizedEducationProgramModel.tblIEPAcademic" />
           <EntitySet Name="tblIEPCommunications" EntityType="IndividualizedEducationProgramModel.tblIEPCommunication" />
           <EntitySet Name="tblIEPHealths" EntityType="IndividualizedEducationProgramModel.tblIEPHealth" />
@@ -914,6 +903,7 @@
           <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <EntitySet Name="tblRoles" EntityType="IndividualizedEducationProgramModel.tblRole" />
           <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
+          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
           <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
@@ -930,8 +920,6 @@
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
           </AssociationSet>
-          <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
-          <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <AssociationSet Name="FK_tblServices_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID">
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblService" EntitySet="tblServices" />
@@ -952,16 +940,6 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="tblAccommodation">
           <Key>
             <PropertyRef Name="AccommodationID" />
@@ -987,8 +965,8 @@
           <Property Name="BehaviorBaselineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="BehaviorID" Type="Int32" Nullable="false" />
-          <Property Name="Behavior" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Baseline" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Behavior" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Baseline" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesi">
@@ -999,7 +977,7 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="BehaviorID" Type="Int32" Nullable="false" />
           <Property Name="BehaviorHypothesisTypeID" Type="Int32" Nullable="false" />
-          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesisType">
@@ -1015,13 +993,13 @@
           </Key>
           <Property Name="BehaviorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="StrengthMotivator" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="BehaviorConcern" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Crisis_Escalation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Crisis_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Crisis_Implementation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Crisis_Other" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ReviewedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StrengthMotivator" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="BehaviorConcern" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Escalation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Implementation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Crisis_Other" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewedBy" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1033,7 +1011,7 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="BehaviorID" Type="Int32" Nullable="false" />
           <Property Name="BehaviorStrategyTypeID" Type="Int32" Nullable="false" />
-          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategyType">
@@ -1051,7 +1029,7 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="BehaviorID" Type="Int32" Nullable="false" />
           <Property Name="BehaviorTriggerTypeID" Type="Int32" Nullable="false" />
-          <Property Name="OtherDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblBehaviorTriggerType">
@@ -1160,6 +1138,35 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="tblGoal">
+          <Key>
+            <PropertyRef Name="goalID" />
+          </Key>
+          <Property Name="goalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
+          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EvaluationProcedures" Type="Int32" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
+        </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
             <PropertyRef Name="IEPAcademicID" />
@@ -1172,7 +1179,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -1188,7 +1195,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
@@ -1216,7 +1223,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
@@ -1230,7 +1237,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblIEPMath">
@@ -1263,7 +1270,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblIEPReading">
@@ -1281,7 +1288,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEP">
           <Key>
@@ -1328,7 +1335,7 @@
           <Property Name="MeetNeedByGoalDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedByAccomidation" Type="Boolean" />
           <Property Name="MeetNeedByOther" Type="Boolean" />
-          <Property Name="MeedNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeedNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="SkillDeficit" Type="Boolean" Nullable="false" />
           <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="AreaOfNeed" Type="Boolean" />
@@ -1348,7 +1355,7 @@
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblLanguage">
           <Key>
@@ -1445,6 +1452,26 @@
           <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblService">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Frequency" Type="Int32" Nullable="false" />
+          <Property Name="DaysPerWeek" Type="Byte" Nullable="false" />
+          <Property Name="Minutes" Type="Int16" Nullable="false" />
+          <Property Name="ProviderID" Type="Int32" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
+          <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+        </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
             <PropertyRef Name="ServiceCode" />
@@ -1503,9 +1530,9 @@
           <Property Name="TransitionAssementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransitionID" Type="Int32" Nullable="false" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Narrative" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Narrative" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="CompletedOn" Type="DateTime" Precision="3" />
-          <Property Name="Performance" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Performance" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1518,8 +1545,8 @@
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="GoalType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompletetionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Behavior" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="WhereAndHow" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Behavior" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="WhereAndHow" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1529,17 +1556,17 @@
           </Key>
           <Property Name="TransitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Assessment_Needs" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Strengths" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Prefrences" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Interest" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Needs" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Strengths" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Prefrences" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Interest" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="CommunityParticipation" Type="Boolean" Nullable="false" />
-          <Property Name="CommunityParticipation_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CommunityParticipation_Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Planning_Facilitate" Type="Boolean" Nullable="false" />
           <Property Name="Planning_Align" Type="Boolean" Nullable="false" />
           <Property Name="Planning_GraduationMonth" Type="Int32" />
           <Property Name="Planning_GraduationYear" Type="Int32" />
-          <Property Name="Planning_Completion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Planning_Completion" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Planning_Credits" Type="Int32" />
           <Property Name="Planning_BenefitKRS" Type="Boolean" Nullable="false" />
           <Property Name="Planning_ParentIntials" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -1554,11 +1581,11 @@
           <Property Name="TransitionServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransitionID" Type="Int32" Nullable="false" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Frequency" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Duration" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Frequency" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1606,55 +1633,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tblGoal">
-          <Key>
-            <PropertyRef Name="goalID" />
-          </Key>
-          <Property Name="goalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
-          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EvaluationProcedures" Type="Int32" />
-          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
-        </EntityType>
-        <EntityType Name="tblService">
-          <Key>
-            <PropertyRef Name="ServiceID" />
-          </Key>
-          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Frequency" Type="Int32" Nullable="false" />
-          <Property Name="DaysPerWeek" Type="Byte" Nullable="false" />
-          <Property Name="Minutes" Type="Int16" Nullable="false" />
-          <Property Name="ProviderID" Type="Int32" />
-          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
-          <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
-        </EntityType>
         <Association Name="FK_tblServices_ProviderID">
           <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="0..1" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
@@ -1701,17 +1679,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="IndividualizedEducationProgramModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="IndividualizedEducationProgramModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
@@ -1919,6 +1886,35 @@
                 <ScalarProperty Name="Method" ColumnName="Method" />
                 <ScalarProperty Name="goalID" ColumnName="goalID" />
                 <ScalarProperty Name="goalBenchmarkID" ColumnName="goalBenchmarkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGoals">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
+              <MappingFragment StoreEntitySet="tblGoals">
+                <ScalarProperty Name="EvaluationProcedures" ColumnName="EvaluationProcedures" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
+                <ScalarProperty Name="ProgressDescription_Quarter3" ColumnName="ProgressDescription_Quarter3" />
+                <ScalarProperty Name="ProgressDescription_Quarter2" ColumnName="ProgressDescription_Quarter2" />
+                <ScalarProperty Name="ProgressDescription_Quarter1" ColumnName="ProgressDescription_Quarter1" />
+                <ScalarProperty Name="ProgressDate_Quarter4" ColumnName="ProgressDate_Quarter4" />
+                <ScalarProperty Name="ProgressDate_Quarter3" ColumnName="ProgressDate_Quarter3" />
+                <ScalarProperty Name="ProgressDate_Quarter2" ColumnName="ProgressDate_Quarter2" />
+                <ScalarProperty Name="ProgressDate_Quarter1" ColumnName="ProgressDate_Quarter1" />
+                <ScalarProperty Name="Progress_Quarter4" ColumnName="Progress_Quarter4" />
+                <ScalarProperty Name="Progress_Quarter3" ColumnName="Progress_Quarter3" />
+                <ScalarProperty Name="Progress_Quarter2" ColumnName="Progress_Quarter2" />
+                <ScalarProperty Name="Progress_Quarter1" ColumnName="Progress_Quarter1" />
+                <ScalarProperty Name="StateStandards" ColumnName="StateStandards" />
+                <ScalarProperty Name="Baseline" ColumnName="Baseline" />
+                <ScalarProperty Name="hasSerivce" ColumnName="hasSerivce" />
+                <ScalarProperty Name="AnnualGoal" ColumnName="AnnualGoal" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="goalID" ColumnName="goalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2219,6 +2215,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblServices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
+              <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblServiceTypes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
               <MappingFragment StoreEntitySet="tblServiceTypes">
@@ -2361,54 +2376,6 @@
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblGoals">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
-              <MappingFragment StoreEntitySet="tblGoals">
-                <ScalarProperty Name="EvaluationProcedures" ColumnName="EvaluationProcedures" />
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
-                <ScalarProperty Name="ProgressDescription_Quarter3" ColumnName="ProgressDescription_Quarter3" />
-                <ScalarProperty Name="ProgressDescription_Quarter2" ColumnName="ProgressDescription_Quarter2" />
-                <ScalarProperty Name="ProgressDescription_Quarter1" ColumnName="ProgressDescription_Quarter1" />
-                <ScalarProperty Name="ProgressDate_Quarter4" ColumnName="ProgressDate_Quarter4" />
-                <ScalarProperty Name="ProgressDate_Quarter3" ColumnName="ProgressDate_Quarter3" />
-                <ScalarProperty Name="ProgressDate_Quarter2" ColumnName="ProgressDate_Quarter2" />
-                <ScalarProperty Name="ProgressDate_Quarter1" ColumnName="ProgressDate_Quarter1" />
-                <ScalarProperty Name="Progress_Quarter4" ColumnName="Progress_Quarter4" />
-                <ScalarProperty Name="Progress_Quarter3" ColumnName="Progress_Quarter3" />
-                <ScalarProperty Name="Progress_Quarter2" ColumnName="Progress_Quarter2" />
-                <ScalarProperty Name="Progress_Quarter1" ColumnName="Progress_Quarter1" />
-                <ScalarProperty Name="StateStandards" ColumnName="StateStandards" />
-                <ScalarProperty Name="Baseline" ColumnName="Baseline" />
-                <ScalarProperty Name="hasSerivce" ColumnName="hasSerivce" />
-                <ScalarProperty Name="AnnualGoal" ColumnName="AnnualGoal" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Module" ColumnName="Module" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="goalID" ColumnName="goalID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblServices">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
-              <MappingFragment StoreEntitySet="tblServices">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
-                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
-                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
-                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
