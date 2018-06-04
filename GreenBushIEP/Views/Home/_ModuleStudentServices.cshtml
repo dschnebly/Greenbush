@@ -421,9 +421,12 @@
 </div>
 
 <script>
-    $('#serviceStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-    $('#serviceEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-    //$(".chosen-select").chosen({ width: "100%" });
+    $('#serviceStartDate').datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $('#serviceEndDate').datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
     var calendarArrayOfDates = JSON.parse(model);
@@ -459,7 +462,6 @@
         var serviceDaysPerWeeks = $('[name="serviceDaysPerWeek"]');
         if (serviceDaysPerWeeks.length > 0)
             dupServiceDaysPerWeek = serviceDaysPerWeeks.last().val();
-
 
         var serviceMinutesPerDays = $('[name="serviceMinutesPerDay"]');
         if (serviceMinutesPerDays.length > 0)
@@ -735,18 +737,17 @@
             if (endDateElement.val() == iepEndDate)
                 getEndOfSchoolYear(endDateElement, defaultYear, "iepEndDate", 6);
 
-            var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-            var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-            if (is_safari || is_explorer) {
-                $("#serviceStartDate").datepicker();
-                $("#serviceEndDate").datepicker();
-            }
+            $('#serviceStartDate').datepicker({
+                dateFormat: "yy-mm-dd"
+            }).datepicker("setDate", "0");
+            $('#serviceEndDate').datepicker({
+                dateFormat: "yy-mm-dd"
+            }).datepicker("setDate", "0");
         });
     }
     initService();
 
     function initGoalEvents() {
-
         $('.oneStudentService').not('#defaultStudentService').each(function (index) {
 
             /* Binding */

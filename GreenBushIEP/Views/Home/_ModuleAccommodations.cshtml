@@ -179,8 +179,12 @@
 
 <script>
 
-    $('#accomStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-    $('#accomEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+    $("#AnticipatedStartDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#AnticipatedEndDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 
     /* Binding */
     /* tooltips */
@@ -264,9 +268,6 @@
                         cloneGoal.attr('id', 'defaultgoal_' + data.id);
                         var deleteButton = cloneGoal.find('.deleteGoal');
                         deleteButton.attr('accom-id', data.id);
-                        //deleteButton.click(function () {
-                        //    _deleteRow(deleteButton);
-                        //});
 
                         var saveButton = cloneGoal.find('#btnSubmit');
                         saveButton.attr('accom-id', data.id);
@@ -280,10 +281,6 @@
                         toggleButton.attr("href", "#collapse" + data.id);
 
                         var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
-
-
-                        //cloneGoal.append('<input type="hidden" name="IEPid" id="IEPid" value="' + data.iep + '" />');
-
                     }
                 }
                 else {
@@ -299,13 +296,6 @@
                 console.log("Unable to delete the student goal.");
             }
         });
-
-        var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-        if (is_safari || is_explorer) {
-            $("#AnticipatedStartDate").datepicker();
-            $("#AnticipatedEndDate").datepicker();
-        }
     }
 
     function _update(id) {

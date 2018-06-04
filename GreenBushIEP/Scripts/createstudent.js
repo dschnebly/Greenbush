@@ -15,12 +15,12 @@
     });
 
     // hooks up the dates on safari and explorer with a datepicker.
-    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-    if (is_safari || is_explorer) {
-        $("#IEPBeginDate").datepicker();
-        $("#IEPEndDate").datepicker();
-    }
+    $("#IEPBeginDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#IEPEndDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 });
 
 function init() {
