@@ -1193,11 +1193,18 @@ namespace GreenbushIep.Controllers
 
             if (iep != null)
             {
-                //model.StudentId = studentId;
+                
                 model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
                     model = oc.FirstOrDefault();
+                else
+                {
+                    //default value
+                    model.DistrictAssessment_GradeNotAssessed = true;
+                    model.StateAssessment_RequiredCompleted = true;
+                    model.Transporation_Other_flag = true;
+                }
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();

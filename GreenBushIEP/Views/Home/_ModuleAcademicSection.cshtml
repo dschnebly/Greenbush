@@ -68,7 +68,7 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
-                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 4 ? "checked" : String.Empty)>No needs to address</label><br />
+                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 4 || Model.Academic.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label>*<br />

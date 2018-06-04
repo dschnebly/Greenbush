@@ -1238,7 +1238,7 @@
                                     <h6 style="font-weight:bold; font-size: 13px;">Team Considerations:</h6>
                                 </div>
                                 <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
+                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1  ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
                                 </div>
                                 <div class="checkbox">
                                     <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed in Physical Education</label>

@@ -80,7 +80,7 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by</label>
             <div class="form-check">
-                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="4" @(Model.MeetNeedBy == 4 ? "checked" : String.Empty)>No needs to address</label><br />
+                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="4" @(Model.MeetNeedBy == 4 || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                 <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="1" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                 <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="2" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                 <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="3" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
