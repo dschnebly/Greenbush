@@ -89,7 +89,7 @@
                 <br />
                 <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3"  maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
