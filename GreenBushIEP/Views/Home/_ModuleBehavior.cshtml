@@ -11,7 +11,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
 </div>
 <div class="modal-body">
 
@@ -21,7 +21,7 @@
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
 
     </fieldset>
-       
+
     <div class="row oneStudentGoal " id="defaultgoal">
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {
@@ -39,9 +39,6 @@
                             <h4 class="panel-title">
                                 <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
                                     <span class="glyphicon glyphicon-road"></span><span class="studentGoalLabel" style="margin-left:5px;">Behavior</span>
-                                    <span class="pull-right">
-                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                    </span>
                                 </a>
                             </h4>
                         </div>
@@ -54,7 +51,7 @@
                                         <label for="Collection">Strengths/Motivators</label>
                                         <div>
 
-                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +60,7 @@
                                         <label for="Collection">Behavior(s) of Concern</label>
                                         <div>
 
-                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +80,7 @@
                                                 {
                                                     string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
                                                     <option value="@trigger.BehaviorTriggerTypeID" @selected>@trigger.BehaviorTriggerType</option>
-                                                    if(selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
+                                                    if (selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
                                                     {
                                                         showTriggerOther = true;
                                                     }
@@ -92,7 +89,7 @@
                                         </select>
                                         <div id="divTriggerOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                                         </div>
                                     </div>
@@ -122,7 +119,7 @@
                                         </select>
                                         <div id="divHypothesisOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000" />
+                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                                         </div>
                                     </div>
@@ -153,7 +150,7 @@
                                         </select>
                                         <div id="divStrategyOther" class="voffset2" style="display:none">
                                             <label>Other Description</label>
-                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                                         </div>
                                     </div>
@@ -202,7 +199,7 @@
                                     <div class="col-md-12">
                                         <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
                                         <div>
-                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000" />
+                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
 
@@ -212,7 +209,7 @@
                                     <div class="col-md-12">
                                         <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
                                         <div>
-                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
 
@@ -223,7 +220,7 @@
                                     <div class="col-md-12">
                                         <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
                                         <div>
-                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +229,7 @@
                                         <label for="Crisis_Other">Other</label>
                                         <div>
 
-                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other"  data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit." maxlength="1000"/>
+                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                                         </div>
                                     </div>
 
