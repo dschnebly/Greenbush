@@ -45,7 +45,6 @@ namespace GreenBushIEP.Models
             accommodations = new List<tblAccommodation>();
         }
 
-
         public IEP(int? stid = null)
         {
             if (stid != null)

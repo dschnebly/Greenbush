@@ -857,20 +857,20 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult UpdateIEPDates(int stId, string IEPStartDate, string IEPEndDate)
+        public ActionResult UpdateIEPDates(int stId, string IEPStartDate, string IEPMeetingDate)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
 
             if (iep != null)
             {
                 DateTime startDate;
-                DateTime endDate;
+                DateTime meetingDate;
                 if (DateTime.TryParseExact(IEPStartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
                 {
-                    if (DateTime.TryParseExact(IEPEndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate))
+                    if (DateTime.TryParseExact(IEPMeetingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out meetingDate))
                     {
                         iep.begin_date = startDate;
-                        iep.end_date = endDate;
+                        iep.MeetingDate = meetingDate;
 
                         db.SaveChanges();
                     }
@@ -878,7 +878,6 @@ namespace GreenbushIep.Controllers
                     return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
                 }
             }
-
 
             return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
         }
@@ -951,7 +950,8 @@ namespace GreenbushIep.Controllers
                     model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
                     model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
-                    model.IEPEndDate = iep.end_date ?? DateTime.Now;
+                    model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+                    //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
                 else
                 {
@@ -965,7 +965,8 @@ namespace GreenbushIep.Controllers
                     model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
                     model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
-                    model.IEPEndDate = iep.end_date ?? DateTime.Now;
+                    model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+                    //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
 
                 return PartialView("_ModuleStudentServices", model);

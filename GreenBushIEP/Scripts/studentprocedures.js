@@ -79,30 +79,22 @@
     $("#IEPDates").on("click", function () {
         var stId = $("#stid").val();
         var startDate = $("#IEPBeginDate").val().toString('MM/dd/yyyy');
-        var endDate = $("#IEPEndDate").val().toString('MM/dd/yyyy');
+        var meetingDate = $("#IEPMeetingDate").val().toString('MM/dd/yyyy');
         var birthDate = $("#studentBirthDate").val();
 
-        if (startDate > endDate) {
-            $("#IEPBeginDate").addClass("date-error");
-            $("#IEPEndDate").addClass("date-error");
-
-            return alert("The IEP can't end before it started. Please try again.");
-        }
-
         var a = new Date(startDate);
-        var b = new Date(endDate);
+        var b = new Date(a);
         var c = new Date(birthDate);
+        b.setDate(a.getDate() + 365); // the endDate is 365 days from the startDate
         var daysToStart = (a - c) / 1000 / 60 / 60 / 24;
         var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
         var startDiff = parseInt(daysToStart / 365);
         var endDiff = parseInt(daysToEnd / 365);
  
-
         if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
             $("#IEPBeginDate").addClass("date-error");
-            $("#IEPEndDate").addClass("date-error");
 
-            return alert("Either the Beginning Date or the Ending Date were not in the correct format. Please try again.");
+            return alert("The Beginning Date was not in the correct format or some other related problem. Please try again.");
         }
 
         //If the student is over 21 or under 3, notify the teacher but let them save regardless.
@@ -118,7 +110,7 @@
 
         if (endDiff > 21)
         {
-            $("#IEPEndDate").addClass("date-error");
+            $("#IEPBeginDate").addClass("date-error");
 
             if(!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.'))
             {
@@ -138,31 +130,16 @@
 			$("#IEPBeginDate").removeClass("date-error");
 		}
 
-		// Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-		if (dayEnd == 0 || dayEnd == 6) {
-			$("#IEPEndDate").addClass("date-error");
-			return alert("Please select a Weekday for the Ending Date.");
-		}
-		else {
-			$("#IEPEndDate").removeClass("date-error");
-		}
-
-		var numDays = days_between(a, b);
-		if(numDays > 365)
-			return alert("The IEP Beginning and Ending date range can't be over a year. Please try another selection.");
-
         $("#IEPBeginDate").attr('disabled', true);
-        $("#IEPEndDate").attr('disabled', true);
 
         $.ajax({
             type: 'GET',
             url: '/Home/UpdateIEPDates',
-            data: { Stid: stId, IEPStartDate: startDate, IEPEndDate: endDate },
+            data: { Stid: stId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
             dataType: 'json',
             success: function (data) {
                 if (data.Result === 'success') {
                     $("#IEPBeginDate").removeClass("date-error");
-                    $("#IEPEndDate").removeClass("date-error");
 
                 } else {
                     alert("The date you entered was invalid. Please try again.");
@@ -170,41 +147,22 @@
             },
             error: function (data) {
                 $("#IEPBeginDate").addClass("date-error");
-                $("#IEPEndDate").addClass("date-error");
 
                 alert("Unable to connect to the server or other related network problem. Please contact your admin.");
             },
             complete: function () {
                 $("#IEPBeginDate").attr('disabled', false);
-                $("#IEPEndDate").attr('disabled', false);
             }
         });
     });
 
-    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-    if (is_safari || is_explorer) {
-        $("#IEPBeginDate").datepicker();
-        $("#IEPEndDate").datepicker();
-    }
+    $("#IEPBeginDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#IEPMeetingDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 });
-
-function days_between(date1, date2) {
-
-	// The number of milliseconds in one day
-	var ONE_DAY = 1000 * 60 * 60 * 24
-
-	// Convert both dates to milliseconds
-	var date1_ms = date1.getTime()
-	var date2_ms = date2.getTime()
-
-	// Calculate the difference in milliseconds
-	var difference_ms = Math.abs(date1_ms - date2_ms)
-
-	// Convert back to days and return
-	return Math.round(difference_ms / ONE_DAY)
-
-}
 
 function getParameterByName(name, url) {
     if (!url) {

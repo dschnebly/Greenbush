@@ -375,7 +375,7 @@ namespace GreenBushIEP.Models
         public List<tblCalendar> availableCalendarDays { get; set; }
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
-        public DateTime IEPEndDate { get; set; }
+        public DateTime MeetingDate { get; set; }
 
         public StudentServiceViewModel()
         {
@@ -389,7 +389,7 @@ namespace GreenBushIEP.Models
             availableCalendarDays = new List<tblCalendar>();
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();
-            IEPEndDate = new DateTime();
+            MeetingDate = new DateTime();
         }
     }
 

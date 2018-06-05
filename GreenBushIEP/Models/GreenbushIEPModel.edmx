@@ -361,7 +361,6 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="IepStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="begin_date" Type="datetime" />
-          <Property Name="end_date" Type="datetime" />
           <Property Name="Amendment" Type="bit" Nullable="false" />
           <Property Name="AmendingIEPid" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
@@ -376,6 +375,8 @@
           <Property Name="IEPReadingID" Type="int" />
           <Property Name="IEPMathID" Type="int" />
           <Property Name="IEPWrittenID" Type="int" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="end_Date" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -1298,7 +1299,6 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="IepStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="begin_date" Type="DateTime" Precision="3" />
-          <Property Name="end_date" Type="DateTime" Precision="3" />
           <Property Name="Amendment" Type="Boolean" Nullable="false" />
           <Property Name="AmendingIEPid" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1313,6 +1313,8 @@
           <Property Name="IEPReadingID" Type="Int32" />
           <Property Name="IEPMathID" Type="Int32" />
           <Property Name="IEPWrittenID" Type="Int32" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="end_Date" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -2051,6 +2053,8 @@
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="end_Date" ColumnName="end_Date" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
                 <ScalarProperty Name="IEPWrittenID" ColumnName="IEPWrittenID" />
                 <ScalarProperty Name="IEPMathID" ColumnName="IEPMathID" />
                 <ScalarProperty Name="IEPReadingID" ColumnName="IEPReadingID" />
@@ -2065,7 +2069,6 @@
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="AmendingIEPid" ColumnName="AmendingIEPid" />
                 <ScalarProperty Name="Amendment" ColumnName="Amendment" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="begin_date" ColumnName="begin_date" />
                 <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
