@@ -1,6 +1,6 @@
 ﻿@model GreenBushIEP.Models.BehaviorViewModel
 
-@{ 
+@{
     bool showTriggerOther = false;
     bool showHypothesisOther = false;
     bool showStrategyOther = false;
@@ -294,7 +294,6 @@
         $('.tooltip-help').on('click', function () {
             $('[data-toggle="tooltip"]').tooltip('toggle');
         });
-
     });
 
     function init() {
@@ -303,23 +302,25 @@
         var showHypothesis = '@showHypothesisOther';
         var showStrategyOther = '@showStrategyOther';
 
-        $(".chosen-select").chosen({ width: "100%" });
-
-        if (showTrigger == "True")
+        if (showTrigger == "True") {
             $("#divTriggerOther").show();
-        else
+        } else {
             $("#divTriggerOther").hide();
+        }
 
-        if (showHypothesis == "True")
+        if (showHypothesis == "True") {
             $("#divHypothesisOther").show();
-        else
+        } else {
             $("#divHypothesisOther").hide();
+        }
 
-
-        if (showStrategyOther == "True")
+        if (showStrategyOther == "True") {
             $("#divStrategyOther").show();
-        else
+        } else {
             $("#divStrategyOther").hide();
+        }
+
+        $(".chosen-select").chosen({ width: "100%" });
 
         $("#SelectedStrategies").change(function () {
             var triggerValue = $("#SelectedStrategies option:selected").text();
@@ -333,16 +334,14 @@
 
         $("#SelectedTriggers").change(function () {
             var triggerValue = $("#SelectedTriggers option:selected").text();
-            if(triggerValue.includes("Other"))
-            {
+            if (triggerValue.includes("Other")) {
                 $("#divTriggerOther").show();
             }
-            else
-            {
+            else {
                 $("#divTriggerOther").hide();
             }
         });
-        
+
         $("#SelectedHypothesis").change(function () {
             var hyValue = $("#SelectedHypothesis option:selected").text();
             if (hyValue.includes("Other")) {
@@ -352,8 +351,6 @@
                 $("#divHypothesisOther").hide();
             }
         });
-
-
     }
 </script>
 

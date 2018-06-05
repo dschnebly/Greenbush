@@ -163,10 +163,11 @@
 		$('[data-toggle="tooltip"]').tooltip('toggle');
 	});
 
-	var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-	var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-	if (is_safari || is_explorer) {
-	    $("#HearingDate").datepicker();
-	    $("#VisionDate").datepicker();
-	}
+	$("#HearingDate").datepicker({
+	    dateFormat: "yy-mm-dd"
+	}).datepicker("setDate", "0");
+	$("#VisionDate").datepicker({
+	    dateFormat: "yy-mm-dd"
+	}).datepicker("setDate", "0");
+
 </script>
