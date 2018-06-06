@@ -17,8 +17,8 @@
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-university" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Academic Performance</h4>
 </div>
-<div class="modal-body">
-    @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { }))
+<div class="modal-body" style="margin-bottom:5px;">
+    @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { @style="margin-bottom:15px;" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -221,13 +221,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
+        
+        <div class="row" >
             <div class="form-group">
-                <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleAcademicForm">Reset</button>
-                    <button type="submit" name="button2id" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="col-md-12" style="text-align:center;margin-bottom:8px;padding-top:15px" id="questionSubmit">
+                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleAcademicForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <div class="pull-right"><button name="button2id" type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
                 </div>
             </div>
         </div>
