@@ -54,7 +54,7 @@
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
-        <input type="hidden" value="@Model.IEPEndDate.ToString("yyyy-MM-dd")" id="iepEndDate" />
+        @*<input type="hidden" value="@Model.IEPEndDate.ToString("yyyy-MM-dd")" id="iepEndDate" />*@
 
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
@@ -102,13 +102,13 @@
                                                 <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("yyyy-MM-dd"))">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        @*<div class="col-md-3">
                                             <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                 <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPEndDate.ToString("yyyy-MM-dd"))">
                                             </div>
-                                        </div>
+                                        </div>*@
                                         <div class="col-md-4">
                                             <label for="Location">Location</label>
                                             <div class="input-group">
@@ -217,8 +217,8 @@
                                     <div class="row">
                                         <br />
                                         <div class="col-md-12" style="text-align:center;">
-                                            <button type="reset" class="btn btn-default">Reset</button>
-                                            <button type="button" class="saveService btn btn-primary">Save</button>
+                                            <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                                            <button type="button" class="saveService btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                         </div>
                                     </div>
                                 </div>
