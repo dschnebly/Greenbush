@@ -21,258 +21,239 @@
 
     </fieldset>
 
-    <div class="row oneStudentGoal " id="defaultgoal">
+    <div class="row" >
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.BehaviorID)
             @Html.HiddenFor(model => model.IEPid)
             @Html.HiddenFor(model => model.StudentId)
-
-
+            
             <div class="col-md-12 voffset2">
-                <div class="panel-group" id="accordion[0]">
+             
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Collection">Strengths/Motivators</label>
+                        <div>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                    <span class="glyphicon glyphicon-road"></span><span class="studentGoalLabel" style="margin-left:5px;">Behavior</span>
-                                </a>
-                            </h4>
+                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                         </div>
-                        <div id="collapse0" class="panel-collapse">
-                            <div class="panel-body">
+                    </div>
+                </div>
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Collection">Behavior(s) of Concern</label>
+                        <div>
 
+                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Triggers</h3>
 
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Collection">Strengths/Motivators</label>
-                                        <div>
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label for="misTriggers">Possible triggers for behaviors</label>
+                        <select name="SelectedTriggers" class="form-control chosen-select" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                            @if (Model.Triggers != null)
+                            {
+                                foreach (var trigger in Model.Triggers)
+                                {
+                                    string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
+                                    <option value="@trigger.BehaviorTriggerTypeID" @selected>@trigger.BehaviorTriggerType</option>
+                                    if (selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
+                                    {
+                                        showTriggerOther = true;
+                                    }
+                                }
+                            }
+                        </select>
+                        <div id="divTriggerOther" class="voffset2" style="display:none">
+                            <label>Other Description</label>
+                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
-                                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Collection">Behavior(s) of Concern</label>
-                                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Hypothesis</h3>
 
-                                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Triggers</h3>
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                        <select name="SelectedHypothesis" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                            @if (Model.HypothesisList != null)
+                            {
+                                foreach (var hypothesis in Model.HypothesisList)
+                                {
+                                    string selected = Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
+                                    <option value="@hypothesis.BehaviorHypothesisTypeID" @selected>@hypothesis.BehaviorHypothesisType</option>
+                                    if (selected == "selected=selected" && @hypothesis.BehaviorHypothesisType == "Other")
+                                    {
+                                        showHypothesisOther = true;
+                                    }
+                                }
+                            }
+                        </select>
+                        <div id="divHypothesisOther" class="voffset2" style="display:none">
+                            <label>Other Description</label>
+                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
-                                    </div>
-                                </div>
-                                <div class="row voffset1">
-                                    <div class="col-md-12">
-                                        <label for="misTriggers">Possible triggers for behaviors</label>
-                                        <select name="SelectedTriggers" class="form-control chosen-select" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
-                                            @if (Model.Triggers != null)
-                                            {
-                                                foreach (var trigger in Model.Triggers)
-                                                {
-                                                    string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
-                                                    <option value="@trigger.BehaviorTriggerTypeID" @selected>@trigger.BehaviorTriggerType</option>
-                                                    if (selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
-                                                    {
-                                                        showTriggerOther = true;
-                                                    }
-                                                }
-                                            }
-                                        </select>
-                                        <div id="divTriggerOther" class="voffset2" style="display:none">
-                                            <label>Other Description</label>
-                                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+                </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Hypothesis</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Strategies</h3>
 
-                                    </div>
-                                </div>
-                                <div class="row voffset1">
-                                    <div class="col-md-12">
-                                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
-                                        <select name="SelectedHypothesis" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
-                                            @if (Model.HypothesisList != null)
-                                            {
-                                                foreach (var hypothesis in Model.HypothesisList)
-                                                {
-                                                    string selected = Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
-                                                    <option value="@hypothesis.BehaviorHypothesisTypeID" @selected>@hypothesis.BehaviorHypothesisType</option>
-                                                    if (selected == "selected=selected" && @hypothesis.BehaviorHypothesisType == "Other")
-                                                    {
-                                                        showHypothesisOther = true;
-                                                    }
-                                                }
-                                            }
-                                        </select>
-                                        <div id="divHypothesisOther" class="voffset2" style="display:none">
-                                            <label>Other Description</label>
-                                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                        <select name="SelectedStrategies" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                            @if (Model.Strategies != null)
+                            {
+                                foreach (var strategy in Model.Strategies)
+                                {
+                                    string selected = Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
+                                    <option value="@strategy.BehaviorStrategyTypeID" @selected>@strategy.BehaviorStrategyType</option>
+                                    if (selected == "selected=selected" && @strategy.BehaviorStrategyType == "Other")
+                                    {
+                                        showStrategyOther = true;
+                                    }
+                                }
+                            }
+                        </select>
+                        <div id="divStrategyOther" class="voffset2" style="display:none">
+                            <label>Other Description</label>
+                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Strategies</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Targeted Behaviors</h3>
 
-                                    </div>
-                                </div>
-                                <div class="row voffset1">
-                                    <div class="col-md-12">
-                                        <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
-                                        <select name="SelectedStrategies" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
-                                            @if (Model.Strategies != null)
-                                            {
-                                                foreach (var strategy in Model.Strategies)
-                                                {
-                                                    string selected = Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
-                                                    <option value="@strategy.BehaviorStrategyTypeID" @selected>@strategy.BehaviorStrategyType</option>
-                                                    if (selected == "selected=selected" && @strategy.BehaviorStrategyType == "Other")
-                                                    {
-                                                        showStrategyOther = true;
-                                                    }
-                                                }
-                                            }
-                                        </select>
-                                        <div id="divStrategyOther" class="voffset2" style="display:none">
-                                            <label>Other Description</label>
-                                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                    </div>
+                </div>
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
+                            <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
+                            <li><a data-toggle="tab" href="#sectionC"><b>Behavior 3</b></a></li>
+                        </ul>
 
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="tab-content container">
+                            <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Targeted Behaviors</h3>
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
 
-                                    </div>
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
-                                        <ul class="nav nav-tabs">
-                                            <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
-                                            <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
-                                            <li><a data-toggle="tab" href="#sectionC"><b>Behavior 3</b></a></li>
-                                        </ul>
+                            </div>
+                            <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
 
-                                        <div class="tab-content container">
-                                            <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
-
-                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
-
-                                            </div>
-                                            <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
-                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
-
-                                            </div>
-                                            <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
-                                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Crisis Management Plan</h3>
-
-                                    </div>
-                                </div>
-
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
-                                        <div>
-                                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
-                                        <div>
-                                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
-                                        <div>
-                                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Crisis_Other">Other</label>
-                                        <div>
-
-                                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Action Plan</h3>
-                                    </div>
-                                </div>
-
-                                <div class="row voffset2">
-                                    <div class="col-md-12">
-                                        <label for="Collection">Follow school/district behavior policies/practice</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon" style="background-color: white !important;; border: 0;font-size: unset !important;">Time frame plan will be reviewed</div>
-                                            <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group" id="saveGroup">
-                                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                                            <button type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit">Save</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                            <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Crisis Management Plan</h3>
+
+                    </div>
+                </div>
+
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
+                        <div>
+                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+
 
                 </div>
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
+                        <div>
+                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
+                        <div>
+                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Crisis_Other">Other</label>
+                        <div>
+
+                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Action Plan</h3>
+                    </div>
+                </div>
+
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label for="Collection">Follow school/district behavior policies/practice</label>
+                        <div class="input-group">
+                            <div class="input-group-addon" style="background-color: white !important;; border: 0;font-size: unset !important;">Time frame plan will be reviewed</div>
+                            <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group" id="saveGroup">
+                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                            <button type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+                           
             </div>
 
         }
-    </div> <!--end oneStudentGoal-->
+    </div> <!--end parent row-->
 
 </div>
-<div class="modal-footer">
-</div>
+
 
 <script>
     // Attach Event
