@@ -1098,7 +1098,7 @@
                     </div>
 
                 </li>
-                <li class="ui-state-default filter planning @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )">
+                <li class="ui-state-default filter planning @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )">
 
                     <div class="hero-widget well">
                         <div class="icon">
@@ -1396,11 +1396,11 @@
                         </div>
 
                         <hr />
-
-                        <div class="row @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )">
+						
+                        <div class="row @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ? String.Empty : "hidden")">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
-                                <br />
+								<br />
                                 <div style="padding-bottom: 8px;">
                                     <b>Reminder: A transition plan is required for any student who will turn age 13, or are over the age of 13 during the IEP period</b>
                                 </div>
@@ -1409,7 +1409,7 @@
                                 <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
                             </div>
                         </div>
-                        <hr class="@((Model.studentAge > 12 || (Model.isDoc && Model.studentAge > 20)) ? "hidden" : String.Empty )" />
+                        <hr class="@((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )" />
 
                         <div class="row">
                             <div class="col-md-12">
