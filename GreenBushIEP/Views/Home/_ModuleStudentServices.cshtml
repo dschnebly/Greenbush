@@ -102,13 +102,13 @@
                                                 <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("yyyy-MM-dd"))">
                                             </div>
                                         </div>
-                                        @*<div class="col-md-3">
+                                        <div class="col-md-3">
                                             <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPEndDate.ToString("yyyy-MM-dd"))">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="">
                                             </div>
-                                        </div>*@
+                                        </div>
                                         <div class="col-md-4">
                                             <label for="Location">Location</label>
                                             <div class="input-group">
@@ -559,11 +559,15 @@
                 if (day == 0) {
                     e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
                     e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-                    e.target.parentNode.classList.add('has-error');
+					e.target.parentNode.classList.add('has-error');
+					var error = e.target.title;
+					_showAlert(error, false);
                 } else if (day == 6) {
                     e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
                     e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-                    e.target.parentNode.classList.add('has-error');
+					e.target.parentNode.classList.add('has-error');
+					var error = e.target.title;
+					_showAlert(error, false);
                 } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
                     e.target.setCustomValidity('OH NOES! That is day is not is session.');
                     e.target.title = 'OH NOES! That is day is not is session.';
@@ -571,7 +575,9 @@
                 } else if (e.target.value < $('#iepStartDate').val() || e.target.value > $('#iepEndDate').val()) {
                     e.target.setCustomValidity('OH NOES! That not in range of the IEP.');
                     e.target.title = 'OH NOES! That not in range of the IEP.';
-                    e.target.parentNode.classList.add('has-error');
+					e.target.parentNode.classList.add('has-error');
+					var error = e.target.title;
+					_showAlert(error, false);
                 }
                 else {
                     e.target.setCustomValidity('');
@@ -1131,4 +1137,15 @@
         });
     }
 
+	function _showAlert(message, positive) {
+
+		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+			if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
+			else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+			$("#alertMessage .moreinfo").html(message);
+			$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+				$("#alertMessage").slideUp(500);
+			});
+		}
+	}
 </script>
