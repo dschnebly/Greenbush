@@ -50,6 +50,7 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
             <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 4 || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleCommunicationMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
@@ -62,11 +63,12 @@
             </div>
         </fieldset>
 
-        <div class="row">
+        <div class="row" style="margin-bottom:8px">
             <div class="form-group">
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" class="btn btn-default" id="resetModuleCommunicationForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values.">Reset</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-default" id="resetModuleCommunicationForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <div class="pull-right"><button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
                 </div>
             </div>
         </div>
@@ -74,7 +76,6 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 </div>
 
 <script>

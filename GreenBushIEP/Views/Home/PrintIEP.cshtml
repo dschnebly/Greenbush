@@ -22,6 +22,10 @@
         background-color: #525659;  
         
     }
+
+    p, textarea{
+      overflow-y: auto;
+    }
  
     .fadeInToBackground {
         background: #525659;
@@ -689,9 +693,9 @@
         <fieldset>
             <label>Reading Instructional Levels (multi-select options)</label>
             <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier1 ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier1 ? "checked" : String.Empty )/>Tier 1 core/basic instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier2 ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier2 ? "checked" : String.Empty )/>Tier 2 group instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier3 ? @imageChecked : @imageNotChecked)" class='imgCheck'/><input type="checkbox" name="ModuleReadingInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier3 ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier1.HasValue && Model.studentReading.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier1.HasValue && Model.studentReading.InstructionalTier1.Value ? "checked" : String.Empty )/>Tier 1 core/basic instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier2.HasValue && Model.studentReading.InstructionalTier2.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier2.HasValue && Model.studentReading.InstructionalTier2.Value ? "checked" : String.Empty )/>Tier 2 group instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier3.HasValue && Model.studentReading.InstructionalTier3.Value ? @imageChecked : @imageNotChecked)" class='imgCheck'/><input type="checkbox" name="ModuleReadingInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier3.HasValue && Model.studentReading.InstructionalTier3.Value ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction</label><br>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -749,13 +753,13 @@
             <label>Math Instructional Levels (multi-select options)</label>
             <div class="form-check">
                 <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier1 ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier1 ? "checked" : String.Empty )/>Tier 1 core/basic instruction
+                    <img src="@(Model.studentMath.InstructionalTier1.HasValue && Model.studentMath.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier1.HasValue  && Model.studentMath.InstructionalTier1.Value ? "checked" : String.Empty )/>Tier 1 core/basic instruction
                 </label><br>
                 <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier2 ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier2 ? "checked" : String.Empty )/>Tier 2 group instruction
+                    <img src="@(Model.studentMath.InstructionalTier2.HasValue && Model.studentMath.InstructionalTier2.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier2.HasValue  && Model.studentMath.InstructionalTier2.Value ? "checked" : String.Empty )/>Tier 2 group instruction
                 </label><br>
                 <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier3 ? @imageChecked : @imageNotChecked)" class='imgCheck' />   <input type="checkbox" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier3 ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction
+                    <img src="@(Model.studentMath.InstructionalTier3.HasValue && Model.studentMath.InstructionalTier3.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />   <input type="checkbox" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier3.HasValue  && Model.studentMath.InstructionalTier3.Value ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction
                 </label><br>
             </div>
         </fieldset>
@@ -819,9 +823,9 @@
         <fieldset>
             <label>Written Instructional Levels (multi-select options)</label>
             <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier1 ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier1 ? "checked" : String.Empty)/>Tier 1 core/basic instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier2 ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier2 ? "checked" : String.Empty)/>Tier 2 group instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier3 ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier3 ? "checked" : String.Empty)/>Tier 3 individual/intensive instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier1.HasValue && Model.studentWritten.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier1.HasValue && Model.studentWritten.InstructionalTier1.Value ? "checked" : String.Empty)/>Tier 1 core/basic instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier2.HasValue  && Model.studentWritten.InstructionalTier2.Value? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier2.HasValue && Model.studentWritten.InstructionalTier2.Value ? "checked" : String.Empty)/>Tier 2 group instruction</label><br>
+                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier3.HasValue  && Model.studentWritten.InstructionalTier3.Value? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier3.HasValue && Model.studentWritten.InstructionalTier3.Value ? "checked" : String.Empty)/>Tier 3 individual/intensive instruction</label><br>
             </div>
         </fieldset>
         <fieldset class="form-group">

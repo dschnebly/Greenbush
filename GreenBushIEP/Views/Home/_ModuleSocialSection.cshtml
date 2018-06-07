@@ -42,15 +42,15 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Does this student's behavior impede the learning of self or others?</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? "checked" : String.Empty)>Yes</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.BehaviorImepedeLearning ? String.Empty : "checked")>No</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "yes", Model.BehaviorImepedeLearning)Yes</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "no", !Model.BehaviorImepedeLearning)No</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Does this student require a Behavior Intervention Plan?</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? "checked" : String.Empty)>Yes</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.BehaviorInterventionPlan ? String.Empty : "checked")>No</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "yes", Model.BehaviorInterventionPlan)Yes</label><br />
+                <label class="radio-inline">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "no", !Model.BehaviorInterventionPlan)No</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -68,6 +68,7 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
             <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 4 || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleSocialMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
@@ -76,26 +77,28 @@
                 <br />
                 <p style="display:@(Model.MeetNeedBy == 3 ? "block" : "none");">
                     *if other, please explain<br />
-                    <textarea class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3" style="font-size: 21px;" maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit.">@(Model.MeedNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3" style="font-size: 21px;" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.MeedNeedByOtherDescription)</textarea>
             </div>
         </fieldset>
-
-        <div class="row">
+        <div class="row" style="margin-bottom:8px">
             <div class="form-group">
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleSocialForm">Reset</button>
-                    <button type="submit" name="button2id" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-default" id="resetModuleSocialForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <div class="pull-right"><button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
                 </div>
             </div>
         </div>
+
+        
     }
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 </div>
 
 <script>
+
     // Attach Event
     //reset the form to default database/brand new values.
     $("input[name='ModuleSocialNoConcern']").on('click', function (event) {
@@ -160,6 +163,5 @@
 	$('.tooltip-help').on('click', function () {
 		$('[data-toggle="tooltip"]').tooltip('toggle');
 	});
-
 
 </script>

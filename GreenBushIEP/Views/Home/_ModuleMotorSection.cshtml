@@ -30,9 +30,9 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">Team will consider participation in:</label>
             <div class="form-check">
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 ? "checked" : String.Empty)>No Special Education Supports Needed</label><br />
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed</label><br />
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has Met P.E. Requirements</label><br />
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1  || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed in Physical Education</label><br />
+				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -50,6 +50,7 @@
         <fieldset class="form-group">
             <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
             <div class="form-check">
+                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 4  || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                 <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
@@ -58,24 +59,25 @@
                 <br />
                 <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;") ">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit.">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;"  maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.MeetNeedByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
-
-        <div class="row">
+        
+        <div class="row" style="margin-bottom:8px">
             <div class="form-group">
                 <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" class="btn btn-default" id="resetModuleMotorForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values.">Reset</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="reset" class="btn btn-default" id="resetModuleMotorForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <div class="pull-right"><button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
                 </div>
             </div>
         </div>
+
     }
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 </div>
 
 <script>

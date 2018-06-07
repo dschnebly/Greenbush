@@ -13,6 +13,14 @@
             document.getElementById("avatarImage").src = oFREvent.target.result;
         };
     });
+
+    // hooks up the dates on safari and explorer with a datepicker.
+    $("#IEPBeginDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#IEPEndDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 });
 
 function init() {

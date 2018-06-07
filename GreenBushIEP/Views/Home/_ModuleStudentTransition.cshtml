@@ -413,7 +413,7 @@
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapse" class="panel-collapse collapse in">
+                                    <div id="collapse" class="panel-collapse">
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -814,19 +814,19 @@
                                                 <div class="col-md-12">
                                                     <label for="transitionServiceFrequency">Frequency</label>
                                                     <div>
-                                                        <input class="form-control" id="transitionServiceFrequency" maxlength="300" name="transitionServiceFrequency" type="text" placeholder="once a week" value="">
+                                                        <input class="form-control" id="transitionServiceFrequency" maxlength="2000" name="transitionServiceFrequency" type="text" placeholder="once a week" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="transitionServiceDuration">Duration</label>
                                                     <div>
-                                                        <input class="form-control" id="transitionServiceDuration" maxlength="300" name="transitionServiceDuration" type="text" placeholder="30 minutes at a time" value="">
+                                                        <input class="form-control" id="transitionServiceDuration" maxlength="2000" name="transitionServiceDuration" type="text" placeholder="30 minutes at a time" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="transitionServiceLocation">Location</label>
                                                     <div>
-                                                        <input class="form-control" id="transitionServiceLocation" maxlength="300" name="transitionServiceLocation" type="text" placeholder="where will the activity occur?" value="">
+                                                        <input class="form-control" id="transitionServiceLocation" maxlength="2000" name="transitionServiceLocation" type="text" placeholder="where will the activity occur?" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -893,19 +893,19 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceFrequency">Frequency</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionInstructionServiceFrequency@(service.TransitionServiceID)" maxlength="300" name="transitionInstructionServiceFrequency@(service.TransitionServiceID)1" type="text" placeholder="once a week" value="@(service.Frequency)" />
+                                                                            <input class="form-control" id="transitionInstructionServiceFrequency@(service.TransitionServiceID)" maxlength="2000" name="transitionInstructionServiceFrequency@(service.TransitionServiceID)1" type="text" placeholder="once a week" value="@(service.Frequency)" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="300" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(service.Duration)">
+                                                                            <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="2000" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(service.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceLocation">Location</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionInstructionServiceLocation1" maxlength="300" name="transitionInstructionServiceLocation@(service.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(service.Location)">
+                                                                            <input class="form-control" id="transitionInstructionServiceLocation1" maxlength="2000" name="transitionInstructionServiceLocation@(service.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(service.Location)">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -964,19 +964,19 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceFrequency">Frequency</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionRelatedServiceFrequency@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceFrequency@(related.TransitionServiceID)" type="text" placeholder="once a week" value="@(related.Frequency)">
+                                                                            <input class="form-control" id="transitionRelatedServiceFrequency@(related.TransitionServiceID)" maxlength="2000" name="transitionRelatedServiceFrequency@(related.TransitionServiceID)" type="text" placeholder="once a week" value="@(related.Frequency)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionRelatedServiceDuration@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceDuration@(related.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(related.Duration)">
+                                                                            <input class="form-control" id="transitionRelatedServiceDuration@(related.TransitionServiceID)" maxlength="2000" name="transitionRelatedServiceDuration@(related.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(related.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceLocation">Location</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionRelatedServiceLocation@(related.TransitionServiceID)" maxlength="300" name="transitionRelatedServiceLocation@(related.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(related.Location)">
+                                                                            <input class="form-control" id="transitionRelatedServiceLocation@(related.TransitionServiceID)" maxlength="2000" name="transitionRelatedServiceLocation@(related.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(related.Location)">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1035,19 +1035,19 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceFrequency">Frequency</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionDailyServiceFrequency@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceFrequency@(daily.TransitionServiceID)" type="text" placeholder="once a week" value="@(daily.Frequency)">
+                                                                            <input class="form-control" id="transitionDailyServiceFrequency@(daily.TransitionServiceID)" maxlength="2000" name="transitionDailyServiceFrequency@(daily.TransitionServiceID)" type="text" placeholder="once a week" value="@(daily.Frequency)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionDailyServiceDuration@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceDuration@(daily.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(daily.Duration)">
+                                                                            <input class="form-control" id="transitionDailyServiceDuration@(daily.TransitionServiceID)" maxlength="2000" name="transitionDailyServiceDuration@(daily.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(daily.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceLocation">Location</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionDailyServiceLocation@(daily.TransitionServiceID)" maxlength="300" name="transitionDailyServiceLocation@(daily.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(daily.Location)">
+                                                                            <input class="form-control" id="transitionDailyServiceLocation@(daily.TransitionServiceID)" maxlength="2000" name="transitionDailyServiceLocation@(daily.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(daily.Location)">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1165,19 +1165,19 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceFrequency">Frequency</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
+                                                                            <input class="form-control" id="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" maxlength="2000" name="transitionLeisureServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
+                                                                            <input class="form-control" id="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" maxlength="2000" name="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceLocation">Location</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" maxlength="300" name="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
+                                                                            <input class="form-control" id="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" maxlength="2000" name="transitionLeisureServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1330,7 +1330,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button>
         </div>
     </div>
 

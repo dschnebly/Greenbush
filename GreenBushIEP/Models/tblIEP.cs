@@ -18,7 +18,6 @@ namespace GreenBushIEP.Models
         public int UserID { get; set; }
         public string IepStatus { get; set; }
         public Nullable<System.DateTime> begin_date { get; set; }
-        public Nullable<System.DateTime> end_date { get; set; }
         public bool Amendment { get; set; }
         public Nullable<int> AmendingIEPid { get; set; }
         public System.DateTime Create_Date { get; set; }
@@ -33,5 +32,7 @@ namespace GreenBushIEP.Models
         public Nullable<int> IEPReadingID { get; set; }
         public Nullable<int> IEPMathID { get; set; }
         public Nullable<int> IEPWrittenID { get; set; }
+        public Nullable<System.DateTime> MeetingDate { get; set; }
+        public Nullable<System.DateTime> end_Date { get; set; }
     }
 }

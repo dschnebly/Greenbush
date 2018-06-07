@@ -17,8 +17,8 @@
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-university" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Academic Performance</h4>
 </div>
-<div class="modal-body">
-    @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { }))
+<div class="modal-body" style="margin-bottom:5px;">
+    @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { @style="margin-bottom:15px;" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -68,6 +68,7 @@
                     <fieldset class="form-group">
                         <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 4 || Model.Academic.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleAcademicMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.Academic.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label>*<br />
@@ -76,7 +77,7 @@
                             <br />
                             <p style="display:@(Model.Academic.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3"  maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit."  style="font-size: 21px;">@(Model.Academic.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3"  maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit."  style="font-size: 21px;">@(Model.Academic.MeetNeedByOtherDescription)</textarea>
                         </div>
                         <br />
                     </fieldset>
@@ -111,8 +112,9 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">This need will be meet by:</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Reading.MeetNeedBy == 4 ? "checked" : String.Empty) />No needs to address</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.Reading.MeetNeedBy == 1 ? "checked" : String.Empty) />Goal</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.Reading.MeetNeedBy == 2 ? "checked" : String.Empty) />Accommodation(s), modification(s), and/or supplemental aid</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleReadingMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.Reading.MeetNeedBy == 3 ? "checked" : String.Empty) />Other</label>*<br />
@@ -155,8 +157,9 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; ">This need will be meet by:</label>
+                        <label style="font-size: 20px; ">This need will be met by:</label>
                         <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleMathMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Math.MeetNeedBy == 4 ? "checked" : String.Empty) />No needs to address</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleMathMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.Math.MeetNeedBy == 1 ? "checked" : String.Empty) />Goal</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleMathMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.Math.MeetNeedBy == 2 ? "checked" : String.Empty) />Accommodation(s), modification(s), and/or supplemental aid</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleMathMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.Math.MeetNeedBy == 3 ? "checked" : String.Empty) />Other</label>*<br />
@@ -165,7 +168,7 @@
                             <br />
                             <p style="display:@(Model.Math.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Math.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3"   maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 21px;">@(Model.Math.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
@@ -200,8 +203,9 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label style="font-size: 20px; padding: 25px 0 15px;">This need will be meet by:</label>
+                        <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
+                            <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.Written.MeetNeedBy == 4 ? "checked" : String.Empty) />No needs to address</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.Written.MeetNeedBy == 1 ? "checked" : String.Empty) />Goal</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.Written.MeetNeedBy == 2 ? "checked" : String.Empty) />Accommodation(s), modification(s), and/or supplemental aid</label><br />
                             <label class="radio-inline"><input type="radio" name="ModuleWrittenMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.Written.MeetNeedBy == 3 ? "checked" : String.Empty) />Other</label>*<br />
@@ -210,19 +214,20 @@
                             <br />
                             <p style="display:@(Model.Written.MeetNeedBy == 3 ? "block" : "none");">
                                 *&nbsp;If other, please explain<br />
-                                <textarea class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3"   maxlength="100" data-toggle="tooltip" data-placement="bottom" title="100 character limit." style="font-size: 21px;">@(Model.Written.MeetNeedByOtherDescription)</textarea>
+                                <textarea class="form-control" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3"   maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 21px;">@(Model.Written.MeetNeedByOtherDescription)</textarea>
                         </div>
                     </fieldset>
 
                 </div>
             </div>
         </div>
-
-        <div class="row">
+        
+        <div class="row" >
             <div class="form-group">
-                <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleAcademicForm">Reset</button>
-                    <button type="submit" name="button2id" class="btn btn-primary">Save</button>
+                <div class="col-md-12" style="text-align:center;margin-bottom:8px;padding-top:15px" id="questionSubmit">
+                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleAcademicForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <div class="pull-right"><button name="button2id" type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
                 </div>
             </div>
         </div>
@@ -231,7 +236,6 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 </div>
 
 <script>

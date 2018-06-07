@@ -156,14 +156,14 @@
         }
 
         .widgetDisabled {
-            opacity: 0.65;           
+            opacity: 0.65;
         }
 
         .needsAttention {
             /*background-color: #5b4b89 !important;*/
             /*opacity: 0.65;*/
-            border-color:#a00000 !important;
-            border-width: 2px;                                           
+            border-color: #a00000 !important;
+            border-width: 1px;
         }
 
         .needsAttentionIcon {
@@ -208,9 +208,11 @@
                 border: 1px solid #45906D;
             }
 
+        .filter > .well {
+            background-color: transparent;
+        }
 
-			
-                    
+
         .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
             margin-bottom: 5px;
             visibility: visible;
@@ -871,7 +873,7 @@
 }
 
 <div class="transition-page">
-   
+
     <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
 
         <div class="row">
@@ -880,9 +882,8 @@
                     <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Content/Images/Uploads/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
                     <div class="student-identity edit-student">
                         <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
-                        <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("dd/MM/yyyy"))" />
+                        <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("MM/dd/yyyy"))" />
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
-                        
                     </div>
                 </div>
             </div>
@@ -898,26 +899,27 @@
             <div class="col-md-12">
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
                     <ul class="navigation">
-						<li class="pull-right">
-							<button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
-							<button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
-						</li>
+                        <li class="pull-right">
+                            <button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
+
         <div class="row" style="margin-top: 15px;">
             <div class="btn-group btn-group-primary col-md-2">
                 <label class="btn btn-square-toround btn-xl btn-bordered-warning" data-toggle="modal"><span class="glyphicon glyphicon-chevron-right"></span> DRAFT </label>
             </div>
             <div class="col-md-8">
                 <span class="form-group">
-                    <label for="IEPBeginDate">Beginning Date:&nbsp;&nbsp;</label>
+                    <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
                     <input type="date" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
                 </span>
                 <span class="form-group has-error">
-                    <label for="IEPEndDate">Ending Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="IEPEndDate" id="IEPEndDate" value="@(Model.studentIEP.draft.end_date != null ? Model.studentIEP.draft.end_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.end_date != null ? Model.studentIEP.draft.end_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
+                    <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
+                    <input type="date" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
                 </span>
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
@@ -1029,7 +1031,6 @@
                     </div>
 
                 </li>
-               
                 <li class="ui-state-default filter planning iep">
 
                     <div class="hero-widget well">
@@ -1056,6 +1057,21 @@
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg service-section" data-view="ServiceModule"><i class="glyphicon glyphicon-search"></i> View</button>
+                        </div>
+                    </div>
+
+                </li>
+                <li class="ui-state-default filter planning iep">
+
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
+                        </div>
+                        <div class="text">
+                            <label class="text-muted">Other Considerations</label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg other-considerations-section" data-view="OtherConsiderationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
 
@@ -1109,21 +1125,6 @@
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg transition-section" data-view="TransitionModule"><i class="glyphicon glyphicon-search"></i> View</button>
-                        </div>
-                    </div>
-
-                </li>
-                <li class="ui-state-default filter planning">
-
-                    <div class="hero-widget well">
-                        <div class="icon">
-                            <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
-                        </div>
-                        <div class="text">
-                            <label class="text-muted">Other Considerations</label>
-                        </div>
-                        <div class="options">
-                            <button type="button" class="btn btn-default btn-lg other-considerations-section" data-view="OtherConsiderationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
 
@@ -1234,16 +1235,16 @@
                             </div>
                             <div class="col-md-8 ">
                                 <div>
-                                    <h6 style="font-weight:bold; font-size: 13px;">Team will consider participation in </h6>
+                                    <h6 style="font-weight:bold; font-size: 13px;">Team Considerations:</h6>
                                 </div>
                                 <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 ? "checked" : String.Empty )>&nbsp;No Special Education Supports Needed</label>
+                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1  ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
                                 </div>
                                 <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed</label>
+                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed in Physical Education</label>
                                 </div>
                                 <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="3" @(Model.studentPlan.MotorParticipation == 3 ? "checked" : String.Empty )>&nbsp;Student has Met P.E. Requirements</label>
+                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="3" @(Model.studentPlan.MotorParticipation == 3 ? "checked" : String.Empty )>&nbsp;Student has met Physical Education Requirements</label>
                                 </div>
                             </div>
                         </div>
@@ -1366,7 +1367,7 @@
                             <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
                                 <h5 style="font-size:17px;font-weight:bold;">Reading </h5>
                                 <div>
-                                    <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />Concerns</label>
+                                    <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />No Concerns</label>
                                     <label><input type="checkbox" name="ReadingProgress" @(Model.studentPlan.ReadingProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
                                 </div>
                                 <div class="checkbox isAcademicPerformanceConcern">
@@ -1376,7 +1377,7 @@
                             <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
                                 <h5 style="font-size:17px;font-weight:bold;">Math </h5>
                                 <div>
-                                    <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />Concerns</label>
+                                    <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />No Concerns</label>
                                     <label><input type="checkbox" name="MathProgress" @(Model.studentPlan.MathProgress ? "checked=checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
                                     <div class="checkbox isAcademicPerformanceConcern">
                                         <label><input type="checkbox" name="MathNeed" @(Model.studentPlan.MathNeed ? "checked=checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
@@ -1386,7 +1387,7 @@
                             <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
                                 <h5 style="font-size:17px;font-weight:bold;">Written Language </h5>
                                 <div>
-                                    <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />Concerns</label>
+                                    <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />No Concerns</label>
                                     <label><input type="checkbox" name="WrittenProgress" @(Model.studentPlan.WrittenProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
                                 </div>
                                 <div class="checkbox isAcademicPerformanceConcern">

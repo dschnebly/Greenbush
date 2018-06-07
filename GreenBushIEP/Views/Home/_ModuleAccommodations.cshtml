@@ -31,9 +31,7 @@
             <button id="newgoal" class="btn btn-default">New Accommodation/Modification&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
         </div>
     </div>
-
-
-
+    
     <div class="container goalContainer">
 
         <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
@@ -80,13 +78,13 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapse0" class="panel-collapse">
+                            <div id="collapse0" class="panel-collapse in">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="AccType">Type</label>
                                             <div class="form-check" style="margin-left:8px">
-                                                <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;">Accommodation</label><br />
+                                                <label class="radio-inline"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" checked>Accommodation</label><br />
                                                 <label class="radio-inline"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
 
                                             </div>
@@ -154,8 +152,8 @@
                                     <div class="row">
                                         <div class="form-group" id="saveGroup">
                                             <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                                <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit">Save</button>
+                                                <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm"><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btn btn-primary btnSubmit"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -174,13 +172,17 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button>
 </div>
 
 <script>
 
-    $('#accomStartDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
-    $('#accomEndDate').prop('min', function () { return new Date().toJSON().split('T')[0]; });
+    $("#AnticipatedStartDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#AnticipatedEndDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 
     /* Binding */
     /* tooltips */
@@ -196,42 +198,51 @@
 
     $("#resetModuleAccForm").trigger("reset");
 
-
     /* Event */
     /* when clicking on the New Student Goal button */
     $('#newgoal').on('click', function () {
+        $.each($("div.panel-collapse").not('#defaultgoal'), function (index) {
+            $(this).collapse('hide');
+        });
+
+        var goalCount = $('.oneStudentGoal').not("#defaultgoal").length;
         var cloneGoal = $("#defaultgoal").clone();
         cloneGoal.removeClass("hidden");
         cloneGoal.attr('id', 'defaultgoal_X');
-        var saveButton = cloneGoal.find('#btnSubmit');
 
+        // reset the id values of the panel and accordian elements
+        cloneGoal.find('div.panel-group').attr('id', 'accordion[' + goalCount + ']');
+        cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
+
+        var link = cloneGoal.find('h4 a');
+        link.attr('href', '#collapse' + goalCount);
+        link.attr('data-parent', 'accordion[' + goalCount + ']');
+        var panelCollapse = cloneGoal.find("#collapse0").prop("id", "collapse" + goalCount);
+
+        panelCollapse.collapse('show');
+
+        var saveButton = cloneGoal.find('#btnSubmit');
         saveButton.click(function () {
             var buttonVal = $(this).attr('accom-id');
             if (buttonVal == undefined)
                 _save(0);
             else
                 _save(buttonVal);
-
         });
 
         //clear location list when form has existing accommodations
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
         $("#ExistingAccommodations").append(cloneGoal);
+
         initGoal(cloneGoal);
 
         return false;
     });
 
-
-    $(".deleteGoal").click(function () {
-        _deleteRow($(this));
-    });
-
-
-
     function _save(elementValue) {
         event.preventDefault();
+
         var element = $("#defaultgoal_X");
         if (elementValue != 0)
             element = $("#defaultgoal_" + elementValue);
@@ -247,18 +258,14 @@
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    _showAlert("The Accommodation/Modification has been saved.");
+                    _showAlert("The Accommodation/Modification has been saved.", true);
 
                     if (data.isNew) {
-                        var cloneGoal = element; //.clone();
-
+                        var cloneGoal = element;
 
                         cloneGoal.attr('id', 'defaultgoal_' + data.id);
                         var deleteButton = cloneGoal.find('.deleteGoal');
                         deleteButton.attr('accom-id', data.id);
-                        deleteButton.click(function () {
-                            _deleteRow(deleteButton);
-                        });
 
                         var saveButton = cloneGoal.find('#btnSubmit');
                         saveButton.attr('accom-id', data.id);
@@ -272,10 +279,6 @@
                         toggleButton.attr("href", "#collapse" + data.id);
 
                         var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
-
-
-                        //cloneGoal.append('<input type="hidden" name="IEPid" id="IEPid" value="' + data.iep + '" />');
-
                     }
                 }
                 else {
@@ -291,13 +294,6 @@
                 console.log("Unable to delete the student goal.");
             }
         });
-
-        var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        var is_explorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-        if (is_safari || is_explorer) {
-            $("#AnticipatedStartDate").datepicker();
-            $("#AnticipatedEndDate").datepicker();
-        }
     }
 
     function _update(id) {
@@ -319,7 +315,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    _showAlert("The Accommodation/Modification has been updated.");
+                    _showAlert("The Accommodation/Modification has been updated.", true);
                 }
                 else {
                     if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -339,7 +335,8 @@
     }
 
     function initGoal(element) {
-        element.addClass('bound').each(function (index) {
+
+        element.not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
 
             $(this).find("input[type=date]").on('input', function (e) {
 
@@ -351,13 +348,13 @@
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
-                    _showAlert(error);
+                    _showAlert(error , false);
                 } else if (day == 6) {
                     var error = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
-                    _showAlert(error);
+                    _showAlert(error, false);
                 } else {
 
                     e.target.setCustomValidity('');
@@ -366,8 +363,6 @@
                 }
 
             });
-
-
 
             $(this).find(".number-spinner button").on("click", function () {
                 var btn = $(this),
@@ -388,7 +383,6 @@
                 return false;
             });
 
-
             $(this).find(".minute-spinner button").on("click", function () {
                 var btn = $(this),
                     oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
@@ -408,6 +402,15 @@
                 return false;
             });
 
+            $(this).find(".panel-title a").on("click", function () {
+                $(".panel-collapse").each(function () {
+                    $(this).collapse('hide');
+                });
+            });
+;
+            $(this).find(".deleteGoal").on("click", function () {
+                _deleteRow($(this));
+            });
 
         });
     }
@@ -418,31 +421,47 @@
         if (confirm("Do you really want to delete this Accommodation/Modification?")) {
 
             if (dataId != undefined && dataId != null) {
-                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
+                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response)
+                {
                     if (response.result != undefined && response.result) {
 
-                        var container = $("#defaultgoal_" + dataId);
-                        container.remove();
+                        $(element).closest('.oneStudentGoal').remove();
 
                     }
-                    else {
-                        _showAlert("There was a problem deleting the Accommodation or Modification.");
+                    else
+                    {
+
+                        _showAlert("There was a problem deleting the Accommodation or Modification.", false);
+
                     }
-
-
                 });
+            }
+            else // it's a new accomodation
+            {
+                var currentGoal = $(element).closest('.oneStudentGoal');
+                var previousGoal = currentGoal.prev(".oneStudentGoal:visible").find(".panel-collapse");
+                currentGoal.remove();
+                return previousGoal.collapse('show');
             }
         }
     }
 
-    function _showAlert(message) {
+    function _showAlert(message, positive) {
 
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
+            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
             $("#alertMessage .moreinfo").html(message);
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);
             });
         }
     }
+
+    $(document).ready(function () {
+        $(".oneStudentGoal").each(function () {
+            initGoal($(this));
+        });
+    });
 
 </script>

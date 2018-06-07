@@ -29,7 +29,7 @@ namespace GreenBushIEP.Models
         public int Frequency { get; set; }
         public byte DaysPerWeek { get; set; }
         public short Minutes { get; set; }
-        public int ProviderID { get; set; }
+        public Nullable<int> ProviderID { get; set; }
         public string LocationCode { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }

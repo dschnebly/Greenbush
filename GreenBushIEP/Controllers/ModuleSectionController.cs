@@ -151,8 +151,8 @@ namespace GreenBushIEP.Controllers
                         SocialIEP.MentalHealthDiagnosis = collection["ModuleSocialMentalHealthDiagnosis"] == "on" ? true : false;
                         SocialIEP.SignificantBehaviors = collection["ModuleSocialSignificantBehaviors"] == "on" ? true : false;
                         SocialIEP.SocialDeficit = collection["ModuleSocialDeficit"] == "on" ? true : false;
-                        SocialIEP.BehaviorImepedeLearning = collection["ModuleSocialBehaviorImepedeLearning"] == "on" ? true : false;
-                        SocialIEP.BehaviorInterventionPlan = collection["ModuleSocialBehaviorInterventionPlan"] == "on" ? true : false;
+                        SocialIEP.BehaviorImepedeLearning = collection["ModuleSocialBehaviorImepedeLearning"] == "yes" ? true : false;
+                        SocialIEP.BehaviorInterventionPlan = collection["ModuleSocialBehaviorInterventionPlan"] == "yes" ? true : false;
                         SocialIEP.LevelOfPerformance = collection["ModuleSocialLevelOfPerformance"].ToString();
                         SocialIEP.AreaOfNeedDescription = collection["ModuleSocialAreaOfNeedDescription"].ToString();
                         SocialIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleSocialMeetNeedBy"]);
@@ -767,6 +767,7 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.AnnualGoal = collection[++j].ToString();
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();
+                    studentGoal.goal.EvaluationProcedures = Convert.ToInt32(collection[++j]);
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
@@ -795,9 +796,9 @@ namespace GreenBushIEP.Controllers
                             if (benchmark != null)
                             {
                                 benchmark.goalID = studentGoal.goal.goalID;
-                                benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0: 0;
+                                benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
                                 benchmark.ObjectiveBenchmark = collection[++j].ToString();
-                                benchmark.TransitionActivity = (collection[++j] == "true") ? true : false;
+                                benchmark.TransitionActivity = (collection[++j].ToLower() ==  "true") ? true : false;
                                 benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
