@@ -190,8 +190,7 @@ namespace GreenBushIEP.Controllers
                         IntellgienceIEP.AreaOfNeed = collection["ModuleIntelligenceAreaOfNeed"] == "on" ? true : false;
                         IntellgienceIEP.LevelOfPerformance = collection["ModuleIntelligenceLevelOfPerformance"].ToString();
                         IntellgienceIEP.AreaOfNeedDescription = collection["ModuleIntelligenceAreaOfNeedDescription"].ToString();
-                        IntellgienceIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleIntelligenceMeetNeedBy"]);
-                        IntellgienceIEP.MeetNeedByOtherDescription = collection["ModuleIntelligenceMeetNeedByOtherDescription"].ToString();
+                        
 
                         db.SaveChanges();
 
