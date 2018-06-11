@@ -239,7 +239,7 @@
                             }
                         }
                     </select>
-                    <label>Code</label><br />
+                    <label class="voffset2">Provider ID/License #</label>
                     <input type="text" id="providerCode" name="providerCode" class="form-control" /><br />
                 </div>
             </div>
@@ -445,7 +445,8 @@
         $('ul.list-group').append("<li class='head'>List of Providers</li>");
 
         providerList.forEach(function (provider) {
-            var listgroupitem = '<li class="list-group-item"><span>' + provider.Name + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + provider.Name + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
+            var providerName = provider.Name.replace(/'/g, '&#39;');
+            var listgroupitem = '<li class="list-group-item"><span>' + provider.Name + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
 
             $('ul.list-group').append(listgroupitem);
         });

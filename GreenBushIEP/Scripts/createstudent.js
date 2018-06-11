@@ -24,11 +24,11 @@
 });
 
 function init() {
-
-    //set up the bootstrap datepicker
-    var date_input = $('input[name="dob"]'); //our date input has the name "dob"
-
-    //$('#dob').mask("99/99/9999", {});
+      
+    $(".studentDOB").datepicker({
+        dateFormat: "mm/dd/yy",
+    }).datepicker("setDate", "0");
+    
 
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
@@ -48,8 +48,7 @@ function init() {
     $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
     });
 
-    link.href = "/Scripts/bootstrap-datepicker.min.js";
-
+    
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
 
@@ -114,6 +113,8 @@ function init() {
                 console.log(data);
             }
         });
+
+        
 
     });
 

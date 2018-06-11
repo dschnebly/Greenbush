@@ -598,19 +598,7 @@
                 <p class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3">@(Model.studentIntelligence.AreaOfNeedDescription)</p>
             </div>
         </fieldset>
-        <fieldset class="form-group">
-            <label>This need will be meet by:</label>
-            <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentIntelligence.MeetNeedBy == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 1 ? "checked" : String.Empty )/>Goal</label><br>
-                <label class="radio-inline"><img src="@(Model.studentIntelligence.MeetNeedBy == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 2 ? "checked" : String.Empty )/>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br>
-                <label class="radio-inline"><img src="@(Model.studentIntelligence.MeetNeedBy == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleIntelligenceMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.studentIntelligence.MeetNeedBy == 3 ? "checked" : String.Empty )/>Other</label><br>
-            </div>
-            <div class="form-check" id="MeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control" name="ModuleIntelligenceMeetNeedByOtherDescription" id="ModuleIntelligenceMeetNeedByOtherDescription" rows="3">@(Model.studentIntelligence.MeetNeedByOtherDescription)</p>
-                
-            </div>
-        </fieldset>
+       
     </div>
     }
     else
