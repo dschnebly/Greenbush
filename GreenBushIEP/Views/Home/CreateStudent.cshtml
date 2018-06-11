@@ -9,7 +9,8 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/chosen.css")
-    @Styles.Render("~/Content/bootstrap-datepicker3.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
+    
 }
 
 <style>
@@ -639,7 +640,8 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label" for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" placeholder="MM/dd/YYYY  e.g. 08/25/1977">
+                                                    @*<input type="date" id="dob" name="dob" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" placeholder="MM/dd/YYYY  e.g. 08/25/1977">*@
+                                                    <input  type="text" id="dob" name="dob" style="height:35px;" class="form-control studentDOB" placeholder="MM/dd/YYYY  e.g. 08/25/1977"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1188,7 +1190,6 @@
 <var data-reload="true" data-src="/Scripts/createstudent.js"></var>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/bootstrap-datepicker.min.js"></var>
 
 <script>
     function loadScript(url, callback) {
@@ -1216,7 +1217,6 @@
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/bootstrap-datepicker.min.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
     @Scripts.Render("~/Scripts/createstudent.js")
 }
