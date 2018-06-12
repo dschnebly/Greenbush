@@ -125,7 +125,9 @@
             $("input[name='HearingImpaired']").prop('checked', false);
 
             $("#MeetNeedByOtherDescription").val('');
-            $("input:radio[name=MeetNeedBy]").prop('checked', false);
+            $("input[name=MetByGoal]").prop('checked', false);
+            $("input[name=MetByAccommodation]").prop('checked', false);
+            $("input[name=MetByOther]").prop('checked', false);
             $("#MeetByOtherTextArea p").hide();
         }
     });
@@ -144,14 +146,13 @@
     });
 
     // Attach Event
-    // if radio button is selected than show text box.
+    // if checkbox is selected than show text box.
     $("input:checkbox[name=MetByOther]").on('click', function (event) {
         if ($("input:checkbox[name=MetByOther]").is(':checked')) {
             $("#MeetByOtherTextArea p").show();
         }
         else {
             $("#MeetByOtherTextArea p").hide();
-            $("#MeetNeedByOtherDescription").val("");
         }
     });
 

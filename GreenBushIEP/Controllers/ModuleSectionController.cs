@@ -76,8 +76,10 @@ namespace GreenBushIEP.Controllers
                         MotorIEP.Participation = Convert.ToInt32(collection["ModuleMotorParticipation"]);
                         MotorIEP.LevelOfPerformance = collection["ModuleMotorLevelOfPerformance"].ToString();
                         MotorIEP.AreaOfNeedDescription = collection["ModuleMotorAreaOfNeedDescription"].ToString();
-                        //MotorIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleMotorMeetNeedBy"]);
-                        //MotorIEP.MeetNeedByOtherDescription = collection["ModuleMotorMeetNeedByOtherDescription"].ToString();
+                        MotorIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
+                        MotorIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
+                        MotorIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
+                        MotorIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 

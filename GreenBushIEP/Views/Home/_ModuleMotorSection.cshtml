@@ -28,48 +28,49 @@
             </div>
         </div>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Team will consider participation in:</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Team will consider participation in:</label>
             <div class="form-check">
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1  || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed in Physical Education</label><br />
-				<label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed in Physical Education</label><br />
+                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
                 <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 21px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
                 <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by:</label>
+            <label style="font-size: 18px; padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="4" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 4  || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="1" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="2" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorMeetNeedBy" value="3" style="position: relative; right: 5px;" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+                <div class="checkbox">
+                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
-                <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;") ">
+                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" style="font-size: 21px;"  maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
-        
-        <div class="row" style="margin-bottom:8px">
-            <div class="form-group">
-                <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" class="btn btn-default" id="resetModuleMotorForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <div class="pull-right"><button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <div class="form-group">
+                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
                 </div>
             </div>
         </div>
@@ -77,8 +78,8 @@
     }
 
 </div>
-<div class="modal-footer">
-</div>
+<br />
+<br />
 
 <script>
     // Attach Event
@@ -90,9 +91,10 @@
             $("input[name='ModuleMotorNeeds']").prop('checked', false);
 
             $("input[name='ModuleMotorParticipation']").prop('checked', false);
-            $("input[name='ModuleMotorNeeds']").prop('checked', false);
-            $("input:radio[name=ModuleMotorMeetNeedBy]").prop('checked', false);
-
+            $("#MeetNeedByOtherDescription").val('');
+            $("input[name=MetByGoal]").prop('checked', false);
+            $("input[name=MetByAccommodation]").prop('checked', false);
+            $("input[name=MetByOther]").prop('checked', false);
             $("#MeetByOtherTextArea p").hide();
         }
     });
@@ -108,9 +110,9 @@
     });
 
     // Attach Event
-    // if radio button is selected than show text box.
-    $("input:radio[name=ModuleMotorMeetNeedBy]").on('click', function (event) {
-        if ($("input:radio[name=ModuleMotorMeetNeedBy]:checked").val() == 3) {
+    // if checkbox is selected than show text box.
+    $("input:checkbox[name=MetByOther]").on('click', function (event) {
+        if ($("input:checkbox[name=MetByOther]").is(':checked')) {
             $("#MeetByOtherTextArea p").show();
         }
         else {
