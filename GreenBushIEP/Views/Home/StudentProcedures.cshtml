@@ -327,6 +327,76 @@
             background-color: #5bc0de;
         }
 
+
+        .checkbox label {
+            font-size: 16px;
+            margin-left: -20px;
+        }
+
+            .checkbox label:after,
+            .radio label:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+
+        .form-check .checkbox {
+            line-height: 25px;
+        }
+
+        .checkbox .cr,
+        .radio .cr {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #a9a9a9;
+            border-radius: .25em;
+            width: 1.3em;
+            height: 1.3em;
+            float: left;
+            margin-right: .5em;
+        }
+
+        .radio .cr {
+            border-radius: 50%;
+        }
+
+            .checkbox .cr .cr-icon,
+            .radio .cr .cr-icon {
+                position: absolute;
+                font-size: .8em;
+                line-height: 0;
+                top: 50%;
+                left: 20%;
+            }
+
+            .radio .cr .cr-icon {
+                margin-left: 0.04em;
+            }
+
+        .checkbox label input[type="checkbox"],
+        .radio label input[type="radio"] {
+            display: none;
+        }
+
+            .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+            .radio label input[type="radio"] + .cr > .cr-icon {
+                transform: scale(3) rotateZ(-20deg);
+                opacity: 0;
+                transition: all .3s ease-in;
+            }
+
+            .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+            .radio label input[type="radio"]:checked + .cr > .cr-icon {
+                transform: scale(1) rotateZ(0deg);
+                opacity: 1;
+            }
+
+            .checkbox label input[type="checkbox"]:disabled + .cr,
+            .radio label input[type="radio"]:disabled + .cr {
+                opacity: .5;
+            }
+
+
         .onoffswitch2 {
             position: relative;
             width: 90px;
@@ -545,6 +615,27 @@
             -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
         }
+
+        .formbtn {
+            min-width: 85px;
+        }
+
+        .btn-secondary {
+            background-color: #ccc;
+            color: #4b4f56;
+        }
+
+            .btn-secondary i {
+                color: #4b4f56;
+            }
+
+            .btn-secondary:hover {
+                color: #fff;
+            }
+
+                .btn-secondary:hover i {
+                    color: #fff;
+                }
 
 
         /**** Vertically Centers the Modal Popup ****/
@@ -847,10 +938,6 @@
             .modal-dialog {
                 width: 100% !important;
                 margin: 0;
-            }
-
-            .modal-footer button {
-                display: none;
             }
 
             .modal-backdrop {
@@ -1238,7 +1325,7 @@
                                     <h6 style="font-weight:bold; font-size: 13px;">Team Considerations:</h6>
                                 </div>
                                 <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1  ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
+                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1 ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
                                 </div>
                                 <div class="checkbox">
                                     <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed in Physical Education</label>
@@ -1397,11 +1484,11 @@
                         </div>
 
                         <hr />
-						
+
                         <div class="row @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ? String.Empty : "hidden")">
                             <div class="col-md-12">
                                 <h5 style="font-size:19px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
-								<br />
+                                <br />
                                 <div style="padding-bottom: 8px;">
                                     <b>Reminder: A transition plan is required for any student who will turn age 13, or are over the age of 13 during the IEP period</b>
                                 </div>

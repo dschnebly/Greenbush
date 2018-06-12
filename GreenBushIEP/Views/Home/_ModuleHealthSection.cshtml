@@ -66,46 +66,49 @@
             </legend>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Present Level of Performance</label>
             <div class="form-check">
                 <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 21px;">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
                 <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">This need will be met by</label>
+            <label style="font-size: 18px; padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
-                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="4" @(Model.MeetNeedBy == 4 || Model.MeetNeedBy == null ? "checked" : String.Empty)>No needs to address</label><br />
-                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="1" @(Model.MeetNeedBy == 1 ? "checked" : String.Empty)>Goal</label><br />
-                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="2" @(Model.MeetNeedBy == 2 ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="MeetNeedBy" value="3" @(Model.MeetNeedBy == 3 ? "checked" : String.Empty)>Other</label><br />
+                <div class="checkbox">
+                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
-                <p style="display: @(Model.MeetNeedBy == 3 ? "block;" : "none;")">
+                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3"  maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 21px;">@(Model.MeetNeedByOtherDescription)</textarea>
+                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
 
-        <div class="row" style="margin-bottom:8px">
-            <div class="form-group">
-                <div class="col-md-12" style="text-align:center;">
-                    <button type="reset" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <div class="pull-right"><button type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <div class="form-group">
+                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
                 </div>
             </div>
         </div>
     }
 
 </div>
+<br />
+<br />
 
 <script>
     // Attach Event
@@ -142,32 +145,33 @@
 
     // Attach Event
     // if radio button is selected than show text box.
-    $("input:radio[name=MeetNeedBy]").on('click', function (event) {
-        if ($("input:radio[name=MeetNeedBy]:checked").val() == 3) {
+    $("input:checkbox[name=MetByOther]").on('click', function (event) {
+        if ($("input:checkbox[name=MetByOther]").is(':checked')) {
             $("#MeetByOtherTextArea p").show();
         }
         else {
             $("#MeetByOtherTextArea p").hide();
+            $("#MeetNeedByOtherDescription").val("");
         }
-	});
+    });
 
-	/* Binding */
-	/* tooltips */
-	$('[data-toggle="tooltip"]').tooltip({
-		trigger: 'manual'
-	});
+    /* Binding */
+    /* tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'manual'
+    });
 
-	///* Event */
-	///* When a user clicks on the question mark icon we turn on tooltips */
-	$('.tooltip-help').on('click', function () {
-		$('[data-toggle="tooltip"]').tooltip('toggle');
-	});
+    ///* Event */
+    ///* When a user clicks on the question mark icon we turn on tooltips */
+    $('.tooltip-help').on('click', function () {
+        $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
 
-	$("#HearingDate").datepicker({
-	    dateFormat: "yy-mm-dd"
-	}).datepicker("setDate", "0");
-	$("#VisionDate").datepicker({
-	    dateFormat: "yy-mm-dd"
-	}).datepicker("setDate", "0");
+    $("#HearingDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
+    $("#VisionDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    }).datepicker("setDate", "0");
 
 </script>

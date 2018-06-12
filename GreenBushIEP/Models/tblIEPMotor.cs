@@ -22,8 +22,10 @@ namespace GreenBushIEP.Models
         public int Participation { get; set; }
         public string LevelOfPerformance { get; set; }
         public string AreaOfNeedDescription { get; set; }
-        public Nullable<int> MeetNeedBy { get; set; }
-        public string MeetNeedByOtherDescription { get; set; }
         public Nullable<bool> AreaOfNeed { get; set; }
+        public Nullable<bool> NeedMetByGoal { get; set; }
+        public Nullable<bool> NeedMetByAccommodation { get; set; }
+        public Nullable<bool> NeedMetByOther { get; set; }
+        public string NeedMetByOtherDescription { get; set; }
     }
 }

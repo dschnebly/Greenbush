@@ -27,13 +27,11 @@ namespace GreenBushIEP.Models
         public Nullable<bool> OtherInformation { get; set; }
         public string LevelOfPerformance { get; set; }
         public string AreaOfNeedDescription { get; set; }
-        public Nullable<bool> MeetNeedByGoal { get; set; }
-        public string MeetNeedByGoalDescription { get; set; }
-        public Nullable<bool> MeetNeedByAccomidation { get; set; }
-        public Nullable<bool> MeetNeedByOther { get; set; }
-        public string MeedNeedByOtherDescription { get; set; }
         public bool SkillDeficit { get; set; }
-        public Nullable<int> MeetNeedBy { get; set; }
         public Nullable<bool> AreaOfNeed { get; set; }
+        public Nullable<bool> NeedMetByGoal { get; set; }
+        public Nullable<bool> NeedMetByAccommodation { get; set; }
+        public Nullable<bool> NeedMetByOther { get; set; }
+        public string NeedMetByOtherDescription { get; set; }
     }
 }

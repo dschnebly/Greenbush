@@ -241,8 +241,10 @@
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -257,9 +259,11 @@
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -281,13 +285,15 @@
           <Property Name="MedicaidEligible" Type="bit" />
           <Property Name="MedicaidID" Type="nvarchar" MaxLength="10" />
           <Property Name="HealthCarePlan" Type="bit" />
-          <Property Name="AdditionalHealthInfo" Type="nvarchar" MaxLength="1000" />
+          <Property Name="AdditionalHealthInfo" Type="nvarchar" MaxLength="2000" />
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -299,9 +305,11 @@
           <Property Name="ProgressTowardGenEd" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -317,8 +325,10 @@
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -332,9 +342,11 @@
           <Property Name="Participation" Type="int" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="AreaOfNeed" Type="bit" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -350,8 +362,10 @@
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPs">
           <Key>
@@ -395,14 +409,12 @@
           <Property Name="OtherInformation" Type="bit" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedByGoal" Type="bit" />
-          <Property Name="MeetNeedByGoalDescription" Type="nvarchar" MaxLength="500" />
-          <Property Name="MeetNeedByAccomidation" Type="bit" />
-          <Property Name="MeetNeedByOther" Type="bit" />
-          <Property Name="MeedNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="SkillDeficit" Type="bit" Nullable="false" />
-          <Property Name="MeetNeedBy" Type="int" />
           <Property Name="AreaOfNeed" Type="bit" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -418,8 +430,10 @@
           <Property Name="AreaOfNeed" Type="bit" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="nvarchar(max)" />
           <Property Name="AreaOfNeedDescription" Type="nvarchar(max)" />
-          <Property Name="MeetNeedBy" Type="int" />
-          <Property Name="MeetNeedByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="NeedMetByGoal" Type="bit" />
+          <Property Name="NeedMetByAccommodation" Type="bit" />
+          <Property Name="NeedMetByOther" Type="bit" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblLanguages">
           <Key>
@@ -1179,8 +1193,10 @@
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -1195,9 +1211,11 @@
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -1219,13 +1237,15 @@
           <Property Name="MedicaidEligible" Type="Boolean" />
           <Property Name="MedicaidID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="HealthCarePlan" Type="Boolean" />
-          <Property Name="AdditionalHealthInfo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalHealthInfo" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -1237,9 +1257,11 @@
           <Property Name="ProgressTowardGenEd" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -1255,8 +1277,10 @@
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -1270,9 +1294,11 @@
           <Property Name="Participation" Type="Int32" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeed" Type="Boolean" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -1288,8 +1314,10 @@
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEP">
           <Key>
@@ -1333,14 +1361,12 @@
           <Property Name="OtherInformation" Type="Boolean" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedByGoal" Type="Boolean" />
-          <Property Name="MeetNeedByGoalDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedByAccomidation" Type="Boolean" />
-          <Property Name="MeetNeedByOther" Type="Boolean" />
-          <Property Name="MeedNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="SkillDeficit" Type="Boolean" Nullable="false" />
-          <Property Name="MeetNeedBy" Type="Int32" />
           <Property Name="AreaOfNeed" Type="Boolean" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -1356,8 +1382,10 @@
           <Property Name="AreaOfNeed" Type="Boolean" Nullable="false" />
           <Property Name="LevelOfPerformance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AreaOfNeedDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MeetNeedBy" Type="Int32" />
-          <Property Name="MeetNeedByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="NeedMetByGoal" Type="Boolean" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" />
+          <Property Name="NeedMetByOther" Type="Boolean" />
+          <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblLanguage">
           <Key>
@@ -1923,8 +1951,10 @@
           <EntitySetMapping Name="tblIEPAcademics">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPAcademic">
               <MappingFragment StoreEntitySet="tblIEPAcademic">
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
@@ -1938,9 +1968,11 @@
           <EntitySetMapping Name="tblIEPCommunications">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPCommunication">
               <MappingFragment StoreEntitySet="tblIEPCommunication">
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
@@ -1956,9 +1988,11 @@
           <EntitySetMapping Name="tblIEPHealths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPHealth">
               <MappingFragment StoreEntitySet="tblIEPHealth">
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
@@ -1985,9 +2019,11 @@
           <EntitySetMapping Name="tblIEPIntelligences">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
               <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="ProgressTowardGenEd" ColumnName="ProgressTowardGenEd" />
@@ -2000,8 +2036,10 @@
           <EntitySetMapping Name="tblIEPMaths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMath">
               <MappingFragment StoreEntitySet="tblIEPMath">
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
@@ -2018,9 +2056,11 @@
           <EntitySetMapping Name="tblIEPMotors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMotor">
               <MappingFragment StoreEntitySet="tblIEPMotor">
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="Participation" ColumnName="Participation" />
@@ -2035,8 +2075,10 @@
           <EntitySetMapping Name="tblIEPReadings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPReading">
               <MappingFragment StoreEntitySet="tblIEPReading">
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
@@ -2079,14 +2121,12 @@
           <EntitySetMapping Name="tblIEPSocials">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPSocial">
               <MappingFragment StoreEntitySet="tblIEPSocial">
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
                 <ScalarProperty Name="SkillDeficit" ColumnName="SkillDeficit" />
-                <ScalarProperty Name="MeedNeedByOtherDescription" ColumnName="MeedNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedByOther" ColumnName="MeetNeedByOther" />
-                <ScalarProperty Name="MeetNeedByAccomidation" ColumnName="MeetNeedByAccomidation" />
-                <ScalarProperty Name="MeetNeedByGoalDescription" ColumnName="MeetNeedByGoalDescription" />
-                <ScalarProperty Name="MeetNeedByGoal" ColumnName="MeetNeedByGoal" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="OtherInformation" ColumnName="OtherInformation" />
@@ -2106,8 +2146,10 @@
           <EntitySetMapping Name="tblIEPWrittens">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPWritten">
               <MappingFragment StoreEntitySet="tblIEPWritten">
-                <ScalarProperty Name="MeetNeedByOtherDescription" ColumnName="MeetNeedByOtherDescription" />
-                <ScalarProperty Name="MeetNeedBy" ColumnName="MeetNeedBy" />
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="AreaOfNeedDescription" ColumnName="AreaOfNeedDescription" />
                 <ScalarProperty Name="LevelOfPerformance" ColumnName="LevelOfPerformance" />
                 <ScalarProperty Name="AreaOfNeed" ColumnName="AreaOfNeed" />

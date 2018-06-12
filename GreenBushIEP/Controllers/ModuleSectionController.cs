@@ -35,8 +35,10 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.VisionResult = Convert.ToInt32(collection["VisionResult"]);
                         HealthIEP.LevelOfPerformance = collection["LevelOfPerformance"].ToString();
                         HealthIEP.AreaOfNeedDescription = collection["AreaOfNeedDescription"].ToString();
-                        HealthIEP.MeetNeedBy = Convert.ToInt32(collection["MeetNeedBy"]);
-                        HealthIEP.MeetNeedByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
+                        HealthIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false ;
+                        HealthIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false ;
+                        HealthIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false ;
+                        HealthIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
@@ -74,8 +76,8 @@ namespace GreenBushIEP.Controllers
                         MotorIEP.Participation = Convert.ToInt32(collection["ModuleMotorParticipation"]);
                         MotorIEP.LevelOfPerformance = collection["ModuleMotorLevelOfPerformance"].ToString();
                         MotorIEP.AreaOfNeedDescription = collection["ModuleMotorAreaOfNeedDescription"].ToString();
-                        MotorIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleMotorMeetNeedBy"]);
-                        MotorIEP.MeetNeedByOtherDescription = collection["ModuleMotorMeetNeedByOtherDescription"].ToString();
+                        //MotorIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleMotorMeetNeedBy"]);
+                        //MotorIEP.MeetNeedByOtherDescription = collection["ModuleMotorMeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
@@ -114,8 +116,8 @@ namespace GreenBushIEP.Controllers
                         CommunicationIEP.LimitedEnglish = collection["ModuleCommunicationDeaf"] == "on" ? true : false;
                         CommunicationIEP.LevelOfPerformance = collection["ModuleCommunicationLevelOfPerformance"].ToString();
                         CommunicationIEP.AreaOfNeedDescription = collection["ModuleCommunicationAreaOfNeedDescription"].ToString();
-                        CommunicationIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleCommunicationMeetNeedBy"]);
-                        CommunicationIEP.MeetNeedByOtherDescription = collection["ModuleCommunicationMeetNeedByOtherDescription"].ToString();
+                        //CommunicationIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleCommunicationMeetNeedBy"]);
+                        //CommunicationIEP.MeetNeedByOtherDescription = collection["ModuleCommunicationMeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
@@ -155,8 +157,8 @@ namespace GreenBushIEP.Controllers
                         SocialIEP.BehaviorInterventionPlan = collection["ModuleSocialBehaviorInterventionPlan"] == "yes" ? true : false;
                         SocialIEP.LevelOfPerformance = collection["ModuleSocialLevelOfPerformance"].ToString();
                         SocialIEP.AreaOfNeedDescription = collection["ModuleSocialAreaOfNeedDescription"].ToString();
-                        SocialIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleSocialMeetNeedBy"]);
-                        SocialIEP.MeedNeedByOtherDescription = collection["ModuleSocialMeedNeedByOtherDescription"].ToString();
+                        //SocialIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleSocialMeetNeedBy"]);
+                        //SocialIEP.MeedNeedByOtherDescription = collection["ModuleSocialMeedNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
@@ -234,32 +236,32 @@ namespace GreenBushIEP.Controllers
                         viewModel.Academic.AreaOfNeed = collection["ModuleAcademicAreaOfNeed"] == "on" ? true : false;
                         viewModel.Academic.LevelOfPerformance = collection["ModuleAcademicLevelOfPerformance"].ToString();
                         viewModel.Academic.AreaOfNeedDescription = collection["ModuleAcademicAreaOfNeedDescription"].ToString();
-                        viewModel.Academic.MeetNeedBy = Convert.ToInt32(collection["ModuleAcademicMeetNeedBy"]);
-                        viewModel.Academic.MeetNeedByOtherDescription = collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
+                        //viewModel.Academic.MeetNeedBy = Convert.ToInt32(collection["ModuleAcademicMeetNeedBy"]);
+                        //viewModel.Academic.MeetNeedByOtherDescription = collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Reading.NoConcerns = collection["ModuleReadingNoConcern"] == "on" ? true : false;
                         viewModel.Reading.ProgressTowardGenEd = collection["ModuleReadingProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Reading.AreaOfNeed = collection["ModuleReadingAreaOfNeed"] == "on" ? true : false;
                         viewModel.Reading.LevelOfPerformance = collection["ModuleReadingLevelOfPerformance"].ToString();
                         viewModel.Reading.AreaOfNeedDescription = collection["ModuleReadingAreaOfNeedDescription"].ToString();
-                        viewModel.Reading.MeetNeedBy = Convert.ToInt32(collection["ModuleReadingMeetNeedBy"]);
-                        viewModel.Reading.MeetNeedByOtherDescription = collection["ModuleReadingMeetNeedByOtherDescription"].ToString();
+                        //viewModel.Reading.MeetNeedBy = Convert.ToInt32(collection["ModuleReadingMeetNeedBy"]);
+                        //viewModel.Reading.MeetNeedByOtherDescription = collection["ModuleReadingMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Math.NoConcerns = collection["ModuleMathNoConcern"] == "on" ? true : false;
                         viewModel.Math.ProgressTowardGenEd = collection["ModuleMathProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Math.AreaOfNeed = collection["ModuleMathAreaOfNeed"] == "on" ? true : false;
                         viewModel.Math.LevelOfPerformance = collection["ModuleMathLevelOfPerformance"].ToString();
                         viewModel.Math.AreaOfNeedDescription = collection["ModuleMathAreaOfNeedDescription"].ToString();
-                        viewModel.Math.MeetNeedBy = Convert.ToInt32(collection["ModuleMathMeetNeedBy"]);
-                        viewModel.Math.MeetNeedByOtherDescription = collection["ModuleMathMeetNeedByOtherDescription"].ToString();
+                        //viewModel.Math.MeetNeedBy = Convert.ToInt32(collection["ModuleMathMeetNeedBy"]);
+                        //viewModel.Math.MeetNeedByOtherDescription = collection["ModuleMathMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Written.NoConcerns = collection["ModuleWrittenNoConcern"] == "on" ? true : false;
                         viewModel.Written.ProgressTowardGenEd = collection["ModuleWrittenProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Written.AreaOfNeed = collection["ModuleWrittenAreaOfNeed"] == "on" ? true : false;
                         viewModel.Written.LevelOfPerformance = collection["ModuleWrittenLevelOfPerformance"].ToString();
                         viewModel.Written.AreaOfNeedDescription = collection["ModuleWrittenAreaOfNeedDescription"].ToString();
-                        viewModel.Written.MeetNeedBy = Convert.ToInt32(collection["ModuleWrittenMeetNeedBy"]);
-                        viewModel.Written.MeetNeedByOtherDescription = collection["ModuleWrittenMeetNeedByOtherDescription"].ToString();
+                        //viewModel.Written.MeetNeedBy = Convert.ToInt32(collection["ModuleWrittenMeetNeedBy"]);
+                        //viewModel.Written.MeetNeedByOtherDescription = collection["ModuleWrittenMeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 

@@ -808,34 +808,34 @@ namespace GreenbushIep.Controllers
                     model.studentPlan = new StudentPlan(student.UserID);
 
                     //check if any module has accommodations checked or behavior plan
-                    if (db.tblIEPAcademics.Where(o => o.IEPid ==  theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
                     if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && o.BehaviorInterventionPlan).Any())
                         enableBehaviorPlan = true;
                     
-                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.draft.IEPid && o.MeetNeedBy.Value == 2).Any())
+                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
 
