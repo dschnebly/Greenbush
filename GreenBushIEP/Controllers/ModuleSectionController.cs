@@ -118,8 +118,10 @@ namespace GreenBushIEP.Controllers
                         CommunicationIEP.LimitedEnglish = collection["ModuleCommunicationDeaf"] == "on" ? true : false;
                         CommunicationIEP.LevelOfPerformance = collection["ModuleCommunicationLevelOfPerformance"].ToString();
                         CommunicationIEP.AreaOfNeedDescription = collection["ModuleCommunicationAreaOfNeedDescription"].ToString();
-                        //CommunicationIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleCommunicationMeetNeedBy"]);
-                        //CommunicationIEP.MeetNeedByOtherDescription = collection["ModuleCommunicationMeetNeedByOtherDescription"].ToString();
+                        CommunicationIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
+                        CommunicationIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
+                        CommunicationIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
+                        CommunicationIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
