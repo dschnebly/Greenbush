@@ -74,6 +74,12 @@
                     <span class="onoffswitch2-switch"></span>
                 </label>
             </div>
+            <div class="form-check" id="AdditionalHealthInfoTextArea">
+               <p style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
+                    <label style="font-size: 20px;">Notes</label><br />
+                    <textarea class="form-control" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.AdditionalHealthInfo)</textarea>
+                </p>
+            </div>
         </fieldset>
         <fieldset class="form-group">
             <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
@@ -166,6 +172,17 @@
         }
     });
 
+    $("input:checkbox[name=HealthCarePlan]").on('click', function (event) {
+        //if ($("#HealthCarePlan").val() == "on") {
+        if ($("input:checkbox[name=HealthCarePlan]").is(':checked')) {
+            $("#AdditionalHealthInfoTextArea p").show();
+        }
+        else {
+            $("#AdditionalHealthInfo").val("");
+            $("#AdditionalHealthInfoTextArea p").hide();
+        }
+    });
+    
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
