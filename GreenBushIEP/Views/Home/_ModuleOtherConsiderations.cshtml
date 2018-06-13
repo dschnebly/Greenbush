@@ -181,7 +181,12 @@
                             <span class="onoffswitch2-switch"></span>
                         </label>
                     </div>
-
+                    
+                    <div class="form-check voffset2" id="ParentalConcerns_TextArea">
+                        <p id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
+                            <input class="form-control standard-font-size" id="Parental_Concerns_Desc" name="Parental_Concerns_Desc" type="text" value="@(Model.Parental_Concerns_Desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        </p>
+                    </div>
                 </fieldset>
             </div>
         </div>
@@ -218,17 +223,26 @@
 </div>
 
 <script>
-    $("input[name=AssistiveTechnology_Require").click(function (event) {
-        var elementId = event.target.value;
-        var val = $("#AssistiveTechnology_Require").val();
-        if (elementId == "on") {
-            $("#AT_Desc").show();
+    
+    $("input:checkbox[name=Parental_Concerns_flag]").on('click', function (event) {
+        if ($("input:checkbox[name=Parental_Concerns_flag]").is(':checked')) {
+            $("#PC_Desc").show();
+        }
+        else {
+            $("#PC_Desc").hide();
+            $("#Parental_Concerns_Desc").val('');
+        }
+    });
 
+    $("input:checkbox[name=AssistiveTechnology_Require]").on('click', function (event) {
+        if ($("input:checkbox[name=AssistiveTechnology_Require]").is(':checked')) {
+            $("#AT_Desc").show();
         }
         else {
             $("#AT_Desc").hide();
+            $("#AssistiveTechnology_Description").val('');
+            
         }
-
     });
 
 
