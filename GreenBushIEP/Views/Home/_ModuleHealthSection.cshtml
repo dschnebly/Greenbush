@@ -66,9 +66,19 @@
             </legend>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Present Level of Performance</label>
+            <label style="font-size: 20px; padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
+            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="HealthCarePlan">
+                    <span class="onoffswitch2-inner"></span>
+                    <span class="onoffswitch2-switch"></span>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
-                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 18px;">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 18px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -123,7 +133,7 @@
             $("input[name='HealthVisionResult']").prop('checked', false);
             $("input[name='VisionImparied']").prop('checked', false);
             $("input[name='HearingImpaired']").prop('checked', false);
-
+            $("input[name='HealthCarePlan']").prop('checked', false);            
             $("#MeetNeedByOtherDescription").val('');
             $("input[name=MetByGoal]").prop('checked', false);
             $("input[name=MetByAccommodation]").prop('checked', false);
