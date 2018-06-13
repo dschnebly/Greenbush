@@ -31,6 +31,7 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.HearingDate = Convert.ToDateTime(collection["HearingDate"]);
                         HealthIEP.HearingResult = Convert.ToInt32(collection["HearingResult"]);
                         HealthIEP.VisionImparied = collection["VisionImparied"] == "on" ? true : false;
+                        HealthIEP.HealthCarePlan = collection["HealthCarePlan"] == "on" ? true : false;                        
                         HealthIEP.VisionDate = Convert.ToDateTime(collection["VisionDate"]);
                         HealthIEP.VisionResult = Convert.ToInt32(collection["VisionResult"]);
                         HealthIEP.LevelOfPerformance = collection["LevelOfPerformance"].ToString();
