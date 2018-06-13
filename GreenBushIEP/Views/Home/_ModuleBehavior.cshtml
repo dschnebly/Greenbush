@@ -43,16 +43,9 @@
                     <div class="form-check">
                         <textarea id="BehaviorConcern" name="BehaviorConcern" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.BehaviorConcern)</textarea>
                     </div>
-                </div>
-                <div class="row voffset2">
-                    <div class="col-md-12">
-                        <label for="Collection">Behavior(s) of Concern</label>
-                        <div>
-
-                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                        </div>
-                    </div>
-                </div>
+                    </fieldset>
+                
+               
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Triggers</h3>
@@ -61,7 +54,7 @@
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label  style="font-weight:bold" for="misTriggers">Possible triggers for behaviors</label>
+                        <label  style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Possible triggers for behaviors</label>
                         <select name="SelectedTriggers" class="form-control chosen-select standard-font-size" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.Triggers != null)
                             {
@@ -85,13 +78,12 @@
                 </div>
                 <div class="row voffset3">
                     <div class="col-md-12">
-                        <label  class="standard-font-size">Hypothesis</label>
-
+                        <h3>Hypothesis</h3>
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label style="font-weight:bold" for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                        <label  style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Hypothesis for the reason for the behavior(s)</label>
                         <select name="SelectedHypothesis" class="form-control chosen-select standard-font-size" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.HypothesisList != null)
                             {
@@ -116,13 +108,13 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <label  class="standard-font-size">Strategies</label>
+                        <h3>Strategies</h3>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label   for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strategies to address the reason(s) for the behavior</label>
                         <select name="SelectedStrategies" class="form-control chosen-select standard-font-size" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.Strategies != null)
                             {
@@ -147,7 +139,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="standard-font-size">Targeted Behaviors</label>
+                        <h3>Targeted Behaviors</h3>
 
                     </div>
                 </div>
@@ -250,13 +242,13 @@
 
                 <div class="row voffset3">
                     <div class="col-md-12">
-                        <label class="standard-font-size">Action Plan</label>
+                        <h3>Action Plan</h3>
                     </div>
                 </div>
 
                 <div class="row voffset2">
                     <div class="col-md-12">
-                        <label for="Collection">Follow school/district behavior policies/practice</label>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice</label>
                         <div class="input-group">
                             <div class="input-group-addon" style="background-color: white !important;; border: 0;font-size: unset !important; padding-left: 0;">Time frame plan will be reviewed</div>
                             <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100" />
