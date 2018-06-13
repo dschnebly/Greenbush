@@ -242,32 +242,40 @@ namespace GreenBushIEP.Controllers
                         viewModel.Academic.AreaOfNeed = collection["ModuleAcademicAreaOfNeed"] == "on" ? true : false;
                         viewModel.Academic.LevelOfPerformance = collection["ModuleAcademicLevelOfPerformance"].ToString();
                         viewModel.Academic.AreaOfNeedDescription = collection["ModuleAcademicAreaOfNeedDescription"].ToString();
-                        //viewModel.Academic.MeetNeedBy = Convert.ToInt32(collection["ModuleAcademicMeetNeedBy"]);
-                        //viewModel.Academic.MeetNeedByOtherDescription = collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
+                        viewModel.Academic.NeedMetByGoal = collection["ModuleAcademicMetByGoal"] == "on" ? true : false;
+                        viewModel.Academic.NeedMetByAccommodation = collection["ModuleAcademicMetByAccommodation"] == "on" ? true : false;
+                        viewModel.Academic.NeedMetByOther = collection["ModuleAcademicMetByOther"] == "on" ? true : false;
+                        viewModel.Academic.NeedMetByOtherDescription= collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Reading.NoConcerns = collection["ModuleReadingNoConcern"] == "on" ? true : false;
                         viewModel.Reading.ProgressTowardGenEd = collection["ModuleReadingProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Reading.AreaOfNeed = collection["ModuleReadingAreaOfNeed"] == "on" ? true : false;
                         viewModel.Reading.LevelOfPerformance = collection["ModuleReadingLevelOfPerformance"].ToString();
                         viewModel.Reading.AreaOfNeedDescription = collection["ModuleReadingAreaOfNeedDescription"].ToString();
-                        //viewModel.Reading.MeetNeedBy = Convert.ToInt32(collection["ModuleReadingMeetNeedBy"]);
-                        //viewModel.Reading.MeetNeedByOtherDescription = collection["ModuleReadingMeetNeedByOtherDescription"].ToString();
+                        viewModel.Reading.NeedMetByGoal = collection["ModuleReadingMetByGoal"] == "on" ? true : false;
+                        viewModel.Reading.NeedMetByAccommodation = collection["ModuleReadingMetByAccommodation"] == "on" ? true : false;
+                        viewModel.Reading.NeedMetByOther = collection["ModuleReadingMetByOther"] == "on" ? true : false;
+                        viewModel.Reading.NeedMetByOtherDescription = collection["ModuleReadingMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Math.NoConcerns = collection["ModuleMathNoConcern"] == "on" ? true : false;
                         viewModel.Math.ProgressTowardGenEd = collection["ModuleMathProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Math.AreaOfNeed = collection["ModuleMathAreaOfNeed"] == "on" ? true : false;
                         viewModel.Math.LevelOfPerformance = collection["ModuleMathLevelOfPerformance"].ToString();
                         viewModel.Math.AreaOfNeedDescription = collection["ModuleMathAreaOfNeedDescription"].ToString();
-                        //viewModel.Math.MeetNeedBy = Convert.ToInt32(collection["ModuleMathMeetNeedBy"]);
-                        //viewModel.Math.MeetNeedByOtherDescription = collection["ModuleMathMeetNeedByOtherDescription"].ToString();
+                        viewModel.Math.NeedMetByGoal = collection["ModuleMathMetByGoal"] == "on" ? true : false;
+                        viewModel.Math.NeedMetByAccommodation = collection["ModuleMathMetByAccommodation"] == "on" ? true : false;
+                        viewModel.Math.NeedMetByOther = collection["ModuleMathMetByOther"] == "on" ? true : false;
+                        viewModel.Math.NeedMetByOtherDescription = collection["ModuleMathMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Written.NoConcerns = collection["ModuleWrittenNoConcern"] == "on" ? true : false;
                         viewModel.Written.ProgressTowardGenEd = collection["ModuleWrittenProgressTowardGenEd"] == "on" ? true : false;
                         viewModel.Written.AreaOfNeed = collection["ModuleWrittenAreaOfNeed"] == "on" ? true : false;
                         viewModel.Written.LevelOfPerformance = collection["ModuleWrittenLevelOfPerformance"].ToString();
                         viewModel.Written.AreaOfNeedDescription = collection["ModuleWrittenAreaOfNeedDescription"].ToString();
-                        //viewModel.Written.MeetNeedBy = Convert.ToInt32(collection["ModuleWrittenMeetNeedBy"]);
-                        //viewModel.Written.MeetNeedByOtherDescription = collection["ModuleWrittenMeetNeedByOtherDescription"].ToString();
+                        viewModel.Written.NeedMetByGoal = collection["ModuleWrittenMetByGoal"] == "on" ? true : false;
+                        viewModel.Written.NeedMetByAccommodation = collection["ModuleWrittenMetByAccommodation"] == "on" ? true : false;
+                        viewModel.Written.NeedMetByOther = collection["ModuleWrittenMetByOther"] == "on" ? true : false;
+                        viewModel.Written.NeedMetByOtherDescription = collection["ModuleWrittenMeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
