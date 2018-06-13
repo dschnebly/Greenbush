@@ -7,15 +7,15 @@
 </div>
 <div class="modal-body">
 
-@using (Html.BeginForm("EditIntelligence", "ModuleSection", FormMethod.Post, new { }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.IEPIntelligenceID)
+    @using (Html.BeginForm("EditIntelligence", "ModuleSection", FormMethod.Post, new { }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IEPIntelligenceID)
 
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty)/>
+                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
                 <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
             </div>
             <div class="funkyradio-primary">
@@ -24,33 +24,33 @@
             </div>
         </div>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3" style="font-size: 21px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3" style="font-size: 18px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3" style="font-size: 21px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3" style="font-size: 18px;">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
-       
-        <div class="row" style="margin-bottom:8px">
-            <div class="form-group">
-                <div class="col-md-12" style="text-align:center;"  id="questionSubmit">
-                    <button type="reset"name="button1id"  class="btn btn-default" id="resetModuleIntelligenceForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <div class="pull-right"><button name="button2id" type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <div class="form-group">
+                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
                 </div>
             </div>
         </div>
 
-}
+    }
 
 </div>
-<div class="modal-footer">
-</div>
+<br />
+<br />
 
 <script>
     // Attach Event

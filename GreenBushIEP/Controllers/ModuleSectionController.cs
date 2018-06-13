@@ -161,8 +161,10 @@ namespace GreenBushIEP.Controllers
                         SocialIEP.BehaviorInterventionPlan = collection["ModuleSocialBehaviorInterventionPlan"] == "yes" ? true : false;
                         SocialIEP.LevelOfPerformance = collection["ModuleSocialLevelOfPerformance"].ToString();
                         SocialIEP.AreaOfNeedDescription = collection["ModuleSocialAreaOfNeedDescription"].ToString();
-                        //SocialIEP.MeetNeedBy = Convert.ToInt32(collection["ModuleSocialMeetNeedBy"]);
-                        //SocialIEP.MeedNeedByOtherDescription = collection["ModuleSocialMeedNeedByOtherDescription"].ToString();
+                        SocialIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
+                        SocialIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
+                        SocialIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
+                        SocialIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
 
                         db.SaveChanges();
 
