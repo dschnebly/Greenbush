@@ -16,19 +16,19 @@
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
-                <label for="HealthNoConcerns">No Concerns</label>
+                <label for="HealthNoConcerns" class="standard-font-size">No Concerns</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label for="HealthProgressTowardGenEd">Health Concerns progressing with General Education Supports</label>
+                <label for="HealthProgressTowardGenEd" class="standard-font-size">Health Concerns progressing with General Education Supports</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) />
-                <label for="HealthDiagnosis">Concerns that impact ability to learn or access to general curriculum</label>
+                <label for="HealthDiagnosis"  class="standard-font-size">Concerns that impact ability to learn or access to general curriculum</label>
             </div>
         </div>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
+            <label  class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                 <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImparied != null ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="HearingImpaired">
@@ -38,16 +38,16 @@
             </div>
         </fieldset>
         <fieldset class="form-group" id="HearingImpairmentInfo">
-            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
-                Hearing Screening Date:&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field HearingDate must be a date." data-val-required="The HearingDate field is required." id="HearingDate" name="HearingDate" value="@(Model.HearingDate.ToString("yyyy-MM-dd"))" />
+            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0; font-size:18px">
+                <label class="standard-font-size"> Hearing Screening Date:</label>&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field HearingDate must be a date." data-val-required="The HearingDate field is required." id="HearingDate" name="HearingDate" value="@(Model.HearingDate.ToString("yyyy-MM-dd"))" />
                 &nbsp;&nbsp;
-                <label class="radio-inline"><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.HearingResult == 1 ? "checked" : String.Empty)>Pass</label>
-                <label class="radio-inline"><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.HearingResult == 0 ? "checked" : String.Empty)>Failed</label>
-                <label class="radio-inline"><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.HearingResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.HearingResult == 1 ? "checked" : String.Empty)>Pass</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.HearingResult == 0 ? "checked" : String.Empty)>Failed</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.HearingResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
             </legend>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Does the student have a visual impairment?</label>&nbsp;&nbsp;
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a visual impairment?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                 <input type="checkbox" name="VisionImparied" id="VisionImparied" class="onoffswitch2-checkbox" @(Model.VisionImparied ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="VisionImparied">
@@ -58,15 +58,15 @@
         </fieldset>
         <fieldset class="form-group">
             <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
-                Visual Screening Date:&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The VisionDate field is required." id="VisionDate" name="VisionDate" value="@(Model.VisionDate.ToString("yyyy-MM-dd"))" />
+                <label class="standard-font-size">Visual Screening Date:</label>&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The VisionDate field is required." id="VisionDate" name="VisionDate" value="@(Model.VisionDate.ToString("yyyy-MM-dd"))" />
                 &nbsp;&nbsp;
-                <label class="radio-inline"><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.VisionResult == 1 ? "checked" : String.Empty)>Pass</label>
-                <label class="radio-inline"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.VisionResult == 0 ? "checked" : String.Empty)>Failed</label>
-                <label class="radio-inline"><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.VisionResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.VisionResult == 1 ? "checked" : String.Empty)>Pass</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.VisionResult == 0 ? "checked" : String.Empty)>Failed</label>
+                <label class="radio-inline standard-font-size"><input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.VisionResult == -1 ? "checked" : String.Empty)>Unable to Test</label>
             </legend>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 20px; padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
+            <label class="standard-font-size"  style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                 <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="HealthCarePlan">
@@ -76,25 +76,25 @@
             </div>
             <div class="form-check" id="AdditionalHealthInfoTextArea">
                <p style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
-                    <label style="font-size: 20px;">Notes</label><br />
-                    <textarea class="form-control" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.AdditionalHealthInfo)</textarea>
+                    <label class="standard-font-size">Notes</label><br />
+                    <textarea class="form-control standard-font-size" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.AdditionalHealthInfo)</textarea>
                 </p>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
-                <textarea class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" style="font-size: 18px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label class="standard-font-size"  style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" style="font-size: 18px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <label class="standard-font-size"  style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
                 <div class="checkbox">
                     <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
@@ -105,8 +105,8 @@
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
                 <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
-                    *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.NeedMetByOtherDescription)</textarea>
+                    <span class="standard-font-size"> *if other, please explain</span><br />
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>

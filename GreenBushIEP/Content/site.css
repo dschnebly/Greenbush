@@ -375,6 +375,13 @@ tbody > tr {
 .voffset8 { margin-top: 100px; }
 .voffset9 { margin-top: 150px; }
 
+
+.standard-font-size{
+    font-size: 18px;
+}
+
+
+
 /*==================================================
 =            Teacher's Students List               =
 ==================================================*/

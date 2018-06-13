@@ -33,32 +33,32 @@
              
                 <div class="row voffset2">
                     <div class="col-md-12">
-                        <label for="Collection">Strengths/Motivators</label>
+                        <label class="standard-font-size" for="Collection">Strengths/Motivators</label>
                         <div>
 
-                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="@Model.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                            <input type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control standard-font-size" value="@Model.StrengthMotivator" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                         </div>
                     </div>
                 </div>
                 <div class="row voffset2">
                     <div class="col-md-12">
-                        <label for="Collection">Behavior(s) of Concern</label>
+                        <label  class="standard-font-size" for="Collection">Behavior(s) of Concern</label>
                         <div>
 
-                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                            <input type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control standard-font-size" value="@Model.BehaviorConcern" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Triggers</h3>
+                        <label  class="standard-font-size">Triggers</label>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label for="misTriggers">Possible triggers for behaviors</label>
-                        <select name="SelectedTriggers" class="form-control chosen-select" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                        <label  style="font-weight:bold" for="misTriggers">Possible triggers for behaviors</label>
+                        <select name="SelectedTriggers" class="form-control chosen-select standard-font-size" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.Triggers != null)
                             {
                                 foreach (var trigger in Model.Triggers)
@@ -73,22 +73,22 @@
                             }
                         </select>
                         <div id="divTriggerOther" class="voffset2" style="display:none">
-                            <label>Other Description</label>
-                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                            <label class="standard-font-size" >Other Description</label>
+                            <input type="text" id="TriggerOther" name="TriggerOther" class="form-control standard-font-size" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Hypothesis</h3>
+                        <label  class="standard-font-size">Hypothesis</label>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
-                        <select name="SelectedHypothesis" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                        <label style="font-weight:bold" for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                        <select name="SelectedHypothesis" class="form-control chosen-select standard-font-size" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.HypothesisList != null)
                             {
                                 foreach (var hypothesis in Model.HypothesisList)
@@ -104,22 +104,22 @@
                         </select>
                         <div id="divHypothesisOther" class="voffset2" style="display:none">
                             <label>Other Description</label>
-                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                            <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control standard-font-size" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Strategies</h3>
+                        <label  class="standard-font-size">Strategies</label>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
-                        <select name="SelectedStrategies" class="form-control chosen-select" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                        <label   for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                        <select name="SelectedStrategies" class="form-control chosen-select standard-font-size" data-placeholder="Choose hypotheses..." id="SelectedStrategies" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.Strategies != null)
                             {
                                 foreach (var strategy in Model.Strategies)
@@ -134,16 +134,16 @@
                             }
                         </select>
                         <div id="divStrategyOther" class="voffset2" style="display:none">
-                            <label>Other Description</label>
-                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
+                            <label class="standard-font-size" >Other Description</label>
+                            <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control standard-font-size" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Targeted Behaviors</h3>
+                        <label class="standard-font-size">Targeted Behaviors</label>
 
                     </div>
                 </div>
@@ -175,7 +175,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Crisis Management Plan</h3>
+                        <label class="standard-font-size">Crisis Management Plan</label>
 
                     </div>
                 </div>
@@ -221,9 +221,9 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Action Plan</h3>
+                        <label class="standard-font-size">Action Plan</label>
                     </div>
                 </div>
 

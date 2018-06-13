@@ -16,51 +16,51 @@
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="ModuleMotorNoConcerns" name="ModuleMotorNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
-                <label for="ModuleMotorNoConcerns">No Concerns</label>
+                <label for="ModuleMotorNoConcerns"  class="standard-font-size">No Concerns</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
+                <label for="ModuleMotorProgressTowardGenEd" class="standard-font-size">Progressing with General Education Supports</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.Needs ? "checked" : String.Empty) />
-                <label for="ModuleMotorNeeds">Area of Need which impacts performance in General Education</label>
+                <label for="ModuleMotorNeeds" class="standard-font-size">Area of Need which impacts performance in General Education</label>
             </div>
         </div>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Team will consider participation in:</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Team will consider participation in:</label>
             <div class="form-check">
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed in Physical Education</label><br />
-                <label class="radio-inline"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
+                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
+                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports Needed in Physical Education</label><br />
+                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" style="font-size: 18px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label  class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" style="font-size: 18px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <label  class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
                 <div class="checkbox">
-                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
                 </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
-                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                <p  class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.NeedMetByOtherDescription)</textarea>
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>

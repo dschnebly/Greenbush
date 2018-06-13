@@ -16,51 +16,51 @@
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="ModuleCommunicationNoConcerns" name="ModuleCommunicationNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
-                <label for="ModuleCommunicationNoConcerns">No Concerns</label>
+                <label for="ModuleCommunicationNoConcerns" class="standard-font-size">No Concerns</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleCommunicationProgressTowardGenEd" id="ModuleCommunicationProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label for="ModuleCommunicationProgressTowardGenEd">Progressing with General Education Support</label>
+                <label for="ModuleCommunicationProgressTowardGenEd" class="standard-font-size">Progressing with General Education Support</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) />
-                <label for="ModuleCommunicationAreaOfNeed">Area of Need which impacts performance in General Education</label>
+                <label for="ModuleCommunicationAreaOfNeed" class="standard-font-size">Area of Need which impacts performance in General Education</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.Deaf ? "checked" : String.Empty) />
-                <label for="ModuleCommunicationDeaf">Deaf/Hard of Hearing</label>
+                <label for="ModuleCommunicationDeaf" class="standard-font-size">Deaf/Hard of Hearing</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleCommunicationLimitedEnglish" id="ModuleCommunicationLimitedEnglish" @(Model.LimitedEnglish ? "checked" : String.Empty) />
-                <label for="ModuleCommunicationLimitedEnglish">Limited English Proficiency</label>
+                <label for="ModuleCommunicationLimitedEnglish" class="standard-font-size">Limited English Proficiency</label>
             </div>
         </div>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleCommunicationLevelOfPerformance" id="ModuleCommunicationLevelOfPerformance" rows="3" style="font-size: 18px;" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleCommunicationLevelOfPerformance" id="ModuleCommunicationLevelOfPerformance" rows="3"  placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3" style="font-size: 18px;">@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label style="font-size: 18px; padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
                 <div class="checkbox">
-                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label class="standard-font-size"><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
                 </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
-                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                <p class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." style="font-size: 18px;">@(Model.NeedMetByOtherDescription)</textarea>
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
