@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-check" id="AssistiveTechnology_Text">
                         <p id="AT_Desc" style="display: @(Model.AssistiveTechnology_Require.HasValue && Model.AssistiveTechnology_Require.Value ? "block;" : "none;")">
-                            <input class="form-control standard-font-size" id="AssistiveTechnology_Description" name="AssistiveTechnology_Description" type="text" value="@(Model.AssistiveTechnology_Description)" placeholder="Explain"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                            <input class="form-control standard-font-size" id="AssistiveTechnology_Description" name="AssistiveTechnology_Description" type="text" value="@(Model.AssistiveTechnology_Description)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                         </p>
                     </div>
                 </fieldset>
@@ -48,7 +48,7 @@
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
-                <label  class="standard-font-size">Assessments</label>
+                <label class="standard-font-size">Assessments</label>
             </div>
         </div>
         <div class="row voffset2">
@@ -63,13 +63,13 @@
                 </div>
                 <div class="form-check voffset2" id="DistrictAssessment_TextArea">
                     <p id="DA_NoAccom_Desc" style="display: @(Model.DistrictAssessment_NoAccommodations_flag.HasValue && Model.DistrictAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="@(Model.DistrictAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="@(Model.DistrictAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="DA_WithAccom_Desc" style="display: @(Model.DistrictAssessment_WithAccommodations_flag.HasValue && Model.DistrictAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="@(Model.DistrictAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="@(Model.DistrictAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="DA_Alt_Desc" style="display: @(Model.DistrictAssessment_Alternative_flag.HasValue && Model.DistrictAssessment_Alternative_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="@(Model.DistrictAssessment_Alternative_desc)" placeholder="Describe Curricular Areas"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="@(Model.DistrictAssessment_Alternative_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
             </div>
@@ -88,10 +88,10 @@
                 <div class="form-check voffset2" id="StateAssessment_TextArea">
 
                     <p id="SA_NoAccom_Desc" style="display: @(Model.StateAssessment_NoAccommodations_flag.HasValue && Model.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="@(Model.StateAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="@(Model.StateAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="SA_WithAccom_Desc" style="display: @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.StateAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.StateAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
 
                 </div>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
                     <p id="TP_Other_Desc" style="display: @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" value="@(Model.Transporation_Other_desc)" placeholder="Describe"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit."/>
+                        <input class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" value="@(Model.Transporation_Other_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
             </div>
@@ -132,7 +132,7 @@
                     To what extent, if any, will the child not participate with non-identified children in general education classes, the general education curriculum, extracurricular activities, and other non academic activities?
                 </label>
                 <div>
-                    <textarea class="form-control standard-font-size" name="RegularEducation_NotParticipate" id="RegularEducation_NotParticipate" rows="3"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit.">@(Model.RegularEducation_NotParticipate)</textarea>
+                    <textarea class="form-control standard-font-size" name="RegularEducation_NotParticipate" id="RegularEducation_NotParticipate" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.RegularEducation_NotParticipate)</textarea>
                 </div>
             </div>
         </div>
@@ -150,14 +150,14 @@
             <div class="row voffset2">
                 <div class="col-md-12">
                     <div class="form-check">
-                        <label class="radio-inline" style="font-size: 16px;"><input  type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.ExtendedSchoolYear_RegressionRisk.HasValue && Model.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty)> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
-                        <label class="radio-inline"style="font-size: 15px;"><input type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.ExtendedSchoolYear_SeverityRisk.HasValue && Model.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty)> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
+                        <label class="radio-inline" style="font-size: 16px;"><input type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.ExtendedSchoolYear_RegressionRisk.HasValue && Model.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty)> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
+                        <label class="radio-inline" style="font-size: 15px;"><input type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.ExtendedSchoolYear_SeverityRisk.HasValue && Model.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty)> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
 
                     </div>
 
                     <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
                         <label class="standard-font-size">Severity Justification/Reasoning:</label>
-                        <textarea class="form-control standard-font-size" name="ExtendedSchoolYear_Justification" id="ExtendedSchoolYear_Justification" rows="3"  maxlength = 1000 data-toggle = "tooltip" data-placement = "bottom" title = "1000 character limit.">@(Model.ExtendedSchoolYear_Justification)</textarea>
+                        <textarea class="form-control standard-font-size" name="ExtendedSchoolYear_Justification" id="ExtendedSchoolYear_Justification" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.ExtendedSchoolYear_Justification)</textarea>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@
                             <span class="onoffswitch2-switch"></span>
                         </label>
                     </div>
-                    
+
                     <div class="form-check voffset2" id="ParentalConcerns_TextArea">
                         <p id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
                             <input class="form-control standard-font-size" id="Parental_Concerns_Desc" name="Parental_Concerns_Desc" type="text" value="@(Model.Parental_Concerns_Desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
@@ -199,19 +199,19 @@
         </div>
 
         <div class="row voffset2">
-            <div class="col-md-12"  style="font-size:16px">
-                <p >The parent(s)/legal education decision maker will be informed of (@studentName)'s progress in writing at least one time every quarter.</p>
+            <div class="col-md-12" style="font-size:16px">
+                <p>The parent(s)/legal education decision maker will be informed of (@studentName)'s progress in writing at least one time every quarter.</p>
 
-                <p >The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
+                <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
                 <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
             </div>
         </div>
         <div class="row">
-            <div class="form-group">
-                <div class="col-md-12" style="text-align:center;margin-bottom:8px;padding-top:15px" id="questionSubmit">
-                    <button type="reset" name="button1id" class="btn btn-default" id="resetModuleAcademicForm" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <div class="pull-right"><button name="button2id" type="button" class="btn btn-danger btn-block" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button></div>
+            <div class="col-md-12" style="text-align:center; margin-top: 10px;">
+                <div class="form-group">
+                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
                 </div>
             </div>
         </div>
@@ -219,8 +219,9 @@
     }
 
 </div>
-<div class="modal-footer">
-</div>
+<br />
+<br />
+
 
 <script>
     
