@@ -441,6 +441,7 @@
     <Content Include="Content\Images\copying-icon.gif" />
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
+    <Content Include="Content\Images\foundMeobyteClosed.gif" />
     <Content Include="Content\Images\green-crop2.jpg" />
     <Content Include="Content\Images\greenbush-logo-2f3945.png" />
     <Content Include="Content\Images\legal_image.jpg" />

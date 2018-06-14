@@ -149,7 +149,7 @@ namespace GreenBushIEP.Controllers
                         RoleID = "5",
                         FirstName = collection["firstname"],
                         LastName = collection["lastname"],
-                        Email = collection["email"],
+                        Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null ),
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
                     };
@@ -352,6 +352,8 @@ namespace GreenBushIEP.Controllers
                     var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
                     student.ImageURL = fileName;
                     adminpersona.SaveAs(path);
+
+                    db.SaveChanges();
                 }
             }
 
