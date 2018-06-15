@@ -23,14 +23,14 @@
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
     </fieldset>
 
-    <div class="row" >
+    <div class="row">
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.BehaviorID)
             @Html.HiddenFor(model => model.IEPid)
             @Html.HiddenFor(model => model.StudentId)
-            
+
             <div class="col-md-12 voffset2">
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strengths/Motivators</label>
@@ -43,9 +43,9 @@
                     <div class="form-check">
                         <textarea id="BehaviorConcern" name="BehaviorConcern" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.BehaviorConcern)</textarea>
                     </div>
-                    </fieldset>
-                
-               
+                </fieldset>
+
+
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Triggers</h3>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label  style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Possible triggers for behaviors</label>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Possible triggers for behaviors</label>
                         <select name="SelectedTriggers" class="form-control chosen-select standard-font-size" data-placeholder="Choose triggers..." id="SelectedTriggers" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.Triggers != null)
                             {
@@ -83,7 +83,7 @@
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label  style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Hypothesis for the reason for the behavior(s)</label>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Hypothesis for the reason for the behavior(s)</label>
                         <select name="SelectedHypothesis" class="form-control chosen-select standard-font-size" data-placeholder="Choose hypotheses..." id="SelectedHypothesis" multiple="multiple" style="min-height: 49px; " data-validate="true">
                             @if (Model.HypothesisList != null)
                             {
@@ -130,7 +130,7 @@
                             }
                         </select>
                         <div id="divStrategyOther" class="voffset2" style="display:none">
-                            <label class="standard-font-size" >Other Description</label>
+                            <label class="standard-font-size">Other Description</label>
                             <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control standard-font-size" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
 
                         </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="row voffset2">
                     <div class="col-md-12">
-                        <label  style="font-size: 18px; font-weight:400; padding: 0 0 15px;" for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;" for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
                             <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
@@ -176,19 +176,12 @@
                 </div>
 
 
-                    <fieldset class="form-group">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
-                        <div class="form-check">
-                            <textarea id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Escalation)</textarea>
-                        </div>
-                    </fieldset>
-
-                    @*<div class="col-md-12">
-                        <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
-                        <div>
-                            <input type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="@Model.Crisis_Escalation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                        </div>
-                    </div>*@
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
+                    <div class="form-check">
+                        <textarea id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Escalation)</textarea>
+                    </div>
+                </fieldset>
 
 
                 <fieldset class="form-group">
@@ -198,30 +191,12 @@
                     </div>
                 </fieldset>
 
-                @*<div class="row voffset2">
-                    <div class="col-md-12">
-                        <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
-                        <div>
-                            <input type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="@Model.Crisis_Description" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                        </div>
-                    </div>
-                </div>*@
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
                     <div class="form-check">
                         <textarea id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Implementation)</textarea>
                     </div>
                 </fieldset>
-
-                @*<div class="row voffset2">
-                    <div class="col-md-12">
-                        <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
-                        <div>
-                            <input type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="@Model.Crisis_Implementation" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                        </div>
-                    </div>
-                </div>*@
 
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Other</label>
@@ -230,31 +205,18 @@
                     </div>
                 </fieldset>
 
-                @*<div class="row voffset2">
-                    <div class="col-md-12">
-                        <label for="Crisis_Other">Other</label>
-                        <div>
-                            <input type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="@Model.Crisis_Other" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-                        </div>
-                    </div>
-                </div>*@
-
-
                 <div class="row voffset3">
                     <div class="col-md-12">
                         <h3>Action Plan</h3>
                     </div>
                 </div>
 
-                <div class="row voffset2">
-                    <div class="col-md-12">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice</label>
-                        <div class="input-group">
-                            <div class="input-group-addon" style="background-color: white !important;; border: 0;font-size: unset !important; padding-left: 0;">Time frame plan will be reviewed</div>
-                            <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100" />
-                        </div>
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice</label>
+                    <div class="form-check">
+                        <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" />
                     </div>
-                </div>
+                </fieldset>
 
                 <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                     <div class="form-group">
@@ -263,7 +225,7 @@
                         <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
                     </div>
                 </div>
-                                           
+
             </div>
 
         }

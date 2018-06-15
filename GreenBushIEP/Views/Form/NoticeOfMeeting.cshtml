@@ -1,5 +1,6 @@
 ﻿@{
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 }
 
 <div>
@@ -55,9 +56,9 @@
         <p class=MsoNormal style='tab-stops:lined 261.0pt'>
             <b>
                 <span style='font-size:
-  11.0pt'>On be half of: </span>
+  11.0pt'>On behalf of: </span>
             </b><span style='font-size:11.0pt;mso-bidi-font-weight:
-  bold'><u><b>@(String.Format(teacherFormattedName).PadRight(56 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+  bold'><u><b>@(String.Format(studentFormattedName).PadRight(56 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
     <span style='font-size:11.0pt'>
