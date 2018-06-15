@@ -344,13 +344,13 @@
 
                 // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
                 if (day == 0) {
-                    var error = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+                    var error = 'The selected date is a Sunday. Please select a Week Date.';
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
                     _showAlert(error , false);
                 } else if (day == 6) {
-                    var error = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+                    var error = 'The selected date is a Saturday. Please select a Week Date.';
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
