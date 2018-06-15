@@ -117,6 +117,11 @@
                         <input class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" value="@(Model.Transporation_Other_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
+                <div class="form-check voffset2" id="TransporationDisability_TextArea">
+                    <p id="TP_disability_Desc" style="display: none;">
+                        <input class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                    </p>
+                </div>
             </div>
         </div>
         <hr />
@@ -249,13 +254,21 @@
 
     $("input[name=TransporationPlan").click(function (event) {
         var elementId = event.target.id;
+
         if (elementId == "TP_Other") {
             $("#TP_Other_Desc").show();
-
         }
         else {
             $("#TP_Other_Desc").hide();
             $("#Transporation_Other_desc").val('');
+        }
+
+        if (elementId == "TP_Req") {
+            $("#TP_disability_Desc").show();
+        }
+        else {
+            $("#TP_disability_Desc").hide();
+            $("#Transporation_disability_desc").val('');
         }
 
     });
