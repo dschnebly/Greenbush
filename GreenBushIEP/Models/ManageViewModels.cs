@@ -376,7 +376,7 @@ namespace GreenBushIEP.Models
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
         public DateTime MeetingDate { get; set; }
-
+      
         public StudentServiceViewModel()
         {
             studentId = 0;
@@ -390,6 +390,7 @@ namespace GreenBushIEP.Models
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();
             MeetingDate = new DateTime();
+
         }
     }
 

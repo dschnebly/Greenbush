@@ -951,6 +951,8 @@ namespace GreenbushIep.Controllers
                     model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+                    
+
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
                 else
