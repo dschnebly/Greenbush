@@ -41,6 +41,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
+        public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }

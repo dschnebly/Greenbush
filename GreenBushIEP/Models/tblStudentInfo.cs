@@ -33,5 +33,7 @@ namespace GreenBushIEP.Models
         public Nullable<int> Grade { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public string Primary_DisabilityCode { get; set; }
+        public string Secondary_DisabilityCode { get; set; }
     }
 }

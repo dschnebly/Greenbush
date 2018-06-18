@@ -12,13 +12,9 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblDistrict
+    public partial class tblDisability
     {
-        public string USD { get; set; }
-        public string DistrictName { get; set; }
-        public Nullable<int> Active { get; set; }
-        public bool DOC { get; set; }
-        public string Zip { get; set; }
-        public string State { get; set; }
+        public string DisabilityCode { get; set; }
+        public string DisabilityDescription { get; set; }
     }
 }

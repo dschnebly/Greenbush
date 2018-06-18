@@ -108,7 +108,7 @@
             <div class="col-md-12">
                 <div class="form-check">
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.Transporation_NotEligible.HasValue && Model.Transporation_NotEligible.Value ? "checked" : String.Empty)>The student is not eligible for transportation.</label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.Transporation_Required.HasValue && Model.Transporation_Required.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
+                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
                 </div>
@@ -118,8 +118,8 @@
                     </p>
                 </div>
                 <div class="form-check voffset2" id="TransporationDisability_TextArea">
-                    <p id="TP_disability_Desc" style="display: none;">
-                        <input class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                    <p id="TP_disability_Desc" style="display: @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "block;" : "none;")">
+                        <input class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" value="@(Model.Transporation_Disability_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
             </div>
