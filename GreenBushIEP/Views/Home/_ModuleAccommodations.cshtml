@@ -475,10 +475,17 @@
             initGoal($(this));
         });
 
-        $('.dtField').datepicker({
-            dateFormat: "mm/dd/yy",            
+       
+        $(this).find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+                //beforeShow: function () {
+                //    alert('before');
+
+                //}
+            });
         });
-        
        
     });
     
