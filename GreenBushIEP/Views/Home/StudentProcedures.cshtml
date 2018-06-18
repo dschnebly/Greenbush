@@ -1002,11 +1002,11 @@
             <div class="col-md-8">
                 <span class="form-group">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
+                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
                 </span>
                 <span class="form-group has-error">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" data-old="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" />
                 </span>
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
@@ -1271,7 +1271,7 @@
                             <div class="col-md-3 ">
                                 <div>
                                     <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date</h6>
-                                    <input type="date" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("yyyy-MM-dd"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
+                                    <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
                                 </div>
                                 <div class="radio">
                                     <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
@@ -1286,7 +1286,7 @@
                             <div class="col-md-3 ">
                                 <div>
                                     <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date</h6>
-                                    <input type="date" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("yyyy-MM-dd"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
+                                    <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
                                 </div>
                                 <div class="radio">
                                     <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>
