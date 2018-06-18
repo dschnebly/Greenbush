@@ -16,10 +16,10 @@
 
     // hooks up the dates on safari and explorer with a datepicker.
     $("#IEPBeginDate").datepicker({
-        dateFormat: "yy-mm-dd"
+        dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
     $("#IEPEndDate").datepicker({
-        dateFormat: "yy-mm-dd"
+        dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
 });
 
@@ -27,8 +27,10 @@ function init() {
       
     $(".studentDOB").datepicker({
         dateFormat: "mm/dd/yy",
-    }).datepicker("setDate", "0");
-    
+        changeMonth: true,
+        changeYear: true
+    })
+        
 
     $(".chosen-select").chosen({
         disable_search_threshold: 10,

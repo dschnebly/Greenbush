@@ -380,7 +380,10 @@ tbody > tr {
     font-size: 18px;
 }
 
-
+ .dtField /*bring to front when in modal*/
+ {
+   z-index: 99999 !important;
+ }
 
 /*==================================================
 =            Teacher's Students List               =

@@ -865,9 +865,9 @@ namespace GreenbushIep.Controllers
             {
                 DateTime startDate;
                 DateTime meetingDate;
-                if (DateTime.TryParseExact(IEPStartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
+                if (DateTime.TryParseExact(IEPStartDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
                 {
-                    if (DateTime.TryParseExact(IEPMeetingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out meetingDate))
+                    if (DateTime.TryParseExact(IEPMeetingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out meetingDate))
                     {
                         iep.begin_date = startDate;
                         iep.MeetingDate = meetingDate;

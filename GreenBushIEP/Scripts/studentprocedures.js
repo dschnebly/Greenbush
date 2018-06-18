@@ -157,11 +157,18 @@
     });
 
     $("#IEPBeginDate").datepicker({
-        dateFormat: "yy-mm-dd"
+        dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
     $("#IEPMeetingDate").datepicker({
-        dateFormat: "yy-mm-dd"
+        dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
+
+    $("#HealthHearingDate").datepicker({
+        dateFormat: "mm/dd/yy"
+    })
+    $("#HealthVisionDate").datepicker({
+        dateFormat: "mm/dd/yy"
+    })
 });
 
 function getParameterByName(name, url) {

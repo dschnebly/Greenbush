@@ -76,16 +76,16 @@
                                             @if (Model.AnticipatedStartDate.HasValue)
                                             {
 
-                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                        id="AnticipatedStartDate" name="AnticipatedStartDate"
-                                                       class="form-control standard-font-size" aria-describedby="basic-addon1" value="@Model.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")" />
+                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")" />
 
                                             }
                                             else
                                             {
-                                                <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                        id="AnticipatedStartDate" name="AnticipatedStartDate"
-                                                       class="form-control standard-font-size" aria-describedby="basic-addon1" />
+                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
 
                                             }
                                         </div>
@@ -98,16 +98,16 @@
                                             @if (Model.AnticipatedEndDate.HasValue)
                                             {
 
-                                                <input type="date" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
                                                        id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                       class="form-control standard-font-size" aria-describedby="basic-addon1" value="@Model.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")"  />
+                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")"  />
 
                                             }
                                             else
                                             {
-                                                <input type="date" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
                                                        id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                       class="form-control standard-font-size" aria-describedby="basic-addon1" />
+                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
 
                                             }
 

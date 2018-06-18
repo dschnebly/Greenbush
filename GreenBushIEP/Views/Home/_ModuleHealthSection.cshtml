@@ -39,7 +39,7 @@
         </fieldset>
         <fieldset class="form-group" id="HearingImpairmentInfo">
             <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0; font-size:18px">
-                <label class="standard-font-size"> Hearing Screening Date:</label>&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field HearingDate must be a date." data-val-required="The HearingDate field is required." id="HearingDate" name="HearingDate" value="@(Model.HearingDate.ToString("yyyy-MM-dd"))" />
+                <label class="standard-font-size"> Hearing Screening Date:</label>&nbsp;&nbsp;<input type="text" data-val="true" data-val-date="The field Hearing Date must be a date." data-val-required="The Hearing Date field is required." id="HearingDate" name="HearingDate" value="@(Model.HearingDate.ToString("MM/dd/yyyy"))" />
                 &nbsp;&nbsp;
                 <label class="radio-inline standard-font-size"><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.HearingResult == 1 ? "checked" : String.Empty)>Pass</label>
                 <label class="radio-inline standard-font-size"><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.HearingResult == 0 ? "checked" : String.Empty)>Failed</label>
@@ -57,8 +57,8 @@
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0;">
-                <label class="standard-font-size">Visual Screening Date:</label>&nbsp;&nbsp;<input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The VisionDate field is required." id="VisionDate" name="VisionDate" value="@(Model.VisionDate.ToString("yyyy-MM-dd"))" />
+            <legend style="border-bottom: 0; font-weight: bold; margin-bottom: 0; font-size:18px">
+                <label class="standard-font-size">Visual Screening Date:</label>&nbsp;&nbsp;<input type="text" data-val="true" data-val-date="The field Vision Date must be a date." data-val-required="The Vision Date field is required." id="VisionDate" name="VisionDate" value="@(Model.VisionDate.ToString("MM/dd/yyyy"))" />
                 &nbsp;&nbsp;
                 <label class="radio-inline standard-font-size"><input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.VisionResult == 1 ? "checked" : String.Empty)>Pass</label>
                 <label class="radio-inline standard-font-size"><input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.VisionResult == 0 ? "checked" : String.Empty)>Failed</label>
@@ -195,10 +195,10 @@
     });
 
     $("#HearingDate").datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
+        dateFormat: "mm/dd/yy"
+    })
     $("#VisionDate").datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
+        dateFormat: "mm/dd/yy"
+    })
 
 </script>

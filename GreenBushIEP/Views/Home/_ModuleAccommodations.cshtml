@@ -1,5 +1,7 @@
 ﻿@model GreenBushIEP.Models.AccomodationViewModel
 
+
+
 <style>
     .form-inline .form-group {
         margin-right: 10px;
@@ -14,6 +16,7 @@
     .panel-group {
         margin-bottom: 12px;
     }
+   
 </style>
 
 
@@ -123,8 +126,8 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size" aria-describedby="basic-addon1" />
+                                                        <input type="text" data-val="true" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -132,9 +135,9 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="date" data-val="true" data-val-date="The field VisionDate must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                        <input type="text" data-val="true" data-val-date="The field End date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control standard-font-size" aria-describedby="basic-addon1" />
+                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -175,15 +178,9 @@
     <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
 </div>
 
+
 <script>
-
-    $("#AnticipatedStartDate").datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
-    $("#AnticipatedEndDate").datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
-
+       
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -234,6 +231,18 @@
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
         $("#ExistingAccommodations").append(cloneGoal);
+
+        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+        cloneGoal.find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+                //beforeShow: function () {
+                //    alert('before');
+
+                //}
+            });
+        });
 
         initGoal(cloneGoal);
 
@@ -411,8 +420,10 @@
             $(this).find(".deleteGoal").on("click", function () {
                 _deleteRow($(this));
             });
-
+    
         });
+       
+       
     }
 
     function _deleteRow(element) {
@@ -459,9 +470,16 @@
     }
 
     $(document).ready(function () {
+       
         $(".oneStudentGoal").each(function () {
             initGoal($(this));
         });
-    });
 
+        $('.dtField').datepicker({
+            dateFormat: "mm/dd/yy",            
+        });
+        
+       
+    });
+    
 </script>
