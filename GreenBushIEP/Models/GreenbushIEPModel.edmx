@@ -169,6 +169,13 @@
           <Property Name="SchoolWeek" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SchoolQuarter" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblDisabilities">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="tblDistricts">
           <Key>
             <PropertyRef Name="USD" />
@@ -177,6 +184,8 @@
           <Property Name="DistrictName" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="int" />
           <Property Name="DOC" Type="bit" Nullable="false" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblGoalBenchmarks">
           <Key>
@@ -493,6 +502,8 @@
           <Property Name="Parental_Concerns_flag" Type="bit" />
           <Property Name="Parental_Concerns_Desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Transporation_Disability_flag" Type="bit" />
+          <Property Name="Transporation_Disability_desc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tblProviderDistricts">
           <Key>
@@ -583,6 +594,8 @@
           <Property Name="Grade" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" />
+          <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -653,6 +666,7 @@
           <Property Name="Planning_ConsentPrior" Type="bit" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Planning_Occupation" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
@@ -796,6 +810,7 @@
           <EntitySet Name="tblCalendar" EntityType="Self.tblCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarReporting" EntityType="Self.tblCalendarReporting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="Self.tblGoalBenchmarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoals" EntityType="Self.tblGoals" Schema="dbo" store:Type="Tables" />
@@ -897,6 +912,7 @@
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
+          <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
           <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
           <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
@@ -1120,6 +1136,13 @@
           <Property Name="SchoolWeek" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="SchoolQuarter" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="tblDisability">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tblDistrict">
           <Key>
             <PropertyRef Name="USD" />
@@ -1128,6 +1151,8 @@
           <Property Name="DistrictName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Int32" />
           <Property Name="DOC" Type="Boolean" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblGoalBenchmark">
           <Key>
@@ -1446,6 +1471,8 @@
           <Property Name="Parental_Concerns_flag" Type="Boolean" />
           <Property Name="Parental_Concerns_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Transporation_Disability_flag" Type="Boolean" />
+          <Property Name="Transporation_Disability_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblProviderDistrict">
           <Key>
@@ -1533,6 +1560,8 @@
           <Property Name="Grade" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -1603,6 +1632,7 @@
           <Property Name="Planning_ConsentPrior" Type="Boolean" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Planning_Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
@@ -1884,9 +1914,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblDisabilities">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDisability">
+              <MappingFragment StoreEntitySet="tblDisabilities">
+                <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
+                <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblDistricts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
               <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="DOC" ColumnName="DOC" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
@@ -2192,6 +2232,8 @@
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Transporation_Disability_desc" ColumnName="Transporation_Disability_desc" />
+                <ScalarProperty Name="Transporation_Disability_flag" ColumnName="Transporation_Disability_flag" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Parental_Concerns_Desc" ColumnName="Parental_Concerns_Desc" />
                 <ScalarProperty Name="Parental_Concerns_flag" ColumnName="Parental_Concerns_flag" />
@@ -2291,6 +2333,8 @@
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
+                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
@@ -2365,6 +2409,7 @@
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="Planning_Occupation" ColumnName="Planning_Occupation" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Planning_ConsentPrior" ColumnName="Planning_ConsentPrior" />

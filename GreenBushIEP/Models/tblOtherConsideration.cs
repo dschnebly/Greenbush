@@ -43,5 +43,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> Parental_Concerns_flag { get; set; }
         public string Parental_Concerns_Desc { get; set; }
         public System.DateTime Create_Date { get; set; }
+        public Nullable<bool> Transporation_Disability_flag { get; set; }
+        public string Transporation_Disability_desc { get; set; }
     }
 }

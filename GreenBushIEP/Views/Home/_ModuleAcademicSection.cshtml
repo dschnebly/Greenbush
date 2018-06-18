@@ -10,6 +10,17 @@
             border: 0;
         }
     }
+
+    @@media only screen and (max-width : 1045px ) {
+
+        nav-stacked {
+            float: none !important;
+        }
+
+        .pull-left {
+            float: none !important;
+        }
+    }
 </style>
 
 <div class="modal-header">
@@ -40,15 +51,15 @@
                     <div class="funkyradio">
                         <div class="funkyradio-success">
                             <input type="checkbox" name="ModuleAcademicNoConcern" id="ModuleAcademicNoConcern" @(Model.Academic.NoConcerns ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicNoConcern" class="standard-font-size" >No concern</label>
+                            <label for="ModuleAcademicNoConcern" class="standard-font-size">No concern</label>
                         </div>
                         <div class="funkyradio-primary">
                             <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.Academic.ProgressTowardGenEd ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicProgressTowardGenEd" class="standard-font-size" >Progressing with general education support</label>
+                            <label for="ModuleAcademicProgressTowardGenEd" class="standard-font-size">Progressing with general education support</label>
                         </div>
                         <div class="funkyradio-primary">
                             <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.Academic.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicAreaOfNeed" class="standard-font-size" >Area of need which impacts performance in general education</label>
+                            <label for="ModuleAcademicAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
                         </div>
                     </div>
                     <fieldset class="form-group">
@@ -69,7 +80,7 @@
                             <div class="checkbox">
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByGoal" @(Model.Academic.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByAccommodation" @(Model.Academic.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
-                                <label class="standard-font-size" ><input type="checkbox" name="ModuleAcademicMetByOther" @(Model.Academic.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                                <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByOther" @(Model.Academic.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
                             </div>
                             <div class="form-check" id="AcademicMeetByOtherTextArea">
                                 <br />
@@ -119,7 +130,7 @@
                             </div>
                             <div class="form-check" id="ReadingMeetByOtherTextArea">
                                 <br />
-                                <p  class="standard-font-size" style="display:@(Model.Reading.NeedMetByOther == true ? "block;" : "none;");">
+                                <p class="standard-font-size" style="display:@(Model.Reading.NeedMetByOther == true ? "block;" : "none;");">
                                     *&nbsp;If other, please explain<br />
                                     <textarea class="form-control standard-font-size" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Reading.NeedMetByOtherDescription)</textarea>
                                 </p>
@@ -165,7 +176,7 @@
                             </div>
                             <div class="form-check" id="MathMeetByOtherTextArea">
                                 <br />
-                                <p  class="standard-font-size" style="display:@(Model.Math.NeedMetByOther == true ? "block;" : "none;");">
+                                <p class="standard-font-size" style="display:@(Model.Math.NeedMetByOther == true ? "block;" : "none;");">
                                     *&nbsp;If other, please explain<br />
                                     <textarea class="form-control standard-font-size" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Math.NeedMetByOtherDescription)</textarea>
                                 </p>
@@ -211,7 +222,7 @@
                             </div>
                             <div class="form-check" id="WrittenMeetByOtherTextArea">
                                 <br />
-                                <p  class="standard-font-size" style="display:@(Model.Written.NeedMetByOther == true ? "block;" : "none;");">
+                                <p class="standard-font-size" style="display:@(Model.Written.NeedMetByOther == true ? "block;" : "none;");">
                                     *&nbsp;If other, please explain<br />
                                     <textarea class="form-control standard-font-size" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Written.NeedMetByOtherDescription)</textarea>
                                 </p>

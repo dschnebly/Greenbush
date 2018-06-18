@@ -569,7 +569,8 @@ namespace GreenBushIEP.Controllers
                         model.Transporation_NotEligible = true;
                         break;
                     case "2":
-                        model.Transporation_Required = true;
+                        //model.Transporation_Required = true;
+                        model.Transporation_Disability_flag = true;
                         break;
                     case "3":
                         model.Transporation_AttendOtherBuilding = true;
@@ -610,6 +611,8 @@ namespace GreenBushIEP.Controllers
                     OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
                     OC.Transporation_NotEligible = model.Transporation_NotEligible;
                     OC.Transporation_Required = model.Transporation_Required;
+                    OC.Transporation_Disability_flag = model.Transporation_Disability_flag;
+                    OC.Transporation_Disability_desc = model.Transporation_Disability_desc;
                     OC.Transporation_AttendOtherBuilding = model.Transporation_AttendOtherBuilding;
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
                     OC.Transporation_Other_desc = model.Transporation_Other_desc;
