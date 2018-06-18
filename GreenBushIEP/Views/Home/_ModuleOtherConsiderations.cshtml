@@ -114,12 +114,12 @@
                 </div>
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
                     <p id="TP_Other_Desc" style="display: @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" value="@(Model.Transporation_Other_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc)</textarea>
                     </p>
                 </div>
                 <div class="form-check voffset2" id="TransporationDisability_TextArea">
                     <p id="TP_disability_Desc" style="display: @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" value="@(Model.Transporation_Disability_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <textarea class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Disability_desc)</textarea>
                     </p>
                 </div>
             </div>
