@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/chosen.css")
     @Styles.Render("~/Content/jquery-ui.min.css")
-    
+
 }
 
 <style>
@@ -492,6 +492,12 @@
         right: 0px;
     }
 
+    .chosen-container-multi .chosen-choices li.search-choice span {
+        word-wrap: break-word;
+        position: unset;
+        top: 0;
+    }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -640,6 +646,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label" for="dob">Date of Birth</label>
+                                                    @*<input type="date" id="dob" name="dob" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" style="height:35px;" placeholder="MM/dd/YYYY  e.g. 08/25/1977">*@
                                                     <input  type="text" id="dob" name="dob" style="height:35px;" class="form-control studentDOB" placeholder="MM/dd/YYYY  e.g. 08/25/1977"/>
                                                 </div>
                                             </div>
@@ -818,7 +825,7 @@
                             </div>
                             <ul class="list-inline pull-right saveandcontinue">
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                                <li><button type="button" class="btn btn-info next-step" id="next2" >Save and continue</button></li>
+                                <li><button type="button" class="btn btn-info next-step" id="next2">Save and continue</button></li>
                             </ul>
 
                         }
