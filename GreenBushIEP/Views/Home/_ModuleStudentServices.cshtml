@@ -221,7 +221,7 @@
                                             <div class="form-group">
                                                 <br/>
                                                 <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -411,7 +411,7 @@
                                                 <div class="form-group">
                                                     <br />
                                                     <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                    <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -709,7 +709,7 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-
+               
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
@@ -721,8 +721,17 @@
                 var endDateOk = _validateDate(fiscalYear, endDate);
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
-                if (!startDateOk || !endDateOk || isNoServiceEndDate || isNoServiceStartDate)
+                if (isNoServiceEndDate || isNoServiceStartDate)
+                {
+                    if (isNoServiceEndDate)
+                        _showAlert("The End date is not a valid Service date.", false);
+                    else if (isNoServiceStartDate)
+                        _showAlert("The Initiation date is not a valid Service date", false);
+                    else
+                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+
                     return false;
+                }
 
 
                 $.ajax({
@@ -1107,7 +1116,7 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-
+               
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
@@ -1119,11 +1128,17 @@
                 var endDateOk = _validateDate(fiscalYear, endDate);
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
-                if (!startDateOk || !endDateOk || isNoServiceEndDate || isNoServiceStartDate)
+                if (isNoServiceEndDate || isNoServiceStartDate) {
+                    if (isNoServiceEndDate)
+                        _showAlert("The End date is not a valid Service date.", false);
+                    else if (isNoServiceStartDate)
+                        _showAlert("The Initiation date is not a valid Service date", false);
+                    else
+                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+
                     return false;
-
-
-
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SaveStudentService',
