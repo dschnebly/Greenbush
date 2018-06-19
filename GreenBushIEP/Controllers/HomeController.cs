@@ -947,7 +947,7 @@ namespace GreenbushIep.Controllers
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year -1 && c.Year <= DateTime.Now.Year + 5).ToList();
                     model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;

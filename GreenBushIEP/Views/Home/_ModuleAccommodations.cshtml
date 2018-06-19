@@ -16,6 +16,7 @@
     .panel-group {
         margin-bottom: 12px;
     }
+
    
 </style>
 
@@ -127,7 +128,7 @@
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
                                                         <input type="text" data-val="true" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
+                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -137,7 +138,7 @@
 
                                                         <input type="text" data-val="true" data-val-date="The field End date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" />
+                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -474,7 +475,6 @@
         $(".oneStudentGoal").each(function () {
             initGoal($(this));
         });
-
        
         $(this).find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
