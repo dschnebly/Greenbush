@@ -1295,7 +1295,16 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
+                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.studentPlan.HealthCarePlan ? "checked" : String.Empty ) />
+                                <label class="onoffswitch2-label" for="HealthCarePlan">
+                                    <span class="onoffswitch2-inner"></span>
+                                    <span class="onoffswitch2-switch"></span>
+                                </label>
+                            </div>
+                        </div>
                         <hr />
 
                         <div class="row">
