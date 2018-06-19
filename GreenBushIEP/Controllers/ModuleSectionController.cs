@@ -883,7 +883,9 @@ namespace GreenBushIEP.Controllers
                         tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault() ?? new tblTransitionAssessment();
                         assessment.TransitionID = transition.TransitionID;
                         assessment.Narrative = collection[i++].ToString();
-                        assessment.CompletedOn = Convert.ToDateTime(collection[i++]);
+						var completedOn = collection[i++];
+						if(completedOn != null && completedOn != "")
+							assessment.CompletedOn =  Convert.ToDateTime(completedOn);
                         assessment.Performance = collection[i++].ToString();
                         assessment.IEPid = transition.IEPid;
                         assessment.Update_Date = DateTime.Now;
@@ -1080,8 +1082,9 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
+					transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
 
-                    db.SaveChanges();
+					db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
                 }

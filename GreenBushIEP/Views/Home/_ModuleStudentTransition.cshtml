@@ -419,7 +419,7 @@
                                                 <div class="col-md-12">
                                                     <fieldset class="form-group" style="margin-bottom: 5px;">
                                                         <label for="narrative">Narrative</label>
-                                                        <textarea rows="3" name="transitionAssessmentNarrativeDefault" id="transitionAssessmentNarrativeDefault" style="width: 100%;"></textarea>
+                                                        <textarea rows="3" name="transitionAssessmentNarrativeDefault" id="transitionAssessmentNarrativeDefault" style="width: 100%;" maxlength="2000"></textarea>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -433,7 +433,7 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <label for="performance">Performance</label>
-                                                    <textarea rows="2" name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group"></textarea>
+                                                    <textarea rows="2" name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group" maxlength="2000"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -508,37 +508,37 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div class="input-group-addon assessment-needs">Transition Needs</div>
-                                            <input type="text" class="form-control" name="transitionNeeds" value="@(Model.transition.Assessment_Needs)">
-                                        </div>
+										<div class="input-group">
+											<div class="input-group-addon assessment-needs">Transition Needs</div>
+											<textarea id="transitionNeeds" name="transitionNeeds" class="form-control" rows="5"  data-toggle="tooltip" data-placement="bottom" >@(Model.transition.Assessment_Needs)</textarea>
+										</div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div class="input-group-addon assessment-needs">Transition Strengths</div>
-                                            <input type="text" class="form-control" name="transitionStrengths" value="@(Model.transition.Assessment_Strengths)">
-                                        </div>
+										<div class="input-group">
+											<div class="input-group-addon assessment-needs">Transition Strengths</div>
+											<textarea id="transitionNeeds" name="transitionStrengths" class="form-control" rows="5"  data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Strengths)</textarea>
+										</div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div class="input-group-addon assessment-needs">Transition Preferences</div>
-                                            <input type="text" class="form-control" name="transitionPreferences" value="@(Model.transition.Assessment_Prefrences)">
-                                        </div>
+										<div class="input-group">
+											<div class="input-group-addon assessment-needs">Transition Preferences</div>
+											<textarea id="transitionPreferences" name="transitionPreferences" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Prefrences)</textarea>
+										</div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div class="input-group-addon assessment-needs">Transition Interest</div>
-                                            <input type="text" class="form-control" name="transitionInterest" value="@(Model.transition.Assessment_Interest)">
-                                        </div>
+										<div class="input-group">
+											<div class="input-group-addon assessment-needs">Transition Interest</div>
+											<textarea id="transitionInterest" name="transitionInterest" class="form-control" rows="5"  data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Interest)</textarea>
+										</div>
                                     </div>
                                 </div>
 
@@ -585,12 +585,14 @@
                                                     <span class="transitionGoalStudentClass">@(@Model.student.FirstName)&nbsp;@(Model.student.LastName)</span>&nbsp;&nbsp;
                                                     <span>Will</span>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" type="text" id="transitionGoalBehavior" name="transitionGoalBehavior" placeholder="Behavior" title="Behavior" value="" />
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" type="text" id="transitionGoalHow" name="transitionGoalHow" placeholder="Where and How" title="Where and How" value="" />
-                                                </div>
+												<div class="col-md-3">
+													<textarea id="transitionGoalBehavior" name="transitionGoalBehavior" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior"></textarea>
+
+												</div>
+												<div class="col-md-3">
+													<textarea id="transitionGoalHow" name="transitionGoalHow" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How"></textarea>
+
+												</div>
                                             </div>
                                         </div>
                                     </div>
@@ -645,12 +647,14 @@
                                                                         <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
                                                                         <span>Will</span>
                                                                     </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionEducationBehavior@(goal.TransitionGoalID)" name="transitionEducationBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
-                                                                    </div>
+																	<div class="col-md-3">
+																		<textarea id="transitionEducationBehavior@(goal.TransitionGoalID)" name="transitionEducationBehavior@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(goal.Behavior)</textarea>
+
+																	</div>
+																	<div class="col-md-3">
+																		<textarea id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)"  class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(goal.WhereAndHow)</textarea>
+
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -701,12 +705,16 @@
                                                                         <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
                                                                         <span>Will</span>
                                                                     </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionEmploymentBehavior@(goal.TransitionGoalID)" name="transitionEmploymentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
-                                                                    </div>
+																	<div class="col-md-3">
+																		@*<input class="form-control" type="text" id="transitionEmploymentBehavior@(goal.TransitionGoalID)" name="transitionEmploymentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">*@
+																		<textarea id="transitionEmploymentBehavior@(goal.TransitionGoalID)" name="transitionEmploymentBehavior@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior">@(goal.Behavior)</textarea>
+
+																	</div>
+																	<div class="col-md-3">
+																		@*<input class="form-control" type="text" id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">*@
+																		<textarea id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior">@(goal.WhereAndHow)</textarea>
+
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -757,12 +765,16 @@
                                                                         <span class="transitionGoalStudentClass">Demo&nbsp;Student</span>&nbsp;&nbsp;
                                                                         <span>Will</span>
                                                                     </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionIndependentBehavior@(goal.TransitionGoalID)" name="transitionIndependentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">
-                                                                    </div>
-                                                                    <div class="col-md-3">
-                                                                        <input class="form-control" type="text" id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">
-                                                                    </div>
+																	<div class="col-md-3">
+																		@*<input class="form-control" type="text" id="transitionIndependentBehavior@(goal.TransitionGoalID)" name="transitionIndependentBehavior@(goal.TransitionGoalID)" placeholder="Behavior" title="Behavior" value="@(goal.Behavior)">*@
+																		<textarea id="transitionIndependentBehavior@(goal.TransitionGoalID)" name="transitionIndependentBehavior@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior">@(goal.Behavior)</textarea>
+
+																	</div>
+																	<div class="col-md-3">
+																		@*<input class="form-control" type="text" id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">*@
+																		<textarea id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How">@(goal.WhereAndHow)</textarea>
+
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -808,7 +820,7 @@
                                                 <div class="col-md-12">
                                                     <label for="transitionServiceDescription">Description</label>
                                                     <div>
-                                                        <textarea id="transitionServiceDescription" rows="3" name="transitionServiceDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea"></textarea>
+                                                        <textarea id="transitionServiceDescription" rows="3" name="transitionServiceDescription" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" maxlength="2000"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -887,7 +899,7 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDescription">Description</label>
                                                                         <div>
-                                                                            <textarea id="transitionInstructionServiceDescription@(service.TransitionServiceID)" rows="3" name="transitionInstructionServiceDescription@(service.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(service.ServiceDescription)</textarea>
+                                                                            <textarea id="transitionInstructionServiceDescription@(service.TransitionServiceID)" rows="3" name="transitionInstructionServiceDescription@(service.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(service.ServiceDescription)</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -899,7 +911,7 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="2000" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(service.Duration)">
+                                                                            <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="2000" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minutes at a time" value="@(service.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -958,7 +970,7 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDescription">Description</label>
                                                                         <div>
-                                                                            <textarea id="transitionRelatedServiceDescription@(related.TransitionServiceID)" rows="3" name="transitionRelatedServiceDescription@(related.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(related.ServiceDescription)</textarea>
+                                                                            <textarea id="transitionRelatedServiceDescription@(related.TransitionServiceID)" rows="3" name="transitionRelatedServiceDescription@(related.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(related.ServiceDescription)</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -1029,7 +1041,7 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDescription">Description</label>
                                                                         <div>
-                                                                            <textarea id="transitionDailyServiceDescription@(daily.TransitionServiceID)" rows="3" name="transitionDailyServiceDescription@(daily.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(daily.ServiceDescription)</textarea>
+                                                                            <textarea id="transitionDailyServiceDescription@(daily.TransitionServiceID)" rows="3" name="transitionDailyServiceDescription@(daily.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(daily.ServiceDescription)</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -1094,25 +1106,25 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDescription">Description</label>
                                                                         <div>
-                                                                            <textarea id="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(vocational.ServiceDescription)</textarea>
+                                                                            <textarea id="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionVocationalServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" maxlength="2000">@(vocational.ServiceDescription)</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceFrequency">Frequency</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
+                                                                            <input class="form-control" id="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" maxlength="2000" name="transitionVocationalServiceFrequency@(vocational.TransitionServiceID)" type="text" placeholder="once a week" value="@(vocational.Frequency)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDuration">Duration</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
+                                                                            <input class="form-control" id="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" maxlength="2000" name="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceLocation">Location</label>
                                                                         <div>
-                                                                            <input class="form-control" id="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" maxlength="300" name="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
+                                                                            <input class="form-control" id="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" maxlength="2000" name="transitionVocationalServiceLocation@(vocational.TransitionServiceID)" type="text" placeholder="where will the activity occur?" value="@(vocational.Location)">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1159,7 +1171,7 @@
                                                                     <div class="col-md-12">
                                                                         <label for="transitionServiceDescription">Description</label>
                                                                         <div>
-                                                                            <textarea id="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea">@(vocational.ServiceDescription)</textarea>
+                                                                            <textarea id="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" rows="3" name="transitionLeisureServiceDescription@(vocational.TransitionServiceID)" placeholder="When and where will the activity occur and whil will support it?" class="activity-textarea" maxlength="2000">@(vocational.ServiceDescription)</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -1203,7 +1215,7 @@
                                                     <span class="onoffswitch2-switch"></span>
                                                 </label>
                                             </div>
-                                            <textarea class="form-control @(Model.transition.CommunityParticipation ?  String.Empty : "hidden")" style="width: 100%; margin: 25px 0 0 0;" name="communityParticipationDesc" id="communityParticipationDesc">@(Model.transition.CommunityParticipation_Description)</textarea>
+                                            <textarea class="form-control @(Model.transition.CommunityParticipation ?  String.Empty : "hidden")" style="width: 100%; margin: 25px 0 0 0;" name="communityParticipationDesc" id="communityParticipationDesc" maxlength="2000" rows="5">@(Model.transition.CommunityParticipation_Description)</textarea>
                                         </fieldset>
                                     </div>
                                 </div>
@@ -1234,7 +1246,7 @@
                                         <p>
                                             @(@Model.student.FirstName)&nbsp;@(Model.student.LastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
                                             He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-                                            district and will be meaningful to his post secondary goal of working as an <a href="#" id="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;">Enter occupation</a>. The courses he/she is enrolled in for school year
+                                            district and will be meaningful to his post secondary goal of working as an <a href="#" id="inline-occupation" name="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;">@(Model.transition.Planning_Occupation != "" ? Model.transition.Planning_Occupation : "Enter occupation")</a>. The courses he/she is enrolled in for school year
                                             and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
                                         </p>
                                         <fieldset class="form-group">
@@ -1466,13 +1478,13 @@
                 return;
             }
 
-            var formData = $('#transitionStudyForm');
-
+			var formData = $('#transitionStudyForm');
+			
             $.ajax({
-                type: 'POST',
+				type: 'POST',
                 url: '/ModuleSection/EditTransitionStudy',
                 dataType: "json",
-                data: formData.serialize(),
+				data: formData.serialize() + '&occupationText=' + $("#inline-occupation").text(),
                 success: function (data) {
                     if (data.Result == "success") {
                         console.log("Course of Study successfull updated.");
@@ -1536,7 +1548,8 @@
         pk: 1,
         name: 'occupation',
         title: 'Enter occupation',
-        mode: 'inline'
+		mode: 'inline',
+		value: ''
     });
 
     // Attach Event
