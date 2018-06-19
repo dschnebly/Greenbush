@@ -68,8 +68,8 @@
         <fieldset class="form-group">
             <label class="standard-font-size"  style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
-                <label class="onoffswitch2-label" for="HealthCarePlan">
+                <input type="checkbox" name="ModuleHealthCarePlan" id="ModuleHealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="ModuleHealthCarePlan">
                     <span class="onoffswitch2-inner"></span>
                     <span class="onoffswitch2-switch"></span>
                 </label>
@@ -172,8 +172,8 @@
         }
     });
 
-    $("input:checkbox[name=HealthCarePlan]").on('click', function (event) {
-        if ($("input:checkbox[name=HealthCarePlan]").is(':checked')) {
+    $("input:checkbox[name=ModuleHealthCarePlan]").on('click', function (event) {
+        if ($("input:checkbox[name=ModuleHealthCarePlan]").is(':checked')) {
             $("#AdditionalHealthInfoTextArea p").show();
         }
         else {

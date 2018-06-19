@@ -19,6 +19,7 @@ namespace GreenBushIEP.Models
         public int HealthVisionResult { get; set; }
         public bool HealthVisionImparied { get; set; }
         public bool HealthProgressTowardGenEd { get; set; }
+        public bool HealthCarePlan { get; set; }
         public bool MotorNoConcern { get; set; }
         public bool MotorProgress { get; set; }
         public bool MotorNeeds { get; set; }
@@ -68,6 +69,7 @@ namespace GreenBushIEP.Models
             this.HealthVisionResult = -1;
             this.HealthVisionImparied = false;
             this.HealthProgressTowardGenEd = false;
+            this.HealthCarePlan = false;
             this.MotorNoConcern = true;
             this.MotorProgress = false;
             this.MotorNeeds = false;
@@ -125,6 +127,7 @@ namespace GreenBushIEP.Models
                     this.HealthVisionImparied = studentHealth.VisionImparied;
                     this.HealthVisionResult = studentHealth.VisionResult;
                     this.HealthProgressTowardGenEd = studentHealth.ProgressTowardGenEd;
+                    this.HealthCarePlan = studentHealth.HealthCarePlan ?? false;
                 }
 
                 tblIEPMotor studentMotor = db.tblIEPMotors.FirstOrDefault(m => m.IEPMotorID == studentIEP.IEPMotorID);
@@ -248,6 +251,7 @@ namespace GreenBushIEP.Models
                     studentHealth.VisionImparied = this.HealthVisionImparied;
                     studentHealth.VisionResult = this.HealthVisionResult;
                     studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
+                    studentHealth.HealthCarePlan = this.HealthCarePlan;
                 }
                 db.SaveChanges();
 
