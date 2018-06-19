@@ -428,7 +428,7 @@
                                                     <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                     <div class="input-group" style="margin-bottom: 5px;">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="transitionAssessmentCompletedDefault" name="transitionAssessmentCompletedDefault" class="form-control" aria-describedby="basic-addon1" value="">
+                                                        <input type="text" data-val="true" data-val-date="The field Completed Date must be a date." data-val-required="The Completed On Date field is required." id="transitionAssessmentCompletedDefault" name="transitionAssessmentCompletedDefault" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
@@ -488,7 +488,7 @@
                                                                         <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                                         <div class="input-group" style="margin-bottom: 5px;">
                                                                             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                            <input type="date" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required." id="transitionAssessmentCompleted@(assessment.TransitionAssementID)" name="transitionAssessmentCompleted@(assessment.TransitionAssementID)" class="form-control" aria-describedby="basic-addon1" value="@(assessment.CompletedOn?.ToString("yyyy-MM-dd"))" />
+                                                                            <input type="text" data-val="true" data-val-date="The field Completed Date must be a date." data-val-required="The Completed Date field is required." id="transitionAssessmentCompleted@(assessment.TransitionAssementID)" name="transitionAssessmentCompleted@(assessment.TransitionAssementID)" class="form-control dtField" aria-describedby="basic-addon1" value="@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")"  style="z-index: 99999"/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-9">
@@ -1367,6 +1367,13 @@
                 allWells.hide();
                 $target.show();
             }
+        });
+
+        $(this).find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+            });
         });
 
         // update the date displayed in the deafaul transition label to todays date.
