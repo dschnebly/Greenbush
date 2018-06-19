@@ -155,13 +155,14 @@
             }
         });
     });
-
+    
     $("#IEPBeginDate").datepicker({
         dateFormat: "mm/dd/yy"
-    }).datepicker("setDate", "0");
+    });
+
     $("#IEPMeetingDate").datepicker({
         dateFormat: "mm/dd/yy"
-    }).datepicker("setDate", "0");
+    });
 
     $("#HealthHearingDate").datepicker({
         dateFormat: "mm/dd/yy"
@@ -205,6 +206,23 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
+}
+
+function createDateString(newDate) {
+    var dateArr = newDate.split('-');
+    var month = 0;
+    var day = 0;
+    var year = 0;
+
+    if (dateArr.length > 0 && dateArr.length == 3) {
+        year = dateArr[0];
+        month = dateArr[1];
+        day = dateArr[2];
+    }
+
+    var returnDate = new Date(year, month - 1, day);
+    var output = returnDate.getMonth() + 1 + '/' + returnDate.getDate() + '/' + returnDate.getFullYear();
+    return output;
 }
 
 function formatDate(date) {

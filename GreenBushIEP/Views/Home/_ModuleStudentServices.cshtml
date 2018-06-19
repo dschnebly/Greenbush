@@ -33,6 +33,8 @@
             top: 45%;
             left: 40%;
         }
+
+  
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -54,7 +56,7 @@
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
-        @*<input type="hidden" value="@Model.IEPEndDate.ToString("yyyy-MM-dd")" id="iepEndDate" />*@
+        @*<input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepEndDate" />*@
 
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
@@ -99,14 +101,14 @@
                                             <label   for="Frequency">Initiation Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("yyyy-MM-dd"))">
+                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <label   for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value=""  style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -221,7 +223,7 @@
                                             <div class="form-group">
                                                 <br/>
                                                 <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -284,14 +286,14 @@
                                                 <label for="Frequency">Initiation Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("yyyy-MM-dd"))">
+                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="Frequency">End Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="date" class="form-control" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("yyyy-MM-dd"))">
+                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -411,7 +413,7 @@
                                                 <div class="form-group">
                                                     <br />
                                                     <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                    <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -438,12 +440,17 @@
 </div>
 
 <script>
-    $('#serviceStartDate').datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
-    $('#serviceEndDate').datepicker({
-        dateFormat: "yy-mm-dd"
-    }).datepicker("setDate", "0");
+   
+    $(document).ready(function () {
+
+        $(this).find('.dtField').each(function () {           
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",               
+            });
+        });
+
+    });
 
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
     var calendarArrayOfDates = JSON.parse(model);
@@ -533,11 +540,21 @@
 
         $('.serviceContainer').append(cloneService);
 
+
+        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+        cloneService.find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy"
+            });
+        });
+
         panelCollapse.collapse('show');
 
         initService();
     });
 
+ 
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
@@ -558,7 +575,8 @@
                
             });
 
-            $(this).find("input[type=date]").on('input', function (e) {
+            $(this).find(".dtField").on('change', function (e) {
+               
                 if (e.target.value == '') {
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
@@ -568,7 +586,9 @@
                 }
 
                 var day = new Date(e.target.value).getUTCDay();
-                var calendaryDay = e.target.value.split('-');
+                var selectedDate = e.target.value;
+                var calendaryDay = selectedDate.split('/');
+                
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
                 
                 // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
@@ -585,25 +605,19 @@
 					var error = e.target.title;
 					_showAlert(error, false);
                 } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
-                    e.target.setCustomValidity('OH NOES! That is day is not is session.');
-                    e.target.title = 'OH NOES! That is day is not is session.';
+                    e.target.setCustomValidity('OH NOES! That day is not is session.');
+                    e.target.title = 'OH NOES! That day is not is session.';
                     e.target.parentNode.classList.add('has-error');
                     var error = e.target.title;
-                    _showAlert(error, false);
-                } else if (e.target.value < $('#iepStartDate').val() || e.target.value > $('#iepEndDate').val()) {
-                    e.target.setCustomValidity('OH NOES! That not in range of the IEP.');
-                    e.target.title = 'OH NOES! That not in range of the IEP.';
-					e.target.parentNode.classList.add('has-error');
-					var error = e.target.title;
-					_showAlert(error, false);
+                    _showAlert(error, false);                    
                 }
                 else {
                     e.target.setCustomValidity('');
                     e.target.title = '';
                     e.target.parentNode.classList.remove('has-error');
                 }
-
-                _validateDate(fiscalYear, calendaryDay);
+                
+                _validateDate(fiscalYear, selectedDate);
 
             });
 
@@ -709,20 +723,29 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-
+               
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
                 //check dates before saving
-                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('-');
-                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('-');
+                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
+                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('/');
                 var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
-                var startDateOk = _validateDate(fiscalYear, startDate);
-                var endDateOk = _validateDate(fiscalYear, endDate);
+                var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
+                var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
-                if (!startDateOk || !endDateOk || isNoServiceEndDate || isNoServiceStartDate)
+                if (isNoServiceEndDate || isNoServiceStartDate)
+                {
+                    if (isNoServiceEndDate)
+                        _showAlert("The End date is not a valid Service date.", false);
+                    else if (isNoServiceStartDate)
+                        _showAlert("The Initiation date is not a valid Service date", false);
+                    else
+                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+
                     return false;
+                }
 
 
                 $.ajax({
@@ -755,13 +778,6 @@
 
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
-
-            $('#serviceStartDate').datepicker({
-                dateFormat: "yy-mm-dd"
-            }).datepicker("setDate", "0");
-            $('#serviceEndDate').datepicker({
-                dateFormat: "yy-mm-dd"
-            }).datepicker("setDate", "0");
         });
     }
     initService();
@@ -798,22 +814,24 @@
         return false;
     }
 
-    function createDate(newDate)
-    {
-        //var dateArr = newDate.split('-');
+   
+
+    function createDate2(newDate) {
+       
+        var dateArr = newDate.split('/');
         var month = 0;
         var day = 0;
         var year = 0;
 
-        if (newDate.length > 0 && newDate.length == 3) {
-            year = newDate[0];
-            month = newDate[1];
-            day = newDate[2];
+        if (dateArr.length > 0 && dateArr.length == 3) {
+            month = dateArr[0];
+            day = dateArr[1];
+            year = dateArr[2];
         }
 
-        var newDate = new Date(year, month - 1, day);
-
-        return newDate;
+        var returnDate = new Date(year, month - 1, day);
+        
+        return returnDate;
     }
 
     function getEndOfSchoolYear(element, selectedYear, dateElementName, startMonth) {
@@ -903,6 +921,14 @@
 
         $('.serviceContainer').append(cloneService);
 
+        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+        cloneService.find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+            });
+        });
+
         panelCollapse.collapse("show");
 
         initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay);
@@ -945,7 +971,7 @@
                 
             });
 
-            $(this).find("input[type=date]").on('input', function (e) {
+            $(this).find(".dtField").on('change', function (e) {
                 if (e.target.value == '') {
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
@@ -955,8 +981,9 @@
                 }
 
                 var day = new Date(e.target.value).getUTCDay();
-                var calendaryDay = e.target.value.split('-');
-                
+                var selectedDate = e.target.value;
+                var calendaryDay = selectedDate.split('/');
+                                
                 // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
                 if (day == 0) {
                     e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
@@ -967,12 +994,8 @@
                     e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
                     e.target.parentNode.classList.add('has-error');
                 } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
-                    e.target.setCustomValidity('OH NOES! That is day is not is session.');
-                    e.target.title = 'OH NOES! That is day is not is session.';
-                    e.target.parentNode.classList.add('has-error');
-                } else if (e.target.value < $('#iepStartDate').val() || e.target.value > $('#iepEndDate').val()) {
-                    e.target.setCustomValidity('OH NOES! That not in range of the IEP.');
-                    e.target.title = 'OH NOES! That not in range of the IEP.';
+                    e.target.setCustomValidity('OH NOES! That day is not is session.');
+                    e.target.title = 'OH NOES! That day is not is session.';
                     e.target.parentNode.classList.add('has-error');
                 }
                 else {
@@ -981,7 +1004,7 @@
                     e.target.parentNode.classList.remove('has-error');
                 }
 
-                _validateDate(fiscalYear, calendaryDay);
+                _validateDate(fiscalYear, selectedDate);
 
             });
 
@@ -1107,23 +1130,29 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-
+               
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
                 //check dates before saving
-                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('-');
-                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('-');
+                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
+                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('/');
                 var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
-                var startDateOk = _validateDate(fiscalYear, startDate);
-                var endDateOk = _validateDate(fiscalYear, endDate);
+                var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
+                var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
-                if (!startDateOk || !endDateOk || isNoServiceEndDate || isNoServiceStartDate)
+                if (isNoServiceEndDate || isNoServiceStartDate) {
+                    if (isNoServiceEndDate)
+                        _showAlert("The End date is not a valid Service date.", false);
+                    else if (isNoServiceStartDate)
+                        _showAlert("The Initiation date is not a valid Service date", false);
+                    else
+                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+
                     return false;
-
-
-
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SaveStudentService',
@@ -1147,9 +1176,14 @@
             //setup end date
             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
             var lastDaySchoolYear = searchLastDay(nextYear, 5);
-            var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month-1, lastDaySchoolYear.Day);
-            var formattedEndDate = formatDate(lastDay);
-            endDateElement.val(formattedEndDate);
+
+            if (lastDaySchoolYear != undefined) {
+                var Month = lastDaySchoolYear.Month;
+                var Day = lastDaySchoolYear.Day;
+                var Year = lastDaySchoolYear.Year;
+                var formattedDate = Month + "/" + Day + "/" + Year;                
+                endDateElement.val(formattedDate);
+            }
 
             //setup start date - find by first year of selected fiscal year
             var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
@@ -1159,8 +1193,7 @@
                 var Month = firstDayNextYear.Month;
                 var Day = firstDayNextYear.Day;
                 var Year = firstDayNextYear.Year;
-                var dfDate = new Date(Year, Month - 1, Day);
-                var formattedDate = formatDate(dfDate);
+                var formattedDate = Month + "/" + Day + "/" + Year;
                 startDateElement.val(formattedDate);
             }
 
@@ -1176,7 +1209,7 @@
 			else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
 			$("#alertMessage .moreinfo").html(message);
 			$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-				$("#alertMessage").slideUp(500);
+				$("#alertMessage").slideUp(1000);
 			});
 		}
 	}
@@ -1186,20 +1219,21 @@
 	    //start date must be within the school year
 	    var firstDaySchoolYear = searchFirstDay(fiscalYear, fiscalYear - 1, 8);
 	    var lastDaySchoolYear = searchLastDay(fiscalYear, 5);
-
+	    
 	    if (firstDaySchoolYear != undefined && lastDaySchoolYear != undefined) {
 	       
-	        var calDate = createDate(calendarDay);
-
+	        var calDate = createDate2(calendarDay);
+	       
 	        var firstDay = new Date(firstDaySchoolYear.Year, firstDaySchoolYear.Month - 1, firstDaySchoolYear.Day);
 	        var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month - 1, lastDaySchoolYear.Day);
+	        
 	        if ((calDate >= firstDay) && (calDate <= lastDay)) {
 	            return true;
 	        }
 	        else {
 	            var showFirstDay = firstDaySchoolYear.Month + "/" + firstDaySchoolYear.Day + "/" + firstDaySchoolYear.Year;
 	            var showLastDay = lastDaySchoolYear.Month + "/" + lastDaySchoolYear.Day + "/" + lastDaySchoolYear.Year;
-	            _showAlert("The Start and End Date must be within the selected school year. Start Date: " + showFirstDay + " End Date: " + showLastDay, false)
+	            _showAlert("The Initiation and End Date must be within the selected school year. Start Date: " + showFirstDay + " End Date: " + showLastDay, false)
 	            return false;
 	        }
 	    }
