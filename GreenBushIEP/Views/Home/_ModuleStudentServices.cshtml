@@ -238,6 +238,8 @@
 
         @foreach (var service in Model.studentServices)
         {
+            var needsIN = (Model.studentServices.IndexOf(service) == Model.studentServices.Count - 1) ? "in" : "";
+
             string serviceTitle = "Student Service";
             if(!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
             {
@@ -267,7 +269,7 @@
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapse@(service.ServiceID)" class="collapse in">
+                                <div id="collapse@(service.ServiceID)" class="panel-collapse collapse @(needsIN)">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-2">
@@ -470,45 +472,24 @@
     //duplicate service for next school year
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
+        var parent = $('div.collapse.in');
 
-        var fiscalYears = $('[name="fiscalYear"]');
-        var dupFiscalYear;
-        var dupServiceDaysPerWeek = 0;
-        var dupserviceMinutesPerDay = 0;
-        var dupFrequency = 0;
-        var dupLocation = '';
-        var dupServiceType = '';
-        var dupServiceProvider = '';
+        if (parent != null) {
+            var dupFiscalYear = parent.find('[name="fiscalYear"]').val();
+            var dupServiceDaysPerWeek = parent.find('[name="serviceDaysPerWeek"]').val();
+            var dupserviceMinutesPerDay = parent.find('[name="serviceMinutesPerDay"]').val();
+            var dupFrequency = parent.find('[name="Frequency"]').find(":selected").val();
+            var dupLocation = parent.find('[name="Location"]').find(":selected").val();
+            var dupServiceType = parent.find('[name="ServiceType"]').find(":selected").val();
+            var dupServiceProvider = parent.find('[name="serviceProvider"]').find(":selected").val();
 
-        if (fiscalYears.length > 0)
-            dupFiscalYear = fiscalYears.last().val();
+            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay);
 
-        var serviceDaysPerWeeks = $('[name="serviceDaysPerWeek"]');
-        if (serviceDaysPerWeeks.length > 0)
-            dupServiceDaysPerWeek = serviceDaysPerWeeks.last().val();
-
-        var serviceMinutesPerDays = $('[name="serviceMinutesPerDay"]');
-        if (serviceMinutesPerDays.length > 0)
-            dupserviceMinutesPerDay = serviceMinutesPerDays.last().val();
-
-        var Frequencys = $('[name="Frequency"]');
-        if (Frequencys.length > 0)
-            dupFrequency = Frequencys.find(":selected").last().val();
-
-        var Locations = $('[name="Location"]');
-        if (Locations.length > 0)
-            dupLocation = Locations.last().find(":selected").val();
-
-        var ServiceTypes = $('[name="ServiceType"]');
-        if (ServiceTypes.length > 0)
-            dupServiceType = ServiceTypes.last().find(":selected").val();
-
-        var serviceProviders = $('[name="serviceProvider"]');
-        if (serviceProviders.length > 0)
-            dupServiceProvider = serviceProviders.last().find(":selected").val();
-
-        duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay);
-
+        }
+        else
+        {
+            _showAlert("Please select a service to duplicate", false);
+        }
     });
 
     /* Event */
