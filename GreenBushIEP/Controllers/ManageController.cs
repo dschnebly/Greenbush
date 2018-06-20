@@ -82,6 +82,12 @@ namespace GreenBushIEP.Controllers
                     adminpersona.SaveAs(path);
                 }
 
+                if (db.tblUsers.Any(o => o.Email == user.Email))
+                {
+                    return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                }
+                
+                
                 // Add to Database
                 db.tblUsers.Add(user);
                 db.SaveChanges();
@@ -112,6 +118,7 @@ namespace GreenBushIEP.Controllers
             catch (Exception e)
             {
                 Console.Write(e.Message);
+                return Json(new { Result = "error", Message = e.Message });
             }
 
             return RedirectToAction("Portal", "Home");
@@ -157,8 +164,16 @@ namespace GreenBushIEP.Controllers
                     // try catch. If the email is the same as another student show error gracefully.
                     try
                     {
-                        db.tblUsers.Add(student);
-                        db.SaveChanges();
+
+                        if (db.tblUsers.Any(o => o.Email == student.Email))
+                        {
+                            return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                        }
+                        else
+                        {
+                            db.tblUsers.Add(student);
+                            db.SaveChanges();
+                        }
                     }
                     catch (Exception e)
                     {

@@ -57,4 +57,33 @@
             document.getElementById("avatarImage").src = oFREvent.target.result;
         };
     });
+
+    $("#ActionButton").on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/Manage/Create',
+            type: 'POST',
+            data: $("#UserForm").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+                    alert("The user was successfully created.");
+                } else {
+
+                    $("#alertMessage .moreinfo").html(data.Message);
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.");
+            }
+        });
+        return false;
+    });
+
+
 });
+

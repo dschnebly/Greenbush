@@ -237,6 +237,8 @@ function formatDate(date) {
     return ([year, month, day].join('-')).toString();
 }
 
+
+
 // Prevents the user from using the back button
 window.history.pushState({ page: 1 }, "", "");
 window.onpopstate = function (event) {
@@ -810,3 +812,5 @@ $("#truefalseSwitchAcademicConcerns").click(function (event) {
         $('.isAcademicPerformanceConcern').removeClass("noConcerns").fadeIn();
     }
 });
+
+
