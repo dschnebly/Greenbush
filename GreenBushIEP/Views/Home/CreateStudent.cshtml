@@ -666,6 +666,43 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <label for="primaryDisability">Primary Disability</label>
+                                        <select class="form-control" name="primaryDisability" id="primaryDisability">
+                                            <option value="AM" @((Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "AM") ? "selected=selected" : String.Empty)>Autism</option>
+                                            <option value="DB" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "DB" ? "selected=selected" : String.Empty)>Deaf - Blindness</option>
+                                            <option value="DD" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "DD" ? "selected=selected" : String.Empty)>Developmentally Delayed - Students age 3-9 only.</option>
+                                            <option value="ED" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "ED" ? "selected=selected" : String.Empty)>Emotional Disturbance</option>
+                                            <option value="HI" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "HI" ? "selected=selected" : String.Empty)>Hearing Impairment</option>
+                                            <option value="ID" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "ID" ? "selected=selected" : String.Empty)>Intellectual Disability</option>
+                                            <option value="MD" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "MD" ? "selected=selected" : String.Empty)>Multiple Disabilities</option>
+                                            <option value="OH" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "OH" ? "selected=selected" : String.Empty)>Other Health Impairment</option>
+                                            <option value="OI" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "OI" ? "selected=selected" : String.Empty)>Orthopedic Impairment</option>
+                                            <option value="SL" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "SL" ? "selected=selected" : String.Empty)>Speech/Language Disabilities</option>
+                                            <option value="TB" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "TB" ? "selected=selected" : String.Empty)>Traumatic Brain Injury</option>
+                                            <option value="VI" @(Model.info.Primary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "VI" ? "selected=selected" : String.Empty)>Visual Impairment</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="secondaryDisability">Secondary Disability</label>
+                                        <select class="form-control" name="secondaryDisability" id="secondaryDisability">
+                                            <option value="ND" @(Model.info.Secondary_DisabilityCode != null && Model.info.Secondary_DisabilityCode == "ND" ? "selected=selected" : String.Empty )>Disability Not Noticed</option>
+                                            <option value="AM" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "AM" ? "selected=selected" : String.Empty)>Autism</option>
+                                            <option value="DB" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "DB" ? "selected=selected" : String.Empty)>Deaf - Blindness</option>
+                                            <option value="ED" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "ED" ? "selected=selected" : String.Empty)>Emotional Disturbance</option>
+                                            <option value="HI" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "HI" ? "selected=selected" : String.Empty)>Hearing Impairment</option>
+                                            <option value="ID" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "ID" ? "selected=selected" : String.Empty)>Intellectual Disability</option>
+                                            <option value="LD" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "LD" ? "selected=selected" : String.Empty)>Specific Learning Disability</option>
+                                            <option value="MD" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "MD" ? "selected=selected" : String.Empty)>Multiple Disabilities</option>
+                                            <option value="OH" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "OH" ? "selected=selected" : String.Empty)>Other Health Impairment</option>
+                                            <option value="OI" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "OI" ? "selected=selected" : String.Empty)>Orthopedic Impairment</option>
+                                            <option value="SL" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "SL" ? "selected=selected" : String.Empty)>Speech/Language Disabilities</option>
+                                            <option value="TB" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "TB" ? "selected=selected" : String.Empty)>Traumatic Brain Injury</option>
+                                            <option value="VI" @(Model.info.Secondary_DisabilityCode != null && Model.info.Primary_DisabilityCode == "VI" ? "selected=selected" : String.Empty)>Visual Impairment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <label for="email">Email</label>
                                         @Html.EditorFor(model => model.student.Email, new { htmlAttributes = new { @class = "form-control", id = "email", Name = "email", placeholder = "User email" } })
                                         @*@Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })*@
@@ -826,7 +863,6 @@
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                 <li><button type="button" class="btn btn-info next-step" id="next2">Save and continue</button></li>
                             </ul>
-
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
@@ -1046,6 +1082,8 @@
         </section>
     </div>
 </div>
+<br/>
+<br/>
 
 <!-- student contact template file -->
 <div id="contact-template" style="display: none;">
