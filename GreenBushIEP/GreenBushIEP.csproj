@@ -439,6 +439,7 @@
     <Content Include="Content\chosen.css" />
     <Content Include="Content\font-awesome-min.css" />
     <Content Include="Content\greenbush_logo.png" />
+    <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\Images\copying-icon.gif" />
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
