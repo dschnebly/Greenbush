@@ -188,6 +188,8 @@ namespace GreenBushIEP.Controllers
                         UserID = student.UserID,
                         KIDSID = Convert.ToInt64(collection["kidsid"]),
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
+                        Primary_DisabilityCode = collection["primaryDisability"].ToString(),
+                        Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
                         USD = collection["misDistrict"],
                         BuildingID = collection["AttendanceBuildingId"],
                         NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],

@@ -666,6 +666,43 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <label for="primaryDisability">Primary Disability</label>
+                                        <select class="form-control" name="primaryDisability" id="primaryDisability">
+                                            <option value="AM">Autism</option>
+                                            <option value="DB">Deaf - Blindness</option>
+                                            <option value="DD">Developmentally Delayed - Students age 3-9 only.</option>
+                                            <option value="ED">Emotional Disturbance</option>
+                                            <option value="HI">Hearing Impairment</option>
+                                            <option value="ID">Intellectual Disability</option>
+                                            <option value="MD">Multiple Disabilities</option>
+                                            <option value="OH">Other Health Impairment</option>
+                                            <option value="OI">Orthopedic Impairment</option>
+                                            <option value="SL">Speech/Language Disabilities</option>
+                                            <option value="TB">Traumatic Brain Injury</option>
+                                            <option value="VI">Visual Impairment</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="secondaryDisability">Secondary Disability</label>
+                                        <select class="form-control" name="secondaryDisability" id="secondaryDisability">
+                                            <option value="ND">Disability Not Noticed</option>
+                                            <option value="AM">Autism</option>
+                                            <option value="DB">Deaf - Blindness</option>
+                                            <option value="ED">Emotional Disturbance</option>
+                                            <option value="HI">Hearing Impairment</option>
+                                            <option value="ID">Intellectual Disability</option>
+                                            <option value="LD">Specific Learning Disability</option>
+                                            <option value="MD">Multiple Disabilities</option>
+                                            <option value="OH">Other Health Impairment</option>
+                                            <option value="OI">Orthopedic Impairment</option>
+                                            <option value="SL">Speech/Language Disabilities</option>
+                                            <option value="TB">Traumatic Brain Injury</option>
+                                            <option value="VI">Visual Impairment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <label for="email">Email</label>
                                         @Html.EditorFor(model => model.student.Email, new { htmlAttributes = new { @class = "form-control", id = "email", Name = "email", placeholder = "User email" } })
                                         @*@Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })*@
@@ -748,7 +785,7 @@
                                             <option value="KO">KO - Korean</option>
                                             <option value="LO">LO - Lao</option>
                                             <option value="M">M - Mode of Communication</option>
-                                            <option value="NAT-AM">NAT-A, - Navtive America (kickapoo, Pottawatomie, ect)</option>
+                                            <option value="NAT-AM">NAT-A, - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
                                             <option value="N">N - Non-Verbal and Non-Sign</option>
                                             <option value="O">O - Other</option>
                                             <option value="PH">PH - Phllippine - Tagalog</option>
@@ -778,7 +815,7 @@
                                             <option value="KO">KO - Korean</option>
                                             <option value="LO">LO - Lao</option>
                                             <option value="M">M - Mode of Communication</option>
-                                            <option value="NAT-AM">NAT-A, - Navtive America (kickapoo, Pottawatomie, ect)</option>
+                                            <option value="NAT-AM">NAT-A, - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
                                             <option value="N">N - Non-Verbal and Non-Sign</option>
                                             <option value="O">O - Other</option>
                                             <option value="PH">PH - Phllippine - Tagalog</option>
@@ -826,7 +863,6 @@
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                 <li><button type="button" class="btn btn-info next-step" id="next2">Save and continue</button></li>
                             </ul>
-
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
@@ -1046,6 +1082,8 @@
         </section>
     </div>
 </div>
+<br/>
+<br/>
 
 <!-- student contact template file -->
 <div id="contact-template" style="display: none;">
