@@ -23,6 +23,7 @@
 
     .vertical-center > .container {
         max-width: 55%;
+        margin-top: 15rem;
         display: inline-block;
         vertical-align: middle; /* vertical alignment of the inline element */
         /* reset the font property */
@@ -41,7 +42,7 @@
     bottom: 0;
     right: 0;
     margin: auto;
-    background: url(/Content/Images/green-crop2.jpg) no-repeat center center fixed;
+    background: url(/Content/Images/IEPBackpackBackgroundImage.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -100,11 +101,21 @@ hr {
     right: -15px;
 }
 
+#iep-header-image {
+    position: absolute;
+    bottom: 68%;
+    width: 90%;
+}
+
+    #iep-header-image img {
+        margin: 0 auto;
+        width: 55%;
+    }
+
 #output {
     position: relative;
     width: 100%;
     padding: 15px;
-    margin-bottom: 15px;
     background-color: inherit;
 }
 
@@ -123,33 +134,6 @@ hr {
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
-}
-
-.c-sub-hero__background-cloud-one {
-    background: url("/Content/Images/cloud_one.png");
-    position: absolute;
-    top: 0;
-    width: 1155px;
-    height: 46%;
-    z-index: 0;
-    -moz-animation: cloud_one 300s linear infinite;
-    -o-animation: cloud_one 300s linear infinite;
-    animation: cloud_one 300s linear infinite;
-    -webkit-animation: cloud_one 300s linear infinite;
-}
-
-.c-sub-hero__background-cloud-three {
-    background: url("/Content/Images/cloud_three.png");
-    position: absolute;
-    top: 0;
-    left: -50px;
-    width: 755px;
-    height: 48%;
-    z-index: 0;
-    -moz-animation: cloud_three 500s linear infinite;
-    -o-animation: cloud_three 500s linear infinite;
-    animation: cloud_three 500s ease-in-out infinite;
-    -webkit-animation: cloud_three 500s ease-in-out infinite;
 }
 
 @-webkit-keyframes one {
@@ -171,27 +155,6 @@ hr {
         left: -200%;
     }
 }
-
-@keyframes cloud_one {
-    from {
-        left: 0;
-    }
-
-    to {
-        left: -200%;
-    }
-}
-
-@keyframes cloud_three {
-    from {
-        left: 0;
-    }
-
-    to {
-        left: -200%;
-    }
-}
-
 
 /*********************************/
 /*********************************/
@@ -364,26 +327,54 @@ tbody > tr {
     top: 0px;
 }
 
-.voffset  { margin-top: 2px; }
-.voffset1 { margin-top: 5px; }
-.voffset2 { margin-top: 10px; }
-.voffset3 { margin-top: 15px; }
-.voffset4 { margin-top: 30px; }
-.voffset5 { margin-top: 40px; }
-.voffset6 { margin-top: 60px; }
-.voffset7 { margin-top: 80px; }
-.voffset8 { margin-top: 100px; }
-.voffset9 { margin-top: 150px; }
+.voffset {
+    margin-top: 2px;
+}
+
+.voffset1 {
+    margin-top: 5px;
+}
+
+.voffset2 {
+    margin-top: 10px;
+}
+
+.voffset3 {
+    margin-top: 15px;
+}
+
+.voffset4 {
+    margin-top: 30px;
+}
+
+.voffset5 {
+    margin-top: 40px;
+}
+
+.voffset6 {
+    margin-top: 60px;
+}
+
+.voffset7 {
+    margin-top: 80px;
+}
+
+.voffset8 {
+    margin-top: 100px;
+}
+
+.voffset9 {
+    margin-top: 150px;
+}
 
 
-.standard-font-size{
+.standard-font-size {
     font-size: 18px;
 }
 
- .dtField /*bring to front when in modal*/
- {
-   z-index: 99999 !important;
- }
+.dtField /*bring to front when in modal*/ {
+    z-index: 99999 !important;
+}
 
 /*==================================================
 =            Teacher's Students List               =
@@ -395,29 +386,6 @@ tbody > tr {
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
 
-
-@media only screen and (max-width : 1500px) {
-    .c-sub-hero__background-cloud-one {
-        width: 180%;
-        height: 48%;
-    }
-
-    .c-sub-hero__background-cloud-three {
-        width: 100%;
-    }
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
-    .c-sub-hero__background-cloud-one {
-        width: 180%;
-        height: 48%;
-    }
-
-    .c-sub-hero__background-cloud-three {
-        width: 775px;
-    }
-}
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
@@ -433,14 +401,6 @@ tbody > tr {
     .submit-login {
         float: none;
         margin: 0 auto;
-    }
-
-    .c-sub-hero__background-cloud-one {
-        background-image: none;
-    }
-
-    .c-sub-hero__background-cloud-three {
-        background-image: none;
     }
 }
 
