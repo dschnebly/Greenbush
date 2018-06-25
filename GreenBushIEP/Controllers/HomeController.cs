@@ -230,8 +230,6 @@ namespace GreenbushIep.Controllers
                     newProvider.ProviderCode = providerCode;
                     newProvider.UserID = owner.UserID;
 
-                    
-
                     //can't have duplicate provider code
                     tblProvider dup = db.tblProviders.Where(p => p.ProviderCode == providerCode).SingleOrDefault();
 

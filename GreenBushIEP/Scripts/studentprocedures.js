@@ -495,7 +495,7 @@ $(".iep-form-section").on("click", function (e) {
             }
         },
         error: function (data) {
-            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.').focus();
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);
             });

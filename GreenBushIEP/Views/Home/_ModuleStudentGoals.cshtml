@@ -62,9 +62,6 @@
     <h4 class="modal-title" style="font-size: 30px;"><i class="fa fa-trophy" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Goals</h4>
 </div>
 <div class="modal-body">
-    <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
-        <strong class="moreinfo">Oh snap!</strong>
-    </div>
     <div class="container" id="StudentGoals">
 
         <div class="row">
@@ -72,7 +69,6 @@
                 <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
-
 
         <div class="StudentGoalBenchmark hidden" id="defaultObjective">
             <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
@@ -397,7 +393,7 @@
                                 <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                     <div class="form-group">
                                         <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                        <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                        <button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -408,7 +404,6 @@
         }
 
         </div>
-
 
         @if (Model.studentGoals.Count > 0)
         {
@@ -744,7 +739,7 @@
                                             <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                                 <div class="form-group">
                                                     <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                    <button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -759,6 +754,13 @@
 
             }
         }
+
+    </div>
+    <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none; margin-left: 30px;">
+        <strong class="moreinfo">Oh snap!</strong>
+    </div>
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
     </div>
 </div>
 <div class="modal-footer" style="border-top: 0;">
@@ -931,6 +933,26 @@
             });
 
             //* Binding */
+            /* when the teacher saves the form */
+            $(this).find(".SaveForm").on('click', function() { 
+                $('.ajax-loader').css("visibility", "visible");
+
+                var data = $(this).closest('.goalForm').serialize();
+                $.post('/ModuleSection/EditStudentGoals', data)
+                .done(function (results) {
+                    $('.ajax-loader').css("visibility", "hidden");
+                })
+                .fail(function (xhr, status, error) {
+                    $('.ajax-loader').css("visibility", "hidden");
+
+                    $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                });
+            });
+
+            //* Binding */
             /* When the user clicks on the minus to view more info for the Progress Towards Annual Goal */
             $(this).find('.ProgressAnnualGoal').on('click', function () {
                 $(this).toggleClass('glyphicon-minus glyphicon-plus');
@@ -940,15 +962,15 @@
 
             //* Binding */
             /* Submits the form when the user hits the save button */
-            $(this).find(".saveStudentGoal").on("click", function () {
-                var annualGoal = $(this).closest('form').find('textarea.StudentGoalAnnualGoal');
-                if (annualGoal.val().length == 0) {
-                    alert('The Measurable Annual Goal cannot be empty.')
-                    annualGoal.focus();
-                    return;
-                }
-                $(this).closest('.goalForm').submit();
-            });
+            //$(this).find(".saveStudentGoal").on("click", function () {
+            //    var annualGoal = $(this).closest('form').find('textarea.StudentGoalAnnualGoal');
+            //    if (annualGoal.val().length == 0) {
+            //        alert('The Measurable Annual Goal cannot be empty.')
+            //        annualGoal.focus();
+            //        return;
+            //    }
+            //    $(this).closest('.goalForm').submit();
+            //});
 
             //* Binding */
             /* when the teacher clicks the Add Short Term Benchmark(s) button */
