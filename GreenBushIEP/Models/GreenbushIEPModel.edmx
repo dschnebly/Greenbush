@@ -187,6 +187,18 @@
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tblFormArchive">
+          <Key>
+            <PropertyRef Name="FormArchiveID" />
+          </Key>
+          <Property Name="FormArchiveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Student_UserID" Type="int" Nullable="false" />
+          <Property Name="Creator_UserID" Type="int" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="ArchiveDate" Type="datetime" Nullable="false" />
+          <Property Name="FormName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblGoalBenchmarks">
           <Key>
             <PropertyRef Name="goalBenchmarkID" />
@@ -649,10 +661,10 @@
           </Key>
           <Property Name="TransitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
-          <Property Name="Assessment_Needs" Type="nvarchar" MaxLength="2000" />
-          <Property Name="Assessment_Strengths" Type="nvarchar" MaxLength="2000" />
-          <Property Name="Assessment_Prefrences" Type="nvarchar" MaxLength="2000" />
-          <Property Name="Assessment_Interest" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Assessment_Needs" Type="nvarchar(max)" />
+          <Property Name="Assessment_Strengths" Type="nvarchar(max)" />
+          <Property Name="Assessment_Prefrences" Type="nvarchar(max)" />
+          <Property Name="Assessment_Interest" Type="nvarchar(max)" />
           <Property Name="CommunityParticipation" Type="bit" Nullable="false" />
           <Property Name="CommunityParticipation_Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="Planning_Facilitate" Type="bit" Nullable="false" />
@@ -812,6 +824,7 @@
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="Self.tblGoalBenchmarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoals" EntityType="Self.tblGoals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblIEPAcademic" EntityType="Self.tblIEPAcademic" Schema="dbo" store:Type="Tables" />
@@ -959,6 +972,7 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1615,10 +1629,10 @@
           </Key>
           <Property Name="TransitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="Assessment_Needs" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Strengths" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Prefrences" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Assessment_Interest" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Needs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Prefrences" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Assessment_Interest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CommunityParticipation" Type="Boolean" Nullable="false" />
           <Property Name="CommunityParticipation_Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Planning_Facilitate" Type="Boolean" Nullable="false" />
@@ -1709,6 +1723,18 @@
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <EntityType Name="tblFormArchive">
+          <Key>
+            <PropertyRef Name="FormArchiveID" />
+          </Key>
+          <Property Name="FormArchiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Student_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2477,6 +2503,19 @@
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tblFormArchives">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
+              <MappingFragment StoreEntitySet="tblFormArchive">
+                <ScalarProperty Name="FormFile" ColumnName="FormFile" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="Creator_UserID" ColumnName="Creator_UserID" />
+                <ScalarProperty Name="Student_UserID" ColumnName="Student_UserID" />
+                <ScalarProperty Name="FormArchiveID" ColumnName="FormArchiveID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

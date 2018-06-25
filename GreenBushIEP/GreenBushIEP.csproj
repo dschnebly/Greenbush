@@ -339,6 +339,9 @@
     <Compile Include="Models\tblDistrict.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblFormArchive.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblGoal.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
