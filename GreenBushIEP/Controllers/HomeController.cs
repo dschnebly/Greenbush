@@ -1309,6 +1309,9 @@ namespace GreenbushIep.Controllers
                 viewModel.IEPForms = GetForms();
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
+
+
+                viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).ToList();
             }
 
             return PartialView("_IEPFormModule", viewModel);
@@ -1526,6 +1529,31 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
+        public ActionResult DownloadArchve(int id)
+        {
+            //TODO: Check if user has permissions to update permissions
+            var document = db.tblFormArchives.Where(o => o.FormArchiveID == id).FirstOrDefault();
+            if (document != null)
+            {
+                new System.Net.Mime.ContentDisposition
+                {
+                    FileName = document.FormName + ".pdf",
+                    Inline = false
+                };
+                Response.AppendHeader("Content-Disposition", "attachment;filename=" + ScrubDocumentName(document.FormName + ".pdf"));
+                
+                return File(document.FormFile, "application/pdf");
+            }
+            else
+                return null;
+        }
+
+        public static string ScrubDocumentName(string documentName)
+        {
+            return documentName.Replace(',', ' ');
+        }
+
+        [Authorize]
         [ValidateInput(false)]
         public FileResult DownloadPDF(FormCollection collection)
         {
@@ -1533,12 +1561,18 @@ namespace GreenbushIep.Controllers
             string HTMLContent = collection["printText"];
             string studentName = collection["studentName"];
             string studentId = collection["studentId"];
+            string isArchive = collection["isArchive"];
+            string iepIDStr = collection["iepID"];
 
             if (!string.IsNullOrEmpty(HTMLContent))
             {
                 int id = 0;
                 Int32.TryParse(studentId, out id);
-                
+
+                int iepId = 0;
+                Int32.TryParse(iepIDStr, out iepId);
+
+
                 tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
                 if (user != null)
                 {
@@ -1547,7 +1581,8 @@ namespace GreenbushIep.Controllers
 
                 db.SaveChanges();
 
-
+                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                
                 var cssText = @"<style>
                                 .header{color:white;}
                                 .input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}
@@ -1594,7 +1629,22 @@ namespace GreenbushIep.Controllers
                                     byte[] fileIn = stream.ToArray();
                                     var printFile = AddPageNumber(fileIn, studentName);
 
-                                    return File(printFile, "application/pdf", "IEP.pdf");
+                                   if(isArchive == "1")
+                                   {
+                                        var archive = new tblFormArchive();
+                                        archive.Creator_UserID = teacher.UserID;
+                                        archive.Student_UserID = id;
+                                        archive.FormName = "IEP";
+                                        archive.FormFile = fileIn;
+                                        archive.IEPid = iepId;
+                                        archive.ArchiveDate = DateTime.Now;
+
+                                        db.tblFormArchives.Add(archive);
+                                        db.SaveChanges();
+                                                                            
+                                   }
+                                   
+                                   return File(printFile, "application/pdf", "IEP.pdf");
                                 
                             }
                         }

@@ -344,38 +344,85 @@
 <div class="modal-body">
     @Html.Hidden("stid", Model.StudentId)
 
-    <div class="drive-wrapper drive-list-view">
-        <div class="table-responsive drive-items-table-wrapper">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="type"></th>
-                        <th class="name truncate">Name</th>
-                        <th class="date">&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var form in Model.IEPForms)
-                        {
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#sectionA"><b>Forms</b></a></li>
+        <li><a data-toggle="tab" href="#sectionB"><b>Archive</b></a></li>
+        
+    </ul>
+    <div class="tab-content container">
+        <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
+
+            <div class="drive-wrapper drive-list-view">
+                <div class="table-responsive drive-items-table-wrapper">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td class="type" style="cursor: default;"><i class="fa fa-file-text-o text-primary"></i></td>
-                                <td class="name truncate"><a href="#" id="@form.Value">@form.Text</a></td>
-                                <td class="date"><button type="button" class="btn btn-default btn-lg printForm" id="@form.Value"><i class="fa fa-print"></i><span>&nbsp;Print Form</span></button></td>
+                                <th class="type"></th>
+                                <th class="name truncate">Name</th>
+                                <th class="date">&nbsp;</th>
                             </tr>
-                        }
-                    }
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var form in Model.IEPForms)
+                                {
+                                    <tr>
+                                        <td class="type" style="cursor: default;"><i class="fa fa-file-text-o text-primary"></i></td>
+                                        <td class="name truncate"><a href="#" id="@form.Value">@form.Text</a></td>
+                                        <td class="date"><button type="button" class="btn btn-default btn-lg printForm" id="@form.Value"><i class="fa fa-print"></i><span>&nbsp;Print Form</span></button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
+        <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+            @*<div class="drive-wrapper drive-list-view">
+                <div class="table-responsive drive-items-table-wrapper">*@
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th class="name truncate">Form Name</th>
+                                <th class="date">Date</th>
+                                <th class="date">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var archive in Model.Archives)
+                                {
+                                    <tr>
+                                        
+                                        <td class="name truncate">@archive.FormName</td>
+                                        <td class="name truncate">@archive.ArchiveDate</td>
+                                        <td class="date"><button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa-print"></i><span>&nbsp;Download</span></button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                @*</div>
+            </div>*@
+
+        </div>
+        
     </div>
+
+
+
+
+   
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
     </div>
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button>
+    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
 </div>
 <script>
 
@@ -387,6 +434,21 @@
 
             var pageName = this.id;
             window.location.href = '/Home/IEPFormFile?id=' + id + '&fileName=' + pageName;
+        }
+        else {
+            $("#alertMessage .moreinfo").html('Server Error');
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        }
+    });
+
+
+    $(".downloadForm").on("click", function (e) {
+        var id = this.id;
+
+        if (id) {
+            window.location.href = '/Home/DownloadArchve?id=' + id;
         }
         else {
             $("#alertMessage .moreinfo").html('Server Error');

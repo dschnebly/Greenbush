@@ -238,9 +238,11 @@ namespace GreenBushIEP.Models
         public IEPFormViewModel()
         {
             IEPForms = new List<System.Web.Mvc.SelectListItem>();
+            Archives = new List<tblFormArchive>();
         }
 
         public List<System.Web.Mvc.SelectListItem> IEPForms { get; set; }
+        public List<tblFormArchive> Archives { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
     }
