@@ -61,8 +61,9 @@
     $("#ActionButton").on('click', function (e) {
         e.preventDefault();
 
+        var action = $(this).closest(form).arrt('action');
         $.ajax({
-            url: '/Manage/Create',
+            url: action,
             type: 'POST',
             data: $("#UserForm").serialize(),
             success: function (data) {
