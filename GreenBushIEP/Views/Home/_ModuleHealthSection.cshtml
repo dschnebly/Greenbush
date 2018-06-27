@@ -24,11 +24,11 @@
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) />
-                <label for="HealthDiagnosis"  class="standard-font-size">Concerns that impact ability to learn or access to general curriculum</label>
+                <label for="HealthDiagnosis" class="standard-font-size">Concerns that impact ability to learn or access to general curriculum</label>
             </div>
         </div>
         <fieldset class="form-group">
-            <label  class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                 <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImparied != null ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="HearingImpaired">
@@ -66,7 +66,7 @@
             </legend>
         </fieldset>
         <fieldset class="form-group">
-            <label class="standard-font-size"  style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                 <input type="checkbox" name="ModuleHealthCarePlan" id="ModuleHealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="ModuleHealthCarePlan">
@@ -75,130 +75,130 @@
                 </label>
             </div>
             <div class="form-check" id="AdditionalHealthInfoTextArea">
-               <p style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
+                <p style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
                     <label class="standard-font-size">Notes</label><br />
-                    <textarea class="form-control standard-font-size" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.AdditionalHealthInfo)</textarea>
+                    <textarea class="form-control standard-font-size" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.AdditionalHealthInfo)</textarea>
                 </p>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label class="standard-font-size"  style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-            <div class="form-check">
-                <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label class="standard-font-size"  style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+            <div><label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+    <div class="form-check">
+        <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+    </div>
+</fieldset>
+            <fieldset class="form-group">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+                <div class="form-check">
+                    <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
                 </div>
-            </div>
-            <div class="form-check" id="MeetByOtherTextArea">
-                <br />
-                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
-                    <span class="standard-font-size"> *if other, please explain</span><br />
-                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
-                </p>
-            </div>
-        </fieldset>
+            </fieldset>
+            <fieldset class="form-group">
+                <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+                <div class="form-check">
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                        <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                        <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                    </div>
+                </div>
+                <div class="form-check" id="MeetByOtherTextArea">
+                    <br />
+                    <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                        <span class="standard-font-size"> *if other, please explain</span><br />
+                        <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
+                    </p>
+                </div>
+            </fieldset>
 
-        <div class="row">
-            <div class="col-md-12" style="text-align:center;">
-                <div class="form-group">
-                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+            <div class="row">
+                <div class="col-md-12" style="text-align:center;">
+                    <div class="form-group">
+                        <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                        <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                        <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                    </div>
                 </div>
             </div>
-        </div>
     }
 
-</div>
-<br />
-<br />
+    </div>
+    <br />
+    <br />
 
-<script>
-    // Attach Event
-    //reset the form to default database/brand new values.
-    $("input[name='HealthNoConcerns']").on('click', function (event) {
-        if ($("input[name='HealthNoConcerns']").is(':checked')) {
-            $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
-            $("input[name='HealthDiagnosis']").prop('checked', false);
-            $("input[name='HealthHearingDate']")[0].value = new Date().toJSON().slice(0, 10);
-            $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
-            $("input[name='HealthHearingResult']").prop('checked', false);
-            $("input[name='HealthVisionResult']").prop('checked', false);
-            $("input[name='VisionImparied']").prop('checked', false);
-            $("input[name='HearingImpaired']").prop('checked', false);
-            $("input[name='HealthCarePlan']").prop('checked', false);            
-            $("#MeetNeedByOtherDescription").val('');
-            $("input[name=MetByGoal]").prop('checked', false);
-            $("input[name=MetByAccommodation]").prop('checked', false);
-            $("input[name=MetByOther]").prop('checked', false);
-            $("#MeetByOtherTextArea p").hide();
-        }
-    });
+    <script>
+        // Attach Event
+        //reset the form to default database/brand new values.
+        $("input[name='HealthNoConcerns']").on('click', function (event) {
+            if ($("input[name='HealthNoConcerns']").is(':checked')) {
+                $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
+                $("input[name='HealthDiagnosis']").prop('checked', false);
+                $("input[name='HealthHearingDate']")[0].value = new Date().toJSON().slice(0, 10);
+                $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
+                $("input[name='HealthHearingResult']").prop('checked', false);
+                $("input[name='HealthVisionResult']").prop('checked', false);
+                $("input[name='VisionImparied']").prop('checked', false);
+                $("input[name='HearingImpaired']").prop('checked', false);
+                $("input[name='HealthCarePlan']").prop('checked', false);
+                $("#MeetNeedByOtherDescription").val('');
+                $("input[name=MetByGoal]").prop('checked', false);
+                $("input[name=MetByAccommodation]").prop('checked', false);
+                $("input[name=MetByOther]").prop('checked', false);
+                $("#MeetByOtherTextArea p").hide();
+            }
+        });
 
-    // Attach Event
-    // reset the form because jquery does not have built in reset functionality.
-    $("#resetForm").trigger("reset");
+        // Attach Event
+        // reset the form because jquery does not have built in reset functionality.
+        $("#resetForm").trigger("reset");
 
-    // Attach Event
-    // if an option other than no concern is selected than turn off noconcern
-    $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
-        $("input[name='HealthNoConcerns']").prop('checked', false)
-    });
-    $("input[name='HealthDiagnosis']").on('click', function (event) {
-        $("input[name='HealthNoConcerns']").prop('checked', false)
-    });
+        // Attach Event
+        // if an option other than no concern is selected than turn off noconcern
+        $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
+            $("input[name='HealthNoConcerns']").prop('checked', false)
+        });
+        $("input[name='HealthDiagnosis']").on('click', function (event) {
+            $("input[name='HealthNoConcerns']").prop('checked', false)
+        });
 
-    // Attach Event
-    // if checkbox is selected than show text box.
-    $("input:checkbox[name=MetByOther]").on('click', function (event) {
-        if ($("input:checkbox[name=MetByOther]").is(':checked')) {
-            $("#MeetByOtherTextArea p").show();
-        }
-        else {
-            $("#MeetByOtherTextArea p").hide();
-        }
-    });
+        // Attach Event
+        // if checkbox is selected than show text box.
+        $("input:checkbox[name=MetByOther]").on('click', function (event) {
+            if ($("input:checkbox[name=MetByOther]").is(':checked')) {
+                $("#MeetByOtherTextArea p").show();
+            }
+            else {
+                $("#MeetByOtherTextArea p").hide();
+            }
+        });
 
-    $("input:checkbox[name=ModuleHealthCarePlan]").on('click', function (event) {
-        if ($("input:checkbox[name=ModuleHealthCarePlan]").is(':checked')) {
-            $("#AdditionalHealthInfoTextArea p").show();
-        }
-        else {
-            $("#AdditionalHealthInfo").val("");
-            $("#AdditionalHealthInfoTextArea p").hide();
-        }
-    });
-    
-    /* Binding */
-    /* tooltips */
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger: 'manual'
-    });
+        $("input:checkbox[name=ModuleHealthCarePlan]").on('click', function (event) {
+            if ($("input:checkbox[name=ModuleHealthCarePlan]").is(':checked')) {
+                $("#AdditionalHealthInfoTextArea p").show();
+            }
+            else {
+                $("#AdditionalHealthInfo").val("");
+                $("#AdditionalHealthInfoTextArea p").hide();
+            }
+        });
 
-    ///* Event */
-    ///* When a user clicks on the question mark icon we turn on tooltips */
-    $('.tooltip-help').on('click', function () {
-        $('[data-toggle="tooltip"]').tooltip('toggle');
-    });
+        /* Binding */
+        /* tooltips */
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'manual'
+        });
 
-    $("#HearingDate").datepicker({
-        dateFormat: "mm/dd/yy"
-    })
-    $("#VisionDate").datepicker({
-        dateFormat: "mm/dd/yy"
-    })
+        ///* Event */
+        ///* When a user clicks on the question mark icon we turn on tooltips */
+        $('.tooltip-help').on('click', function () {
+            $('[data-toggle="tooltip"]').tooltip('toggle');
+        });
 
-</script>
+        $("#HearingDate").datepicker({
+            dateFormat: "mm/dd/yy"
+        })
+        $("#VisionDate").datepicker({
+            dateFormat: "mm/dd/yy"
+        })
+
+    </script>

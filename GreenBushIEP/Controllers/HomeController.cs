@@ -1566,6 +1566,7 @@ namespace GreenbushIep.Controllers
 
             if (!string.IsNullOrEmpty(HTMLContent))
             {
+                //bool isDraft = false;
                 int id = 0;
                 Int32.TryParse(studentId, out id);
 
@@ -1581,35 +1582,25 @@ namespace GreenbushIep.Controllers
 
                 db.SaveChanges();
 
+                //var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+                //if(iepObj != null)
+                  //  isDraft = iepObj.FirstOrDefault().dra
+
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 
-                var cssText = @"<style>
-                                .header{color:white;}
-                                .input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}
-                                .transitionServiceLabel, .underline{ text-decoration: underline;}
-                                .transition-break{page-break-before:always;}
-                                td { padding: 10px;}th{font-weight:600;}
-                                table{width:600px;border-spacing: 10px;}
-                                .module-page {font-size:11pt;}label{font-weight:800;}
-                                h3{font-weight:600;font-size:14pt;width:100%;text-align:center;padding:15px;}
-                                p{padding:10px}
-                                .section-break{page-break-after:always;color:white;background-color:white}
-                                .funkyradio{padding-bottom:15px;}
-                                .radio-inline{font-weight:normal;}
-                                .form-group{margin-top:5px;margin-bottom:5px}
-                                .voffset{padding-bottom:8px;}
-                                .form-check{margin-left:10px;}
-                                .dont-break{margin-top:10px;page-break-inside: avoid;}
-                                </style>";
+                var cssText = @"<style>.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 10px;}.module-page, span {font-size:11pt;}label{font-weight:600;}.text-center{text-align:center} h3 {font-weight:400;font-size:18pt;width:100%;text-align:center;padding:8px;}p {padding:5px}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;}</style>";
+
                 string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                
+                string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
+
                 HtmlDocument doc = new HtmlDocument();
                 doc.OptionWriteEmptyNodes = true;
                 doc.OptionFixNestedTags = true;
-                doc.LoadHtml(cssText + "<div class='module-page'>" + result + "</div>" );
+                doc.LoadHtml(cssTextResult + "<div class='module-page'>" + result + "</div>" );
+
                 string cleanHTML = doc.DocumentNode.OuterHtml;
 
-                using (var cssMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cssText)))
+                using (var cssMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cssTextResult)))
                 {
                     using (var htmlMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cleanHTML)))
                     {
@@ -1672,8 +1663,8 @@ namespace GreenbushIep.Controllers
                     for (int i = 1; i <= pages; i++)
                     {
                         ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 85f, 750f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("{0}", DateTime.Now.ToShortDateString()), blackFont), 85f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("{0}", DateTime.Now.ToShortDateString()), blackFont), 25f, 15f, 0);
                         ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Page {0} of {1}",i.ToString(), pages.ToString()), blackFont), 568f, 15f, 0);
                     }
                 }

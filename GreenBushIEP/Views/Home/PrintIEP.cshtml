@@ -25,6 +25,8 @@
 
     p, textarea{
       overflow-y: auto;
+      font-size:14px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
  
     .fadeInToBackground {
@@ -283,57 +285,57 @@
                 <div class="funkyradio">
                     
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentHealth.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentHealth.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.studentHealth.ProgressTowardGenEd ? "checked" : String.Empty) />
                         <label for="HealthProgressTowardGenEd" class="">Health Concerns progressing with General Education Supports</label>
 
                     </div>
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentHealth.Diagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentHealth.Diagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.studentHealth.Diagnosis ? "checked" : String.Empty) />
                         <label for="HealthDiagnosis" class="">Concerns that impact ability to learn or access to general curriculum</label>
                     </div>
                 </div>
-                
-                <fieldset class="form-group voffset" id="HearingImpairmentInfo" style="display: block;">
-                    <div><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</div>
+                <fieldset class="form-group">
+                    <label>Does the student have a hearing impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="HearingImparied" id="HearingImparied" @(Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value ? "checked" : String.Empty ) />
+                </fieldset>
+                <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
+                    <div class="title"><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</div>
                     <div class="form-check">
-                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 1 ? "checked" : String.Empty ) />Pass</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 0 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 0 ? "checked" : String.Empty ) />Failed</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="VisionResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 1 ? "checked" : String.Empty ) />Pass</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == 0 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="VisionResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == 0 ? "checked" : String.Empty ) />Failed</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.HearingResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="VisionResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.HearingResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
                     </div>
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.VisionImparied ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty ) />                    
+                    <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.VisionImparied ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty ) />                    
                 </fieldset>
-                <fieldset class="form-group voffset" id="HearingImpairmentInfo" style="display: block;">
+                <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
                     <div><label>Visual Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</div>
+
                     <div class="form-check">
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 1 ? "checked" : String.Empty ) />Pass</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 0 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty ) />Failed</label>
-                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="HearingResult" value="1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 1 ? "checked" : String.Empty ) />Pass</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == 0 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="HearingResult" value="0" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == 0 ? "checked" : String.Empty ) />Failed</label>
+                        <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
                     </div>
                 </fieldset>
                 
                 <fieldset class="form-group">
-                    <label class="" style="padding: 5px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
-                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                        <input type="checkbox" name="ModuleHealthCarePlan" id="ModuleHealthCarePlan" class="onoffswitch2-checkbox" @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value ? "checked" : String.Empty ) />
-                        <label class="onoffswitch2-label" for="ModuleHealthCarePlan">
-                            <span class="onoffswitch2-inner"></span>
-                            <span class="onoffswitch2-switch"></span>
-                        </label>
-                    </div>
+                    
+                    <label>Does this student require a health care plan?</label>&nbsp;&nbsp;
+                    <img src="@(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                    <input type="checkbox" id="ModuleHealthCarePlan" name="ModuleHealthCarePlan" @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value ? "checked" : String.Empty) />
+                    
                     <div class="form-check" id="AdditionalHealthInfoTextArea">
-                        <p style="display: @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value == true ? "block;" : "none;")">
-                            <label >Notes</label><br />
+                        <span style="display: @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value == true ? "block;" : "none;")">
+                            <label>Notes:</label><br />
                             <textarea class="form-control standard-font-size" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.studentHealth.AdditionalHealthInfo)</textarea>
-                        </p>
+                        </span>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label  style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                    <div><label style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
                     <div class="form-check">
                         <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.studentHealth.LevelOfPerformance)</textarea>
                     </div>
@@ -348,18 +350,20 @@
                     <label>This need will be met by:</label>
                     <div class="form-check">
                         <div class="checkbox">
-                            <label><img src="@(Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentHealth.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                            <label><img src="@(Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentHealth.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                            <label><img src="@(Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentHealth.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                            <label><img src="@(Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentHealth.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                            <label><img src="@(Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentHealth.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                            <label><img src="@(Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentHealth.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                         </div>
                     </div>
-                    <div class="form-check" id="MeetByOtherTextArea">
-                        <br />
-                        <p style="display: @(Model.studentHealth.NeedMetByOther == true ? "block;" : "none;")">
-                            <span > *if other, please explain</span><br />
-                            <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.studentHealth.NeedMetByOtherDescription)</textarea>
-                        </p>
-                    </div>
+
+                    <div class="standard-font-size" style="display: @(Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value == true ? "block;" : "none;")">
+                        @if (Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value == true)
+                        {
+                            <p>*if other, please explain:</p>
+                        }
+                        <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentHealth.NeedMetByOtherDescription)</p>
+                    </div>     
+                                       
                 </fieldset>
                 
             }
@@ -377,25 +381,25 @@
             {
             <div>
                 <div class="funkyradio-primary">
-                    <img src="@(Model.studentMotor.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                    <img src="@(Model.studentMotor.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                     <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.studentMotor.ProgressTowardGenEd ? "checked" : String.Empty )>
                     <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
                 </div>
                 <div class="funkyradio-primary">
-                    <img src="@(Model.studentMotor.Needs ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                    <img src="@(Model.studentMotor.Needs ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                     <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.studentMotor.Needs ? "checked" : String.Empty )>
                     <label for="ModuleMotorNeeds">Area of Need which impacts perforamnce in General Education</label>
                 </div>
                 <fieldset class="form-group">
                     <p><label>Team will consider participation in:</label></p>
                     <div class="form-check"  style="padding-left:10px;padding-bottom:8px;">
-						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty ) />No Special Education Supports Needed</label><br>
-					    <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty ) />Modified or Adaptive Supports Needed</label><br>
-						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty ) />Student has Met P.E. Requirements</label><br>
+						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty ) />No Special Education supports needed in Physical Education</label><br>
+					    <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty ) />Modified or Adaptive Supports Needed in Physical Education</label><br>
+						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty ) />Student has met Physical Education Requirements</label><br>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                    <div><label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
                     <div class="form-check">
                         <p class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3">@(Model.studentMotor.LevelOfPerformance)</p>
                     </div>
@@ -407,22 +411,24 @@
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label>This need will be met by:</label>
+                    
                     <div class="form-check">
+                        <label>This need will be met by:</label>
                         <div class="checkbox">
-                            <label><img src="@(Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentMotor.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                            <label><img src="@(Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentMotor.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                            <label><img src="@(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentMotor.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                            <label><img src="@(Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMotor.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                            <label><img src="@(Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMotor.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                            <label><img src="@(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMotor.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                         </div>
                     </div>
-                                       
-                    <div class="form-check" id="MeetByOtherTextArea">
-                        <p>
-                            If other, please explain
-                        </p>
-                            <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" >@(Model.studentMotor.NeedMetByOtherDescription)</p>
-                        
-                    </div>
+
+                    <div class="standard-font-size" style="display: @(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true ? "block;" : "none;")">
+                        @if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true)
+                        {
+                            <p>*if other, please explain:</p>
+                        }
+                        <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" >@(Model.studentMotor.NeedMetByOtherDescription)</p>
+                    </div>          
+                    
                 </fieldset>
             </div>
             }
@@ -441,22 +447,22 @@
             <div>
                 <div class="funkyradio">
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentCommunication.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" name="ModuleCommunicationProgressTowardGenEd" id="ModuleCommunicationProgressTowardGenEd" @(Model.studentCommunication.ProgressTowardGenEd ? "checked" : String.Empty )/>
                         <label for="ModuleCommunicationProgressTowardGenEd">Progressing with General Education Support</label>
                     </div>
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentCommunication.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.studentCommunication.AreaOfNeed == true ? "checked" : String.Empty )/>
                         <label for="ModuleCommunicationAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
                     </div>
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.Deaf ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentCommunication.Deaf ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.studentCommunication.Deaf ? "checked" : String.Empty )/>
                         <label for="ModuleCommunicationDeaf">Deaf/Hard of Hearing</label>
                     </div>
                     <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.LimitedEnglish ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                        <img src="@(Model.studentCommunication.LimitedEnglish ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" name="ModuleCommunicationLimitedEnglish" id="ModuleCommunicationLimitedEnglish" @(Model.studentCommunication.LimitedEnglish ? "checked" : String.Empty) />
                         <label for="ModuleCommunicationLimitedEnglish">Limited English Proficiency</label>
                     </div>
@@ -478,18 +484,20 @@
                     <label>This need will be met by:</label>
                     <div class="form-check">
                         <div class="checkbox">
-                            <label><img src="@(Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentCommunication.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                            <label><img src="@(Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentCommunication.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                            <label><img src="@(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentCommunication.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                            <label><img src="@(Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentCommunication.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                            <label><img src="@(Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentCommunication.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                            <label><img src="@(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentCommunication.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                         </div>
                     </div>
                     
-                                
-                    <div class="form-check" id="MeetByOtherTextArea">
-                        <p>If other, please explain</p>
-                            <p class="form-control" name="ModuleCommunicationMeetNeedByOtherDescription" id="ModuleCommunicationMeetNeedByOtherDescription" rows="3">@(Model.studentCommunication.NeedMetByOtherDescription)</p>
-                       
-                    </div>
+                    <div class="standard-font-size" style="display: @(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true ? "block;" : "none;")">
+                        @if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true)
+                        {
+                            <p>*if other, please explain:</p>
+                        }
+                        <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentCommunication.NeedMetByOtherDescription)</p>
+                    </div>          
+                   
                 </fieldset>
             </div>
             }
@@ -508,27 +516,27 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentSocial.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleSocialProgressTowardGenEd" id="ModuleSocialProgressTowardGenEd" @(Model.studentSocial.ProgressTowardGenEd ? "checked" : String.Empty )/>
                 <label for="ModuleSocialProgressTowardGenEd">Progressing with General Education Support</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentSocial.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.studentSocial.AreaOfNeed == true ? "checked" : String.Empty )/>
                 <label for="ModuleSocialAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.MentalHealthDiagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentSocial.MentalHealthDiagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.studentSocial.MentalHealthDiagnosis ? "checked" : String.Empty )/>
                 <label for="ModuleSocialMentalHealthDiagnosis">Mental Health Diagnosis</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.SignificantBehaviors ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentSocial.SignificantBehaviors ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleSocialSignificantBehaviors" id="ModuleSocialSignificantBehaviors" @(Model.studentSocial.SignificantBehaviors ? "checked" : String.Empty )/>
                 <label for="ModuleSocialSignificantBehaviors">Significant Behaviours</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.SocialDeficit == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentSocial.SocialDeficit == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleSocialDeficit" id="ModuleSocialDeficit" @(Model.studentSocial.SocialDeficit == true ? "checked" : String.Empty )/>
                 <label for="ModuleSocialDeficit">Social Skills Deficit</label>
             </div>
@@ -568,16 +576,20 @@
            
             <div class="form-check">
                 <div class="checkbox">
-                    <label><img src="@(Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentSocial.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentSocial.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentSocial.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <label><img src="@(Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentSocial.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                    <label><img src="@(Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentSocial.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><img src="@(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentSocial.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                 </div>
             </div>
 
-            <div class="form-check" id="MeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control" name="ModuleSocialMeedNeedByOtherDescription" id="ModuleSocialMeedNeedByOtherDescription" rows="3">@(Model.studentSocial.NeedMetByOtherDescription)</p>                
+            <div class="standard-font-size" style="display: @(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true ? "block;" : "none;")">
+                @if (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true)
+                {
+                    <p>*if other, please explain:</p>
+                }
+                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentSocial.NeedMetByOtherDescription)</p>
             </div>
+            
         </fieldset>
     </div>
     }
@@ -596,12 +608,12 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentIntelligence.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentIntelligence.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.studentIntelligence.ProgressTowardGenEd ? "checked" : String.Empty )/>
                 <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentIntelligence.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentIntelligence.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.studentIntelligence.AreaOfNeed == true ? "checked" : String.Empty )/>
                 <label for="ModuleIntelligenceAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
             </div>
@@ -636,12 +648,12 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentAcademic.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentAcademic.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.studentAcademic.ProgressTowardGenEd ? "checked" : String.Empty ) />
                 <label for="ModuleAcademicProgressTowardGenEd">Progressing with general education support</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentAcademic.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentAcademic.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.studentAcademic.AreaOfNeed ? "checked" : String.Empty ) />
                 <label for="ModuleAcademicAreaOfNeed">Area of need which impacts performance in general education</label>
             </div>
@@ -663,17 +675,20 @@
             <label>This need will be met by:</label>
             <div class="form-check">
                 <div class="checkbox">
-                    <label><img src="@(Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentAcademic.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentAcademic.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentAcademic.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <label><img src="@(Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentAcademic.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                    <label><img src="@(Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentAcademic.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><img src="@(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentAcademic.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                 </div>
             </div>
 
-            <div class="form-check" id="AcademicMeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>                
+            <div class="standard-font-size" style="display: @(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true ? "block;" : "none;")">
+              @if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true)                  
+                {
+                    <p>*if other, please explain:</p>
+                }
+                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>
             </div>
-            <br>
+           
         </fieldset>
     </div>
     }
@@ -692,24 +707,17 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentReading.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentReading.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.studentReading.ProgressTowardGenEd ? "checked" : String.Empty )/>
                 <label for="ModuleReadingProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentReading.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentReading.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.studentReading.AreaOfNeed == true ? "checked" : String.Empty )/>
                 <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
             </div>
         </div>
-        <fieldset>
-            <label>Reading Instructional Levels (multi-select options)</label>
-            <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier1.HasValue && Model.studentReading.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier1.HasValue && Model.studentReading.InstructionalTier1.Value ? "checked" : String.Empty )/>Tier 1 core/basic instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier2.HasValue && Model.studentReading.InstructionalTier2.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleReadingInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier2.HasValue && Model.studentReading.InstructionalTier2.Value ? "checked" : String.Empty )/>Tier 2 group instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentReading.InstructionalTier3.HasValue && Model.studentReading.InstructionalTier3.Value ? @imageChecked : @imageNotChecked)" class='imgCheck'/><input type="checkbox" name="ModuleReadingInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentReading.InstructionalTier3.HasValue && Model.studentReading.InstructionalTier3.Value ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction</label><br>
-            </div>
-        </fieldset>
+       
         <fieldset class="form-group">
             <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
@@ -726,16 +734,20 @@
             <label>This need will be met by:</label>
             <div class="form-check">
                 <div class="checkbox">
-                    <label><img src="@(Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentReading.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentReading.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentReading.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <label><img src="@(Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentReading.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                    <label><img src="@(Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentReading.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><img src="@(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentReading.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                 </div>
             </div>
 
-            <div class="form-check" id="ReadingMeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
+            <div class="standard-font-size" style="display: @(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true ? "block;" : "none;")">
+              @if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true)
+              {
+                    <p>*if other, please explain:</p>
+                }
+                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
             </div>
+           
         </fieldset>
     </div>
     }
@@ -754,30 +766,17 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentMath.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentMath.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.studentMath.ProgressTowardGenEd ? "checked" : String.Empty )/>
                 <label for="ModuleMathProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentMath.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentMath.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.studentMath.AreaOfNeed == true ? "checked" : String.Empty )/>
                 <label for="ModuleMathAreaOfNeed">Area of need which impacts performance in general education</label>
             </div>
         </div>
-        <fieldset>
-            <label>Math Instructional Levels (multi-select options)</label>
-            <div class="form-check">
-                <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier1.HasValue && Model.studentMath.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier1.HasValue  && Model.studentMath.InstructionalTier1.Value ? "checked" : String.Empty )/>Tier 1 core/basic instruction
-                </label><br>
-                <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier2.HasValue && Model.studentMath.InstructionalTier2.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />  <input type="checkbox" name="ModuleMathInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier2.HasValue  && Model.studentMath.InstructionalTier2.Value ? "checked" : String.Empty )/>Tier 2 group instruction
-                </label><br>
-                <label class="radio-inline">
-                    <img src="@(Model.studentMath.InstructionalTier3.HasValue && Model.studentMath.InstructionalTier3.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />   <input type="checkbox" name="ModuleMathInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentMath.InstructionalTier3.HasValue  && Model.studentMath.InstructionalTier3.Value ? "checked" : String.Empty )/>Tier 3 individual/intensive instruction
-                </label><br>
-            </div>
-        </fieldset>
+      
         <fieldset class="form-group">
             <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
@@ -795,16 +794,20 @@
             <label>This need will be met by:</label>
             <div class="form-check">
                 <div class="checkbox">
-                    <label><img src="@(Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentMath.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentMath.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentMath.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <label><img src="@(Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMath.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                    <label><img src="@(Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMath.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><img src="@(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMath.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                 </div>
             </div>
 
-            <div class="form-check" id="MathMeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control">@(Model.studentMath.NeedMetByOtherDescription)</p>                
+            <div class="standard-font-size" style="display: @(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true ? "block;" : "none;")">
+               @if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true)
+                {
+                    <p>*if other, please explain:</p>
+                }
+                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMath.NeedMetByOtherDescription)</p>
             </div>
+          
         </fieldset>
     </div>
     }
@@ -823,24 +826,17 @@
     <div style="font-size:12pt;  color: #333;">
         <div class="funkyradio">
             <div class="funkyradio-primary">
-                <img src="@(Model.studentWritten.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentWritten.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.studentWritten.ProgressTowardGenEd ? "checked" : String.Empty)/>
                 <label for="ModuleWrittenProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
             </div>
             <div class="funkyradio-primary">
-                <img src="@(Model.studentWritten.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                <img src="@(Model.studentWritten.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                 <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.studentWritten.AreaOfNeed == true ? "checked" : String.Empty)/>
                 <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamance in general education</label>
             </div>
         </div>
-        <fieldset>
-            <label>Written Instructional Levels (multi-select options)</label>
-            <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier1.HasValue && Model.studentWritten.InstructionalTier1.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier1" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier1.HasValue && Model.studentWritten.InstructionalTier1.Value ? "checked" : String.Empty)/>Tier 1 core/basic instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier2.HasValue  && Model.studentWritten.InstructionalTier2.Value? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier2" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier2.HasValue && Model.studentWritten.InstructionalTier2.Value ? "checked" : String.Empty)/>Tier 2 group instruction</label><br>
-                <label class="radio-inline"><img src="@(Model.studentWritten.InstructionalTier3.HasValue  && Model.studentWritten.InstructionalTier3.Value? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="ModuleWrittenInstructionalTier3" style="position: relative; right: 5px;" @(Model.studentWritten.InstructionalTier3.HasValue && Model.studentWritten.InstructionalTier3.Value ? "checked" : String.Empty)/>Tier 3 individual/intensive instruction</label><br>
-            </div>
-        </fieldset>
+     
         <fieldset class="form-group">
             <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
             <div class="form-check">
@@ -858,16 +854,20 @@
           
             <div class="form-check">
                 <div class="checkbox">
-                    <label><img src="@(Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByGoal" @(Model.studentWritten.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByAccommodation" @(Model.studentWritten.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' /><input type="checkbox" name="MetByOther" @(Model.studentWritten.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <label><img src="@(Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentWritten.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                    <label><img src="@(Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentWritten.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><img src="@(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentWritten.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
                 </div>
             </div>
 
-            <div class="form-check" id="WrittenMeetByOtherTextArea">
-                <p>If other, please explain</p>
-                <p class="form-control">@(Model.studentWritten.NeedMetByOtherDescription)</p>                
+            <div class="standard-font-size" style="display: @(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true ? "block;" : "none;")">
+               @if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true)
+                {
+                    <p>*if other, please explain:</p>
+                }
+                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentWritten.NeedMetByOtherDescription)</p>
             </div>
+         
         </fieldset>
     </div>
     }
@@ -896,8 +896,8 @@
                                 <div class="col-md-12">
                                     <label for="AccType">Type</label>
                                     <div class="form-check" style="margin-left:8px">
-                                        <label class="radio-inline"><img src="@(accom.AccomType == 1  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" value=1 style="position: relative; right: 5px;" @(accom.AccomType == 1 ? "checked=checked" : String.Empty )/>Accommodation</label><br />
-                                        <label class="radio-inline"><img src="@(accom.AccomType == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input type="radio" value=2 style="position: relative; right: 5px;" @(accom.AccomType == 2 ? "checked=checked" : String.Empty )/>Modification</label><br />
+                                        <label class="radio-inline"><img src="@(accom.AccomType == 1  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=1 style="position: relative; right: 5px;" @(accom.AccomType == 1 ? "checked=checked" : String.Empty )/>Accommodation</label><br />
+                                        <label class="radio-inline"><img src="@(accom.AccomType == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=2 style="position: relative; right: 5px;" @(accom.AccomType == 2 ? "checked=checked" : String.Empty )/>Modification</label><br />
 
                                     </div>
                                 </div>
@@ -937,14 +937,14 @@
                                             <label for="AnticipatedStartDate">Anticipated Start Date</label>
                                             @if (accom.AnticipatedStartDate.HasValue)
                                             {
-                                                <p>@accom.AnticipatedStartDate.Value.Date.ToString("yyyy-MM-dd")</p>
+                                                <p>@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")</p>
                                             }                                           
                                         </div>
                                         <div class="col-md-3" style="padding-top:8px">
                                             <label for="AnticipatedEndDate">Anticipated End Date</label>
                                             @if (accom.AnticipatedEndDate.HasValue)
                                             {
-                                                <p>@accom.AnticipatedEndDate.Value.Date.ToString("yyyy-MM-dd")</p>
+                                                <p>@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")</p>
 
                                             }
                                             
@@ -1196,7 +1196,7 @@
 
             <div class="row" style="padding-top:8px">
                 <div class="col-md-12">
-                    <label>Crisis Management Plan</label>
+                    <label class="underline">Crisis Management Plan</label>
 
                 </div>
             </div>
@@ -1241,7 +1241,11 @@
 
 
             </div>
-
+            <div class="row voffset3">
+                <div class="col-md-12">
+                    <label class="underline">Action Plan</label>
+                </div>
+            </div>
 
             <div class="row voffset2">
                 <div class="col-md-12">
@@ -1275,10 +1279,7 @@
         <div>
             <h3 class="text-center">TRANSITION PLAN</h3>
 
-            <div class="row setup-content" id="step-1">
-                <div class="col-xs-12">
-                    <div class="col-md-12 well" style="background-color: transparent;">
-
+           
                         <div class="row">
                             <div class="col-md-12" id="transitionAssessmentContainer">
 
@@ -1312,7 +1313,7 @@
                                                                 <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                                 <div class="input-group" style="margin-bottom: 5px;">
                                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                    @(assessment.CompletedOn?.ToString("yyyy-MM-dd"))
+                                                                    @(assessment.CompletedOn?.ToString("MM/dd/yyyy"))
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-9">
@@ -1366,13 +1367,9 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
+                  
             <div class="row setup-content" id="step-2">
-                <div class="col-xs-12">
-                    <div class="col-md-12 well" style="background-color: transparent;">
+             
 
                         <div class="row">
                             <div class="col-md-12" id="transitionEducationGoalContainer">
@@ -1400,15 +1397,13 @@
                                                             <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Education/Training Goal</span>
                                                     </h4>
                                                 </div>
-                                                <div  class="panel-collapse collapse in">
-                                                    <div class="panel-body">
+                                               
                                                         <div class="row">
                                                             <div class="col-md-12">                                                                
                                                                     @edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    
                                             </div>
                                         </div>
                                     }
@@ -1445,15 +1440,13 @@
                                                             <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Employment Goal</span>
                                                     </h4>
                                                 </div>
-                                                <div id="collapseTransitionEmployment@(goal.TransitionGoalID)" class="panel-collapse collapse in">
-                                                    <div class="panel-body">
+                                               
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 @edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    
                                             </div>
                                         </div>
                                     }
@@ -1487,15 +1480,13 @@
                                                             <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Independent Living</span>                                                        
                                                     </h4>
                                                 </div>
-                                                <div >
-                                                    <div class="panel-body">
+                                              
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 @edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    
                                             </div>
                                         </div>
                                     }
@@ -1506,8 +1497,7 @@
 
 
 
-                    </div>
-                </div>
+                  
             </div>
 
             <div class="row" style="padding-top:20px">
@@ -1519,7 +1509,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-top:15px">
+                        <div class="row" style="padding-top:5px">
                             <div class="panel-heading">
                                 <h4>
                                     <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Instruction Service</span>
@@ -1530,55 +1520,48 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-top:8px">
+                        <div class="row" style="padding-top:5px">
                             <div class="col-md-12" id="transitionInstructionServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
                                 {
                                     foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
                                     {
-                                        <div >
-                                            <div class="panel panel-default">
-                                               
-                                                <div >
-                                                    <div class="panel-body">
-                                                        <div class="row"  style="padding-top:8px">
+                                      
+                                                        <div class="row" style="padding-top:8px">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
                                                                 <div>
-                                                                    <p  class="form-control">@(service.ServiceDescription)</p>
+                                                                    <p class="form-control">@(service.ServiceDescription)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceFrequency">Frequency</label>
                                                                 <div>
-                                                                    <p class="form-control" >@(service.Frequency)</p>
+                                                                    <p class="form-control">@(service.Frequency)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDuration">Duration</label>
                                                                 <div>
-                                                                    <p class="form-control" value="" >@(service.Duration)</p>
+                                                                    <p class="form-control" value="">@(service.Duration)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceLocation">Location</label>
                                                                 <div>
-                                                                    <p class="form-control" value="" >@(service.Location)</p>
+                                                                    <p class="form-control" value="">@(service.Location)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                   
                                     }
                                 }
 
                             </div>
                         </div>
 
-                        <div class="row transition-break" style="padding-top:15px">
+                        <div class="row transition-break" style="padding-top:5px">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Related Service</span>
@@ -1589,18 +1572,13 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-top:8px">
+                        <div class="row" >
                             <div class="col-md-12" id="transitionRelatedServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
                                 {
                                     foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
-                                    {
-                                        <div class="panel-group transitionRelatedService" id="transitionRelatedIndentity@(related.TransitionServiceID)">
-                                            <div class="panel panel-default">
-                                               
-                                                <div>
-                                                    <div class="panel-body">
+                                    {              
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1611,26 +1589,25 @@
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceFrequency">Frequency</label>
                                                                 <div>
-                                                                    <p class="form-control" value="" >@(related.Frequency)</p>
+                                                                    <p class="form-control" value="">@(related.Frequency)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDuration">Duration</label>
                                                                 <div>
-                                                                    <p class="form-control"  value="" >@(related.Duration)</p>
+                                                                    <p class="form-control" value="">@(related.Duration)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceLocation">Location</label>
                                                                 <div>
-                                                                    <p class="form-control" value="" >@(related.Location)</p>
+                                                                    <p class="form-control" value="">@(related.Location)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                 
+                                               
+                                            
                                     }
                                 }
 
@@ -1638,7 +1615,7 @@
                         </div>
 
 
-                        <div class="row transition-break" style="padding-top:15px">
+                        <div class="row transition-break" style="padding-top:5px">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Daily Living Skills Service</span>
@@ -1649,18 +1626,14 @@
                             </div>
                         </div>
 
-                        <div class="row" style="padding-top:8px">
+                        <div class="row" >
                             <div class="col-md-12" id="transitionDailyServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
                                 {
                                     foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
                                     {
-                                        <div class="panel-group transitionDailyService" id="transitionDailyIndentity1">
-                                            <div class="panel panel-default">
-                                                
-                                                <div id="collapseTransitionDaily@(daily.TransitionServiceID)" class="panel-collapse collapse in">
-                                                    <div class="panel-body">
+                                        
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1671,105 +1644,93 @@
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceFrequency">Frequency</label>
                                                                 <div>
-                                                                    <p class="form-control" value="" >@(daily.Frequency)</p>
+                                                                    <p class="form-control" value="">@(daily.Frequency)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDuration">Duration</label>
                                                                 <div>
-                                                                    <p class="form-control"  value="" >@(daily.Duration)</p>
+                                                                    <p class="form-control" value="">@(daily.Duration)</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceLocation">Location</label>
                                                                 <div>
-                                                                    <p class="form-control"  value="" >@(daily.Location)</p>
+                                                                    <p class="form-control" value="">@(daily.Location)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    
                                     }
                                 }
 
                             </div>
                         </div>
-                        <div class="row transition-break" style="padding-top:15px">
+                        <div class="row transition-break" style="padding-top:5px">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Functional Vocational Service</span>
                                 </h4>
                             </div>
                         </div>
-                            <div class="row" style="padding-top:15px">
-                                <div class="col-md-12" id="transitionFunctionalServiceContainer">
+                        <div class="row" >
+                            <div class="col-md-12" id="transitionFunctionalServiceContainer">
 
-                                    @if (Model.studentTransition.services.Count > 0)
+                                @if (Model.studentTransition.services.Count > 0)
+                                {
+                                    foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
                                     {
-                                        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
-                                        {
-                                            <div class="panel-group transitionVocationalService" id="transitionVocationalIndentity@(vocational.TransitionServiceID)">
-                                                <div class="panel panel-default">
-
-                                                    <div id="collapseTransitionVoctional@(vocational.TransitionServiceID)" class="panel-collapse collapse in">
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <label for="transitionServiceDescription">Description</label>
-                                                                    <div>
-                                                                        <p class="form-control">@(vocational.ServiceDescription)</p>
-                                                                    </div>
+                                       
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label for="transitionServiceDescription">Description</label>
+                                                                <div>
+                                                                    <p class="form-control">@(vocational.ServiceDescription)</p>
                                                                 </div>
-                                                                <div class="col-md-12">
-                                                                    <label for="transitionServiceFrequency">Frequency</label>
-                                                                    <div>
-                                                                        <p class="form-control">@(vocational.Frequency)</p>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="transitionServiceFrequency">Frequency</label>
+                                                                <div>
+                                                                    <p class="form-control">@(vocational.Frequency)</p>
                                                                 </div>
-                                                                <div class="col-md-12">
-                                                                    <label for="transitionServiceDuration">Duration</label>
-                                                                    <div>
-                                                                        <p class="form-control">@(vocational.Duration)</p>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="transitionServiceDuration">Duration</label>
+                                                                <div>
+                                                                    <p class="form-control">@(vocational.Duration)</p>
                                                                 </div>
-                                                                <div class="col-md-12">
-                                                                    <label for="transitionServiceLocation">Location</label>
-                                                                    <div>
-                                                                        <p class="form-control">@(vocational.Location)</p>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="transitionServiceLocation">Location</label>
+                                                                <div>
+                                                                    <p class="form-control">@(vocational.Location)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
+                                                   
                                     }
+                                }
 
-                                </div>
                             </div>
+                        </div>
 
-                        <div class="row transition-break" style="padding-top:15px">
+
+
+                        <div class="row transition-break" style="padding-top:5px">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <span class="glyphicon glyphicon-random"></span><span class="transitionServiceLabel" style="margin-left:8px;">Recreation and Leisure Service</span>
                                 </h4>
                             </div>
                         </div>
-                            <div class="row" style="padding-top:15px">
+                            <div class="row">
                                 <div class="col-md-12" id="transitionLeisureServiceContainer">
 
                                     @if (Model.studentTransition.services.Count > 0)
                                     {
                                         foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
                                         {
-                                            <div class="panel-group transitionLeisureService" id="transitionLeisureIndentity@(vocational.TransitionServiceID)">
-                                                <div class="panel panel-default">
-                                                    
-                                                    <div id="collapseTransitionLeisure@(vocational.TransitionServiceID)" class="panel-collapse collapse in">
-                                                        <div class="panel-body">
+                                            
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <label for="transitionServiceDescription">Description</label>
@@ -1796,10 +1757,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                       
                                         }
                                     }
 
@@ -1823,9 +1781,87 @@
                                     </fieldset>
                                 </div>
                             </div>
+                        <div class="row dont-break">
+                            <div class="col-md-12">
+                                <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
+                                <span>
+                                    @(Model.studentFirstName)&nbsp;@(Model.studentLastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+                                    He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
+                                    district and will be meaningful to his post secondary goal of working as an <span class="underline">@(Model.studentTransition.transition.Planning_Occupation)</span>. The courses he/she is enrolled in for school year
+                                    and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
+                                </span><br/><br />
+                                <fieldset class="form-group">
+                                    <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>
+                                    <img src="@(Model.studentTransition.transition.Planning_Facilitate ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                                    <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.Planning_Facilitate ? "checked='checked'" : "" )>
+                                    
+                                </fieldset><br/>
+                                <fieldset class="form-group">
+                                    <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>
+                                    <img src="@(Model.studentTransition.transition.Planning_Align ? @imageChecked : @imageNotChecked)" class='imgCheck' />
+                                    <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.Planning_Align ? "checked='checked'" : "" )>
+                                    
+                                </fieldset><br /><br />
+                                <span >
+                                    The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                                    maintained in the counselor's office
+                                </span>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <fieldset class="form-group">
+                                    <span><b>Anticipated Graduation Month/Year</b></span><span> @(Model.studentTransition.transition.Planning_GraduationMonth)-@(Model.studentTransition.transition.Planning_GraduationYear)</span>
+                                 </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">                                   
+                                    @if (Model.studentTransition.transition.Planning_Completion == "Graduate with a High School Diploma")
+                                    {
+                                        <span>Graduate with a High School Diploma</span>
+                                    }
+                                    else if (Model.studentTransition.transition.Planning_Completion == "Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age")
+                                    {
+                                        <span>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</span>
+                                    }                                                                        
+                                </fieldset>
+                            </div>
+                            <div class="col-md-3">
+                                <fieldset class="form-group">
+                                    <span><b>Total # of Credits required by district</b></span><span> @(Model.studentTransition.transition.Planning_Credits)</span>
+                                </fieldset>
+                            </div>
+                        </div>
 
-
+                        <div class="row" style="margin-top:15px;">
+                            <div class="col-md-12">
+                                <label class="underline">Vocational Rehabilitation</label><br/><br />
+                                <fieldset class="form-group">
+                                    <label style = "padding: 5px 0 10px;" > Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance?</label>&nbsp;&nbsp;
+                                    <img src="@(Model.studentTransition.transition.Planning_BenefitKRS ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                        <input type = "checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.Planning_BenefitKRS ? "checked='checked'" : "" )>
+                                        <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
+                                            <span class="onoffswitch2-inner"></span>
+                                            <span class="onoffswitch2-switch"></span>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group @(Model.studentTransition.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
+                                    <label style = "padding: 5px 0 10px;" > Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
+                                    <img src="@(Model.studentTransition.transition.Planning_ConsentPrior  ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                        <input type = "checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="onoffswitch2-checkbox" @(Model.studentTransition.transition.Planning_ConsentPrior ? "checked='checked'" : "" )>
+                                        <label class="onoffswitch2-label" for="isConfidentailReleaseObtained">
+                                            <span class="onoffswitch2-inner"></span>
+                                            <span class="onoffswitch2-switch"></span>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        
                         </div>
                 </div>
             </div>
@@ -1852,7 +1888,7 @@
                 <div class="col-md-12">
                     <fieldset class="form-group">
                         <label>Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?</label><br/>
-                        <img src="@(Model.studentOtherConsiderations.AssistiveTechnology_Require  != null ? @imageSliderChecked : @imageSliderNotChecked)" />
+                        <img src = "@(Model.studentOtherConsiderations.AssistiveTechnology_Require  != null ? @imageSliderChecked : @imageSliderNotChecked)" />
                         @*<div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                             
                             <input type="checkbox" name="AssistiveTechnology_Require" id="AssistiveTechnology_Require" class="onoffswitch2-checkbox" @(Model.studentOtherConsiderations.AssistiveTechnology_Require != null && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value ? "checked" : String.Empty ) />
@@ -1875,55 +1911,68 @@
                     <label>Assessments</label>
                 </div>
             </div>
-            <div class="row voffset2">
+            <div class="row voffset2 dont-break">
                 <div class="col-md-12">
                     <label style="font-size: 15px; ">Participation in District-Wide Assessments</label>
                     <label>When the student's age or grade level is being assess, the IEP team has determined the following options(s) to be most appropriate.  In considering the unique curricular needs of the student, the IEP team may select multiple options below.  The intent is that all students will be part of the District accountability system as appropriate.</label>
-                    <div class="form-check" style="padding-top:5px;font-size:8pt">
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_NoAccommodations_flag" value="1" @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</label><br />
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value   ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_WithAccommodations_flag" value="2" @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_Alternative_flag" value="3" @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "checked" : String.Empty) />Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_GradeNotAssessed" value="4" @(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "checked" : String.Empty) />Grade in which student is enrolled is not being assessed.</label><br />
+                    <div class="form-check" style="padding-top:5px;">
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_NoAccommodations_flag" value="1" @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</label><br />
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value   ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_WithAccommodations_flag" value="2" @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_Alternative_flag" value="3" @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "checked" : String.Empty) />Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="DistrictWideAssessments" id="DistrictAssessment_GradeNotAssessed" value="4" @(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "checked" : String.Empty) />Grade in which student is enrolled is not being assessed.</label><br />
                     </div>
                     <div class="form-check voffset2" id="DistrictAssessment_TextArea">
+                    @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
+                    {
                         <p id="DA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
                             <p class="form-control" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." >@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
                         </p>
+                    }
+                        @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+                        {
                         <p id="DA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
                             <p class="form-control" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." >@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
                         </p>
+                        }
+                      @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+                      {
                         <p id="DA_Alt_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "block;" : "none;")">
                             <p class="form-control" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
                         </p>
+                      }
                     </div>
                 </div>
             </div>
-            <div class="row voffset2">
+            <div class="row voffset2 dont-break">
                 <div class="col-md-12">
                     <label style="font-size: 15px; ">Participation in State Assessments</label>
                     <label>Changes occur annually in the grade or age level administration of Kansas State Assessments. In planning to meet the needs of the student, the IEP team has determined the student will participate as indicated below:</label>
 
-                    <div class="form-check" style="padding-top:5px;font-size:8pt">
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_NoAccom" value="1" @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</label><br />
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_WithAccom" value="2" @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
-                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="3" @(Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty) />Student has completed all required State Assessments.</label><br />
+                    <div class="form-check" style="padding-top:5px;">
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_NoAccom" value="1" @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</label><br />
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_WithAccom" value="2" @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty) />Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
+                        <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="3" @(Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty) />Student has completed all required State Assessments.</label><br />
 
                     </div>
                     <div class="form-check voffset2" id="StateAssessment_TextArea">
-
+                        @if(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
+                        { 
                         <p id="SA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
                             <p class="form-control" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." >@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
                         </p>
+                        }
+                        @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
+                        {
                         <p id="SA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
                             <p class="form-control" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." >@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
                         </p>
-
+                        }
                     </div>
 
                 </div>
             </div>
             <hr />
-            <div class="row voffset2">
+            <div class="row voffset2 dont-break" >
                 <div class="col-md-12">
                     <label>Transportation Plan</label>
                 </div>
@@ -1931,8 +1980,8 @@
             <div class="row voffset2">
                 <div class="col-md-12">
                     <div class="form-check">
-                        <label class="radio-inline" ><img src="@(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? "checked" : String.Empty) />The student is not eligible for transportation.</label><br />
-                        <label class="radio-inline" ><img src="@(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? "checked" : String.Empty) />The nature of the student’s disability is such that transportation is required.</label><br />
+                        <label class="radio-inline" ><img src="@(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? "checked" : String.Empty) />The student is not eligible for transportation.</label><br />
+                        <label class="radio-inline" ><img src="@(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? "checked" : String.Empty) />The nature of the student’s disability is such that transportation is required.</label><br />
                     </div>
                     <div class="form-check voffset2" id="TransporationPlan_TextArea">
                         <p id="TP_Other_Desc" style="display: @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "block;" : "none;")">
@@ -1942,7 +1991,7 @@
                 </div>
             </div>
             <hr />
-            <div class="row voffset2">
+            <div class="row voffset2 dont-break">
                 <div class="col-md-12">
                     <label>Regular Education Environment</label>
                     <p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
@@ -1963,7 +2012,7 @@
             {
 
                 <hr />
-                <div class="row voffset2">
+                <div class="row voffset2 dont-break">
                     <div class="col-md-12">
                         <label>Extended School Year</label>
                         <p>The IEP team has enough information to determine that @Model.studentFirstName does require extended school term services.</p>
@@ -1972,8 +2021,8 @@
                 <div class="row voffset2">
                     <div class="col-md-12">
                         <div class="form-check">
-                            <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty) /> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
-                            <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' /><input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty) /> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
+                            <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty) /> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
+                            <label class="radio-inline"><img src="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input style="font-size: 18px;" type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty) /> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
 
                         </div>
 
@@ -1986,7 +2035,7 @@
             }
 
             <hr />
-            <div class="row voffset2">
+            <div class="row voffset2 dont-break">
                 <div class="col-md-12">
                     <label>Parental Concerns</label>
                 </div>
@@ -2039,316 +2088,315 @@
     <div>
         <h3 class="text-center">GOALS</h3>
         @if (Model.studentGoals != null)
-    {
-        foreach (var sGoal in Model.studentGoals)
         {
-            var progQ1 = "";
-            var progQ2 = "";
-            var progQ3 = "";
-            var progQ4 = "";
-
-            var ddlText = "";
-            switch (sGoal.Module)
+            foreach (var sGoal in Model.studentGoals)
             {
-                case "1": { ddlText = "Health"; break; }
-                case "2": { ddlText = "Motor"; break; }
-                case "3": { ddlText = "Communication"; break; }
-                case "4": { ddlText = "Social-Emotional"; break; }
-                case "5": { ddlText = "General Intelligence"; break; }
-                case "6": { ddlText = "Academic Performance"; break; }
-                case "7": { ddlText = "Reading"; break; }
-                case "8": { ddlText = "Math"; break; }
-                case "9": { ddlText = "Written Language"; break; }
-            } //end switch
+                var progQ1 = "";
+                var progQ2 = "";
+                var progQ3 = "";
+                var progQ4 = "";
+                var evalText = "";
+                var ddlText = "";
+                switch (sGoal.Module)
+                {
+                    case "1": { ddlText = "Health"; break; }
+                    case "2": { ddlText = "Motor"; break; }
+                    case "3": { ddlText = "Communication"; break; }
+                    case "4": { ddlText = "Social-Emotional"; break; }
+                    case "5": { ddlText = "General Intelligence"; break; }
+                    case "6": { ddlText = "Academic Performance"; break; }
+                    case "7": { ddlText = "Reading"; break; }
+                    case "8": { ddlText = "Math"; break; }
+                    case "9": { ddlText = "Written Language"; break; }
+                } //end switch
 
-            switch (sGoal.Progress_Quarter1)
-            {
-                case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
-                case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-                case "3": { progQ1 = "Goal Met (indicate date)"; break; }
-            } //end switch
+                switch (sGoal.Progress_Quarter1)
+                {
+                    case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ1 = "Goal Met (indicate date)"; break; }
+                } //end switch
 
-            switch (sGoal.Progress_Quarter2)
-            {
-                case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
-                case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-                case "3": { progQ2 = "Goal Met (indicate date)"; break; }
-            } //end switch
+                switch (sGoal.Progress_Quarter2)
+                {
+                    case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ2 = "Goal Met (indicate date)"; break; }
+                } //end switch
 
-            switch (sGoal.Progress_Quarter3)
-            {
-                case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
-                case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-                case "3": { progQ3 = "Goal Met (indicate date)"; break; }
-            } //end switch
+                switch (sGoal.Progress_Quarter3)
+                {
+                    case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ3 = "Goal Met (indicate date)"; break; }
+                } //end switch
 
-            switch (sGoal.Progress_Quarter4)
-            {
-                case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
-                case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-                case "3": { progQ4 = "Goal Met (indicate date)"; break; }
-            } //end switch
+                switch (sGoal.Progress_Quarter4)
+                {
+                    case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ4 = "Goal Met (indicate date)"; break; }
+                } //end switch
+
+                
+                switch (sGoal.EvaluationProcedures.Value)
+                {
+                    case 1: { evalText = "Written Observation"; break; }
+                    case 2: { evalText = "Written Performance"; break; }
+                    case 3: { evalText = "Oral Performance"; break; }
+                    case 4: { evalText = "Criterion-Referenced Test"; break; }
+                    case 5: { evalText = "Time Sample"; break; }
+                    case 6: { evalText = "Demonstration/Performance"; break; }
+                    case 7: { evalText = "Other"; break; }
+                    
+                } //end switch
 
     <div>
         <div class="panel-group" id="accordion0">
             <div class="panel-default">
                 <div class="panel-heading" style="padding-top:8px;">
-                    <h4 class="panel-title">@sGoal.Title</h4>
+                    <label for="StudentGoalTitle">Student Goal</label> <h4 class="">@sGoal.Title</h4>
                 </div>
 
-                <div class="form-group" style="padding:2px;">
-                    <label for="StudentGoalTitle">Student Goal</label>
+                <div class="form-group" >
+                   
                     <div class="input-group">
-                        <div class="input-group-btn bs-dropdown-to-select-group">
-                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="height: 49px;">
-                                <span data-bind="bs-drp-sel-label">@ddlText</span>
-                                <span class="caret"></span>
-                                <span class="sr-only"></span>
-                            </button>
-
-                        </div>
-                        <span type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle" value="" >@sGoal.Title</span>
+                       <span data-bind="bs-drp-sel-label"><b>@ddlText</b></span>&nbsp;<span type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle" value="">@sGoal.Title</span>                        
                     </div>
 
                 </div>
-                <label for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
-                <div class="form-group" style="padding:2px;">
-                    <p class="form-control StudentGoalAnnualGoal" name="StudentGoalAnnualGoal0" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@sGoal.AnnualGoal</p>
+                
+                <div class="form-group" >
+                    <label for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                    <span class="form-control StudentGoalAnnualGoal" name="StudentGoalAnnualGoal0" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@sGoal.AnnualGoal</span>
                 </div>
-                <label for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
-                <div class="form-group" style="padding:2px;">
-                    <p type="text" class="form-control" name="StudentGoalBaseline0" value="" >@sGoal.Baseline</p>
+                
+                <div class="form-group" >
+                    <label for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                    <span type="text" class="form-control" name="StudentGoalBaseline0" value="" >@sGoal.Baseline</span>
                 </div>
-                <label for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label><br />
-                <div class="form-group" style="padding:2px;">
-                    <p type="text" class="form-control" name="StudentGoalStateStandards0" value="" >@sGoal.StateStandards</p>
+                
+                <div class="form-group" >
+                    <label for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label><br />
+                    <span type="text" class="form-control" name="StudentGoalStateStandards0" value="" >@sGoal.StateStandards</span>
                 </div>
+                <div class="form-group">
+                    <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label><br />
+                    <span>@evalText</span>
+                </div>
+                    <table class="table table-bordered table-responsive" style="margin-top:10px;margin-bottom: 0; background-color: transparent;">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th class="text-center" colspan="4"><i class="ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
+                            </tr>
+                            <tr class="PTAGDisplay ">
+                                <th>
+                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
 
-                <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: transparent;" >
-                    <thead class="thead-inverse">
-                        <tr>
-                            <th class="text-center" colspan="4"><i class="ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
-                        </tr>
-                        <tr class="PTAGDisplay ">
-                            <th>
-                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup><br/>@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-                               
-                            </th>
-                            <th>
-                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup><br/>@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-                                
-                            </th>
-                            <th>
-                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup><br/>@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-                                
-                            </th>
-                            <th>
-                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup><br/>@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-                                
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="PTAGDisplay ">
-                        <tr>
-                            <td><span>@progQ1</span>                            
-                            </td>
-                            <td><span>@progQ2</span>
-                            </td>
-                            <td>
-                                <span>@progQ3</span>
-                            </td>
-                            <td>
-                                <span>@progQ4</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter the student's performance while attempt to reach this goal">Comments</label>
-                                <div class="form-group shortTermComments">
-                                    <p name="reportOfAnnualGoalComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter1</p>
-                                    <p name="reportOfAnnualGoalComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter2</p>
-                                    <p name="reportOfAnnualGoalComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter3</p>
-                                    <p name="reportOfAnnualGoalComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter4</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </th>
+                                <th>
+                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
 
-                @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
-                        {
-                            foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
-                            {
-                                var ddlText2 = "";
-                                var gbProgQ1 = "";
-                                var gbProgQ2 = "";
-                                var gbProgQ3 = "";
-                                var gbProgQ4 = "";
-                                var isChecked = "glyphicon-unchecked";
+                                </th>
+                                <th>
+                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
 
-                                if (gb.TransitionActivity)
-                                {
-                                    isChecked = "glyphicon-check";
-                                }
+                                </th>
+                                <th>
+                                    <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
 
-                                switch (gb.Method)
-                                {
-                                    case 1: { ddlText2 = "Written Observation"; break; }
-                                    case 2: { ddlText2 = "Written Performance"; break; }
-                                    case 3: { ddlText2 = "Oral Performance"; break; }
-                                    case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-                                    case 5: { ddlText2 = "Time Sample"; break; }
-                                    case 6: { ddlText2 = "Demonstration/Performance"; break; }
-                                    case 7: { ddlText2 = "Other"; break; }
-                                } //end switch
-
-                                switch (gb.Progress_Quarter1)
-                                {
-                                    case "1": { gbProgQ1 = "Not applicable during this grading period"; break; }
-                                    case "2": { gbProgQ1 = "No progress made"; break; }
-                                    case "3": { gbProgQ1 = "Little progress made"; break; }
-                                    case "4": { gbProgQ1 = "Progress made; Objective not yet met"; break; }
-                                    case "5": { gbProgQ1 = "Objective met"; break; }
-
-                                } //end switch
-
-                                switch (gb.Progress_Quarter2)
-                                {
-                                    case "1": { gbProgQ2 = "Not applicable during this grading period"; break; }
-                                    case "2": { gbProgQ2 = "No progress made"; break; }
-                                    case "3": { gbProgQ2 = "Little progress made"; break; }
-                                    case "4": { gbProgQ2 = "Progress made; Objective not yet met"; break; }
-                                    case "5": { gbProgQ2 = "Objective met"; break; }
-
-                                } //end switch
-
-                                switch (gb.Progress_Quarter3)
-                                {
-                                    case "1": { gbProgQ3 = "Not applicable during this grading period"; break; }
-                                    case "2": { gbProgQ3 = "No progress made"; break; }
-                                    case "3": { gbProgQ3 = "Little progress made"; break; }
-                                    case "4": { gbProgQ3 = "Progress made; Objective not yet met"; break; }
-                                    case "5": { gbProgQ3 = "Objective met"; break; }
-
-                                } //end switch
-
-                                switch (gb.Progress_Quarter4)
-                                {
-                                    case "1": { gbProgQ4 = "Not applicable during this grading period"; break; }
-                                    case "2": { gbProgQ4 = "No progress made"; break; }
-                                    case "3": { gbProgQ4 = "Little progress made"; break; }
-                                    case "4": { gbProgQ4 = "Progress made; Objective not yet met"; break; }
-                                    case "5": { gbProgQ4 = "Objective met"; break; }
-
-                                } //end switch
-
-                    <label class="input-labels" style="padding: 2px;">Short Term Benchmark(s)</label>
-
-                    <label class="input-labels pull-right" style="padding-top:2px;margin-right: 15px;">T.A.</label>
-                    <div class="StudentGoalBenchmarks">
-                        <div class="StudentGoalBenchmark " id="defaultObjective">
-
-                            <div class="form-group" style="padding:2px;">
-                                <div class="input-group" style="background-color: #F9F9F9;">
-                                    <div class="input-group-btn bs-dropdown-to-select-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="height: 49px;">
-                                            <span data-bind="bs-drp-sel-label">@ddlText2</span>
-                                            <span class="caret"></span>
-                                            <span class="sr-only"></span>
-                                        </button>
-
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="PTAGDisplay ">
+                            <tr>
+                                <td>
+                                    <span>@progQ1</span>
+                                </td>
+                                <td>
+                                    <span>@progQ2</span>
+                                </td>
+                                <td>
+                                    <span>@progQ3</span>
+                                </td>
+                                <td>
+                                    <span>@progQ4</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter the student's performance while attempt to reach this goal">Comments</label>
+                                    <div class="form-group shortTermComments">
+                                        <p name="reportOfAnnualGoalComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter1</p>
+                                        <p name="reportOfAnnualGoalComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter2</p>
+                                        <p name="reportOfAnnualGoalComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter3</p>
+                                        <p name="reportOfAnnualGoalComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter4</p>
                                     </div>
-                                    <span type="text" name="StudentBenchGoalTitle0" class="form-control StudentGoalTitle" value="" >@gb.ObjectiveBenchmark</span>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
-                                            <span class="glyphicon @isChecked"></span>
-                                        </button>
-                                    </span>
-                                    <img src="@isChecked ? @imageChecked : @imageNotChecked" />
-                                </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
+                    {
+                        foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
+                        {
+                            var ddlText2 = "";
+                            var gbProgQ1 = "";
+                            var gbProgQ2 = "";
+                            var gbProgQ3 = "";
+                            var gbProgQ4 = "";
+                            var isChecked = "glyphicon-unchecked";
+
+                            if (gb.TransitionActivity)
+                            {
+                                isChecked = "glyphicon-check";
+                            }
+
+                            switch (gb.Method)
+                            {
+                                case 1: { ddlText2 = "Written Observation"; break; }
+                                case 2: { ddlText2 = "Written Performance"; break; }
+                                case 3: { ddlText2 = "Oral Performance"; break; }
+                                case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+                                case 5: { ddlText2 = "Time Sample"; break; }
+                                case 6: { ddlText2 = "Demonstration/Performance"; break; }
+                                case 7: { ddlText2 = "Other"; break; }
+                            } //end switch
+
+                            switch (gb.Progress_Quarter1)
+                            {
+                                case "1": { gbProgQ1 = "Not applicable during this grading period"; break; }
+                                case "2": { gbProgQ1 = "No progress made"; break; }
+                                case "3": { gbProgQ1 = "Little progress made"; break; }
+                                case "4": { gbProgQ1 = "Progress made; Objective not yet met"; break; }
+                                case "5": { gbProgQ1 = "Objective met"; break; }
+
+                            } //end switch
+
+                            switch (gb.Progress_Quarter2)
+                            {
+                                case "1": { gbProgQ2 = "Not applicable during this grading period"; break; }
+                                case "2": { gbProgQ2 = "No progress made"; break; }
+                                case "3": { gbProgQ2 = "Little progress made"; break; }
+                                case "4": { gbProgQ2 = "Progress made; Objective not yet met"; break; }
+                                case "5": { gbProgQ2 = "Objective met"; break; }
+
+                            } //end switch
+
+                            switch (gb.Progress_Quarter3)
+                            {
+                                case "1": { gbProgQ3 = "Not applicable during this grading period"; break; }
+                                case "2": { gbProgQ3 = "No progress made"; break; }
+                                case "3": { gbProgQ3 = "Little progress made"; break; }
+                                case "4": { gbProgQ3 = "Progress made; Objective not yet met"; break; }
+                                case "5": { gbProgQ3 = "Objective met"; break; }
+
+                            } //end switch
+
+                            switch (gb.Progress_Quarter4)
+                            {
+                                case "1": { gbProgQ4 = "Not applicable during this grading period"; break; }
+                                case "2": { gbProgQ4 = "No progress made"; break; }
+                                case "3": { gbProgQ4 = "Little progress made"; break; }
+                                case "4": { gbProgQ4 = "Progress made; Objective not yet met"; break; }
+                                case "5": { gbProgQ4 = "Objective met"; break; }
+
+                            } //end switch
+
+                            <label class="input-labels" style="padding: 2px;">Short Term Benchmark(s)</label>
+                            
+                            <div class="StudentGoalBenchmarks">
+                                    
+                                    <div class="form-group" style="padding:2px;">
+                                        <label >@ddlText2</label>&nbsp;<span>@gb.ObjectiveBenchmark</span>
+                                        <b>T.A.</b>
+                                        <img src="@(isChecked == "" ? @imageNotChecked : @imageChecked)" class='imgCheck' />&nbsp;
+                                        <input type="checkbox" id="StudentEvaluationProceduresChk" name="StudentEvaluationProceduresChk" @(isChecked == "" ? String.Empty : "checked") />
+                                        
+                                    </div>
+                                    <div class="slideReportProgress">
+                                        <table class="table table-bordered table-bordered table-responsive">
+                                            <thead class="thead-inverse" style="background-color: transparent;">
+                                                <tr>
+                                                    <th class="text-center" colspan="4">Reports of Progress</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="text" class="form-control" name="reportOfProgressQuarter10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter1.Date.ToShortDateString()" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="text" class="form-control" name="reportOfProgressQuarter20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter2.Date.ToShortDateString()" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="text" class="form-control" name="reportOfProgressQuarter30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter3.Date.ToShortDateString()" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="text" class="form-control" name="reportOfProgressQuarter40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter4.Date.ToShortDateString()" />
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <span>@gbProgQ1</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <span>@gbProgQ2</span>
+
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <span>@gbProgQ3</span>
+
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <span>@gbProgQ4</span>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                        <div class="form-group shortTermComments">
+                                                            <p name="reportOfProgressShortTermComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter1</p>
+                                                            <p name="reportOfProgressShortTermComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter2</p>
+                                                            <p name="reportOfProgressShortTermComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter3</p>
+                                                            <p name="reportOfProgressShortTermComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter4</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                               
                             </div>
-                            <div class="slideReportProgress">
-                                <table class="table table-bordered table-bordered table-responsive">
-                                    <thead class="thead-inverse" style="background-color: transparent;">
-                                        <tr>
-                                            <th class="text-center" colspan="4">Reports of Progress</th>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup></div>
-                                                <div class="col-md-9 date">
-                                                    <input type="text" class="form-control" name="reportOfProgressQuarter10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter1.Date.ToShortDateString()" />
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup></div>
-                                                <div class="col-md-9 date">
-                                                    <input type="text" class="form-control" name="reportOfProgressQuarter20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter2.Date.ToShortDateString()" />
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup></div>
-                                                <div class="col-md-9 date">
-                                                    <input type="text" class="form-control" name="reportOfProgressQuarter30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter3.Date.ToShortDateString()" />
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup></div>
-                                                <div class="col-md-9 date">
-                                                    <input type="text" class="form-control" name="reportOfProgressQuarter40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@gb.ProgressDate_Quarter4.Date.ToShortDateString()" />
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="input-group input-append">
-                                                    <span>@gbProgQ1</span>
+                        }//end foreach short term bench
+                    }
 
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group input-append">
-                                                    <span>@gbProgQ2</span>
-
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group input-append">
-                                                    <span>@gbProgQ3</span>
-
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group input-append">
-                                                    <span>@gbProgQ4</span>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
-                                                <div class="form-group shortTermComments">
-                                                    <textarea name="reportOfProgressShortTermComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter1</textarea>
-                                                    <textarea name="reportOfProgressShortTermComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter2</textarea>
-                                                    <textarea name="reportOfProgressShortTermComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter3</textarea>
-                                                    <textarea name="reportOfProgressShortTermComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter4</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                            }//end foreach short term bench
-                        }
-
-            </div> <!--end panel default-->
+                </div> <!--end panel default-->
         </div><!--end panel group-->
     </div><!--end col md 12-->
         }//end for goals
@@ -2369,136 +2417,129 @@
 
                     foreach (var service in Model.studentServices)
                     {
-                        <div class="row oneStudentService">
-                            <div class="col-md-12">
-                                <div class="panel-group">
-                                    <div class="panel-default">                                      
-                                        <div>
-                                            <div class="panel-body">
-                                                <div class="row" style="padding-top:5px;">
-                                                    <div class="col-md-2"  style="padding-top:5px;">
-                                                        <label for="fiscalYear">Fiscal Year</label>
-                                                        @switch (@service.SchoolYear)
-                                                        {
-                                                            case 2018: <text>2017 - 2018</text>; break;
-                                                            case 2019: <text>2018 - 2019</text>; break;
-                                                            case 2020: <text>2019 - 2020</text>; break;
-                                                            case 2021: <text>2020 - 2021</text>; break;
-                                                            case 2022: <text>2021 - 2022</text>; break;
-                                                        }
-                                                    </div>
-                                                    <div class="col-md-3"  style="padding-top:5px;">
-                                                        <label for="Frequency">Initiation Date</label>
-                                                        <span>@(service.StartDate.ToString("yyyy-MM-dd"))</span>
+                        
+                                            
+                    <div class="row" style="padding-top:5px;">
+                        <div class="col-md-2"  style="padding-top:10px;">
+                            <label for="fiscalYear">Fiscal Year</label>
+                            @switch (@service.SchoolYear)
+                            {
+                                case 2018: <text>2017 - 2018</text>; break;
+                                case 2019: <text>2018 - 2019</text>; break;
+                                case 2020: <text>2019 - 2020</text>; break;
+                                case 2021: <text>2020 - 2021</text>; break;
+                                case 2022: <text>2021 - 2022</text>; break;
+                            }
+                        </div>
+                        <div class="col-md-3"  style="padding-top:10px;">
+                            <label for="Frequency">Initiation Date</label>
+                            <span>@(service.StartDate.ToString("MM/dd/yyyy"))</span>
 
-                                                    </div>
-                                                    <div class="col-md-3"  style="padding-top:5px;">
-                                                        <label for="Frequency">End Date</label>
-                                                        <span>@(service.EndDate.ToString("yyyy - MM - dd"))</span>
-                                                    </div>
-                                                    <div class="col-md-2" style="padding-top:5px;">
-                                                        <label for="Days">Days per Week</label>
-                                                        <span>@service.DaysPerWeek</span>
-                                                    </div>
-                                                    <div class="col-md-2" style="padding-top:5px;">
-                                                        <label for="Duration">Minutes per Day</label>
-                                                        <span>@service.Minutes</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-3" style="padding-top:5px;">
-                                                        <label for="Frequency">Frequency</label>
-                                                        @switch (@service.Frequency)
-                                                        {
-                                                            case 1: <text>Every week(1)</text>; break;
-                                                            case 2: <text>Every 2 weeks(2)</text>; break;
-                                                            case 3: <text>Every 3 weeks(3)</text>; break;
-                                                            case 4: <text>Every 4 weeks(4)</text>; break;
-                                                            case 8: <text>Every 8 weeks(8)</text>; break;
-                                                            case 9: <text>Every 9 weeks(9)</text>; break;
-                                                            case 12: <text>Every 12 weeks(12)</text>; break;
-                                                            case 18: <text>Every 18 weeks(18)</text>; break;
-                                                            case 19: <text>3 out of 4 weeks(19)</text>; break;
-                                                            case 99: <text>1 day per year(99)</text>; break;
-                                                        }
-                                                    </div>
-                                                    <div class="col-md-3" style="padding-top:5px;">
-                                                        <label for="Location">Location</label>
-                                                        <div class="input-group">
-                                                            @if (Model.locations.Count > 0)
-                                                            {
-                                                                foreach (var serviceLocation in Model.locations)
-                                                                {
-                                                                    if (service.LocationCode == serviceLocation.LocationCode)
-                                                                    {
-                                                                        <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
-                                                                    }
-                                                                }
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" style="padding-top:5px;">
-                                                        <label for="ServiceType">Service Type</label>
-                                                        <div class="form-group">
-                                                            @if (Model.serviceTypes.Count > 0)
-                                                            {
-                                                                foreach (var serviceType in Model.serviceTypes)
-                                                                {
-                                                                    if (serviceType.ServiceCode == service.ServiceCode)
-                                                                    {
-                                                                        <text>(@serviceType.ServiceCode) @serviceType.Name</text>
-                                                                    }
-                                                                }
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" style="padding-top:5px;">
-                                                        <label for="serviceProvider">Provider</label>
-                                                        <div class="form-group">
-                                                            @if (Model.serviceProviders.Count > 0)
-                                                            {
-                                                                foreach (var serviceProvider in Model.serviceProviders)
-                                                                {
-                                                                    if (service.ProviderID == serviceProvider.ProviderID)
-                                                                    {
-                                                                        <text>@serviceProvider.Name</text>
-
-                                                                    }
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <text>&nbsp;</text>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-12 StudentGoals">
-                                                        <br />
-                                                        <label>List of Attached Goals</label>
-                                                        <hr style="margin-top: 0;" />
-                                                        @if (Model.studentGoals.Count > 0)
-                                                        {
-                                                            foreach (var goal in Model.studentGoals)
-                                                            {
-                                                                if (goal.hasSerivce && goal.tblServices.Where(o => o.ServiceID == service.ServiceID).Count() > 0)
-                                                                {
-                                                                    <text>@goal.Title.ToString()</text><br />
-                                                                }
-                                                            }
-
-                                                        }
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-3"  style="padding-top:10px;">
+                            <label for="Frequency">End Date</label>
+                            <span>@(service.EndDate.ToString("MM/dd/yyyy"))</span>
+                        </div>
+                        <div class="col-md-2" style="padding-top:10px;">
+                            <label for="Days">Days per Week</label>
+                            <span>@service.DaysPerWeek</span>
+                        </div>
+                        <div class="col-md-2" style="padding-top:10px;">
+                            <label for="Duration">Minutes per Day</label>
+                            <span>@service.Minutes</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3" style="padding-top:5px;">
+                            <label for="Frequency">Frequency</label>
+                            @switch (@service.Frequency)
+                            {
+                                case 1: <text>Every week(1)</text>; break;
+                                case 2: <text>Every 2 weeks(2)</text>; break;
+                                case 3: <text>Every 3 weeks(3)</text>; break;
+                                case 4: <text>Every 4 weeks(4)</text>; break;
+                                case 8: <text>Every 8 weeks(8)</text>; break;
+                                case 9: <text>Every 9 weeks(9)</text>; break;
+                                case 12: <text>Every 12 weeks(12)</text>; break;
+                                case 18: <text>Every 18 weeks(18)</text>; break;
+                                case 19: <text>3 out of 4 weeks(19)</text>; break;
+                                case 99: <text>1 day per year(99)</text>; break;
+                            }
+                        </div>
+                        <div class="col-md-3" style="padding-top:5px;">
+                            <label for="Location">Location</label>
+                            <div class="input-group">
+                                @if (Model.locations.Count > 0)
+                                {
+                                    foreach (var serviceLocation in Model.locations)
+                                    {
+                                        if (service.LocationCode == serviceLocation.LocationCode)
+                                        {
+                                            <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
+                                        }
+                                    }
+                                }
                             </div>
                         </div>
+                        <div class="col-md-3" style="padding-top:5px;">
+                            <label for="ServiceType">Service Type</label>
+                            <div class="form-group">
+                                @if (Model.serviceTypes.Count > 0)
+                                {
+                                    foreach (var serviceType in Model.serviceTypes)
+                                    {
+                                        if (serviceType.ServiceCode == service.ServiceCode)
+                                        {
+                                            <text>(@serviceType.ServiceCode) @serviceType.Name</text>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top:5px;">
+                            <label for="serviceProvider">Provider</label>
+                            <div class="form-group">
+                                @if (Model.serviceProviders.Count > 0)
+                                {
+                                    foreach (var serviceProvider in Model.serviceProviders)
+                                    {
+                                        if (service.ProviderID == serviceProvider.ProviderID)
+                                        {
+                                            <text>@serviceProvider.Name</text>
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <text>&nbsp;</text>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 StudentGoals">
+                            <br />
+                            <label>List of Attached Goals</label>
+                            <hr style="margin-top: 0;" />
+                            @if (Model.studentGoals.Count > 0)
+                            {
+                                foreach (var goal in Model.studentGoals)
+                                {
+                                    if (goal.hasSerivce && goal.tblServices.Where(o => o.ServiceID == service.ServiceID).Count() > 0)
+                                    {
+                                        <text>@goal.Title.ToString()</text><br />
+                                    }
+                                }
+
+                            }
+
+                        </div>
+                    </div>
+                                            
+                                        
+                        
                     }
 
                 }
