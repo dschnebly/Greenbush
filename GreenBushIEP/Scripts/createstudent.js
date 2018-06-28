@@ -31,7 +31,6 @@ function init() {
         changeYear: true
     })
         
-
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
@@ -50,7 +49,6 @@ function init() {
     $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
     });
 
-    
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
 

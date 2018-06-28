@@ -622,7 +622,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="tab-content">
+                <div class="tab-content" style="margin-bottom: 4em;">
                     <div class="tab-pane active" role="tabpanel" id="step1">
                         @using (Html.BeginForm("EditStudent", "Manage", null, FormMethod.Post, new { id = "editStudent", @class = "editstudent", onsubmit = "return false;" }))
                         {
@@ -876,7 +876,6 @@
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                 <li><button type="button" class="btn btn-info next-step" id="next4">Save and continue</button></li>
                             </ul>
-
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
