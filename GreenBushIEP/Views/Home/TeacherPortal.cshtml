@@ -131,33 +131,14 @@
 
 <div class="container">
     <h3>
-        @ViewBag.DisplayName <small> - my current list of students</small>
-        @*<a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>*@
+        @ViewBag.DisplayName <small> - my current list of students</small>    
     </h3>
     <hr>
     <div class="row voffset1" >
         <div class="col-md-12">
-            <div id="user-toggle" class="pull-right">
-                <div class="user-toggle-item">
-                    <button id="add-student-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-child" title="Working with a Student"></i></button>
-                    <ul id="student-actions" class="hide-buttons">
-                        <li><a href="/Manage/CreateStudent" title="Create New Student" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
-                    </ul>
-                </div>
-            </div>
+                    <a href="/Manage/CreateStudent" type="button" title="Create New Student" role="button" data-toggle="tooltip" style="margin-bottom:0;margin-top: 10px;" class="btn btn-primary btn-circle btn-xl pull-right" data-ftrans="slide"><i class="fa fa-child" style="position: relative; top: 8px;"></i></a>
         </div>
     </div>
-
-    @*<div class="row" style="display: none;">
-        <div class="col-xs-12">
-            <div class="input-group c-search">
-                <input type="text" class="form-control" id="contact-list-search">
-                <span class="input-group-btn">
-                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
-                </span>
-            </div>
-        </div>
-    </div>*@
     @{
         if (Model.Students.Count > 0)
         {
