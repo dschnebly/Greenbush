@@ -132,7 +132,7 @@
 <div class="container">
     <h3>
         @ViewBag.DisplayName <small> - my current list of students</small>
-        <a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
+        @*<a href="#search-students" id="search" data-command="toggle-search" data-toggle="tooltip" title="Toggle Search" role="button" class="hide-search btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>*@
     </h3>
     <hr>
     <div class="row voffset1" >
@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <div class="row" style="display: none;">
+    @*<div class="row" style="display: none;">
         <div class="col-xs-12">
             <div class="input-group c-search">
                 <input type="text" class="form-control" id="contact-list-search">
@@ -157,7 +157,7 @@
                 </span>
             </div>
         </div>
-    </div>
+    </div>*@
     @{
         if (Model.Students.Count > 0)
         {
