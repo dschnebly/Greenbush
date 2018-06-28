@@ -60,8 +60,8 @@
 
     $("#ActionButton").on('click', function (e) {
         e.preventDefault();
+        var action = $(this).closest("form").attr("action");
 
-        var action = $(this).closest(form).arrt('action');
         $.ajax({
             url: action,
             type: 'POST',

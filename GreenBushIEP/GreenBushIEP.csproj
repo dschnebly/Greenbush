@@ -499,6 +499,7 @@
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AddEdit.js" />
+    <Content Include="Scripts\AddUsers.js" />
     <Content Include="Scripts\adminportal.js" />
     <Content Include="Scripts\agreement.js" />
     <Content Include="ApplicationInsights.config">

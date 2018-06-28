@@ -118,7 +118,7 @@ namespace GreenBushIEP.Controllers
             catch (Exception e)
             {
                 Console.Write(e.Message);
-                return Json(new { Result = "error", Message = e.Message });
+                return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help"});
             }
 
             return RedirectToAction("Portal", "Home");
@@ -165,7 +165,7 @@ namespace GreenBushIEP.Controllers
                     try
                     {
 
-                        if (db.tblUsers.Any(o => o.Email == student.Email))
+                        if (!String.IsNullOrEmpty(student.Email) && db.tblUsers.Any(o => o.Email == student.Email))
                         {
                             return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
                         }
