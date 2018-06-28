@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    //// attach event
+    //// fires when the doucment is loaded, adds the districts to the drop down.
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",

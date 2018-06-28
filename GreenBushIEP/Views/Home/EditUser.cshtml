@@ -116,7 +116,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-2 pull-right">
-                @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+                @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
             </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -314,7 +314,7 @@
 }
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/AddEdit.js"></var>
+<var data-reload="true" data-src="/Scripts/EditUsers.js"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
