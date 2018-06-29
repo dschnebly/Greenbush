@@ -89,7 +89,7 @@
         height: 2px;
         background: #e0e0e0;
         position: absolute;
-        width: 60%;
+        width: 70%;
         margin: 0 auto;
         left: 0;
         right: 0;
@@ -138,7 +138,7 @@
     }
 
     .wizard .nav-tabs > li {
-        width: 33%;
+        width: 24%;
     }
 
     .wizard li:after {
@@ -615,6 +615,13 @@
                         <li role="presentation" class="disabled">
                             <a href="#step2" data-toggle="tab" aria-controls="step3" role="tab" title="Step 2">
                                 <span class="round-tab">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                <span class="round-tab">
                                     <i class="glyphicon glyphicon-home"></i>
                                 </span>
                             </a>
@@ -866,6 +873,70 @@
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step2">
+                        <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">User Settings</h4>
+                        @using (Html.BeginForm("CreateStudentContacts", "Manage", null, FormMethod.Post, new { id = "createStudentContacts", @class = "newstudent" }))
+                        {
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.Hidden("studentId", 0)
+
+                            if (Model.contacts != null)
+                            {
+
+                                <div class="step22" id="student-contacts">
+                                    @foreach (var contact in Model.contacts)
+                                    {
+                                        <div class="student-contact">
+                                            <div class="row">
+                                                <div class="col-sm-4 nopadding">
+                                                    <div class="form-group">
+                                                        <label for="contactFirstName">First Name</label>
+                                                        @Html.ValidationMessageFor(model => contact.FirstName, "", new { @class = "text-danger" })
+                                                        <input name="contacts[0].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Middle Name</label>
+                                                        @Html.ValidationMessageFor(model => contact.MiddleName, "", new { @class = "text-danger" })
+                                                        <input name="contacts[0].ContactMiddleName" class="form-control text-box single-line" placeholder="Middle Name" type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        @Html.ValidationMessageFor(model => contact.LastName, "", new { @class = "text-danger" })
+                                                        <input name="contacts[0].ContactLastName" class="form-control text-box single-line" placeholder="Last Name" type="text" data-validate="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Relationship</label>
+                                                        <select name="contacts[0].ContactRelationship" class="form-control text-box single-line" data-validate="true">
+                                                            <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
+                                                            <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
+                                                            <option value="advocate" selected=@(contact.Realtionship == "advocate")>Education Advocate</option>
+                                                            <option value="other" selected=@(contact.Realtionship == "other")>Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-pull-10">
+                                        <button type="button" class="btn-circle btn-lg btn-info pull-right add-contact"><i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
+                                </div>
+                                <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+                                    <li><button type="button" class="btn btn-info next-step" id="next3">Save and continue</button></li>
+                                </ul>
+
+                            }
+                        }
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="step3">
                         <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
                         @using (Html.BeginForm("CreateStudentContacts", "Manage", null, FormMethod.Post, new { id = "createStudentContacts", @class = "newstudent" }))
                         {
@@ -1231,8 +1302,6 @@
 
 <!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/createstudent.js"></var>
-
-<!-- loading the file even though it's an ajax call -->
 
 <script>
     function loadScript(url, callback) {
