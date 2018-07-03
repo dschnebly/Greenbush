@@ -24,13 +24,13 @@
 });
 
 function init() {
-      
+
     $(".studentDOB").datepicker({
         dateFormat: "mm/dd/yy",
         changeMonth: true,
         changeYear: true
     })
-        
+
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
@@ -114,7 +114,7 @@ function init() {
             }
         });
 
-        
+
 
     });
 
