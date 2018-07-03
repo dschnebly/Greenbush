@@ -28,9 +28,6 @@
                         $("#output").removeClass(' alert-danger');
                         $('input[type="submit"]').val("continue");
                         $('input[type="submit"]').attr("action", data.portal);
-
-                        // crescendo the audio.
-                        $("#audio1").animate({ volume: 0 }, 2000);
                     }
                     else {
                         $("#output").removeClass(' alert alert-success');
