@@ -2,10 +2,11 @@
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
 
-<div>
+<div class="module-page">
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;line-height:normal'>
@@ -44,7 +45,7 @@
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            I, <u>@(String.Format(contactFormattedName).PadRight(95 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
+            I, <u>@(String.Format(contactFormattedName).PadRight(25 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
             having authority under the laws of the state of Kansas to make
         </p>
 
@@ -55,11 +56,11 @@
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" /> on behalf of the above named student  
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on behalf of the above named student  
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" /> on my own behalf (adult student),
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on my own behalf (adult student),
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
@@ -75,7 +76,7 @@
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;'>
             This revocation of consent is effective:<span style=''>
-            </span><u><span style=''>                                                                                </span></u>
+            </span><u><span style=''> <textarea style="width:100px;height:20px"></textarea>                                                                               </span></u>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;'>
@@ -167,15 +168,19 @@ line-height:115%'><span style=''>                       �
             <span style='font-size:6.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
         </p>
 
-        <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
-margin-bottom:0in;margin-left:261.0pt;margin-bottom:.0001pt;text-align:center;
-tab-stops:6.5in'><u><span style=''>                                                                                            </span><o:p></o:p></u></p>
+      
 
-        <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
-margin-bottom:0in;margin-left:261.35pt;margin-bottom:.0001pt;text-align:center;
-line-height:normal'><span style='font-size:8.0pt'>(Signature)<o:p></o:p></span></p>
+        <table style="margin-top:5px;">
+            <tr>
+                <td width="150">_______________________________________________________</td>
+                
 
-
+            </tr>
+            <tr>
+                <td width="150">(Signature)</td>
+                
+            </tr>
+        </table>
     </div>
 
 

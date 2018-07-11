@@ -4,6 +4,9 @@
 @{
     ViewBag.Title = "Parents Rights";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+
 }
 
 @section stylesheets {
@@ -11,6 +14,11 @@
 }
 
 <style>
+     .imgCheck{
+        display:none
+
+    }
+
     .fadeInToBackground {
         background: #525659;
         transition: background .25s ease-in-out;
@@ -279,7 +287,18 @@
     <div class="container" style="min-height: 1250px; width: 725px;">
         <div class="row" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
-                <button type="button" class="btn btn-info" id="printbutton" onclick="return window.print();">PRINT</button>
+                <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
+                    @*<button type="button" class="btn btn-info" id="printbutton" onclick="return window.print();">Print</button>*@
+                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />
+                    <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />
+                    <input type="hidden" id="printText" name="printText" />
+                    <input type="hidden" id="isArchive" name="isArchive" />
+                    <input type="hidden" id="studentName" name="studentName" value="" />
+                    <input type="hidden" id="studentId" name="studentId" value="@Model.studentId" />
+                    <input type="hidden" id="iepID" name="iepID" value="@Model.iepId" />   
+                    <input type="hidden" id="isIEP" name="isIEP" value="0" /> 
+                    <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
+                </form>
             </div>
         </div>
         <div class="row">
@@ -290,7 +309,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div align="left">
-                    <div class="col-md-12">
+                    <div class="col-md-12 ">
                         @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel)
                     </div>
                 </div>
@@ -340,6 +359,36 @@
             }, 100);
         }
 
+
+        //setup up hidden checkbox images for printing to pdf
+        $('input:checkbox').change(function () {
+            if ($(this).is(":checked")) {
+                $(this).addClass("menuitemshow");
+                $(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
+            } else {
+                $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');                
+            }
+        });
+
     });
+
+    function PrintText() {
+        var x = document.getElementsByClassName("form-print");
+        var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+        $("#printText").val(markup);
+        $("#isArchive").val(0);
+        x[0].submit();
+    }
+
+    function ArchiveText() {
+
+        var x = document.getElementsByClassName("form-print");
+        var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+        $("#printText").val(markup);
+        $("#isArchive").val(1);
+        x[0].submit();
+    }
+
+
 
 </script>

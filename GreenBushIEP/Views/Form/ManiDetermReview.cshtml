@@ -1,10 +1,10 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.Value.ToString() : " ";
-   
+    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.ToString() : " ";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
-<div>
+<div class="module-page">
     <div class=WordSection1>
 
         <h1>
@@ -19,7 +19,8 @@
         <p class=MsoNormal style='tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
                 Student's Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><span style=''></span> Date:
-                <input type="text"/>            </span>
+                <textarea maxlength="20" style="width:100px;height:20px"></textarea>
+            </span>
         </p>
 
         <p class=MsoNormal style='line-height:16.0pt;tab-stops:5.0in 369.0pt'>
@@ -33,7 +34,7 @@
             </span>
         </p>
 
-       
+
 
         <p class=MsoNormal style='margin-top:15px;margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;
 tab-stops:list .25in'>
@@ -54,32 +55,32 @@ mso-fareast-font-family:Arial'>
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
-                A.<span style=''></span>Student's behavior<o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p>
+                A.<span style=''></span>Student's behavior<o:p><br/><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p>
             </span>
         </p>
 
-       
+
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
-                B.<span style=''></span>Student.s IEP
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
+                B.<span style=''></span>Student's IEP
+            </span><span style='font-family:"Arial",sans-serif'><o:p><br/><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span>
         </p>
 
-      
+
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 C.<span style=''></span>Teacher observation of the student
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
+            </span><span style='font-family:"Arial",sans-serif'><o:p><br/><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span>
         </p>
 
-       
+
 
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 D. <span style=''></span>Relevant information provided by the parent
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
+            </span><span style='font-family:"Arial",sans-serif'><o:p><br/><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span>
         </p>
 
 
@@ -87,7 +88,7 @@ mso-fareast-font-family:Arial'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif;'>
                 E. <span style=''></span>Any other relevant information.
-            </span><b style=''><span style='font-family:"Arial",sans-serif'><o:p><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span></b>
+            </span><span style='font-family:"Arial",sans-serif'><o:p><br/><textarea class="form-control" cols="100" rows="4"></textarea><br /></o:p></span>
         </p>
 
 
@@ -110,7 +111,7 @@ mso-fareast-font-family:Arial'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
 58.5pt 81.0pt'>
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" /> YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /> NO<o:p></o:p>
+                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  NO<o:p></o:p>
             </span>
         </p>
 
@@ -136,7 +137,7 @@ tab-stops:list .25in'>
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
 58.5pt 81.0pt'>
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" /> YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /> NO<o:p></o:p>
+                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  YES     <span style=''></span>or<span style=''>     </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  NO<o:p></o:p>
             </span>
         </p>
 
@@ -173,7 +174,7 @@ tab-stops:list .25in'>
             <span style='font-family:"Arial",sans-serif'>
                 <span style=''> </span><span style=''></span>
             </span>
-            <input type="checkbox" />
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> 
             <span style='font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:"Arial",sans-serif'><span style=''>   </span></span><b>
                 <span style='font-family:"Arial",sans-serif'>IS</span>
             </b><span style='font-family:
@@ -188,7 +189,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
         <p class=MsoNormal style='margin-left:81.0pt;line-height:16.0pt;mso-list:l14 level2 lfo16;tab-stops:list 81.0pt left 1.25in'>
-            <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
                 the student will be returned to the
                 placement specified in his/her IEP, unless: (a) the school and parent(s) agree to
                 a change of placement through the IEP process; or (b) the student is assigned
@@ -203,7 +204,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 
         <p class=MsoNormal style='margin-left:81.0pt;line-height:
 16.0pt;mso-list:l14 level2 lfo16;tab-stops:list 81.0pt left 1.25in'>
-            <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
                 the team will conduct a functional
                 behavioral assessment (unless a functional behavioral assessment has already
                 been conducted), and will implement a behavior intervention plan for the
@@ -213,14 +214,14 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 
         <p class=MsoNormal style='margin-left:1.0in;line-height:16.0pt;mso-list:skip;tab-stops:1.25in'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
-		<p class=MsoNormal style='margin-left:81.0pt;line-height:16.0pt;mso-list:skip;tab-stops:81.0pt'>
-			<input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
-				the team will review the existing behavior intervention plan and modify it, as necessary, to address the
-			 behavior that resulted in the disciplinary removal.<o:p></o:p>
-			</span>
-		</p>
+        <p class=MsoNormal style='margin-left:81.0pt;line-height:16.0pt;mso-list:skip;tab-stops:81.0pt'>
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+                the team will review the existing behavior intervention plan and modify it, as necessary, to address the
+                behavior that resulted in the disciplinary removal.<o:p></o:p>
+            </span>
+        </p>
 
-       
+
 
         <p class=MsoNormal style='margin-left:1.0in;mso-list:skip;tab-stops:1.25in'><o:p>&nbsp;</o:p></p>
 
@@ -239,7 +240,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
         <p class=MsoNormal style='line-height:19.0pt;mso-list:skip;tab-stops:.5in .75in'>
-            <input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
                 <span style=''>   </span><b>
                     IS
                     NOT
@@ -251,7 +252,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 16.0pt;'>
             <span style='font-family:"Arial",sans-serif'>
                 <span style=''></span>
-            </span><input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
                 <span style=''>  </span>disciplinary
                 removal may occur, but the school district must continue to make a free
                 appropriate public education (FAPE) available to the student in a manner which
@@ -271,7 +272,7 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 .5in 1.0in'>
             <span style='font-family:"Arial",sans-serif'>
                 <span style=''></span>
-            </span><input type="checkbox" /><span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
                 <span style=''></span>If appropriate, the school will conduct a
                 functional behavioral assessment and develop a behavior intervention plan
                 designed to address the behavior violation so that it does not recur.<o:p></o:p>
@@ -300,23 +301,20 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
 
         </div>
         <div>
-            <table style="width:50%" class="pull-left" cellspacing="0">
+            <table style="width:100%" class="pull-left" cellspacing="0" border="1">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
             </table>
-            <table style="width:50%" class="pull-right">
-                <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-
-            </table>
+          
         </div>
 
         <p class=MsoNormal style='text-indent:4.3pt;line-height:200%;margin-top:8px'>
@@ -324,29 +322,26 @@ font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
         <div>
-            <table style="width:50%" class="pull-left" cellspacing="0">
+            <table style="width:100%" class="pull-left" cellspacing="0" border="1">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
+                <tr><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td><td> <textarea maxlength="20" style="width:200px;height:20px"></textarea></td></tr>
             </table>
-            <table style="width:50%" class="pull-right">
-                <tr><td>NAME</td><td>TITLE</td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-                <tr><td><input type="text" /></td><td><input type="text" /></td></tr>
-
-            </table>
+            
         </div>
 
 
         <p class=MsoNormal style='line-height:23.0pt;tab-stops:81.0pt 117.0pt 2.0in 148.5pt'>
             <span style='font-family:"Arial",sans-serif'>
-                Attachments:<span style=''>      </span><input type="checkbox" /> YES<span style=''>     </span>or<span style=''>    </span><input type="checkbox" /> NO<o:p></o:p>
+                Attachments:<span style=''>      </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  YES<span style=''>     </span>or<span style=''>    </span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>  NO<o:p></o:p>
             </span>
         </p>
 

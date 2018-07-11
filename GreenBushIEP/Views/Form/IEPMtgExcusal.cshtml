@@ -2,9 +2,10 @@
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
-<div>
+<div class="module-page">
     <div class=WordSection1>
         <p class=MsoNormal align=center style='text-align:center'>
             <span style='font-size:11.0pt;font-family:"Cambria",serif;'>
@@ -35,8 +36,8 @@
             </span>
         </p>
         <p class=MsoNormal style=''>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif;'>                
-            @(String.Format("{0}", "Name of parent(s)/decision maker").PadLeft(118, '\u00A0'))
+            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif;'>
+                @(String.Format("{0}", "Name of parent(s)/decision maker").PadLeft(118, '\u00A0'))
             </span>
         </p>
 
@@ -53,7 +54,7 @@
             </span>
             <span>@(String.Format("{0}", "Position of school representative").PadLeft(78, '\u00A0'))</span>
         </p>
-        
+
         <p class=MsoNormal align=center style='text-align:center'>
             <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
@@ -171,7 +172,7 @@ font-family:"Calibri",sans-serif'>
             <tr style=''>
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                             The member of the
                             IEP team noted above <b style=''>
                                 will not attend
@@ -184,7 +185,7 @@ font-family:"Calibri",sans-serif'>
                         <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
                     </p>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" /><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                             The member of the
                             IEP team noted above will <b style=''>
                                 only attend
@@ -202,7 +203,7 @@ font-family:"Calibri",sans-serif'>
                 </td>
                 <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;    mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                             The member of the
                             IEP team noted above is <b style=''>
                                 excused from
@@ -226,11 +227,11 @@ font-family:"Calibri",sans-serif'>
                         <span style='font-family:"Calibri",sans-serif'>
                             I<span style=''></span>
                         </span>
-                        <input type="checkbox" name="ckAgree" />
+                        <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
                             agree<span style=''>  </span>
                         </span>
-                        <input type="checkbox" name="ckAgree" />
+                        <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
                             <span style=''></span>disagree <br>
                             with the above marked statement:
@@ -245,11 +246,11 @@ font-family:"Calibri",sans-serif'>
                         <span style='font-family:"Calibri",sans-serif'>
                             I<span style=''></span>
                         </span>
-                        <input type="checkbox" name="ckConsent" />
+                        <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
                             consent<span style=''></span>
                         </span>
-                        <input type="checkbox" name="ckConsent" />
+                        <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
                             do not
                             consent <br>
@@ -263,91 +264,90 @@ font-family:"Calibri",sans-serif'>
         <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
         <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-               style='width:535.5pt;margin-left:-26.1pt;border-collapse:collapse;mso-yfti-tbllook: 480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
-            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-                <td width=382 valign=top style='width:286.35pt;border:none;border-bottom:  solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+               style='width:6.0in;margin-left:.9pt;border-collapse:collapse;'>
+            <tr style=''>
+                <td width=325 valign=top style='width:243.9pt;border:none;border:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
                 </td>
-                <td width=92 valign=top style='width:69.15pt;padding:0in 5.4pt 0in 5.4pt'>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=right style='text-align:right'>
-                        <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>Date:<o:p></o:p></span>
+                        <span style='font-family:"Calibri",sans-serif'><o:p>Date:</o:p></span>
                     </p>
                 </td>
-                <td width=240 valign=top style='width:2.5in;border:none;border-bottom:solid windowtext 1.0pt;
-  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                <td width=197 valign=top style='width:2.05in;border:none solid 0pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
                 </td>
             </tr>
-            <tr style=';'>
-                <td width=382 valign=top style='width:286.35pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
+            <tr>
+                <td width=325 valign=top style='width:243.9pt;border:none solid 0pt;border-top:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center'>
-                        <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>
-                            (Signature
-                            of Parent/Legal Decision Maker)<o:p></o:p>
+                        <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                            (Signature of Parent/Legal Decision Maker)<o:p></o:p>
                         </span>
                     </p>
                 </td>
-                <td width=92 valign=top style='width:69.15pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                </td>
+                <td width=197 valign=top style='width:2.05in;border:none solid 0pt;border-top:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
+                </td>
+            </tr>
+            <tr>
+                <td width=325 valign=top style='width:243.9pt;border:none solid 0pt;padding:0in 5.4pt 0in 5.4pt;'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
+                </td>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal align=right style='text-align:right'>
+                        <span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
                     </p>
                 </td>
-                <td width=240 valign=top style='width:2.5in;border:none;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
+
+            </tr>
+            <tr class="filler">
+                <td width=325 valign=top style='border:none solid 0pt;border-top:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal align=center style='text-align:center'>
+                        <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                            <o:p></o:p>
+                        </span>
                     </p>
+                </td>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt;'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                </td>
+                <td width=197 valign=top style='width:2.05in;border:none solid 0pt;border-top:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
+                </td>
+            </tr>
+            <tr>
+                <td width=325 valign=top style='width:243.9pt;border:none solid 0pt;padding:0in 5.4pt 0in 5.4pt;'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
+                </td>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal align=right style='text-align:right'>
+                        <span style='font-family:"Calibri",sans-serif'><o:p>Date:</o:p></span>
+                    </p>
+                </td>
+
+            </tr>
+            <tr>
+                <td width=325 valign=top style='border:none solid 0pt;border-top:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal align=center style='text-align:center'>
+                        <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                            (Signature of Authorized District Representative)<o:p></o:p>
+                        </span>
+                    </p>
+                </td>
+                <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt;'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
+                </td>
+                <td width=197 valign=top style='width:2.05in;border:none solid 0pt;border-top:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
                 </td>
             </tr>
         </table>
 
-        <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-               style='width:535.5pt;margin-left:-26.1pt;border-collapse:collapse;mso-yfti-tbllook: 480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
-            <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-                <td width=384 valign=top style='width:4.0in;border:none;border-bottom:solid windowtext 1.0pt;
-  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-                </td>
-                <td width=90 valign=top style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal align=right style='text-align:right'>
-                        <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>Date:<o:p></o:p></span>
-                    </p>
-                </td>
-                <td width=240 valign=top style='width:2.5in;border:none;border-bottom:solid windowtext 1.0pt;
-  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-                </td>
-            </tr>
-            <tr style=';'>
-                <td width=384 valign=top style='width:4.0in;border:none;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal align=center style='text-align:center'>
-                        <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>
-                            (Signature
-                            of Authorized District Representative)<o:p></o:p>
-                        </span>
-                    </p>
-                </td>
-                <td width=90 valign=top style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-                    </p>
-                </td>
-                <td width=240 valign=top style='width:2.5in;border:none;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-                    </p>
-                </td>
-            </tr>
-        </table>
-
-        <p class=MsoNormal>
-            <span style='font-size:2.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
+      
 
     </div>
 

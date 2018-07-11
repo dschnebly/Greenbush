@@ -1,14 +1,15 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
-<div>
+<div class="module-page">
     <div class=WordSection1>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
 0in;margin-left:0in;margin-bottom:.0001pt'>
             Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))                           IEP
-            Meeting Date:  <input type="text" />
+            Meeting Date:  <textarea maxlength="20" style="width:100px;height:20px"></textarea>
         </p>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;
@@ -29,8 +30,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span style='font-size:4.0pt;line-height:107%;font-family:"Cambria",serif'></span><span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'>
-                (The
-                child’s IEP must reflect these considerations.)
+                (The child’s IEP must reflect these considerations.)
             </span><span style='font-size:
 16.0pt;line-height:107%;font-family:"Cambria",serif'></span>
         </p>
@@ -41,24 +41,24 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                  src="IEP_Team_Considerations_files/image003.gif">
         </p>
 
-        <table class=TableGrid border=0 cellspacing=0 cellpadding=0 width=0
-               style='width:509.6pt;border-collapse:collapse'>
+        <table class=TableGrid border=1 cellspacing=0 cellpadding=5 width=0 style='width:509.6pt;border: solid black 1pt'>
             <tr style='height:68.5pt'>
-                <td width=679 valign=top style='width:509.6pt;border:double black 2.25pt;
-  border-bottom:solid black 1.0pt;padding:2.3pt 5.75pt 0in 5.5pt;height:68.5pt'>
+                <td width=679 valign=top style='width:509.6pt;border:none black 0pt;
+  border-bottom:none black 1.0pt;padding:2.3pt 5.75pt 0in 5.5pt;height:68.5pt'>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         What are
                         the strengths of the child?
-                        
+
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br/>
+                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
                 </td>
             </tr>
-            <tr style='height:67.7pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
-  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:67.7pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+            <tr style='height:67.7pt;'>
+                <td valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
+  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
+  padding:2.3pt 5.75pt 0in 5.5pt;height:67.5pt'>
+                    
+                    <p class=MsoNormal style='margin-top:0in;margin-bottom:.0001pt;'>
                         How have
                         the child’s strengths been utilized to address the child’s needs on the IEP?
                     </p>
@@ -66,8 +66,8 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                 </td>
             </tr>
             <tr style='height:66.5pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
-  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
+  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
   padding:2.3pt 5.75pt 0in 5.5pt;height:66.5pt'>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         What are
@@ -77,8 +77,8 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                 </td>
             </tr>
             <tr style='height:67.55pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
-  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
+  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
   padding:2.3pt 5.75pt 0in 5.5pt;height:67.55pt'>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         How are
@@ -88,8 +88,8 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                 </td>
             </tr>
             <tr style='height:81.15pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
-  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
+  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
   padding:2.3pt 5.75pt 0in 5.5pt;height:81.15pt'>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   99%'>
@@ -101,8 +101,8 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                 </td>
             </tr>
             <tr style='height:81.0pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none;border-left:
-  double black 2.25pt;border-bottom:solid black 1.0pt;border-right:double black 2.25pt;
+                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
+  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
   padding:2.3pt 5.75pt 0in 5.5pt;height:81.0pt'>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   99%'>
@@ -114,8 +114,8 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                 </td>
             </tr>
             <tr style='height:95.55pt'>
-                <td width=679 valign=top style='width:509.6pt;border:double black 2.25pt;
-  border-top:none;padding:2.3pt 5.75pt 0in 5.5pt;height:95.55pt'>
+                <td width=679 valign=top style='width:509.6pt;border:none black 0pt;
+  border-top:none solid 0px;padding:2.3pt 5.75pt 0in 5.5pt;height:95.55pt'>
                     <p class=MsoNormal style='margin-bottom:.1pt;line-height:99%'>
                         Are extended
                         school year services necessary since the benefits accrued to the child during
@@ -127,27 +127,11 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
             </tr>
         </table>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
-margin-left:-.75pt'>
-            <span style='font-size:10.0pt;line-height:107%'>
-                Sample Form
-                Special
-                Education Services
-            </span>
-        </p>
-
-        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
-margin-left:-.75pt'>
-            <span style='font-size:10.0pt;line-height:107%'>
-                Revised
-                6/5/07                                                                                                           Kansas
-                State Department of Education
-            </span>
-        </p>
-
-        <table class="page-break"><tr>
-                <td  valign=top style='width:274.6pt;border:double black 1.5pt;
-  border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+       
+        <p  class="section-break"></p>
+        <table border="1" cellpadding="5" class="dont-break" style="width:100%">
+            <tr>
+                <td valign=top >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.55pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
                         <b>
@@ -165,17 +149,14 @@ margin-left:-.75pt'>
                         </b>
                     </p>
                 </td>
-            
-                <td width=102 style='width:76.55pt;border-top:double black 1.5pt;border-left:
-  none;border-bottom:double black 1.5pt;border-right:solid black 1.0pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+
+                <td style="width:20%" >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
   margin-bottom:0in;margin-left:.8pt;margin-bottom:.0001pt;text-align:center'>
                         <span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'></span>
                     </p>
                 </td>
-                <td width=210 style='width:157.45pt;border:double black 1.5pt;border-left:
-  none;padding:2.25pt 4.1pt 0in 5.3pt;height:57.75pt'>
+                <td  style="width:20%" >
                     <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
   text-align:center'>
                         <span style='font-size:12.0pt;line-height:107%;font-family:
@@ -184,9 +165,7 @@ margin-left:-.75pt'>
                 </td>
             </tr>
             <tr style='height:74.15pt'>
-                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
-  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:74.15pt'>
+                <td >
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         Have the needs of the child which
@@ -195,26 +174,20 @@ margin-left:-.75pt'>
                         assessments, been considered in the development of the child’s IEP?
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:74.15pt'>
+                <td >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:74.15pt'>
+                <td >
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br/>
+                        <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:72.65pt'>
-                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.65pt'>
+                <td >
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         Does the child’s behavior impede his
@@ -222,26 +195,20 @@ margin-left:-.75pt'>
   107%'></span>
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.65pt'>
+                <td >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:72.65pt'>
+                <td >
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:100.45pt'>
-                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
-  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:100.45pt'>
+                <td >
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt;line-height:99%'>
                         If the child is blind
@@ -254,78 +221,60 @@ margin-left:-.75pt'>
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>(Children with disabilities only.)</p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:100.45pt'>
+                <td >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:100.45pt'>
+                <td >
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:72.5pt'>
-                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.5pt'>
+                <td>
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         Does the child have limited English
                         proficiency?
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.5pt'>
+                <td>
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:72.5pt'>
+                <td>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:72.5pt'>
-                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.5pt'>
+                <td>
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         Does the child have any special
                         communication needs?
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:72.5pt'>
+                <td>
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:72.5pt'>
+                <td>
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:100.6pt'>
-                <td width=366 valign=top style='width:274.6pt;border-top:none;border-left:
-  double black 1.5pt;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:100.6pt'>
+                <td >
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         If the child is deaf or hard of
@@ -336,26 +285,20 @@ margin-left:-.75pt'>
                         communication mode?  (Children with disabilities only.)
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:100.6pt'>
+                <td >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /> Yes  <input type="checkbox" /> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:solid black 1.0pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:100.6pt'>
+                <td >
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
                 </td>
             </tr>
             <tr style='height:73.1pt'>
-                <td width=366 style='width:274.6pt;border-top:none;border-left:double black 1.5pt;
-  border-bottom:double black 1.5pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:73.1pt'>
+                <td >
                     <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
   margin-left:.1pt;margin-bottom:.0001pt'>
                         Does the child require any assistive
@@ -364,17 +307,13 @@ margin-left:-.75pt'>
                         (Children with disabilities only.)
                     </p>
                 </td>
-                <td width=102 style='width:76.55pt;border-top:none;border-left:none;
-  border-bottom:double black 1.5pt;border-right:solid black 1.0pt;padding:2.25pt 4.1pt 0in 5.3pt;
-  height:73.1pt'>
+                <td >
                     <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
   margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" name="reqAssist"/> Yes  <input type="checkbox" name="reqAssist"/> No</span>
+                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" name="reqAssist" /><img class='imgCheck' src="@(@imageNotChecked)" /> Yes  <input type="checkbox" name="reqAssist" /><img class='imgCheck' src="@(@imageNotChecked)" /> No</span>
                     </p>
                 </td>
-                <td width=210 valign=top style='width:157.45pt;border-top:none;border-left:
-  none;border-bottom:double black 1.5pt;border-right:double black 1.5pt;
-  padding:2.25pt 4.1pt 0in 5.3pt;height:73.1pt'>
+                <td >
                     <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
                         <textarea class="form-control" rows="5"></textarea><br />
                     </p>
@@ -388,23 +327,7 @@ margin-left:22.55pt'>
 "Times New Roman",serif'></span>
         </p>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
-margin-left:-.75pt'>
-            <span style='font-size:10.0pt;line-height:107%'>
-                Sample Form
-                Special
-                Education Services
-            </span>
-        </p>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:-.7pt;margin-bottom:.15pt;
-margin-left:-.75pt'>
-            <span style='font-size:10.0pt;line-height:107%'>
-                Revised
-                6/5/07                                                                                                           Kansas
-                State Department of Education
-            </span>
-        </p>
 
     </div>
 </div>

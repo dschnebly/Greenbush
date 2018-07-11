@@ -250,7 +250,9 @@ namespace GreenBushIEP.Models
     public class IEPFormFileViewModel
     {
         public int studentId { get; set; }
+        public int iepId { get; set; }
         public string fileName { get; set; }
+        public string fileDesc { get; set; }
         public StudentLegalView fileModel { get; set; }
 
         public IEPFormFileViewModel()
@@ -258,6 +260,8 @@ namespace GreenBushIEP.Models
             studentId = 0;
             fileName = string.Empty;
             fileModel = new StudentLegalView();
+            iepId = 0;
+            fileDesc = "";
         }
     }
 

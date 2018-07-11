@@ -1324,10 +1324,18 @@ namespace GreenbushIep.Controllers
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
             viewModel.studentId = id;
             viewModel.fileName = fileName;
-
+            
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+            var forms = GetForms();
 
+            var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
+            if (form != null)
+                viewModel.fileDesc = form.Text;
+
+            if (iep != null)
+                viewModel.iepId = iep.IEPid;          
 
             StudentLegalView fileViewModel = new StudentLegalView()
             {
@@ -1344,6 +1352,8 @@ namespace GreenbushIep.Controllers
             }
 
             viewModel.fileModel = fileViewModel;
+            
+
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -1529,7 +1539,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult DownloadArchve(int id)
+        public ActionResult DownloadArchive(int id)
         {
             //TODO: Check if user has permissions to update permissions
             var document = db.tblFormArchives.Where(o => o.FormArchiveID == id).FirstOrDefault();
@@ -1563,6 +1573,9 @@ namespace GreenbushIep.Controllers
             string studentId = collection["studentId"];
             string isArchive = collection["isArchive"];
             string iepIDStr = collection["iepID"];
+            string isIEP = collection["isIEP"];
+            string formName = collection["formName"]; 
+            
 
             if (!string.IsNullOrEmpty(HTMLContent))
             {
@@ -1575,8 +1588,9 @@ namespace GreenbushIep.Controllers
 
 
                 tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-                if (user != null)
+                if (user != null && isIEP == "1")
                 {
+                    //update only if user it printing IEP
                     user.Agreement = true;
                 }
 
@@ -1588,9 +1602,11 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 
-                var cssText = @"<style>.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 10px;}.module-page, span {font-size:11pt;}label{font-weight:600;}.text-center{text-align:center} h3 {font-weight:400;font-size:18pt;width:100%;text-align:center;padding:8px;}p {padding:5px}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;}</style>";
+                var cssText = @"<style>.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none}.module-page, span {font-size:11pt;}label{font-weight:600;}.text-center{text-align:center} h3 {font-weight:400;font-size:18pt;width:100%;text-align:center;padding:8px;}p {padding:5px}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;}</style>";
 
                 string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
+                result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
+                               
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
 
                 HtmlDocument doc = new HtmlDocument();
@@ -1625,7 +1641,7 @@ namespace GreenbushIep.Controllers
                                         var archive = new tblFormArchive();
                                         archive.Creator_UserID = teacher.UserID;
                                         archive.Student_UserID = id;
-                                        archive.FormName = "IEP";
+                                        archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
                                         archive.FormFile = fileIn;
                                         archive.IEPid = iepId;
                                         archive.ArchiveDate = DateTime.Now;
@@ -1672,6 +1688,11 @@ namespace GreenbushIep.Controllers
             }
             
             return fileOut;
+        }
+
+        private static string SplitCamelCase(string input)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
         }
 
         protected override void OnException(ExceptionContext filterContext)

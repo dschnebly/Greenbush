@@ -264,6 +264,7 @@
                     <input type="hidden" id="studentName" name="studentName" value="@studentFullName" />
                     <input type="hidden" id="studentId" name="studentId" value="@Model.draft.UserID" />                    
                     <input type="hidden" id="iepID" name="iepID" value="@Model.draft.IEPid" />                    
+                    <input type="hidden" id="isIEP" name="isIEP" value="1" />
                     
                 </form>
 
@@ -329,21 +330,21 @@
                     
                     <div class="form-check" id="AdditionalHealthInfoTextArea">
                         <span style="display: @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value == true ? "block;" : "none;")">
-                            <label>Notes:</label><br />
-                            <textarea class="form-control standard-font-size" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.studentHealth.AdditionalHealthInfo)</textarea>
+                            <span>Notes:</span>
+                            <p class="form-control" id="AdditionalHealthInfo" name="AdditionalHealthInfo" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.studentHealth.AdditionalHealthInfo)</p>
                         </span>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
                     <div><label style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
                     <div class="form-check">
-                        <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.studentHealth.LevelOfPerformance)</textarea>
+                        <p class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.studentHealth.LevelOfPerformance)</p>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
                     <label  style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                     <div class="form-check">
-                        <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentHealth.AreaOfNeedDescription)</textarea>
+                        <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentHealth.AreaOfNeedDescription)</p>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
