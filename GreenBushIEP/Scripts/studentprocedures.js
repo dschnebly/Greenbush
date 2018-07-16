@@ -131,6 +131,8 @@
 		}
 
         $("#IEPBeginDate").attr('disabled', true);
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
 
         $.ajax({
             type: 'GET',
@@ -141,8 +143,17 @@
                 if (data.Result === 'success') {
                     $("#IEPBeginDate").removeClass("date-error");
 
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
+
                 } else {
-                    alert("The date you entered was invalid. Please try again.");
+
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
                 }
             },
             error: function (data) {
