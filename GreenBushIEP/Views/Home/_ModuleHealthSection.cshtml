@@ -82,17 +82,19 @@
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <div><label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
-    <div class="form-check">
-        <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
-    </div>
-</fieldset>
-            <fieldset class="form-group">
-                <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                <div class="form-check">
-                    <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
-                </div>
-            </fieldset>
+            <div>
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            </div>
+            <div class="form-check">
+                <textarea class="form-control standard-font-size" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <div class="form-check">
+                <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
             <fieldset class="form-group">
                 <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
                 <div class="form-check">
@@ -122,83 +124,83 @@
             </div>
     }
 
-    </div>
-    <br />
-    <br />
+</div>
+<br />
+<br />
 
-    <script>
-        // Attach Event
-        //reset the form to default database/brand new values.
-        $("input[name='HealthNoConcerns']").on('click', function (event) {
-            if ($("input[name='HealthNoConcerns']").is(':checked')) {
-                $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
-                $("input[name='HealthDiagnosis']").prop('checked', false);
-                $("input[name='HealthHearingDate']")[0].value = new Date().toJSON().slice(0, 10);
-                $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
-                $("input[name='HealthHearingResult']").prop('checked', false);
-                $("input[name='HealthVisionResult']").prop('checked', false);
-                $("input[name='VisionImparied']").prop('checked', false);
-                $("input[name='HearingImpaired']").prop('checked', false);
-                $("input[name='HealthCarePlan']").prop('checked', false);
-                $("#MeetNeedByOtherDescription").val('');
-                $("input[name=MetByGoal]").prop('checked', false);
-                $("input[name=MetByAccommodation]").prop('checked', false);
-                $("input[name=MetByOther]").prop('checked', false);
-                $("#MeetByOtherTextArea p").hide();
-            }
-        });
+<script>
+    // Attach Event
+    //reset the form to default database/brand new values.
+    $("input[name='HealthNoConcerns']").on('click', function (event) {
+        if ($("input[name='HealthNoConcerns']").is(':checked')) {
+            $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
+            $("input[name='HealthDiagnosis']").prop('checked', false);
+            $("input[name='HealthHearingDate']")[0].value = new Date().toJSON().slice(0, 10);
+            $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
+            $("input[name='HealthHearingResult']").prop('checked', false);
+            $("input[name='HealthVisionResult']").prop('checked', false);
+            $("input[name='VisionImparied']").prop('checked', false);
+            $("input[name='HearingImpaired']").prop('checked', false);
+            $("input[name='HealthCarePlan']").prop('checked', false);
+            $("#MeetNeedByOtherDescription").val('');
+            $("input[name=MetByGoal]").prop('checked', false);
+            $("input[name=MetByAccommodation]").prop('checked', false);
+            $("input[name=MetByOther]").prop('checked', false);
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
 
-        // Attach Event
-        // reset the form because jquery does not have built in reset functionality.
-        $("#resetForm").trigger("reset");
+    // Attach Event
+    // reset the form because jquery does not have built in reset functionality.
+    $("#resetForm").trigger("reset");
 
-        // Attach Event
-        // if an option other than no concern is selected than turn off noconcern
-        $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
-            $("input[name='HealthNoConcerns']").prop('checked', false)
-        });
-        $("input[name='HealthDiagnosis']").on('click', function (event) {
-            $("input[name='HealthNoConcerns']").prop('checked', false)
-        });
+    // Attach Event
+    // if an option other than no concern is selected than turn off noconcern
+    $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
+        $("input[name='HealthNoConcerns']").prop('checked', false)
+    });
+    $("input[name='HealthDiagnosis']").on('click', function (event) {
+        $("input[name='HealthNoConcerns']").prop('checked', false)
+    });
 
-        // Attach Event
-        // if checkbox is selected than show text box.
-        $("input:checkbox[name=MetByOther]").on('click', function (event) {
-            if ($("input:checkbox[name=MetByOther]").is(':checked')) {
-                $("#MeetByOtherTextArea p").show();
-            }
-            else {
-                $("#MeetByOtherTextArea p").hide();
-            }
-        });
+    // Attach Event
+    // if checkbox is selected than show text box.
+    $("input:checkbox[name=MetByOther]").on('click', function (event) {
+        if ($("input:checkbox[name=MetByOther]").is(':checked')) {
+            $("#MeetByOtherTextArea p").show();
+        }
+        else {
+            $("#MeetByOtherTextArea p").hide();
+        }
+    });
 
-        $("input:checkbox[name=ModuleHealthCarePlan]").on('click', function (event) {
-            if ($("input:checkbox[name=ModuleHealthCarePlan]").is(':checked')) {
-                $("#AdditionalHealthInfoTextArea p").show();
-            }
-            else {
-                $("#AdditionalHealthInfo").val("");
-                $("#AdditionalHealthInfoTextArea p").hide();
-            }
-        });
+    $("input:checkbox[name=ModuleHealthCarePlan]").on('click', function (event) {
+        if ($("input:checkbox[name=ModuleHealthCarePlan]").is(':checked')) {
+            $("#AdditionalHealthInfoTextArea p").show();
+        }
+        else {
+            $("#AdditionalHealthInfo").val("");
+            $("#AdditionalHealthInfoTextArea p").hide();
+        }
+    });
 
-        /* Binding */
-        /* tooltips */
-        $('[data-toggle="tooltip"]').tooltip({
-            trigger: 'manual'
-        });
+    /* Binding */
+    /* tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'manual'
+    });
 
-        ///* Event */
-        ///* When a user clicks on the question mark icon we turn on tooltips */
-        $('.tooltip-help').on('click', function () {
-            $('[data-toggle="tooltip"]').tooltip('toggle');
-        });
+    ///* Event */
+    ///* When a user clicks on the question mark icon we turn on tooltips */
+    $('.tooltip-help').on('click', function () {
+        $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
 
-        $("#HearingDate").datepicker({
-            dateFormat: "mm/dd/yy"
-        })
-        $("#VisionDate").datepicker({
-            dateFormat: "mm/dd/yy"
-        })
+    $("#HearingDate").datepicker({
+        dateFormat: "mm/dd/yy"
+    })
+    $("#VisionDate").datepicker({
+        dateFormat: "mm/dd/yy"
+    })
 
-    </script>
+</script>

@@ -971,15 +971,9 @@
                 </div>
             </div>
             <div class="col-md-2 pull-right">
-                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
+                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
             </div>
         </div>
-
-        @*<div class="row">
-            <div class="col-md-12">
-                <a role="button" class="btn btn-info" id="backtoportal" data-ftrans="slide reverse" data-ajax="false" href="/Home/TeacherPortal?hasSeenAgreement=True" style="position: relative; top: -10px;"><span class="glyphicon glyphicon-arrow-left"></span></a>
-            </div>
-        </div>*@
 
         <div class="row">
             <div class="col-md-12">
@@ -998,7 +992,7 @@
             <div class="btn-group btn-group-primary col-md-2">
                 <label class="btn btn-square-toround btn-xl btn-bordered-warning" data-toggle="modal"><span class="glyphicon glyphicon-chevron-right"></span> DRAFT </label>
             </div>
-            <div class="col-md-8" style="margin-left: -25px;">
+            <div class="col-md-8">
                 <span class="form-group" style="margin-right: 15px;">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
@@ -1009,14 +1003,14 @@
                 </span>
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
-            <div class="col-md-2 pull-right" style="padding-left: 0;padding-right: 0;width: 168px;">
+            @*<div class="col-md-2 pull-right" style="padding-left: 0;padding-right: 0;width: 168px;">
                 <div class="btn-group">
                     <button type="button" autofocus class="btn btn-default filter-button" data-filter="all" aria-label="All"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
                     <button type="button" class="btn btn-default filter-button" data-filter="iep" aria-label="IEP"><span class="fa fa-smile-o" aria-hidden="true"></span></button>
                     <button type="button" class="btn btn-default filter-button" data-filter="legal" aria-label="Legal Forms"><span class="fa fa-file-text" aria-hidden="true"></span></button>
                     <button type="button" class="btn btn-default filter-button" data-filter="planning" aria-label="Plans and Services"><span class="fa fa-trophy"></span></button>
                 </div>
-            </div>
+            </div>*@
         </div>
 
         <div class="row">
