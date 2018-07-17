@@ -708,6 +708,9 @@
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
+                var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+
                 //check dates before saving
                 var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
                 var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('/');
@@ -928,6 +931,9 @@
             $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
+            var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+            $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+
             /* Closes all the other panel groups except the one you clicked on */
             $(this).find(".panel-title a").on("click", function () {
                 $(".collapse").each(function () {
@@ -1114,6 +1120,9 @@
                
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
+
+                var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
                 //check dates before saving
                 var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
