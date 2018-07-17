@@ -1732,7 +1732,7 @@
           <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
           <Property Name="IEPid" Type="Int32" Nullable="false" />
           <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FormName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         </Schema>

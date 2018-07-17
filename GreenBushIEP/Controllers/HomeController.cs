@@ -13,6 +13,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using HtmlAgilityPack;
+using System.Data.Entity.Validation;
 
 namespace GreenbushIep.Controllers
 {
@@ -1638,6 +1639,8 @@ namespace GreenbushIep.Controllers
 
                                    if(isArchive == "1")
                                    {
+                                    try
+                                    {
                                         var archive = new tblFormArchive();
                                         archive.Creator_UserID = teacher.UserID;
                                         archive.Student_UserID = id;
@@ -1648,6 +1651,37 @@ namespace GreenbushIep.Controllers
 
                                         db.tblFormArchives.Add(archive);
                                         db.SaveChanges();
+                                    }
+                                    catch(Exception ex)
+                                    {
+                                        string errorMessage = "";
+                                      
+                                        if (ex is DbEntityValidationException)
+                                        {
+
+                                            if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
+                                            {
+                                                var errors =
+                                                    ((DbEntityValidationException)(ex)).EntityValidationErrors;
+                                                foreach (var failure in errors)
+                                                {
+                                                    foreach (var error in failure.ValidationErrors)
+                                                    {
+                                                        string propertyName = error.PropertyName;
+
+                                                        errorMessage += propertyName + " " +error.ErrorMessage;
+                                                        
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            errorMessage = ex.Message;
+                                        }
+
+                                        
+                                    }
                                                                             
                                    }
                                    
