@@ -1314,7 +1314,7 @@
                                                                 <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                                 <div class="input-group" style="margin-bottom: 5px;">
                                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                    @(assessment.CompletedOn?.ToString("MM/dd/yyyy"))
+                                                                    @(assessment.CompletedOn.Value.ToString("MM/dd/yyyy"))
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-9">
