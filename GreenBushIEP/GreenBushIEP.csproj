@@ -442,6 +442,8 @@
     <Content Include="Content\font-awesome-min.css" />
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
+    <Content Include="Content\Images\check_no.png" />
+    <Content Include="Content\Images\check_yes.png" />
     <Content Include="Content\Images\copying-icon.gif" />
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
@@ -459,7 +461,11 @@
     <Content Include="Content\Images\newStudent.PNG" />
     <Content Include="Content\Images\newTeacher.PNG" />
     <Content Include="Content\Images\newUser.png" />
+    <Content Include="Content\Images\no_checked.png" />
+    <Content Include="Content\Images\no_radio.png" />
     <Content Include="Content\Images\owner1.jpg" />
+    <Content Include="Content\Images\radio_no.png" />
+    <Content Include="Content\Images\radio_yes.png" />
     <Content Include="Content\Images\student1.jpg" />
     <Content Include="Content\Images\student2.jpg" />
     <Content Include="Content\Images\student3.jpg" />
@@ -477,6 +483,8 @@
     <Content Include="Content\Images\thisisgreenbush.jpg" />
     <Content Include="Content\Images\ui-icons_444444_256x240.png" />
     <Content Include="Content\Images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\Images\yes_checked.png" />
+    <Content Include="Content\Images\yes_radio.png" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\material-toggle-button.css" />
     <Content Include="Content\site.css" />
