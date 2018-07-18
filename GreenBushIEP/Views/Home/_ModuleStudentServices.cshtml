@@ -482,8 +482,10 @@
             var dupLocation = parent.find('[name="Location"]').find(":selected").val();
             var dupServiceType = parent.find('[name="ServiceType"]').find(":selected").val();
             var dupServiceProvider = parent.find('[name="serviceProvider"]').find(":selected").val();
+            var dupStartDate = parent.find('[name="serviceStartDate"]').val();
+            var dupEndDate = parent.find('[name="serviceEndDate"]').val();
 
-            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay);
+            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
 
         }
         else
@@ -709,16 +711,29 @@
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
                 var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+                if (serviceType != undefined && serviceType != "")
+                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
                 //check dates before saving
-                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
-                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('/');
+                var eDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val();
+                var endDate = eDate.split('/');
+                var endDateObj = new Date(eDate);
+                var sDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val();
+                var startDate = sDate.split('/');
+                var startDateObj = new Date(sDate);
                 var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
                 var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
                 var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
+
+                //start date must be after IEP start date
+                _validateStartDate(startDateObj);
+
+                //end date must be after
+                if (endDateObj < startDateObj)
+                    _showAlert("The End date must be after the Initiation date.", false);
+
                 if (isNoServiceEndDate || isNoServiceStartDate)
                 {
                     if (isNoServiceEndDate)
@@ -882,7 +897,7 @@
 
     }
 
-    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay) {
+    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate) {
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
@@ -915,10 +930,10 @@
 
         panelCollapse.collapse("show");
 
-        initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay);
+        initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
     }
 
-    function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay) {
+    function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate) {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
             //set to next year
@@ -932,7 +947,8 @@
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
             var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-            $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+            if(serviceType != undefined && serviceType != "")
+                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
             /* Closes all the other panel groups except the one you clicked on */
             $(this).find(".panel-title a").on("click", function () {
@@ -1122,16 +1138,31 @@
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
                 var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+                if (serviceType != undefined && serviceType != "")
+                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
                 //check dates before saving
-                var endDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val().split('/');
-                var startDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val().split('/');
+
+                var eDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val();
+                var endDate = eDate.split('/');
+                var endDateObj = new Date(eDate);
+                var sDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val();
+                var startDate = sDate.split('/');
+                var startDateObj = new Date(sDate);
+
                 var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
                 var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
                 var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
                 var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
                 var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
+
+                //start date must be after IEP start date
+                _validateStartDate(startDateObj);
+
+                //end date must be after
+                if (endDateObj < startDateObj)
+                    _showAlert("The End date must be after the Initiation date.", false);
+
                 if (isNoServiceEndDate || isNoServiceStartDate) {
                     if (isNoServiceEndDate)
                         _showAlert("The End date is not a valid Service date.", false);
@@ -1167,7 +1198,18 @@
             var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
             var lastDaySchoolYear = searchLastDay(nextYear, 5);
 
-            if (lastDaySchoolYear != undefined) {
+
+            if (lastDaySchoolYear == undefined) {
+                var origStartDateVal = new Date(dupEndDate);
+                var newEndDate = new Date(origStartDateVal.setFullYear(nextYear));
+              
+                var Month = newEndDate.getMonth() + 1;
+                var Day = newEndDate.getDate();
+                var Year = newEndDate.getFullYear();
+                var formattedDate = Month + "/" + Day + "/" + Year;
+                endDateElement.val(formattedDate);
+            }
+            else {
                 var Month = lastDaySchoolYear.Month;
                 var Day = lastDaySchoolYear.Day;
                 var Year = lastDaySchoolYear.Year;
@@ -1175,21 +1217,45 @@
                 endDateElement.val(formattedDate);
             }
 
+         
+            
             //setup start date - find by first year of selected fiscal year
             var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
-
             var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
-            if (firstDayNextYear != undefined) {
-                var Month = firstDayNextYear.Month;
-                var Day = firstDayNextYear.Day;
-                var Year = firstDayNextYear.Year;
+
+            if (firstDayNextYear == undefined) {
+                var origStartDateVal = new Date(dupStartDate);
+                var newStartDate = new Date(origStartDateVal.setFullYear(nextYear-1));
+              
+                var Month = newStartDate.getMonth() + 1;
+                var Day = newStartDate.getDate();
+                var Year = newStartDate.getFullYear();
                 var formattedDate = Month + "/" + Day + "/" + Year;
                 startDateElement.val(formattedDate);
             }
-
+            else {
+                
+                if (firstDayNextYear != undefined) {
+                    var Month = firstDayNextYear.Month;
+                    var Day = firstDayNextYear.Day;
+                    var Year = firstDayNextYear.Year;
+                    var formattedDate = Month + "/" + Day + "/" + Year;
+                    startDateElement.val(formattedDate);
+                }
+            }
 
             $(".duplication-loader").css('visibility', 'hidden');
         });
+    }
+
+    function _validateStartDate(dateVal)
+    {
+        var startDateElement = $("#iepStartDate").val();
+        var iepStartDate = new Date(startDateElement);
+        
+        if (dateVal < iepStartDate)
+            _showAlert("The Initiation date must be after the IEP Initiation (" + iepStartDate.toLocaleDateString("en-US") + ")", false);
+        
     }
 
 	function _showAlert(message, positive) {
