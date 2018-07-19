@@ -448,7 +448,9 @@
         $(this).find('.dtField').each(function () {           
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",               
+                dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true
             });
         });
 
@@ -528,7 +530,9 @@
         cloneService.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy"
+                dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true
             });
         });
 
@@ -571,36 +575,15 @@
                 var day = new Date(e.target.value).getUTCDay();
                 var selectedDate = e.target.value;
                 var calendaryDay = selectedDate.split('/');
-                
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
-                
-                // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-                if (day == 0) {
-                    e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
-                    e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-					e.target.parentNode.classList.add('has-error');
-					var error = e.target.title;
-					_showAlert(error, false);
-                } else if (day == 6) {
-                    e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
-                    e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-					e.target.parentNode.classList.add('has-error');
-					var error = e.target.title;
-					_showAlert(error, false);
-                } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
-                    e.target.setCustomValidity('OH NOES! That day is not is session.');
-                    e.target.title = 'OH NOES! That day is not is session.';
+                _onDateChange(day, calendaryDay, e);
+                               
+                var isValid = _validateDate(fiscalYear, selectedDate);
+                if (!isValid) {
+                    _showAlert("The Initiation and End Date must be within the selected school year", false);
                     e.target.parentNode.classList.add('has-error');
-                    var error = e.target.title;
-                    _showAlert(error, false);                    
                 }
-                else {
-                    e.target.setCustomValidity('');
-                    e.target.title = '';
-                    e.target.parentNode.classList.remove('has-error');
-                }
-                
-                _validateDate(fiscalYear, selectedDate);
+
 
             });
 
@@ -715,37 +698,11 @@
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
                 //check dates before saving
-                var eDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val();
-                var endDate = eDate.split('/');
-                var endDateObj = new Date(eDate);
-                var sDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val();
-                var startDate = sDate.split('/');
-                var startDateObj = new Date(sDate);
-                var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
-                var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
-                var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
-                var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
-                var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
+                var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
-                //start date must be after IEP start date
-                _validateStartDate(startDateObj);
-
-                //end date must be after
-                if (endDateObj < startDateObj)
-                    _showAlert("The End date must be after the Initiation date.", false);
-
-                if (isNoServiceEndDate || isNoServiceStartDate)
-                {
-                    if (isNoServiceEndDate)
-                        _showAlert("The End date is not a valid Service date.", false);
-                    else if (isNoServiceStartDate)
-                        _showAlert("The Initiation date is not a valid Service date", false);
-                    else
-                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
-
+                //don't allow user to save
+                if (!isValid)
                     return false;
-                }
-
 
                 $.ajax({
                     type: 'POST',
@@ -925,6 +882,8 @@
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true
             });
         });
 
@@ -986,28 +945,15 @@
                 var day = new Date(e.target.value).getUTCDay();
                 var selectedDate = e.target.value;
                 var calendaryDay = selectedDate.split('/');
-                                
-                // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-                if (day == 0) {
-                    e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
-                    e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-                    e.target.parentNode.classList.add('has-error');
-                } else if (day == 6) {
-                    e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
-                    e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-                    e.target.parentNode.classList.add('has-error');
-                } else if (isNoServiceDay(calendaryDay[0], calendaryDay[1], calendaryDay[2])) {
-                    e.target.setCustomValidity('OH NOES! That day is not is session.');
-                    e.target.title = 'OH NOES! That day is not is session.';
-                    e.target.parentNode.classList.add('has-error');
-                }
-                else {
-                    e.target.setCustomValidity('');
-                    e.target.title = '';
-                    e.target.parentNode.classList.remove('has-error');
-                }
+                var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
 
-                _validateDate(fiscalYear, selectedDate);
+                _onDateChange(day, calendaryDay, e);
+               
+                var isValid = _validateDate(fiscalYear, selectedDate);
+                if (!isValid) {
+                    _showAlert("The Initiation and End Date must be within the selected school year", false);
+                    e.target.parentNode.classList.add('has-error');
+                }
 
             });
 
@@ -1142,37 +1088,11 @@
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
                 //check dates before saving
-
-                var eDate = $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val();
-                var endDate = eDate.split('/');
-                var endDateObj = new Date(eDate);
-                var sDate = $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val();
-                var startDate = sDate.split('/');
-                var startDateObj = new Date(sDate);
-
-                var fiscalYear = $(this).closest('.oneStudentService').find("select[name='fiscalYear']").val();
-                var startDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceStartDate']").val());
-                var endDateOk = _validateDate(fiscalYear, $(this).closest('.oneStudentService').find("input[name='serviceEndDate']").val());
-                var isNoServiceStartDate = isNoServiceDay(startDate[0], startDate[1], startDate[2]);
-                var isNoServiceEndDate = isNoServiceDay(endDate[0], endDate[1], endDate[2]);
-
-                //start date must be after IEP start date
-                _validateStartDate(startDateObj);
-
-                //end date must be after
-                if (endDateObj < startDateObj)
-                    _showAlert("The End date must be after the Initiation date.", false);
-
-                if (isNoServiceEndDate || isNoServiceStartDate) {
-                    if (isNoServiceEndDate)
-                        _showAlert("The End date is not a valid Service date.", false);
-                    else if (isNoServiceStartDate)
-                        _showAlert("The Initiation date is not a valid Service date", false);
-                    else
-                        _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
-
+                var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
+               
+                //don't allow user to save
+                if (!isValid)
                     return false;
-                }
                 
                 $.ajax({
                     type: 'POST',
@@ -1253,8 +1173,12 @@
         var startDateElement = $("#iepStartDate").val();
         var iepStartDate = new Date(startDateElement);
         
-        if (dateVal < iepStartDate)
+        if (dateVal < iepStartDate) {
             _showAlert("The Initiation date must be after the IEP Initiation (" + iepStartDate.toLocaleDateString("en-US") + ")", false);
+            return false;
+        }
+
+        return true;
         
     }
 
@@ -1264,8 +1188,8 @@
 			if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
 			else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
 			$("#alertMessage .moreinfo").html(message);
-			$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-				$("#alertMessage").slideUp(1000);
+			$("#alertMessage").fadeTo(3000, 1000).slideUp(1000, function () {
+				$("#alertMessage").slideUp(5000);
 			});
 		}
 	}
@@ -1275,7 +1199,8 @@
 	    //start date must be within the school year
 	    var firstDaySchoolYear = searchFirstDay(fiscalYear, fiscalYear - 1, 8);
 	    var lastDaySchoolYear = searchLastDay(fiscalYear, 5);
-	    
+	    var isValid = true;
+
 	    if (firstDaySchoolYear != undefined && lastDaySchoolYear != undefined) {
 	       
 	        var calDate = createDate2(calendarDay);
@@ -1284,14 +1209,109 @@
 	        var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month - 1, lastDaySchoolYear.Day);
 	        
 	        if ((calDate >= firstDay) && (calDate <= lastDay)) {
-	            return true;
+	            isValid = true;
 	        }
 	        else {
 	            var showFirstDay = firstDaySchoolYear.Month + "/" + firstDaySchoolYear.Day + "/" + firstDaySchoolYear.Year;
 	            var showLastDay = lastDaySchoolYear.Month + "/" + lastDaySchoolYear.Day + "/" + lastDaySchoolYear.Year;
-	            _showAlert("The Initiation and End Date must be within the selected school year. Start Date: " + showFirstDay + " End Date: " + showLastDay, false)
-	            return false;
+	            isValid = false;
 	        }
+	    }
+
+	    return isValid;
+	}
+
+	function _dateCheck(startDateElement, endDateElement, fiscalYearElement)
+	{
+	    //check dates before saving
+	    var isValid = true;
+	    var eDate = endDateElement.val();
+	    var endDate = eDate.split('/');
+	    var endDateObj = new Date(eDate);
+	    var sDate = startDateElement.val();
+	    var startDate = sDate.split('/');
+	    var startDateObj = new Date(sDate);
+	    var fiscalYear = fiscalYearElement.val();
+	    var startDateOk = _validateDate(fiscalYear, startDateElement.val());
+	    var endDateOk = _validateDate(fiscalYear, endDateElement.val());
+	    var isNoServiceStartDate = isNoServiceDay(startDate[2], startDate[0], startDate[1]);
+	    var isNoServiceEndDate = isNoServiceDay(endDate[2], endDate[0], endDate[1]);
+
+	    if (!startDateOk) {
+	        isValid = false;
+	        _showAlert("The Initiation must be within the selected school year", false);
+	        startDateElement.parent.addClass('has-error');
+	        return false;
+	    }
+
+	    if (!endDateOk)
+	    {
+	        isValid = false;
+	        _showAlert("The End Date must be within the selected school year", false);
+	        endDateElement.parent.addClass('has-error');
+	        return false;
+	    }
+	     
+	    //start date must be after IEP start date
+	    var isAfterIEP = _validateStartDate(startDateObj);
+	    if (!isAfterIEP) {
+	        isValid = false;	        
+	        return false;
+	    }
+
+	    //end date must be after
+	    if (endDateObj < startDateObj) {
+	        _showAlert("The End date must be after the Initiation date.", false);
+	        isValid = false;
+	        return false;
+	    }
+
+	    if (isNoServiceEndDate || isNoServiceStartDate) {
+	        isValid = false;
+
+	        if (isNoServiceEndDate) {
+	            _showAlert("The End date is not a valid Service date.", false);
+	            endDateElement.parent.addClass('has-error');
+	        }
+	        else if (isNoServiceStartDate) {
+	            _showAlert("The Initiation date is not a valid Service date", false);
+	            startDateElement.parent.addClass('has-error');
+	        }
+	        else
+	            _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+	        
+	    }
+        
+	    return isValid;
+
+	}
+
+	function _onDateChange(day, calendaryDay, e)
+	{
+	    // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+	    if (day == 0) {
+	        e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
+	        e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+	        e.target.parentNode.classList.add('has-error');
+	        var error = e.target.title;
+	        _showAlert(error, false);
+	    } else if (day == 6) {
+	        e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
+	        e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+	        e.target.parentNode.classList.add('has-error');
+	        var error = e.target.title;
+	        _showAlert(error, false);
+	    } else if (isNoServiceDay(calendaryDay[2], calendaryDay[0], calendaryDay[1])) {
+	        e.target.setCustomValidity('OH NOES! That day is not is session.');
+	        e.target.title = 'OH NOES! That day is not is session.';
+	        e.target.parentNode.classList.add('has-error');
+	        var error = e.target.title;
+	        _showAlert(error, false);
+	    }
+	    else {
+	        e.target.setCustomValidity('');
+	        e.target.title = '';
+	        e.target.parentNode.classList.remove('has-error');
 	    }
 	}
 
