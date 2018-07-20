@@ -16,6 +16,7 @@ namespace GreenBushIEP.Models
     {
         public int FrequencyCode { get; set; }
         public string Label { get; set; }
-        public string Type { get; set; }
+        public string FrequencyType { get; set; }
+        public Nullable<int> MinuteMultiplier { get; set; }
     }
 }

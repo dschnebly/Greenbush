@@ -196,7 +196,7 @@
           <Property Name="Creator_UserID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="ArchiveDate" Type="datetime" Nullable="false" />
-          <Property Name="FormName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmarks">
@@ -266,6 +266,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -285,6 +287,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -315,6 +319,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -331,6 +337,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -350,6 +358,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -368,6 +378,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -387,6 +399,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPs">
           <Key>
@@ -436,6 +450,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -455,6 +471,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblLanguages">
           <Key>
@@ -470,6 +488,7 @@
           <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Billable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -547,7 +566,8 @@
           </Key>
           <Property Name="FrequencyCode" Type="int" Nullable="false" />
           <Property Name="Label" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FrequencyType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MinuteMultiplier" Type="int" />
         </EntityType>
         <EntityType Name="tblServiceGoals">
           <Key>
@@ -582,6 +602,7 @@
           <Property Name="ServiceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Billable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentInfo">
           <Key>
@@ -1236,6 +1257,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -1255,6 +1278,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -1285,6 +1310,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -1301,6 +1328,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -1320,6 +1349,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -1338,6 +1369,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -1357,6 +1390,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEP">
           <Key>
@@ -1406,6 +1441,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -1425,6 +1462,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblLanguage">
           <Key>
@@ -1441,6 +1480,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblAccommodations" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblLocation" ToRole="tblAccommodation" />
+          <Property Name="Billable" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -1521,7 +1561,8 @@
           </Key>
           <Property Name="FrequencyCode" Type="Int32" Nullable="false" />
           <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FrequencyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MinuteMultiplier" Type="Int32" />
         </EntityType>
         <EntityType Name="tblService">
           <Key>
@@ -1550,6 +1591,7 @@
           <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Billable" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentInfo">
           <Key>
@@ -2017,6 +2059,8 @@
           <EntitySetMapping Name="tblIEPAcademics">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPAcademic">
               <MappingFragment StoreEntitySet="tblIEPAcademic">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2034,6 +2078,8 @@
           <EntitySetMapping Name="tblIEPCommunications">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPCommunication">
               <MappingFragment StoreEntitySet="tblIEPCommunication">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2054,6 +2100,8 @@
           <EntitySetMapping Name="tblIEPHealths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPHealth">
               <MappingFragment StoreEntitySet="tblIEPHealth">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2085,6 +2133,8 @@
           <EntitySetMapping Name="tblIEPIntelligences">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
               <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2102,6 +2152,8 @@
           <EntitySetMapping Name="tblIEPMaths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMath">
               <MappingFragment StoreEntitySet="tblIEPMath">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2122,6 +2174,8 @@
           <EntitySetMapping Name="tblIEPMotors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMotor">
               <MappingFragment StoreEntitySet="tblIEPMotor">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2141,6 +2195,8 @@
           <EntitySetMapping Name="tblIEPReadings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPReading">
               <MappingFragment StoreEntitySet="tblIEPReading">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2187,6 +2243,8 @@
           <EntitySetMapping Name="tblIEPSocials">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPSocial">
               <MappingFragment StoreEntitySet="tblIEPSocial">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2212,6 +2270,8 @@
           <EntitySetMapping Name="tblIEPWrittens">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPWritten">
               <MappingFragment StoreEntitySet="tblIEPWritten">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2240,6 +2300,7 @@
           <EntitySetMapping Name="tblLocations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblLocation">
               <MappingFragment StoreEntitySet="tblLocations">
+                <ScalarProperty Name="Billable" ColumnName="Billable" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
@@ -2322,7 +2383,8 @@
           <EntitySetMapping Name="tblServiceFrequencies">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceFrequency">
               <MappingFragment StoreEntitySet="tblServiceFrequency">
-                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MinuteMultiplier" ColumnName="MinuteMultiplier" />
+                <ScalarProperty Name="FrequencyType" ColumnName="FrequencyType" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
                 <ScalarProperty Name="FrequencyCode" ColumnName="FrequencyCode" />
               </MappingFragment>
@@ -2350,6 +2412,7 @@
           <EntitySetMapping Name="tblServiceTypes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
               <MappingFragment StoreEntitySet="tblServiceTypes">
+                <ScalarProperty Name="Billable" ColumnName="Billable" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />

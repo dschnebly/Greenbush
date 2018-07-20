@@ -24,9 +24,16 @@
             </div>
         </div>
         <fieldset class="form-group">
-            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            <div>
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+            </div>
+            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
             <div class="form-check">
-                <textarea class="form-control standard-font-size" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3"  placeholder="Describe strengths and concerns (include baseline data)">@(Model.LevelOfPerformance)</textarea>
+                <textarea class="form-control standard-font-size" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.PLAAFP_Strengths)</textarea>
+            </div>
+            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+            <div class="form-check">
+                <textarea class="form-control standard-font-size" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.PLAAFP_Concerns)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">

@@ -63,11 +63,19 @@
                         </div>
                     </div>
                     <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        <div>
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
                         <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.Academic.LevelOfPerformance)</textarea>
+                            <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Strengths" name="ModuleAcademic_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Academic.PLAAFP_Strengths)</textarea>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                        <div class="form-check">
+                            <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Concerns" name="ModuleAcademic_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Academic.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
+                    
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
@@ -109,11 +117,19 @@
                         </div>
                     </div>
                     <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        <div>
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
                         <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.Reading.LevelOfPerformance)</textarea>
+                            <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Strengths" name="ModuleReading_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Reading.PLAAFP_Strengths)</textarea>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                        <div class="form-check">
+                            <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Concerns" name="ModuleReading_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Reading.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
+                   
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
@@ -155,9 +171,16 @@
                         </div>
                     </div>
                     <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        <div>
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
                         <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleMathLevelOfPerformance" id="ModuleMathLevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.Math.LevelOfPerformance)</textarea>
+                            <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Strengths" name="ModuleMath_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Math.PLAAFP_Strengths)</textarea>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                        <div class="form-check">
+                            <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Concerns" name="ModuleMath_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Math.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
                     <fieldset class="form-group">
@@ -201,11 +224,19 @@
                         </div>
                     </div>
                     <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        <div>
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
                         <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.Written.LevelOfPerformance)</textarea>
+                            <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Strengths" name="ModuleWritten_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Written.PLAAFP_Strengths)</textarea>
+                        </div>
+                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                        <div class="form-check">
+                            <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Concerns" name="ModuleWritten_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Written.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
+                  
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
