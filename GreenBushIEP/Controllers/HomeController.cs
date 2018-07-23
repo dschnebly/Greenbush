@@ -1218,7 +1218,7 @@ namespace GreenbushIep.Controllers
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
                     model.Transporation_Other_flag = true;
-                    model.Transporation_Disability_flag = true;
+                    model.Transporation_Disability_flag = false;
                 }
             }
 
