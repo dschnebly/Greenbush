@@ -255,17 +255,17 @@
         <div class="row print-button" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
                 @*@Html.ActionLink("PRINT", "AgreementPrint", "Home", new { id = Model.draft.UserID }, new { @id = "printbutton", @class = "btn btn-info print", onclick = "return window.print();" })*@
-                
-                <form  action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
-                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print"/>
+
+                <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
+                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />
                     <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />
                     <input type="hidden" id="printText" name="printText" />
                     <input type="hidden" id="isArchive" name="isArchive" />
                     <input type="hidden" id="studentName" name="studentName" value="@studentFullName" />
-                    <input type="hidden" id="studentId" name="studentId" value="@Model.draft.UserID" />                    
-                    <input type="hidden" id="iepID" name="iepID" value="@Model.draft.IEPid" />                    
+                    <input type="hidden" id="studentId" name="studentId" value="@Model.draft.UserID" />
+                    <input type="hidden" id="iepID" name="iepID" value="@Model.draft.IEPid" />
                     <input type="hidden" id="isIEP" name="isIEP" value="1" />
-                    
+
                 </form>
 
             </div>
@@ -275,16 +275,16 @@
                 @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right exit", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
             </div>
         </div>
-        
+
         <div class="module-page">
             <div class="header"><h3>@Model.studentFirstName @Model.studentLastName</h3></div>
 
             <h3 class="text-center">HEALTH</h3>
-            
+
             @if (!Model.studentHealth.NoConcerns)
             {
                 <div class="funkyradio">
-                    
+
                     <div class="funkyradio-primary">
                         <img src="@(Model.studentHealth.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                         <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.studentHealth.ProgressTowardGenEd ? "checked" : String.Empty) />
@@ -310,7 +310,7 @@
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.VisionImparied ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty ) />                    
+                    <label>Does the student have a visual impairment?</label>&nbsp;&nbsp;<img src="@(Model.studentHealth.VisionImparied ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="VisionImparied" id="VisionImparied" @(Model.studentHealth.VisionImparied ? "checked" : String.Empty ) />
                 </fieldset>
                 <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
                     <div><label>Visual Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</div>
@@ -321,13 +321,13 @@
                         <label class="radio-inline"><img src="@(Model.studentHealth.VisionResult == -1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="HearingResult" value="-1" style="position: relative; right: 5px;" @(Model.studentHealth.VisionResult == -1 ? "checked" : String.Empty ) />Unable to Test</label>
                     </div>
                 </fieldset>
-                
+
                 <fieldset class="form-group">
-                    
+
                     <label>Does this student require a health care plan?</label>&nbsp;&nbsp;
                     <img src="@(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
                     <input type="checkbox" id="ModuleHealthCarePlan" name="ModuleHealthCarePlan" @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value ? "checked" : String.Empty) />
-                    
+
                     <div class="form-check" id="AdditionalHealthInfoTextArea">
                         <span style="display: @(Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value == true ? "block;" : "none;")">
                             <span>Notes:</span>
@@ -336,20 +336,24 @@
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <div><label style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
-                    <div class="form-check">
-                        <p class="form-control" id="LevelOfPerformance" name="LevelOfPerformance" rows="3" placeholder="Describe strengths and concerns (include baseline data)">@(Model.studentHealth.LevelOfPerformance)</p>
+                    <div>
+                        <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                        <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                        <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentHealth.PLAAFP_Strengths)</p>
+                        <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                        <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentHealth.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
                 <fieldset class="form-group">
-                    <label  style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                    <div class="form-check">
-                        <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentHealth.AreaOfNeedDescription)</p>
+                    <div class="form-group-label">
+                        <label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
                     </div>
+                     <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentHealth.AreaOfNeedDescription)</p>                    
                 </fieldset>
                 <fieldset class="form-group">
-                    <label>This need will be met by:</label>
-                    <div class="form-check">
+                    
+                    <div class="form-check form-group-label">
+                        <label>This need will be met by:</label>
                         <div class="checkbox">
                             <label><img src="@(Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentHealth.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
                             <label><img src="@(Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentHealth.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
@@ -363,10 +367,10 @@
                             <p>*if other, please explain:</p>
                         }
                         <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentHealth.NeedMetByOtherDescription)</p>
-                    </div>     
-                                       
+                    </div>
+
                 </fieldset>
-                
+
             }
             else
             {
@@ -380,886 +384,905 @@
                 <h3 class="text-center">MOTOR</h3>
                 @if (!Model.studentMotor.NoConcerns)
             {
-            <div>
-                <div class="funkyradio-primary">
-                    <img src="@(Model.studentMotor.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                    <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.studentMotor.ProgressTowardGenEd ? "checked" : String.Empty )>
-                    <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
-                </div>
-                <div class="funkyradio-primary">
-                    <img src="@(Model.studentMotor.Needs ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                    <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.studentMotor.Needs ? "checked" : String.Empty )>
-                    <label for="ModuleMotorNeeds">Area of Need which impacts perforamnce in General Education</label>
-                </div>
-                <fieldset class="form-group">
-                    <p><label>Team will consider participation in:</label></p>
-                    <div class="form-check"  style="padding-left:10px;padding-bottom:8px;">
-						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty ) />No Special Education supports needed in Physical Education</label><br>
-					    <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty ) />Modified or Adaptive Supports Needed in Physical Education</label><br>
-						<label class="radio-inline"><img src="@(Model.studentMotor.Participation == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty ) />Student has met Physical Education Requirements</label><br>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <div><label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
-                    <div class="form-check">
-                        <p class="form-control" name="ModuleMotorLevelOfPerformance" id="ModuleMotorLevelOfPerformance" rows="3">@(Model.studentMotor.LevelOfPerformance)</p>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label>Area of Need which impacts performance</label>
-                    <div class="form-check">
-                        <p class="form-control" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" >@(Model.studentMotor.AreaOfNeedDescription)</p>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    
-                    <div class="form-check">
-                        <label>This need will be met by:</label>
-                        <div class="checkbox">
-                            <label><img src="@(Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMotor.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                            <label><img src="@(Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMotor.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                            <label><img src="@(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMotor.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <div>
+                        <div class="funkyradio-primary">
+                            <img src="@(Model.studentMotor.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                            <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.studentMotor.ProgressTowardGenEd ? "checked" : String.Empty )>
+                            <label for="ModuleMotorProgressTowardGenEd">Progressing with General Education Supports</label>
                         </div>
-                    </div>
+                        <div class="funkyradio-primary">
+                            <img src="@(Model.studentMotor.Needs ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                            <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.studentMotor.Needs ? "checked" : String.Empty )>
+                            <label for="ModuleMotorNeeds">Area of Need which impacts perforamnce in General Education</label>
+                        </div>
+                        <fieldset class="form-group">
+                            <p><label>Team will consider participation in:</label></p>
+                            <div class="form-check" style="padding-left:10px;padding-bottom:8px;">
+                                <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 1 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 1 ? "checked" : String.Empty ) />No Special Education supports needed in Physical Education</label><br>
+                                <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 2 ? "checked" : String.Empty ) />Modified or Adaptive Supports Needed in Physical Education</label><br>
+                                <label class="radio-inline"><img src="@(Model.studentMotor.Participation == 3 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.studentMotor.Participation == 3 ? "checked" : String.Empty ) />Student has met Physical Education Requirements</label><br>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentMotor.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentMotor.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
+                            </div>
+                            <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentMotor.AreaOfNeedDescription)</p>
+                        </fieldset>
+                        <fieldset class="form-group">
+                                <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMotor.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMotor.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMotor.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
 
-                    <div class="standard-font-size" style="display: @(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true ? "block;" : "none;")">
-                        @if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true)
-                        {
-                            <p>*if other, please explain:</p>
-                        }
-                        <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3" >@(Model.studentMotor.NeedMetByOtherDescription)</p>
-                    </div>          
-                    
-                </fieldset>
-            </div>
-            }
-            else
-            {
-            <div class="text-center">
-                <p>The team has determined that there are no concerns at this time.</p>
-            </div>
-            }
+                            <div class="standard-font-size" style="display: @(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true)
+                                {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMotor.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
             </div>
             <hr class="section-break" />
             <div>
                 <h3 class="text-center">COMMUNICATION</h3>
                 @if (!Model.studentCommunication.NoConcerns)
             {
-            <div>
-                <div class="funkyradio">
-                    <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                        <input type="checkbox" name="ModuleCommunicationProgressTowardGenEd" id="ModuleCommunicationProgressTowardGenEd" @(Model.studentCommunication.ProgressTowardGenEd ? "checked" : String.Empty )/>
-                        <label for="ModuleCommunicationProgressTowardGenEd">Progressing with General Education Support</label>
-                    </div>
-                    <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                        <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.studentCommunication.AreaOfNeed == true ? "checked" : String.Empty )/>
-                        <label for="ModuleCommunicationAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
-                    </div>
-                    <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.Deaf ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                        <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.studentCommunication.Deaf ? "checked" : String.Empty )/>
-                        <label for="ModuleCommunicationDeaf">Deaf/Hard of Hearing</label>
-                    </div>
-                    <div class="funkyradio-primary">
-                        <img src="@(Model.studentCommunication.LimitedEnglish ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                        <input type="checkbox" name="ModuleCommunicationLimitedEnglish" id="ModuleCommunicationLimitedEnglish" @(Model.studentCommunication.LimitedEnglish ? "checked" : String.Empty) />
-                        <label for="ModuleCommunicationLimitedEnglish">Limited English Proficiency</label>
-                    </div>
-                </div>
-                <fieldset class="form-group">
-                    <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-                    <div class="form-check">
-                        <p class="form-control" name="ModuleCommunicationLevelOfPerformance" id="ModuleCommunicationLevelOfPerformance" rows="3">@(Model.studentCommunication.LevelOfPerformance)</p>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label>Area of need which impacts performance</label>
-                    <div class="form-check">
-                        <p class="form-control" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3">@(Model.studentCommunication.AreaOfNeedDescription)</p>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-
-                    <label>This need will be met by:</label>
-                    <div class="form-check">
-                        <div class="checkbox">
-                            <label><img src="@(Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentCommunication.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                            <label><img src="@(Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentCommunication.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                            <label><img src="@(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentCommunication.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                    <div>
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentCommunication.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleCommunicationProgressTowardGenEd" id="ModuleCommunicationProgressTowardGenEd" @(Model.studentCommunication.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleCommunicationProgressTowardGenEd">Progressing with General Education Support</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentCommunication.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.studentCommunication.AreaOfNeed == true ? "checked" : String.Empty ) />
+                                <label for="ModuleCommunicationAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentCommunication.Deaf ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.studentCommunication.Deaf ? "checked" : String.Empty ) />
+                                <label for="ModuleCommunicationDeaf">Deaf/Hard of Hearing</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentCommunication.LimitedEnglish ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleCommunicationLimitedEnglish" id="ModuleCommunicationLimitedEnglish" @(Model.studentCommunication.LimitedEnglish ? "checked" : String.Empty) />
+                                <label for="ModuleCommunicationLimitedEnglish">Limited English Proficiency</label>
+                            </div>
                         </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentCommunication.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentCommunication.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
+                            </div>
+                            <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentCommunication.AreaOfNeedDescription)</p>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                    <div class="checkbox">
+                                        <label><img src="@(Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentCommunication.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                        <label><img src="@(Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentCommunication.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                        <label><img src="@(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentCommunication.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                    </div>
+                                </div>
+
+                                <div class="standard-font-size" style="display: @(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                    @if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true)
+                                    {
+                                        <p>*if other, please explain:</p>
+                                    }
+                                    <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentCommunication.NeedMetByOtherDescription)</p>
+                                </div>
+
+                        </fieldset>
                     </div>
-                    
-                    <div class="standard-font-size" style="display: @(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true ? "block;" : "none;")">
-                        @if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true)
-                        {
-                            <p>*if other, please explain:</p>
-                        }
-                        <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentCommunication.NeedMetByOtherDescription)</p>
-                    </div>          
-                   
-                </fieldset>
-            </div>
-            }
-            else
-            {
-            <div class="text-center">
-                <p>The team has determined that there are no concerns at this time.</p>
-            </div>
-            }
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
             </div>
             <hr class="section-break" />
-    <div>
-        <h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
-        @if (!Model.studentSocial.NoConcerns)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleSocialProgressTowardGenEd" id="ModuleSocialProgressTowardGenEd" @(Model.studentSocial.ProgressTowardGenEd ? "checked" : String.Empty )/>
-                <label for="ModuleSocialProgressTowardGenEd">Progressing with General Education Support</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.studentSocial.AreaOfNeed == true ? "checked" : String.Empty )/>
-                <label for="ModuleSocialAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.MentalHealthDiagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.studentSocial.MentalHealthDiagnosis ? "checked" : String.Empty )/>
-                <label for="ModuleSocialMentalHealthDiagnosis">Mental Health Diagnosis</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.SignificantBehaviors ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleSocialSignificantBehaviors" id="ModuleSocialSignificantBehaviors" @(Model.studentSocial.SignificantBehaviors ? "checked" : String.Empty )/>
-                <label for="ModuleSocialSignificantBehaviors">Significant Behaviours</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentSocial.SocialDeficit == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleSocialDeficit" id="ModuleSocialDeficit" @(Model.studentSocial.SocialDeficit == true ? "checked" : String.Empty )/>
-                <label for="ModuleSocialDeficit">Social Skills Deficit</label>
-            </div>
-        </div>
-        <fieldset class="form-group">
-            <label>Does this student's behaviour impede the learning of self or others?</label>
-            <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorImepedeLearning ? @imageRadioChecked : @imageRadioNotChecked )" class='imgCheck'/><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? "checked" : String.Empty ) />Yes</label><br>
-                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorImepedeLearning ? @imageRadioNotChecked : @imageRadioChecked )" class='imgCheck'/><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? String.Empty : "checked" ) />No</label><br>
-            </div>
-            
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Does this student require a Behavior Intervention Plan?</label>
-
-            <div class="form-check">
-                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorInterventionPlan ? @imageRadioChecked : @imageRadioNotChecked )" class='imgCheck'/><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? "checked" : String.Empty ) />Yes</label><br>
-                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorInterventionPlan ? @imageRadioNotChecked : @imageRadioChecked )" class='imgCheck'/><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? String.Empty : "checked" ) />No</label><br>
-            </div>
-            
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleSocialLevelOfPerformance" id="ModuleSocialLevelOfPerformance" rows="3">@(Model.studentSocial.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleSocialAreaOfNeedDescription" id="ModuleSocialAreaOfNeedDescription" rows="3">@(Model.studentSocial.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-
-            <label>This need will be met by:</label>
-           
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><img src="@(Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentSocial.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentSocial.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentSocial.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                </div>
-            </div>
-
-            <div class="standard-font-size" style="display: @(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true ? "block;" : "none;")">
-                @if (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true)
+            <div>
+                <h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
+                @if (!Model.studentSocial.NoConcerns)
                 {
-                    <p>*if other, please explain:</p>
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentSocial.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleSocialProgressTowardGenEd" id="ModuleSocialProgressTowardGenEd" @(Model.studentSocial.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleSocialProgressTowardGenEd">Progressing with General Education Support</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentSocial.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.studentSocial.AreaOfNeed == true ? "checked" : String.Empty ) />
+                                <label for="ModuleSocialAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentSocial.MentalHealthDiagnosis ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.studentSocial.MentalHealthDiagnosis ? "checked" : String.Empty ) />
+                                <label for="ModuleSocialMentalHealthDiagnosis">Mental Health Diagnosis</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentSocial.SignificantBehaviors ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleSocialSignificantBehaviors" id="ModuleSocialSignificantBehaviors" @(Model.studentSocial.SignificantBehaviors ? "checked" : String.Empty ) />
+                                <label for="ModuleSocialSignificantBehaviors">Significant Behaviours</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentSocial.SocialDeficit == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleSocialDeficit" id="ModuleSocialDeficit" @(Model.studentSocial.SocialDeficit == true ? "checked" : String.Empty ) />
+                                <label for="ModuleSocialDeficit">Social Skills Deficit</label>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <label>Does this student's behaviour impede the learning of self or others?</label>
+                            <div class="form-check">
+                                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorImepedeLearning ? @imageRadioChecked : @imageRadioNotChecked )" class='imgCheck' /><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? "checked" : String.Empty ) />Yes</label><br>
+                                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorImepedeLearning ? @imageRadioNotChecked : @imageRadioChecked )" class='imgCheck' /><input type="radio" name="ModuleSocialBehaviorImepedeLearning" @(Model.studentSocial.BehaviorImepedeLearning ? String.Empty : "checked" ) />No</label><br>
+                            </div>
+
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label>Does this student require a Behavior Intervention Plan?</label>
+
+                            <div class="form-check">
+                                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorInterventionPlan ? @imageRadioChecked : @imageRadioNotChecked )" class='imgCheck' /><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? "checked" : String.Empty ) />Yes</label><br>
+                                <label class="radio-inline"><img src="@(Model.studentSocial.BehaviorInterventionPlan ? @imageRadioNotChecked : @imageRadioChecked )" class='imgCheck' /><input type="radio" name="ModuleSocialBehaviorInterventionPlan" @(Model.studentSocial.BehaviorInterventionPlan ? String.Empty : "checked" ) />No</label><br>
+                            </div>
+
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentSocial.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentSocial.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
+                            </div>
+                            <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentSocial.AreaOfNeedDescription)</p>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentSocial.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentSocial.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentSocial.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
+
+                            <div class="standard-font-size" style="display: @(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true)
+                                 {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentSocial.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
                 }
-                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentSocial.NeedMetByOtherDescription)</p>
-            </div>
-            
-        </fieldset>
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">GENERAL INTELLIGENCE</h3>
-        @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentIntelligence.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.studentIntelligence.ProgressTowardGenEd ? "checked" : String.Empty )/>
-                <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentIntelligence.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.studentIntelligence.AreaOfNeed == true ? "checked" : String.Empty )/>
-                <label for="ModuleIntelligenceAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
-            </div>
-        </div>
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleIntelligenceLevelOfPerformance" id="ModuleIntelligenceLevelOfPerformance" rows="3">@(Model.studentIntelligence.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3">@(Model.studentIntelligence.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-       
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
-        @if (!Model.studentAcademic.NoConcerns)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentAcademic.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.studentAcademic.ProgressTowardGenEd ? "checked" : String.Empty ) />
-                <label for="ModuleAcademicProgressTowardGenEd">Progressing with general education support</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentAcademic.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.studentAcademic.AreaOfNeed ? "checked" : String.Empty ) />
-                <label for="ModuleAcademicAreaOfNeed">Area of need which impacts performance in general education</label>
-            </div>
-        </div>
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleAcademicLevelOfPerformance" id="ModuleAcademicLevelOfPerformance" rows="3">@(Model.studentAcademic.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.studentAcademic.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-
-            <label>This need will be met by:</label>
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><img src="@(Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentAcademic.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentAcademic.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentAcademic.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                </div>
-            </div>
-
-            <div class="standard-font-size" style="display: @(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true ? "block;" : "none;")">
-              @if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true)                  
+                else
                 {
-                    <p>*if other, please explain:</p>
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
                 }
-                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>
             </div>
-           
-        </fieldset>
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">READING</h3>
-        @if (!Model.studentReading.NoConcerns)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentReading.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.studentReading.ProgressTowardGenEd ? "checked" : String.Empty )/>
-                <label for="ModuleReadingProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentReading.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.studentReading.AreaOfNeed == true ? "checked" : String.Empty )/>
-                <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
-            </div>
-        </div>
-       
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleReadingLevelOfPerformance" id="ModuleReadingLevelOfPerformance" rows="3">@(Model.studentReading.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.studentReading.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>This need will be met by:</label>
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><img src="@(Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentReading.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentReading.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentReading.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                </div>
-            </div>
-
-            <div class="standard-font-size" style="display: @(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true ? "block;" : "none;")">
-              @if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true)
-              {
-                    <p>*if other, please explain:</p>
-                }
-                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
-            </div>
-           
-        </fieldset>
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">MATH</h3>
-        @if (!Model.studentMath.NoConcerns)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentMath.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.studentMath.ProgressTowardGenEd ? "checked" : String.Empty )/>
-                <label for="ModuleMathProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentMath.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.studentMath.AreaOfNeed == true ? "checked" : String.Empty )/>
-                <label for="ModuleMathAreaOfNeed">Area of need which impacts performance in general education</label>
-            </div>
-        </div>
-      
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control">@(Model.studentMath.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control">@(Model.studentMath.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-
-            <label>This need will be met by:</label>
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><img src="@(Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMath.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMath.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMath.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                </div>
-            </div>
-
-            <div class="standard-font-size" style="display: @(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true ? "block;" : "none;")">
-               @if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true)
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">GENERAL INTELLIGENCE</h3>
+                @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
                 {
-                    <p>*if other, please explain:</p>
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentIntelligence.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.studentIntelligence.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleIntelligenceProgressTowardGenEd">Progressing with General Education Support</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentIntelligence.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.studentIntelligence.AreaOfNeed == true ? "checked" : String.Empty ) />
+                                <label for="ModuleIntelligenceAreaOfNeed">Area of Need which impacts perforamnce in General Education</label>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentIntelligence.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentIntelligence.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
+                            </div>
+                            <p class="form-control" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.studentIntelligence.AreaOfNeedDescription)</p>
+                        </fieldset>
+                     </div>  
                 }
-                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMath.NeedMetByOtherDescription)</p>
-            </div>
-          
-        </fieldset>
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">WRITTEN</h3>
-        @if (!Model.studentWritten.NoConcerns)
-    {
-    <div style="font-size:12pt;  color: #333;">
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentWritten.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.studentWritten.ProgressTowardGenEd ? "checked" : String.Empty)/>
-                <label for="ModuleWrittenProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-            </div>
-            <div class="funkyradio-primary">
-                <img src="@(Model.studentWritten.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.studentWritten.AreaOfNeed == true ? "checked" : String.Empty)/>
-                <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamance in general education</label>
-            </div>
-        </div>
-     
-        <fieldset class="form-group">
-            <label>Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            <div class="form-check">
-                <p class="form-control" name="ModuleWrittenLevelOfPerformance" id="ModuleWrittenLevelOfPerformance" rows="3">@(Model.studentWritten.LevelOfPerformance)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Area of Need which impacts performance</label>
-            <div class="form-check">
-                <p class="form-control">@(Model.studentWritten.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>This need will be met by:</label>
-          
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><img src="@(Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentWritten.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                    <label><img src="@(Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentWritten.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                    <label><img src="@(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentWritten.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                </div>
-            </div>
-
-            <div class="standard-font-size" style="display: @(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true ? "block;" : "none;")">
-               @if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true)
+                else
                 {
-                    <p>*if other, please explain:</p>
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
                 }
-                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentWritten.NeedMetByOtherDescription)</p>
+                    </div>
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
+                @if (!Model.studentAcademic.NoConcerns)
+                {
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentAcademic.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.studentAcademic.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleAcademicProgressTowardGenEd">Progressing with general education support</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentAcademic.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.studentAcademic.AreaOfNeed ? "checked" : String.Empty ) />
+                                <label for="ModuleAcademicAreaOfNeed">Area of need which impacts performance in general education</label>
+                            </div>
+                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentAcademic.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentAcademic.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label>Area of Need which impacts performance</label>
+                            </div>
+                            <p class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.studentAcademic.AreaOfNeedDescription)</p>
+                                
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentAcademic.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentAcademic.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentAcademic.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
+
+                            <div class="standard-font-size" style="display: @(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true)
+                                {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
             </div>
-         
-        </fieldset>
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no concerns at this time.</p>
-    </div>
-    }
-    </div>
-    <hr class="section-break" />
-    <div>
-        <h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
-        @if (Model.accommodations != null && Model.accommodations.Count() > 0)
-    {
-    <div class="col-md-12">
-        <div class="panel-group">
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">READING</h3>
+                @if (!Model.studentReading.NoConcerns)
+                {
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentReading.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.studentReading.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleReadingProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentReading.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.studentReading.AreaOfNeed == true ? "checked" : String.Empty ) />
+                                <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
+                            </div>
+                        </div>
 
-            <div class="panel-default">
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentReading.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentReading.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label>Area of Need which impacts performance</label>
+                            </div>
+                            <p class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.studentReading.AreaOfNeedDescription)</p>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentReading.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentReading.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentReading.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
 
-                @foreach (var accom in Model.accommodations)
-                    {
-                    <div style="padding-top:10px">
+                            <div class="standard-font-size" style="display: @(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true)
+                                {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
+            </div>
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">MATH</h3>
+                @if (!Model.studentMath.NoConcerns)
+                {
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentMath.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.studentMath.ProgressTowardGenEd ? "checked" : String.Empty ) />
+                                <label for="ModuleMathProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentMath.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.studentMath.AreaOfNeed == true ? "checked" : String.Empty ) />
+                                <label for="ModuleMathAreaOfNeed">Area of need which impacts performance in general education</label>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentMath.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentMath.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label>Area of Need which impacts performance</label>
+                            </div>
+                            <p class="form-control">@(Model.studentMath.AreaOfNeedDescription)</p>
+
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMath.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMath.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMath.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
+
+                            <div class="standard-font-size" style="display: @(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true)
+                                {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMath.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
+            </div>
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">WRITTEN</h3>
+                @if (!Model.studentWritten.NoConcerns)
+                {
+                    <div style="font-size:12pt;  color: #333;">
+                        <div class="funkyradio">
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentWritten.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.studentWritten.ProgressTowardGenEd ? "checked" : String.Empty) />
+                                <label for="ModuleWrittenProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <img src="@(Model.studentWritten.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
+                                <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.studentWritten.AreaOfNeed == true ? "checked" : String.Empty) />
+                                <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamance in general education</label>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-group">
+                            <div>
+                                <div class="form-group-label"><label style="padding: 5px 0 8px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                                <span style="margin-top:5px;font-weight:100">Strengths:</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentWritten.PLAAFP_Strengths)</p>
+                                <span style="margin-top:5px;font-weight:100">Concerns (including Baseline):</span>
+                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentWritten.PLAAFP_Concerns)</p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group-label">
+                                <label>Area of Need which impacts performance</label>
+                            </div>
+                            <p class="form-control">@(Model.studentWritten.AreaOfNeedDescription)</p>
+
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check form-group-label">
+                                <label>This need will be met by:</label>
+                                <div class="checkbox">
+                                    <label><img src="@(Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentWritten.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
+                                    <label><img src="@(Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentWritten.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                                    <label><img src="@(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentWritten.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
+                                </div>
+                            </div>
+
+                            <div class="standard-font-size" style="display: @(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true ? "block;" : "none;")">
+                                @if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true)
+                                {
+                                    <p>*if other, please explain:</p>
+                                }
+                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentWritten.NeedMetByOtherDescription)</p>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no concerns at this time.</p>
+                    </div>
+                }
+            </div>
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
+                @if (Model.accommodations != null && Model.accommodations.Count() > 0)
+                {
+                    <div class="col-md-12">
+                        <div class="panel-group">
+
+                            <div class="panel-default">
+
+                                @foreach (var accom in Model.accommodations)
+                                {
+                                    <div style="padding-top:10px">
+                                        <div class="panel-body">
+                                            <div class="row voffset">
+                                                <div class="col-md-12">
+                                                    <label for="AccType">Type</label>
+                                                    <div class="form-check" style="margin-left:8px">
+                                                        <label class="radio-inline"><img src="@(accom.AccomType == 1  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=1 style="position: relative; right: 5px;" @(accom.AccomType == 1 ? "checked=checked" : String.Empty ) />Accommodation</label><br />
+                                                        <label class="radio-inline"><img src="@(accom.AccomType == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=2 style="position: relative; right: 5px;" @(accom.AccomType == 2 ? "checked=checked" : String.Empty ) />Modification</label><br />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row voffset2">
+                                                <div class="col-md-12">
+                                                    <label>Description</label>
+                                                    <div>
+                                                        <p class="form-control">@accom.Description</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row voffset2">
+                                                <div class="col-md-12">
+                                                    <label>Frequency</label>
+                                                    <div>
+                                                        <p class="form-control">@accom.Frequency</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row voffset2">
+                                                <div class="col-md-12">
+                                                    <label>Duration</label>
+                                                    <div>
+                                                        <p class="form-control">@accom.Duration</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row voffset4">
+
+                                                        <div class="col-md-3" style="padding-top:8px">
+                                                            <label for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                            @if (accom.AnticipatedStartDate.HasValue)
+                                                            {
+                                                                <p>@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")</p>
+                                                            }
+                                                        </div>
+                                                        <div class="col-md-3" style="padding-top:8px">
+                                                            <label for="AnticipatedEndDate">Anticipated End Date</label>
+                                                            @if (accom.AnticipatedEndDate.HasValue)
+                                                            {
+                                                                <p>@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")</p>
+
+                                                            }
+
+                                                        </div>
+                                                        <div class="col-md-3" style="padding-top:8px">
+                                                            <div class="form-group" name="Location">
+                                                                <label for="Location">Location</label><p>@accom.Location</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                } <!--end for each-->
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p>The team has determined that there are no accommodations at this time.</p>
+                    </div>
+                }
+
+            </div><!--end accommodations-->
+            <hr class="section-break" />
+            <div>
+                <h3 class="text-center">BEHAVIOR PLAN</h3>
+                @if (Model.studentBehavior != null)
+                {
+                    <div id="collapse0" class="panel-collapse">
                         <div class="panel-body">
-                            <div class="row voffset">
-                                <div class="col-md-12">
-                                    <label for="AccType">Type</label>
-                                    <div class="form-check" style="margin-left:8px">
-                                        <label class="radio-inline"><img src="@(accom.AccomType == 1  ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=1 style="position: relative; right: 5px;" @(accom.AccomType == 1 ? "checked=checked" : String.Empty )/>Accommodation</label><br />
-                                        <label class="radio-inline"><img src="@(accom.AccomType == 2 ? @imageRadioChecked : @imageRadioNotChecked)" class='imgCheck' />&nbsp;<input type="radio" value=2 style="position: relative; right: 5px;" @(accom.AccomType == 2 ? "checked=checked" : String.Empty )/>Modification</label><br />
 
+                            <div class="row voffset2">
+                                <div class="col-md-12">
+                                    <label for="Collection">Strengths/Motivators</label>
+                                    <div>
+                                        <p type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.StrengthMotivator</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row voffset2">
                                 <div class="col-md-12">
-                                    <label>Description</label>
+                                    <label for="Collection">Behavior(s) of Concern</label>
                                     <div>
-                                        <p class="form-control">@accom.Description</p>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row voffset2">
-                                <div class="col-md-12">
-                                    <label>Frequency</label>
-                                    <div>
-                                        <p class="form-control">@accom.Frequency</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row voffset2">
-                                <div class="col-md-12">
-                                    <label>Duration</label>
-                                    <div>
-                                        <p class="form-control">@accom.Duration</p>
-
+                                        <p type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.BehaviorConcern</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="row voffset4">
-
-                                        <div class="col-md-3" style="padding-top:8px">
-                                            <label for="AnticipatedStartDate">Anticipated Start Date</label>
-                                            @if (accom.AnticipatedStartDate.HasValue)
-                                            {
-                                                <p>@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")</p>
-                                            }                                           
-                                        </div>
-                                        <div class="col-md-3" style="padding-top:8px">
-                                            <label for="AnticipatedEndDate">Anticipated End Date</label>
-                                            @if (accom.AnticipatedEndDate.HasValue)
-                                            {
-                                                <p>@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")</p>
-
-                                            }
-                                            
-                                        </div>
-                                        <div class="col-md-3" style="padding-top:8px">
-                                            <div class="form-group" name="Location">
-                                                <label for="Location">Location</label><p>@accom.Location</p>                                               
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label class="underline">Triggers</label>
                                 </div>
                             </div>
+                            <div class="row voffset1">
+                                <div class="col-md-12">
+                                    <label for="misTriggers">Possible triggers for behaviors</label>
+                                    <p>
+                                        @if (Model.studentBehavior.Triggers != null)
+                                        {
+                                            var showTriggerOther = false;
+
+                                            foreach (var hypothesis in Model.studentBehavior.Triggers)
+                                            {
+
+                                                var selected = "";
+                                                if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
+                                                {
+                                                    selected = hypothesis.BehaviorTriggerType;
+
+                                                    if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
+                                                    {
+                                                        showTriggerOther = true;
+                                                    }
+
+                                                    <text>@selected</text>
+                                                    <br />
+                                                }
+
+                                            }
+                                            if (showTriggerOther)
+                                            {
+                                                <div id="divHypothesisOther" class="voffset2">
+                                                    <label>Other Description</label>
+                                            <p type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.TriggerOther</p>
+
+                                        </div>
+                                            }
+
+                                        }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="underline">Hypothesis</label>
+
+                                    </div>
+                                </div>
+                                <div class="row voffset1">
+                                    <div class="col-md-12">
+                                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                                        <p>
+                                            @if (Model.studentBehavior.HypothesisList != null)
+                                            {
+                                                var showHypothesisOther = false;
+
+                                                foreach (var hypothesis in Model.studentBehavior.HypothesisList)
+                                                {
+
+                                                    var selected = "";
+                                                    if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
+                                                    {
+                                                        selected = hypothesis.BehaviorHypothesisType;
+
+                                                        if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
+                                                        {
+                                                            showHypothesisOther = true;
+                                                        }
+
+                                                        <text>@selected</text>
+                                                        <br />
+                                                    }
+
+                                                }
+                                                if (showHypothesisOther)
+                                                {
+                                                    <div id="divHypothesisOther" class="voffset2">
+                                                        <label>Other Description</label>
+                                                <p type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.HypothesisOther</p>
+
+                                            </div>
+                                                }
+
+                                            }
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="underline">Strategies</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="row voffset1">
+                                        <div class="col-md-12">
+                                            <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                                            <p>
+                                                @if (Model.studentBehavior.Strategies != null)
+                                                {
+                                                    var showStrategyOther = false;
+
+                                                    foreach (var strategy in Model.studentBehavior.Strategies)
+                                                    {
+
+                                                        var selected = "";
+                                                        if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
+                                                        {
+                                                            selected = strategy.BehaviorStrategyType;
+
+                                                            if (selected != "" && strategy.BehaviorStrategyType == "Other")
+                                                            {
+                                                                showStrategyOther = true;
+                                                            }
+
+                                                            <text>@selected</text><br />
+                                                        }
+
+                                                    }
+                                                    if (showStrategyOther)
+                                                    {
+                                                        <div id="divStrategyOther" class="voffset2">
+                                                            <label>Other Description</label>
+                                                    <p type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.StrategiesOther</p>
+
+                                                </div>
+                                                    }
+                                                }
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row voffset">
+                                            <div class="col-md-12">
+                                                <label class="underline">Targeted Behaviors</label>
+                                                <span>Choose up to three targeted behaviors and supporting baseline data for each:</span>
+                                                <div>
+                                                    <table class="table dont-break">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Behavior 1</th>
+                                                                <th scope="col">Baseline 1</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tr>
+                                                            <td>
+                                                                @Model.studentBehavior.targetedBehavior1.Behavior
+
+                                                            </td>
+                                                            <td>@Model.studentBehavior.targetedBehavior1.Baseline</td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table dont-break">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Behavior 2</th>
+                                                                <th scope="col">Baseline 2</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tr>
+                                                            <td>
+                                                                @Model.studentBehavior.targetedBehavior2.Behavior
+
+                                                            </td>
+                                                            <td>@Model.studentBehavior.targetedBehavior2.Baseline</td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table dont-break">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Behavior 3</th>
+                                                                <th scope="col">Baseline 3</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tr>
+                                                            <td>
+                                                                @Model.studentBehavior.targetedBehavior3.Behavior
+
+                                                            </td>
+                                                            <td>@Model.studentBehavior.targetedBehavior3.Baseline</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-top:8px">
+                                            <div class="col-md-12">
+                                                <label class="underline">Crisis Management Plan</label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
+                                                <div>
+                                                    <p type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.Crisis_Escalation</p>
+                                                </div>
+                                            </div>
 
 
-                        </div>
-                    </div>
-
-                    } <!--end for each-->
-            </div>
-
-        </div>
-
-    </div>
-    }
-    else
-    {
-    <div class="text-center">
-        <p>The team has determined that there are no accommodations at this time.</p>
-    </div>
-    }
-
-    </div><!--end accommodations-->
-    <hr class="section-break" />
-    <div>
-    <h3 class="text-center">BEHAVIOR PLAN</h3>
-    @if (Model.studentBehavior != null)
-    {
-    <div id="collapse0" class="panel-collapse">
-        <div class="panel-body">
-            
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Collection">Strengths/Motivators</label>
-                    <div>
-                        <p type="text" id="StrengthMotivator" name="StrengthMotivator" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.StrengthMotivator</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Collection">Behavior(s) of Concern</label>
-                    <div>
-
-                        <p type="text" id="BehaviorConcern" name="BehaviorConcern" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.BehaviorConcern</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="underline">Triggers</label>
-                </div>
-            </div>
-            <div class="row voffset1">
-                <div class="col-md-12">
-                    <label for="misTriggers">Possible triggers for behaviors</label>
-                    <p>
-                    @if (Model.studentBehavior.Triggers != null)
-                    {
-                        var showTriggerOther = false;
-
-                        foreach (var hypothesis in Model.studentBehavior.Triggers)
-                        {
-
-                            var selected = "";
-                            if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
-                            {
-                                selected = hypothesis.BehaviorTriggerType;
-
-                                if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
-                                {
-                                    showTriggerOther = true;
-                                }
-
-                                <text>@selected</text>
-                                <br />
-                            }
-
-                        }
-                        if (showTriggerOther)
-                        {
-                            <div id="divHypothesisOther" class="voffset2">
-                                <label>Other Description</label>
-                                <p type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.TriggerOther</p>
-
-                            </div>
-                        }
-
-                    }
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="underline">Hypothesis</label>
-
-                </div>
-            </div>
-            <div class="row voffset1">
-                <div class="col-md-12">
-                    <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
-                    <p>
-                    @if (Model.studentBehavior.HypothesisList != null)
-                    {
-                        var showHypothesisOther = false;
-
-                        foreach (var hypothesis in Model.studentBehavior.HypothesisList)
-                        {
-
-                            var selected = "";
-                            if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
-                            {
-                                selected = hypothesis.BehaviorHypothesisType;
-
-                                if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
-                                {
-                                    showHypothesisOther = true;
-                                }
-
-                                <text>@selected</text>
-                                <br />
-                            }
-
-                        }
-                        if (showHypothesisOther)
-                        {
-                            <div id="divHypothesisOther" class="voffset2">
-                                <label>Other Description</label>
-                                <p type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.HypothesisOther</p>
-
-                            </div>
-                        }
-
-                    }
-                    </p>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="underline">Strategies</label>
-
-                </div>
-            </div>
-            <div class="row voffset1">
-                <div class="col-md-12">
-                    <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
-                    <p>
-                    @if (Model.studentBehavior.Strategies != null)
-                    {
-                        var showStrategyOther = false;
-
-                        foreach (var strategy in Model.studentBehavior.Strategies)
-                        {
-
-                            var selected = "";
-                            if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
-                            {
-                                selected = strategy.BehaviorStrategyType;
-
-                                if (selected != "" && strategy.BehaviorStrategyType == "Other")
-                                {
-                                    showStrategyOther = true;
-                                }
-
-                                <text>@selected</text><br />
-                            }
-
-                        }
-                        if (showStrategyOther)
-                        {
-                            <div id="divStrategyOther" class="voffset2">
-                                <label>Other Description</label>
-                                <p type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.StrategiesOther</p>
-
-                            </div>
-                        }
-                    }
-                  </p>
-                </div>
-            </div>
-
-            <div class="row voffset">                
-                <div class="col-md-12">
-                    <label class="underline">Targeted Behaviors</label>
-                    <span>Choose up to three targeted behaviors and supporting baseline data for each:</span>
-                    <div>
-                        <table class="table dont-break">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Behavior 1</th>
-                                    <th scope="col">Baseline 1</th>
-
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td>
-                                    @Model.studentBehavior.targetedBehavior1.Behavior
-                                    
-                                </td>
-                                <td>@Model.studentBehavior.targetedBehavior1.Baseline</td>
-                            </tr>
-                        </table>
-                        <table class="table dont-break" >
-                            <thead>
-                                <tr>
-                                    <th scope="col">Behavior 2</th>
-                                    <th scope="col">Baseline 2</th>
-
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td>
-                                    @Model.studentBehavior.targetedBehavior2.Behavior
-
-                                </td>
-                                <td>@Model.studentBehavior.targetedBehavior2.Baseline</td>
-                            </tr>
-                        </table>
-                        <table class="table dont-break">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Behavior 3</th>
-                                    <th scope="col">Baseline 3</th>
-
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td>
-                                    @Model.studentBehavior.targetedBehavior3.Behavior
-
-                                </td>
-                                <td>@Model.studentBehavior.targetedBehavior3.Baseline</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="padding-top:8px">
-                <div class="col-md-12">
-                    <label class="underline">Crisis Management Plan</label>
-
-                </div>
-            </div>
-
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Crisis_Escalation">Escalation (describe what this looks like for student)</label>
-                    <div>
-                        <p type="text" id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" >@Model.studentBehavior.Crisis_Escalation</p>
-                    </div>
-                </div>
+                                        </div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
+                                                <div>
+                                                    <p type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.Crisis_Description</p>
+                                                </div>
+                                            </div>
 
 
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Crisis_Description">Crisis (describe what this looks like for student)</label>
-                    <div>
-                        <p type="text" id="Crisis_Description" name="Crisis_Description" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" >@Model.studentBehavior.Crisis_Description</p>
-                    </div>
-                </div>
+                                        </div>
+
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
+                                                <div>
+                                                    <p type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.Crisis_Implementation</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label for="Crisis_Other">Other</label>
+                                                <div>
+
+                                                    <p type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.Crisis_Other</p>
+                                                </div>
+                                            </div>
 
 
-            </div>
+                                        </div>
+                                        <div class="row voffset3">
+                                            <div class="col-md-12">
+                                                <label class="underline">Action Plan</label>
+                                            </div>
+                                        </div>
 
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Crisis_Implementation">Implementation Steps/De-escalation Strategies</label>
-                    <div>
-                        <p type="text" id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" >@Model.studentBehavior.Crisis_Implementation</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Crisis_Other">Other</label>
-                    <div>
+                                        <div class="row voffset2">
+                                            <div class="col-md-12">
+                                                <label for="Collection">Follow school/district behavior policies/practice</label>
+                                                <div>
 
-                        <p type="text" id="Crisis_Other" name="Crisis_Other" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" >@Model.studentBehavior.Crisis_Other</p>
-                    </div>
-                </div>
+                                                    <p type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100">Plan is to be reviewed: @Model.studentBehavior.ReviewedBy</p>
+                                                </div>
+                                            </div>
+                                        </div>
 
 
-            </div>
-            <div class="row voffset3">
-                <div class="col-md-12">
-                    <label class="underline">Action Plan</label>
-                </div>
-            </div>
-
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label for="Collection">Follow school/district behavior policies/practice</label>
-                    <div>
-
-                        <p  type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="100 character limit." maxlength="100">Plan is to be reviewed: @Model.studentBehavior.ReviewedBy</p>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+                                    </div>
     </div>
     }
     else
