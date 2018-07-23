@@ -27,7 +27,9 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
+        public virtual DbSet<tblAuditLog> tblAuditLogs { get; set; }
         public virtual DbSet<tblBehaviorBaseline> tblBehaviorBaselines { get; set; }
         public virtual DbSet<tblBehaviorHypothesi> tblBehaviorHypothesis { get; set; }
         public virtual DbSet<tblBehaviorHypothesisType> tblBehaviorHypothesisTypes { get; set; }
@@ -41,8 +43,10 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
+        public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
         public virtual DbSet<tblIEPAcademic> tblIEPAcademics { get; set; }
@@ -59,12 +63,14 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
+        public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
         public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
+        public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
         public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
         public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
@@ -72,7 +78,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
-        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

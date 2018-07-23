@@ -17,5 +17,6 @@ namespace GreenBushIEP.Models
         public string ServiceCode { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
+        public bool Billable { get; set; }
     }
 }

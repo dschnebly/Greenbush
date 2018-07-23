@@ -23,6 +23,7 @@ namespace GreenBushIEP.Models
         public string LocationCode { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
+        public bool Billable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblAccommodation> tblAccommodations { get; set; }

@@ -12,11 +12,9 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblServiceFrequency
+    public partial class tblCounty
     {
-        public int FrequencyCode { get; set; }
-        public string Label { get; set; }
-        public string FrequencyType { get; set; }
-        public Nullable<int> MinuteMultiplier { get; set; }
+        public string CountyCode { get; set; }
+        public string CountyName { get; set; }
     }
 }

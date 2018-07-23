@@ -35,5 +35,14 @@ namespace GreenBushIEP.Models
         public System.DateTime Update_Date { get; set; }
         public string Primary_DisabilityCode { get; set; }
         public string Secondary_DisabilityCode { get; set; }
+        public bool ClaimingCode { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public string PlacementCode { get; set; }
+        public Nullable<bool> StatusCode { get; set; }
+        public Nullable<System.DateTime> ExitDate { get; set; }
+        public Nullable<System.DateTime> InitialIEPDate { get; set; }
+        public Nullable<System.DateTime> InitialEvalConsentSigned { get; set; }
+        public Nullable<System.DateTime> InitialEvalDetermination { get; set; }
+        public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
     }
 }

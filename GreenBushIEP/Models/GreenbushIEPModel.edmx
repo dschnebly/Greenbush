@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IndividualizedEducationProgramModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tblAccommodations">
           <Key>
             <PropertyRef Name="AccommodationID" />
@@ -21,6 +31,20 @@
           <Property Name="AnticipatedStartDate" Type="datetime" />
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tblAuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ColumnName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="IEPid" Type="int" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorBaselines">
           <Key>
@@ -169,6 +193,13 @@
           <Property Name="SchoolWeek" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SchoolQuarter" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblCounties">
+          <Key>
+            <PropertyRef Name="CountyCode" />
+          </Key>
+          <Property Name="CountyCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblDisabilities">
           <Key>
             <PropertyRef Name="DisabilityCode" />
@@ -196,7 +227,7 @@
           <Property Name="Creator_UserID" Type="int" Nullable="false" />
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="ArchiveDate" Type="datetime" Nullable="false" />
-          <Property Name="FormName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmarks">
@@ -266,6 +297,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -285,6 +318,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -315,6 +350,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -331,6 +368,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -350,6 +389,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -368,6 +409,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -387,6 +430,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPs">
           <Key>
@@ -436,6 +481,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -455,6 +502,8 @@
           <Property Name="NeedMetByAccommodation" Type="bit" />
           <Property Name="NeedMetByOther" Type="bit" />
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
+          <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblLanguages">
           <Key>
@@ -470,6 +519,7 @@
           <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Billable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
@@ -517,6 +567,13 @@
           <Property Name="Transporation_Disability_flag" Type="bit" />
           <Property Name="Transporation_Disability_desc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
+        <EntityType Name="tblPlacementCodes">
+          <Key>
+            <PropertyRef Name="PlacementCode" />
+          </Key>
+          <Property Name="PlacementCode" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PlacementDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblProviderDistricts">
           <Key>
             <PropertyRef Name="ProviderDistrictID" />
@@ -547,7 +604,8 @@
           </Key>
           <Property Name="FrequencyCode" Type="int" Nullable="false" />
           <Property Name="Label" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FrequencyType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MinuteMultiplier" Type="int" />
         </EntityType>
         <EntityType Name="tblServiceGoals">
           <Key>
@@ -582,6 +640,16 @@
           <Property Name="ServiceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Billable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStatusCodes">
+          <Key>
+            <PropertyRef Name="StatusCode" />
+          </Key>
+          <Property Name="StatusCode" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentInfo">
           <Key>
@@ -602,12 +670,21 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="10" />
           <Property Name="NeighborhoodBuildingID" Type="nvarchar" MaxLength="50" />
           <Property Name="AssignedUSD" Type="nvarchar" MaxLength="50" />
-          <Property Name="County" Type="nvarchar" MaxLength="20" />
+          <Property Name="County" Type="char" MaxLength="2" />
           <Property Name="Grade" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" />
           <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" />
+          <Property Name="ClaimingCode" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="PlacementCode" Type="char" MaxLength="1" />
+          <Property Name="StatusCode" Type="bit" />
+          <Property Name="ExitDate" Type="datetime" />
+          <Property Name="InitialIEPDate" Type="datetime" />
+          <Property Name="InitialEvalConsentSigned" Type="datetime" />
+          <Property Name="InitialEvalDetermination" Type="datetime" />
+          <Property Name="ReEvalConsentSigned" Type="datetime" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -808,7 +885,9 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAuditLog" EntityType="Self.tblAuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="Self.tblBehaviorHypothesisTypes" Schema="dbo" store:Type="Tables" />
@@ -822,6 +901,7 @@
           <EntitySet Name="tblCalendar" EntityType="Self.tblCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarReporting" EntityType="Self.tblCalendarReporting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCounties" EntityType="Self.tblCounties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
@@ -841,6 +921,7 @@
           <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOtherConsiderations" EntityType="Self.tblOtherConsiderations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPlacementCodes" EntityType="Self.tblPlacementCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviderDistricts" EntityType="Self.tblProviderDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
@@ -848,6 +929,7 @@
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServices" EntityType="Self.tblServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceTypes" EntityType="Self.tblServiceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatusCodes" EntityType="Self.tblStatusCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentRelationships" EntityType="Self.tblStudentRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransitionAssessments" EntityType="Self.tblTransitionAssessments" Schema="dbo" store:Type="Tables" />
@@ -911,7 +993,9 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="sysdiagrams" EntityType="IndividualizedEducationProgramModel.sysdiagram" />
           <EntitySet Name="tblAccommodations" EntityType="IndividualizedEducationProgramModel.tblAccommodation" />
+          <EntitySet Name="tblAuditLogs" EntityType="IndividualizedEducationProgramModel.tblAuditLog" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" />
           <EntitySet Name="tblBehaviorHypothesisTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesisType" />
@@ -925,8 +1009,10 @@
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
+          <EntitySet Name="tblCounties" EntityType="IndividualizedEducationProgramModel.tblCounty" />
           <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
           <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
+          <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
           <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
           <EntitySet Name="tblIEPAcademics" EntityType="IndividualizedEducationProgramModel.tblIEPAcademic" />
@@ -943,12 +1029,14 @@
           <EntitySet Name="tblLocations" EntityType="IndividualizedEducationProgramModel.tblLocation" />
           <EntitySet Name="tblOrganizationMappings" EntityType="IndividualizedEducationProgramModel.tblOrganizationMapping" />
           <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
+          <EntitySet Name="tblPlacementCodes" EntityType="IndividualizedEducationProgramModel.tblPlacementCode" />
           <EntitySet Name="tblProviderDistricts" EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" />
           <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <EntitySet Name="tblRoles" EntityType="IndividualizedEducationProgramModel.tblRole" />
           <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
           <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
+          <EntitySet Name="tblStatusCodes" EntityType="IndividualizedEducationProgramModel.tblStatusCode" />
           <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
@@ -972,7 +1060,6 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
-          <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -985,6 +1072,16 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="tblAccommodation">
           <Key>
             <PropertyRef Name="AccommodationID" />
@@ -1002,6 +1099,20 @@
           <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
           <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
+        </EntityType>
+        <EntityType Name="tblAuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="IEPid" Type="Int32" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblBehaviorBaseline">
           <Key>
@@ -1150,6 +1261,13 @@
           <Property Name="SchoolWeek" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="SchoolQuarter" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="tblCounty">
+          <Key>
+            <PropertyRef Name="CountyCode" />
+          </Key>
+          <Property Name="CountyCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CountyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tblDisability">
           <Key>
             <PropertyRef Name="DisabilityCode" />
@@ -1167,6 +1285,18 @@
           <Property Name="DOC" Type="Boolean" Nullable="false" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblFormArchive">
+          <Key>
+            <PropertyRef Name="FormArchiveID" />
+          </Key>
+          <Property Name="FormArchiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Student_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmark">
           <Key>
@@ -1236,6 +1366,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPCommunication">
           <Key>
@@ -1255,6 +1387,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPHealth">
           <Key>
@@ -1285,6 +1419,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPIntelligence">
           <Key>
@@ -1301,6 +1437,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -1320,6 +1458,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPMotor">
           <Key>
@@ -1338,6 +1478,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -1357,6 +1499,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEP">
           <Key>
@@ -1406,6 +1550,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -1425,6 +1571,8 @@
           <Property Name="NeedMetByAccommodation" Type="Boolean" />
           <Property Name="NeedMetByOther" Type="Boolean" />
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblLanguage">
           <Key>
@@ -1440,6 +1588,7 @@
           <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Billable" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblAccommodations" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblLocation" ToRole="tblAccommodation" />
         </EntityType>
         <EntityType Name="tblOrganizationMapping">
@@ -1488,6 +1637,13 @@
           <Property Name="Transporation_Disability_flag" Type="Boolean" />
           <Property Name="Transporation_Disability_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblPlacementCode">
+          <Key>
+            <PropertyRef Name="PlacementCode" />
+          </Key>
+          <Property Name="PlacementCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PlacementDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="tblProviderDistrict">
           <Key>
             <PropertyRef Name="ProviderDistrictID" />
@@ -1521,7 +1677,8 @@
           </Key>
           <Property Name="FrequencyCode" Type="Int32" Nullable="false" />
           <Property Name="Label" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FrequencyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MinuteMultiplier" Type="Int32" />
         </EntityType>
         <EntityType Name="tblService">
           <Key>
@@ -1550,6 +1707,16 @@
           <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Billable" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStatusCode">
+          <Key>
+            <PropertyRef Name="StatusCode" />
+          </Key>
+          <Property Name="StatusCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentInfo">
           <Key>
@@ -1570,12 +1737,21 @@
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="County" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="County" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Grade" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ClaimingCode" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="StatusCode" Type="Boolean" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialIEPDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialEvalConsentSigned" Type="DateTime" Precision="3" />
+          <Property Name="InitialEvalDetermination" Type="DateTime" Precision="3" />
+          <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -1723,18 +1899,6 @@
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
-        <EntityType Name="tblFormArchive">
-          <Key>
-            <PropertyRef Name="FormArchiveID" />
-          </Key>
-          <Property Name="FormArchiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Student_UserID" Type="Int32" Nullable="false" />
-          <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1765,6 +1929,17 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="IndividualizedEducationProgramModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="IndividualizedEducationProgramModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
@@ -1780,6 +1955,21 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAuditLogs">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAuditLog">
+              <MappingFragment StoreEntitySet="tblAuditLog">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1940,6 +2130,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblCounties">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCounty">
+              <MappingFragment StoreEntitySet="tblCounties">
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="CountyCode" ColumnName="CountyCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblDisabilities">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDisability">
               <MappingFragment StoreEntitySet="tblDisabilities">
@@ -1957,6 +2155,19 @@
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormArchives">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
+              <MappingFragment StoreEntitySet="tblFormArchive">
+                <ScalarProperty Name="FormFile" ColumnName="FormFile" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="Creator_UserID" ColumnName="Creator_UserID" />
+                <ScalarProperty Name="Student_UserID" ColumnName="Student_UserID" />
+                <ScalarProperty Name="FormArchiveID" ColumnName="FormArchiveID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2017,6 +2228,8 @@
           <EntitySetMapping Name="tblIEPAcademics">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPAcademic">
               <MappingFragment StoreEntitySet="tblIEPAcademic">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2034,6 +2247,8 @@
           <EntitySetMapping Name="tblIEPCommunications">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPCommunication">
               <MappingFragment StoreEntitySet="tblIEPCommunication">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2054,6 +2269,8 @@
           <EntitySetMapping Name="tblIEPHealths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPHealth">
               <MappingFragment StoreEntitySet="tblIEPHealth">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2085,6 +2302,8 @@
           <EntitySetMapping Name="tblIEPIntelligences">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
               <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2102,6 +2321,8 @@
           <EntitySetMapping Name="tblIEPMaths">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMath">
               <MappingFragment StoreEntitySet="tblIEPMath">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2122,6 +2343,8 @@
           <EntitySetMapping Name="tblIEPMotors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMotor">
               <MappingFragment StoreEntitySet="tblIEPMotor">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2141,6 +2364,8 @@
           <EntitySetMapping Name="tblIEPReadings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPReading">
               <MappingFragment StoreEntitySet="tblIEPReading">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2187,6 +2412,8 @@
           <EntitySetMapping Name="tblIEPSocials">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPSocial">
               <MappingFragment StoreEntitySet="tblIEPSocial">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2212,6 +2439,8 @@
           <EntitySetMapping Name="tblIEPWrittens">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPWritten">
               <MappingFragment StoreEntitySet="tblIEPWritten">
+                <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
+                <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
@@ -2240,6 +2469,7 @@
           <EntitySetMapping Name="tblLocations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblLocation">
               <MappingFragment StoreEntitySet="tblLocations">
+                <ScalarProperty Name="Billable" ColumnName="Billable" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
@@ -2292,6 +2522,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblPlacementCodes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblPlacementCode">
+              <MappingFragment StoreEntitySet="tblPlacementCodes">
+                <ScalarProperty Name="PlacementDescription" ColumnName="PlacementDescription" />
+                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblProviderDistricts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProviderDistrict">
               <MappingFragment StoreEntitySet="tblProviderDistricts">
@@ -2322,7 +2560,8 @@
           <EntitySetMapping Name="tblServiceFrequencies">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceFrequency">
               <MappingFragment StoreEntitySet="tblServiceFrequency">
-                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MinuteMultiplier" ColumnName="MinuteMultiplier" />
+                <ScalarProperty Name="FrequencyType" ColumnName="FrequencyType" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
                 <ScalarProperty Name="FrequencyCode" ColumnName="FrequencyCode" />
               </MappingFragment>
@@ -2350,15 +2589,35 @@
           <EntitySetMapping Name="tblServiceTypes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblServiceType">
               <MappingFragment StoreEntitySet="tblServiceTypes">
+                <ScalarProperty Name="Billable" ColumnName="Billable" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblStatusCodes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStatusCode">
+              <MappingFragment StoreEntitySet="tblStatusCodes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
+                <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
+                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
+                <ScalarProperty Name="InitialIEPDate" ColumnName="InitialIEPDate" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ClaimingCode" ColumnName="ClaimingCode" />
                 <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
                 <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -2503,19 +2762,6 @@
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="tblFormArchives">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
-              <MappingFragment StoreEntitySet="tblFormArchive">
-                <ScalarProperty Name="FormFile" ColumnName="FormFile" />
-                <ScalarProperty Name="FormName" ColumnName="FormName" />
-                <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="Creator_UserID" ColumnName="Creator_UserID" />
-                <ScalarProperty Name="Student_UserID" ColumnName="Student_UserID" />
-                <ScalarProperty Name="FormArchiveID" ColumnName="FormArchiveID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

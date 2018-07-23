@@ -189,28 +189,28 @@ $("#next2").on("click", function () {
 
     if (tabValidates()) {
 
-        $.ajax({
-            url: '/Manage/CreateStudent',
-            type: 'POST',
-            data: $("#createNewStudent").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
+        //$.ajax({
+        //    url: '/Manage/CreateStudent',
+        //    type: 'POST',
+        //    data: $("#createNewStudent").serialize(),
+        //    success: function (data) {
+        //        if (data.Result === "success") {
 
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+        //            var $active = $('.wizard .nav-tabs li.active');
+        //            $active.next().removeClass('disabled');
+        //            $($active).next().find('a[data-toggle="tab"]').click();
 
-                    // create a new student id and add it to the contacts form here.
-                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
-                } else {
+        //            // create a new student id and add it to the contacts form here.
+        //            $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+        //        } else {
 
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
-            }
-        });
+        //            alert(data.Message);
+        //        }
+        //    },
+        //    error: function (data) {
+        //        alert("There was an error when attempt to connect to the server.")
+        //    }
+        //});
 
     }
 });

@@ -12,11 +12,12 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblServiceFrequency
+    public partial class sysdiagram
     {
-        public int FrequencyCode { get; set; }
-        public string Label { get; set; }
-        public string FrequencyType { get; set; }
-        public Nullable<int> MinuteMultiplier { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

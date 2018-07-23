@@ -39,5 +39,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> NeedMetByAccommodation { get; set; }
         public Nullable<bool> NeedMetByOther { get; set; }
         public string NeedMetByOtherDescription { get; set; }
+        public string PLAAFP_Strengths { get; set; }
+        public string PLAAFP_Concerns { get; set; }
     }
 }

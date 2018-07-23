@@ -12,11 +12,16 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblServiceFrequency
+    public partial class tblAuditLog
     {
-        public int FrequencyCode { get; set; }
-        public string Label { get; set; }
-        public string FrequencyType { get; set; }
-        public Nullable<int> MinuteMultiplier { get; set; }
+        public int AuditLogID { get; set; }
+        public string TableName { get; set; }
+        public string ColumnName { get; set; }
+        public int UserID { get; set; }
+        public int ModifiedBy { get; set; }
+        public Nullable<int> IEPid { get; set; }
+        public string Value { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }
