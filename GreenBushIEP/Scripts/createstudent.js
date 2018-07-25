@@ -249,44 +249,13 @@ $("#next3").on("click", function () {
 
 $("#next4").on("click", function () {
 
-    var theForm = document.getElementById("editStudent");
-
-    if (tabValidates()) {
-
-        $.ajax({
-            url: '/Manage/EditStudent',
-            type: 'POST',
-            data: $("#editStudent").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
-});
-
-$("#next5").on("click", function () {
-
     var theForm = document.getElementById("editStudentContacts");
 
     if (tabValidates()) {
-
         $.ajax({
-            url: '/Manage/EditStudentContacts',
+            url: '/Manage/CreateStudentContacts',
             type: 'POST',
-            data: $("#editStudentContacts").serialize(),
+            data: $("#createStudentContacts").serialize(),
             success: function (data) {
                 if (data.Result === "success") {
 
@@ -305,3 +274,32 @@ $("#next5").on("click", function () {
 
     }
 });
+
+//$("#next5").on("click", function () {
+
+//    var theForm = document.getElementById("editStudentContacts");
+
+//    if (tabValidates()) {
+
+//        $.ajax({
+//            url: '/Manage/EditStudentContacts',
+//            type: 'POST',
+//            data: $("#editStudentContacts").serialize(),
+//            success: function (data) {
+//                if (data.Result === "success") {
+
+//                    var $active = $('.wizard .nav-tabs li.active');
+//                    $active.next().removeClass('disabled');
+//                    $($active).next().find('a[data-toggle="tab"]').click();
+//                } else {
+
+//                    alert(data.Message);
+//                }
+//            },
+//            error: function (data) {
+//                alert("There was an error when attempt to connect to the server.");
+//            }
+//        });
+
+//    }
+//});

@@ -634,7 +634,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="control-label required" for="kidsid">KIDS ID</label>
-                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true" } })
+                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", Min="1", Max="9999999999" } })
                                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-3">
@@ -1088,8 +1088,8 @@
                                         <div class="col-md-8">
                                             <label>&nbsp;</label>
                                             <div class="row vertical-align">
-                                                <div class="col-md-2">
-                                                    <label class="control-label required" for="statusCode" class="pull-right">Status Code</label>
+                                                <div class="col-md-2" style="padding: 0; text-align: right;">
+                                                    <label class="control-label required" for="statusCode">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
@@ -1170,7 +1170,7 @@
                         </div>
                     </div>
                     <div id="step3" class="tab-pane" role="tabpanel">
-                        <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
+                        <h4 style="font-size:1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
                         @using (Html.BeginForm("CreateStudentContacts", "Manage", null, FormMethod.Post, new { id = "createStudentContacts", @class = "newstudent" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -1337,7 +1337,7 @@
                                 </div>
                                 <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
                                     <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                    <li><button type="button" class="btn btn-info next-step" id="next3">Save and continue</button></li>
+                                    <li><button type="button" class="btn btn-info next-step" id="next4">Save and continue</button></li>
                                 </ul>
                             }
                         }
