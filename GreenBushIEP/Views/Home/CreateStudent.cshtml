@@ -601,21 +601,21 @@
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation">
+                        <li role="presentation" class="disabled">
                             <a href="#step2" data-toggle="tab" aria-controls="step3" role="tab" title="Step 2">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-cog"></i>
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation">
+                        <li role="presentation" class="disabled">
                             <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-home"></i>
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation" @*class="disabled"*@>
+                        <li role="presentation" class="disabled">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -634,8 +634,8 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label for="kidsid">KIDS ID</label>
-                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control required", id = "kidsid", @Name = "kidsid", placeholder = "10 digit Kansas ID", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true" } })
-                                        @Html.ValidationMessageFor(model => model.student.KidsID, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true" } })
+                                        @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-3">
                                         <div class="bootstrap-iso">
@@ -649,24 +649,24 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label for="studentPlacement">Placed By</label>
-                                        <select name="studentPlacement" class="form-control">
+                                        <select name="studentPlacement" id="studentPlacement" class="form-control">
                                             @if (Model.placementCode != null)
                                             {
                                                 foreach (var code in Model.placementCode)
                                                 {
-                                            <option value="@code.PlacementCode">@code.PlacementDescription</option>
+                                                    <option value="@code.PlacementCode">@code.PlacementDescription</option>
                                                 }
                                             }
                                         </select>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="assignChildCount">USD or Agency Code</label>
-                                        <select id="assignChildCount" class="form-control">
+                                        <select name="assignChildCount" id="assignChildCount" class="form-control">
                                             @if (Model.allDistricts != null)
                                             {
                                                 foreach (var district in Model.allDistricts)
                                                 {
-                                            <option value="@district.USD">@district.DistrictName</option>
+                                                    <option value="@district.USD">@district.DistrictName</option>
                                                 }
                                             }
                                         </select>
@@ -685,12 +685,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="firstname">First Name</label>
-                                        @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control required", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
+                                        @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
                                         <label for="lastname">Last Name</label>
-                                        @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control required", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
+                                        @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -702,7 +702,7 @@
                                             {
                                                 foreach (var primary in Model.primaryDisabilities)
                                                 {
-                                            <option value="@primary.DisabilityCode">@primary.DisabilityDescription</option>
+                                                    <option value="@primary.DisabilityCode">@primary.DisabilityDescription</option>
                                                 }
                                             }
                                         </select>
@@ -715,7 +715,7 @@
                                             {
                                                 foreach (var secondary in Model.secondaryDisabilities)
                                                 {
-                                            <option value="@secondary.DisabilityCode">@secondary.DisabilityDescription</option>
+                                                    <option value="@secondary.DisabilityCode">@secondary.DisabilityDescription</option>
                                                 }
                                             }
                                         </select>
@@ -735,7 +735,7 @@
                                                 foreach (var district in Model.districts)
                                                 {
                                                     string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
-                                            <option value="@district.USD" @selected>@district.DistrictName</option>
+                                                    <option value="@district.USD" @selected>@district.DistrictName</option>
                                                 }
                                             }
                                         </select>
@@ -751,7 +751,7 @@
                                         Neighborhood School
                                     </div>
                                     <div class="col-md-10">
-                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding required" data-validate="true" required></select>
+                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required></select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -759,7 +759,7 @@
                                         Responsible Building
                                     </div>
                                     <div class="col-md-10">
-                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding required" data-validate="true"></select>
+                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding" data-validate="true"></select>
                                     </div>
                                 </div>
                             </div>
@@ -1115,7 +1115,7 @@
                                                         <input id="initialIEPDate" name="initialIEPDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
                                                     </div>
                                                 </div>
-                                            </div>norequired
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="bootstrap-iso">

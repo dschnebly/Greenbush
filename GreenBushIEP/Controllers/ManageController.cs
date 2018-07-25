@@ -165,7 +165,6 @@ namespace GreenBushIEP.Controllers
                         Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null ),
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
-                        TeacherID = submitter.UserID.ToString(),
                     };
 
                     // try catch. If the email is the same as another student show error gracefully.
@@ -203,6 +202,7 @@ namespace GreenBushIEP.Controllers
                         NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
                         Status = "PENDING",
                         Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+                        CreatedBy = submitter.UserID,
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
                     };
