@@ -29,7 +29,7 @@
             left: 40%;
         }
 
- /*//////////////////////////////////////
+    /*//////////////////////////////////////
     ///  User Toggle Buttons Starts Here
     //////////////////////////////////////*/
 
@@ -75,51 +75,68 @@
         margin-right: 20px;
     }
 
-        #user-toggle .user-toggle-item {
-            display: inline-block;
-        }
-
-        #user-toggle button:first-child {
-            margin-left: 15px;
-        }
-
-        #user-toggle .user-toggle-item button:hover {
+        #user-toggle:hover {
             -webkit-animation: pulse 1s ease 0s;
             -o-animation: pulse 1s ease 0s;
             -moz-animation: pulse 1s ease 0s;
             animation: pulse 1s ease 0s;
         }
 
-        #user-toggle .user-toggle-item ul {
-            display: inline-block;
-            list-style-type: none;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-            position: relative;
-            top: 10px;
-            padding-right: 12px;
+    @@-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
         }
 
-            #user-toggle .user-toggle-item ul li {
-                display: inline-block;
-                float: left;
-                padding-left: 15px;
-            }
+        50% {
+            -webkit-transform: scale(1.2);
+        }
 
-            #user-toggle .user-toggle-item ul.show-buttons {
-                display: inline-block;
-                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
-                -moz-animation: fadein 1s; /* Firefox < 16
-                -ms-animation: fadein 1s; /* Internet Explorer
-                -o-animation: fadein 1s; /* Opera < 12.1
-                animation: fadein 1s;*/
-            }
+        100% {
+            -webkit-transform: scale(1);
+        }
+    }
 
-            #user-toggle .user-toggle-item ul.hide-buttons {
-                display: none;
-            }
+    @@-o-keyframes pulse {
+        0% {
+            -o-transform: scale(1);
+        }
 
+        50% {
+            -o-transform: scale(1.2);
+        }
+
+        100% {
+            -o-transform: scale(1);
+        }
+    }
+
+    @@-moz-keyframes pulse {
+        0% {
+            -moz-transform: scale(1);
+        }
+
+        50% {
+            -moz-transform: scale(1.2);
+        }
+
+        100% {
+            -moz-transform: scale(1);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
 </style>
 
 <h2>@ViewBag.Title</h2>
@@ -131,12 +148,12 @@
 
 <div class="container">
     <h3>
-        @ViewBag.DisplayName <small> - my current list of students</small>    
+        @ViewBag.DisplayName <small> - my current list of students</small>
     </h3>
     <hr>
-    <div class="row voffset1" >
+    <div class="row voffset1">
         <div class="col-md-12">
-                    <a href="/Manage/CreateStudent" type="button" title="Create New Student" role="button" data-toggle="tooltip" style="margin-bottom:0;margin-top: 10px;" class="btn btn-primary btn-circle btn-xl pull-right" data-ftrans="slide"><i class="fa fa-child" style="position: relative; top: 8px;"></i></a>
+            <a href="/Manage/CreateStudent" id="user-toggle" type="button" title="Create New Student" role="button" data-toggle="tooltip" style="margin-bottom:0;margin-top: 10px;" class="btn btn-primary btn-circle btn-xl pull-right" data-ftrans="slide"><i class="fa fa-child" style="position: relative; top: 8px;"></i></a>
         </div>
     </div>
     @{
@@ -178,7 +195,7 @@
 
 
 
-        @section scripts {
-            @Scripts.Render("~/Scripts/portal.js")
-            @Scripts.Render("~/Scripts/fasw.transitions.js")
-        }
+@section scripts {
+    @Scripts.Render("~/Scripts/portal.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}
