@@ -480,7 +480,7 @@
     }
 
     .required {
-        border: 1px solid #C9302C;
+        color: #C9302C;
     }
 
     .norequired {
@@ -633,7 +633,7 @@
                             <div class="step11">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label for="kidsid">KIDS ID</label>
+                                        <label class="control-label required" for="kidsid">KIDS ID</label>
                                         @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true" } })
                                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
@@ -641,7 +641,7 @@
                                         <div class="bootstrap-iso">
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <label class="control-label" for="dob">Date of Birth</label>
+                                                    <label class="control-label required" for="dob">Date of Birth</label>
                                                     <input type="text" id="dob" name="dob" style="height:49px; z-index: 99999" class="form-control studentDOB required" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
                                                 </div>
                                             </div>
@@ -660,7 +660,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="assignChildCount">USD or Agency Code</label>
+                                        <label class="control-label required" for="assignChildCount">USD or Agency Code</label>
                                         <select name="assignChildCount" id="assignChildCount" class="form-control">
                                             @if (Model.allDistricts != null)
                                             {
@@ -684,12 +684,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="firstname">First Name</label>
+                                        <label class="control-label required" for="firstname">First Name</label>
                                         @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="lastname">Last Name</label>
+                                        <label class="control-label required" for="lastname">Last Name</label>
                                         @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
@@ -708,7 +708,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="secondaryDisability">Secondary Disability</label>
+                                        <label  for="secondaryDisability">Secondary Disability</label>
                                         <select class="form-control" name="secondaryDisability" id="secondaryDisability">
                                             <option value="ND">Disability Not Noticed</option>
                                             @if (Model.secondaryDisabilities != null)
@@ -728,7 +728,7 @@
                                         @Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="misDistrict">District</label>
+                                        <label class="control-label required" for="misDistrict">District</label>
                                         <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                                             @if (Model.districts != null)
                                             {
@@ -748,15 +748,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
-                                        Neighborhood School
-                                    </div>
+                                        <span class="control-label required">Neighborhood School</span></div>
                                     <div class="col-md-10">
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required></select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
-                                        Responsible Building
+                                        <span class="control-label required">Responsible Building</span>
                                     </div>
                                     <div class="col-md-10">
                                         <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding" data-validate="true"></select>
@@ -1082,7 +1081,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" checked>
+                                                <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;">
                                                 <label for="fullDayKindergarten" style="float: left; position: relative; bottom: 16px; left: 20%;">Full Day Kindergarten</label>
                                             </div>
                                         </div>
@@ -1090,7 +1089,7 @@
                                             <label>&nbsp;</label>
                                             <div class="row vertical-align">
                                                 <div class="col-md-2">
-                                                    <label for="statusCode" class="pull-right">Status Code</label>
+                                                    <label class="control-label required" for="statusCode" class="pull-right">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
