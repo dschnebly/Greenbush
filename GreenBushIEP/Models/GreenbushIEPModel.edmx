@@ -206,6 +206,7 @@
           </Key>
           <Property Name="DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="DisabilityArea" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="tblDistricts">
           <Key>
@@ -679,7 +680,7 @@
           <Property Name="ClaimingCode" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="PlacementCode" Type="char" MaxLength="1" />
-          <Property Name="StatusCode" Type="bit" />
+          <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="ExitDate" Type="datetime" />
           <Property Name="InitialIEPDate" Type="datetime" />
           <Property Name="InitialEvalConsentSigned" Type="datetime" />
@@ -791,6 +792,27 @@
           <Property Name="TeacherID" Type="nvarchar" MaxLength="20" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="255" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_PrimaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_PrimaryDisabilities">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_SecondaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_SecondaryDisabilities">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="0..1" />
@@ -937,6 +959,18 @@
           <EntitySet Name="tblTransitions" EntityType="Self.tblTransitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransitionServices" EntityType="Self.tblTransitionServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_PrimaryDisabilities" EntityType="Self.vw_PrimaryDisabilities" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_PrimaryDisabilities].[DisabilityCode] AS [DisabilityCode], 
+    [vw_PrimaryDisabilities].[DisabilityDescription] AS [DisabilityDescription]
+    FROM [dbo].[vw_PrimaryDisabilities] AS [vw_PrimaryDisabilities]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_SecondaryDisabilities" EntityType="Self.vw_SecondaryDisabilities" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_SecondaryDisabilities].[DisabilityCode] AS [DisabilityCode], 
+    [vw_SecondaryDisabilities].[DisabilityDescription] AS [DisabilityDescription]
+    FROM [dbo].[vw_SecondaryDisabilities] AS [vw_SecondaryDisabilities]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
             <End Role="tblLocations" EntitySet="tblLocations" />
             <End Role="tblAccommodations" EntitySet="tblAccommodations" />
@@ -1010,7 +1044,6 @@
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCounties" EntityType="IndividualizedEducationProgramModel.tblCounty" />
-          <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
           <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
@@ -1037,13 +1070,11 @@
           <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
           <EntitySet Name="tblStatusCodes" EntityType="IndividualizedEducationProgramModel.tblStatusCode" />
-          <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
           <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
-          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
@@ -1060,6 +1091,11 @@
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
+          <EntitySet Name="vw_PrimaryDisabilities" EntityType="IndividualizedEducationProgramModel.vw_PrimaryDisabilities" />
+          <EntitySet Name="vw_SecondaryDisabilities" EntityType="IndividualizedEducationProgramModel.vw_SecondaryDisabilities" />
+          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
+          <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1267,13 +1303,6 @@
           </Key>
           <Property Name="CountyCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="CountyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblDisability">
-          <Key>
-            <PropertyRef Name="DisabilityCode" />
-          </Key>
-          <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblDistrict">
           <Key>
@@ -1718,41 +1747,6 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblStudentInfo">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="KIDSID" Type="Int64" Nullable="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FullDayKG" Type="Boolean" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="County" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Grade" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ClaimingCode" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="StatusCode" Type="Boolean" />
-          <Property Name="ExitDate" Type="DateTime" Precision="3" />
-          <Property Name="InitialIEPDate" Type="DateTime" Precision="3" />
-          <Property Name="InitialEvalConsentSigned" Type="DateTime" Precision="3" />
-          <Property Name="InitialEvalDetermination" Type="DateTime" Precision="3" />
-          <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
             <PropertyRef Name="RealtionshipID" />
@@ -1839,26 +1833,6 @@
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="tblUser">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Agreement" Type="Boolean" />
-          <Property Name="Archive" Type="Boolean" />
-          <Property Name="TeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
           <End Type="IndividualizedEducationProgramModel.tblAccommodation" Role="tblAccommodation" Multiplicity="*" />
@@ -1899,6 +1873,86 @@
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <EntityType Name="tblDisability">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DisabilityArea" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_PrimaryDisabilities">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_SecondaryDisabilities">
+          <Key>
+            <PropertyRef Name="DisabilityCode" />
+          </Key>
+          <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Agreement" Type="Boolean" />
+          <Property Name="Archive" Type="Boolean" />
+          <Property Name="TeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblStudentInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="KIDSID" Type="Int64" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullDayKG" Type="Boolean" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="County" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ClaimingCode" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialIEPDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialEvalConsentSigned" Type="DateTime" Precision="3" />
+          <Property Name="InitialEvalDetermination" Type="DateTime" Precision="3" />
+          <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2135,14 +2189,6 @@
               <MappingFragment StoreEntitySet="tblCounties">
                 <ScalarProperty Name="CountyName" ColumnName="CountyName" />
                 <ScalarProperty Name="CountyCode" ColumnName="CountyCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblDisabilities">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDisability">
-              <MappingFragment StoreEntitySet="tblDisabilities">
-                <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
-                <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2606,42 +2652,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblStudentInfoes">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
-              <MappingFragment StoreEntitySet="tblStudentInfo">
-                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
-                <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
-                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
-                <ScalarProperty Name="InitialIEPDate" ColumnName="InitialIEPDate" />
-                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ClaimingCode" ColumnName="ClaimingCode" />
-                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
-                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="County" ColumnName="County" />
-                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
-                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="FullDayKG" ColumnName="FullDayKG" />
-                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
-                <ScalarProperty Name="Race" ColumnName="Race" />
-                <ScalarProperty Name="Ethicity" ColumnName="Ethicity" />
-                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
-                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblStudentRelationships">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentRelationship">
               <MappingFragment StoreEntitySet="tblStudentRelationships">
@@ -2733,9 +2743,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="tblServiceGoals" TypeName="IndividualizedEducationProgramModel.tblServiceGoals" StoreEntitySet="tblServiceGoals">
+            <EndProperty Name="tblService">
+              <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+            </EndProperty>
+            <EndProperty Name="tblGoal">
+              <ScalarProperty Name="goalID" ColumnName="GoalID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="tblDisabilities">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDisability">
+              <MappingFragment StoreEntitySet="tblDisabilities">
+                <ScalarProperty Name="DisabilityArea" ColumnName="DisabilityArea" />
+                <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
+                <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_PrimaryDisabilities">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_PrimaryDisabilities">
+              <MappingFragment StoreEntitySet="vw_PrimaryDisabilities">
+                <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
+                <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_SecondaryDisabilities">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_SecondaryDisabilities">
+              <MappingFragment StoreEntitySet="vw_SecondaryDisabilities">
+                <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
+                <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
               <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
@@ -2754,14 +2800,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="tblServiceGoals" TypeName="IndividualizedEducationProgramModel.tblServiceGoals" StoreEntitySet="tblServiceGoals">
-            <EndProperty Name="tblService">
-              <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-            </EndProperty>
-            <EndProperty Name="tblGoal">
-              <ScalarProperty Name="goalID" ColumnName="GoalID" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="tblStudentInfoes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
+              <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
+                <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
+                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
+                <ScalarProperty Name="InitialIEPDate" ColumnName="InitialIEPDate" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ClaimingCode" ColumnName="ClaimingCode" />
+                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
+                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
+                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="FullDayKG" ColumnName="FullDayKG" />
+                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="Ethicity" ColumnName="Ethicity" />
+                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
+                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

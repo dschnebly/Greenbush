@@ -29,5 +29,8 @@ namespace GreenBushIEP.Models
         public string TeacherID { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Zip { get; set; }
     }
 }

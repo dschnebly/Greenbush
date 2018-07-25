@@ -38,7 +38,7 @@ namespace GreenBushIEP.Models
         public bool ClaimingCode { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string PlacementCode { get; set; }
-        public Nullable<bool> StatusCode { get; set; }
+        public string StatusCode { get; set; }
         public Nullable<System.DateTime> ExitDate { get; set; }
         public Nullable<System.DateTime> InitialIEPDate { get; set; }
         public Nullable<System.DateTime> InitialEvalConsentSigned { get; set; }

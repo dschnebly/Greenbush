@@ -3,6 +3,7 @@ using GreenBushIEP.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -132,8 +133,13 @@ namespace GreenBushIEP.Controllers
 
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
+            model.allDistricts = db.tblDistricts.ToList();
             model.student.DateOfBirth = DateTime.Now.AddYears(-5);
+            model.placementCode = db.tblPlacementCodes.ToList();
+            model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
+            model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.contacts.Add(new tblStudentRelationship() { Realtionship = "parent", State = "KS" });
+            model.statusCode = db.tblStatusCodes.ToList();
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
@@ -159,6 +165,7 @@ namespace GreenBushIEP.Controllers
                         Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null ),
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
+                        TeacherID = submitter.UserID.ToString(),
                     };
 
                     // try catch. If the email is the same as another student show error gracefully.
@@ -190,14 +197,10 @@ namespace GreenBushIEP.Controllers
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
                         Primary_DisabilityCode = collection["primaryDisability"].ToString(),
                         Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
+                        AssignedUSD = collection["assignChildCount"].ToString(),
                         USD = collection["misDistrict"],
                         BuildingID = collection["AttendanceBuildingId"],
                         NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
-                        Ethicity = collection["ethnic"],
-                        StudentLanguage = collection["studentLanguage"],
-                        ParentLanguage = collection["parentLanguage"],
-                        Race = collection["race"],
-                        Grade = Convert.ToInt32(collection["studentGrade"]),
                         Status = "PENDING",
                         Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
                         Create_Date = DateTime.Now,
@@ -271,6 +274,76 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
+        }
+
+        public JsonResult CreateStudentOptions(FormCollection collection)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+
+                    tblUser user = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+                    if(user != null)
+                    {
+                        user.Address1 = collection["studentStreetAddress1"].ToString();
+                        user.Address2 = collection["studentStreetAddress2"].ToString();
+                        user.City = collection["studentCity"].ToString();
+                        user.State = collection["studentState"].ToString();
+                        user.Zip = collection["studentZipCode"].ToString();
+                    }
+                    db.SaveChanges();
+
+                    tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+                    if(info != null)
+                    {
+                        info.County = collection["studentCounty"].ToString();
+                        info.Grade = Convert.ToInt32(collection["studentGrade"]);
+                        info.Race = collection["studentRace"].ToString();
+                        info.Ethicity = collection["studentEthnic"].ToString();
+                        info.StudentLanguage = collection["studentLanguage"].ToString();
+                        info.ParentLanguage = collection["parentLanguage"].ToString();
+                        info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
+                        info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
+                        info.StatusCode = collection["statusCode"].ToString();
+
+                        if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+                        {
+                            info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
+                        }
+
+                        if(!String.IsNullOrEmpty(collection["exitDate"]))
+                        {
+                            info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
+                        }
+
+                        if(!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                        {
+                            info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
+                        }
+                        
+                        if(!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+                        {
+                            info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
+                        }
+
+                        if(!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                        {
+                            info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = studentId });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to add the student's contacts. \n\n" + e.InnerException.ToString() });
+                }
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to update the user's options. Please try again or contact your administrator." });
         }
 
         [HttpPost]

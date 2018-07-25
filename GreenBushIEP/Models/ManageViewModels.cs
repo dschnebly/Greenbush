@@ -181,8 +181,15 @@ namespace GreenBushIEP.Models
             info = new tblStudentInfo();
             contacts = new List<tblStudentRelationship>();
             districts = new List<tblDistrict>();
+            allDistricts = new List<tblDistrict>();
             selectedDistrict = new List<tblDistrict>();
             buildings = new List<BuildingsViewModel>();
+            statusCode = new List<tblStatusCode>();
+            placementCode = new List<tblPlacementCode>();
+            counties = new List<tblCounty>();
+            primaryDisabilities = new List<vw_PrimaryDisabilities>();
+            secondaryDisabilities = new List<vw_SecondaryDisabilities>();
+            statusCodes = new List<tblStatusCode>();
         }
 
         public tblUser submitter { get; set; }
@@ -190,8 +197,15 @@ namespace GreenBushIEP.Models
         public tblStudentInfo info { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public List<tblDistrict> districts { get; set; }
+        public List<tblDistrict> allDistricts { get; set; }
         public List<tblDistrict> selectedDistrict { get; set; }
         public List<BuildingsViewModel> buildings { get; set; }
+        public List<tblStatusCode> statusCode { get; set; }
+        public List<tblPlacementCode> placementCode { get; set; }
+        public List<tblCounty> counties { get; set; }
+        public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
+        public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
+        public List<tblStatusCode> statusCodes { get; set;}
     }
 
     public class StudentProcedureViewModel

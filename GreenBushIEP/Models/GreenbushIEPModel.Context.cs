@@ -44,7 +44,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
-        public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
@@ -71,13 +70,16 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
-        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
         public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
+        public virtual DbSet<tblDisability> tblDisabilities { get; set; }
+        public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
+        public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

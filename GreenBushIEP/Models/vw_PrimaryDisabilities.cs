@@ -12,10 +12,9 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblDisability
+    public partial class vw_PrimaryDisabilities
     {
         public string DisabilityCode { get; set; }
         public string DisabilityDescription { get; set; }
-        public string DisabilityArea { get; set; }
     }
 }

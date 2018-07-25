@@ -29,7 +29,7 @@ function init() {
         dateFormat: "mm/dd/yy",
         changeMonth: true,
         changeYear: true
-    })
+    });
         
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
@@ -185,46 +185,46 @@ function initContacts() {
 
 $("#next2").on("click", function () {
 
-    var theForm = document.getElementById("createNewStudent")
+    var theForm = document.getElementById("createNewStudent");
 
     if (tabValidates()) {
 
-        //$.ajax({
-        //    url: '/Manage/CreateStudent',
-        //    type: 'POST',
-        //    data: $("#createNewStudent").serialize(),
-        //    success: function (data) {
-        //        if (data.Result === "success") {
+        $.ajax({
+            url: '/Manage/CreateStudent',
+            type: 'POST',
+            data: $("#createNewStudent").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
 
-        //            var $active = $('.wizard .nav-tabs li.active');
-        //            $active.next().removeClass('disabled');
-        //            $($active).next().find('a[data-toggle="tab"]').click();
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
 
-        //            // create a new student id and add it to the contacts form here.
-        //            $("form:eq(1)").find("input[name='studentId']").val(data.Message);
-        //        } else {
+                    // create a new student id and add it to the contacts form here.
+                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+                } else {
 
-        //            alert(data.Message);
-        //        }
-        //    },
-        //    error: function (data) {
-        //        alert("There was an error when attempt to connect to the server.")
-        //    }
-        //});
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.");
+            }
+        });
 
     }
 });
 
 $("#next3").on("click", function () {
 
-    var theForm = document.getElementById("createStudentContacts")
+    var theForm = document.getElementById("createStudentContacts");
 
     if (tabValidates()) {
 
         $.ajax({
-            url: '/Manage/CreateStudentContacts',
+            url: '/Manage/CreateStudentOptions',
             type: 'POST',
-            data: $("#createStudentContacts").serialize(),
+            data: $("#createStudentOptions").serialize(),
             success: function (data) {
                 if (data.Result === "success") {
 
@@ -240,7 +240,7 @@ $("#next3").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 
@@ -270,7 +270,7 @@ $("#next4").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 
@@ -299,7 +299,7 @@ $("#next5").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 
