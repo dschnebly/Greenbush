@@ -12,7 +12,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPHealthID)
-
+        
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
@@ -20,7 +20,7 @@
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label for="HealthProgressTowardGenEd" class="standard-font-size">Health Concerns progressing with General Education Supports</label>
+                <label  for="HealthProgressTowardGenEd" class="standard-font-size" style="">Health Concerns progressing with General Education Supports</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) />
