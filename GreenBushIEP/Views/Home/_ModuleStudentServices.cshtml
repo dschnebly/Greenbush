@@ -53,6 +53,7 @@
             <div class="col-md-12" style="margin-bottom: 12px;">
                 <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 <button id="duplicateService" class="btn btn-default">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="duplicateAllService" class="btn btn-default">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
@@ -258,7 +259,7 @@
                         <form action="/Home/saveStudentService" method="post">
                             <input type="hidden" name="StudentId" value="@Model.studentId" />
                             <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
-                            <div class="panel panel-default">
+                            <div class="panel panel-default panel-existing">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
@@ -471,6 +472,34 @@
         trigger: 'manual'
     });
 
+    
+    //duplicate all services for next school year
+    $('#duplicateAllService').on('click', function () {
+        $(".duplication-loader").css('visibility', 'visible');
+        $(".panel-existing").each(function (index) {
+            
+            var parent = $(this);
+
+            if (parent != null) {
+                var dupFiscalYear = parent.find('[name="fiscalYear"]').val();
+                var dupServiceDaysPerWeek = parent.find('[name="serviceDaysPerWeek"]').val();
+                var dupserviceMinutesPerDay = parent.find('[name="serviceMinutesPerDay"]').val();
+                var dupFrequency = parent.find('[name="Frequency"]').find(":selected").val();
+                var dupLocation = parent.find('[name="Location"]').find(":selected").val();
+                var dupServiceType = parent.find('[name="ServiceType"]').find(":selected").val();
+                var dupServiceProvider = parent.find('[name="serviceProvider"]').find(":selected").val();
+                var dupStartDate = parent.find('[name="serviceStartDate"]').val();
+                var dupEndDate = parent.find('[name="serviceEndDate"]').val();
+
+                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+
+            }
+            
+        });
+
+        
+    });
+
     //duplicate service for next school year
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
@@ -540,8 +569,7 @@
 
         initService();
     });
-
- 
+     
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
@@ -769,8 +797,6 @@
 
         return false;
     }
-
-   
 
     function createDate2(newDate) {
        
