@@ -105,8 +105,8 @@ namespace GreenBushIEP.Models
 
         public MISProviderViewModel()
         {
-           listOfProviders = new List<tblProvider>();
-           districts = new List<tblDistrict>();
+            listOfProviders = new List<tblProvider>();
+            districts = new List<tblDistrict>();
         }
     }
 
@@ -115,8 +115,7 @@ namespace GreenBushIEP.Models
         public string Name { get; set; }
         public int ProviderID { get; set; }
         public string ProviderCode { get; set; }
-
-            }
+    }
 
     public class Student
     {
@@ -139,6 +138,7 @@ namespace GreenBushIEP.Models
         public string Status { get; set; }
         public string BuildingName { get; set; }
         public string USD { get; set; }
+        public int? CreatedBy { get; set; }
     }
 
     public class StudentViewModel
@@ -205,7 +205,7 @@ namespace GreenBushIEP.Models
         public List<tblCounty> counties { get; set; }
         public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
         public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
-        public List<tblStatusCode> statusCodes { get; set;}
+        public List<tblStatusCode> statusCodes { get; set; }
     }
 
     public class StudentProcedureViewModel
@@ -396,7 +396,7 @@ namespace GreenBushIEP.Models
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
         public DateTime MeetingDate { get; set; }
-      
+
         public StudentServiceViewModel()
         {
             studentId = 0;

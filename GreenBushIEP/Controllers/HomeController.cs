@@ -560,7 +560,8 @@ namespace GreenbushIep.Controllers
                                     BuildingID = user.BuildingID,
                                     ImageURL = user.ImageURL,
                                     KidsID = i.KIDSID,
-                                    DateOfBirth = i.DateOfBirth
+                                    DateOfBirth = i.DateOfBirth,
+                                    CreatedBy = i.CreatedBy,
                                 }).Distinct().ToList();
 
 
