@@ -2,11 +2,53 @@
     function init() {
 
         // attach Event
-        // fires when a user clicks on the main new system user button
+        // fires when a user clicks on the new system user button
         $("#user-toggle").on("click", function () {
             $(".ajax-loader").css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
-        })
+        });
+
+        // attach Event
+        // fires when a user clicks on the edit user button
+        $("#editStudent").on("click", function () {
+            $(".ajax-loader").css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
+        });
+
+        // attach event
+        // fires when an delete button is pressed.
+        $('#deleteUser').on('show.bs.modal', function (e) {
+            var user = $(e.relatedTarget).data('id');
+            $(e.currentTarget).find('input[name="id"]').val(user);
+            $('#confirmDeletion').val('');
+        });
+
+        // attach event
+        // fires when you click yes on the module deleteForm.
+        $('#deleteUser button[type=submit]').on('click', function (e) {
+            if ($('#confirmDeletion').val() === 'DELETE') {
+                var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
+                console.log(userId);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/Delete',
+                    data: { id: userId },
+                    dataType: "json",
+                    success: function (data) {
+                        var currentUser = $("div.list-group-item.bound[data-id='" + userId + "']");
+                        $(currentUser).remove();
+
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    },
+                    error: function (data) {
+                        console.log("Unable to connect to the server or another related problem.");
+                    }
+                });
+            }
+        });
 
         $(".listrap").listrap().on("selection-changed", function (event, selection) {
             console.log(selection);

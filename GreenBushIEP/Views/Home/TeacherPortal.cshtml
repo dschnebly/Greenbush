@@ -183,15 +183,18 @@
                             <td>@student.LastName.ToTitleCase()</td>
                             <td>@student.DateOfBirth.ToString("MM-dd-yyyy")</td>
                             <td>
-                                <a role="button" class="btn btn-info pull-right" data-ftrans="slide" href="/Home/StudentProcedures?stid=@student.UserID.ToString()">
+                                <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right">
                                     <span class="glyphicon glyphicon-user"></span>
                                 </a>
 
                                 @if (student.CreatedBy == Model.Teacher.UserID)
                                 {
-                                    <button type="button" title="Delete this user" class="btn btn-info btn-action pull-right" data-toggle="modal" data-target="#deleteUser">
+                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
+                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
                                 }
                             </td>
                         </tr>
@@ -203,6 +206,33 @@
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
     </div>
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @Html.Hidden("id", 0)
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Deleting a user also deletes all data in your database associated with them. Is this what you want to do? <strong>(can't be undone)</strong><br />
+                        <br />
+                        Type DELETE to confirm<br />
+                        <input id="confirmDeletion" type="text" value="" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
 </div>
 
 

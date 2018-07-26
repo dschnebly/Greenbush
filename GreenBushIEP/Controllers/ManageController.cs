@@ -468,6 +468,9 @@ namespace GreenBushIEP.Controllers
                 model.student.Email = student.Email;
                 model.student.RoleID = "5";
                 model.student.ImageURL = student.ImageURL;
+                model.student.Address1 = student.Address1;
+                model.student.Address2 = student.Address2;
+                model.student.Zip = student.Zip;
             }
 
             tblStudentInfo studentinfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
@@ -507,8 +510,13 @@ namespace GreenBushIEP.Controllers
             }
 
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
+            model.allDistricts = db.tblDistricts.ToList();
+            model.placementCode = db.tblPlacementCodes.ToList();
+            model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
+            model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
+            model.statusCode = db.tblStatusCodes.ToList();
             model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.student.UserID == bm.UserID select d).Distinct().ToList();
-            model.districts = (model.submitter.RoleID == "1") ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
 
             foreach (var d in model.selectedDistrict)
             {

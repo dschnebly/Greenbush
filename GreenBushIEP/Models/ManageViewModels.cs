@@ -139,6 +139,9 @@ namespace GreenBushIEP.Models
         public string BuildingName { get; set; }
         public string USD { get; set; }
         public int? CreatedBy { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Zip { get; set; }
     }
 
     public class StudentViewModel
