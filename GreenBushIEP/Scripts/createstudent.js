@@ -38,7 +38,7 @@ function init() {
     });
 
     $("#submitForm").on('click', function () {
-        document.forms[2].submit();
+        document.forms[3].submit();
     });
 
     $('#buildingIds').hide();
@@ -113,9 +113,6 @@ function init() {
                 console.log(data);
             }
         });
-
-        
-
     });
 
     function nextTab(elem) {
@@ -275,31 +272,88 @@ $("#next4").on("click", function () {
     }
 });
 
-//$("#next5").on("click", function () {
+$("#next5").on("click", function () {
 
-//    var theForm = document.getElementById("editStudentContacts");
+    var theForm = document.getElementById("editStudent");
+    if (tabValidates()) {
 
-//    if (tabValidates()) {
+        $.ajax({
+            url: '/Manage/EditStudent',
+            type: 'POST',
+            data: $("#editStudent").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
 
-//        $.ajax({
-//            url: '/Manage/EditStudentContacts',
-//            type: 'POST',
-//            data: $("#editStudentContacts").serialize(),
-//            success: function (data) {
-//                if (data.Result === "success") {
+                } else {
 
-//                    var $active = $('.wizard .nav-tabs li.active');
-//                    $active.next().removeClass('disabled');
-//                    $($active).next().find('a[data-toggle="tab"]').click();
-//                } else {
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
 
-//                    alert(data.Message);
-//                }
-//            },
-//            error: function (data) {
-//                alert("There was an error when attempt to connect to the server.");
-//            }
-//        });
+    }
+});
 
-//    }
-//});
+$("#next6").on("click", function () {
+
+    var theForm = document.getElementById("editStudentOptions");
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/EditStudentOptions',
+            type: 'POST',
+            data: $("#editStudentOptions").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});
+
+$("#next7").on("click", function () {
+
+    var theForm = document.getElementById("editStudentContacts");
+
+    if (tabValidates()) {
+
+        $.ajax({
+            url: '/Manage/EditStudentContacts',
+            type: 'POST',
+            data: $("#editStudentContacts").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+                } else {
+
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.")
+            }
+        });
+
+    }
+});

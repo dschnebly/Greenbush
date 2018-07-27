@@ -87,8 +87,8 @@ namespace GreenBushIEP.Controllers
                 {
                     return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
                 }
-                
-                
+
+
                 // Add to Database
                 db.tblUsers.Add(user);
                 db.SaveChanges();
@@ -119,7 +119,7 @@ namespace GreenBushIEP.Controllers
             catch (Exception e)
             {
                 Console.Write(e.Message);
-                return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help"});
+                return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help" });
             }
 
             return RedirectToAction("Portal", "Home");
@@ -162,7 +162,7 @@ namespace GreenBushIEP.Controllers
                         RoleID = "5",
                         FirstName = collection["firstname"],
                         LastName = collection["lastname"],
-                        Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null ),
+                        Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
                     };
@@ -285,7 +285,7 @@ namespace GreenBushIEP.Controllers
                     int studentId = Convert.ToInt32(collection["studentId"]);
 
                     tblUser user = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-                    if(user != null)
+                    if (user != null)
                     {
                         user.Address1 = collection["studentStreetAddress1"].ToString();
                         user.Address2 = collection["studentStreetAddress2"].ToString();
@@ -296,7 +296,7 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
 
                     tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-                    if(info != null)
+                    if (info != null)
                     {
                         info.County = collection["studentCounty"].ToString();
                         info.Grade = Convert.ToInt32(collection["studentGrade"]);
@@ -313,22 +313,22 @@ namespace GreenBushIEP.Controllers
                             info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
                         }
 
-                        if(!String.IsNullOrEmpty(collection["exitDate"]))
+                        if (!String.IsNullOrEmpty(collection["exitDate"]))
                         {
                             info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
                         }
 
-                        if(!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                        if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
                         {
                             info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
                         }
-                        
-                        if(!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+
+                        if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
                         {
                             info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
                         }
 
-                        if(!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                        if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                         }
@@ -586,6 +586,7 @@ namespace GreenBushIEP.Controllers
                 info.Status = "PENDING";
                 info.Grade = Convert.ToInt32(collection["studentGrade"]);
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
             }
             else
             {
@@ -602,6 +603,85 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "success", Message = student.UserID });
+        }
+
+        // POST: Manage/EditStudentContancts
+        [HttpPost]
+        public JsonResult EditStudentOptions(FormCollection collection)
+        {
+
+            int studentId = Convert.ToInt32(collection["studentId"]);
+            tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+            if (student != null)
+            {
+                try
+                {
+                    student.Address1 = collection["studentStreetAddress1"].ToString();
+                    student.Address2 = collection["studentStreetAddress2"].ToString();
+                    student.City = collection["studentCity"].ToString();
+                    student.State = collection["studentState"].ToString();
+                    student.Zip = collection["studentZipCode"].ToString();
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.InnerException.ToString() });
+                }
+            }
+
+            tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
+            if (info != null)
+            {
+                try
+                {
+                    info.County = collection["studentCounty"].ToString();
+                    info.Grade = Convert.ToInt32(collection["studentGrade"]);
+                    info.Race = collection["studentRace"].ToString();
+                    info.Ethicity = collection["studentEthnic"].ToString();
+                    info.StudentLanguage = collection["studentLanguage"].ToString();
+                    info.ParentLanguage = collection["parentLanguage"].ToString();
+                    info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
+                    info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
+                    info.StatusCode = collection["statusCode"].ToString();
+
+                    if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+                    {
+                        info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
+                    }
+
+                    if (!String.IsNullOrEmpty(collection["exitDate"]))
+                    {
+                        info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
+                    }
+
+                    if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                    {
+                        info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
+                    }
+
+                    if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+                    {
+                        info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
+                    }
+
+                    if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                    {
+                        info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+                    }
+
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.InnerException.ToString() });
+                }
+
+
+                return Json(new { Result = "success", Message = student.UserID });
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to edit students. \n\n" });
         }
 
         // POST: Manage/EditStudentContancts
