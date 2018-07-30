@@ -28,15 +28,14 @@
         $('#deleteUser button[type=submit]').on('click', function (e) {
             if ($('#confirmDeletion').val() === 'DELETE') {
                 var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
-                console.log(userId);
                 $.ajax({
                     type: 'POST',
                     url: '/Manage/Delete',
                     data: { id: userId },
                     dataType: "json",
                     success: function (data) {
-                        var currentUser = $("div.list-group-item.bound[data-id='" + userId + "']");
-                        $(currentUser).remove();
+                        var userRow = $("tr[data-id=" + userId + "]")
+                        userRow.remove();
 
                         $("#alertMessage .moreinfo").html(data.Message);
                         $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
