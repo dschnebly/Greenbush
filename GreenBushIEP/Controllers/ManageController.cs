@@ -543,7 +543,7 @@ namespace GreenBushIEP.Controllers
             {
                 student.FirstName = collection["firstname"];
                 student.LastName = collection["lastname"];
-                student.Email = collection["email"];
+                student.Email = String.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString() ;
                 student.RoleID = "5";
             }
             else
