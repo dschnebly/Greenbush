@@ -634,7 +634,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="control-label required" for="kidsid">KIDS ID</label>
-                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[0-9]*", type = "number", maxLength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", Min="1", Max="9999999999" } })
+                                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
                                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-3">
@@ -708,7 +708,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label  for="secondaryDisability">Secondary Disability</label>
+                                        <label for="secondaryDisability">Secondary Disability</label>
                                         <select class="form-control" name="secondaryDisability" id="secondaryDisability">
                                             <option value="ND">Disability Not Noticed</option>
                                             @if (Model.secondaryDisabilities != null)
@@ -748,7 +748,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
-                                        <span class="control-label required">Neighborhood School</span></div>
+                                        <span class="control-label required">Neighborhood School</span>
+                                    </div>
                                     <div class="col-md-10">
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required></select>
                                     </div>
