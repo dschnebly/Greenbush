@@ -798,6 +798,7 @@ namespace GreenbushIep.Controllers
                 model.birthDate = info.DateOfBirth;
                 model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 model.isDoc = district.DOC;
+                model.isCreator = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault().UserID == info.CreatedBy;
 
                 IEP theIEP = new IEP(student.UserID);
 

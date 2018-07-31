@@ -221,6 +221,9 @@ namespace GreenBushIEP.Models
             student = new tblUser();
             studentPlan = new StudentPlan(student.UserID);
             birthDate = new DateTime();
+            hasAccommodations = false;
+            needsBehaviorPlan = false;
+            isCreator = false;
         }
 
         public bool isDoc { get; set; }
@@ -232,6 +235,7 @@ namespace GreenBushIEP.Models
         public DateTime birthDate { get; set; }
         public bool hasAccommodations { get; set; }
         public bool needsBehaviorPlan { get; set; }
+        public bool isCreator { get; set; }
     }
 
     public class StudentLegalView
