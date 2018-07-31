@@ -441,6 +441,31 @@ namespace GreenBushIEP.Models
             services = new List<tblTransitionService>();
         }
     }
+
+
+    public class StudentDetailsPrintViewModel
+    {
+        public StudentDetailsPrintViewModel()
+        {
+            student = new tblStudentInfo();
+            teacher = new tblUser();
+            contacts = new List<tblStudentRelationship>();
+            building = new tblBuilding();
+            neighborhoodBuilding = new tblBuilding();
+        }
+
+        public tblUser teacher { get; set; }
+        public tblStudentInfo student { get; set; }
+        public List<tblStudentRelationship> contacts { get; set; }
+        public string ethnicity { get; set; }
+        public string gender { get; set; }
+        public string parentLang { get; set; }
+        public string studentLang { get; set; }
+        public string studentCounty { get; set; }
+        public tblBuilding building { get; set; }
+        public tblBuilding neighborhoodBuilding { get; set; }
+
+    }
 }
 
 public class IEPStatus

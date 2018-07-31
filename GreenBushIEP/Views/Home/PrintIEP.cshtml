@@ -10,7 +10,9 @@
     var imageRadioNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_no.png");
     var imageSliderChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/yes_checked.png");
     var imageSliderNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/no_checked.png");
+    var headerLogo = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/GBlogo1A.jpg");
     var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
+
 }
 
 @section stylesheets {
@@ -277,7 +279,108 @@
         </div>
 
         <div class="module-page">
-            <div class="header"><h3>@Model.studentFirstName @Model.studentLastName</h3></div>
+            
+            
+            <table style="width:100%;">
+                <tr>
+                    <td style="vertical-align:top"><img height="71" width="182" src="@(headerLogo)" /></td>
+                    <td style="text-align:center">
+                        <h4><b>Teacher Information Page</b></h4>
+                        <h5>Special Purpose School</h5>
+                        @*<h5>@(Model.studentDetails..schoolBuilding)</h5>*@
+                        <h5>947 W. 47 Hwy, P.O. Box 189</h5>
+                        <h5>Girard, KS 66743</h5>
+                        <h5>620-724-6281</h5>
+                    </td>
+                    <td style="text-align:right;vertical-align:top">
+                        Printed:<br />@(DateTime.Now.ToShortDateString())<br />
+                        Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
+                    </td>
+                </tr>
+
+            </table>
+            <hr />
+            <table style="width:100%;">
+                <tr>
+                    <td><label>Student Legal Name:</label></td>
+                    <td>@(studentFullName)</td>
+                    <td><label>KIDS ID:</label></td>
+                    <td>@(Model.studentDetails.student.KIDSID)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><label>Birth Date:</label></td>
+                    <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
+                    <td><label>Age at Annual Meeting:</label></td>
+                    <td>@(Model.studentAge)</td>
+                    <td><label>Gender:</label></td>
+                    <td>@Model.studentDetails.gender</td>
+                </tr>
+                <tr>
+                    <td><label>Language of the Student:</label></td>
+                    <td>@Model.studentDetails.studentLang</td>
+                    <td></td>
+                    <td></td>
+                    <td><label>Language of the Parent:</label></td>
+                    <td>@Model.studentDetails.parentLang</td>
+                </tr>
+            </table>
+            <hr />
+            <table style="width:100%;">
+
+                @foreach (var contact in Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact))
+                {
+                <tr>
+                    <td><label>Contact:</label></td>
+                    <td>@contact.FirstName @contact.LastName</td>
+                    
+                </tr>
+                <tr>
+                    <td><label>Address:</label></td>
+                    <td>@contact.Address1 @contact.Address2 @contact.City, @contact.State @contact.Zip</td>
+                    
+                </tr>
+                <tr>
+                    <td><label>Phones:</label></td>
+                    <td>@contact.Phone</td>
+                    
+                </tr>
+                <tr>
+                    <td><label>Email:</label></td>
+                    <td>@contact.Email</td>
+
+                </tr>
+                }
+            </table>
+            <hr />
+            <table>
+
+                
+                    <tr>
+                        <td><label>Neighborhood School:</label></td>
+                        <td>@Model.studentDetails.neighborhoodBuilding.BuildingName</td>
+
+                    </tr>
+                <tr>
+                    <td><label>Responsible School:</label></td>
+                    <td>@Model.studentDetails.building.BuildingName</td>
+                </tr>
+                    <tr>
+                        <td><label>Assign Child Count:</label></td>
+                        <td>@Model.studentDetails.student.AssignedUSD</td>
+                        <td><label>County of Residence:</label></td>
+                        <td>@Model.studentDetails.studentCounty</td>
+                    </tr>
+                    <tr>
+                        <td><label>Grade:</label></td>
+                        <td>@Model.studentDetails.student.Grade</td>
+                        <td><label>KG Full Day:</label></td>
+                        <td>@(Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "N")</td>
+                    </tr>
+                
+            </table>
+
 
             <h3 class="text-center">HEALTH</h3>
 
@@ -363,7 +466,7 @@
 
                     <div class="standard-font-size" style="display: @(Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value == true ? "block;" : "none;")">
                         @if (Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value == true)
-                        {
+            {
                             <p>*if other, please explain:</p>
                         }
                         <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentHealth.NeedMetByOtherDescription)</p>
@@ -383,7 +486,7 @@
             <div>
                 <h3 class="text-center">MOTOR</h3>
                 @if (!Model.studentMotor.NoConcerns)
-            {
+        {
                     <div>
                         <div class="funkyradio-primary">
                             <img src="@(Model.studentMotor.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
@@ -430,7 +533,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value == true)
-                                {
+        {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMotor.NeedMetByOtherDescription)</p>
@@ -450,7 +553,7 @@
             <div>
                 <h3 class="text-center">COMMUNICATION</h3>
                 @if (!Model.studentCommunication.NoConcerns)
-            {
+    {
                     <div>
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -501,7 +604,7 @@
 
                                 <div class="standard-font-size" style="display: @(Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true ? "block;" : "none;")">
                                     @if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value == true)
-                                    {
+    {
                                         <p>*if other, please explain:</p>
                                     }
                                     <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentCommunication.NeedMetByOtherDescription)</p>
@@ -521,7 +624,7 @@
             <div>
                 <h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
                 @if (!Model.studentSocial.NoConcerns)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -594,7 +697,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value == true)
-                                 {
+    {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentSocial.NeedMetByOtherDescription)</p>
@@ -614,7 +717,7 @@
             <div>
                 <h3 class="text-center">GENERAL INTELLIGENCE</h3>
                 @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -656,7 +759,7 @@
             <div>
                 <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
                 @if (!Model.studentAcademic.NoConcerns)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -698,7 +801,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true)
-                                {
+    {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>
@@ -718,7 +821,7 @@
             <div>
                 <h3 class="text-center">READING</h3>
                 @if (!Model.studentReading.NoConcerns)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -760,7 +863,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true)
-                                {
+    {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
@@ -780,7 +883,7 @@
             <div>
                 <h3 class="text-center">MATH</h3>
                 @if (!Model.studentMath.NoConcerns)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -823,7 +926,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true)
-                                {
+    {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMath.NeedMetByOtherDescription)</p>
@@ -843,7 +946,7 @@
             <div>
                 <h3 class="text-center">WRITTEN</h3>
                 @if (!Model.studentWritten.NoConcerns)
-                {
+    {
                     <div style="font-size:12pt;  color: #333;">
                         <div class="funkyradio">
                             <div class="funkyradio-primary">
@@ -886,7 +989,7 @@
 
                             <div class="standard-font-size" style="display: @(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true ? "block;" : "none;")">
                                 @if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true)
-                                {
+    {
                                     <p>*if other, please explain:</p>
                                 }
                                 <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentWritten.NeedMetByOtherDescription)</p>
@@ -913,7 +1016,7 @@
                             <div class="panel-default">
 
                                 @foreach (var accom in Model.accommodations)
-                                {
+    {
                                     <div style="padding-top:10px">
                                         <div class="panel-body">
                                             <div class="row voffset">
@@ -960,14 +1063,14 @@
                                                         <div class="col-md-3" style="padding-top:8px">
                                                             <label for="AnticipatedStartDate">Anticipated Start Date</label>
                                                             @if (accom.AnticipatedStartDate.HasValue)
-                                                            {
+    {
                                                                 <p>@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")</p>
                                                             }
                                                         </div>
                                                         <div class="col-md-3" style="padding-top:8px">
                                                             <label for="AnticipatedEndDate">Anticipated End Date</label>
                                                             @if (accom.AnticipatedEndDate.HasValue)
-                                                            {
+    {
                                                                 <p>@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")</p>
 
                                                             }
@@ -1005,7 +1108,7 @@
             <div>
                 <h3 class="text-center">BEHAVIOR PLAN</h3>
                 @if (Model.studentBehavior != null)
-                {
+    {
                     <div id="collapse0" class="panel-collapse">
                         <div class="panel-body">
 
@@ -1036,29 +1139,29 @@
                                     <label for="misTriggers">Possible triggers for behaviors</label>
                                     <p>
                                         @if (Model.studentBehavior.Triggers != null)
-                                        {
-                                            var showTriggerOther = false;
+    {
+        var showTriggerOther = false;
 
-                                            foreach (var hypothesis in Model.studentBehavior.Triggers)
-                                            {
+        foreach (var hypothesis in Model.studentBehavior.Triggers)
+        {
 
-                                                var selected = "";
-                                                if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
-                                                {
-                                                    selected = hypothesis.BehaviorTriggerType;
+            var selected = "";
+            if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
+            {
+                selected = hypothesis.BehaviorTriggerType;
 
-                                                    if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
-                                                    {
-                                                        showTriggerOther = true;
-                                                    }
+                if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
+                {
+                    showTriggerOther = true;
+                }
 
                                                     <text>@selected</text>
                                                     <br />
                                                 }
 
-                                            }
-                                            if (showTriggerOther)
-                                            {
+        }
+        if (showTriggerOther)
+        {
                                                 <div id="divHypothesisOther" class="voffset2">
                                                     <label>Other Description</label>
                                             <p type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.TriggerOther</p>
@@ -1082,29 +1185,29 @@
                                         <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
                                         <p>
                                             @if (Model.studentBehavior.HypothesisList != null)
-                                            {
-                                                var showHypothesisOther = false;
+    {
+        var showHypothesisOther = false;
 
-                                                foreach (var hypothesis in Model.studentBehavior.HypothesisList)
-                                                {
+        foreach (var hypothesis in Model.studentBehavior.HypothesisList)
+        {
 
-                                                    var selected = "";
-                                                    if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
-                                                    {
-                                                        selected = hypothesis.BehaviorHypothesisType;
+            var selected = "";
+            if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
+            {
+                selected = hypothesis.BehaviorHypothesisType;
 
-                                                        if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
-                                                        {
-                                                            showHypothesisOther = true;
-                                                        }
+                if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
+                {
+                    showHypothesisOther = true;
+                }
 
                                                         <text>@selected</text>
                                                         <br />
                                                     }
 
-                                                }
-                                                if (showHypothesisOther)
-                                                {
+        }
+        if (showHypothesisOther)
+        {
                                                     <div id="divHypothesisOther" class="voffset2">
                                                         <label>Other Description</label>
                                                 <p type="text" id="HypothesisOther" name="HypothesisOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.HypothesisOther</p>
@@ -1128,28 +1231,28 @@
                                             <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
                                             <p>
                                                 @if (Model.studentBehavior.Strategies != null)
-                                                {
-                                                    var showStrategyOther = false;
+    {
+        var showStrategyOther = false;
 
-                                                    foreach (var strategy in Model.studentBehavior.Strategies)
-                                                    {
+        foreach (var strategy in Model.studentBehavior.Strategies)
+        {
 
-                                                        var selected = "";
-                                                        if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
-                                                        {
-                                                            selected = strategy.BehaviorStrategyType;
+            var selected = "";
+            if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
+            {
+                selected = strategy.BehaviorStrategyType;
 
-                                                            if (selected != "" && strategy.BehaviorStrategyType == "Other")
-                                                            {
-                                                                showStrategyOther = true;
-                                                            }
+                if (selected != "" && strategy.BehaviorStrategyType == "Other")
+                {
+                    showStrategyOther = true;
+                }
 
                                                             <text>@selected</text><br />
                                                         }
 
-                                                    }
-                                                    if (showStrategyOther)
-                                                    {
+        }
+        if (showStrategyOther)
+        {
                                                         <div id="divStrategyOther" class="voffset2">
                                                             <label>Other Description</label>
                                                     <p type="text" id="StrategiesOther" name="StrategiesOther" class="form-control" value="" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000">@Model.studentBehavior.StrategiesOther</p>
@@ -1294,8 +1397,9 @@
 
 
     </div><!--end behavior plan-->
-   
-   
+
+
+
 
 @if (Model.studentTransition != null && (Model.studentAge > 12 || (Model.studentTransition.isDOC && Model.studentAge > 20)))
 {
@@ -1308,9 +1412,9 @@
                             <div class="col-md-12" id="transitionAssessmentContainer">
 
                                 @if (Model.studentTransition.assessments.Count > 0)
-                                {
-                                    foreach (var assessment in Model.studentTransition.assessments)
-                                    {
+    {
+        foreach (var assessment in Model.studentTransition.assessments)
+        {
                                         <div class="panel-group transitionAssessment" id="assessment@(assessment.TransitionAssementID)">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
@@ -1398,21 +1502,21 @@
                         <div class="row">
                             <div class="col-md-12" id="transitionEducationGoalContainer">
                                 @if (Model.studentTransition.goals.Count > 0)
-                                {
-                                    foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "education"))
-                                    {
-                                        var edGrad = "";
-                                        if (goal.CompletetionType == "After Graduation")
-                                        {
-                                            edGrad = "After Graduation";
-                                        }else if (goal.CompletetionType == "After leaving High School")
-                                        {
-                                            edGrad = "After leaving High School";
-                                        }
-                                        else if (goal.CompletetionType == "Upon completion of High School Program")
-                                        {
-                                            edGrad = "Upon completion of High School Program";
-                                        }
+    {
+        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "education"))
+        {
+            var edGrad = "";
+            if (goal.CompletetionType == "After Graduation")
+            {
+                edGrad = "After Graduation";
+            }else if (goal.CompletetionType == "After leaving High School")
+            {
+                edGrad = "After leaving High School";
+            }
+            else if (goal.CompletetionType == "Upon completion of High School Program")
+            {
+                edGrad = "Upon completion of High School Program";
+            }
 
                                         <div class="panel-group transitionEducation" id="transitionEducationIndentity@(goal.TransitionGoalID)">
                                             <div class="panel panel-default">
@@ -1440,22 +1544,22 @@
                         <div class="row" style="padding-top:8px">
                             <div class="col-md-12" id="transitionEmploymentGoalContainer">
                                 @if (Model.studentTransition.goals.Count > 0)
-                                {
-                                    foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "employment"))
-                                    {
-                                        var edGrad = "";
-                                        if (goal.CompletetionType == "After Graduation")
-                                        {
-                                            edGrad = "After Graduation";
-                                        }
-                                        else if (goal.CompletetionType == "After leaving High School")
-                                        {
-                                            edGrad = "After leaving High School";
-                                        }
-                                        else if (goal.CompletetionType == "Upon completion of High School Program")
-                                        {
-                                            edGrad = "Upon completion of High School Program";
-                                        }
+    {
+        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "employment"))
+        {
+            var edGrad = "";
+            if (goal.CompletetionType == "After Graduation")
+            {
+                edGrad = "After Graduation";
+            }
+            else if (goal.CompletetionType == "After leaving High School")
+            {
+                edGrad = "After leaving High School";
+            }
+            else if (goal.CompletetionType == "Upon completion of High School Program")
+            {
+                edGrad = "Upon completion of High School Program";
+            }
 
                                         <div class="panel-group transitionEmployment" id="transitionEmploymentIndentity@(goal.TransitionGoalID)">
                                             <div class="panel panel-default">
@@ -1481,27 +1585,27 @@
                         <div class="row" style="padding-top:8px">
                             <div class="col-md-12" id="transitionIndependentGoalContainer">
                                 @if (Model.studentTransition.goals.Count > 0)
-                                {
-                                    foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "independent"))
-                                    {
-                                        var edGrad = "";
-                                        if (goal.CompletetionType == "After Graduation")
-                                        {
-                                            edGrad = "After Graduation";
-                                        }
-                                        else if (goal.CompletetionType == "After leaving High School")
-                                        {
-                                            edGrad = "After leaving High School";
-                                        }
-                                        else if (goal.CompletetionType == "Upon completion of High School Program")
-                                        {
-                                            edGrad = "Upon completion of High School Program";
-                                        }
+    {
+        foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "independent"))
+        {
+            var edGrad = "";
+            if (goal.CompletetionType == "After Graduation")
+            {
+                edGrad = "After Graduation";
+            }
+            else if (goal.CompletetionType == "After leaving High School")
+            {
+                edGrad = "After leaving High School";
+            }
+            else if (goal.CompletetionType == "Upon completion of High School Program")
+            {
+                edGrad = "Upon completion of High School Program";
+            }
                                         <div class="panel-group transitionIndependent" id="transitionIndependentIndentity1">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                            <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Independent Living</span>                                                        
+                                                            <span class="glyphicon glyphicon-random"></span><span class="transitionGoalLabel" style="margin-left:8px;">Independent Living</span>
                                                     </h4>
                                                 </div>
                                               
@@ -1548,10 +1652,11 @@
                             <div class="col-md-12" id="transitionInstructionServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
-                                {
-                                    foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
-                                    {
-                                      
+    {
+        foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
+        {
+
+
                                                         <div class="row" style="padding-top:8px">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1600,9 +1705,9 @@
                             <div class="col-md-12" id="transitionRelatedServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
-                                {
-                                    foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
-                                    {              
+    {
+        foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
+        {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1654,10 +1759,11 @@
                             <div class="col-md-12" id="transitionDailyServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
-                                {
-                                    foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
-                                    {
-                                        
+    {
+        foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
+        {
+
+
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1701,10 +1807,11 @@
                             <div class="col-md-12" id="transitionFunctionalServiceContainer">
 
                                 @if (Model.studentTransition.services.Count > 0)
-                                {
-                                    foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
-                                    {
-                                       
+    {
+        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
+        {
+
+
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <label for="transitionServiceDescription">Description</label>
@@ -1751,10 +1858,11 @@
                                 <div class="col-md-12" id="transitionLeisureServiceContainer">
 
                                     @if (Model.studentTransition.services.Count > 0)
-                                    {
-                                        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
-                                        {
-                                            
+    {
+        foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
+        {
+
+
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <label for="transitionServiceDescription">Description</label>
