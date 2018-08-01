@@ -24,10 +24,11 @@
                 cache: false,
                 success: function (data) {
                     if (data.success) {
-                        $("#output").addClass("alert alert-success animated fadeInUp").html("Welcome back " + "<span style='text-transform:uppercase'>" + emailfield.val() + "</span>");
                         $("#output").removeClass(' alert-danger');
-                        $('input[type="submit"]').val("continue");
-                        $('input[type="submit"]').attr("action", data.portal);
+
+                        $(".panel-default").addClass('slideOutLeft');
+                        $(".jumbotron").fadeOut();
+                        setTimeout(function () { window.location = data.portal; }, 500);
                     }
                     else {
                         $("#output").removeClass(' alert alert-success');

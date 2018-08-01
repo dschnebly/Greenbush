@@ -49,10 +49,6 @@
             }
         });
 
-        $(".listrap").listrap().on("selection-changed", function (event, selection) {
-            console.log(selection);
-        });
-
         $('[data-command="toggle-search"]').on('click', function (event) {
             event.preventDefault();
             $(this).toggleClass('hide-search');

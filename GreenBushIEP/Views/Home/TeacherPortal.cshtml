@@ -196,10 +196,10 @@
 
                                 @if (student.CreatedBy == Model.Teacher.UserID)
                                 {
-                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser" style="top:4px;">
+                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser" style="margin: 6px 4px 0px 0px;">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent" style="top:4px;">
+                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent" style="margin: 6px 4px 0px 0px;">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
                                 }
