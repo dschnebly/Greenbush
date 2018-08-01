@@ -1410,17 +1410,12 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
-            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
+            //tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
             // Get the MIS id of the logged in teacher.
             tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
             tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
-
-
-            var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == studentInfo.BuildingID).Take(1).FirstOrDefault();
-            var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == studentInfo.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-            var studentCounty = db.tblCounties.Where(c => c.CountyCode == studentInfo.County).FirstOrDefault();
-
+            
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
 
@@ -1451,18 +1446,7 @@ namespace GreenbushIep.Controllers
 
             if (query.Count() == 1)
             {
-                var studentDetails = new StudentDetailsPrintViewModel();
-                studentDetails.student = studentInfo;
-                studentDetails.teacher = teacher;
-                studentDetails.ethnicity = studentInfo.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
-                studentDetails.gender = studentInfo.Gender == "F" ? "Female" : "Male";
-                studentDetails.contacts = contacts;
-                studentDetails.building = studentBuilding;
-                studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-                studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
-                studentDetails.parentLang = GetLanguage(studentInfo.ParentLanguage);
-                studentDetails.studentLang = GetLanguage(studentInfo.StudentLanguage);
-
+               
                 IEP theIEP = new IEP()
                 {
                     draft = query.SingleOrDefault().iep,
@@ -1479,11 +1463,10 @@ namespace GreenbushIep.Controllers
                     serviceTypes = db.tblServiceTypes.ToList(),
                     serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList(),
                     studentFirstName = string.Format("{0}", student.FirstName),
-                    studentLastName = string.Format("{0}", student.LastName),
-                    studentDetails = studentDetails
-
+                    studentLastName = string.Format("{0}", student.LastName),             
 
                 };
+                             
 
                 //student goalds
                 if (theIEP != null && theIEP.draft != null)
@@ -1509,17 +1492,48 @@ namespace GreenbushIep.Controllers
                     stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.draft.IEPid).FirstOrDefault() ?? new tblTransition();
 
                     theIEP.studentTransition = stvw;
+                    tblStudentInfo info = null;
                     if (student != null)
                     {
 
-                        tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+                        info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
                         tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                         tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
                         theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 
                         stvw.isDOC = district.DOC;
+
+                      
                     }
+
+                    if (info != null && theIEP.draft != null)
+                    {
+                        //var teacherBuilding = db.tblBuildings.Where(c => c.BuildingID == teacher.BuildingID).Take(1).FirstOrDefault();
+                        var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+                        var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+                        var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+
+
+                        var studentDetails = new StudentDetailsPrintViewModel();
+                        studentDetails.student = info;
+                        studentDetails.teacher = teacher;
+                        studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
+                        studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
+                        studentDetails.contacts = contacts;
+                        studentDetails.building = studentBuilding;
+                        studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+                        studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+                        studentDetails.parentLang = GetLanguage(info.ParentLanguage);
+                        studentDetails.studentLang = GetLanguage(info.StudentLanguage);
+                        studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
+                        studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
+                        studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+                        studentDetails.InititationDate = theIEP.draft.begin_date.HasValue ? theIEP.draft.begin_date.Value.ToShortDateString() : "";
+
+                        theIEP.studentDetails = studentDetails;
+                    }
+
                 }
 
                 return View("PrintIEP", theIEP);
@@ -1589,6 +1603,7 @@ namespace GreenbushIep.Controllers
         public FileResult DownloadPDF(FormCollection collection)
         {
 
+            string StudentHTMLContent = collection["studentText"];
             string HTMLContent = collection["printText"];
             string studentName = collection["studentName"];
             string studentId = collection["studentId"];
@@ -1623,98 +1638,150 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
+                var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
 
                 string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
 
-                HtmlDocument doc = new HtmlDocument();
-                doc.OptionWriteEmptyNodes = true;
-                doc.OptionFixNestedTags = true;
-                doc.LoadHtml(cssTextResult + "<div class='module-page'>" + result + "</div>");
 
-                string cleanHTML = doc.DocumentNode.OuterHtml;
+                string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
+                result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+                
+                byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage");
+                byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page");
+                
+                var printFile = AddPageNumber(iepFile, studentName);
+                List<byte[]> pdfByteContent = new List<byte[]>();
+                pdfByteContent.Add(studentFile);
+                pdfByteContent.Add(printFile);
 
-                using (var cssMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cssTextResult)))
+                var mergedFile = concatAndAddContent(pdfByteContent);
+
+                if (isArchive == "1")
                 {
-                    using (var htmlMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cleanHTML)))
+                    try
                     {
-                        using (MemoryStream stream = new System.IO.MemoryStream())
+                        var archive = new tblFormArchive();
+                        archive.Creator_UserID = teacher.UserID;
+                        archive.Student_UserID = id;
+                        archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
+                        archive.FormFile = mergedFile;//fileIn;
+                        archive.IEPid = iepId;
+                        archive.ArchiveDate = DateTime.Now;
+
+                        db.tblFormArchives.Add(archive);
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorMessage = "";
+
+                        if (ex is DbEntityValidationException)
                         {
-                            using (MemoryStream stream2 = new System.IO.MemoryStream())
+
+                            if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
                             {
-                                Document pdfDoc = new Document(PageSize.LETTER, 36, 36, 50, 50);
-
-
-                                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                                pdfDoc.Open();
-
-                                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, htmlMemoryStream, cssMemoryStream);
-                                pdfDoc.Close();
-
-                                byte[] fileIn = stream.ToArray();
-                                var printFile = AddPageNumber(fileIn, studentName);
-
-                                if (isArchive == "1")
+                                var errors = ((DbEntityValidationException)(ex)).EntityValidationErrors;
+                                foreach (var failure in errors)
                                 {
-                                    try
+                                    foreach (var error in failure.ValidationErrors)
                                     {
-                                        var archive = new tblFormArchive();
-                                        archive.Creator_UserID = teacher.UserID;
-                                        archive.Student_UserID = id;
-                                        archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
-                                        archive.FormFile = fileIn;
-                                        archive.IEPid = iepId;
-                                        archive.ArchiveDate = DateTime.Now;
+                                        string propertyName = error.PropertyName;
 
-                                        db.tblFormArchives.Add(archive);
-                                        db.SaveChanges();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        string errorMessage = "";
-
-                                        if (ex is DbEntityValidationException)
-                                        {
-
-                                            if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
-                                            {
-                                                var errors =
-                                                    ((DbEntityValidationException)(ex)).EntityValidationErrors;
-                                                foreach (var failure in errors)
-                                                {
-                                                    foreach (var error in failure.ValidationErrors)
-                                                    {
-                                                        string propertyName = error.PropertyName;
-
-                                                        errorMessage += propertyName + " " + error.ErrorMessage;
-
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            errorMessage = ex.Message;
-                                        }
-
+                                        errorMessage += propertyName + " " + error.ErrorMessage;
 
                                     }
-
                                 }
-
-                                return File(printFile, "application/pdf", "IEP.pdf");
-
                             }
+                        }
+                        else
+                        {
+                            errorMessage = ex.Message;
                         }
                     }
                 }
+
+                return File(mergedFile, "application/pdf", "IEP.pdf");
+
             }
 
             return null;
 
+        }
+
+        private byte[] CreatePDFBytes(string cssTextResult, string result2, string className)
+        {            
+            HtmlDocument doc = new HtmlDocument();
+            doc.OptionWriteEmptyNodes = true;
+            doc.OptionFixNestedTags = true;
+            doc.LoadHtml(cssTextResult + "<div class='" + className + "'>" + result2 + "</div>");
+
+            string cleanHTML2 = doc.DocumentNode.OuterHtml;
+
+            byte[] fileIn = null;
+            byte[] printFile = null;
+            using (var cssMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cssTextResult)))
+            {
+                using (var htmlMemoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(cleanHTML2)))
+                {
+                    using (MemoryStream stream = new System.IO.MemoryStream())
+                    {
+                        using (MemoryStream stream2 = new System.IO.MemoryStream())
+                        {
+
+                            Document pdfDoc = new Document(PageSize.LETTER, 36, 36, 50, 50);
+
+                            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                            pdfDoc.Open();
+
+                            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, htmlMemoryStream, cssMemoryStream);
+                            pdfDoc.Close();
+
+                            fileIn = stream.ToArray();
+
+                            printFile = AddPageNumber(fileIn, string.Empty);
+
+                        }
+                    }
+                }
+            }//end css stream
+
+            return printFile;
+        }
+
+        private static byte[] concatAndAddContent(List<byte[]> pdfByteContent)
+        {
+
+            using (var ms = new MemoryStream())
+            {
+                using (var doc = new Document())
+                {
+                    using (var copy = new PdfSmartCopy(doc, ms))
+                    {
+                        doc.Open();
+
+                        //Loop through each byte array
+                        foreach (var p in pdfByteContent)
+                        {
+
+                            //Create a PdfReader bound to that byte array
+                            using (var reader = new PdfReader(p))
+                            {
+
+                                //Add the entire document instead of page-by-page
+                                copy.AddDocument(reader);
+                            }
+                        }
+
+                        doc.Close();
+                    }
+                }
+
+                //Return just before disposing
+                return ms.ToArray();
+            }
         }
 
         byte[] AddPageNumber(byte[] fileIn, string studentName)
@@ -1733,9 +1800,11 @@ namespace GreenbushIep.Controllers
                     for (int i = 1; i <= pages; i++)
                     {
                         //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("{0}", DateTime.Now.ToShortDateString()), blackFont), 25f, 15f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 568f, 15f, 0);
+                        if(studentName != string.Empty)
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format(" IEP Backpack", i.ToString(), pages.ToString()), blackFont), 250f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
                     }
                 }
                 fileOut = stream.ToArray();
@@ -1876,6 +1945,19 @@ namespace GreenbushIep.Controllers
                 case "ZH-YUE": fullName = "ZH - YUE - Cantonese"; break;
 
                 case "ZH-WUU": fullName = "ZH - WUU - Wu"; break;
+            }
+
+            return fullName;
+
+        }
+
+        private string GetDisability(string value)
+        {
+            string fullName = "";
+            var disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
+            if(disablity != null)
+            {
+                fullName = string.Format("{0} - {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
             }
 
             return fullName;
