@@ -171,17 +171,17 @@ namespace GreenbushIep.Controllers
                 {
                     listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).OrderBy(o => o.Name).ToList();
 
-					var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
-										   join districts in db.tblDistricts
-												on buildingMaps.USD equals districts.USD
-										   where buildingMaps.UserID == MIS.UserID
-										   select districts).Distinct().ToList();
+                    var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+                                           join districts in db.tblDistricts
+                                                on buildingMaps.USD equals districts.USD
+                                           where buildingMaps.UserID == MIS.UserID
+                                           select districts).Distinct().ToList();
 
-					model.listOfProviders = listOfProviders;
+                    model.listOfProviders = listOfProviders;
                     model.districts = MISDistrictList;
-				}
+                }
 
-				return PartialView("_ModuleServiceProviders", model);
+                return PartialView("_ModuleServiceProviders", model);
             }
 
             // Unknow user or view.
@@ -193,7 +193,7 @@ namespace GreenbushIep.Controllers
         public ActionResult UpdateProvidersList(int pk, string providerName, int[] providerDistrict, string providerCode)
         {
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            
+
             if (owner != null)
             {
                 tblProvider provider = db.tblProviders.Where(p => p.ProviderID == pk).SingleOrDefault();
@@ -219,7 +219,7 @@ namespace GreenbushIep.Controllers
                         db.tblProviderDistricts.Add(pd);
                         db.SaveChanges();
                     }
-                    
+
                     var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.Name });
 
                     return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
@@ -255,11 +255,11 @@ namespace GreenbushIep.Controllers
                             }
 
                         }
-                        
+
                     }
                     else
                     {
-                        return Json(new { Result = "error", id = pk, errors = "Provider code already exists"}, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "error", id = pk, errors = "Provider code already exists" }, JsonRequestBehavior.AllowGet);
                     }
 
                     var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.Name });
@@ -283,7 +283,7 @@ namespace GreenbushIep.Controllers
                 {
                     foreach (var existingPD in provider.tblProviderDistricts.ToList())
                         db.tblProviderDistricts.Remove(existingPD);
-                    
+
                     db.tblProviders.Remove(provider);
                     db.SaveChanges();
 
@@ -832,7 +832,7 @@ namespace GreenbushIep.Controllers
 
                     if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.draft.IEPid && o.BehaviorInterventionPlan).Any())
                         enableBehaviorPlan = true;
-                    
+
                     if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.draft.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
                         enableAccommodations = true;
 
@@ -850,7 +850,7 @@ namespace GreenbushIep.Controllers
                     model.studentPlan = new StudentPlan();
                 }
 
-               
+
             }
 
             return View(model);
@@ -948,11 +948,11 @@ namespace GreenbushIep.Controllers
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year -1 && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year - 1 && c.Year <= DateTime.Now.Year + 5).ToList();
                     model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
-                    
+
 
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
@@ -1006,7 +1006,7 @@ namespace GreenbushIep.Controllers
                     service.Update_Date = DateTime.Now;
 
                     // nullable serviceId
-                    service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID ;
+                    service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
 
                     for (int i = 11; i < collection.Count; i++)
                     {
@@ -1040,7 +1040,7 @@ namespace GreenbushIep.Controllers
                     if (!string.IsNullOrEmpty(selectedGoals))
                     {
                         string[] goalsArr = selectedGoals.Split(',');
-                        
+
                         for (int i = 0; i < goalsArr.Count(); i++)
                         {
                             int goalId = 0;
@@ -1209,7 +1209,7 @@ namespace GreenbushIep.Controllers
 
             if (iep != null)
             {
-                
+
                 model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
@@ -1327,7 +1327,7 @@ namespace GreenbushIep.Controllers
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
             viewModel.studentId = id;
             viewModel.fileName = fileName;
-            
+
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
@@ -1338,7 +1338,7 @@ namespace GreenbushIep.Controllers
                 viewModel.fileDesc = form.Text;
 
             if (iep != null)
-                viewModel.iepId = iep.IEPid;          
+                viewModel.iepId = iep.IEPid;
 
             StudentLegalView fileViewModel = new StudentLegalView()
             {
@@ -1351,11 +1351,11 @@ namespace GreenbushIep.Controllers
             if (fileViewModel.studentInfo != null)
             {
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
-                fileViewModel.building = building != null ? building.BuildingName: "";
+                fileViewModel.building = building != null ? building.BuildingName : "";
             }
 
             viewModel.fileModel = fileViewModel;
-            
+
 
 
             return View("_IEPFormsFile", viewModel);
@@ -1371,7 +1371,7 @@ namespace GreenbushIep.Controllers
                 model.IEPForms = GetForms();
                 model.StudentId = stid;
                 model.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
-                
+
             }
 
             return View(model);
@@ -1410,10 +1410,16 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
-
+            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
+            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
             // Get the MIS id of the logged in teacher.
             tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
             tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
+
+
+            var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == studentInfo.BuildingID).Take(1).FirstOrDefault();
+            var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == studentInfo.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+            var studentCounty = db.tblCounties.Where(c => c.CountyCode == studentInfo.County).FirstOrDefault();
 
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
@@ -1436,15 +1442,27 @@ namespace GreenbushIep.Controllers
                          join math in db.tblIEPMaths
                              on iep.IEPMathID equals math.IEPMathID
                          join written in db.tblIEPWrittens
-                             on iep.IEPWrittenID equals written.IEPWrittenID                           
+                             on iep.IEPWrittenID equals written.IEPWrittenID
                          where iep.UserID == student.UserID && iep.IepStatus == iepStatus
                          select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
 
-            
-            
+
+
 
             if (query.Count() == 1)
             {
+                var studentDetails = new StudentDetailsPrintViewModel();
+                studentDetails.student = studentInfo;
+                studentDetails.teacher = teacher;
+                studentDetails.ethnicity = studentInfo.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
+                studentDetails.gender = studentInfo.Gender == "F" ? "Female" : "Male";
+                studentDetails.contacts = contacts;
+                studentDetails.building = studentBuilding;
+                studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+                studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+                studentDetails.parentLang = GetLanguage(studentInfo.ParentLanguage);
+                studentDetails.studentLang = GetLanguage(studentInfo.StudentLanguage);
+
                 IEP theIEP = new IEP()
                 {
                     draft = query.SingleOrDefault().iep,
@@ -1461,8 +1479,8 @@ namespace GreenbushIep.Controllers
                     serviceTypes = db.tblServiceTypes.ToList(),
                     serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList(),
                     studentFirstName = string.Format("{0}", student.FirstName),
-                    studentLastName = string.Format("{0}", student.LastName)
-
+                    studentLastName = string.Format("{0}", student.LastName),
+                    studentDetails = studentDetails
 
 
                 };
@@ -1472,8 +1490,8 @@ namespace GreenbushIep.Controllers
                 {
                     theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
                     foreach (var goal in theIEP.studentGoals)
-                    { 
-                        theIEP.studentGoalBenchmarks.AddRange( db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
+                    {
+                        theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
                     }
 
                     theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();
@@ -1554,7 +1572,7 @@ namespace GreenbushIep.Controllers
                     Inline = false
                 };
                 Response.AppendHeader("Content-Disposition", "attachment;filename=" + ScrubDocumentName(document.FormName + ".pdf"));
-                
+
                 return File(document.FormFile, "application/pdf");
             }
             else
@@ -1570,15 +1588,15 @@ namespace GreenbushIep.Controllers
         [ValidateInput(false)]
         public FileResult DownloadPDF(FormCollection collection)
         {
-            
+
             string HTMLContent = collection["printText"];
             string studentName = collection["studentName"];
             string studentId = collection["studentId"];
             string isArchive = collection["isArchive"];
             string iepIDStr = collection["iepID"];
             string isIEP = collection["isIEP"];
-            string formName = collection["formName"]; 
-            
+            string formName = collection["formName"];
+
 
             if (!string.IsNullOrEmpty(HTMLContent))
             {
@@ -1601,21 +1619,21 @@ namespace GreenbushIep.Controllers
 
                 //var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
                 //if(iepObj != null)
-                  //  isDraft = iepObj.FirstOrDefault().dra
+                //  isDraft = iepObj.FirstOrDefault().dra
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                
-                var cssText = @"<style>.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none}.module-page, span {font-size:11pt;}label{font-weight:600;}.text-center{text-align:center} h3 {font-weight:400;font-size:18pt;width:100%;text-align:center;padding:8px;}p {padding:5px}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
+
+                var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
 
                 string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
-                               
+
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
 
                 HtmlDocument doc = new HtmlDocument();
                 doc.OptionWriteEmptyNodes = true;
                 doc.OptionFixNestedTags = true;
-                doc.LoadHtml(cssTextResult + "<div class='module-page'>" + result + "</div>" );
+                doc.LoadHtml(cssTextResult + "<div class='module-page'>" + result + "</div>");
 
                 string cleanHTML = doc.DocumentNode.OuterHtml;
 
@@ -1626,21 +1644,21 @@ namespace GreenbushIep.Controllers
                         using (MemoryStream stream = new System.IO.MemoryStream())
                         {
                             using (MemoryStream stream2 = new System.IO.MemoryStream())
-                            {       
-                                    Document pdfDoc = new Document(PageSize.LETTER, 36, 36, 50, 50);
-                                    
+                            {
+                                Document pdfDoc = new Document(PageSize.LETTER, 36, 36, 50, 50);
 
-                                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                                    pdfDoc.Open();
 
-                                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, htmlMemoryStream, cssMemoryStream);
-                                    pdfDoc.Close();
+                                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                                pdfDoc.Open();
 
-                                    byte[] fileIn = stream.ToArray();
-                                    var printFile = AddPageNumber(fileIn, studentName);
+                                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, htmlMemoryStream, cssMemoryStream);
+                                pdfDoc.Close();
 
-                                   if(isArchive == "1")
-                                   {
+                                byte[] fileIn = stream.ToArray();
+                                var printFile = AddPageNumber(fileIn, studentName);
+
+                                if (isArchive == "1")
+                                {
                                     try
                                     {
                                         var archive = new tblFormArchive();
@@ -1654,10 +1672,10 @@ namespace GreenbushIep.Controllers
                                         db.tblFormArchives.Add(archive);
                                         db.SaveChanges();
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         string errorMessage = "";
-                                      
+
                                         if (ex is DbEntityValidationException)
                                         {
 
@@ -1671,8 +1689,8 @@ namespace GreenbushIep.Controllers
                                                     {
                                                         string propertyName = error.PropertyName;
 
-                                                        errorMessage += propertyName + " " +error.ErrorMessage;
-                                                        
+                                                        errorMessage += propertyName + " " + error.ErrorMessage;
+
                                                     }
                                                 }
                                             }
@@ -1682,13 +1700,13 @@ namespace GreenbushIep.Controllers
                                             errorMessage = ex.Message;
                                         }
 
-                                        
+
                                     }
-                                                                            
-                                   }
-                                   
-                                   return File(printFile, "application/pdf", "IEP.pdf");
-                                
+
+                                }
+
+                                return File(printFile, "application/pdf", "IEP.pdf");
+
                             }
                         }
                     }
@@ -1701,9 +1719,9 @@ namespace GreenbushIep.Controllers
 
         byte[] AddPageNumber(byte[] fileIn, string studentName)
         {
-            byte[] bytes = fileIn; 
+            byte[] bytes = fileIn;
             byte[] fileOut = null;
-            Font blackFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
+            Font blackFont = FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK);
             Font grayFont = FontFactory.GetFont("Arial", 75, Font.NORMAL, new BaseColor(245, 245, 245));
             using (MemoryStream stream = new MemoryStream())
             {
@@ -1711,18 +1729,18 @@ namespace GreenbushIep.Controllers
                 using (PdfStamper stamper = new PdfStamper(reader, stream))
                 {
                     int pages = reader.NumberOfPages;
-                    
+
                     for (int i = 1; i <= pages; i++)
                     {
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
+                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
+                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
                         ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("{0}", DateTime.Now.ToShortDateString()), blackFont), 25f, 15f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Page {0} of {1}",i.ToString(), pages.ToString()), blackFont), 568f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 568f, 15f, 0);
                     }
                 }
                 fileOut = stream.ToArray();
             }
-            
+
             return fileOut;
         }
 
@@ -1743,13 +1761,13 @@ namespace GreenbushIep.Controllers
             // OR set the result without redirection:
             //filterContext.Result = new ViewResult
             //{
-              //  ViewName = "~/Views/Error/Index.cshtml"
-                
+            //  ViewName = "~/Views/Error/Index.cshtml"
+
             //};
 
-            
+
         }
-        
+
         private BehaviorViewModel GetBehaviorModel(int studentId, int iepId)
         {
             var model = new BehaviorViewModel();
@@ -1801,5 +1819,67 @@ namespace GreenbushIep.Controllers
             return model;
         }
 
+        private string GetLanguage(string value)
+        {
+            string fullName = "";
+            switch (value)
+            {
+
+                case "EN":
+                    fullName = "EN - English";
+                    break;
+                    
+                case "ES": fullName = "ES - Spanish"; break;
+
+                case "DE": fullName = "DE - German"; break;
+
+                case "FR": fullName = "FR - French"; break;
+
+                case "RU": fullName = "RU - Russian"; break;
+
+                case "A": fullName = "A - Augmentative Communication"; break;
+
+                case "AR": fullName = "AR - Arabic"; break;
+
+                case "DIN": fullName = "DIN - Dinka(Sudanese)"; break;
+
+                case "HMN": fullName = "HMN - Hmong"; break;
+
+                case "IRA": fullName = "IRA - Farsi(Iranian)"; break;
+
+                case "KHMR": fullName = "KHMR - Khmen / Cambodian"; break;
+
+                case "KO": fullName = "KO - Korean"; break;
+
+                case "LO": fullName = "LO - Lao"; break;
+
+                case "M": fullName = "M - Mode of Communication"; break;
+
+                case "NAT-AM": fullName = "NAT - A, -Navtive America(Kickapoo, Pottawatomie, etc.)"; break;
+
+                case "N": fullName = "N - Non - Verbal and Non-Sign"; break;
+
+                case "O": fullName = "O - Other"; break;
+
+                case "PH": fullName = "PH - Phllippine - Tagalog"; break;
+
+                case "SO": fullName = "SO - Somali"; break;
+
+                case "TH": fullName = "TH - Thai"; break;
+
+                case "VI": fullName = "VI - Vietnamese"; break;
+
+                case "YU": fullName = "YU - Yugoslavian, Croatian, Bosnian, Serb"; break;
+
+                case "ZH-ZH-CMN": fullName = "ZH - ZH - CMN - Mandarin"; break;
+
+                case "ZH-YUE": fullName = "ZH - YUE - Cantonese"; break;
+
+                case "ZH-WUU": fullName = "ZH - WUU - Wu"; break;
+            }
+
+            return fullName;
+
+        }
     }
 }

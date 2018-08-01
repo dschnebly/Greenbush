@@ -461,6 +461,7 @@
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\font-awesome-min.css" />
+    <Content Include="Content\GBlogo1A.jpg" />
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\Images\check_no.png" />

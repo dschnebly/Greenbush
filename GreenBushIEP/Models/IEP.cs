@@ -34,6 +34,9 @@ namespace GreenBushIEP.Models
         public string studentLastName { get; set; }
         public int studentAge { get; set; }
 
+        //for printing
+        public StudentDetailsPrintViewModel studentDetails { get; set; }
+        
         public IEP()
         {
             studentGoals = new List<tblGoal>();
@@ -43,6 +46,7 @@ namespace GreenBushIEP.Models
             serviceTypes = new List<tblServiceType>();
             serviceProviders = new List<tblProvider>();
             accommodations = new List<tblAccommodation>();
+            studentDetails = new StudentDetailsPrintViewModel();
         }
 
         public IEP(int? stid = null)
