@@ -7,7 +7,7 @@
 </div>
 <div class="modal-body">
 
-    @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new { }))
+    @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new {  }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -134,6 +134,7 @@
 <br />
 
 <script>
+
     // Attach Event
     //reset the form to default database/brand new values.
     $("input[name='HealthNoConcerns']").on('click', function (event) {
