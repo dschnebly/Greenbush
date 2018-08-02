@@ -455,6 +455,7 @@ namespace GreenBushIEP.Models
             teacher = new tblUser();
             contacts = new List<tblStudentRelationship>();
             building = new tblBuilding();
+            teacherBuilding = new tblBuilding();
             neighborhoodBuilding = new tblBuilding();
         }
 
@@ -466,8 +467,13 @@ namespace GreenBushIEP.Models
         public string parentLang { get; set; }
         public string studentLang { get; set; }
         public string studentCounty { get; set; }
+        public string primaryDisability { get; set; }
+        public string secondaryDisability { get; set; }
         public tblBuilding building { get; set; }
         public tblBuilding neighborhoodBuilding { get; set; }
+        public tblBuilding teacherBuilding { get; set; }
+        public int studentAgeAtIEP { get; set; }
+        public string InititationDate { get; set; }
 
     }
 }
