@@ -278,11 +278,10 @@
                     <td style="width:200px">&nbsp;</td>
                     <td style="text-align:center">
                         <h4><b>Student Information Page</b></h4>
-
                         <h5>@Model.studentDetails.building.BuildingName</h5>
-                        <h5>947 W. 47 Hwy, P.O. Box 189</h5>
-                        <h5>Girard, KS 66743</h5>
-                        <h5>620-724-6281</h5>
+                        <h5>@Model.studentDetails.building.Address_Physical</h5>
+                        <h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
+                        <h5>@Model.studentDetails.building.Phone</h5>
                     </td>
                     <td style="text-align:right;vertical-align:top">
                         Printed:<br />@(DateTime.Now.ToShortDateString())<br />
@@ -328,7 +327,7 @@
                     </tr>
                     <tr>
                         <td><label>Address:</label></td>
-                        <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City, @primeContact.State @primeContact.Zip</td>
+                        <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
                     </tr>
                     <tr>
                         <td><label>Phones:</label></td>
@@ -358,7 +357,7 @@
                 </tr>
                 <tr>
                     <td><label>Assign Child Count:</label></td>
-                    <td>.</td>
+                    <td>**</td>
                     <td></td>
                     <td></td>
                     <td><label>County of Residence:</label></td>
@@ -406,7 +405,7 @@
                     <td><label>Initiation:</label></td>
                     <td>**</td>
                     <td><label>Exit:</label></td>
-                    <td>@Model.studentDetails.student.ExitDate</td>
+                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
                     <td><label>Next Hearing:</label></td>
                     <td>**</td>
                 </tr>
@@ -587,11 +586,10 @@
                     <td style="width:200px">&nbsp;</td>
                     <td style="text-align:center">
                         <h4><b>Individualized Education Plan</b></h4>
-
                         <h5>@Model.studentDetails.building.BuildingName</h5>
-                        <h5>947 W. 47 Hwy, P.O. Box 189</h5>
-                        <h5>Girard, KS 66743</h5>
-                        <h5>620-724-6281</h5>
+                        <h5>@Model.studentDetails.building.Address_Physical</h5>
+                        <h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
+                        <h5>@Model.studentDetails.building.Phone</h5>
                     </td>
                     <td style="text-align:right;vertical-align:top">
                         Printed:<br />@(DateTime.Now.ToShortDateString())<br />
@@ -611,14 +609,14 @@
                     <td><label>Contact 1:</label></td>
                     <td>@( primeContact != null ? string.Format("{0} {1}", primeContact.FirstName, @primeContact.LastName) : "")</td>
                     <td><label>Birth Date:</label></td>
-                    <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
+                    <td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
 
                 </tr>
                 <tr>
                     <td><label>Address:</label></td>
                     <td>@( primeContact != null ? string.Format("{0} {1} {2}, {3} {4}", @primeContact.Address1, @primeContact.Address2, @primeContact.City, @primeContact.State, @primeContact.Zip) : "" )</td>
                     <td><label>Age on IEP Date:</label></td>
-                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtIEP)</td>
+                    <td style="width:150px;">@(Model.studentDetails.studentAgeAtIEP)</td>
 
                 </tr>
                 <tr>
@@ -641,13 +639,13 @@
                     <td><label>Email:</label></td>
                     <td>@( primeContact != null ? @primeContact.Email : "")</td>
                     <td><label>IEP Date:</label></td>
-                    <td>@Model.studentDetails.student.InitialIEPDate</td>
+                    <td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><label>Inititation:</label></td>
-                    <td>**</td>
+                    <td style="width:150px;">**</td>
 
                 </tr>
                 <tr>
@@ -709,19 +707,19 @@
                 }
                 else if (Model.studentHealth.Diagnosis)
                 {
-                    <p>The Team has concerns about *name in the area of Health; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Health; that impact the ability to learn or access the general curriculum</p>
                 }
 
                 if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
                 {
                     <p>
-                        *Name has a hearing impairment.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
+                        @Model.studentFirstName has a hearing impairment.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
                     </p>
                 }
                 else
                 {
                     <p>
-                        *Name does not have a hearing impairment.
+                        @Model.studentFirstName does not have a hearing impairment.
                     </p>
                 }
 
@@ -738,13 +736,13 @@
                 if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
                 {
                     <p>
-                        *Name has a visual impairment.  The IEP team will provide instruction in Braille and the use of Braille unless determined, through an evaluation, to be inappropriate.
+                        @Model.studentFirstName has a visual impairment.  The IEP team will provide instruction in Braille and the use of Braille unless determined, through an evaluation, to be inappropriate.
                     </p>
                 }
                 else
                 {
                     <p>
-                        *Name does not have a visual impairment.
+                        @Model.studentFirstName does not have a visual impairment.
                     </p>
                 }
                 <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
@@ -760,14 +758,14 @@
                     @if (Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value)
                     {
                         <span>
-                            *Name does require a Health Care Plan.
+                            @Model.studentFirstName does require a Health Care Plan.
                         </span>
                         <p>@(Model.studentHealth.AdditionalHealthInfo)</p>
                     }
                     else
                     {
                         <span>
-                            *Name does not require a Health Care Plan.
+                            @Model.studentFirstName does not require a Health Care Plan.
                         </span>
                     }
                 </div>
@@ -844,7 +842,7 @@
                     }
                     else if (Model.studentMotor.Needs)
                     {
-                        <p>The Team has concerns about *name in the area of Motor; that impact the ability to learn or access the general curriculum</p>
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Motor; that impact the ability to learn or access the general curriculum</p>
                     }
 
                     var motorVal = "";
@@ -953,19 +951,19 @@
                 }
                 else if (Model.studentCommunication.AreaOfNeed.HasValue && Model.studentCommunication.AreaOfNeed.Value)
                 {
-                    <p>The Team has concerns about *name in the area of Communication; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Communication; that impact the ability to learn or access the general curriculum</p>
                 }
 
                 if (Model.studentCommunication.Deaf)
                 {
                     <p>
-                        *Name is Deaf/Hard of Hearing.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
+                        @Model.studentFirstName is Deaf/Hard of Hearing.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
                     </p>
                 }
                 if (Model.studentCommunication.LimitedEnglish)
                 {
                     <p>
-                        *Name has limited English.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
+                        @Model.studentFirstName has limited English.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
                     </p>
                 }
 
@@ -1042,33 +1040,33 @@
                     }
                     if (Model.studentSocial.AreaOfNeed.HasValue && Model.studentSocial.AreaOfNeed.Value)
                     {
-                        <p> The Team has concerns about *name in the area of Social and Emotional; that impact the ability to learn or access the general curriculum </p>
+                        <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; that impact the ability to learn or access the general curriculum </p>
                     }
 
                     if (Model.studentSocial.MentalHealthDiagnosis)
                     {
                         <p>
-                            *Name has a mental health diagnosis.
+                            @Model.studentFirstName has a mental health diagnosis.
                         </p>
 
                     }
                     if (Model.studentSocial.SignificantBehaviors)
                     {
                         <p>
-                            *Name significant behavior concerns.
+                            @Model.studentFirstName significant behavior concerns.
                         </p>
                     }
 
                     if (Model.studentSocial.BehaviorImepedeLearning)
                     {
                         <p>
-                            *Name's behavior impedes the learning of self or others.
+                            @Model.studentFirstName's behavior impedes the learning of self or others.
                         </p>
                     }
                     if (Model.studentSocial.BehaviorInterventionPlan)
                     {
                         <p>
-                            *Name requires a Behavior Intervention Plan.
+                            @Model.studentFirstName requires a Behavior Intervention Plan.
                         </p>
                     }
                     <fieldset class="form-group">
@@ -1146,7 +1144,7 @@
                     }
                     else if (Model.studentIntelligence.AreaOfNeed == true)
                     {
-                        <p>The Team has concerns about *name in the area of General Intelligence; that impact the ability to learn or access the general curriculum</p>
+                        <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; that impact the ability to learn or access the general curriculum</p>
                     }
 
                     <fieldset class="form-group">
@@ -1183,7 +1181,7 @@
                     }
                     else if (Model.studentAcademic.AreaOfNeed)
                     {
-                        <p>The Team has concerns about *name in the area of Academic Performance; that impact the ability to learn or access the general curriculum</p>
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; that impact the ability to learn or access the general curriculum</p>
                     }
 
                     <fieldset class="form-group">
@@ -1259,7 +1257,7 @@
                 }
                 else if (Model.studentReading.AreaOfNeed)
                 {
-                    <p>The Team has concerns about *name in the area of Reading; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Reading; that impact the ability to learn or access the general curriculum</p>
                 }
 
                     <fieldset class="form-group">
@@ -1337,7 +1335,7 @@
                 }
                 else if (Model.studentMath.AreaOfNeed)
                 {
-                    <p>The Team has concerns about *name in the area of Math; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Math; that impact the ability to learn or access the general curriculum</p>
                 }
 
                     <fieldset class="form-group">
@@ -1415,7 +1413,7 @@
                 }
                 else if (Model.studentWritten.AreaOfNeed)
                 {
-                    <p>The Team has concerns about *name in the area of Writing; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Writing; that impact the ability to learn or access the general curriculum</p>
                 }
 
                     <fieldset class="form-group">
@@ -1530,7 +1528,7 @@
                 }
                 else
                 {                    
-                   <p class="text-center">The Team has no concerns about *name in the area of Accommodations/Modifications at this time.</p>                    
+                   <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Accommodations/Modifications at this time.</p>                    
                 }
 
             </div>
@@ -1793,7 +1791,7 @@
             }
             else
             {                    
-               <p class="text-center">The Team has no Behavior Plan for *name at this time. </p>                    
+               <p class="text-center">The Team has no Behavior Plan for @Model.studentFirstName at this time. </p>                    
             }
             </div><!--end behavior plan-->
 
@@ -2261,27 +2259,27 @@
                                    <p class ="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
                                  }
                             </div>
-                            
+                            <div class="form-check voffset2" id="StateAssessment_TextArea">
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
                                 {
-                                    <div id="DA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                                    <p >@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
-                                    </div>
+                                 
+                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
+                                 
                                     
                                 }
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
                                 {
-                                    <div id="DA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
+                                 
                                     <p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
-                                    </div>
+                                 
                                 }
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
                                 {
-                                    <div id="DA_Alt_Desc" style="display: @(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "block;" : "none;")">
+                                 
                                     <p >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
-                                   </div>
+                                 
                                 }
-                           
+                           </div>
                         </div>
                     </div>
                     <div class="row voffset2 dont-break">
@@ -2303,18 +2301,16 @@
                                     <p>Student has completed all required State Assessments.</p>
                                  }
                             </div>
-                            <div class="form-check voffset2" id="StateAssessment_TextArea">
+                            <div >
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
-                                {
-                                    <p id="SA_NoAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
+                                {                                    
                                     <p >@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
-                                    </p>
+                                    
                                 }
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-                                {
-                                    <p id="SA_WithAccom_Desc" style="display: @(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
+                                {                                 
                                     <p >@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
-                                    </p>
+                                 
                                 }
                             </div>
 
@@ -2338,10 +2334,8 @@
                                  <p class="@(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? "" : "hidden")" >The nature of the student’s disability is such that transportation is required.</p>
                                  }
                             </div>
-                            <div class="form-check voffset2" id="TransporationPlan_TextArea">
-                                <p id="TP_Other_Desc" style="display: @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "block;" : "none;")">
-                                <p>@(Model.studentOtherConsiderations.Transporation_Other_desc)</p>
-                                </p>
+                            <div style="display: @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "block;" : "none;")">                            
+                                 <p>@(Model.studentOtherConsiderations.Transporation_Other_desc)</p>                            
                             </div>
                         </div>
                     </div>
@@ -2376,14 +2370,20 @@
                         <div class="row voffset2">
                             <div class="col-md-12">
                                 <div class="form-check">
-                                    <p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ?  "" : "hidden")" > Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
-                                    <p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")" > The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
+                                    @if (Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value)
+                                    {
+                                       <p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "" : "hidden")" > Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
+                                    }
+                                    @if (Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value)
+                                    {
+                                       <p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")" > The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
+                                    }
 
                                 </div>
 
                                 <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
                                     <label>Severity Justification/Reasoning:</label>
-                                    <p >@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
+                                    <p>@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
                                 </div>
                             </div>
                         </div>
@@ -2442,7 +2442,7 @@
             <hr/>
             <div>
                 <h3 class="text-center">GOALS</h3>
-                @if (Model.studentGoals != null)
+                @if (Model.studentGoals != null && Model.studentGoals.Count > 0)
                 {
                     foreach (var sGoal in Model.studentGoals)
                     {
@@ -2759,7 +2759,7 @@
                 }
                 else
                 {                    
-                   <p class="text-center">The Team has no goals for *name at this time.</p>                 
+                   <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>                 
                 }
             </div><!--end section break-->
             </div>   <!--end module page-->
