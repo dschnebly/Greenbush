@@ -320,26 +320,26 @@
 
             @if (primeContact != null)
             {
-        <hr />
-        <table style="width:100%;">
-            <tr>
-                <td><label>Contact 1:</label></td>
-                <td>@primeContact.FirstName @primeContact.LastName</td>
-            </tr>
-            <tr>
-                <td><label>Address:</label></td>
-                <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City, @primeContact.State @primeContact.Zip</td>
-            </tr>
-            <tr>
-                <td><label>Phones:</label></td>
-                <td>@primeContact.Phone</td>
-            </tr>
-            <tr>
-                <td><label>Email:</label></td>
-                <td>@primeContact.Email</td>
-            </tr>
+                <hr />
+                <table style="width:100%;">
+                    <tr>
+                        <td><label>Contact 1:</label></td>
+                        <td>@primeContact.FirstName @primeContact.LastName</td>
+                    </tr>
+                    <tr>
+                        <td><label>Address:</label></td>
+                        <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City, @primeContact.State @primeContact.Zip</td>
+                    </tr>
+                    <tr>
+                        <td><label>Phones:</label></td>
+                        <td>@primeContact.Phone</td>
+                    </tr>
+                    <tr>
+                        <td><label>Email:</label></td>
+                        <td>@primeContact.Email</td>
+                    </tr>
 
-        </table>
+                </table>
             }
             <hr />
             <table style="width:100%">
@@ -449,29 +449,29 @@
                 @if (Model.studentServices != null && Model.studentServices.Count() > 0)
                 {
                     var serviceCount = 1;
-            <table style="font-size:8pt;text-align:left">
-                <tr>
-                    <td><b>Ln#</b></td>
-                    <td><b>FY</b></td>
-                    <td><b>Service<br />Setting</b></td>
-                    <td><b>Provider</b></td>
-                    <td><b>LEA</b></td>
-                    <td><b>AttendBlg</b></td>
-                    <td><b>Mins</b></td>
-                    <td><b>Days</b></td>
-                    <td><b>Start<br />Date</b></td>
-                    <td><b>End<br />Date</b></td>
-                    <td><b>Freq</b></td>
-                </tr>
-
-                @foreach (var service in Model.studentServices)
-                        {
+                    <table style="font-size:8pt;text-align:left">
                         <tr>
-                            <td>
-                                @serviceCount
-                            </td>
-                            <td>
-                                @switch (@service.SchoolYear)
+                            <td><b>Ln#</b></td>
+                            <td><b>FY</b></td>
+                            <td><b>Service<br />Setting</b></td>
+                            <td><b>Provider</b></td>
+                            <td><b>LEA</b></td>
+                            <td><b>AttendBlg</b></td>
+                            <td><b>Mins</b></td>
+                            <td><b>Days</b></td>
+                            <td><b>Start<br />Date</b></td>
+                            <td><b>End<br />Date</b></td>
+                            <td><b>Freq</b></td>
+                        </tr>
+
+                        @foreach (var service in Model.studentServices)
+                        {
+                            <tr>
+                                <td>
+                                    @serviceCount
+                                </td>
+                                <td>
+                                    @switch (@service.SchoolYear)
                                     {
                                         case 2018: <text>2017 - 2018</text>; break;
                                         case 2019: <text>2018 - 2019</text>; break;
@@ -479,63 +479,63 @@
                                         case 2021: <text>2020 - 2021</text>; break;
                                         case 2022: <text>2021 - 2022</text>; break;
                                     }
-                            </td>
-                            <td>
-                                @if (Model.serviceTypes.Count > 0)
+                                </td>
+                                <td>
+                                    @if (Model.serviceTypes.Count > 0)
                                     {
                                         foreach (var serviceType in Model.serviceTypes)
                                         {
                                             if (serviceType.ServiceCode == service.ServiceCode)
                                             {
-                                    <text>(@serviceType.ServiceCode) @serviceType.Name</text>
+                                                <text>(@serviceType.ServiceCode) @serviceType.Name</text>
                                             }
                                         }
                                     }
-                            </td>
+                                </td>
 
-                            <td>
-                                @if (Model.serviceProviders.Count > 0)
+                                <td>
+                                    @if (Model.serviceProviders.Count > 0)
                                     {
                                         foreach (var serviceProvider in Model.serviceProviders)
                                         {
                                             if (service.ProviderID == serviceProvider.ProviderID)
                                             {
-                                    <text>@serviceProvider.Name</text>
+                                                <text>@serviceProvider.Name</text>
 
                                             }
                                         }
                                     }
                                     else
                                     {
-                                    <text>&nbsp;&nbsp;&nbsp;</text>
+                                        <text>&nbsp;&nbsp;&nbsp;</text>
                                     }
-                            </td>
-                            <td>**</td>
-                            <td>
-                                @if (Model.locations.Count > 0)
+                                </td>
+                                <td>**</td>
+                                <td>
+                                    @if (Model.locations.Count > 0)
                                     {
                                         foreach (var serviceLocation in Model.locations)
                                         {
                                             if (service.LocationCode == serviceLocation.LocationCode)
                                             {
-                                    <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
+                                                <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
                                             }
                                         }
                                     }
-                            </td>
-                            <td>
-                                @service.Minutes
-                            </td>
-                            <td>
-                                @service.DaysPerWeek
-                            </td>
-                            <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
+                                </td>
+                                <td>
+                                    @service.Minutes
+                                </td>
+                                <td>
+                                    @service.DaysPerWeek
+                                </td>
+                                <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
 
 
-                            <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
+                                <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
 
-                            <td>
-                                @switch (@service.Frequency)
+                                <td>
+                                    @switch (@service.Frequency)
                                     {
                                         case 1: <text>Every week(1)</text>; break;
                                         case 2: <text>Every 2 weeks(2)</text>; break;
@@ -548,11 +548,11 @@
                                         case 19: <text>3 out of 4 weeks(19)</text>; break;
                                         case 99: <text>1 day per year(99)</text>; break;
                                     }
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                             serviceCount++;
                         }
-            </table>
+                    </table>
                 }
             </div><!--end services-->
 
@@ -727,14 +727,14 @@
                 }
 
                 <p><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</p>
-                    <p class="title">
-                        <label>Hearing Screening Result:</label>
+                <p class="title">
+                    <label>Hearing Screening Result:</label>
 
-                        @(Model.studentHealth.HearingResult == 1 ? "Pass" : "")
-                        @(Model.studentHealth.HearingResult == 0 ? "Fail" : "")
-                        @(Model.studentHealth.HearingResult == -1 ? "Unable to Test" : "")
+                    @(Model.studentHealth.HearingResult == 1 ? "Pass" : "")
+                    @(Model.studentHealth.HearingResult == 0 ? "Fail" : "")
+                    @(Model.studentHealth.HearingResult == -1 ? "Unable to Test" : "")
 
-                    </p>
+                </p>
 
                 if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
                 {
@@ -886,61 +886,61 @@
                             <p style="margin-top:5px;">@(Model.studentMotor.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
-                            </div>
-                            <p>@(Model.studentMotor.AreaOfNeedDescription)</p>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            @{
-                                var textNeedMetBy = "";
-                                if (Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
-                                {
-                                    textNeedMetBy = "by goal(s)";
-                                }
-                                if (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value)
-                                {
-                                    textNeedMetBy = "with accommodations or modifications";
-                                }
-                                if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
-                                {
-                                    textNeedMetBy = Model.studentMotor.NeedMetByOtherDescription;
-                                }
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentMotor.AreaOfNeedDescription)</p>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        @{
+                            var textNeedMetBy = "";
+                            if (Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
+                            {
+                                textNeedMetBy = "by goal(s)";
+                            }
+                            if (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value)
+                            {
+                                textNeedMetBy = "with accommodations or modifications";
+                            }
+                            if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
+                            {
+                                textNeedMetBy = Model.studentMotor.NeedMetByOtherDescription;
+                            }
 
-                                if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
-                                    && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
-                                {
-                                    textNeedMetBy = "by goal(s) and accommodations or modifications";
-                                }
+                            if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
+                                && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications";
+                            }
 
-                                if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
-                                    && (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value))
-                                {
-                                    textNeedMetBy = "by goal(s) and " + Model.studentMotor.NeedMetByOtherDescription;
-                                }
+                            if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
+                                && (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and " + Model.studentMotor.NeedMetByOtherDescription;
+                            }
 
-                                if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
-                                    && (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
-                                    && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
-                                {
-                                    textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
-                                }
+                            if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
+                                && (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
+                                && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
+                            }
+
+                        }
+                        <div class="form-check form-group-label">
+                            <p>This need will be met @textNeedMetBy </p>
+                        </div>
+
+                    </fieldset>
 
                             }
-                            <div class="form-check form-group-label">
-                                <p>This need will be met @textNeedMetBy </p>
-                            </div>
-
-                        </fieldset>
-
-                                }
-                                else
-                                {
-                                    <div class="text-center">
-                                        <p>The Team has no concerns about @Model.studentFirstName in the area of Motor at this time.</p>
-                                    </div>
-                                }
+                            else
+                            {
+                                <div class="text-center">
+                                    <p>The Team has no concerns about @Model.studentFirstName in the area of Motor at this time.</p>
+                                </div>
+                            }
 
 
 
@@ -987,61 +987,61 @@
                         <p style="margin-top:5px;">@(Model.studentCommunication.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
-                    <fieldset class="form-group">
-                        <div class="form-group-label">
-                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
-                        </div>
-                        <p>@(Model.studentCommunication.AreaOfNeedDescription)</p>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        @{
-                            var textNeedMetBy = "";
-                            if (Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                            {
-                                textNeedMetBy = "by goal(s)";
-                            }
-                            if (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value)
-                            {
-                                textNeedMetBy = "with accommodations or modifications";
-                            }
-                            if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
-                            {
-                                textNeedMetBy = Model.studentCommunication.NeedMetByOtherDescription;
-                            }
+                <fieldset class="form-group">
+                    <div class="form-group-label">
+                        <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                    </div>
+                    <p>@(Model.studentCommunication.AreaOfNeedDescription)</p>
+                </fieldset>
+                <fieldset class="form-group">
+                    @{
+                        var textNeedMetBy = "";
+                        if (Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+                        {
+                            textNeedMetBy = "by goal(s)";
+                        }
+                        if (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value)
+                        {
+                            textNeedMetBy = "with accommodations or modifications";
+                        }
+                        if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
+                        {
+                            textNeedMetBy = Model.studentCommunication.NeedMetByOtherDescription;
+                        }
 
-                            if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                                && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
-                            {
-                                textNeedMetBy = "by goal(s) and accommodations or modifications";
-                            }
+                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+                            && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
+                        {
+                            textNeedMetBy = "by goal(s) and accommodations or modifications";
+                        }
 
-                            if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                                && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value))
-                            {
-                                textNeedMetBy = "by goal(s) and " + Model.studentCommunication.NeedMetByOtherDescription;
-                            }
-                            if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                                       && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
-                                       && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
-                            {
-                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
-                            }
+                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+                            && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value))
+                        {
+                            textNeedMetBy = "by goal(s) and " + Model.studentCommunication.NeedMetByOtherDescription;
+                        }
+                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+                                   && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
+                                   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
+                        {
+                            textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
+                        }
+
+                    }
+                    <div class="form-check form-group-label">
+                        <span>This need will be met @textNeedMetBy </span>
+                    </div>
+
+                </fieldset>
+
 
                         }
-                        <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
-                        </div>
+                        else
+                        {
 
-                    </fieldset>
+                            <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Communication at this time.</p>
 
-
-                            }
-                            else
-                            {
-
-                                <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Communication at this time.</p>
-
-                            }
+                        }
 
             <hr />
             <div>
@@ -1174,12 +1174,12 @@
                             <p style="margin-top:5px;">@(Model.studentIntelligence.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
-                            </div>
-                            <p>@(Model.studentIntelligence.AreaOfNeedDescription)</p>
-                        </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentIntelligence.AreaOfNeedDescription)</p>
+                    </fieldset>
 
                 }
                 else
@@ -1195,258 +1195,345 @@
                 <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
                 @if (!Model.studentAcademic.NoConcerns)
             {
-                    <div style="font-size:12pt;  color: #333;">
 
 
-                        <div class="funkyradio">
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentAcademic.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.studentAcademic.ProgressTowardGenEd ? "checked" : String.Empty ) />
-                                <label for="ModuleAcademicProgressTowardGenEd">Progressing with general education support</label>
-                            </div>
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentAcademic.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.studentAcademic.AreaOfNeed ? "checked" : String.Empty ) />
-                                <label for="ModuleAcademicAreaOfNeed">Area of need which impacts performance in general education</label>
-                            </div>
-                        </div>
-                        <fieldset class="form-group">
-                            <div>
-                                <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                                <span style="margin-top:5px;font-weight:100"> Strengths:</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentAcademic.PLAAFP_Strengths)</p>
-                                <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentAcademic.PLAAFP_Concerns)</p>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label>Area of Need which impacts performance</label>
-                            </div>
-                            <p class="form-control" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.studentAcademic.AreaOfNeedDescription)</p>
-
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-check form-group-label">
-                                <label>This need will be met by:</label>
-                                <div class="checkbox">
-                                    <label><img src="@(Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentAcademic.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                                    <label><img src="@(Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentAcademic.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                                    <label><img src="@(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentAcademic.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                                </div>
-                            </div>
-
-                            <div class="standard-font-size" style="display: @(Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true ? "block;" : "none;")">
-                                @if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value == true)
-                                {
-                                    <p> *if other, please explain:</p>
-                                }
-                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentAcademic.NeedMetByOtherDescription)</p>
-                            </div>
-
-                        </fieldset>
-                    </div>
-                }
-                else
+                if (Model.studentAcademic.ProgressTowardGenEd)
                 {
-                    <div class="text-center">
-                        <p>The team has determined that there are no concerns at this time.</p>
-                    </div>
-                }
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; however,  progress is being made with general education supports.</p>
+                    }
+                    else if (Model.studentAcademic.AreaOfNeed)
+                    {
+                        <p>The Team has concerns about *name in the area of Academic Performance; that impact the ability to learn or access the general curriculum</p>
+                    }
+
+
+
+                    <fieldset class="form-group">
+                        <div>
+                            <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
+                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Strengths)</p>
+                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Concerns)</p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentAcademic.AreaOfNeedDescription)</p>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        @{
+                            var textNeedMetBy = "";
+                            if (Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                            {
+                                textNeedMetBy = "by goal(s)";
+                            }
+                            if (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value)
+                            {
+                                textNeedMetBy = "with accommodations or modifications";
+                            }
+                            if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+                            {
+                                textNeedMetBy = Model.studentAcademic.NeedMetByOtherDescription;
+                            }
+
+                            if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                                && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications";
+                            }
+
+                            if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                                && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and " + Model.studentAcademic.NeedMetByOtherDescription;
+                            }
+                            if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                                       && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+                                       && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentAcademic.NeedMetByOtherDescription;
+                            }
+
+                        }
+                        <div class="form-check form-group-label">
+                            <span>This need will be met @textNeedMetBy </span>
+                        </div>
+
+                    </fieldset>
+
+
+                            }
+                            else
+                            {
+
+                                <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
+
+                            }
+
+
+
+
+
             </div>
             <hr class="section-break" />
             <div>
                 <h3 class="text-center">READING</h3>
+
                 @if (!Model.studentReading.NoConcerns)
             {
-                    <div style="font-size:12pt;  color: #333;">
 
 
-                        <div class="funkyradio">
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentReading.ProgressTowardGenEd == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.studentReading.ProgressTowardGenEd ? "checked" : String.Empty ) />
-                                <label for="ModuleReadingProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-                            </div>
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentReading.AreaOfNeed == true ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.studentReading.AreaOfNeed == true ? "checked" : String.Empty ) />
-                                <label for="ModuleReadingAreaOfNeed">Area of need which impacts perforamnce in general education</label>
-                            </div>
+                if (Model.studentReading.ProgressTowardGenEd)
+                {
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Reading; however,  progress is being made with general education supports.</p>
+                    }
+                    else if (Model.studentReading.AreaOfNeed)
+                    {
+                        <p>The Team has concerns about *name in the area of Reading; that impact the ability to learn or access the general curriculum</p>
+                    }
+
+
+
+                    <fieldset class="form-group">
+                        <div>
+                            <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
+                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Strengths)</p>
+                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Concerns)</p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentReading.AreaOfNeedDescription)</p>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        @{
+                            var textNeedMetBy = "";
+                            if (Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
+                            {
+                                textNeedMetBy = "by goal(s)";
+                            }
+                            if (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value)
+                            {
+                                textNeedMetBy = "with accommodations or modifications";
+                            }
+                            if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
+                            {
+                                textNeedMetBy = Model.studentReading.NeedMetByOtherDescription;
+                            }
+
+                            if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
+                                && (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications";
+                            }
+
+                            if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
+                                && (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and " + Model.studentReading.NeedMetByOtherDescription;
+                            }
+                            if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
+                                       && (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
+                                       && (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentReading.NeedMetByOtherDescription;
+                            }
+
+                        }
+                        <div class="form-check form-group-label">
+                            <span>This need will be met @textNeedMetBy </span>
                         </div>
 
-                        <fieldset class="form-group">
-                            <div>
-                                <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                                <span style="margin-top:5px;font-weight:100"> Strengths:</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentReading.PLAAFP_Strengths)</p>
-                                <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentReading.PLAAFP_Concerns)</p>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label>Area of Need which impacts performance</label>
-                            </div>
-                            <p class="form-control" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.studentReading.AreaOfNeedDescription)</p>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-check form-group-label">
-                                <label>This need will be met by:</label>
-                                <div class="checkbox">
-                                    <label><img src="@(Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentReading.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                                    <label><img src="@(Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentReading.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                                    <label><img src="@(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentReading.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                                </div>
-                            </div>
+                    </fieldset>
 
-                            <div class="standard-font-size" style="display: @(Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true ? "block;" : "none;")">
-                                @if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value == true)
-                                {
-                                    <p> *if other, please explain:</p>
-                                }
-                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentReading.NeedMetByOtherDescription)</p>
-                            </div>
 
-                        </fieldset>
-                    </div>
-                }
-                else
-                {
-                    <div class="text-center">
-                        <p>The team has determined that there are no concerns at this time.</p>
-                    </div>
-                }
+                            }
+                            else
+                            {
+
+                                <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Reading at this time.</p>
+
+                            }
+
+
             </div>
-            <hr class="section-break" />
+            <hr />
             <div>
                 <h3 class="text-center">MATH</h3>
+
                 @if (!Model.studentMath.NoConcerns)
             {
-                    <div style="font-size:12pt;  color: #333;">
 
 
-                        <div class="funkyradio">
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentMath.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.studentMath.ProgressTowardGenEd ? "checked" : String.Empty ) />
-                                <label for="ModuleMathProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-                            </div>
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentMath.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.studentMath.AreaOfNeed == true ? "checked" : String.Empty ) />
-                                <label for="ModuleMathAreaOfNeed">Area of need which impacts performance in general education</label>
-                            </div>
+                if (Model.studentMath.ProgressTowardGenEd)
+                {
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Math; however,  progress is being made with general education supports.</p>
+                    }
+                    else if (Model.studentMath.AreaOfNeed)
+                    {
+                        <p>The Team has concerns about *name in the area of Math; that impact the ability to learn or access the general curriculum</p>
+                    }
+
+
+
+                    <fieldset class="form-group">
+                        <div>
+                            <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
+                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Strengths)</p>
+                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Concerns)</p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentMath.AreaOfNeedDescription)</p>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        @{
+                            var textNeedMetBy = "";
+                            if (Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
+                            {
+                                textNeedMetBy = "by goal(s)";
+                            }
+                            if (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value)
+                            {
+                                textNeedMetBy = "with accommodations or modifications";
+                            }
+                            if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
+                            {
+                                textNeedMetBy = Model.studentMath.NeedMetByOtherDescription;
+                            }
+
+                            if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
+                                && (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications";
+                            }
+
+                            if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
+                                && (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and " + Model.studentMath.NeedMetByOtherDescription;
+                            }
+                            if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
+                                       && (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
+                                       && (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMath.NeedMetByOtherDescription;
+                            }
+
+                        }
+                        <div class="form-check form-group-label">
+                            <span>This need will be met @textNeedMetBy </span>
                         </div>
 
-                        <fieldset class="form-group">
-                            <div>
-                                <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                                <span style="margin-top:5px;font-weight:100"> Strengths:</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentMath.PLAAFP_Strengths)</p>
-                                <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentMath.PLAAFP_Concerns)</p>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label>Area of Need which impacts performance</label>
-                            </div>
-                            <p class="form-control">@(Model.studentMath.AreaOfNeedDescription)</p>
+                    </fieldset>
 
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-check form-group-label">
-                                <label>This need will be met by:</label>
-                                <div class="checkbox">
-                                    <label><img src="@(Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentMath.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                                    <label><img src="@(Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentMath.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                                    <label><img src="@(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentMath.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                                </div>
-                            </div>
 
-                            <div class="standard-font-size" style="display: @(Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true ? "block;" : "none;")">
-                                @if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value == true)
-                                {
-                                    <p> *if other, please explain:</p>
-                                }
-                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentMath.NeedMetByOtherDescription)</p>
-                            </div>
+                            }
+                            else
+                            {
 
-                        </fieldset>
-                    </div>
-                }
-                else
-                {
-                    <div class="text-center">
-                        <p>The team has determined that there are no concerns at this time.</p>
-                    </div>
-                }
+                                <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Math at this time.</p>
+
+                            }
+
             </div>
-            <hr class="section-break" />
+            <hr />
             <div>
                 <h3 class="text-center">WRITTEN</h3>
+
                 @if (!Model.studentWritten.NoConcerns)
             {
-                    <div style="font-size:12pt;  color: #333;">
 
 
-                        <div class="funkyradio">
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentWritten.ProgressTowardGenEd ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.studentWritten.ProgressTowardGenEd ? "checked" : String.Empty) />
-                                <label for="ModuleWrittenProgressTowardGenEd">Progressing towards standards with general education supports in place</label>
-                            </div>
-                            <div class="funkyradio-primary">
-                                <img src="@(Model.studentWritten.AreaOfNeed ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;
-                                <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.studentWritten.AreaOfNeed == true ? "checked" : String.Empty) />
-                                <label for="ModuleWrittenAreaOfNeed">Area of need which impacts perforamance in general education</label>
-                            </div>
+                if (Model.studentWritten.ProgressTowardGenEd)
+                {
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Writing; however,  progress is being made with general education supports.</p>
+                    }
+                    else if (Model.studentWritten.AreaOfNeed)
+                    {
+                        <p>The Team has concerns about *name in the area of Writing; that impact the ability to learn or access the general curriculum</p>
+                    }
+
+
+
+                    <fieldset class="form-group">
+                        <div>
+                            <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
+                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Strengths)</p>
+                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Concerns)</p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group-label">
+                            <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                        </div>
+                        <p>@(Model.studentWritten.AreaOfNeedDescription)</p>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        @{
+                            var textNeedMetBy = "";
+                            if (Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
+                            {
+                                textNeedMetBy = "by goal(s)";
+                            }
+                            if (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value)
+                            {
+                                textNeedMetBy = "with accommodations or modifications";
+                            }
+                            if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
+                            {
+                                textNeedMetBy = Model.studentWritten.NeedMetByOtherDescription;
+                            }
+
+                            if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
+                                && (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications";
+                            }
+
+                            if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
+                                && (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and " + Model.studentWritten.NeedMetByOtherDescription;
+                            }
+                            if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
+                                       && (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
+                                       && (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value))
+                            {
+                                textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentWritten.NeedMetByOtherDescription;
+                            }
+
+                        }
+                        <div class="form-check form-group-label">
+                            <span>This need will be met @textNeedMetBy </span>
                         </div>
 
-                        <fieldset class="form-group">
-                            <div>
-                                <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                                <span style="margin-top:5px;font-weight:100"> Strengths:</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Strengths" name="PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.studentWritten.PLAAFP_Strengths)</p>
-                                <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
-                                <p style="margin-top:5px;" class="form-control" id="PLAAFP_Concerns" name="PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.studentWritten.PLAAFP_Concerns)</p>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-group-label">
-                                <label>Area of Need which impacts performance</label>
-                            </div>
-                            <p class="form-control">@(Model.studentWritten.AreaOfNeedDescription)</p>
+                    </fieldset>
 
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <div class="form-check form-group-label">
-                                <label>This need will be met by:</label>
-                                <div class="checkbox">
-                                    <label><img src="@(Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByGoal" @(Model.studentWritten.NeedMetByGoal == true ? "checked" : String.Empty)>Goal</label><br />
-                                    <label><img src="@(Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByAccommodation" @(Model.studentWritten.NeedMetByAccommodation == true ? "checked" : String.Empty)>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                                    <label><img src="@(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value ? @imageChecked : @imageNotChecked)" class='imgCheck' />&nbsp;<input type="checkbox" name="MetByOther" @(Model.studentWritten.NeedMetByOther == true ? "checked" : String.Empty)>Other</label><br />
-                                </div>
-                            </div>
 
-                            <div class="standard-font-size" style="display: @(Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true ? "block;" : "none;")">
-                                @if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value == true)
-                                {
-                                    <p> *if other, please explain:</p>
-                                }
-                                <p class="form-control" id="ModuleMotorMeetNeedByOtherDescription" name="ModuleMotorMeetNeedByOtherDescription" type="text" rows="3">@(Model.studentWritten.NeedMetByOtherDescription)</p>
-                            </div>
+                            }
+                            else
+                            {
 
-                        </fieldset>
-                    </div>
-                }
-                else
-                {
-                    <div class="text-center">
-                        <p>The team has determined that there are no concerns at this time.</p>
-                    </div>
-                }
+                                <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Writing at this time.</p>
+
+                            }
+
+
             </div>
             <hr class="section-break" />
             <div>
