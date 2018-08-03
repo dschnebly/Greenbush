@@ -278,6 +278,8 @@ $(window).on('shown.bs.modal', function (e) {
     }
 
     $("#" + moduleId).css("height", "auto");
+
+    // get the form serialized so if we make changes we can compare.
     moduleFormSerialize = $("#moduleSection form").serialize();
 });
 
