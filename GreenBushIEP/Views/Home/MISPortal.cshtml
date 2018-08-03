@@ -10,6 +10,25 @@
 }
 
 <style>
+
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
+
     h3 a {
         margin: 0 5px;
     }
@@ -258,18 +277,18 @@
                 display: none;
             }
 
-    #mySettings {
+    #mySettings, #add-system-user, #add-student-user  {
         margin-left: 15px;
     }
 
-        #mySettings:hover {
+        #mySettings:hover, #add-system-user:hover, #add-student-user:hover {
             -webkit-animation: pulse 1s ease 0s;
             -o-animation: pulse 1s ease 0s;
             -moz-animation: pulse 1s ease 0s;
             animation: pulse 1s ease 0s;
         }
 
-        #mySettings i {
+        #mySettings i, #add-system-user i, #add-student-user i {
             vertical-align: -webkit-baseline-middle;
             padding-left: 0;
         }
@@ -399,22 +418,14 @@
     </h3>
 
     <hr>
-
     <div class="row">
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
                 <div class="user-toggle-item">
-                    <button id="add-system-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-user-plus" title="Working with a System User"></i></button>
-                    <ul id="system-user-actions" class="hide-buttons">
-                        <li><a href="/Manage/Create" title="Create New System User" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle hide-button" data-ftrans="slide"><i class="glyphicon glyphicon-plus"></i></a></li>
-                        <li><a href="#" id="searchMyTeachers" title="Search My Users" role="button" data-toggle="tooltip" data-command="toggle-my-search" class="btn btn-primary btn-circle hide-button"><i class="glyphicon glyphicon-search"></i></a></li>
-                    </ul>
+                    <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <button id="add-student-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-child" title="Working with a Student"></i></button>
-                    <ul id="student-actions" class="hide-buttons">
-                        <li><a href="/Manage/CreateStudent" title="Create New Student" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
-                    </ul>
+                    <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
                     <a id="mySettings" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/MySettings"><i class="fa fa-cogs" title="Adjust My Settings" data-toggle="tooltip"></i></a>
@@ -423,7 +434,7 @@
         </div>
     </div>
 
-    <div class="row" style="display: none; margin-right: 0;">
+    @*<div class="row" style="display: none; margin-right: 0;">
         <div class="col-md-10">
             <div class="input-group c-my-search">
                 <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
@@ -445,7 +456,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -508,7 +519,12 @@
             </div>
         }
     }
+
+    <div class="ajax-loader" style="display: none">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal-dialog">
