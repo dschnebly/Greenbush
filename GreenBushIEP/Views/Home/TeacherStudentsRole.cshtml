@@ -74,12 +74,10 @@
                         {
                             <thead>
                                 <tr>
-                                    @*<th>WebKidsIDs</th>*@
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Building Name</th>
                                     <th>Email</th>
-                                    @*<th>Date of Birth</th>*@
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -87,12 +85,10 @@
                                 @foreach (var student in Model.Students)
                                 {
                                     <tr class="my-table-item">
-                                        @*<td>@(student.WebKidsID)</td>*@
                                         <td>@(student.FirstName.ToTitleCase())</td>
                                         <td>@(student.LastName.ToTitleCase())</td>
                                         <td>@(student.BuildingID)</td>
                                         <td><a href="mailto:@(student.Email)">@(student.Email)</a></td>
-                                        @*<td>@(student.DateOfBirth.ToString("MM-dd-yyyy"))</td>*@
                                         <td>
                                             <button type="button" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#confirmStudentRemoval">
                                                 <span class="fa fa-user-times" aria-hidden="true"></span>

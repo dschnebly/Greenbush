@@ -434,30 +434,6 @@
         </div>
     </div>
 
-    @*<div class="row" style="display: none; margin-right: 0;">
-        <div class="col-md-10">
-            <div class="input-group c-my-search">
-                <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
-                <span class="input-group-btn">
-                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-1" id="filter">
-            <div class="input-group-btn search-panel">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span id="search_concept"><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu filteroptions" role="menu">
-                    <li class="selected-filter"><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>No Filters</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Teachers Only</a></li>
-                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Students Only</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
-
     <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
@@ -520,8 +496,8 @@
         }
     }
 
-    <div class="ajax-loader" style="display: none">
-        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
     </div>
 </div>
 

@@ -216,6 +216,8 @@
             var districtId = $('#selectedDistrict option:selected').val();
             var user = $("#assignBuilding").find('input[name="id"]').val();
 
+            $('.ajax-loader').css("visibility", "visible");
+
             $.ajax({
                 type: 'GET',
                 url: '/Manage/GetBuildings',
@@ -232,13 +234,16 @@
                         $.each(buildings, function () {
                             $('#selectBuildings').append('<li class="list-group-item building-group-item" data-id="' + this.BuildingID + '"><i class="glyphicon glyphicon-home"></i>&nbsp;' + this.BuildingName + '</li>');
                         });
+
+                        $('.ajax-loader').css("visibility", "hidden");
                     }
                     else {
                         console.log(data.Message);
+                        $('.ajax-loader').css("visibility", "hidden");
                     }
                 },
                 error: function (data) {
-
+                    $('.ajax-loader').css("visibility", "hidden");
                 }
             });
         });
@@ -372,6 +377,7 @@ jQuery.fn.extend({
             });
             return selection;
         };
+
         var toggle = "li .listrap-toggle ";
         var selectionChanged = function () {
             if ($(this).hasClass('img-circle')) {
@@ -384,6 +390,7 @@ jQuery.fn.extend({
             $(this).parent().parent().toggleClass("active");
             listrap.trigger("selection-changed", [listrap.getSelection()]);
         };
+
         $(listrap).find(toggle + "img").on("click", selectionChanged);
         $(listrap).find(toggle + "span").on("click", selectionChanged);
         return listrap;

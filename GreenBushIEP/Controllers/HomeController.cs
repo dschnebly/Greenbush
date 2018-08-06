@@ -773,7 +773,7 @@ namespace GreenbushIep.Controllers
                                       RoleID = u.RoleID,
                                       ImageURL = u.ImageURL,
                                       Archive = u.Archive,
-                                  }).ToList();
+                                  }).Distinct().ToList();
             }
 
             return View(model);

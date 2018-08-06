@@ -1009,7 +1009,6 @@ namespace GreenBushIEP.Controllers
         public ActionResult RemoveFromTeacherList(int id, int teacherid)
         {
             tblUser teacher = db.tblUsers.FirstOrDefault(u => u.UserID == teacherid);
-            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
             tblOrganizationMapping userToRemove = db.tblOrganizationMappings.Where(u => u.AdminID == teacher.UserID && u.UserID == id).SingleOrDefault();
             if (userToRemove != null)
@@ -1047,18 +1046,24 @@ namespace GreenBushIEP.Controllers
         [Authorize]
         public ActionResult GetAllStudentsInDistrict(int id)
         {
-            tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+            List<string> submitterUSD = db.tblOrganizationMappings.Where(o => o.UserID == submitter.UserID).Select(a => a.USD).Distinct().ToList();
+            //List<tblUser> students = (from u in db.tblUsers
+            //                          join i in db.tblStudentInfoes on u.UserID equals i.UserID
+            //                          where u.RoleID == "5" && u.Archive == false && i.USD.Any(val => submitterUSD.Contains(val.ToString())
+            //                          select
 
             try
             {
                 var innerQuery = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
                 var teacherDistricts = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.USD).Distinct().ToList();
 
+                // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
+                // where u.USD == submitter.USD && u.RoleID == "5" && !innerQuery.Contains(o.UserID) //&& o.AdminID != teacher.UserID  
                 List<tblUser> students = (from o in db.tblOrganizationMappings
                                           join u in db.tblUsers on o.UserID equals u.UserID
-                                          where u.RoleID == "5" && !innerQuery.Contains(o.UserID) // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
-                                                                                                  //where u.USD == submitter.USD && u.RoleID == "5" && !innerQuery.Contains(o.UserID) //&& o.AdminID != teacher.UserID  
+                                          where u.RoleID == "5" && !innerQuery.Contains(o.UserID)
                                           select u).Distinct().ToList();
 
                 foreach (tblUser student in students.ToList())
