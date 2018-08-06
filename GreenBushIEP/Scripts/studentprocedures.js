@@ -177,10 +177,11 @@
 
     $("#HealthHearingDate").datepicker({
         dateFormat: "mm/dd/yy"
-    })
+    });
+
     $("#HealthVisionDate").datepicker({
         dateFormat: "mm/dd/yy"
-    })
+    });
 });
 
 function getParameterByName(name, url) {
@@ -249,9 +250,11 @@ function formatDate(date) {
 }
 
 
+var moduleFormSerialize = '';
 
 // Prevents the user from using the back button
 window.history.pushState({ page: 1 }, "", "");
+
 window.onpopstate = function (event) {
 
     // "event" object seems to contain value only when the back button is clicked
@@ -275,6 +278,17 @@ $(window).on('shown.bs.modal', function (e) {
     }
 
     $("#" + moduleId).css("height", "auto");
+
+    // get the form serialized so if we make changes we can compare.
+    moduleFormSerialize = $("#moduleSection form").serialize();
+});
+
+$('#moduleSection').on('hide.bs.modal', function (e) {
+    if ($("#moduleSection form").serialize() != moduleFormSerialize) {
+        if (!confirm("Are you sure you want to leave this module before saving your changes?")) {
+            e.preventDefault();
+        }
+    }
 });
 
 ///////////

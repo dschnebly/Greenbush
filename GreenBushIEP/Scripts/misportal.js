@@ -2,9 +2,9 @@
     function init() {
         // attach Event
         // fires when a user clicks on the main new system user button
-        $("#user-toggle .user-toggle-item button").on("click", function () {
-            $(this).parent().find("ul").toggleClass("show-buttons hide-buttons");
-        })
+        //$("#user-toggle .user-toggle-item button").on("click", function () {
+        //    $(this).parent().find("ul").toggleClass("show-buttons hide-buttons");
+        //})
 
         // attach event
         // fires when an delete button is pressed on a MIS role.
@@ -36,7 +36,10 @@
                         });
                     },
                     error: function (data) {
-                        console.log("Unable to connect to the server or another related problem.");
+                        $("#alertMessage .moreinfo").html("Unable to connect to the server or another related problem.");
+                        $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
                     }
                 });
             }
@@ -44,18 +47,18 @@
 
         // attach event
         // fires when clicking the search icon.
-        $('[data-command="toggle-my-search"]').on('click', function (event) {
-            event.preventDefault;
+        //$('[data-command="toggle-my-search"]').on('click', function (event) {
+        //    event.preventDefault;
 
-            if ($(this).hasClass('hide-search')) {
-                $(this).removeClass('hide-search');
-                $('.c-my-search').closest('.row').slideUp(100);
-            }
-            else {
-                $('.c-my-search').closest('.row').slideDown(100);
-                $(this).addClass('hide-search');
-            }
-        });
+        //    if ($(this).hasClass('hide-search')) {
+        //        $(this).removeClass('hide-search');
+        //        $('.c-my-search').closest('.row').slideUp(100);
+        //    }
+        //    else {
+        //        $('.c-my-search').closest('.row').slideDown(100);
+        //        $(this).addClass('hide-search');
+        //    }
+        //});
 
         // attach event
         // fires where the button on an alert message is clicked
@@ -65,18 +68,18 @@
 
         // attach event
         // fires when the user is searching
-        $('[name="contact-list-search"]').keyup(function (e) {
-            var val = $(e.currentTarget).val();
-            var code = e.keyCode || e.which;
-            if (code === '9') return;
-            if (code === '27') $(this).val(null);
+        //$('[name="contact-list-search"]').keyup(function (e) {
+        //    var val = $(e.currentTarget).val();
+        //    var code = e.keyCode || e.which;
+        //    if (code === '9') return;
+        //    if (code === '27') $(this).val(null);
 
-            var users = $('div.list-group-root').find('div.list-group-item');
-            users.show().filter(function () {
-                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                return !~text.indexOf(val);
-            }).hide();
-        });
+        //    var users = $('div.list-group-root').find('div.list-group-item');
+        //    users.show().filter(function () {
+        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        //        return !~text.indexOf(val);
+        //    }).hide();
+        //});
 
         //////////////////////////////////////////////////////
         //
@@ -86,58 +89,58 @@
 
         // attach event
         // fires when clicking the search icon.
-        $('[data-command="toggle-my-admin-search"]').on('click', function (event) {
-            event.preventDefault;
+        //$('[data-command="toggle-my-admin-search"]').on('click', function (event) {
+        //    event.preventDefault;
 
-            if ($(this).hasClass('hide-search')) {
-                $(this).removeClass('hide-search');
-                $('.c-my-search').closest('.row').slideUp(100);
-            }
-            else {
-                $('.c-my-search').closest('.row').slideDown(100);
-                $(this).addClass('hide-search');
-            }
-        });
+        //    if ($(this).hasClass('hide-search')) {
+        //        $(this).removeClass('hide-search');
+        //        $('.c-my-search').closest('.row').slideUp(100);
+        //    }
+        //    else {
+        //        $('.c-my-search').closest('.row').slideDown(100);
+        //        $(this).addClass('hide-search');
+        //    }
+        //});
 
         // attach event
         // fires when the user is searching
-        $('[name="contact-list-search"]').keyup(function (e) {
-            var val = $(e.currentTarget).val();
-            var code = e.keyCode || e.which;
-            if (code === '9') return;
-            if (code === '27') $(this).val(null);
+        //$('[name="contact-list-search"]').keyup(function (e) {
+        //    var val = $(e.currentTarget).val();
+        //    var code = e.keyCode || e.which;
+        //    if (code === '9') return;
+        //    if (code === '27') $(this).val(null);
 
-            var teachers = $('div.list-group-root').find('div.list-group-item');
-            teachers.show().filter(function () {
-                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                return !~text.indexOf(val.toLowerCase());
-            }).hide();
-        });
+        //    var teachers = $('div.list-group-root').find('div.list-group-item');
+        //    teachers.show().filter(function () {
+        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        //        return !~text.indexOf(val.toLowerCase());
+        //    }).hide();
+        //});
 
         // attach event
         // fires when user select a filter option
-        $(".filteroptions > li").on('click', function () {
-            $(".filteroptions >li").removeClass("selected-filter");
-            $(this).addClass("selected-filter");
-            var filter = $(this).find(".filteroption").text();
+        //$(".filteroptions > li").on('click', function () {
+        //    $(".filteroptions >li").removeClass("selected-filter");
+        //    $(this).addClass("selected-filter");
+        //    var filter = $(this).find(".filteroption").text();
 
-            $('.filteredby').removeClass("filteredby");
-            switch (filter) {
-                case "Show Teachers Only":
-                    $.each($('div.list-group-item > i.fa-child'), function () {
-                        $(this).parent().addClass("filteredby");
-                    });
-                    break;
-                case "Show Students Only":
-                    $.each($('.list-group-item > i.fa-graduation-cap'), function () {
-                        $(this).parent().addClass("filteredby");
-                        $(this).parent().nextAll('.list-group').addClass("filteredby");
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
+        //    $('.filteredby').removeClass("filteredby");
+        //    switch (filter) {
+        //        case "Show Teachers Only":
+        //            $.each($('div.list-group-item > i.fa-child'), function () {
+        //                $(this).parent().addClass("filteredby");
+        //            });
+        //            break;
+        //        case "Show Students Only":
+        //            $.each($('.list-group-item > i.fa-graduation-cap'), function () {
+        //                $(this).parent().addClass("filteredby");
+        //                $(this).parent().nextAll('.list-group').addClass("filteredby");
+        //            });
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //});
 
         //////////////////////////////////////////////////////
         //
@@ -213,6 +216,8 @@
             var districtId = $('#selectedDistrict option:selected').val();
             var user = $("#assignBuilding").find('input[name="id"]').val();
 
+            $('.ajax-loader').css("visibility", "visible");
+
             $.ajax({
                 type: 'GET',
                 url: '/Manage/GetBuildings',
@@ -229,13 +234,16 @@
                         $.each(buildings, function () {
                             $('#selectBuildings').append('<li class="list-group-item building-group-item" data-id="' + this.BuildingID + '"><i class="glyphicon glyphicon-home"></i>&nbsp;' + this.BuildingName + '</li>');
                         });
+
+                        $('.ajax-loader').css("visibility", "hidden");
                     }
                     else {
                         console.log(data.Message);
+                        $('.ajax-loader').css("visibility", "hidden");
                     }
                 },
                 error: function (data) {
-
+                    $('.ajax-loader').css("visibility", "hidden");
                 }
             });
         });
@@ -314,6 +322,10 @@
                         div.next().toggle();
                     }
                     else {
+                        if ($(e.target).hasClass("clickEventDisabled")) { return; }
+
+                        $(e.target).addClass("clickEventDisabled");
+
                         $.ajax({
                             type: 'GET',
                             url: '/Home/GetOrganization',
@@ -324,13 +336,18 @@
                                     $(div).find("i:first-child").toggleClass("fa-minus-square-o fa-plus-square-o");
                                     $(data).insertAfter(div);
                                     initHref();
+
+                                    $(e.target).removeClass("clickEventDisabled");
                                 }
                                 else {
                                     $(div).find("i:first-child").removeClass().addClass("empty-icon");
                                 }
                             },
                             error: function (data) {
-                                console.log('error: ' + data);
+                                $("#alertMessage .moreinfo").html("Unable to connect to the server or another related problem.");
+                                $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#alertMessage").slideUp(500);
+                                });
                             }
                         });
                     }
@@ -360,19 +377,20 @@ jQuery.fn.extend({
             });
             return selection;
         };
+
         var toggle = "li .listrap-toggle ";
         var selectionChanged = function () {
-            // -- begin modification --
             if ($(this).hasClass('img-circle')) {
                 $(this).toggleClass('img-selection-correction');
             }
             else {
                 $(this).next().toggleClass('img-selection-correction');
             }
-            // -- end modification --
+
             $(this).parent().parent().toggleClass("active");
             listrap.trigger("selection-changed", [listrap.getSelection()]);
         };
+
         $(listrap).find(toggle + "img").on("click", selectionChanged);
         $(listrap).find(toggle + "span").on("click", selectionChanged);
         return listrap;

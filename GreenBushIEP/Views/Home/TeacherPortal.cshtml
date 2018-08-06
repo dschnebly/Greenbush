@@ -190,16 +190,16 @@
                             <td>@student.LastName.ToTitleCase()</td>
                             <td>@student.DateOfBirth.ToString("MM-dd-yyyy")</td>
                             <td>
-                                <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right" style="font-size: 20px;">
-                                    <span class="glyphicon glyphicon-user"></span>
+                                <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right">
+                                    <span class="glyphicon glyphicon-log-out"></span>
                                 </a>
 
                                 @if (student.CreatedBy == Model.Teacher.UserID)
                                 {
-                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser" style="margin: 6px 4px 0px 0px;">
+                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent" style="margin: 6px 4px 0px 0px;">
+                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
                                 }
@@ -213,6 +213,7 @@
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
     </div>
+
     <!-- Modal -->
     <div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">

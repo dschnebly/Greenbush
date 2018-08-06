@@ -278,6 +278,7 @@
                 content: '\2714';
                 text-indent: .9em;
                 color: #C2C2C2;
+                padding-top: 8px;
 
             }
 
@@ -993,7 +994,7 @@
                 <div class="student-information">
                     @if (Model.isCreator)
                     {
-                        <a href="/Manage/EditStudent/@(Model.student.UserID)" title="Edit an existing student" data-ftrans="slide">
+                        <a href="/Manage/EditStudent/@(Model.student.UserID.ToString())" title="Edit an existing student" data-ftrans="slide">
                             <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Content/Images/Uploads/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
                         </a>
                     }
@@ -1041,15 +1042,6 @@
                 </span>
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
-
-            @*<div class="col-md-2 pull-right" style="padding-left: 0;padding-right: 0;width: 168px;">
-                    <div class="btn-group">
-                        <button type="button" autofocus class="btn btn-default filter-button" data-filter="all" aria-label="All"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default filter-button" data-filter="iep" aria-label="IEP"><span class="fa fa-smile-o" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default filter-button" data-filter="legal" aria-label="Legal Forms"><span class="fa fa-file-text" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default filter-button" data-filter="planning" aria-label="Plans and Services"><span class="fa fa-trophy"></span></button>
-                    </div>
-                </div>*@
         </div>
 
         <div class="row">
