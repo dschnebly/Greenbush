@@ -205,7 +205,8 @@ namespace GreenBushIEP.Controllers
                         CreatedBy = submitter.UserID,
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
-                    };
+                        PlacementCode = collection["studentPlacement"]
+                };
 
                     try
                     {
@@ -587,6 +588,7 @@ namespace GreenBushIEP.Controllers
                 info.Grade = Convert.ToInt32(collection["studentGrade"]);
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
+                info.PlacementCode = collection["studentPlacement"];
             }
             else
             {
