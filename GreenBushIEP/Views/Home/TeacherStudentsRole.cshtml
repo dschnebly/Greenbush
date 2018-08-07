@@ -11,6 +11,7 @@
 
     hr {
         margin-top: 0;
+        margin-bottom: 20px;
     }
 
     .breadcrumb {
@@ -21,51 +22,184 @@
         background-color: transparent;
     }
 
-    .btn {
-        margin: -4px 4px;
+    /*//////////////////////////////////////
+    ///  User Toggle Buttons Starts Here
+    //////////////////////////////////////*/
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
     }
 
-    .btn-file {
-        position: relative;
-        overflow: hidden;
-    }
-
-        .btn-file input[type=file] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            min-width: 100%;
-            min-height: 100%;
-            font-size: 100px;
-            text-align: right;
-            filter: alpha(opacity=0);
-            opacity: 0;
+        .btn-circle:focus {
             outline: none;
-            background: white;
-            cursor: inherit;
-            display: block;
         }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+
+    #user-toggle {
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+
+        #user-toggle .user-toggle-item {
+            display: inline-block;
+        }
+
+        #user-toggle button:first-child {
+            margin-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item button:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #user-toggle .user-toggle-item ul {
+            display: inline-block;
+            list-style-type: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            top: 10px;
+            padding-right: 12px;
+        }
+
+            #user-toggle .user-toggle-item ul li {
+                display: inline-block;
+                float: left;
+                padding-left: 15px;
+            }
+
+            #user-toggle .user-toggle-item ul.show-buttons {
+                display: inline-block;
+            }
+
+            #user-toggle .user-toggle-item ul.hide-buttons {
+                display: none;
+            }
+
+    #addExistingStudents {
+        margin-left: 15px;
+    }
+
+        #addExistingStudents:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #addExistingStudents i {
+            vertical-align: -webkit-baseline-middle;
+            padding-left: 0;
+        }
+
+
+    @@-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
+        }
+
+        50% {
+            -webkit-transform: scale(1.2);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@-o-keyframes pulse {
+        0% {
+            -o-transform: scale(1);
+        }
+
+        50% {
+            -o-transform: scale(1.2);
+        }
+
+        100% {
+            -o-transform: scale(1);
+        }
+    }
+
+    @@-moz-keyframes pulse {
+        0% {
+            -moz-transform: scale(1);
+        }
+
+        50% {
+            -moz-transform: scale(1.2);
+        }
+
+        100% {
+            -moz-transform: scale(1);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
 </style>
 
 @if (Model.Teacher != null)
 {
     <div class="container">
-        <h3>
-            @(Model.Teacher.FirstName + " " + Model.Teacher.LastName)'s Student List
-            <a href="#" id="searchStudents" title="Search Student List" data-toggle="tooltip" data-command="toggle-my-search" role="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-search"></span></a>
-            <a href="#" id="addExistingStudents" title="Search Exsisting Greenbush Students List" data-toggle="modal" data-target="#addExistingStudentModal" role="button" class="btn btn-info pull-right"><span class="fa fa-users"></span></a>
-        </h3>
-        <hr>
-        <div class="row" style="display: none;">
-            <div class="col-xs-12">
-                <div class="input-group c-my-search">
-                    <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
-                    <span class="input-group-btn">
-                        <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
-                    </span>
+        <div class="col-md-2 pull-right">
+            <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
+        </div>
+        <hr />
+
+        <ul class="breadcrumb">
+            <li><a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Managed Information System Portal</a></li>
+            <li class="active" style="font-size: 20px;">@(Model.Teacher.FirstName + " " + Model.Teacher.LastName)'s Student List</li>
+        </ul>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="user-toggle" class="pull-right">
+                    <div class="user-toggle-item">
+                        <a id="addExistingStudents" class="btn btn-primary btn-circle btn-xl pull-right" data-toggle="modal" data-target="#addExistingStudentModal"><i class="fa fa-users"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
@@ -103,8 +237,6 @@
             </div>
         </div>
     </div>
-
-    <a role="button" class="btn btn-info" id="backtoportal" data-ftrans="slide reverse" data-ajax="false" href="/Home/Portal">Back To Managed Teachers</a>
 
     <!-- Modal -->
     <div class="modal fadeInUp" id="addExistingStudentModal" tabindex="-1" role="dialog" data-id="@(Model.Teacher.UserID)" aria-labelledby="addExistingStudentModal" aria-hidden="true">
@@ -189,10 +321,10 @@
     <!-- end modal -->
 }
 
-    <!--loading the file even though it's an ajax call-->
-    <var data-reload="true" data-src="/Scripts/teacherstudentsrole.js"></var>
+<!--loading the file even though it's an ajax call-->
+<var data-reload="true" data-src="/Scripts/teacherstudentsrole.js"></var>
 
-    @section scripts {
-        @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-        @Scripts.Render("~/Scripts/teacherstudentsrole.js")
-    }
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.min.js")
+    @Scripts.Render("~/Scripts/teacherstudentsrole.js")
+}
