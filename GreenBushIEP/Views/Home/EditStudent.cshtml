@@ -1369,7 +1369,7 @@
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.Hidden("studentId", 0)
-
+                            @Html.Hidden("id", Model.student.UserID)
                             if (Model.contacts != null)
                             {
 
