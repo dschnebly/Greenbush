@@ -59,6 +59,16 @@
                 $('.c-search').closest('.row').slideDown(100);
             }
         });
+
+        // attach event
+        // finds all launchIEP on the page and fires when the link is clicked.
+        $('.launchIEP').each(function (index) {
+            $(this).not('.bound').addClass('bound').on("click", function (e) {
+                e.preventDefault();
+                $(".ajax-loader").css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+            });
+        });
     }
     init();
 
