@@ -18,5 +18,11 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string BuildingName { get; set; }
         public Nullable<int> Active { get; set; }
+        public string Phone { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
+        public string Address_Mailing { get; set; }
+        public string Address_Physical { get; set; }
+        public string State { get; set; }
     }
 }

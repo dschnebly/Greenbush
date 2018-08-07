@@ -114,7 +114,7 @@
                 </div>
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
                     <p id="TP_Other_Desc" style="display: @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "block;" : "none;")">
-                        <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc)</textarea>
+                        <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? "Transportation will be provided every day school is in session, beginning when **student name gets on bus until **student name gets off bus at school. Transportation will resume when school is dismissed until *Student Name arrives home." : Model.Transporation_Other_desc)</textarea>
                     </p>
                 </div>
                 <div class="form-check voffset2" id="TransporationDisability_TextArea">

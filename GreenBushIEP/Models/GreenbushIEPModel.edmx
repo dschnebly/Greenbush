@@ -147,6 +147,12 @@
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BuildingName" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="Address_Mailing" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address_Physical" Type="nvarchar" MaxLength="250" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblCalendar">
           <Key>
@@ -1251,6 +1257,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_SecondaryDis
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address_Mailing" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address_Physical" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblCalendar">
           <Key>
@@ -2129,6 +2141,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_SecondaryDis
           <EntitySetMapping Name="tblBuildings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuilding">
               <MappingFragment StoreEntitySet="tblBuildings">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Address_Physical" ColumnName="Address_Physical" />
+                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />

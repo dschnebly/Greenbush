@@ -1615,7 +1615,10 @@ namespace GreenbushIep.Controllers
 
             if (!string.IsNullOrEmpty(HTMLContent))
             {
-                //bool isDraft = false;
+                string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
+                iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+
+                bool isDraft = false;
                 int id = 0;
                 Int32.TryParse(studentId, out id);
 
@@ -1632,9 +1635,10 @@ namespace GreenbushIep.Controllers
 
                 db.SaveChanges();
 
-                //var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-                //if(iepObj != null)
-                //  isDraft = iepObj.FirstOrDefault().dra
+                var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+                if (iepObj != null) {
+                    isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+                }
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -1644,18 +1648,17 @@ namespace GreenbushIep.Controllers
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
-
-
+                
                 string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
                 result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
                 
-                byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage");
-                byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page");
+                byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+                byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
                 
-                var printFile = AddPageNumber(iepFile, studentName);
+                //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
                 List<byte[]> pdfByteContent = new List<byte[]>();
                 pdfByteContent.Add(studentFile);
-                pdfByteContent.Add(printFile);
+                pdfByteContent.Add(iepFile);
 
                 var mergedFile = concatAndAddContent(pdfByteContent);
 
@@ -1711,7 +1714,7 @@ namespace GreenbushIep.Controllers
 
         }
 
-        private byte[] CreatePDFBytes(string cssTextResult, string result2, string className)
+        private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
         {            
             HtmlDocument doc = new HtmlDocument();
             doc.OptionWriteEmptyNodes = true;
@@ -1741,7 +1744,7 @@ namespace GreenbushIep.Controllers
 
                             fileIn = stream.ToArray();
 
-                            printFile = AddPageNumber(fileIn, string.Empty);
+                            printFile = AddPageNumber(fileIn, studentName, imgfoot, isDraft);
 
                         }
                     }
@@ -1784,7 +1787,7 @@ namespace GreenbushIep.Controllers
             }
         }
 
-        byte[] AddPageNumber(byte[] fileIn, string studentName)
+        byte[] AddPageNumber(byte[] fileIn, string studentName, iTextSharp.text.Image imgfoot, bool isDraft)
         {
             byte[] bytes = fileIn;
             byte[] fileOut = null;
@@ -1798,13 +1801,23 @@ namespace GreenbushIep.Controllers
                     int pages = reader.NumberOfPages;
 
                     for (int i = 1; i <= pages; i++)
-                    {
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
-                        if(studentName != string.Empty)
+                    {                                                               
+
+                        if(isDraft)
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
+
+                        if (studentName != string.Empty)
                             ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
+
+                        //Footer
+                        Phrase logoPhrase = new Phrase(string.Format("{0}", "IEP Backpack"), blackFont);
+                        imgfoot.SetAbsolutePosition(250f, 10f);
+                        imgfoot.ScalePercent(30);
+                        stamper.GetOverContent(i).AddImage(imgfoot);
+
                         ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format(" IEP Backpack", i.ToString(), pages.ToString()), blackFont), 250f, 15f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
+                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
                     }
                 }
                 fileOut = stream.ToArray();
