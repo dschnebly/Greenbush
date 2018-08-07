@@ -1054,34 +1054,25 @@ namespace GreenBushIEP.Controllers
         [Authorize]
         public ActionResult GetAllStudentsInDistrict(int id)
         {
-            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-            List<string> submitterUSD = db.tblOrganizationMappings.Where(o => o.UserID == submitter.UserID).Select(a => a.USD).Distinct().ToList();
-            //List<tblUser> students = (from u in db.tblUsers
-            //                          join i in db.tblStudentInfoes on u.UserID equals i.UserID
-            //                          where u.RoleID == "5" && u.Archive == false && i.USD.Any(val => submitterUSD.Contains(val.ToString())
-            //                          select
 
             try
             {
-                var innerQuery = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
                 var teacherDistricts = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.USD).Distinct().ToList();
+                var studentsInTheDistrict = (from i in db.tblStudentInfoes where teacherDistricts.Contains(i.AssignedUSD) select i.UserID).Distinct().ToList();
+                var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
-                // where u.USD == submitter.USD && u.RoleID == "5" && !innerQuery.Contains(o.UserID) //&& o.AdminID != teacher.UserID  
-                List<tblUser> students = (from o in db.tblOrganizationMappings
-                                          join u in db.tblUsers on o.UserID equals u.UserID
-                                          where u.RoleID == "5" && !innerQuery.Contains(o.UserID)
-                                          select u).Distinct().ToList();
+                List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheDistrict.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
-                foreach (tblUser student in students.ToList())
-                {
-                    var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
-                    if (teacherDistricts.Except(studentDistricts).Any())
-                    {
-                        students.Remove(student);
-                    }
-                }
+                //foreach (tblUser student in students.ToList())
+                //{
+                //    var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
+                //    if (teacherDistricts.Except(studentDistricts).Any())
+                //    {
+                //        students.Remove(student);
+                //    }
+                //}
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }

@@ -216,8 +216,6 @@
             var districtId = $('#selectedDistrict option:selected').val();
             var user = $("#assignBuilding").find('input[name="id"]').val();
 
-            $('.ajax-loader').css("visibility", "visible");
-
             $.ajax({
                 type: 'GET',
                 url: '/Manage/GetBuildings',
@@ -234,16 +232,12 @@
                         $.each(buildings, function () {
                             $('#selectBuildings').append('<li class="list-group-item building-group-item" data-id="' + this.BuildingID + '"><i class="glyphicon glyphicon-home"></i>&nbsp;' + this.BuildingName + '</li>');
                         });
-
-                        $('.ajax-loader').css("visibility", "hidden");
                     }
                     else {
                         console.log(data.Message);
-                        $('.ajax-loader').css("visibility", "hidden");
                     }
                 },
                 error: function (data) {
-                    $('.ajax-loader').css("visibility", "hidden");
                 }
             });
         });
@@ -338,16 +332,14 @@
                                     initHref();
 
                                     $(e.target).removeClass("clickEventDisabled");
+
                                 }
                                 else {
                                     $(div).find("i:first-child").removeClass().addClass("empty-icon");
                                 }
                             },
                             error: function (data) {
-                                $("#alertMessage .moreinfo").html("Unable to connect to the server or another related problem.");
-                                $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
-                                    $("#alertMessage").slideUp(500);
-                                });
+
                             }
                         });
                     }
