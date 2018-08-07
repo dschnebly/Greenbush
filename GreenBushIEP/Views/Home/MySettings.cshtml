@@ -7,240 +7,259 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/jquery-ui.min.css")
+}
 
-    <style>
-        hr {
-            border-top: 1px solid #ddd;
-        }
+<style>
+    hr {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
 
-        .transition-page {
-            position: relative;
-        }
+    .breadcrumb {
+        margin-top: 20px;
+        padding: 3px 0;
+        margin-bottom: 0;
+        list-style: none;
+        background-color: transparent;
+    }
 
-        .widgetDisabled {
-            opacity: 0.65;
+    .transition-page {
+        position: relative;
+    }
+
+    .widgetDisabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+        .widgetDisabled div div button {
             cursor: not-allowed;
+            pointer-events: none;
         }
 
-            .widgetDisabled div div button {
-                cursor: not-allowed;
-                pointer-events: none;
-            }
+    .settings, .settings > .well {
+        background-color: #B6C391 !important;
+    }
 
-        .settings, .settings > .well {
-            background-color: #B6C391 !important;
+        .settings > .well label {
+            color: #fff;
         }
 
-            .settings > .well label {
-                color: #fff;
-            }
-
-            .settings, .settings > .well .options button {
-                border: 1px solid #45906D;
-            }
-
-        .transition-page-scaleUpCenter {
-            -webkit-animation: scaleUpCenter .4s ease-out both;
-            animation: scaleUpCenter .4s ease-out both;
+        .settings, .settings > .well .options button {
+            border: 1px solid #45906D;
         }
 
-        .transition-page-scaleDownCenter {
-            -webkit-animation: scaleDownCenter .4s ease-in both;
-            animation: scaleDownCenter .4s ease-in both;
+    .transition-page-scaleUpCenter {
+        -webkit-animation: scaleUpCenter .4s ease-out both;
+        animation: scaleUpCenter .4s ease-out both;
+    }
+
+    .transition-page-scaleDownCenter {
+        -webkit-animation: scaleDownCenter .4s ease-in both;
+        animation: scaleDownCenter .4s ease-in both;
+    }
+
+    .fade-scale {
+        -webkit-transform: scale(0.7);
+        -moz-transform: scale(0.7);
+        -ms-transform: scale(0.7);
+        transform: scale(0.7);
+        opacity: 0;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+        .fade-scale.in {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
         }
 
-        .fade-scale {
-            -webkit-transform: scale(0.7);
-            -moz-transform: scale(0.7);
-            -ms-transform: scale(0.7);
-            transform: scale(0.7);
-            opacity: 0;
-            -webkit-transition: all 0.3s;
-            -moz-transition: all 0.3s;
-            transition: all 0.3s;
+
+    /**** Vertically Centers the Modal Popup ****/
+    body.modal-open .modal {
+        display: flex !important;
+        height: 100%;
+    }
+
+        body.modal-open .modal .modal-dialog {
+            margin: auto;
         }
 
-            .fade-scale.in {
-                -webkit-transform: scale(1);
-                -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                transform: scale(1);
-                opacity: 1;
-            }
+    /**** Ends Modal Popup Vertical Fix ****/
 
+    .modal-fullscreen {
+        background: transparent;
+    }
 
-        /**** Vertically Centers the Modal Popup ****/
-        body.modal-open .modal {
-            display: flex !important;
-            height: 100%;
-        }
-
-            body.modal-open .modal .modal-dialog {
-                margin: auto;
-            }
-
-        /**** Ends Modal Popup Vertical Fix ****/
-
-        .modal-fullscreen {
+        .modal-fullscreen .modal-content {
             background: transparent;
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
         }
 
-            .modal-fullscreen .modal-content {
-                background: transparent;
-                border: 0;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-            }
+    .modal-backdrop.modal-backdrop-fullscreen {
+        background: #ffffff;
+    }
 
-        .modal-backdrop.modal-backdrop-fullscreen {
-            background: #ffffff;
+        .modal-backdrop.modal-backdrop-fullscreen.in {
+            opacity: .97;
+            filter: alpha(opacity=97);
         }
 
-            .modal-backdrop.modal-backdrop-fullscreen.in {
-                opacity: .97;
-                filter: alpha(opacity=97);
-            }
+    .modal-fullscreen .modal-dialog {
+        margin: 0;
+        margin-right: auto;
+        margin-left: auto;
+        width: 100%;
+    }
 
-        .modal-fullscreen .modal-dialog {
-            margin: 0;
-            margin-right: auto;
-            margin-left: auto;
-            width: 100%;
+    #sortable {
+        list-style-type: none;
+    }
+
+        #sortable li {
+            float: left;
+            min-width: 255px;
+            min-height: 275px;
+            margin: 20px 20px 0 0;
         }
 
-        #sortable {
-            list-style-type: none;
-        }
+    .hero-widget {
+        text-align: center;
+    }
 
-            #sortable li {
-                float: left;
-                min-width: 255px;
-                min-height: 275px;
-                margin: 20px 20px 0 0;
-            }
-
-        .hero-widget {
+        .hero-widget .icon {
+            display: block;
+            font-size: 78px;
+            line-height: 96px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
-            .hero-widget .icon {
-                display: block;
-                font-size: 78px;
-                line-height: 96px;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-
-            .hero-widget label {
-                font-size: 18px;
-            }
-
-            .hero-widget .options {
-                margin-top: 10px;
-            }
-
-        .well {
-            border: 0;
-            bottom: 0;
+        .hero-widget label {
+            font-size: 18px;
         }
 
-        .ajax-loader {
-            visibility: hidden;
-            background-color: rgba(255,255,255,0.7);
-            position: absolute;
-            z-index: 100 !important;
-            width: 108%;
-            height: 100%;
-            top: 0;
-            left: 0px;
-            right: 0;
+        .hero-widget .options {
+            margin-top: 10px;
         }
 
-            .ajax-loader img {
-                position: fixed; /* or absolute */
-                top: 45%;
-                left: 40%;
-            }
+    .well {
+        border: 0;
+        bottom: 0;
+    }
 
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
 
-        .modal-backdrop {
-            background-color: #FFFFFF;
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
         }
 
-        @@-moz-document url-prefix() {
-            fieldset {
-                display: table-cell;
-            }
+
+    .modal-backdrop {
+        background-color: #FFFFFF;
+    }
+
+    @@-moz-document url-prefix() {
+        fieldset {
+            display: table-cell;
+        }
+    }
+
+    @@-webkit-keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleUpCenter {
+        from {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@-webkit-keyframes scaleDownCenter {
+        from {
         }
 
-        @@-webkit-keyframes scaleUpCenter {
-            from {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-            }
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+        }
+    }
+
+    @@keyframes scaleDownCenter {
+        from {
         }
 
-        @@keyframes scaleUpCenter {
-            from {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-                transform: scale(.7);
-            }
+        to {
+            opacity: 0;
+            -webkit-transform: scale(.7);
+            transform: scale(.7);
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-fullscreen .modal-dialog {
+            width: 750px;
         }
 
-        @@-webkit-keyframes scaleDownCenter {
-            from {
-            }
+        .modal-lg {
+            width: 900px;
+        }
+    }
 
-            to {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-            }
+    @@media (min-width: 992px) {
+        .modal-fullscreen .modal-dialog {
+            width: 970px;
         }
 
-        @@keyframes scaleDownCenter {
-            from {
-            }
-
-            to {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-                transform: scale(.7);
-            }
+        .col-md-4 {
+            width: 32% !important;
         }
+    }
 
-        @@media (min-width: 768px) {
-            .modal-fullscreen .modal-dialog {
-                width: 750px;
-            }
-
-            .modal-lg {
-                width: 900px;
-            }
+    @@media (min-width: 1200px) {
+        .modal-fullscreen .modal-dialog {
+            width: 1170px;
         }
-
-        @@media (min-width: 992px) {
-            .modal-fullscreen .modal-dialog {
-                width: 970px;
-            }
-
-            .col-md-4 {
-                width: 32% !important;
-            }
-        }
-
-        @@media (min-width: 1200px) {
-            .modal-fullscreen .modal-dialog {
-                width: 1170px;
-            }
-        }
-    </style>
-}
+    }
+</style>
 
 <div class="transition-page">
-    <h2><i class="fa fa-cogs" aria-hidden="true"></i> My Settings</h2>
+    <ul class="breadcrumb">
+        <i class="fa fa-cogs" aria-hidden="true" style="font-size: 30px;"></i>
+        <li><a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Managed Information System Portal</a></li>
+        <li class="active" style="font-size: 20px;">My Settings</li>
+    </ul>
 
     <div class="container" style="overflow:hidden; margin: 0 auto 75px;">
+
+        <div class="col-md-2 pull-right">
+            <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
+        </div>
+        <hr />
+
         <div class="row">
             <div class="col-md-12">
                 <a role="button" class="btn btn-info" id="backtoportal" data-ftrans="slide reverse" data-ajax="false" href="/Home/MISPortal"><span class="glyphicon glyphicon-arrow-left"></span></a>
@@ -285,7 +304,7 @@
         </div>
 
         <!-- Modal fullscreen settings Module Section -->
-        <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;" >
+        <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
             <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section">
 
             </div>
@@ -295,9 +314,6 @@
         <div class="ajax-loader">
             <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
         </div>
-
-       
-
     </div>
 </div>
 

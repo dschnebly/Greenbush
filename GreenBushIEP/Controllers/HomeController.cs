@@ -200,23 +200,20 @@ namespace GreenbushIep.Controllers
                 if (provider != null)
                 {
 
-                    provider.Name = providerName;
-                    provider.ProviderCode = providerCode;
+                    provider.Name = providerName.ToString();
+                    provider.ProviderCode = providerCode.ToString();
 
-                    db.SaveChanges();
-
+                    // blows away all the districts
                     foreach (var existingPD in provider.tblProviderDistricts.ToList())
+                    {
                         db.tblProviderDistricts.Remove(existingPD);
+                    }
 
                     db.SaveChanges();
 
                     foreach (var district in providerDistrict)
                     {
-                        tblProviderDistrict pd = new tblProviderDistrict();
-                        pd.ProviderID = provider.ProviderID;
-                        pd.USD = district.ToString();
-
-                        db.tblProviderDistricts.Add(pd);
+                        db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district.ToString() });
                         db.SaveChanges();
                     }
 
@@ -227,8 +224,8 @@ namespace GreenbushIep.Controllers
                 else
                 {
                     tblProvider newProvider = new tblProvider();
-                    newProvider.Name = providerName;
-                    newProvider.ProviderCode = providerCode;
+                    newProvider.Name = providerName.ToString();
+                    newProvider.ProviderCode = providerCode.ToString();
                     newProvider.UserID = owner.UserID;
 
                     //can't have duplicate provider code
@@ -246,14 +243,9 @@ namespace GreenbushIep.Controllers
                         {
                             foreach (var district in providerDistrict)
                             {
-                                tblProviderDistrict pd = new tblProviderDistrict();
-                                pd.ProviderID = newProvderId;
-                                pd.USD = district.ToString();
-
-                                db.tblProviderDistricts.Add(pd);
+                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district.ToString() });
                                 db.SaveChanges();
                             }
-
                         }
 
                     }
@@ -1415,7 +1407,7 @@ namespace GreenbushIep.Controllers
             // Get the MIS id of the logged in teacher.
             tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
             tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
-            
+
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
 
@@ -1446,7 +1438,7 @@ namespace GreenbushIep.Controllers
 
             if (query.Count() == 1)
             {
-               
+
                 IEP theIEP = new IEP()
                 {
                     draft = query.SingleOrDefault().iep,
@@ -1463,10 +1455,10 @@ namespace GreenbushIep.Controllers
                     serviceTypes = db.tblServiceTypes.ToList(),
                     serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList(),
                     studentFirstName = string.Format("{0}", student.FirstName),
-                    studentLastName = string.Format("{0}", student.LastName),             
+                    studentLastName = string.Format("{0}", student.LastName),
 
                 };
-                             
+
 
                 //student goalds
                 if (theIEP != null && theIEP.draft != null)
@@ -1504,7 +1496,7 @@ namespace GreenbushIep.Controllers
 
                         stvw.isDOC = district.DOC;
 
-                      
+
                     }
 
                     if (info != null && theIEP.draft != null)
@@ -1636,7 +1628,8 @@ namespace GreenbushIep.Controllers
                 db.SaveChanges();
 
                 var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-                if (iepObj != null) {
+                if (iepObj != null)
+                {
                     isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
                 }
 
@@ -1648,13 +1641,13 @@ namespace GreenbushIep.Controllers
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
-                
+
                 string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
                 result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
-                
+
                 byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
                 byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
-                
+
                 //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
                 List<byte[]> pdfByteContent = new List<byte[]>();
                 pdfByteContent.Add(studentFile);
@@ -1715,7 +1708,7 @@ namespace GreenbushIep.Controllers
         }
 
         private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
-        {            
+        {
             HtmlDocument doc = new HtmlDocument();
             doc.OptionWriteEmptyNodes = true;
             doc.OptionFixNestedTags = true;
@@ -1801,9 +1794,9 @@ namespace GreenbushIep.Controllers
                     int pages = reader.NumberOfPages;
 
                     for (int i = 1; i <= pages; i++)
-                    {                                                               
+                    {
 
-                        if(isDraft)
+                        if (isDraft)
                             ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
 
                         if (studentName != string.Empty)
@@ -1910,7 +1903,7 @@ namespace GreenbushIep.Controllers
                 case "EN":
                     fullName = "EN - English";
                     break;
-                    
+
                 case "ES": fullName = "ES - Spanish"; break;
 
                 case "DE": fullName = "DE - German"; break;
@@ -1968,7 +1961,7 @@ namespace GreenbushIep.Controllers
         {
             string fullName = "";
             var disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
-            if(disablity != null)
+            if (disablity != null)
             {
                 fullName = string.Format("{0} - {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
             }
