@@ -199,6 +199,7 @@ $("#next2").on("click", function () {
 
                     // create a new student id and add it to the contacts form here.
                     $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+                    $("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);

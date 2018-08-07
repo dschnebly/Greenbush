@@ -78,7 +78,7 @@ namespace GreenBushIEP.Controllers
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(adminpersona.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
+                    var path = Path.Combine(Server.MapPath("~/Avatar/"), fileName);
                     user.ImageURL = fileName;
                     adminpersona.SaveAs(path);
                 }
@@ -440,8 +440,14 @@ namespace GreenBushIEP.Controllers
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(adminpersona.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), fileName);
-                    student.ImageURL = fileName;
+                    var random = Guid.NewGuid() + fileName;
+                    var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                    if (!Directory.Exists(Server.MapPath("~/Avatar/")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
+                    }
+
+                    student.ImageURL = random;
                     adminpersona.SaveAs(path);
 
                     db.SaveChanges();
@@ -774,10 +780,10 @@ namespace GreenBushIEP.Controllers
                 {
                     var fileName = Path.GetFileName(adminpersona.FileName);
                     var random = Guid.NewGuid() + fileName;
-                    var path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), random);
-                    if (!Directory.Exists(Server.MapPath("~/Content/Files/")))
+                    var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                    if (!Directory.Exists(Server.MapPath("~/Avatar/")))
                     {
-                        Directory.CreateDirectory(Server.MapPath("~/Content/Files/"));
+                        Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
                     }
                     student.ImageURL = random;
                     adminpersona.SaveAs(path);
@@ -868,12 +874,12 @@ namespace GreenBushIEP.Controllers
                         if (!string.IsNullOrEmpty(user.ImageURL))
                         {
                             // Delete exiting file
-                            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), user.ImageURL));
+                            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Avatar/"), user.ImageURL));
                         }
 
                         // Save new file
                         string filename = Guid.NewGuid() + Path.GetFileName(adminpersona.FileName);
-                        string path = Path.Combine(Server.MapPath("~/Content/Images/Uploads/"), filename);
+                        string path = Path.Combine(Server.MapPath("~/Avatar/"), filename);
                         adminpersona.SaveAs(path);
                         user.ImageURL = filename;
                     }

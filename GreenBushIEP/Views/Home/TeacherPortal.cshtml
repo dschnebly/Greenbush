@@ -147,7 +147,7 @@
 <h2>@ViewBag.Title</h2>
 <div class="user-head">
     <a href="/Manage/Edit/@(Model.Teacher.UserID)" class="inbox-avatar" data-ftrans="slide">
-        <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.Teacher.ImageURL) ? "/Content/Images/newTeacher.png" :  "/Content/Images/Uploads/" + Model.Teacher.ImageURL  )" style="height: 62px;">
+        <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.Teacher.ImageURL) ? "/Content/Images/newTeacher.png" :  "/Avatar/" + Model.Teacher.ImageURL  )" style="height: 62px;">
     </a>
 </div>
 

@@ -665,6 +665,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Avatar\" />
     <Folder Include="Content\Images\Uploads\" />
   </ItemGroup>
   <ItemGroup>

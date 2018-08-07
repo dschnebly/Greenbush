@@ -8,7 +8,7 @@
             <li>
                 <div class="listrap-toggle pull-left">
                     <span class="ourTeacher" data-id="@user.UserID.ToString()"></span>
-                    <img src="~/Content/Images/@(string.IsNullOrEmpty(user.ImageURL) ? "newUser.png" : "Uploads/" + user.ImageURL.ToString() )" class="img-circle pull-left" width="58" height="60" />
+                    <img src="~/Content/Images/@(string.IsNullOrEmpty(user.ImageURL) ? "newUser.png" : "Avatar/" + user.ImageURL.ToString() )" class="img-circle pull-left" width="58" height="60" />
                 </div>
                 <div class="teacher-search-addtional-information">
                     <strong>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</strong>

@@ -365,7 +365,7 @@
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
         <a class="inbox-avatar" href="javascript:;">
-            <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newUser.png" :  "/Content/Images/Uploads/" + Model.user.ImageURL  )">
+            <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newUser.png" :  "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
 
