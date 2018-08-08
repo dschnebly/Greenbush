@@ -487,6 +487,10 @@
         border: 1px solid #aaa;
     }
 
+    .contact-tooltip {
+        border: 2px solid #9F6000;
+    }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -642,7 +646,9 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label required" for="dob">Date of Birth</label>
-                                                    <input type="text" id="dob" name="dob" style="height:49px; z-index: 99999" class="form-control studentDOB required" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
+                                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new {@Value = @Model.student.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control required", placeholder = "MM/dd/YYYY  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
+                                                    @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
+                                                    @*<input type="text" id="dob" name="dob" style="height:49px; z-index: 99999" class="form-control studentDOB required" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />*@
                                                 </div>
                                             </div>
                                         </div>
@@ -653,7 +659,7 @@
                                             @if (Model.placementCode != null)
                                             {
                                                 foreach (var code in Model.placementCode)
-                                                {                                                    
+                                                {
                                                     string selected = @code.PlacementCode == "L" ? "selected=selected" : "";
                                                     <option @selected value="@code.PlacementCode">@code.PlacementDescription</option>
                                                 }
