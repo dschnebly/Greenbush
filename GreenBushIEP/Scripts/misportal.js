@@ -289,6 +289,7 @@
             $(this).toggleClass('active');
         });
 
+
         //////////////////////////////////////////////////////
         //
         // Events for adding the hieracial classes
@@ -300,6 +301,13 @@
         // attach event
         // event is fired when hiearachy view is clicked
         function initHref() {
+            $(".launchListOfStudents").on('click', function (e) {
+                e.preventDefault();
+
+                $(".ajax-loader").show();
+                $(".ajax-loader img").show();
+            });
+
             $('div.list-group-item').each(function (index) { // one sweet bit of code.
 
                 $(this).not('.bound').addClass('bound').on("click", function (e) {
