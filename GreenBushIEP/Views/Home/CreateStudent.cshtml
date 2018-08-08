@@ -648,7 +648,6 @@
                                                     <label class="control-label required" for="dob">Date of Birth</label>
                                                     @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new {@Value = @Model.student.DateOfBirth.ToString("yyyy-MM-dd"), @class = "form-control required", placeholder = "MM/dd/YYYY  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
                                                     @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
-                                                    @*<input type="text" id="dob" name="dob" style="height:49px; z-index: 99999" class="form-control studentDOB required" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />*@
                                                 </div>
                                             </div>
                                         </div>
@@ -1081,16 +1080,16 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-sm-12">
                                             <div class="form-group">
                                                 <input name="claimingCode" id="claimingCode" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" checked>
                                                 <label for="claimingCode" style="float: left; position: relative; bottom: 16px; left: 20%;">Federal/State MIS</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-sm-12">
                                             <div class="form-group">
                                                 <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;">
-                                                <label for="fullDayKindergarten" style="float: left; position: relative; bottom: 16px; left: 20%;">Full Day Kindergarten</label>
+                                                <label for="fullDayKindergarten">Full Day Kindergarten</label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">

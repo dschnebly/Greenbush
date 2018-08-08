@@ -4,15 +4,25 @@
         // attach Event
         // fires when a user clicks on the new system user button
         $("#user-toggle").on("click", function () {
-            $(".ajax-loader").css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
+            $(".ajax-loader").show();
+            $(".ajax-loader img").show();
         });
 
         // attach Event
         // fires when a user clicks on the edit user button
         $("#editStudent").on("click", function () {
-            $(".ajax-loader").css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
+            $(".ajax-loader").show();
+            $(".ajax-loader img").show();
+        });
+
+        // attach event
+        // finds all launchIEP on the page and fires when the link is clicked.
+        $('.launchIEP').each(function (index) {
+            $(this).not('.bound').addClass('bound').on("click", function (e) {
+                e.preventDefault();
+                $(".ajax-loader").show();
+                $(".ajax-loader img").show();
+            });
         });
 
         // attach event
@@ -58,16 +68,6 @@
             } else {
                 $('.c-search').closest('.row').slideDown(100);
             }
-        });
-
-        // attach event
-        // finds all launchIEP on the page and fires when the link is clicked.
-        $('.launchIEP').each(function (index) {
-            $(this).not('.bound').addClass('bound').on("click", function (e) {
-                e.preventDefault();
-                $(".ajax-loader").css("visibility", "visible");
-                $(".ajax-loader img").css("visibility", "visible");
-            });
         });
     }
     init();
