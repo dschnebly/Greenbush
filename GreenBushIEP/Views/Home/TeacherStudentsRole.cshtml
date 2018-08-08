@@ -6,18 +6,21 @@
 }
 
 <style>
-
-    hr {
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
-
     .breadcrumb {
         margin-top: 20px;
         padding: 3px 0;
         margin-bottom: 0;
         list-style: none;
         background-color: transparent;
+    }
+
+    .teacherStudentRole-btn-action {
+        margin: 4px 4px 4px 0px;
+        position: relative;
+    }
+
+    .body-content {
+        margin-bottom: 4em;
     }
 
     /*//////////////////////////////////////
@@ -45,6 +48,7 @@
             font-size: 18px;
             line-height: 1.33;
             border-radius: 25px;
+            margin-bottom: 10px;
         }
 
         .btn-circle.btn-xl {
@@ -54,11 +58,15 @@
             font-size: 24px;
             line-height: 1.33;
             border-radius: 35px;
+            margin-bottom: 10px;
         }
+
+    #add-student-user i {
+        padding: 0;
+    }
 
     #user-toggle {
         margin-right: 20px;
-        margin-top: 20px;
     }
 
         #user-toggle .user-toggle-item {
@@ -95,6 +103,11 @@
 
             #user-toggle .user-toggle-item ul.show-buttons {
                 display: inline-block;
+                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
+                -moz-animation: fadein 1s; /* Firefox < 16
+                -ms-animation: fadein 1s; /* Internet Explorer
+                -o-animation: fadein 1s; /* Opera < 12.1
+                animation: fadein 1s;*/
             }
 
             #user-toggle .user-toggle-item ul.hide-buttons {
@@ -181,7 +194,7 @@
         <div class="col-md-2 pull-right">
             <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
         </div>
-        <hr />
+        @*<hr />*@
 
         <ul class="breadcrumb">
             <li><a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Managed Information System Portal</a></li>
@@ -190,7 +203,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="user-toggle" class="pull-right">
+                <div id="user-toggle" class="pull-right" style="margin-top: 20px;">
                     <div class="user-toggle-item">
                         <a id="addExistingStudents" class="btn btn-primary btn-circle btn-xl pull-right" data-toggle="modal" data-target="#addExistingStudentModal"><i class="fa fa-users"></i></a>
                     </div>
@@ -222,7 +235,7 @@
                                         <td>@(student.BuildingID)</td>
                                         <td><a href="mailto:@(student.Email)">@(student.Email)</a></td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#confirmStudentRemoval">
+                                            <button type="button" class="btn btn-info teacherStudentRole-btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#confirmStudentRemoval" >
                                                 <span class="fa fa-user-times" aria-hidden="true"></span>
                                             </button>
                                         </td>

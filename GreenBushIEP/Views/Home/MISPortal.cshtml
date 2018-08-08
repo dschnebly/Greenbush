@@ -10,25 +10,6 @@
 }
 
 <style>
-
-    .ajax-loader {
-        visibility: hidden;
-        background-color: rgba(255,255,255,0.7);
-        position: absolute;
-        z-index: 100 !important;
-        width: 108%;
-        height: 100%;
-        top: 0;
-        left: 0px;
-        right: 0;
-    }
-
-        .ajax-loader img {
-            position: fixed; /* or absolute */
-            top: 45%;
-            left: 40%;
-        }
-
     h3 a {
         margin: 0 5px;
     }
@@ -496,11 +477,8 @@
         }
     }
 
-    <div class="ajax-loader" style="visibility: hidden;">
-        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-    </div>
-</div>
 
+</div>
 
 <!-- Modal -->
 <div class="modal-dialog">
@@ -572,6 +550,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- end modal -->
+
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")

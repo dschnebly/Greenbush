@@ -9,7 +9,6 @@
         // attach event
         // fires when an delete button is pressed on a MIS role.
         $('#deleteUser').on('show.bs.modal', function (e) {
-
             var user = $(e.relatedTarget).data('id');
             $(e.currentTarget).find('input[name="id"]').val(user);
             $('#confirmDeletion').val('');
