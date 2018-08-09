@@ -479,6 +479,22 @@ namespace GreenBushIEP.Models
         public int studentAgeAtAnnualMeeting { get; set; }
 
     }
+
+    public class StudentServiceObject
+    {
+        public int ServiceID { get; set; }
+        public int IEPid { get; set; }
+        public int SchoolYear { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public string ServiceCode { get; set; }
+        public int Frequency { get; set; }
+        public byte DaysPerWeek { get; set; }
+        public short Minutes { get; set; }
+        public int ProviderID { get; set; }
+        public string LocationCode { get; set; }
+
+    }
 }
 
 public class IEPStatus

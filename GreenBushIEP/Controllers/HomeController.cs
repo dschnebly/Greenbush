@@ -14,6 +14,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using HtmlAgilityPack;
 using System.Data.Entity.Validation;
+using Newtonsoft.Json;
 
 namespace GreenbushIep.Controllers
 {
@@ -911,6 +912,44 @@ namespace GreenbushIep.Controllers
             }
 
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());
+        }
+
+        [HttpGet]
+        [Authorize(Roles = teacher)]
+        public ActionResult DuplicateStudentServicesNextYear(int studentId)
+        {
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            if (iep != null)
+            {
+                //get latest year
+                var maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+                if(maxYear > 0)
+                {
+                    List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear).ToList();
+                    List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
+                    foreach(var service in services)
+                    {
+
+                        var item = new StudentServiceObject();
+                        item.DaysPerWeek = service.DaysPerWeek;
+                        item.StartDate = service.StartDate.AddYears(1).ToShortDateString();
+                        item.EndDate = service.EndDate.AddYears(1).ToShortDateString();
+                        item.LocationCode = service.LocationCode;                        
+                        item.Minutes = service.Minutes;
+                        item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
+                        item.SchoolYear = service.SchoolYear;
+                        item.ServiceCode = service.ServiceCode;
+                        item.Frequency = service.Frequency;
+                        serviceList.Add(item);
+                    }
+                    
+                    return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Result = "fail"}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
