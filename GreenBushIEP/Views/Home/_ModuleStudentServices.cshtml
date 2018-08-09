@@ -58,7 +58,7 @@
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
         @*<input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepEndDate" />*@
-
+         <input type="hidden" id="sid" value="@Model.studentId" />
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
@@ -471,32 +471,48 @@
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
-
-    
+        
     //duplicate all services for next school year
     $('#duplicateAllService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
-        $(".panel-existing").each(function (index) {
-            
-            var parent = $(this);
-
-            if (parent != null) {
-                var dupFiscalYear = parent.find('[name="fiscalYear"]').val();
-                var dupServiceDaysPerWeek = parent.find('[name="serviceDaysPerWeek"]').val();
-                var dupserviceMinutesPerDay = parent.find('[name="serviceMinutesPerDay"]').val();
-                var dupFrequency = parent.find('[name="Frequency"]').find(":selected").val();
-                var dupLocation = parent.find('[name="Location"]').find(":selected").val();
-                var dupServiceType = parent.find('[name="ServiceType"]').find(":selected").val();
-                var dupServiceProvider = parent.find('[name="serviceProvider"]').find(":selected").val();
-                var dupStartDate = parent.find('[name="serviceStartDate"]').val();
-                var dupEndDate = parent.find('[name="serviceEndDate"]').val();
-
-                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
-
+        
+            var studentId = $("#sid").val();
+            if (studentId != undefined) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/DuplicateStudentServicesNextYear',
+                    data: { studentId: studentId },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Result == "success") {
+                            $.each(data.Data, function (index, serviceObj) {
+                                
+                                var dupFiscalYear = serviceObj.SchoolYear;
+                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+                                var dupserviceMinutesPerDay = serviceObj.Minutes;
+                                var dupFrequency = serviceObj.Frequency;
+                                var dupLocation = serviceObj.LocationCode;
+                                var dupServiceType = serviceObj.ServiceCode;
+                                var dupServiceProvider = serviceObj.ProviderID;
+                                var dupStartDate = serviceObj.StartDate;
+                                var dupEndDate = serviceObj.EndDate;
+                                
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+                            });
+                        }
+                        else {
+                            _showAlert('There was a problem duplicating the Student Services.', false);
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Unable to duplicate the student services.");
+                    }
+                });
             }
-            
-        });
-
+            else
+            {
+                _showAlert('There was a problem duplicating the Student Services.', false);
+            }
         
     });
 
@@ -649,7 +665,7 @@
                                     }
                                 },
                                 error: function (data) {
-                                    console.log("Unable to delete the student goal.");
+                                    console.log("Unable to delete the student service.");
                                 }
                             });
                         }
