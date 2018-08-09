@@ -554,7 +554,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy,
-                                }).Distinct().ToList();
+                                }).Distinct().OrderBy(u => u.LastName).ToList();
 
 
                 var model = new StudentViewModel();
