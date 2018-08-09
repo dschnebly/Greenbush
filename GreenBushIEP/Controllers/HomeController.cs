@@ -1609,15 +1609,14 @@ namespace GreenbushIep.Controllers
             {
                 string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
-
-                bool isDraft = false;
+                                
+                
                 int id = 0;
                 Int32.TryParse(studentId, out id);
 
                 int iepId = 0;
                 Int32.TryParse(iepIDStr, out iepId);
-
-
+                
                 tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
                 if (user != null && isIEP == "1")
                 {
@@ -1627,11 +1626,15 @@ namespace GreenbushIep.Controllers
 
                 db.SaveChanges();
 
-                var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-                if (iepObj != null)
-                {
-                    isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
-                }
+                bool isDraft = false;
+                //if (isArchive == "1")
+                //{
+                //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+                //    if (iepObj != null)
+                //    {
+                //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+                //    }
+                //}
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
