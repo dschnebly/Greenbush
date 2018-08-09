@@ -322,7 +322,7 @@ namespace GreenBushIEP.Models
         {
             AccomList = new List<tblAccommodation>();
             Locations = new List<System.Web.Mvc.SelectListItem>();
-
+            
         }
 
         public int StudentId { get; set; }
@@ -341,6 +341,8 @@ namespace GreenBushIEP.Models
         public string Message { get; set; }
         public List<tblAccommodation> AccomList { get; set; }
         public List<System.Web.Mvc.SelectListItem> Locations { get; set; }
+        public string DefaultStartDate { get; set; }
+        public string DefaultEndDate { get; set; }
     }
 
     public class BehaviorViewModel
@@ -473,7 +475,8 @@ namespace GreenBushIEP.Models
         public tblBuilding neighborhoodBuilding { get; set; }
         public tblBuilding teacherBuilding { get; set; }
         public int studentAgeAtIEP { get; set; }
-        public string InititationDate { get; set; }
+        public string inititationDate { get; set; }
+        public int studentAgeAtAnnualMeeting { get; set; }
 
     }
 }

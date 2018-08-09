@@ -111,6 +111,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="row voffset2" >
+                                        <div class="col-md-12">
+                                            <label style="font-size: 18px;">Location</label>
+                                            <div>
+                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Duration</label>
@@ -128,7 +136,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="text" data-val="true" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                        <input type="text" data-val="true" value="@Model.DefaultStartDate" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                                id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
                                                     </div>
                                                 </div>
@@ -137,19 +145,11 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="text" data-val="true" data-val-date="The field End date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                        <input type="text" data-val="true" value="@Model.DefaultEndDate" data-val-date="The field End date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
                                                                class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group" name="Location">
-                                                        <label style="font-size: 18px;" for="Location">Location</label><br />
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control standard-font-size" name="Location" id="Location" value="" data-toggle="tooltip" data-placement="bottom" title="300 character limit.">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div>                                                
                                             </div>
                                         </div>
                                     </div>

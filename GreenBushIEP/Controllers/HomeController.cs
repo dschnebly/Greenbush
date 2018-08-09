@@ -1185,6 +1185,10 @@ namespace GreenbushIep.Controllers
 
                     model.Locations = locationList;
                 }
+
+                model.DefaultStartDate = iep.begin_date.HasValue ? iep.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+                model.DefaultEndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+                
             }
 
 
@@ -1401,8 +1405,7 @@ namespace GreenbushIep.Controllers
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-
-            //tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
+                        
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
             // Get the MIS id of the logged in teacher.
             tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
@@ -1410,6 +1413,14 @@ namespace GreenbushIep.Controllers
 
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
+
+            //calculated fields for printing, are there going to multiple ieps?
+            //var iepObj = db.tblIEPs.Where(o => o.UserID == id).OrderByDescending(o => o.begin_date).FirstOrDefault();
+            //string initiationDate = "";
+            //if (iepObj != null && iepObj.begin_date.HasValue)
+            //{
+            //    initiationDate = iepObj.begin_date.Value.ToShortDateString();
+            //}
 
             var query = (from iep in db.tblIEPs
                          join health in db.tblIEPHealths
@@ -1500,12 +1511,10 @@ namespace GreenbushIep.Controllers
                     }
 
                     if (info != null && theIEP.draft != null)
-                    {
-                        //var teacherBuilding = db.tblBuildings.Where(c => c.BuildingID == teacher.BuildingID).Take(1).FirstOrDefault();
+                    {                        
                         var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
                         var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                         var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-
 
                         var studentDetails = new StudentDetailsPrintViewModel();
                         studentDetails.student = info;
@@ -1521,7 +1530,8 @@ namespace GreenbushIep.Controllers
                         studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
                         studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
                         studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-                        studentDetails.InititationDate = theIEP.draft.begin_date.HasValue ? theIEP.draft.begin_date.Value.ToShortDateString() : "";
+                        studentDetails.studentAgeAtAnnualMeeting = (theIEP.draft.MeetingDate.HasValue ? (theIEP.draft.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.draft.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.draft.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.draft.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+                        studentDetails.inititationDate = theIEP.draft.begin_date.HasValue ? theIEP.draft.begin_date.Value.ToShortDateString() : "";
 
                         theIEP.studentDetails = studentDetails;
                     }
@@ -1635,6 +1645,8 @@ namespace GreenbushIep.Controllers
                 //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
                 //    }
                 //}
+
+                
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 

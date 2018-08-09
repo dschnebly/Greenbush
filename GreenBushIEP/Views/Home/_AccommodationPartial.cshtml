@@ -74,6 +74,14 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="row voffset2" >
+                            <div class="col-md-12">
+                                <label style="font-size: 18px;">Location</label>
+                                <div>
+                                    @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
+                                </div>
+                            </div>
+                        </div>                         
                         <div class="row voffset2">
                             <div class="col-md-12">
                                 <label style="font-size: 18px;">Duration</label>
@@ -132,15 +140,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group" name="Location">
-                                            <label style="font-size: 18px;" for="Location">Location</label><br />
-                                            <div class="form-group">
-                                                <input type="text" class="form-control standard-font-size" name="Location" id="Location" value="@Model.Location" style="font-size: 18px;">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>                       

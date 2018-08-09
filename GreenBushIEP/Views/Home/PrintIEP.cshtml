@@ -265,10 +265,8 @@
                     <input type="hidden" id="studentName" name="studentName" value="@studentFullName" />
                     <input type="hidden" id="studentId" name="studentId" value="@Model.draft.UserID" />
                     <input type="hidden" id="iepID" name="iepID" value="@Model.draft.IEPid" />
-                    <input type="hidden" id="isIEP" name="isIEP" value="1" />
-                  
+                    <input type="hidden" id="isIEP" name="isIEP" value="1" />                  
                 </form>
-
             </div>
         </div>
         <div class="row">
@@ -276,7 +274,6 @@
                 @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right exit", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
             </div>
         </div>
-
         <div class="studentInformationPage">
             <table style="width:100%;">
                 <tr>
@@ -293,7 +290,6 @@
                         Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
                     </td>
                 </tr>
-
             </table>
             <hr />
             <table style="width:100%;">
@@ -308,7 +304,7 @@
                     <td><label>Birth Date:</label></td>
                     <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
                     <td><label>Age at<br />Annual<br />Meeting:</label></td>
-                    <td style="width:25px;">@(Model.studentAge)</td>
+                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtAnnualMeeting > 0 ? Model.studentDetails.studentAgeAtAnnualMeeting.ToString() : "")</td>
                     <td><label>Gender:</label></td>
                     <td>@Model.studentDetails.gender</td>
                 </tr>
@@ -342,7 +338,6 @@
                         <td><label>Email:</label></td>
                         <td>@primeContact.Email</td>
                     </tr>
-
                 </table>
             }
             <hr />
@@ -376,14 +371,12 @@
                     <td><label>KG Full Day:</label></td>
                     <td>@(Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "N")</td>
                 </tr>
-
             </table>
-
             <hr />
             <table style="width:100%">
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
-                    <td>@Model.studentDetails.student.InitialEvalConsentSigned</td>
+                    <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>
                     <td><label>Vision Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
                     <td><label>Hearing Screening:</label></td>
@@ -391,9 +384,9 @@
                 </tr>
                 <tr>
                     <td><label>Init Eval Determination:</label></td>
-                    <td>@Model.studentDetails.student.InitialEvalDetermination</td>
+                    <td>@(Model.studentDetails.student.InitialEvalDetermination.HasValue ? Model.studentDetails.student.InitialEvalDetermination.Value.ToShortDateString() : "")</td>
                     <td><label>Re-Eval Signed:</label></td>
-                    <td>@Model.studentDetails.student.ReEvalConsentSigned</td>
+                    <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.ToShortDateString() : "")</td>
                     <td><label>3 Year Re-Eval:</label></td>
                     <td>**</td>
                 </tr>
@@ -403,32 +396,29 @@
                     <td></td>
                     <td></td>
                     <td><label>Next Vision:</label></td>
-                    <td>**</td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
 
                 </tr>
                 <tr>
                     <td><label>Initiation:</label></td>
-                    <td>**</td>
+                    <td>@Model.studentDetails.inititationDate</td>
                     <td><label>Exit:</label></td>
                     <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
                     <td><label>Next Hearing:</label></td>
-                    <td>**</td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>
                 </tr>
                 <tr>
                     <td><label>Evidence:</label></td>
                     <td colspan="5">**</td>
                 </tr>
-
             </table>
-
             <table style="width:100%">
                 <tr>
                     <td><label>Annual Meeting:</label></td>
-                    <td>**</td>
+                    <td>@(Model.draft.MeetingDate.HasValue ? Model.draft.MeetingDate.Value.ToShortDateString() : "")</td>
                     <td><label>Ed Status:</label></td>
-                    <td>**</td>
                     <td><label>Next Annual Meeting:</label></td>
-                    <td>**</td>
+                    <td>@(Model.draft.MeetingDate.HasValue ? Model.draft.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
                 </tr>
             </table>
             <br />
@@ -438,23 +428,21 @@
                 <table style="width:100%">
                     <tr>
                         <td><label>Exceptionality:</label></td>
-                        <td>**</td>
+                        <td></td>
                         <td><label>Primary<br />Disability:</label></td>
                         <td>@Model.studentDetails.primaryDisability</td>
                         <td><label>Secondary<br />Disability:</label></td>
                         <td>@Model.studentDetails.secondaryDisability</td>
-
                     </tr>
                     <tr>
                         <td><label>Gifted:</label></td>
-                        <td colspan="5">**</td>
+                        <td colspan="5"></td>
                     </tr>
                 </table>
-                
             </div><!--end services-->
 
             <hr />
-            <table>
+            @*<table>
                 <tr>
                     <th>Special Transportation Provided:</th>
                     <td>**</td>
@@ -474,7 +462,7 @@
                     <th>Electronic Consent Recieved:</th>
                     <td>**</td>
                 </tr>
-            </table>
+            </table>*@
 
         </div> <!--end student page-->
         <br />
@@ -494,7 +482,6 @@
                         Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
                     </td>
                 </tr>
-
             </table>
             <table style="width:100%;">
                 <tr>
@@ -514,25 +501,20 @@
                     <td><label>Address:</label></td>
                     <td>@( primeContact != null ? string.Format("{0} {1} {2}, {3} {4}", @primeContact.Address1, @primeContact.Address2, @primeContact.City, @primeContact.State, @primeContact.Zip) : "" )</td>
                     <td><label>Age on IEP Date:</label></td>
-                    <td style="width:150px;">@(Model.studentDetails.studentAgeAtIEP)</td>
-
+                    <td style="width:150px;">@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><label>Grade:</label></td>
                     <td>@Model.studentDetails.student.Grade</td>
-
                 </tr>
                 <tr>
                     <td><label>Phones:</label></td>
                     <td>@( primeContact != null ? @primeContact.Phone : "")</td>
                     <td><label>Re-Eval Completion:</label></td>
                     <td>**</td>
-
-
                 </tr>
-
                 <tr>
                     <td><label>Email:</label></td>
                     <td>@( primeContact != null ? @primeContact.Email : "")</td>
@@ -542,9 +524,8 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td><label>Inititation:</label></td>
-                    <td style="width:150px;">**</td>
-
+                    <td><label>Initiation:</label></td>
+                    <td style="width:150px;">@Model.studentDetails.inititationDate</td>
                 </tr>
                 <tr>
                     <td><label>Neighborhood School:</label></td>
@@ -654,7 +635,7 @@
                 </fieldset>
                 <div>
                     @if (Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value)
-                    {
+                     {
                         <span>
                             @Model.studentFirstName does require a Health Care Plan.
                         </span>
@@ -720,48 +701,46 @@
                     <div class="form-check form-group-label">
                         <span>This need will be met @textNeedMetBy </span>
                     </div>
-
                 </fieldset>
                 }
                 else
                 {
                     <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Health at this time.</p>
                 }
-
             <hr />
             <div>
                 <h3 class="text-center">MOTOR</h3>
-                @if (!Model.studentMotor.NoConcerns)
-                {
+              @if (!Model.studentMotor.NoConcerns)
+              {
 
-                    if (Model.studentMotor.ProgressTowardGenEd)
-                    {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of Motor; however,  progress is being made with general education supports.</p>
-                    }
-                    else if (Model.studentMotor.Needs)
-                    {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of Motor; that impact the ability to learn or access the general curriculum</p>
-                    }
+                  if (Model.studentMotor.ProgressTowardGenEd)
+                  {
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Motor; however,  progress is being made with general education supports.</p>
+                  }
+                  else if (Model.studentMotor.Needs)
+                  {
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Motor; that impact the ability to learn or access the general curriculum</p>
+                  }
 
-                    var motorVal = "";
-                    if (Model.studentMotor.Participation == 1 || Model.studentMotor.Participation == -1)
-                    {
+                  var motorVal = "";
+                  if (Model.studentMotor.Participation == 1 || Model.studentMotor.Participation == -1)
+                  {
 
-                        motorVal = "No Special Education supports needed in Physical Education";
-                    }
-                    else
-                    {
-                        if (Model.studentMotor.Participation == 2)
-                        {
+                      motorVal = "No Special Education supports needed in Physical Education";
+                  }
+                  else
+                  {
+                      if (Model.studentMotor.Participation == 2)
+                      {
 
-                            motorVal = "Modified or Adaptive Supports Needed in Physical Education";
-                        }
-                        else if (Model.studentMotor.Participation == 3)
-                        {
+                          motorVal = "Modified or Adaptive Supports Needed in Physical Education";
+                      }
+                      else if (Model.studentMotor.Participation == 3)
+                      {
 
-                            motorVal = "Student has met Physical Education Requirements";
-                        }
-                    }
+                          motorVal = "Student has met Physical Education Requirements";
+                      }
+                  }
                     <div>
                         <p>
                             @motorVal
@@ -832,38 +811,33 @@
                                     <p>The Team has no concerns about @Model.studentFirstName in the area of Motor at this time.</p>
                                 </div>
                             }
-
-
-
-
             </div>
-
             <hr />
             <h3 class="text-center">COMMUNICATION</h3>
-            @if (!Model.studentCommunication.NoConcerns)
-            {
+             @if (!Model.studentCommunication.NoConcerns)
+             {
 
-                if (Model.studentCommunication.ProgressTowardGenEd)
-                {
+                 if (Model.studentCommunication.ProgressTowardGenEd)
+                 {
                     <p>The Team has concerns about @Model.studentFirstName in the area of Communication; however,  progress is being made with general education supports.</p>
-                }
-                else if (Model.studentCommunication.AreaOfNeed.HasValue && Model.studentCommunication.AreaOfNeed.Value)
-                {
+                 }
+                 else if (Model.studentCommunication.AreaOfNeed.HasValue && Model.studentCommunication.AreaOfNeed.Value)
+                 {
                     <p>The Team has concerns about @Model.studentFirstName in the area of Communication; that impact the ability to learn or access the general curriculum</p>
-                }
+                 }
 
-                if (Model.studentCommunication.Deaf)
-                {
+                 if (Model.studentCommunication.Deaf)
+                 {
                     <p>
                         @Model.studentFirstName is Deaf/Hard of Hearing.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
                     </p>
-                }
-                if (Model.studentCommunication.LimitedEnglish)
-                {
+                 }
+                 if (Model.studentCommunication.LimitedEnglish)
+                 {
                     <p>
                         @Model.studentFirstName has limited English.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
                     </p>
-                }
+                 }
 
                 <fieldset class="form-group">
                     <div>
@@ -918,38 +892,36 @@
                     <div class="form-check form-group-label">
                         <span>This need will be met @textNeedMetBy </span>
                     </div>
-
                 </fieldset>
                 }
                 else
                 {
-
                     <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Communication at this time.</p>
                 }
 
             <hr />
             <div>
                 <h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
-                @if (!Model.studentSocial.NoConcerns)
-                {
-                    if (Model.studentSocial.ProgressTowardGenEd)
-                    {
-                        <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; however,  progress is being made with general education supports.</p>
-                    }
-                    if (Model.studentSocial.AreaOfNeed.HasValue && Model.studentSocial.AreaOfNeed.Value)
-                    {
-                        <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; that impact the ability to learn or access the general curriculum </p>
-                    }
+               @if (!Model.studentSocial.NoConcerns)
+               {
+                   if (Model.studentSocial.ProgressTowardGenEd)
+                   {
+                    <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; however,  progress is being made with general education supports.</p>
+                   }
+                   if (Model.studentSocial.AreaOfNeed.HasValue && Model.studentSocial.AreaOfNeed.Value)
+                   {
+                    <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; that impact the ability to learn or access the general curriculum </p>
+                   }
 
-                    if (Model.studentSocial.MentalHealthDiagnosis)
-                    {
-                        <p>
-                            @Model.studentFirstName has a mental health diagnosis.
-                        </p>
+                   if (Model.studentSocial.MentalHealthDiagnosis)
+                   {
+                    <p>
+                        @Model.studentFirstName has a mental health diagnosis.
+                    </p>
 
-                    }
-                    if (Model.studentSocial.SignificantBehaviors)
-                    {
+                   }
+                   if (Model.studentSocial.SignificantBehaviors)
+                   {
                         <p>
                             @Model.studentFirstName significant behavior concerns.
                         </p>
@@ -1020,9 +992,7 @@
                         <div class="form-check form-group-label">
                             <span>This need will be met @textNeedMetBy </span>
                         </div>
-
                     </fieldset>
-
                     }
                     else
                     {
@@ -1032,20 +1002,19 @@
             <hr />
             <div>
                 <h3 class="text-center">GENERAL INTELLIGENCE</h3>
+            @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
+            {
 
-                @if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
+                if (Model.studentIntelligence.ProgressTowardGenEd)
                 {
+                    <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; however,  progress is being made with general education supports.</p>
+                }
+                else if (Model.studentIntelligence.AreaOfNeed == true)
+                {
+                    <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; that impact the ability to learn or access the general curriculum</p>
+                }
 
-                    if (Model.studentIntelligence.ProgressTowardGenEd)
-                    {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; however,  progress is being made with general education supports.</p>
-                    }
-                    else if (Model.studentIntelligence.AreaOfNeed == true)
-                    {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; that impact the ability to learn or access the general curriculum</p>
-                    }
-
-                    <fieldset class="form-group">
+                                <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
@@ -1082,7 +1051,7 @@
                         <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; that impact the ability to learn or access the general curriculum</p>
                     }
 
-                    <fieldset class="form-group">
+                                <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
@@ -1146,18 +1115,17 @@
             <div>
             <h3 class="text-center">READING</h3>
 
-            @if (!Model.studentReading.NoConcerns)
-            {
+           @if (!Model.studentReading.NoConcerns)
+           {
 
-                if (Model.studentReading.ProgressTowardGenEd)
-                {
-                   <p>The Team has concerns about @Model.studentFirstName in the area of Reading; however,  progress is being made with general education supports.</p>
-                }
-                else if (Model.studentReading.AreaOfNeed)
-                {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Reading; that impact the ability to learn or access the general curriculum</p>
-                }
-
+               if (Model.studentReading.ProgressTowardGenEd)
+               {
+                <p>The Team has concerns about @Model.studentFirstName in the area of Reading; however,  progress is being made with general education supports.</p>
+               }
+               else if (Model.studentReading.AreaOfNeed)
+               {
+                <p>The Team has concerns about @Model.studentFirstName in the area of Reading; that impact the ability to learn or access the general curriculum</p>
+               }
                     <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
@@ -1223,20 +1191,19 @@
             <hr />
             <div>
             <h3 class="text-center">MATH</h3>
+             @if (!Model.studentMath.NoConcerns)
+             {
 
-            @if (!Model.studentMath.NoConcerns)
-            {
-
-                if (Model.studentMath.ProgressTowardGenEd)
-                {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of Math; however,  progress is being made with general education supports.</p>
-                }
-                else if (Model.studentMath.AreaOfNeed)
-                {
+                 if (Model.studentMath.ProgressTowardGenEd)
+                 {
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Math; however,  progress is being made with general education supports.</p>
+                 }
+                 else if (Model.studentMath.AreaOfNeed)
+                 {
                     <p>The Team has concerns about @Model.studentFirstName in the area of Math; that impact the ability to learn or access the general curriculum</p>
-                }
+                 }
 
-                    <fieldset class="form-group">
+                            <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
@@ -1301,13 +1268,12 @@
             <hr />
             <div>
             <h3 class="text-center">WRITTEN</h3>
-
             @if (!Model.studentWritten.NoConcerns)
             {
 
                 if (Model.studentWritten.ProgressTowardGenEd)
                 {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of Writing; however,  progress is being made with general education supports.</p>
+                                <p>The Team has concerns about @Model.studentFirstName in the area of Writing; however,  progress is being made with general education supports.</p>
                 }
                 else if (Model.studentWritten.AreaOfNeed)
                 {
@@ -1378,19 +1344,16 @@
             <div>
                 <h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
                 @if (Model.accommodations != null && Model.accommodations.Count() > 0)
-                {
-                    
-
-
+                { 
                     <table>
                         <tr>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Freq</th>
-                            <th>Duration</th>
-                            <th>Anticipated Start Date</th>
-                            <th>Anticipated End Date</th>
-                            <th>Location</th>
+                            <td><b>Type</b></td>
+                            <td><b>Description</b></td>
+                            <td><b>Freq</b></td>
+                            <td><b>Location</b></td>
+                            <td><b>Duration</b></td>
+                            <td><b>Anticipated <br />Start Date</b></td>
+                            <td><b>Anticipated <br />End Date</b></td>                            
                         </tr>
                         @foreach (var accom in Model.accommodations)
                         {
@@ -1422,6 +1385,9 @@
                                     @accom.Frequency
                                 </td>
                                 <td>
+                                    @accom.Location
+                                </td>
+                                <td>
                                     @accom.Duration
                                 </td>
                                 <td>
@@ -1433,14 +1399,11 @@
                                 <td>
                                     @if (accom.AnticipatedEndDate.HasValue)
                                     {
-                                        @accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")
+                                         @accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")
                                     }
                                 </td>
-                                <td>
-                                    @accom.Location
-                                </td>
+                               
                             </tr>
-
                         } <!--end for each-->
                     </table>
                 }
@@ -1455,7 +1418,7 @@
             <div>
                 <h3 class="text-center">BEHAVIOR PLAN</h3>
                 @if (Model.studentBehavior != null)
-                 {
+                {
                     <div>
                         <div>
                             <div class="row voffset2">
@@ -1482,30 +1445,29 @@
                             <div class="row voffset1">
                                 <div class="col-md-12">
                                     <label for="misTriggers">Possible triggers for behaviors</label>
-                                    
-                                    @if (Model.studentBehavior.Triggers != null)
-                                    {
-                                        var showTriggerOther = false;
+                                      @if (Model.studentBehavior.Triggers != null)
+                                      {
+                                          var showTriggerOther = false;
 
-                                        foreach (var hypothesis in Model.studentBehavior.Triggers)
-                                        {
-                                            var selected = "";
-                                            if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
-                                            {
-                                                selected = hypothesis.BehaviorTriggerType;
+                                          foreach (var hypothesis in Model.studentBehavior.Triggers)
+                                          {
+                                              var selected = "";
+                                              if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
+                                              {
+                                                  selected = hypothesis.BehaviorTriggerType;
 
-                                                if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
-                                                {
-                                                    showTriggerOther = true;
-                                                }
+                                                  if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
+                                                  {
+                                                      showTriggerOther = true;
+                                                  }
 
-                                                    <text> @selected </text>
-                                                    <br />
-                                            }
+                                                <text> @selected </text>
+                                                <br />
+                                              }
 
-                                        }
-                                        if (showTriggerOther)
-                                        {
+                                          }
+                                          if (showTriggerOther)
+                                          {
                                             <div class="voffset2">
                                                         <label>Other Description</label>
                                                         <p>@Model.studentBehavior.TriggerOther</p>
@@ -1525,35 +1487,33 @@
                                 <div class="row voffset1">
                                     <div class="col-md-12">
                                         <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
-                                       
-                                            @if (Model.studentBehavior.HypothesisList != null)
-                                            {
-                                                var showHypothesisOther = false;
+                                          @if (Model.studentBehavior.HypothesisList != null)
+                                          {
+                                              var showHypothesisOther = false;
 
-                                                foreach (var hypothesis in Model.studentBehavior.HypothesisList)
-                                                {
+                                              foreach (var hypothesis in Model.studentBehavior.HypothesisList)
+                                              {
+                                                  var selected = "";
+                                                  if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
+                                                  {
+                                                      selected = hypothesis.BehaviorHypothesisType;
 
-                                                    var selected = "";
-                                                    if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
-                                                    {
-                                                        selected = hypothesis.BehaviorHypothesisType;
+                                                      if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
+                                                      {
+                                                          showHypothesisOther = true;
+                                                      }
 
-                                                        if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
-                                                        {
-                                                            showHypothesisOther = true;
-                                                        }
-
-                                                        <text > @selected </text>
-                                                        <br />
-                                                    }
-                                                }
-                                                if (showHypothesisOther)
-                                                {
-                                                        <div id="divHypothesisOther" class="voffset2">
-                                                            <label>Other Description</label>
-                                                            <p>@Model.studentBehavior.HypothesisOther</p>
-                                                        </div>
-                                                }
+                                                    <text > @selected </text>
+                                                    <br />
+                                                  }
+                                              }
+                                              if (showHypothesisOther)
+                                              {
+                                                    <div id="divHypothesisOther" class="voffset2">
+                                                        <label>Other Description</label>
+                                                        <p>@Model.studentBehavior.HypothesisOther</p>
+                                                    </div>
+                                              }
                                             }                                            
                                         </div>
                                     </div>
@@ -1565,7 +1525,6 @@
                                      <div class="row voffset1">
                                 <div class="col-md-12">
                                     <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
-                                   
                                         @if (Model.studentBehavior.Strategies != null)
                                         {
                                             var showStrategyOther = false;
@@ -1583,8 +1542,7 @@
                                                         showStrategyOther = true;
                                                     }
 
-                                                    <text> @selected </text><br />
-                                                }
+                                                    <text> @selected </text><br />                                                }
 
                                             }
                                             if (showStrategyOther)
@@ -1597,11 +1555,10 @@
                                         }
                                       
                                     </div>
-
                                     </div>
                                         <div class="row voffset">
                                             <div class="col-md-12">
-                                                <label class="underline">Targeted Behaviors</label>                                                
+                                                <label class="underline">Targeted Behaviors</label>
                                                 <div>
                                                     <table class="table dont-break">
                                                         <thead>
@@ -1613,7 +1570,6 @@
                                                         <tr>
                                                             <td>
                                                                 @Model.studentBehavior.targetedBehavior1.Behavior
-
                                                             </td>
                                                             <td>@Model.studentBehavior.targetedBehavior1.Baseline</td>
                                                         </tr>
@@ -1720,7 +1676,7 @@
                     <h3 class="text-center">TRANSITION PLAN</h3>
                     <div class="row">                        
                             @if (Model.studentTransition.assessments.Count > 0)
-                            {
+                             {
                                 <table>
                                     <tr>
                                         <th>Transition Assessment Date</th>
@@ -1776,7 +1732,6 @@
                         </div>
                       </div>                
                         <div class="row">
-                          
                                 @if (Model.studentTransition.goals.Count > 0)
                                 {
                                     <label>Education/Training Goal</label>
@@ -1795,17 +1750,12 @@
                                         {
                                             edGrad = "Upon completion of High School Program";
                                         }
-
-
-                                        <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
-                                        
-                                    }
-                                }
-                           
-                        </div>
-                        
+                                         <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+                                     }
+                                }                           
+                        </div>                        
                         <div class="row" >
-                          
+
                                 @if (Model.studentTransition.goals.Count > 0)
                                 {
                                     <label>Employment Goal</label>
@@ -1825,16 +1775,13 @@
                                             edGrad = "Upon completion of High School Program";
                                         }
 
-                                        <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
-                                    }
-                                }
-                           
+                                         <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+                                        }
+                                }                           
                         </div>
-
                         <div class="row" style="padding-top:8px">
-                            
                                 @if (Model.studentTransition.goals.Count > 0)
-                                { 
+                                {
                                     <label>Independent Living</label>
                                     foreach (var goal in Model.studentTransition.goals.Where(g => g.GoalType == "independent"))
                                     {
@@ -1852,73 +1799,50 @@
                                             edGrad = "Upon completion of High School Program";
                                         }
 
-                                        <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
-                                        
-                                    }
+                                         <p>@edGrad @Model.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+                                      }
                                 }                                                    
-                        </div>
-
-                   
+                        </div>                   
                         <label>Post Secondary Transition Services reviewed annually.</label>
                         <div class="col-xs-12">                                
                                 <div>
-                                    <label>Instruction Service</label>                                    
+                                    <label>Instruction Service</label>
                                     <p>Instruction is the use of formal techniques to impact knowledge.It is typically in schools through academic instruction, general education classes, tutoring, etc.Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.</p>                                
                                 </div>                              
-                                <div >
-
+                                <div>
                                         @if (Model.studentTransition.services.Count > 0)
-                                        {                                          
+                                        {
                                             foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
                                             {
-                                               
                                                     <label for="transitionServiceDescription">Description</label>
                                                     <p>@(service.ServiceDescription)</p>
-                                               
                                                     <label for="transitionServiceFrequency">Frequency</label>
                                                     <p>@(service.Frequency)</p>
-
                                                     <label for="transitionServiceLocation">Location</label>
                                                     <p>@(service.Location)</p>
-
                                                     <label for="transitionServiceDuration">Duration</label>
                                                     <p>@(service.Duration)</p>
-                                               
-                                                   
-                                               
                                             }
-
                                         }
-
-                                    </div>                              
-
-                                <div>
-                                  
-                                    <label>Related Service</label>                                  
-                                    <p>
-                                        Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.
-                                    </p>
+                                    </div>                           
+                                <div>                                  
+                                    <label>Related Service</label>
+                                    <p>Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.</p>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-12" id="transitionRelatedServiceContainer">
                                     @if (Model.studentTransition.services.Count > 0)
                                     {
                                         foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
                                         {
-
                                             <label for="transitionServiceDescription">Description</label>
                                              <p>@(related.ServiceDescription)</p>
-
                                             <label for="transitionServiceFrequency">Frequency</label>
                                             <p>@(related.Frequency)</p>
-
                                             <label for="transitionServiceLocation">Location</label>
                                             <p>@(related.Location)</p>
-
                                             <label for="transitionServiceDuration">Duration</label>
-                                            <p>@(related.Duration)</p>                                                                                      
-
+                                            <p>@(related.Duration)</p>
                                         }
                                     }
                                     </div>
@@ -1926,7 +1850,7 @@
 
                               <div>
                                   
-                                    <label>Daily Living Skills Service</label>                                  
+                                    <label>Daily Living Skills Service</label>
                                     <p>
                                         Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)
                                     </p>
@@ -1942,13 +1866,13 @@
 
                                             <label for="transitionServiceFrequency">Frequency</label>
                                             <p>@(daily.Frequency)</p>
-                                            
+
+
                                             <label for="transitionServiceLocation">Location</label>
                                             <p>@(daily.Location)</p>
 
                                             <label for="transitionServiceDuration">Duration</label>
                                             <p>@(daily.Duration)</p>
-
                                         }
                                     }
                                     </div>
@@ -1976,13 +1900,12 @@
 
                                             <label for="transitionServiceDuration">Duration</label>
                                             <p>@(vocational.Duration)</p>
-                                            
                                         }
-                                    }
+                                      }
                                     </div>
                                 </div>
                               <div>                                  
-                                    <label>Recreation and Leisure Service</label>                                  
+                                    <label>Recreation and Leisure Service</label>
                                    
                                 </div>
                                 <div class="row">
@@ -1996,13 +1919,12 @@
 
                                             <label for="transitionServiceFrequency">Frequency</label>
                                             <p>@(leisure.Frequency)</p>
-                                            
+
                                             <label for="transitionServiceLocation">Location</label>
                                             <p>@(leisure.Location)</p>
 
                                             <label for="transitionServiceDuration">Duration</label>
                                             <p>@(leisure.Duration)</p>
-
                                         }
                                     }
                                     </div>
@@ -2086,7 +2008,7 @@
                                         <label class="underline">Vocational Rehabilitation</label><br /><br />
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_BenefitKRS)
-                                            {
+                                             {
                                                 <p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
                                              }
                                              else
@@ -2097,40 +2019,30 @@
                                         </fieldset>
                                         <fieldset class="form-group @(Model.studentTransition.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
                                             @if (Model.studentTransition.transition.Planning_ConsentPrior)
-                                            {
+                                             {
                                                 <p>Consent to release confidential information was obtained to prior to KRS notification</p>
                                             }
                                             else
                                             {
                                                 <p>Consent to release confidential information was not obtained to prior to KRS notification</p>
-                                            }
-                                            
-                                            
+                                            }                                                                                       
                                         </fieldset>
                                     </div>
                                 </div>
-
                             </div>
-                       
-                  
-
-
                 </div><!--end transition-->
             }
-
             <hr />
             <div>
                 <h3 class="text-center">OTHER CONSIDERATIONS</h3>
                 @if (Model.studentOtherConsiderations != null)
                 {
                     var showExtendYear = Model.studentOtherConsiderations.ExtendedSchoolYear_Necessary == "1" ? true : false;
-
                     <div class="row voffset2">
                         <div class="col-md-12">
                             <label>Assistive Technology</label>
                         </div>
                     </div>
-
                     <div class="row voffset2" style="padding-top:8px">
                         <div class="col-md-12">
                             <fieldset class="form-group">
@@ -2144,8 +2056,7 @@
                                 }                               
                                 <div class="form-check" id="AssistiveTechnology_Text">
                                     <p id="AT_Desc" style="display: @(Model.studentOtherConsiderations.AssistiveTechnology_Require.HasValue && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value ? "block;" : "none;")">
-                                    <p>@(Model.studentOtherConsiderations.AssistiveTechnology_Description)</p>
-                                    
+                                    <p>@(Model.studentOtherConsiderations.AssistiveTechnology_Description)</p>                                    
                                 </div>
                             </fieldset>
                         </div>
@@ -2180,23 +2091,17 @@
                             </div>
                             <div class="form-check voffset2" id="StateAssessment_TextArea">
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
-                                {
-                                 
-                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
-                                 
+                                {                                 
+                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>                                 
                                     
                                 }
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-                                {
-                                 
-                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
-                                 
+                                {                                 
+                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>                                 
                                 }
                                 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-                                {
-                                 
-                                    <p >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
-                                 
+                                {                                 
+                                    <p >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>                                 
                                 }
                            </div>
                         </div>
@@ -2223,13 +2128,11 @@
                             <div >
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
                                 {                                    
-                                    <p >@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
-                                    
+                                    <p >@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>                                    
                                 }
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
                                 {                                 
-                                    <p >@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
-                                 
+                                    <p >@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>                                 
                                 }
                             </div>
 
@@ -2275,10 +2178,8 @@
                             </div>
                         </div>
                     </div>
-
                     if (@showExtendYear)
                     {
-
                         <hr />
                         <div class="row voffset2 dont-break">
                             <div class="col-md-12">
@@ -2318,31 +2219,26 @@
                     <div class="row voffset2">
                         <div class="col-md-12">
                             <fieldset class="form-group">
-                                 @if (Model.studentOtherConsiderations.Parental_Concerns_flag.HasValue && Model.studentOtherConsiderations.Parental_Concerns_flag.Value)
+                                @if (Model.studentOtherConsiderations.Parental_Concerns_flag.HasValue && Model.studentOtherConsiderations.Parental_Concerns_flag.Value)
                                 {
                                      <p>The parent(s)/legal education decision maker has concerns for enhancing the education of @Model.studentFirstName</p>
                                 }
                                 else
                                 {
                                     <p>The parent(s)/legal education decision maker does not have concerns for enhancing the education of @Model.studentFirstName</p>
-                                } 
-                                
-
+                                }                                
                             </fieldset>
                         </div>
                     </div>
-
                     <hr />
                     <div class="row voffset2">
                         <div class="col-md-12">
                             <label>Considerations</label>
                         </div>
                     </div>
-
                     <div class="row voffset2">
                         <div class="col-md-12">
                             <p>The parent(s)/legal education decision maker will be informed of (@Model.studentFirstName)'s progress in writing at least one time every quarter.</p>
-
                             <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
                             <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
                         </div>
@@ -2355,9 +2251,6 @@
                     </div>
                 }
             </div><!--end other consid-->
-
-
-
             <hr/>
             <div>
                 <h3 class="text-center">GOALS</h3>
@@ -2431,25 +2324,19 @@
                                     <div>
                                         <label for="StudentGoalTitle">Student Goal: @sGoal.Title</label>
                                     </div>
-
                                     <div class="form-group">
-
                                         <div class="input-group">
                                             <span data-bind="bs-drp-sel-label"><b>@ddlText</b></span><p>@sGoal.Title</p>
                                         </div>
-
                                     </div>
-
                                     <div class="form-group">
                                         <label >Measurable Annual Goal:</label>
                                         <p >@sGoal.AnnualGoal</p>
                                     </div>
-
                                     <div class="form-group">
                                         <label >Goal Baseline</label>
                                         <p>@sGoal.Baseline</p>
                                     </div>
-
                                     <div class="form-group">
                                         <label >State Standards</label>
                                         <p>@sGoal.StateStandards</p>
@@ -2674,15 +2561,12 @@
                             </div><!--end panel group-->
                         </div><!--end col md 12-->
                     }//end for goals
-
                 }
                 else
                 {                    
                    <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>                 
                 }
             </div><!--end section break-->
-
-
         <div>
             <h3 class="text-center">SERVICES</h3>
             @if (Model.studentServices != null && Model.studentServices.Count() > 0)
@@ -2740,7 +2624,6 @@
                                             if (service.ProviderID == serviceProvider.ProviderID)
                                             {
                                                 <text>@serviceProvider.Name</text>
-
                                             }
                                         }
                                     }
@@ -2769,10 +2652,7 @@
                                     @service.DaysPerWeek
                                 </td>
                                 <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-
-
                                 <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
-
                                 <td>
                                     @switch (@service.Frequency)
                                     {
@@ -2798,68 +2678,65 @@
                    <p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>                 
                 }
 
-        </div>
+        </div>        
+      </div>   <!--end module page-->
+    </div><!--end container-->
+   </div><!--end transition-->
+    <script>
 
+        var body = document.getElementsByTagName("body")[0];
+        body.classList += ' ' + 'fadeInToBackground';
 
-            </div>   <!--end module page-->
-            </div><!--end container-->
-            </div><!--end transition-->
-            <script>
+        var el = document.getElementsByClassName("body-content")[0], c = el.style;
+        c.borderLeft = "1px solid #000";
+        c.borderRight = "1px solid #000";
+        c.boxShadow = "10px 10px 25px #333";
+        c.position = "relative";
+        c.top = "15px";
+        c.backgroundColor = "#ffffff";
+        c.marginBottom = "75px";
 
-                var body = document.getElementsByTagName("body")[0];
-                body.classList += ' ' + 'fadeInToBackground';
+        setTimeout(function () {
+            var tp = document.getElementsByClassName("transition-page")[0];
+            tp.style.display = "block";
 
-                var el = document.getElementsByClassName("body-content")[0], c = el.style;
-                c.borderLeft = "1px solid #000";
-                c.borderRight = "1px solid #000";
-                c.boxShadow = "10px 10px 25px #333";
-                c.position = "relative";
-                c.top = "15px";
-                c.backgroundColor = "#ffffff";
-                c.marginBottom = "75px";
+            var className = 'transition-page-scaleUpCenter';
+            if (el.classList) {
+                el.classList.add(className);
+            }
+            else {
+                el.className += ' ' + className;
+            }
+        }, 200);
 
-                setTimeout(function () {
-                    var tp = document.getElementsByClassName("transition-page")[0];
-                    tp.style.display = "block";
+        document.getElementsByClassName('transition-page')[0].addEventListener('click', function (e) {
+            if (e && e.target && !(hasClass(e.target, 'exit') || hasClass(e.target, 'print'))) {
+                event.preventDefault();
+                document.activeElement.blur();
+            }
+        });
 
-                    var className = 'transition-page-scaleUpCenter';
-                    if (el.classList) {
-                        el.classList.add(className);
-                    }
-                    else {
-                        el.className += ' ' + className;
-                    }
-                }, 200);
+        function hasClass(target, className) {
+            return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
+        }
 
-                document.getElementsByClassName('transition-page')[0].addEventListener('click', function (e) {
-                    if (e && e.target && !(hasClass(e.target, 'exit') || hasClass(e.target, 'print'))) {
-                        event.preventDefault();
-                        document.activeElement.blur();
-                    }
-                });
+        function PrintText() {
+            var x = document.getElementsByClassName("form-print");
+            var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+            var markup2 = document.getElementsByClassName("studentInformationPage")[0].innerHTML;
+            $("#printText").val(markup);
+            $("#studentText").val(markup2);
+            $("#isArchive").val(0);
+            x[0].submit();
+        }
 
-                function hasClass(target, className) {
-                    return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
-                }
-
-                function PrintText() {
-                    var x = document.getElementsByClassName("form-print");
-                    var markup = document.getElementsByClassName("module-page")[0].innerHTML;
-                    var markup2 = document.getElementsByClassName("studentInformationPage")[0].innerHTML;
-                    $("#printText").val(markup);
-                    $("#studentText").val(markup2);
-                    $("#isArchive").val(0);
-                    x[0].submit();
-                }
-
-                function ArchiveText() {
-                    var x = document.getElementsByClassName("form-print");
-                    var markup = document.getElementsByClassName("module-page")[0].innerHTML;
-                    var markup2 = document.getElementsByClassName("studentInformationPage")[0].innerHTML;
-                    $("#printText").val(markup);
-                    $("#studentText").val(markup2);
-                    $("#isArchive").val(1);
-                    x[0].submit();
-                }
-
-            </script>
+        function ArchiveText() {
+            var x = document.getElementsByClassName("form-print");
+            var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+            var markup2 = document.getElementsByClassName("studentInformationPage")[0].innerHTML;
+            $("#printText").val(markup);
+            $("#studentText").val(markup2);
+            $("#isArchive").val(1);
+            x[0].submit();
+        }
+    </script>

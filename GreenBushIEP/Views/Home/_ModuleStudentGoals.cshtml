@@ -274,7 +274,7 @@
                                                     <li data-value="9"><a href="#">Written Language</a></li>
                                                 </ul>
                                             </div>
-                                            <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Enter a new student goal" />
+                                            <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
                                             <span class="input-group-addon">
                                                 <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: 1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="This column indicates if a service will be required to achieve this goal."></i>
                                                 <input name="hasService0" value="true" type="hidden">
@@ -481,7 +481,7 @@
                                                             <li data-value="9"><a href="#">Written Language</a></li>
                                                         </ul>
                                                     </div>
-                                                    <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Enter a new student goal" value="@(studentGoal.goal.Title)" />
+                                                    <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
                                                         <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString())" type="hidden">
