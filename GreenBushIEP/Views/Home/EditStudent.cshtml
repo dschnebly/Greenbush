@@ -487,6 +487,10 @@
         border: 1px solid #aaa;
     }
 
+    .contact-tooltip {
+        border: 2px solid #9F6000;
+    }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -762,7 +766,7 @@
                                                 foreach (var building in Model.buildings)
                                                 {
                                                     string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
-                                                    <option value="@building.BuildingID" @selected>@building.BuildingName</option>
+                                                    <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
                                                 }
                                             }
                                         </select>
@@ -779,7 +783,7 @@
                                                 foreach (var building in Model.buildings)
                                                 {
                                                     string selected = Model.info.BuildingID == building.BuildingID ? "selected=selected" : "";
-                                                    <option value="@building.BuildingID" @selected>@building.BuildingName</option>
+                                                    <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
                                                 }
                                             }
                                         </select>
@@ -803,7 +807,7 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="studentStreetAddress1">Street Address</label>
+                                                <label for="studentStreetAddress1" class="required">Street Address</label>
                                                 <input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text" value="@(Model.student.Address1)" />
                                             </div>
                                         </div>
@@ -815,13 +819,13 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label for="studentCity">City</label>
+                                                <label for="studentCity" class="required">City</label>
                                                 <input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" value="@(Model.student.City)" />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
-                                                <label for="studentState">State</label>
+                                                <label for="studentState" class="required">State</label>
                                                 <select name="studentState" id="studentState" class="form-control norequired" data-validate="true">
                                                     <option value="AL" selected=@(Model.student.State == "AL")>AL</option>
                                                     <option value="AK" selected=@(Model.student.State == "AK")>AK</option>

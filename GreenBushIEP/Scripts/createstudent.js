@@ -103,7 +103,7 @@ function init() {
                     $(".studentBuilding").find('option').remove().end().append($("<option></option>").attr("value", "").text("Select Building"));
                     $.each(buildings, function (key, value) {
                         // throw away the key. It's simply an index counter for the returned array.                                                
-                        $(".studentBuilding").append($("<option></option>").attr("value", value.BuildingID).text(value.BuildingName));
+                        $(".studentBuilding").append($("<option></option>").attr("value", value.BuildingID).text(value.BuildingName + " (" + value.BuildingID +")"));
                     });
 
                 }
