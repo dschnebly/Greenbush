@@ -280,10 +280,13 @@
                     <td style="width:200px">&nbsp;</td>
                     <td style="text-align:center">
                         <h4><b>Student Information Page</b></h4>
+                        @if (@Model.studentDetails.building != null)
+                        {
                         <h5>@Model.studentDetails.building.BuildingName</h5>
                         <h5>@Model.studentDetails.building.Address_Physical</h5>
                         <h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
                         <h5>@Model.studentDetails.building.Phone</h5>
+                        }
                     </td>
                     <td style="text-align:right;vertical-align:top">
                         Printed:<br />@(DateTime.Now.ToShortDateString())<br />
@@ -344,12 +347,12 @@
             <table style="width:100%">
                 <tr>
                     <td><label>Neighborhood School:</label></td>
-                    <td>@Model.studentDetails.neighborhoodBuilding.BuildingName</td>
+                    <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
 
                 </tr>
                 <tr>
                     <td><label>Responsible School:</label></td>
-                    <td>@Model.studentDetails.building.BuildingName</td>
+                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -369,7 +372,7 @@
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.student.FundSource</td>
                     <td><label>KG Full Day:</label></td>
-                    <td>@(Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "N")</td>
+                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "")</td>
                 </tr>
             </table>
             <hr />
@@ -1689,7 +1692,7 @@
                                         <tr>
                                         <td>@(assessment.Create_Date.ToString("M/d/yyyy"))</td>
                                         <td>@(assessment.Narrative)</td>
-                                        <td>@(assessment.CompletedOn.Value.ToString("MM/dd/yyyy"))</td>
+                                        <td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
                                         <td>@(assessment.Performance)</td>
                                         </tr>
                                     }

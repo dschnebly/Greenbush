@@ -1405,7 +1405,8 @@ namespace GreenbushIep.Controllers
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-                        
+            var studentDetails = new StudentDetailsPrintViewModel();
+
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
             // Get the MIS id of the logged in teacher.
             tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
@@ -1470,7 +1471,7 @@ namespace GreenbushIep.Controllers
 
                 };
 
-
+                
                 //student goalds
                 if (theIEP != null && theIEP.draft != null)
                 {
@@ -1515,8 +1516,7 @@ namespace GreenbushIep.Controllers
                         var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
                         var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                         var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-
-                        var studentDetails = new StudentDetailsPrintViewModel();
+                                               
                         studentDetails.student = info;
                         studentDetails.teacher = teacher;
                         studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
@@ -1533,9 +1533,10 @@ namespace GreenbushIep.Controllers
                         studentDetails.studentAgeAtAnnualMeeting = (theIEP.draft.MeetingDate.HasValue ? (theIEP.draft.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.draft.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.draft.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.draft.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.inititationDate = theIEP.draft.begin_date.HasValue ? theIEP.draft.begin_date.Value.ToShortDateString() : "";
 
-                        theIEP.studentDetails = studentDetails;
+                       
                     }
 
+                    theIEP.studentDetails = studentDetails;
                 }
 
                 return View("PrintIEP", theIEP);
