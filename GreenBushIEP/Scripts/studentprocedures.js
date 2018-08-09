@@ -285,7 +285,7 @@ $(window).on('shown.bs.modal', function (e) {
 
 $('#moduleSection').on('hide.bs.modal', function (e) {
     if ($("#moduleSection form").serialize() != moduleFormSerialize) {
-        if (!confirm("Are you sure you want to leave this module before saving your changes?")) {
+        if (!confirm("If your leave this module now the changes you made will NOT be saved.")) {
             e.preventDefault();
         }
     }

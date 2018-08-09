@@ -243,7 +243,7 @@ namespace GreenbushIep.Controllers
                         {
                             foreach (var district in providerDistrict)
                             {
-                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district.ToString() });
+                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString() });
                                 db.SaveChanges();
                             }
                         }
@@ -554,7 +554,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy,
-                                }).Distinct().ToList();
+                                }).Distinct().OrderBy(u => u.LastName).ToList();
 
 
                 var model = new StudentViewModel();
