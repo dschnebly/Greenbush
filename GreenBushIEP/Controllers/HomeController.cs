@@ -369,7 +369,8 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).ToList();
+                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && c.SchoolYear == SchoolYear && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).OrderBy(o =>o.Month).ToList();
+                
                 if (CalendarView != null && CalendarView.Count > 0)
                 {
                     List<tblCalendarReporting> reports = db.tblCalendarReportings.Where(r => r.UserID == MIS.UserID && r.USD == usd && r.BuildingID == bId).ToList();
