@@ -1615,6 +1615,11 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
+        public ActionResult Updates()
+        {
+            return View();
+        }
+
         [Authorize]
         public ActionResult DownloadArchive(int id)
         {

@@ -41,9 +41,10 @@
         @RenderBody()
         <footer>
             <p>
-                @DateTime.Now.Year @Html.Raw("\u00a9 Greenbush - The Southeast Kansas Education Service Center")&nbsp;<a class="nav-link pull-right" href="#">
-                    <i class="fa fa-file-code-o updates" style="">
-                        @*<span class="badge badge-danger">11</span>*@
+                @DateTime.Now.Year @Html.Raw("\u00a9 Greenbush - The Southeast Kansas Education Service Center")
+                <a class="nav-link pull-right" href="@(Url.Action("Updates", "Home"))">
+                    <i class="fa fa-file-code-o updates">
+                        <span class="badge badge-danger">11</span>
                     </i>
                 </a>
             </p>
