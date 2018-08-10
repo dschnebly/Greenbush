@@ -81,15 +81,6 @@
         padding: 0 0 15px 0;
     }
 
-    /*.list-group-item > i,
-    .list-group-item > text {
-        cursor: pointer;
-    }
-
-        .list-group-item > text:hover {
-            text-decoration: underline;
-        }*/
-
     .list-group.list-group-root {
         padding: 0;
         overflow: inherit;
@@ -184,7 +175,6 @@
         font-size: 12px;
         line-height: 1.428571429;
         border-radius: 15px;
-        margin: 0;
     }
 
         .btn-circle:focus {
@@ -211,53 +201,73 @@
             margin-bottom: 10px;
         }
 
-    #add-student-user i {
+    #addExistingTeacher i {
         padding: 0;
     }
 
-    #user-toggle .user-toggle-item {
-        display: inline-block;
+    #user-toggle {
+        margin-right: 20px;
     }
 
-    #user-toggle button:first-child {
+        #user-toggle .user-toggle-item {
+            display: inline-block;
+        }
+
+        #user-toggle button:first-child {
+            margin-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item button:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #user-toggle .user-toggle-item ul {
+            display: inline-block;
+            list-style-type: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            top: 10px;
+            padding-right: 12px;
+        }
+
+            #user-toggle .user-toggle-item ul li {
+                display: inline-block;
+                float: left;
+                padding-left: 15px;
+            }
+
+            #user-toggle .user-toggle-item ul.show-buttons {
+                display: inline-block;
+                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
+                -moz-animation: fadein 1s; /* Firefox < 16
+                -ms-animation: fadein 1s; /* Internet Explorer
+                -o-animation: fadein 1s; /* Opera < 12.1
+                animation: fadein 1s;*/
+            }
+
+            #user-toggle .user-toggle-item ul.hide-buttons {
+                display: none;
+            }
+
+    #add-system-user, #addExistingTeacher {
         margin-left: 15px;
     }
 
-    #user-toggle .user-toggle-item button:hover {
-        -webkit-animation: pulse 1s ease 0s;
-        -o-animation: pulse 1s ease 0s;
-        -moz-animation: pulse 1s ease 0s;
-        animation: pulse 1s ease 0s;
-    }
-
-    #user-toggle .user-toggle-item ul {
-        display: inline-block;
-        list-style-type: none;
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-        position: relative;
-        top: 10px;
-        padding-right: 12px;
-    }
-
-        #user-toggle .user-toggle-item ul li {
-            display: inline-block;
-            float: left;
-            padding-left: 15px;
+        #add-system-user:hover, #addExistingTeacher:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
         }
 
-        #user-toggle .user-toggle-item ul.show-buttons {
-            display: inline-block;
-            /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
-            -moz-animation: fadein 1s; /* Firefox < 16
-            -ms-animation: fadein 1s; /* Internet Explorer
-            -o-animation: fadein 1s; /* Opera < 12.1
-            animation: fadein 1s;*/
-        }
-
-        #user-toggle .user-toggle-item ul.hide-buttons {
-            display: none;
+        #add-system-user i, #addExistingTeacher i {
+            vertical-align: -webkit-baseline-middle;
+            padding-left: 0;
         }
 
     @@-webkit-keyframes pulse {
@@ -390,69 +400,68 @@
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
                 <div class="user-toggle-item">
-                    <button id="add-system-user" type="button" class="btn btn-primary btn-circle btn-xl"><i class="fa fa-user-plus" title="Working with a System User"></i></button>
-                    <ul id="system-user-actions" class="hide-buttons">
-                        <li><a href="/Manage/Create" title="Create New System User" role="button" data-toggle="tooltip" class="btn btn-primary btn-circle" data-ftrans="slide"><i class="glyphicon glyphicon-plus"></i></a></li>
-                        <li><a href="#" id="addExistingTeacher" title="Search Exsisting Teacher List" role="button" data-id="@(Model.user.UserID)" class="btn btn-primary btn-circle"><i class="fa fa-users"></i></a></li>
-                        <li><a href="#" id="searchMyTeachers" title="Search My Users" role="button" data-toggle="tooltip" data-command="toggle-my-admin-search" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-search"></i></a></li>
-                    </ul>
+                    <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
+                </div>
+                <div class="user-toggle-item">
+                    <a id="addExistingTeacher" class="btn btn-primary btn-circle btn-xl" data-id="@(Model.user.UserID)" ><i class="fa fa-users" title="Search Exsisting Teacher List" data-toggle="tooltip"></i></a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row" style="display: none; margin-right: 0;">
-        <div class="col-md-10">
-            <div class="input-group c-my-search">
-                <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
-                <span class="input-group-btn">
-                    <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
-                </span>
-            </div>
-        </div>
-        <div class="col-md-1" id="filter">
-            <div class="input-group-btn search-panel">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span id="search_concept"><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu filteroptions" role="menu">
-                    <li class="selected-filter"><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>No Filters</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Teachers Only</a></li>
-                    <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Students Only</a></li>
-                </ul>
-            </div>
+<div class="row" style="display: none; margin-right: 0;">
+    <div class="col-md-10">
+        <div class="input-group c-my-search">
+            <input type="text" class="form-control" id="contact-list-search" name="contact-list-search">
+            <span class="input-group-btn">
+                <button id="search_table" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search text-muted"></span></button>
+            </span>
         </div>
     </div>
-
-    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+    <div class="col-md-1" id="filter">
+        <div class="input-group-btn search-panel">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span id="search_concept"><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu filteroptions" role="menu">
+                <li class="selected-filter"><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>No Filters</a></li>
+                <li class="divider"></li>
+                <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Teachers Only</a></li>
+                <li><a href="#filters" class="filteroption"><i class="fa fa-check" aria-hidden="true"></i>Show Students Only</a></li>
+            </ul>
+        </div>
     </div>
+</div>
 
-    @{
-        if (Model.staff.Count > 0)
-        {
-            <div class="just-padding">
+<div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+</div>
 
-                <div class="list-group list-group-root well">
+@{
+    if (Model.staff.Count > 0)
+    {
+        <div class="just-padding">
 
-                    @foreach (var user in Model.staff)
-                    {
-                        <div class="list-group-item" data-id="@(user.UserID)">
+            <div class="list-group list-group-root well">
 
-                            @if (user.RoleID == "5")
-                            {
-                                <i class="fa fa-child" aria-hidden="true"></i>
+                @foreach (var user in Model.staff)
+                {
+                    <div class="list-group-item" data-id="@(user.UserID)">
+
+                        @if (user.RoleID == "5")
+                        {
+                            <i class="fa fa-child" aria-hidden="true"></i>
                                 <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                                 </button>
                                 <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                            }
-                            else
-                            {
-                                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" data-ftrans="slide">@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</a>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#confirmRemoval">
@@ -462,16 +471,14 @@
                                     <span class="fa fa-building-o" aria-hidden="true"></span>
                                 </button>
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                            }
-                        </div>
-                    }
+                        }
+                    </div>
+                }
 
-                </div>
             </div>
-        }
+        </div>
     }
-
-</div>
+}
 
 <!-- Modal -->
 <div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
