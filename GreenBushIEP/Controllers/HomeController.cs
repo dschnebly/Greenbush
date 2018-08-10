@@ -134,7 +134,7 @@ namespace GreenbushIep.Controllers
 
                     var MISBuildingList = (from buildingMaps in db.tblBuildingMappings
                                            join buildings in db.tblBuildings
-                                              on buildingMaps.USD equals buildings.USD
+                                              on buildingMaps.BuildingID equals buildings.BuildingID
                                            where buildingMaps.UserID == MIS.UserID
                                            select buildings).Distinct().OrderBy(b => b.BuildingID).ToList();
 
