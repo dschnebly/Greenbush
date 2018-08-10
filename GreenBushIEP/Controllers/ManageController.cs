@@ -1065,14 +1065,14 @@ namespace GreenBushIEP.Controllers
                 // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
                 List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheDistrict.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
-                //foreach (tblUser student in students.ToList())
-                //{
-                //    var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
-                //    if (teacherDistricts.Except(studentDistricts).Any())
-                //    {
-                //        students.Remove(student);
-                //    }
-                //}
+                foreach (tblUser student in students.ToList())
+                {
+                    var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
+                    if (teacherDistricts.Except(studentDistricts).Any())
+                    {
+                        students.Remove(student);
+                    }
+                }
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
