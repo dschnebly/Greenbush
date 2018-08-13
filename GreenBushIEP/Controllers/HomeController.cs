@@ -1618,6 +1618,9 @@ namespace GreenbushIep.Controllers
 
         public ActionResult Updates()
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            ViewBag.fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+
             return View();
         }
 
