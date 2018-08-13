@@ -540,6 +540,8 @@ namespace GreenbushIep.Controllers
                             where o.AdminID == teacher.UserID
                             select i).Distinct().ToList();
 
+                
+
                 var students = (from user in users
                                 join i in info
                                 on user.UserID equals i.UserID
@@ -559,10 +561,18 @@ namespace GreenbushIep.Controllers
                                     ImageURL = user.ImageURL,
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
-                                    CreatedBy = i.CreatedBy,
+                                    CreatedBy = i.CreatedBy
                                 }).Distinct().OrderBy(u => u.LastName).ToList();
 
-
+                //get IEP Date
+                foreach(var student in students)
+                {
+                    IEP theIEP = new IEP(student.UserID);
+                    student.IEPDate = DateTime.Now.ToString("MM/dd/yyyy");
+                    if (theIEP != null && theIEP.draft != null && theIEP.draft.begin_date.HasValue)
+                        student.IEPDate = theIEP.draft.begin_date.Value.ToShortDateString();
+                    
+                }
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
                 model.Students = students.ToList();

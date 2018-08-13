@@ -181,6 +181,7 @@
                         <th>Kids #</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>IEP Date</th>
                         <th>Birthdate</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -192,6 +193,7 @@
                             <td>@student.KidsID</td>
                             <td>@student.FirstName.ToTitleCase()</td>
                             <td>@student.LastName.ToTitleCase()</td>
+                            <td>@student.IEPDate</td>
                             <td>@student.DateOfBirth.ToString("MM-dd-yyyy")</td>
                             <td>
                                 <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right launchIEP">

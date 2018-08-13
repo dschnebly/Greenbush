@@ -142,6 +142,8 @@ namespace GreenBushIEP.Models
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Zip { get; set; }
+
+        public string IEPDate { get; set; }
     }
 
     public class StudentViewModel
