@@ -256,7 +256,7 @@
                                         <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
                                         <div class="input-group">
                                             <div class="input-group-btn bs-dropdown-to-select-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select studentGoalType" data-toggle="dropdown" style="font-size:16px;height: 49px;">
                                                     <span data-bind="bs-drp-sel-label">Select Module...</span>
                                                     <span class="caret"></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
@@ -287,7 +287,7 @@
                                     </div>
                                     <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                     <div class="form-group">
-                                        <input type="text" value="" class="form-control standard-font-size" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
+                                        <input type="text" value="" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
                                     </div>
                                     <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                     <div class="form-group">
@@ -799,6 +799,10 @@
                 $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-label"]')[0].innerHTML = menuText;
             }
         });
+
+        $(".studentGoalType").click(function () {
+            alert("Handler for .click() called.");
+        });
     });
 
     $('#newgoal').on('click', function () {
@@ -839,7 +843,7 @@
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments20']").attr("name", "reportOfAnnualGoalComments2" + goalCount);
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments30']").attr("name", "reportOfAnnualGoalComments3" + goalCount);
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments40']").attr("name", "reportOfAnnualGoalComments4" + goalCount);
-
+        
         // reset the id values of the panel and accordian elements
         var goalAccordion = cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
         goalAccordion.attr('href', '#collapse' + goalCount);
@@ -933,16 +937,26 @@
                 }
             });
 
+            //get baseline goal text
+            var goalBaselineElement = $(this).find(".studentGoalBaseline");
+
+            //check if default selected type has a baseline goal
+            _checkGoal(1, goalBaselineElement);
+
             //* Binding */
             /* When the user selects an option from the drop down. */
             $(this).find('.bs-dropdown-to-select-group .dropdown-menu li').on('click', function (event) {
                 var $target = $(event.currentTarget);
+                var selectedVal = $target.attr('data-value');
                 $target.closest('.bs-dropdown-to-select-group')
-                    .find('[data-bind="bs-drp-sel-value"]').val($target.attr('data-value'))
+                    .find('[data-bind="bs-drp-sel-value"]').val(selectedVal)
                     .end()
                     .children('.dropdown-toggle').dropdown('toggle');
                 $target.closest('.bs-dropdown-to-select-group')
                     .find('[data-bind="bs-drp-sel-label"]').text($target[0].innerText);
+                                
+                _checkGoal(selectedVal, goalBaselineElement);
+                
                 return false;
             });
 
@@ -1053,6 +1067,9 @@
             });
         });
 
+       
+
+
         initObjective();
     }
 
@@ -1154,6 +1171,28 @@
         });
     }
 
+    function _checkGoal(goalTypeId, goalBaselineElement)
+    {
+        var iepID = $("#IEPid").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/ModuleSection/GetGoalBaseline',
+            data: { goalTypeId: goalTypeId, iepID: iepID },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result) {
+                    goalBaselineElement.val(data.Message);
+                }
+                
+            },
+            error: function (data) {
+                console.log("Error getting baseline goal text.");
+            }
+        });
+    }
+
+
     initGoal();
 
     /* Binding */
@@ -1167,5 +1206,7 @@
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
     });
+
+
 
 </script>

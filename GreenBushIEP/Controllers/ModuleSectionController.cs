@@ -763,6 +763,65 @@ namespace GreenBushIEP.Controllers
 
         [HttpPost]
         [Authorize]
+        public ActionResult GetGoalBaseline(int goalTypeId, int iepID)
+        {
+            string baselineText = "";
+            switch (goalTypeId)
+            { 
+                case 1:
+                    var healthGoal = db.tblIEPHealths.Where(g => g.IEPid == iepID && g.Concerns).FirstOrDefault();
+                    if (healthGoal != null)
+                        baselineText = healthGoal.PLAAFP_Concerns;
+                break;
+                case 2:
+                    var motorGoal = db.tblIEPMotors.Where(g => g.IEPid == iepID  && !g.NoConcerns).FirstOrDefault();
+                    if (motorGoal != null)
+                        baselineText = motorGoal.PLAAFP_Concerns;
+                    break;
+                case 3:
+                    var commGoal = db.tblIEPCommunications.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (commGoal != null)
+                        baselineText = commGoal.PLAAFP_Concerns;
+                    break;
+                case 4:
+                    var socialGoal = db.tblIEPSocials.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (socialGoal != null)
+                        baselineText = socialGoal.PLAAFP_Concerns;
+                    break;
+                case 5:
+                    var giGoal = db.tblIEPIntelligences.Where(g => g.IEPid == iepID).FirstOrDefault();
+                    if (giGoal != null)
+                        baselineText = giGoal.PLAAFP_Concerns;
+                    break;
+                case 6:
+                    var academicGoal = db.tblIEPAcademics.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (academicGoal != null)
+                        baselineText = academicGoal.PLAAFP_Concerns;
+                    break;
+                case 7:
+                    var readGoal = db.tblIEPReadings.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (readGoal != null)
+                        baselineText = readGoal.PLAAFP_Concerns;
+                    break;
+                case 8:
+                    var mathGoal = db.tblIEPMaths.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (mathGoal != null)
+                        baselineText = mathGoal.PLAAFP_Concerns;
+                    break;
+                case 9:
+                    var writtenGoal = db.tblIEPWrittens.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
+                    if (writtenGoal != null)
+                        baselineText = writtenGoal.PLAAFP_Concerns;
+                    break;
+            }
+
+            return Json(new { Result = true, Message = baselineText }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [HttpPost]
+        [Authorize]
         public ActionResult DeleteStudentBenchmark(int studentBenchmarkId)
         {
             tblGoalBenchmark benchmarkToRemove = db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == studentBenchmarkId).FirstOrDefault();
