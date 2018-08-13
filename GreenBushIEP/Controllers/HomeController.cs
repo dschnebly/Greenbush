@@ -42,6 +42,10 @@ namespace GreenbushIep.Controllers
         [AllowAnonymous]
         public ActionResult Portal()
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
+
             if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole(owner))
