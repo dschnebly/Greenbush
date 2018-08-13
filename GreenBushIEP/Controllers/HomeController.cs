@@ -42,10 +42,6 @@ namespace GreenbushIep.Controllers
         [AllowAnonymous]
         public ActionResult Portal()
         {
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
-
             if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole(owner))
@@ -72,6 +68,10 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = owner)]
         public ActionResult OwnerPortal()
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
+
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (owner != null)
             {
@@ -96,6 +96,10 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult MISPortal()
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
+
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
@@ -491,6 +495,10 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = admin)]
         public ActionResult AdminPortal(int? userId)
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
+
             tblUser admin = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (admin != null)
             {
@@ -515,6 +523,10 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = teacher)]
         public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
         {
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
+
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
             {
@@ -1633,9 +1645,14 @@ namespace GreenbushIep.Controllers
         public ActionResult Updates()
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            ViewBag.fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            string version = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+            ViewBag.fileVersion = version;
+            ViewBag.UpdateCount = String.Empty;
 
-            return View();
+            var model = new List<tblVersionLog>();
+            model = db.tblVersionLogs.Where(u => u.VersionNumber == version).ToList();
+
+            return View(model);
         }
 
         [Authorize]
