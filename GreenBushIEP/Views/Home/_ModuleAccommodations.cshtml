@@ -283,13 +283,24 @@
                         saveButton.attr('id', "btnSave_" + data.id);
 
                         //collapse panel collapse0
-                        var togglePanel = cloneGoal.find('#collapse0');
+                        var togglePanel = cloneGoal.find('.panel-collapse');
                         togglePanel.attr('id', "collapse" + data.id);
                         var toggleButton = cloneGoal.find('.btnToggle');
-
+                        
                         toggleButton.attr("href", "#collapse" + data.id);
 
+                        toggleButton.attr('data-val', "collapse" + data.id);
+                                                
+                        var parentAcc = toggleButton.closest('.panel-group').attr("id", "accordion[" + data.id + "]");
+                        
+                        toggleButton.attr('data-parent', "#" + "accordion[" + data.id + "]");
+
+                        var label = cloneGoal.find('.studentGoalLabel');
+                        label.text(_getTypeName(data.accomType) + " " + data.newDate);
+
                         var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
+                        
+                        toggleButton.removeClass("collapsed");                                                
                     }
                 }
                 else {
@@ -439,13 +450,9 @@
                     if (response.result != undefined && response.result) {
 
                         $(element).closest('.oneStudentGoal').remove();
-
                     }
-                    else
-                    {
-
+                    else{
                         _showAlert("There was a problem deleting the Accommodation or Modification.", false);
-
                     }
                 });
             }
@@ -489,5 +496,29 @@
         });
        
     });
+
+    function _getTypeName(val)
+    {
+        var shortDesc = "Accommodation ";
+
+        if (val == 1)
+        {
+            shortDesc = "Accommodation ";
+        }
+        else if (val == 2)
+        {
+            shortDesc = "Modification ";
+        }
+        else if (val == 3)
+        {
+            shortDesc = "Supplemental Aids and Services ";
+        }
+        else if (val == 4)
+        {
+            shortDesc = "Support for School Personnel ";
+        }
+
+        return shortDesc;
+    }
     
 </script>

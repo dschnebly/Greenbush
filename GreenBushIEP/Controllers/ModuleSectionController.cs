@@ -670,7 +670,15 @@ namespace GreenBushIEP.Controllers
                     int newId = EditAccomodation(AccomodationIEP, model);
                     if (isNew)
                     {
-                        return Json(new { success = true, id = newId, iep = model.IEPid, isNew = true });
+                        return Json(new
+                        {
+                            success = true,
+                            id = newId,
+                            iep = model.IEPid,
+                            isNew = true,
+                            newDate = model.AnticipatedStartDate.HasValue ? model.AnticipatedStartDate.Value.ToShortDateString() : "" ,
+                            accomType = model.AccomType
+                        });
                     }
                     else
                     {
