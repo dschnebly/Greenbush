@@ -258,6 +258,7 @@
     </Compile>
     <Compile Include="Helper\RandomPassword.cs" />
     <Compile Include="Helper\StringExtensions.cs" />
+    <Compile Include="Helper\VersionCompare.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GreenbushIEPModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -347,6 +348,9 @@
     <Compile Include="Models\tblDistrict.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblEvaluationProcedure.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblFormArchive.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -354,6 +358,9 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGoalBenchmark.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblGoalEvaluationProcedure.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblIEP.cs">
@@ -554,6 +561,7 @@
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\createstudent.js" />
     <Content Include="Scripts\editable.js" />
+    <None Include="Properties\PublishProfiles\IEP Backpack.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\EditUsers.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

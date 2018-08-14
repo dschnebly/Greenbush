@@ -1,20 +1,20 @@
-﻿using GreenBushIEP.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
-using System.Globalization;
-using System.IO;
+﻿using GreenBushIEP.Helper;
+using GreenBushIEP.Models;
+using HtmlAgilityPack;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
-using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.Entity.Validation;
-using Newtonsoft.Json;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace GreenbushIep.Controllers
 {
@@ -70,7 +70,6 @@ namespace GreenbushIep.Controllers
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
 
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (owner != null)
@@ -86,6 +85,9 @@ namespace GreenbushIep.Controllers
                 model.user = owner;
                 model.staff = mis.ToList();
 
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(owner);
+
                 return View(model);
             }
 
@@ -98,7 +100,6 @@ namespace GreenbushIep.Controllers
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
 
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
@@ -113,6 +114,9 @@ namespace GreenbushIep.Controllers
                 UserOrganizationViewModel model = new UserOrganizationViewModel();
                 model.user = MIS;
                 model.staff = admin.ToList();
+
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
                 return View(model);
             }
@@ -497,7 +501,6 @@ namespace GreenbushIep.Controllers
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
 
             tblUser admin = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (admin != null)
@@ -513,6 +516,10 @@ namespace GreenbushIep.Controllers
                 model.user = admin;
                 model.staff = teachers.ToList();
 
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(admin);
+
+
                 return View(model);
             }
 
@@ -525,7 +532,6 @@ namespace GreenbushIep.Controllers
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-            ViewBag.UpdateCount = db.tblVersionLogs.Count(u => u.VersionNumber == fileVersion);
 
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
@@ -588,6 +594,9 @@ namespace GreenbushIep.Controllers
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
                 model.Students = students.ToList();
+
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
 
                 return View(model);
             }
@@ -1647,7 +1656,10 @@ namespace GreenbushIep.Controllers
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string version = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
             ViewBag.fileVersion = version;
-            ViewBag.UpdateCount = String.Empty;
+
+            tblUser user = db.tblUsers.SingleOrDefault(u => u.Email == User.Identity.Name);
+            user.LastVersionNumberSeen = version;
+            db.SaveChanges();
 
             var model = new List<tblVersionLog>();
             model = db.tblVersionLogs.Where(u => u.VersionNumber == version).ToList();

@@ -7,11 +7,11 @@
 
 <style>
     .p-xxs {
-        padding: 5px !important;
+        margin: 5px !important;
     }
 
-    .m-bottom {
-        padding: 5px !important;
+    .p-bottom {
+        padding-bottom: 5px !important;
     }
 </style>
 
@@ -25,15 +25,15 @@
 </div>
 <div class="modal-body">
     <ul class="list-group">
-        <li class="list-group-item p-xxs">
-            @if (Model != null)
+        @if (Model != null)
+        {
+            foreach (var update in Model)
             {
-                foreach (var update in Model)
-                {
-                    <p class="list-group-item-text m-bottom">@update.Update_Date</p>
+                <li class="list-group-item p-xxs">
+                    <p class="list-group-item-text p-bottom">@update.Update_Date</p>
                     <h4 class="list-group-item-heading">@update.UpdateText</h4>
-                }
+                </li>
             }
-        </li>
+        }
     </ul>
 </div>

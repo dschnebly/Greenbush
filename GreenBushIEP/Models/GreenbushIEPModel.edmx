@@ -225,6 +225,13 @@
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tblEvaluationProcedures">
+          <Key>
+            <PropertyRef Name="evaluationProcedureID" />
+          </Key>
+          <Property Name="evaluationProcedureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="evaluationProcedure" Type="nvarchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="tblFormArchive">
           <Key>
             <PropertyRef Name="FormArchiveID" />
@@ -260,6 +267,15 @@
           <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblGoalEvaluationProcedures">
+          <Key>
+            <PropertyRef Name="goalEvaluationProcedureID" />
+          </Key>
+          <Property Name="goalEvaluationProcedureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="goalID" Type="int" Nullable="false" />
+          <Property Name="evaluationProcedureID" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoals">
           <Key>
@@ -801,6 +817,7 @@
           <Property Name="Address1" Type="nvarchar" MaxLength="255" />
           <Property Name="Address2" Type="nvarchar" MaxLength="255" />
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="LastVersionNumberSeen" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -1002,8 +1019,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblCounties" EntityType="Self.tblCounties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEvaluationProcedures" EntityType="Self.tblEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="Self.tblGoalBenchmarks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGoalEvaluationProcedures" EntityType="Self.tblGoalEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoals" EntityType="Self.tblGoals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblIEPAcademic" EntityType="Self.tblIEPAcademic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblIEPCommunication" EntityType="Self.tblIEPCommunication" Schema="dbo" store:Type="Tables" />
@@ -1222,6 +1241,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <EntitySet Name="tblEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" />
+          <EntitySet Name="tblGoalEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2030,6 +2051,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -2151,6 +2173,22 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <EntityType Name="tblEvaluationProcedure">
+          <Key>
+            <PropertyRef Name="evaluationProcedureID" />
+          </Key>
+          <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="evaluationProcedure" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblGoalEvaluationProcedure">
+          <Key>
+            <PropertyRef Name="goalEvaluationProcedureID" />
+          </Key>
+          <Property Name="goalEvaluationProcedureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="goalID" Type="Int32" Nullable="false" />
+          <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2995,6 +3033,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
               <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="LastVersionNumberSeen" ColumnName="LastVersionNumberSeen" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="Address2" ColumnName="Address2" />
                 <ScalarProperty Name="Address1" ColumnName="Address1" />
@@ -3101,6 +3140,24 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tblEvaluationProcedures">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblEvaluationProcedure">
+              <MappingFragment StoreEntitySet="tblEvaluationProcedures">
+                <ScalarProperty Name="evaluationProcedure" ColumnName="evaluationProcedure" />
+                <ScalarProperty Name="evaluationProcedureID" ColumnName="evaluationProcedureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGoalEvaluationProcedures">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure">
+              <MappingFragment StoreEntitySet="tblGoalEvaluationProcedures">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="evaluationProcedureID" ColumnName="evaluationProcedureID" />
+                <ScalarProperty Name="goalID" ColumnName="goalID" />
+                <ScalarProperty Name="goalEvaluationProcedureID" ColumnName="goalEvaluationProcedureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
