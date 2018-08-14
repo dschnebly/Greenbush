@@ -11,6 +11,7 @@ namespace GreenBushIEP.Models
 
         public tblGoal goal { get; set; }
         public List<tblGoalBenchmark> benchmarks { get; set; } = new List<tblGoalBenchmark>();
+        public List<tblGoalEvaluationProcedure> evaluationProcedures { get; set; } = new List<tblGoalEvaluationProcedure>();
 
         public StudentGoal(int? goalId = null)
         {  
@@ -18,15 +19,17 @@ namespace GreenBushIEP.Models
             {
                 this.goal = db.tblGoals.Where(g => g.goalID == goalId).FirstOrDefault();
                 this.benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goalId).ToList();
+                this.evaluationProcedures = db.tblGoalEvaluationProcedures.Where(o => o.goalID == goalId).ToList();
             }
             else
             {
                 this.goal = new tblGoal();
                 this.benchmarks = new List<tblGoalBenchmark>();
+                this.evaluationProcedures = new List<tblGoalEvaluationProcedure>();
             }
         }
 
-        public void SaveGoal()
+        public void SaveGoal(string evalProcedures)
         {
             tblGoal ourGoal = db.tblGoals.Where(g => g.goalID == this.goal.goalID).FirstOrDefault();
             if (ourGoal == null)
@@ -70,6 +73,29 @@ namespace GreenBushIEP.Models
                 benchmark.Update_Date = DateTime.Now;
                 db.SaveChanges();
             }
+
+            if (!string.IsNullOrEmpty(evalProcedures))
+            {
+                var evalProceduresArray = evalProcedures.Split(',');
+                var currentList = db.tblGoalEvaluationProcedures.Where(o => o.goalID == this.goal.goalID);
+                foreach (tblGoalEvaluationProcedure obj in currentList)
+                {
+                    db.tblGoalEvaluationProcedures.Remove(obj);                    
+                }
+                db.SaveChanges();//delete exting rows
+
+                foreach (var evalProc in evalProceduresArray)
+                {
+                    int evalProcVal = 0;
+                    Int32.TryParse(evalProc, out evalProcVal);
+
+                    if (evalProcVal > 0)
+                    {                        
+                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now });                        
+                    }
+                }
+                db.SaveChanges(); //save new rows
+            }
         }
 
         public void DeleteGoal()
@@ -77,6 +103,12 @@ namespace GreenBushIEP.Models
             foreach (tblGoalBenchmark obj in benchmarks)
             {
                 db.tblGoalBenchmarks.Remove(obj);
+                db.SaveChanges();
+            }
+
+            foreach (tblGoalEvaluationProcedure objEP in evaluationProcedures)
+            {
+                db.tblGoalEvaluationProcedures.Remove(objEP);
                 db.SaveChanges();
             }
 

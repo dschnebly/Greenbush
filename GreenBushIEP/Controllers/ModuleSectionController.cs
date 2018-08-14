@@ -752,6 +752,21 @@ namespace GreenBushIEP.Controllers
             tblGoal studentGoalToRemove = db.tblGoals.Where(g => g.goalID == studentGoalId).FirstOrDefault();
             if (studentGoalToRemove != null)
             {
+
+                var evalsToDelete = db.tblGoalEvaluationProcedures.Where(g => g.goalID == studentGoalId).ToList();
+                foreach (tblGoalEvaluationProcedure objEP in evalsToDelete)
+                {
+                    db.tblGoalEvaluationProcedures.Remove(objEP);
+                    db.SaveChanges();
+                }
+
+                var benchmarksToDelete = db.tblGoalBenchmarks.Where(g => g.goalID == studentGoalId).ToList();
+                foreach (tblGoalBenchmark obj in benchmarksToDelete)
+                {
+                    db.tblGoalBenchmarks.Remove(obj);
+                    db.SaveChanges();
+                }
+
                 db.tblGoals.Remove(studentGoalToRemove);
                 db.SaveChanges();
 
@@ -854,7 +869,7 @@ namespace GreenBushIEP.Controllers
                     int tempInt;
                     bool keyParse = Int32.TryParse(collection[++j], out goalId);
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
-
+                    
                     studentGoal.goal.IEPid = iepId;
                     studentGoal.goal.Module = collection[++j].ToString();
                     studentGoal.goal.Title = collection[++j].ToString();
@@ -862,7 +877,8 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.AnnualGoal = collection[++j].ToString();
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();
-                    studentGoal.goal.EvaluationProcedures = Convert.ToInt32(collection[++j]);
+                    
+                    var evalProcedures = collection[++j];
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
@@ -914,7 +930,7 @@ namespace GreenBushIEP.Controllers
                         }
                     }
 
-                    studentGoal.SaveGoal();
+                    studentGoal.SaveGoal(evalProcedures);
                 }
                 catch (Exception e)
                 {
