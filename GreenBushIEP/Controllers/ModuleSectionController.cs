@@ -877,8 +877,12 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.AnnualGoal = collection[++j].ToString();
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();
-                    
-                    var evalProcedures = collection[++j];
+
+                    var evalProcedures = collection["StudentGoalBenchmarkMethods0"];
+                    if (evalProcedures != null)
+                    {
+                        j++;//only increment when values are submitted otherwise it throws the count off for the rest
+                    }
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;

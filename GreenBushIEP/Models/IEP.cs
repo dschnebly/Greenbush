@@ -22,6 +22,7 @@ namespace GreenBushIEP.Models
 
         public List<tblGoal> studentGoals { get; set; }
         public List<tblGoalBenchmark> studentGoalBenchmarks { get; set; }
+        public List<tblGoalEvaluationProcedure> studentGoalEvalProcs { get; set; }
         public List<tblService> studentServices { get; set; }
         public List<tblLocation> locations { get; set; }
         public List<tblServiceType> serviceTypes { get; set; }
@@ -41,6 +42,7 @@ namespace GreenBushIEP.Models
         {
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
+            studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
             studentServices = new List<tblService>();
             locations = new List<tblLocation>();
             serviceTypes = new List<tblServiceType>();
