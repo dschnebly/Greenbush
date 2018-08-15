@@ -579,7 +579,7 @@ namespace GreenbushIep.Controllers
                 foreach(var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.IEPDate = DateTime.Now.ToString("MM/dd/yyyy");
+                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.draft != null && theIEP.draft.begin_date.HasValue)
                         student.IEPDate = theIEP.draft.begin_date.Value.ToShortDateString();
                     
