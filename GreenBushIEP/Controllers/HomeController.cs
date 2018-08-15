@@ -98,8 +98,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult MISPortal()
         {
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
 
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
@@ -203,7 +201,7 @@ namespace GreenbushIep.Controllers
 
         [HttpPost]
         [Authorize(Roles = mis)]
-        public ActionResult UpdateProvidersList(int pk, string providerName, int[] providerDistrict, string providerCode)
+        public ActionResult UpdateProvidersList(int pk, string providerName, string[] providerDistrict, string providerCode)
         {
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -226,7 +224,7 @@ namespace GreenbushIep.Controllers
 
                     foreach (var district in providerDistrict)
                     {
-                        db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district.ToString() });
+                        db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district });
                         db.SaveChanges();
                     }
 
@@ -307,7 +305,7 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult GetProviderDistrict(int providerId)
         {
-            var districts = db.tblProviderDistricts.Where(o => o.ProviderID == providerId).Select(o => o.USD).ToList();
+            var districts = db.tblProviderDistricts.Where(p => p.ProviderID == providerId).Select(p => p.USD).ToList();
 
             return Json(new { Result = "success", districts = districts }, JsonRequestBehavior.AllowGet);
         }
@@ -499,9 +497,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = admin)]
         public ActionResult AdminPortal(int? userId)
         {
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
-
             tblUser admin = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (admin != null)
             {
@@ -530,8 +525,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = teacher)]
         public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
         {
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
 
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)

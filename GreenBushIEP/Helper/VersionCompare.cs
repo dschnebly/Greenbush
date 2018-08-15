@@ -8,6 +8,13 @@ namespace GreenBushIEP.Helper
         public static string GetVersionCount(tblUser user)
         {
             int updateCount = 0;
+
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
+
+            user.LastVersionNumberSeen = (user.LastVersionNumberSeen == null ? user.LastVersionNumberSeen = fileVersion : user.LastVersionNumberSeen );
+
+
             System.Version lastSeen = new System.Version(user.LastVersionNumberSeen);
             var listVersion = new IndividualizedEducationProgramEntities().tblVersionLogs.ToList();
 

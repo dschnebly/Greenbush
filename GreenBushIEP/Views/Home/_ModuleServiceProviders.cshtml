@@ -334,10 +334,12 @@
             data: { providerId: parseInt(providerId) },
             dataType: 'json',
             success: function (data) {
-                if (data.length !== 0) {
+                if (data.length !== 0)
+                {
                     edit(providerId, providerName, providerCode, data.districts);
                 }
-                else {
+                else
+                {
                     $("#alertMessage .moreinfo").html('Server Error');
                     $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                         $("#alertMessage").slideUp(500);
@@ -400,6 +402,8 @@
 
             return;
         }
+
+        console.log(district);
 
         $.post('@Url.Action("UpdateProvidersList", "Home")', { pk: id, providerName: name, providerDistrict: district, providerCode: code }, function (response) {
             if (!$.isEmptyObject(response)) {
