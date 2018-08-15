@@ -479,6 +479,7 @@ namespace GreenBushIEP.Models
         public int studentAgeAtIEP { get; set; }
         public string inititationDate { get; set; }
         public int studentAgeAtAnnualMeeting { get; set; }
+        public string assignChildCount { get; set; }
 
     }
 

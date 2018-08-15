@@ -1592,7 +1592,8 @@ namespace GreenbushIep.Controllers
                         var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
                         var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                         var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-                                               
+                        var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+
                         studentDetails.student = info;
                         studentDetails.teacher = teacher;
                         studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
@@ -1608,8 +1609,9 @@ namespace GreenbushIep.Controllers
                         studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.studentAgeAtAnnualMeeting = (theIEP.draft.MeetingDate.HasValue ? (theIEP.draft.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.draft.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.draft.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.draft.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.inititationDate = theIEP.draft.begin_date.HasValue ? theIEP.draft.begin_date.Value.ToShortDateString() : "";
+                        studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
 
-                       
+
                     }
 
                     theIEP.studentDetails = studentDetails;
