@@ -1547,6 +1547,7 @@ namespace GreenbushIep.Controllers
                     foreach (var goal in theIEP.studentGoals)
                     {
                         theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
+                        theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
                     }
 
                     theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.draft.IEPid).ToList();

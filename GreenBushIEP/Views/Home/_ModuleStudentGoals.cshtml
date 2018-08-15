@@ -1,6 +1,7 @@
 ﻿@model GreenBushIEP.Models.StudentGoalsViewModel
 
 <style>
+    .default { width: 100% !important} /*needed for chosen placeholder to show when the element is initially hidden*/
     .form-inline .form-group {
         margin-right: 10px;
     }
@@ -73,7 +74,7 @@
         color: red;
     }
 </style>
-
+<link href="/Content/chosen.css" rel="stylesheet" />
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
@@ -87,7 +88,7 @@
                 <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
-
+       
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
@@ -111,7 +112,7 @@
                             <li data-value="5"><a href="#">Time Sample</a></li>
                             <li data-value="6"><a href="#">Demonstration/Performance</a></li>
                             <li data-value="7"><a href="#">Other</a></li>
-                        </ul>
+                        </ul>                        
                     </div>
                     <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
                     <span class="input-group-btn">
@@ -273,6 +274,7 @@
                                                     <li data-value="8"><a href="#">Math</a></li>
                                                     <li data-value="9"><a href="#">Written Language</a></li>
                                                 </ul>
+                                                
                                             </div>
                                             <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
                                             <span class="input-group-addon">
@@ -295,22 +297,16 @@
                                     </div>
                                     <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
                                     <div class="form-group">
-                                        <div class="input-group-btn bs-dropdown-to-select-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                                                <span data-bind="bs-drp-sel-label">Select Method...</span>
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <input type="hidden" name="StudentEvaluationProcedures0" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="1">
-                                            <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                                                <li data-value="1"><a href="#">Written Observation</a></li>
-                                                <li data-value="2"><a href="#">Written Performance</a></li>
-                                                <li data-value="3"><a href="#">Oral Performance</a></li>
-                                                <li data-value="4"><a href="#">Criterion-Referenced Test</a></li>
-                                                <li data-value="5"><a href="#">Time Sample</a></li>
-                                                <li data-value="6"><a href="#">Demonstration/Performance</a></li>
-                                                <li data-value="7"><a href="#">Other</a></li>
-                                            </ul>
+                                        <div class="input-group-btn bs-dropdown-to-select-group">                                          
+                                             <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..."  class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">                                                                                              
+                                                 <option value="1">Written Observation</option>
+                                                 <option value="2">Written Performance</option>
+                                                 <option value="3">Oral Performance</option>
+                                                 <option value="4">Criterion-Referenced Test</option>
+                                                 <option value="5">Time Sample</option>
+                                                 <option value="6">Demonstration/Performance</option>
+                                                 <option value="7">Other</option>                           
+                                            </select>
                                         </div>
                                     </div>
                                     <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
@@ -502,23 +498,15 @@
                                             </div>
                                             <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
                                             <div class="form-group">
-                                                <div class="input-group-btn bs-dropdown-to-select-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                                                        <span data-bind="bs-drp-sel-label">Select Method...</span>
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <input type="hidden" name="StudentEvaluationProcedures@(studentGoal.goal.goalID)" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.EvaluationProcedures)">
-                                                    <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                                                        <li data-value="1"><a href="#">Written Observation</a></li>
-                                                        <li data-value="2"><a href="#">Written Performance</a></li>
-                                                        <li data-value="3"><a href="#">Oral Performance</a></li>
-                                                        <li data-value="4"><a href="#">Criterion-Referenced Test</a></li>
-                                                        <li data-value="5"><a href="#">Time Sample</a></li>
-                                                        <li data-value="6"><a href="#">Demonstration/Performance</a></li>
-                                                        <li data-value="7"><a href="#">Other</a></li>
-                                                    </ul>
-                                                </div>
+                                                <select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                    <option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
+                                                    <option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
+                                                    <option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
+                                                    <option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
+                                                    <option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
+                                                    <option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+                                                    <option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
+                                                </select>
                                             </div>
                                             <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
                                                 <thead class="thead-inverse">
@@ -803,6 +791,8 @@
         $(".studentGoalType").click(function () {
             alert("Handler for .click() called.");
         });
+
+        $(".chosen-select").chosen({ width: "100%" });
     });
 
     $('#newgoal').on('click', function () {
@@ -843,6 +833,9 @@
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments20']").attr("name", "reportOfAnnualGoalComments2" + goalCount);
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments30']").attr("name", "reportOfAnnualGoalComments3" + goalCount);
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments40']").attr("name", "reportOfAnnualGoalComments4" + goalCount);
+
+        var evals = cloneGoal.find("select[name='StudentGoalBenchmarkMethods0']").attr("id", "StudentGoalBenchmarkMethods" + goalCount);
+        evals.chosen({ width: "100%"});
         
         // reset the id values of the panel and accordian elements
         var goalAccordion = cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
