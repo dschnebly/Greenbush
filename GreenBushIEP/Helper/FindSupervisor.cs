@@ -12,17 +12,17 @@ namespace GreenBushIEP.Helper
 
         public static tblUser GetByRole(string roleId, tblUser user)
         {
+            if (user.RoleID == roleId)
+            {
+                return user;
+            }
+
             tblUser supervisor = (from o in db.tblOrganizationMappings
                                   join u in db.tblUsers on o.AdminID equals u.UserID
                                   where o.UserID == user.UserID
                                   select u).FirstOrDefault();
 
-            if (supervisor.RoleID != "2")
-            {
-                supervisor = GetByRole(roleId, supervisor);
-            }
-
-            return supervisor;
+            return GetByRole(roleId, supervisor);
         }
 
     }
