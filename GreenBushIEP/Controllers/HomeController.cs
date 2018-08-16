@@ -986,34 +986,33 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentServices(int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser mis = FindSupervisor.GetByRole("2", teacher);
+
+            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+
+            var providers = (from p in db.tblProviders
+                            join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
+                            where d.USD == studentInfo.AssignedUSD select p).ToList();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
                 StudentServiceViewModel model = new StudentServiceViewModel();
-
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
-                tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-
-                // Get the MIS id of the logged in teacher.
-                tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
-                tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
 
                 if (services != null)
                 {
                     model.studentId = studentId;
                     model.studentServices = services;
                     model.serviceTypes = db.tblServiceTypes.ToList();
-                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
+                    model.serviceProviders = providers;
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year - 1 && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year - 1 && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.UserID && r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
-
-
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
                 else
@@ -1021,12 +1020,12 @@ namespace GreenbushIep.Controllers
                     model.studentId = studentId;
                     model.studentServices.Add(new tblService() { IEPid = iep.IEPid });
                     model.serviceTypes = db.tblServiceTypes.ToList();
-                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList();
+                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.AdminID && c.BuildingID == studentInfo.BuildingID && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
-                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.AdminID && r.BuildingID == studentInfo.BuildingID && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
+                    model.calendar = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && c.canHaveClass == false || c.NoService == true && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.Year >= DateTime.Now.Year && c.Year <= DateTime.Now.Year + 5).ToList();
+                    model.calendarReportings = db.tblCalendarReportings.Where(r => r.UserID == mis.UserID && r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear <= DateTime.Now.Year + 5).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
