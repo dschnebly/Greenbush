@@ -334,8 +334,6 @@ namespace GreenbushIep.Controllers
                     return Json(new { Result = "success", HasClass = hasSchool, Message = "successfully saved to the dababase." }, JsonRequestBehavior.AllowGet);
                 }
 
-                //calendar = db.tblCalendars.Where(c => c.UserID == MIS.UserID && c.Year == year && c.Month == month && c.Day == day && c.USD == usd && c.BuildingID == bId).FirstOrDefault();
-
                 return Json(new { Result = "success", HasClass = false, Message = "successfully saved to the dababase." }, JsonRequestBehavior.AllowGet);
             }
 
@@ -982,7 +980,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult StudentServices(int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1038,7 +1036,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult SaveStudentService(FormCollection collection)
         {
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
@@ -1123,7 +1121,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult DeleteStudentService(int studentServiceId)
         {
             tblService service = db.tblServices.Where(s => s.ServiceID == studentServiceId).FirstOrDefault();
@@ -1139,7 +1137,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult StudentTransition(int studentId)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
@@ -1168,7 +1166,7 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult BehaviorPlan(int studentId)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
@@ -1227,7 +1225,7 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult Accommodations(int studentId)
         {
             var model = new AccomodationViewModel();
@@ -1264,7 +1262,7 @@ namespace GreenbushIep.Controllers
             return PartialView("_ModuleAccommodations", model);
         }
 
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult OtherConsiderations(int studentId)
         {
             var model = new tblOtherConsideration();
@@ -1299,7 +1297,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult DeleteAccommodation(int accomId)
         {
             try
@@ -1363,7 +1361,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult IEPFormModule(int studentId)
         {
 
@@ -1384,7 +1382,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = teacher)]
+        [Authorize(Roles = teacher + ", " + mis)]
         public ActionResult IEPFormFile(int id, string fileName)
         {
             IEPFormFileViewModel viewModel = new IEPFormFileViewModel();
@@ -1475,9 +1473,9 @@ namespace GreenbushIep.Controllers
             var studentDetails = new StudentDetailsPrintViewModel();
 
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
+
             // Get the MIS id of the logged in teacher.
-            tblOrganizationMapping admin = db.tblOrganizationMappings.Where(o => o.UserID == teacher.UserID).First();
-            tblOrganizationMapping mis = db.tblOrganizationMappings.Where(o => o.UserID == admin.AdminID).First();
+            tblUser mis = FindSupervisor.GetByRole("2", teacher);
 
             // check the passed value and change the status based on value.
             string iepStatus = IEPStatus.DRAFT;
@@ -1532,7 +1530,7 @@ namespace GreenbushIep.Controllers
                     studentWritten = query.SingleOrDefault().written,
                     locations = db.tblLocations.ToList(),
                     serviceTypes = db.tblServiceTypes.ToList(),
-                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.AdminID).ToList(),
+                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
                     studentFirstName = string.Format("{0}", student.FirstName),
                     studentLastName = string.Format("{0}", student.LastName),
 
