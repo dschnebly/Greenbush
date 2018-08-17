@@ -241,15 +241,15 @@ namespace GreenBushIEP.Helper
             try
             {
                 // email this user the password
-                SmtpClient client = new SmtpClient();
+                SmtpClient smtpClient = new SmtpClient();
 
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org");
+                mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
                 mailMessage.To.Add(user.Email);
                 mailMessage.Subject = "Your new Greenbush IEP password ";
                 mailMessage.Body = "Your new password is '" + password + "'";
 
-                client.Send(mailMessage);
+                smtpClient.Send(mailMessage);
             }
             catch (Exception e)
             {
