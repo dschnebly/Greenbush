@@ -8,7 +8,7 @@ namespace GreenBushIEP.Models
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
-        public tblIEP draft { get; set; }
+        public tblIEP current { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -55,7 +55,7 @@ namespace GreenBushIEP.Models
         {
             if (stid != null)
             {
-                this.draft = db.tblIEPs.SingleOrDefault(i => i.UserID == stid && i.IepStatus == IEPStatus.DRAFT);
+                this.current = db.tblIEPs.SingleOrDefault(i => i.UserID == stid);
             }
         }
 
@@ -73,21 +73,21 @@ namespace GreenBushIEP.Models
 
             // Check that we don't already have a draft copy being used by this user. 
             // If we do we need to return an error.
-            if (this.draft != null)
+            if (this.current != null)
             {
                 throw new System.ArgumentException("There is already a draft IEP for this user");
             }
 
-            this.draft = new tblIEP();
-            this.draft.UserID = stid;
-            this.draft.IepStatus = IEPStatus.DRAFT;
-            this.draft.Create_Date = DateTime.Now;
-            this.draft.Amendment = false;
-            this.draft.StateAssessment = String.Empty;
+            this.current = new tblIEP();
+            this.current.UserID = stid;
+            this.current.IepStatus = IEPStatus.DRAFT;
+            this.current.Create_Date = DateTime.Now;
+            this.current.Amendment = false;
+            this.current.StateAssessment = String.Empty;
 
             try
             {
-                db.tblIEPs.Add(this.draft);
+                db.tblIEPs.Add(this.current);
                 db.SaveChanges();
             }
             catch
@@ -97,7 +97,7 @@ namespace GreenBushIEP.Models
 
             // Adding Health Table
             this.studentHealth = new tblIEPHealth();
-            this.studentHealth.IEPid = this.draft.IEPid;
+            this.studentHealth.IEPid = this.current.IEPid;
             this.studentHealth.NoConcerns = true;
             this.studentHealth.Concerns = false;
             this.studentHealth.Diagnosis = false;
@@ -116,13 +116,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Health table");
             }
 
             // Adding Motor Table
             this.studentMotor = new tblIEPMotor();
-            this.studentMotor.IEPid = this.draft.IEPid;
+            this.studentMotor.IEPid = this.current.IEPid;
             this.studentMotor.NoConcerns = true;
             this.studentMotor.ProgressTowardGenEd = false;
             this.studentMotor.Needs = false;
@@ -137,13 +137,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Motor table");
             }
 
             // Add Communication Table
             this.studentCommunication = new tblIEPCommunication();
-            this.studentCommunication.IEPid = this.draft.IEPid;
+            this.studentCommunication.IEPid = this.current.IEPid;
             this.studentCommunication.NoConcerns = true;
             this.studentCommunication.ProgressTowardGenEd = false;
             this.studentCommunication.SpeechImpactPerformance = false;
@@ -159,13 +159,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Communication table");
             }
 
             // Add Social Table
             this.studentSocial = new tblIEPSocial();
-            this.studentSocial.IEPid = this.draft.IEPid;
+            this.studentSocial.IEPid = this.current.IEPid;
             this.studentSocial.NoConcerns = true;
             this.studentSocial.ProgressTowardGenEd = false;
             this.studentSocial.AreaOfNeed = false;
@@ -183,13 +183,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Social table");
             }
 
             // Add Intelligence Table
             this.studentIntelligence = new tblIEPIntelligence();
-            this.studentIntelligence.IEPid = this.draft.IEPid;
+            this.studentIntelligence.IEPid = this.current.IEPid;
             this.studentIntelligence.Concerns = false;
 
             try
@@ -201,13 +201,13 @@ namespace GreenBushIEP.Models
             }
             catch(Exception e)
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Intelligence table: " + e.InnerException.Message.ToString());
             }
 
             // Add Academic Table
             this.studentAcademic = new tblIEPAcademic();
-            this.studentAcademic.IEPid = this.draft.IEPid;
+            this.studentAcademic.IEPid = this.current.IEPid;
             this.studentAcademic.NoConcerns = true;
             this.studentAcademic.AreaOfNeed = false;
 
@@ -220,13 +220,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Academic table");
             }
 
             // Add Reading Table
             this.studentReading = new tblIEPReading();
-            this.studentReading.IEPid = this.draft.IEPid;
+            this.studentReading.IEPid = this.current.IEPid;
             this.studentReading.NoConcerns = true;
             this.studentReading.ProgressTowardGenEd = false;
             this.studentReading.InstructionalTier1 = false;
@@ -243,13 +243,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Reading table");
             }
 
             // Add Math Table
             this.studentMath = new tblIEPMath();
-            this.studentMath.IEPid = this.draft.IEPid;
+            this.studentMath.IEPid = this.current.IEPid;
             this.studentMath.NoConcerns = true;
             this.studentMath.ProgressTowardGenEd = false;
             this.studentMath.InstructionalTier1 = false;
@@ -266,13 +266,13 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Math table");
             }
 
             // Add Written Table
             this.studentWritten = new tblIEPWritten();
-            this.studentWritten.IEPid = this.draft.IEPid;
+            this.studentWritten.IEPid = this.current.IEPid;
             this.studentWritten.NoConcerns = true;
             this.studentWritten.ProgressTowardGenEd = false;
             this.studentWritten.InstructionalTier1 = false;
@@ -289,20 +289,20 @@ namespace GreenBushIEP.Models
             }
             catch
             {
-                this.draft.IepStatus = IEPStatus.DELETED;
+                this.current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Written table");
             }
 
             // Add references to all the new created tables.
-            this.draft.IEPAcademicID = AcademicID;
-            this.draft.IEPCommunicationID = CommunicationID;
-            this.draft.IEPHealthID = HealthID;
-            this.draft.IEPIntelligenceID = IntelligenceID;
-            this.draft.IEPMathID = MathID;
-            this.draft.IEPMotorID = MotorID;
-            this.draft.IEPReadingID = ReadingID;
-            this.draft.IEPSocialID = SocialID;
-            this.draft.IEPWrittenID = WrittenID;
+            this.current.IEPAcademicID = AcademicID;
+            this.current.IEPCommunicationID = CommunicationID;
+            this.current.IEPHealthID = HealthID;
+            this.current.IEPIntelligenceID = IntelligenceID;
+            this.current.IEPMathID = MathID;
+            this.current.IEPMotorID = MotorID;
+            this.current.IEPReadingID = ReadingID;
+            this.current.IEPSocialID = SocialID;
+            this.current.IEPWrittenID = WrittenID;
 
             db.SaveChanges();
 

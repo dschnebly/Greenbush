@@ -11,7 +11,6 @@
     @Styles.Render("~/Content/jquery-ui.min.css")
 
     <style>
-
         hr {
             border-top: 1px solid #ddd;
         }
@@ -141,6 +140,11 @@
                     text-decoration: underline;
                 }
 
+        .btn-bordered-warning:focus,
+        .btn-bordered-warning:hover {
+            color: #337ab7;
+        }
+
         #student-goals {
             margin: 40px 0;
         }
@@ -220,9 +224,8 @@
             padding-left: 50px !important;
             text-indent: 0px !important;
             line-height: 110% !important;
-            padding-top:8px;
-            padding-bottom:8px;
-
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
 
         .funkyradio input[type="radio"]:empty,
@@ -267,7 +270,6 @@
                 text-indent: .9em;
                 color: #C2C2C2;
                 padding-top: 8px;
-
             }
 
         .funkyradio input[type="radio"]:checked ~ label,
@@ -283,8 +285,7 @@
                 background-color: #ccc;
                 line-height: 2;
                 display: inline-block;
-               vertical-align: middle;
-
+                vertical-align: middle;
             }
 
         .funkyradio input[type="radio"]:focus ~ label:before,
@@ -1016,18 +1017,31 @@
         </div>
 
         <div class="row" style="margin-top: 15px;">
-            <div class="btn-group btn-group-primary col-md-2">
-                <label class="btn btn-square-toround btn-xl btn-bordered-warning" data-toggle="modal"><span class="glyphicon glyphicon-chevron-right"></span> DRAFT </label>
-
+            <div class="btn-group btn-group col-md-2">
+                @if (ViewBag.UserRoleId == "2" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
+                {
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper())
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="changeIEPStatus">@(IEPStatus.ACTIVE.ToUpper())</a></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <label class="btn btn-square-toround btn-xl btn-bordered-warning"><span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper()) </label>
+                }
             </div>
             <div class="col-md-8">
                 <span class="form-group" style="margin-right: 15px;">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.draft.begin_date != null ? Model.studentIEP.draft.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
+                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
                 </span>
                 <span class="form-group" style="margin-right: 15px;">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.draft.MeetingDate != null ? Model.studentIEP.draft.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
                 </span>
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>

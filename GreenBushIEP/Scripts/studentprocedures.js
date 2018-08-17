@@ -122,7 +122,7 @@
 		var dayStart = a.getUTCDay(); //start date
 		var dayEnd = b.getUTCDay(); //end date
 		// Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-		if (dayStart == 0 || dayStart == 6) {
+		if (dayStart === 0 || dayStart === 6) {
 			$("#IEPBeginDate").addClass("date-error");
 			return alert("Please select a Weekday for the Initiation Date.");
 		}
@@ -182,6 +182,41 @@
     $("#HealthVisionDate").datepicker({
         dateFormat: "mm/dd/yy"
     });
+
+    // Attach Event
+    // if the user is an MIS and the Initiation Date it today or later AND the iep status is "active" then when they click the ul link.
+    $(".changeIEPStatus").on("click", function () {
+        var answer = confirm("Are you sure you want to make this IEP Active?");
+        if(answer)
+        {
+            $('.ajax-loader').css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
+           
+            var stId = $("#stid").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/UpdateIEPStatusToActive',
+                data: { Stid: stId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        location.reload(true);
+                    } else {
+                        alert(data.Message);
+                        location.reload(true);
+                    }
+                },
+                error: function (data) {
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                },
+                complete: function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+                }
+            });
+        }
+    });
 });
 
 function getParameterByName(name, url) {
@@ -226,7 +261,7 @@ function createDateString(newDate) {
     var day = 0;
     var year = 0;
 
-    if (dateArr.length > 0 && dateArr.length == 3) {
+    if (dateArr.length > 0 && dateArr.length === 3) {
         year = dateArr[0];
         month = dateArr[1];
         day = dateArr[2];
@@ -266,7 +301,7 @@ window.onpopstate = function (event) {
         event.preventDefault();
         history.go(1);
     }
-}
+};
 
 /** fixing the bootstrap modal overlay bug **/
 $(window).on('shown.bs.modal', function (e) {
@@ -284,7 +319,7 @@ $(window).on('shown.bs.modal', function (e) {
 });
 
 $('#moduleSection').on('hide.bs.modal', function (e) {
-    if ($("#moduleSection form").serialize() != moduleFormSerialize) {
+    if ($("#moduleSection form").serialize() !== moduleFormSerialize) {
         if (!confirm("If your leave this module now the changes you made will NOT be saved.")) {
             e.preventDefault();
         }
