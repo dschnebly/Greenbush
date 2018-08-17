@@ -1534,7 +1534,7 @@ namespace GreenbushIep.Controllers
                              on iep.IEPMathID equals math.IEPMathID
                          join written in db.tblIEPWrittens
                              on iep.IEPWrittenID equals written.IEPWrittenID
-                         where iep.UserID == student.UserID && iep.IepStatus == iepStatus
+                         where iep.UserID == student.UserID //&& iep.IepStatus == iepStatus
                          select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
 
 

@@ -13,7 +13,7 @@
     var headerLogo = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/GBlogo1A.jpg");
     var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
     var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
-    var isDraft = Model.draft != null && Model.draft.IepStatus != null && Model.draft.IepStatus == "Draft" ? true : false;
+    var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
     var draftImage = "";
     if (isDraft)
     {
