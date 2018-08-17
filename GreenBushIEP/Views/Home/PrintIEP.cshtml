@@ -13,7 +13,7 @@
     var headerLogo = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/GBlogo1A.jpg");
     var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
     var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
-    var isDraft = Model.draft != null && Model.draft.IepStatus != null && Model.draft.IepStatus == "Draft" ? true : false;
+    var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
     var draftImage = "";
     if (isDraft)
     {
@@ -254,7 +254,7 @@
     <div class="container" style="min-height: 1250px; width: 725px;">
         <div class="row print-button" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
-                @*@Html.ActionLink("PRINT", "AgreementPrint", "Home", new { id = Model.draft.UserID }, new { @id = "printbutton", @class = "btn btn-info print", onclick = "return window.print();" })*@
+                @*@Html.ActionLink("PRINT", "AgreementPrint", "Home", new { id = Model.current.UserID }, new { @id = "printbutton", @class = "btn btn-info print", onclick = "return window.print();" })*@
 
                 <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
                     <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />
@@ -263,8 +263,8 @@
                     <input type="hidden" id="studentText" name="studentText" />
                     <input type="hidden" id="isArchive" name="isArchive" />
                     <input type="hidden" id="studentName" name="studentName" value="@studentFullName" />
-                    <input type="hidden" id="studentId" name="studentId" value="@Model.draft.UserID" />
-                    <input type="hidden" id="iepID" name="iepID" value="@Model.draft.IEPid" />
+                    <input type="hidden" id="studentId" name="studentId" value="@Model.current.UserID" />
+                    <input type="hidden" id="iepID" name="iepID" value="@Model.current.IEPid" />
                     <input type="hidden" id="isIEP" name="isIEP" value="1" />                  
                 </form>
             </div>
@@ -418,10 +418,10 @@
             <table style="width:100%">
                 <tr>
                     <td><label>Annual Meeting:</label></td>
-                    <td>@(Model.draft.MeetingDate.HasValue ? Model.draft.MeetingDate.Value.ToShortDateString() : "")</td>
+                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
                     <td><label>Ed Status:</label></td>
                     <td><label>Next Annual Meeting:</label></td>
-                    <td>@(Model.draft.MeetingDate.HasValue ? Model.draft.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
+                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
                 </tr>
             </table>
             <br />
