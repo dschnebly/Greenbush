@@ -300,7 +300,9 @@
 
                         var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
                         
-                        toggleButton.removeClass("collapsed");                                                
+                        toggleButton.removeClass("collapsed");
+
+                        $(window).trigger("saving.bs.modal");
                     }
                 }
                 else {
@@ -338,6 +340,8 @@
             success: function (data) {
                 if (data.success) {
                     _showAlert("The Accommodation/Modification has been updated.", true);
+
+                    $(window).trigger("saving.bs.modal");
                 }
                 else {
                     if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -450,6 +454,8 @@
                     if (response.result != undefined && response.result) {
 
                         $(element).closest('.oneStudentGoal').remove();
+
+                        $(window).trigger("deleting.bs.modal");
                     }
                     else{
                         _showAlert("There was a problem deleting the Accommodation or Modification.", false);
