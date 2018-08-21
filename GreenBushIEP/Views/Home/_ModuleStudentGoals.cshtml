@@ -900,6 +900,7 @@
                     if (studentGoalId == 0) {
                         var previousGoal = studentGoal.prev(".StudentGoal:visible").find(".panel-collapse");
                         studentGoal.remove();
+
                         return previousGoal.collapse('show');
                     }
 
@@ -912,6 +913,9 @@
                             if (data.Result == "success") {
                                 var previousGoal = studentGoal.prev(".StudentGoal:visible").find(".panel-collapse");
                                 studentGoal.remove();
+
+                                $(window).trigger("deleting.bs.modal");
+
                                 return previousGoal.collapse('show');
                             }
                             else {
@@ -966,6 +970,9 @@
                 $('.ajax-loader').css("visibility", "visible");
                 $(".ajax-loader img").css("visibility", "visible");
 
+                var studentGoal = $(this).closest('.StudentGoal');
+                var studentGoalId = studentGoal.find("input[name='StudentGoalId']");
+
                 var data = $(this).closest('.goalForm').serialize();
                 $.post('/ModuleSection/EditStudentGoals', data)
                 .done(function (results) {
@@ -973,6 +980,10 @@
                     $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
                         $('.ajax-loader').css("visibility", "hidden");
                     });
+
+                    studentGoalId.val(results.GoalId);
+
+                    $(window).trigger("saving.bs.modal");
                 })
                 .fail(function (error) {
                     $(".ajax-loader img").css("visibility", "hidden");
@@ -1184,7 +1195,6 @@
             }
         });
     }
-
 
     initGoal();
 

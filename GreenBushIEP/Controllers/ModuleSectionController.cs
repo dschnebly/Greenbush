@@ -852,14 +852,16 @@ namespace GreenBushIEP.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EditStudentGoals(FormCollection collection)
         {
+
+            int goalId = 0;
+
             if (ValidateRequest)
             {
                 try
                 {
-                    int goalId = 0;
-
                     string verification = collection[0];
                     int studentId = Convert.ToInt32(collection[1]);
                     int iepId = Convert.ToInt32(collection[2]);
@@ -935,6 +937,7 @@ namespace GreenBushIEP.Controllers
                     }
 
                     studentGoal.SaveGoal(evalProcedures);
+                    goalId = studentGoal.goal.goalID;
                 }
                 catch (Exception e)
                 {
@@ -942,7 +945,8 @@ namespace GreenBushIEP.Controllers
                 }
             }
 
-            return RedirectToAction("StudentProcedures", "Home", new { stid = Convert.ToInt32(collection[1]) });
+            return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
+            // return RedirectToAction("StudentProcedures", "Home", new { stid = Convert.ToInt32(collection[1]) });
         }
 
         [HttpPost]

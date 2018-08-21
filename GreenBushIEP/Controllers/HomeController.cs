@@ -340,6 +340,7 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "The user doesn't have permission to access a resource, or sufficient privilege to perform a task initiated by the user." }, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         private void CopyCalendar(string usd, string bId, tblUser MIS)
         {
             using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
@@ -1449,6 +1450,7 @@ namespace GreenbushIep.Controllers
             return View("_IEPFormsFile", viewModel);
         }
 
+        [Authorize]
         public ActionResult IEPForms(int stid)
         {
             IEPFormViewModel model = new IEPFormViewModel();
@@ -1465,6 +1467,7 @@ namespace GreenbushIep.Controllers
             return View(model);
         }
 
+        [Authorize]
         private List<SelectListItem> GetForms()
         {
             List<SelectListItem> forms = new List<SelectListItem>();
@@ -1493,6 +1496,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult PrintIEP(int id, int status = 0)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1641,16 +1645,19 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
+        [Authorize]
         public ActionResult EditStudentInformation()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult EditTeamStatements()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult EditStudentStrategy()
         {
             return View();
@@ -1671,6 +1678,7 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Updates()
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -1707,6 +1715,7 @@ namespace GreenbushIep.Controllers
                 return null;
         }
 
+        [Authorize]
         public static string ScrubDocumentName(string documentName)
         {
             return documentName.Replace(',', ' ');
@@ -1833,6 +1842,7 @@ namespace GreenbushIep.Controllers
             return null;
 
         }
+
 
         private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
         {

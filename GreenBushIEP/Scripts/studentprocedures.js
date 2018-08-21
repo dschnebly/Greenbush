@@ -303,7 +303,7 @@ window.onpopstate = function (event) {
     }
 };
 
-/** fixing the bootstrap modal overlay bug **/
+/** fixing the bootstrap modal overlay bug and setting up events. **/
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
     var modals = $(".modal").get(), element = null;
@@ -314,8 +314,19 @@ $(window).on('shown.bs.modal', function (e) {
 
     $("#" + moduleId).css("height", "auto");
 
+    // EVENT LISTERNERS
     // get the form serialized so if we make changes we can compare.
     moduleFormSerialize = $("#moduleSection form").serialize();
+
+    // Create a save listener for when saving content in a module
+    $(window).on('saving.bs.modal', function (e) {
+        moduleFormSerialize = $("#moduleSection form").serialize();
+    });
+
+    // Create a delete listener for when deleteing content in a module
+    $(window).on('deleting.bs.modal', function (e) {
+        moduleFormSerialize = $("#moduleSection form").serialize();
+    });
 });
 
 $('#moduleSection').on('hide.bs.modal', function (e) {
