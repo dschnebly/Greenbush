@@ -1,0 +1,290 @@
+﻿@model GreenBushIEP.Models.MISDistricContactViewModel
+
+<style>
+    .list-group {
+        overflow: hidden;
+        border-left: 1px solid rgb(221, 221, 221);
+        border-right: 1px solid rgb(221, 221, 221);
+    }
+
+    .list-group-item:first-child, .list-group-item:last-child {
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        overflow: hidden;
+    }
+
+    .list-group-item {
+        border-left: 0px solid rgb(221, 221, 221);
+        border-right: 0px solid rgb(221, 221, 221);
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+
+        .list-group-item > .show-menu {
+            position: absolute;
+            height: 100%;
+            width: 24px;
+            top: 0px;
+            right: 0px;
+            background-color: rgba(51, 51, 51, 0.2);
+            cursor: pointer;
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+        }
+
+            .list-group-item > .show-menu > span {
+                position: absolute;
+                top: 50%;
+                margin-top: -7px;
+                padding: 0px 5px;
+            }
+
+    .list-group-submenu {
+        position: absolute;
+        top: 0px;
+        right: -125px;
+        white-space: nowrap;
+        list-style: none;
+        padding-left: 0px;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+
+        .list-group-submenu .list-group-submenu-item {
+            float: right;
+            white-space: nowrap;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: rgb(51, 51, 51);
+            color: rgb(235, 235, 235);
+        }
+
+    .list-group-item.open > .show-menu {
+        right: 125px;
+    }
+
+    .list-group-item.open .list-group-submenu {
+        right: 0px;
+    }
+
+    .list-group-submenu .list-group-submenu-item.primary {
+        color: rgb(255, 255, 255);
+        background-color: rgb(50, 118, 177);
+    }
+
+    .list-group-submenu .list-group-submenu-item.success {
+        color: rgb(255, 255, 255);
+        background-color: rgb(92, 184, 92);
+    }
+
+    .list-group-submenu .list-group-submenu-item.info {
+        color: rgb(255, 255, 255);
+        background-color: rgb(57, 179, 215);
+    }
+
+    .list-group-submenu .list-group-submenu-item.warning {
+        color: rgb(255, 255, 255);
+        background-color: rgb(240, 173, 78);
+    }
+
+    .list-group-submenu .list-group-submenu-item.danger {
+        color: rgb(255, 255, 255);
+        background-color: rgb(217, 83, 79);
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;"><i class="glyphicon glyphicon-option-vertical" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;District Contacts</h4>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group col-md-6" style="padding-left: 0;">
+                <label for="validate-text">Choose a Districts</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="glyphicon glyphicon-option-vertical"></span></span>
+                    <select class="form-control" name="selectedDistrict" id="selectedDistrict" required>
+                        @foreach (var district in Model.currentDistricts)
+                        {
+                            string Selected = Model.currentDistricts.IndexOf(district) == 0 ? "Selected" : string.Empty;
+                            <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="moreinfo"><strong>Results!</strong> </span>
+        </div>
+        <div class="row">
+            <h4>Users in this district</h4>
+            @if (Model.contacts.Count > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var contact in Model.contacts)
+                    {
+                        var isOpen = @contact.UserID == @Model.districtContact ? "list-group-item open" : "list-group-item";
+                        <li class="@(isOpen)" data-contactId="@(contact.UserID)">
+                            @(contact.FirstName + " " + contact.LastName)
+                            <span class="show-menu">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </span>
+                            <ul class="list-group-submenu">
+                                <li class="list-group-submenu-item success">District Contact</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Currently there is no one assigned to you in this District.</p>
+                <p>You can <a>make some new system users</a> or switch districts.</p>
+            }
+        </div>
+    </div>
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="updating contacts">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+</div>
+
+<script>
+    $(function () {
+        init();
+
+        // event fired if the user selects a different option in the select
+        $('#selectedDistrict').on('change', function (event) {
+
+            $('.ajax-loader').css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
+
+            var districtUSD = $("#selectedDistrict option:selected").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/ContactsInDistricts',
+                dataType: 'json',
+                data: { USD: districtUSD },
+                async: false,
+                success: function (data) {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+
+                    if (data.Result == "success") {
+
+                        // clear the ul li elements.
+                        $('ul.list-group').empty();
+
+                        // foreach contact, add them the ul
+                        data.Message.contacts.forEach(function (value, index) {
+                            var isOpen = (value.UserId == data.Message.districtContact) ? "open" : "";
+                            $('ul.list-group').append('<li class="list-group-item ' + isOpen + '" data-contactId="' + value.UserID + '">' + value.FirstName + ' ' + value.LastName + '<span class="show-menu"><span class="glyphicon glyphicon-chevron-right"></span></span><ul class="list-group-submenu"><li class="list-group-submenu-item success">District Contact</li></ul></li>');
+                        });
+
+                        // fire off the event handlers.
+                        init();
+                    }
+                    else {
+                        $('ul.list-group').empty();
+
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+
+                    $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+        });
+    });
+
+    // hooks up all the events
+    function init ()
+    {
+        $('.list-group-item > .show-menu').on('click', function (event) {
+            event.preventDefault();
+            var toggleElem = $(this).closest('li').toggleClass('open');
+
+            // check and see if this one was toggled open.
+            if (toggleElem.hasClass('open')) {
+
+                // last contact saved just in case.
+                var otherContact = null;
+
+                // close other opened li
+                $('.list-group-item').not(toggleElem).each(function () {
+                    if ($(this).closest('li').hasClass('open')) {
+                        otherContact = $(this);
+                        $(this).removeClass('open');
+                    }
+                });
+
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var districtUSD = $("#selectedDistrict option:selected").val();
+                var contact = $(toggleElem).data('contactid');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/AddDistrictContact',
+                    dataType: 'json',
+                    data: { USD: districtUSD, contactId: contact },
+                    async: false,
+                    success: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        if (data.Result != "success") {
+                            toggleElem.removeClass('open');
+
+                            if (otherContact != null) {
+                                otherContact.addClass('open');
+                            }
+                        }
+
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    },
+                    error: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        $("#alertMessage .moreinfo").html('doh!');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>

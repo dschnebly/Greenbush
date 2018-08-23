@@ -14,6 +14,12 @@ namespace GreenBushIEP.Models
     
     public partial class tblUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblUser()
+        {
+            this.tblDistricts = new HashSet<tblDistrict>();
+        }
+    
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -33,5 +39,8 @@ namespace GreenBushIEP.Models
         public string Address2 { get; set; }
         public string Zip { get; set; }
         public string LastVersionNumberSeen { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblDistrict> tblDistricts { get; set; }
     }
 }

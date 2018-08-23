@@ -98,7 +98,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult MISPortal()
         {
-
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
@@ -127,72 +126,90 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult LoadMISSection(string view)
         {
-            if (view == "CalendarModule")
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+            if (view == "CalendarModule" && MIS != null)
             {
-                tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                int SchoolYear = (DateTime.Now.Month > 7) ? DateTime.Now.AddYears(1).Year : DateTime.Now.Year;
+                List<tblCalendarTemplate> temp = db.tblCalendarTemplates.Where(t => t.NoService == true).ToList();
 
-                if (MIS != null)
+                var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+                                       join districts in db.tblDistricts
+                                            on buildingMaps.USD equals districts.USD
+                                       where buildingMaps.UserID == MIS.UserID
+                                       select districts).Distinct().ToList();
+
+                var MISBuildingList = (from buildingMaps in db.tblBuildingMappings
+                                       join buildings in db.tblBuildings
+                                          on buildingMaps.BuildingID equals buildings.BuildingID
+                                       where buildingMaps.UserID == MIS.UserID
+                                       select buildings).Distinct().OrderBy(b => b.BuildingID).ToList();
+
+                List<tblCalendar> defaultCalendar = new List<tblCalendar>();
+                foreach (var day in temp)
                 {
-                    int SchoolYear = (DateTime.Now.Month > 7) ? DateTime.Now.AddYears(1).Year : DateTime.Now.Year;
-                    List<tblCalendarTemplate> temp = db.tblCalendarTemplates.Where(t => t.NoService == true).ToList();
+                    tblCalendar calendar = new tblCalendar();
+                    calendar.canHaveClass = day.canHaveClass;
+                    calendar.Day = day.Day;
+                    calendar.Month = day.Month;
+                    calendar.Year = day.Year;
+                    calendar.NoService = day.NoService;
+                    calendar.SchoolYear = day.SchoolYear;
 
-                    var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
-                                           join districts in db.tblDistricts
-                                                on buildingMaps.USD equals districts.USD
-                                           where buildingMaps.UserID == MIS.UserID
-                                           select districts).Distinct().ToList();
-
-                    var MISBuildingList = (from buildingMaps in db.tblBuildingMappings
-                                           join buildings in db.tblBuildings
-                                              on buildingMaps.BuildingID equals buildings.BuildingID
-                                           where buildingMaps.UserID == MIS.UserID
-                                           select buildings).Distinct().OrderBy(b => b.BuildingID).ToList();
-
-                    List<tblCalendar> defaultCalendar = new List<tblCalendar>();
-                    foreach (var day in temp)
-                    {
-                        tblCalendar calendar = new tblCalendar();
-                        calendar.canHaveClass = day.canHaveClass;
-                        calendar.Day = day.Day;
-                        calendar.Month = day.Month;
-                        calendar.Year = day.Year;
-                        calendar.NoService = day.NoService;
-                        calendar.SchoolYear = day.SchoolYear;
-
-                        defaultCalendar.Add(calendar);
-                    }
-
-                    MISCalendarViewModel model = new MISCalendarViewModel();
-                    model.districts = MISDistrictList;
-                    model.buildings = MISBuildingList;
-                    model.calendarDays = defaultCalendar;
-
-                    return PartialView("_ModuleCalendarSection", model);
+                    defaultCalendar.Add(calendar);
                 }
+
+                MISCalendarViewModel model = new MISCalendarViewModel();
+                model.districts = MISDistrictList;
+                model.buildings = MISBuildingList;
+                model.calendarDays = defaultCalendar;
+
+                return PartialView("_ModuleCalendarSection", model);
             }
 
-            if (view == "ServiceProviderModule")
+            if (view == "ServiceProviderModule" && MIS != null)
             {
                 MISProviderViewModel model = new MISProviderViewModel();
                 List<tblProvider> listOfProviders = new List<tblProvider>();
-                tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
+                listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).OrderBy(o => o.Name).ToList();
 
-                if (MIS != null)
-                {
-                    listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).OrderBy(o => o.Name).ToList();
+                var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+                                       join districts in db.tblDistricts
+                                            on buildingMaps.USD equals districts.USD
+                                       where buildingMaps.UserID == MIS.UserID
+                                       select districts).Distinct().ToList();
 
-                    var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
-                                           join districts in db.tblDistricts
-                                                on buildingMaps.USD equals districts.USD
-                                           where buildingMaps.UserID == MIS.UserID
-                                           select districts).Distinct().ToList();
-
-                    model.listOfProviders = listOfProviders;
-                    model.districts = MISDistrictList;
-                }
+                model.listOfProviders = listOfProviders;
+                model.districts = MISDistrictList;
 
                 return PartialView("_ModuleServiceProviders", model);
+            }
+
+            if (view == "ServiceDistrictContactModule" && MIS != null)
+            {
+
+                MISDistricContactViewModel model = new MISDistricContactViewModel();
+
+                List<tblDistrict> MISDistrict = (from organizations in db.tblOrganizationMappings
+                                           join districts in db.tblDistricts
+                                             on organizations.USD equals districts.USD
+                                           where organizations.UserID == MIS.UserID
+                                           select districts).ToList();
+
+                tblDistrict defaultDistrict = MISDistrict.FirstOrDefault();
+
+                List<tblUser> districtContacts = (from organization in db.tblOrganizationMappings
+                                                  join users in db.tblUsers
+                                                    on organization.UserID equals users.UserID
+                                                  where organization.USD == defaultDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
+                                                  select users).ToList();
+
+                model.currentDistricts = MISDistrict;
+                model.contacts = districtContacts;
+                model.districtContact = MISDistrict.FirstOrDefault().ContactUserID.GetValueOrDefault();
+
+                return PartialView("_ModuleDistrictContact", model);
             }
 
             // Unknow user or view.
@@ -378,8 +395,8 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && c.SchoolYear == SchoolYear && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).OrderBy(o =>o.Month).ToList();
-                
+                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && c.SchoolYear == SchoolYear && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).OrderBy(o => o.Month).ToList();
+
                 if (CalendarView != null && CalendarView.Count > 0)
                 {
                     List<tblCalendarReporting> reports = db.tblCalendarReportings.Where(r => r.UserID == MIS.UserID && r.USD == usd && r.BuildingID == bId).ToList();
@@ -550,7 +567,7 @@ namespace GreenbushIep.Controllers
                             where o.AdminID == teacher.UserID
                             select i).Distinct().ToList();
 
-                
+
 
                 var students = (from user in users
                                 join i in info
@@ -575,13 +592,13 @@ namespace GreenbushIep.Controllers
                                 }).Distinct().OrderBy(u => u.LastName).ToList();
 
                 //get IEP Date
-                foreach(var student in students)
+                foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-                    
+
                 }
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
@@ -913,7 +930,7 @@ namespace GreenbushIep.Controllers
         public ActionResult UpdateIEPStatusToActive(int stId)
         {
             tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
-            if(iepDraft != null)
+            if (iepDraft != null)
             {
                 iepDraft.IepStatus = IEPStatus.ACTIVE;
 
@@ -922,7 +939,7 @@ namespace GreenbushIep.Controllers
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
                 }
@@ -980,18 +997,18 @@ namespace GreenbushIep.Controllers
             {
                 //get latest year
                 var maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
-                if(maxYear > 0)
+                if (maxYear > 0)
                 {
                     List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear).ToList();
                     List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
-                    foreach(var service in services)
+                    foreach (var service in services)
                     {
 
                         var item = new StudentServiceObject();
                         item.DaysPerWeek = service.DaysPerWeek;
                         item.StartDate = service.StartDate.AddYears(1).ToShortDateString();
                         item.EndDate = service.EndDate.AddYears(1).ToShortDateString();
-                        item.LocationCode = service.LocationCode;                        
+                        item.LocationCode = service.LocationCode;
                         item.Minutes = service.Minutes;
                         item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
                         item.SchoolYear = service.SchoolYear;
@@ -999,12 +1016,12 @@ namespace GreenbushIep.Controllers
                         item.Frequency = service.Frequency;
                         serviceList.Add(item);
                     }
-                    
+
                     return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
                 }
             }
 
-            return Json(new { Result = "fail"}, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = "fail" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -1017,8 +1034,9 @@ namespace GreenbushIep.Controllers
             tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
             var providers = (from p in db.tblProviders
-                            join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
-                            where d.USD == studentInfo.AssignedUSD select p).ToList();
+                             join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
+                             where d.USD == studentInfo.AssignedUSD
+                             select p).ToList();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
@@ -1281,7 +1299,7 @@ namespace GreenbushIep.Controllers
 
                 model.DefaultStartDate = iep.begin_date.HasValue ? iep.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
                 model.DefaultEndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
-                
+
             }
 
 
@@ -1509,7 +1527,7 @@ namespace GreenbushIep.Controllers
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
 
             // check the passed value and change the status based on value.
-            string iepStatus = IEPStatus.DRAFT;
+            //string iepStatus = IEPStatus.DRAFT;
 
             //calculated fields for printing, are there going to multiple ieps?
             //var iepObj = db.tblIEPs.Where(o => o.UserID == id).OrderByDescending(o => o.begin_date).FirstOrDefault();
@@ -1567,7 +1585,7 @@ namespace GreenbushIep.Controllers
 
                 };
 
-                
+
                 //student goalds
                 if (theIEP != null && theIEP.current != null)
                 {
@@ -1609,7 +1627,7 @@ namespace GreenbushIep.Controllers
                     }
 
                     if (info != null && theIEP.current != null)
-                    {                        
+                    {
                         var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
                         var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                         var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
@@ -1740,14 +1758,14 @@ namespace GreenbushIep.Controllers
             {
                 string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
-                                
-                
+
+
                 int id = 0;
                 Int32.TryParse(studentId, out id);
 
                 int iepId = 0;
                 Int32.TryParse(iepIDStr, out iepId);
-                
+
                 tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
                 if (user != null && isIEP == "1")
                 {
@@ -1767,7 +1785,7 @@ namespace GreenbushIep.Controllers
                 //    }
                 //}
 
-                
+
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 

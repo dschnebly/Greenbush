@@ -676,6 +676,7 @@
     <Content Include="Views\Form\ParentConsentMedicaid.cshtml" />
     <Content Include="Views\Form\PhysicianScript.cshtml" />
     <Content Include="Views\Home\Updates.cshtml" />
+    <Content Include="Views\Home\_ModuleDistrictContact.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

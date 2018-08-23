@@ -20,5 +20,8 @@ namespace GreenBushIEP.Models
         public bool DOC { get; set; }
         public string Zip { get; set; }
         public string State { get; set; }
+        public Nullable<int> ContactUserID { get; set; }
+    
+        public virtual tblUser tblUser { get; set; }
     }
 }

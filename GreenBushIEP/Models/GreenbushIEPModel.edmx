@@ -224,6 +224,7 @@
           <Property Name="DOC" Type="bit" Nullable="false" />
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactUserID" Type="int" />
         </EntityType>
         <EntityType Name="tblEvaluationProcedures">
           <Key>
@@ -919,6 +920,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblDistricts_tblUsers_UserID">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblDistricts">
+              <PropertyRef Name="ContactUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblProviderDistricts_ProviderID">
           <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="1" />
           <End Role="tblProviderDistricts" Type="Self.tblProviderDistricts" Multiplicity="*" />
@@ -1117,6 +1130,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblLocations" EntitySet="tblLocations" />
             <End Role="tblAccommodations" EntitySet="tblAccommodations" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblDistricts_tblUsers_UserID" Association="Self.FK_tblDistricts_tblUsers_UserID">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="Self.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProviders" EntitySet="tblProviders" />
             <End Role="tblProviderDistricts" EntitySet="tblProviderDistricts" />
@@ -1243,6 +1260,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </AssociationSet>
           <EntitySet Name="tblEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" />
           <EntitySet Name="tblGoalEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" />
+          <AssociationSet Name="FK_tblDistricts_tblUsers_UserID" Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblDistrict" EntitySet="tblDistricts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1475,6 +1496,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="DOC" Type="Boolean" Nullable="false" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactUserID" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" FromRole="tblDistrict" ToRole="tblUser" />
         </EntityType>
         <EntityType Name="tblFormArchive">
           <Key>
@@ -2052,6 +2075,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" FromRole="tblUser" ToRole="tblDistrict" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -2189,6 +2213,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <Association Name="FK_tblDistricts_tblUsers_UserID">
+          <End Type="IndividualizedEducationProgramModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblDistrict">
+              <PropertyRef Name="ContactUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2446,6 +2482,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblDistricts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
               <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="ContactUserID" ColumnName="ContactUserID" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="DOC" ColumnName="DOC" />

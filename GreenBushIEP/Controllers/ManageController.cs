@@ -205,7 +205,7 @@ namespace GreenBushIEP.Controllers
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
                         PlacementCode = collection["studentPlacement"]
-                };
+                    };
 
                     try
                     {
@@ -549,7 +549,7 @@ namespace GreenBushIEP.Controllers
             {
                 student.FirstName = collection["firstname"];
                 student.LastName = collection["lastname"];
-                student.Email = String.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString() ;
+                student.Email = String.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
                 student.RoleID = "5";
             }
             else
@@ -1028,6 +1028,50 @@ namespace GreenBushIEP.Controllers
 
             return Json(new { Result = "Error", Message = "An error happened while removing the user from your list. Please contact your admin." });
         }
+
+        // POST: Manage/AddDistrictContact
+        [HttpPost]
+        [Authorize]
+        public ActionResult AddDistrictContact(string USD, int contactId)
+        {
+            tblDistrict theDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
+            if (theDistrict != null)
+            {
+                theDistrict.ContactUserID = contactId;
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Your district contact has been updated." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while saving the district contact. Please try again or contact your administrator." }, JsonRequestBehavior.AllowGet);
+        }
+
+        // POST : Manage/ContactsInDistricts
+        [HttpPost]
+        [Authorize]
+        public ActionResult ContactsInDistricts(string USD)
+        {
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if(MIS != null)
+            {
+                MISDistricContactViewModel model = new MISDistricContactViewModel();
+
+                tblDistrict currentDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
+
+                List<tblUser> districtContacts = (from organization in db.tblOrganizationMappings
+                                                  join users in db.tblUsers
+                                                    on organization.UserID equals users.UserID
+                                                  where organization.USD == USD && (users.RoleID == "3" || users.RoleID == "4")
+                                                  select users).ToList();
+
+                model.contacts = districtContacts;
+                model.districtContact = currentDistrict.ContactUserID.GetValueOrDefault();
+
+                return Json(new { Result = "success", Message = model }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while getting contacts in the district" }, JsonRequestBehavior.AllowGet);
+        } 
 
         [HttpGet]
         public ActionResult GetDistricts(int id)

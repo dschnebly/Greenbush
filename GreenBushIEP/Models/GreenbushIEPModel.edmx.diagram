@@ -67,6 +67,7 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" Width="1.5" PointX="7.375" PointY="22.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" Width="1.5" PointX="9.375" PointY="22.75" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

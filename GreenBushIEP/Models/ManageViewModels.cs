@@ -110,6 +110,20 @@ namespace GreenBushIEP.Models
         }
     }
 
+    public class MISDistricContactViewModel
+    {
+        public List<tblUser> contacts { get; set; }
+        public List<tblDistrict> currentDistricts { get; set; }
+        public int districtContact { get; set; }
+
+        public MISDistricContactViewModel()
+        {
+            contacts = new List<tblUser>();
+            currentDistricts = new List<tblDistrict>();
+            districtContact = 0;
+        }
+    }
+
     public class ProviderViewModel
     {
         public string Name { get; set; }
