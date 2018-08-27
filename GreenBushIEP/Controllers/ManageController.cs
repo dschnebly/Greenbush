@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Web.Mvc;
 
@@ -1032,12 +1033,19 @@ namespace GreenBushIEP.Controllers
         // POST: Manage/AddDistrictContact
         [HttpPost]
         [Authorize]
-        public ActionResult AddDistrictContact(string USD, int contactId)
+        public ActionResult AddDistrictContact(string USD, int contactId, bool isContact)
         {
             tblDistrict theDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
             if (theDistrict != null)
             {
-                theDistrict.ContactUserID = contactId;
+                if (isContact)
+                {
+                    theDistrict.ContactUserID = contactId;
+                }
+                else
+                {
+                    theDistrict.ContactUserID = null;
+                }
                 db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "Your district contact has been updated." }, JsonRequestBehavior.AllowGet);
@@ -1052,26 +1060,21 @@ namespace GreenBushIEP.Controllers
         public ActionResult ContactsInDistricts(string USD)
         {
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if(MIS != null)
+            if (MIS != null)
             {
-                MISDistricContactViewModel model = new MISDistricContactViewModel();
+                tblDistrict MISDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
 
-                tblDistrict currentDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
-
-                List<tblUser> districtContacts = (from organization in db.tblOrganizationMappings
+                var districtContacts = (from organization in db.tblOrganizationMappings
                                                   join users in db.tblUsers
                                                     on organization.UserID equals users.UserID
-                                                  where organization.USD == USD && (users.RoleID == "3" || users.RoleID == "4")
-                                                  select users).ToList();
+                                                  where organization.USD == MISDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
+                                                  select new { UserId = users.UserID, LastName = users.LastName, FirstName = users.FirstName, isContact  = MISDistrict.ContactUserID == users.UserID }).ToList();
 
-                model.contacts = districtContacts;
-                model.districtContact = currentDistrict.ContactUserID.GetValueOrDefault();
-
-                return Json(new { Result = "success", Message = model }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = districtContacts }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "error", Message = "There was an error while getting contacts in the district" }, JsonRequestBehavior.AllowGet);
-        } 
+        }
 
         [HttpGet]
         public ActionResult GetDistricts(int id)
