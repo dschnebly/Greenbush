@@ -627,7 +627,7 @@ namespace GreenbushIep.Controllers
 
                 var query = (from u in db.tblUsers
                              join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                             where o.AdminID == userId
+                             where o.AdminID == userId && !(user.Archive ?? false)
                              select u).Distinct().OrderBy(u => u.RoleID).ToList();
 
                 viewModel.user = user;
