@@ -192,10 +192,10 @@ namespace GreenbushIep.Controllers
                 MISDistricContactViewModel model = new MISDistricContactViewModel();
 
                 List<tblDistrict> MISDistrict = (from organizations in db.tblOrganizationMappings
-                                           join districts in db.tblDistricts
-                                             on organizations.USD equals districts.USD
-                                           where organizations.UserID == MIS.UserID
-                                           select districts).ToList();
+                                                 join districts in db.tblDistricts
+                                                   on organizations.USD equals districts.USD
+                                                 where organizations.UserID == MIS.UserID
+                                                 select districts).ToList();
 
                 tblDistrict defaultDistrict = MISDistrict.FirstOrDefault();
 
@@ -627,7 +627,7 @@ namespace GreenbushIep.Controllers
 
                 var query = (from u in db.tblUsers
                              join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                             where o.AdminID == userId && !(user.Archive ?? false)
+                             where o.AdminID == userId && !u.Archive.HasValue
                              select u).Distinct().OrderBy(u => u.RoleID).ToList();
 
                 viewModel.user = user;
