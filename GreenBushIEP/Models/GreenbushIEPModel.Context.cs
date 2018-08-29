@@ -188,5 +188,27 @@ namespace GreenBushIEP.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<up_ReportProviderCaseload_Result> up_ReportProviderCaseload(string providerId, string fiscalYear)
+        {
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", providerIdParameter, fiscalYearParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportBuildings_Result1> up_ReportBuildings(Nullable<int> buildingID)
+        {
+            var buildingIDParameter = buildingID.HasValue ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result1>("up_ReportBuildings", buildingIDParameter);
+        }
     }
 }

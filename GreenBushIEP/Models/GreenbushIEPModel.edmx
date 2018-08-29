@@ -1012,6 +1012,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BuildingID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="up_ReportProviderCaseload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProviderId" Type="varchar" Mode="In" />
+          <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
@@ -1264,6 +1271,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblDistrict" EntitySet="tblDistricts" />
           </AssociationSet>
+          <FunctionImport Name="up_ReportProviderCaseload" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProviderCaseload_Result)">
+            <Parameter Name="ProviderId" Mode="In" Type="String" />
+            <Parameter Name="FiscalYear" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result1)">
+            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2225,6 +2239,45 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="up_ReportProviderCaseload_Result">
+          <Property Type="Int32" Name="ServiceID" Nullable="false" />
+          <Property Type="Int32" Name="SchoolYear" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ServiceType" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="Frequency" Nullable="false" />
+          <Property Type="Byte" Name="DaysPerWeek" Nullable="false" />
+          <Property Type="Int16" Name="Minutes" Nullable="false" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="104" />
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="goalID" Nullable="true" />
+          <Property Type="String" Name="ProviderName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="up_ReportBuildings_Result">
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="up_ReportBuildings1_Result">
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="up_ReportBuildings_Result1">
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3195,6 +3248,38 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportProviderCaseload" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportProviderCaseload">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProviderCaseload_Result">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="goalID" ColumnName="goalID" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportBuildings" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportBuildings">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportBuildings_Result1">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

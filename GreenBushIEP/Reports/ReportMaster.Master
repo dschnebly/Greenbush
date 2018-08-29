@@ -1,0 +1,73 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ReportMaster.master.cs" Inherits="GreenBushIEP.Report.ReportMaster" %>
+<%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
+
+<%@ Register assembly="Microsoft.ReportViewer.WebForms" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Reports</title>
+	<meta name="viewport" content="width=device-width" />
+	<script src="/Scripts/jquery-3.3.1.js"></script>
+	<script src="/Scripts/jquery-ui.min.js"></script>
+	<link href="/Content/chosen.css" rel="stylesheet" />
+	<script  src="/Scripts/chosen.jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/site.css" rel="stylesheet"/>
+
+    
+    <link href="/Content/transition.css" rel="stylesheet"/>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="/Content/greenbush_logo.png" width="45" height="45" class="pull-left" style="margin: auto 0; margin-right: 12px; margin-left: 2px; height: 40px; width: 40px; margin-top: 5px;" alt="Greenbush Logo" />
+                <a class="navbar-brand" href="/Home/Portal">Greenbush</a>
+				<
+            </div>
+            <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Portal">Home</a></li>
+                    <li><a href="/Home/About">About</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+                            <li class="pull-right"><a href="/Account/LogOff">Log Off Teacher Greenbush</a></li>
+
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+    <form id="form1" runat="server">
+		<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div>
+			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+			<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="900" Height="900"  ShowPrintButton="true" ShowExportControls="true"></rsweb:ReportViewer>
+    	</div>
+    </form>
+
+	</div>
+	<script type="text/javascript">
+         var submit_clicked = false;
+         $(document).ready(function () {
+			 
+			 $('.chosen-select').chosen({ width: "100%", placeholder_text_single: "Select..." });
+
+         });
+
+    </script>
+	
+</body>
+</html>
