@@ -289,6 +289,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="IndividualizedEducationProgramDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GreenbushIEPModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -492,6 +497,12 @@
     <Compile Include="Models\up_ReportBuildings_Result1.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportProceduralDates_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportProceduralDates_Result1.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportProviderCaseload_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -512,6 +523,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ProceduralDates\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ProceduralDates\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ProviderCaseload\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -604,6 +622,7 @@
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
     <Content Include="Scripts\AddEdit.js" />
     <Content Include="Scripts\AddUsers.js" />
@@ -634,12 +653,24 @@
     <Content Include="IndividualizedEducationProgramDataSet1.xss">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="IndividualizedEducationProgramDataSet2.xsc">
+      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
+    </Content>
+    <None Include="IndividualizedEducationProgramDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IndividualizedEducationProgramDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="IndividualizedEducationProgramDataSet2.xss">
+      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\IEP Backpack.pubxml" />
     <Content Include="Reports\ReportMaster.Master" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Reports\Web.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\EditUsers.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -775,6 +806,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
   </ItemGroup>
   <PropertyGroup>

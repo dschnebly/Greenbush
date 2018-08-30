@@ -189,7 +189,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual ObjectResult<up_ReportProviderCaseload_Result> up_ReportProviderCaseload(string providerId, string fiscalYear)
+        public virtual ObjectResult<up_ReportProviderCaseload_Result> up_ReportProviderCaseload(string providerId, string fiscalYear, string teacherId, string buildingId)
         {
             var providerIdParameter = providerId != null ?
                 new ObjectParameter("ProviderId", providerId) :
@@ -199,7 +199,15 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("FiscalYear", fiscalYear) :
                 new ObjectParameter("FiscalYear", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", providerIdParameter, fiscalYearParameter);
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter);
         }
     
         public virtual ObjectResult<up_ReportBuildings_Result1> up_ReportBuildings(Nullable<int> buildingID)
@@ -209,6 +217,19 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("BuildingID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result1>("up_ReportBuildings", buildingIDParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportProceduralDates_Result1> up_ReportProceduralDates(string teacherId, string buildingId)
+        {
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result1>("up_ReportProceduralDates", teacherIdParameter, buildingIdParameter);
         }
     }
 }

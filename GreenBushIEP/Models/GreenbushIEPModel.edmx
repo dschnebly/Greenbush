@@ -1015,9 +1015,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
+        <Function Name="up_ReportProceduralDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="up_ReportProviderCaseload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
           <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -1274,9 +1280,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <FunctionImport Name="up_ReportProviderCaseload" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProviderCaseload_Result)">
             <Parameter Name="ProviderId" Mode="In" Type="String" />
             <Parameter Name="FiscalYear" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result1)">
-            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportProceduralDates" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDates_Result1)">
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2278,6 +2290,23 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="StateName" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="up_ReportProceduralDates_Result">
+          <Property Type="String" Name="DateType" Nullable="false" MaxLength="6" />
+          <Property Type="DateTime" Name="EvalDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="TeacherFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="TeacherLastName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="up_ReportProceduralDates_Result1">
+          <Property Type="String" Name="DateType" Nullable="false" MaxLength="6" />
+          <Property Type="DateTime" Name="EvalDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="TeacherFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="TeacherLastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="TeacherID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3277,6 +3306,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportProceduralDates" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportProceduralDates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProceduralDates_Result1">
+                <ScalarProperty Name="DateType" ColumnName="DateType" />
+                <ScalarProperty Name="EvalDate" ColumnName="EvalDate" />
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="TeacherFirstName" ColumnName="TeacherFirstName" />
+                <ScalarProperty Name="TeacherLastName" ColumnName="TeacherLastName" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

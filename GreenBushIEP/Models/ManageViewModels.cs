@@ -511,7 +511,15 @@ namespace GreenBushIEP.Models
         public int ProviderID { get; set; }
         public string LocationCode { get; set; }
 
-    }
+    }	
+
+	public class TeacherView
+	{
+		public int UserID { get; set; }
+		public string Name { get; set; }
+		
+
+	}
 }
 
 public class IEPStatus

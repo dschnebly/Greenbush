@@ -1,37 +1,34 @@
 ﻿using GreenBushIEP.Models;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.Reporting.WebForms;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace GreenBushIEP.Reports.ProviderCaseload
 {
-	public partial class Report : System.Web.UI.Page
+	public partial class Report1 : System.Web.UI.Page
 	{
-		private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
-		
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!IsPostBack)
 			{
-
-				var providerList = GetProviders(0);
+				
+				var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(User.Identity.Name);
 				this.providerDD.DataSource = providerList;
 				this.providerDD.DataTextField = "Name";
 				this.providerDD.DataValueField = "ProviderID";
 				this.providerDD.DataBind();
 
-				var buildingList = GetBuildings();
+				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
 				this.buildingDD.DataSource = buildingList;
 				this.buildingDD.DataTextField = "BuildingName";
 				this.buildingDD.DataValueField = "BuildingID";
 				this.buildingDD.DataBind();
-				
+
 			}
 		}
 
@@ -44,13 +41,13 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 		{
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
-
+			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 			string providerIds = "";
 			string providerNames = "";
 			string fiscalYears = "";
 			string fiscalYearsNames = "";
 			string buildingID = this.buildingDD.Value;
-
+			string teacher = "";
 
 			foreach (ListItem li in providerDD.Items)
 			{
@@ -84,14 +81,27 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 				}
 			}
 
-			DataTable dt = GetData(providerIds, fiscalYears);
+
+			if (string.IsNullOrEmpty(providerIds))
+			{
+				//get all, but limit list
+				var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(User.Identity.Name);
+				providerIds = string.Join(",", providerList.Select(o => o.ProviderID));
+			}
+
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			{
+				teacher = user.UserID.ToString();
+			}
+
+			DataTable dt = GetData(providerIds, fiscalYears, teacher, buildingID);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			DataTable dt2 = GetBuildingData(buildingID);
+			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
 			ReportDataSource rds2 = new ReportDataSource("DataSet2", dt2);
 			ReportParameter p1 = new ReportParameter("ProviderNames", providerNames.Trim().Trim(','));
 			ReportParameter p2 = new ReportParameter("FiscalYears", fiscalYearsNames.Trim().Trim(','));
-			ReportParameter p3 = new ReportParameter("PrintedBy", CurrentUser());
-			
+			ReportParameter p3 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
+
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ProviderCaseload/rptProviderCaseload.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			MReportViewer.LocalReport.DataSources.Add(rds2);
@@ -99,14 +109,8 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private string CurrentUser()
+		private DataTable GetData(string providerId, string fiscalYear, string teacher, string buildingID)
 		{
-			var user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-			return string.Format("{0} {1}", user.FirstName, user.LastName);
-		}
-
-		private DataTable GetData(string providerId, string fiscalYear)
-		{			
 			DataTable dt = new DataTable();
 			dt.Columns.Add("LastName", typeof(string));
 			dt.Columns.Add("FirstName", typeof(string));
@@ -117,76 +121,19 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			dt.Columns.Add("DaysPerWeek", typeof(string));
 			dt.Columns.Add("Frequency", typeof(string));
 			dt.Columns.Add("ServiceType", typeof(string));
-			
+
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProviderCaseload(providerId, fiscalYear);
+				var list = ctx.up_ReportProviderCaseload(providerId, fiscalYear, teacher, buildingID);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle, cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType);
 			}
-			
-			return dt;
-		}
-
-		private DataTable GetBuildingData(string id)
-		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("BuildingName", typeof(string));
-			dt.Columns.Add("Address_Mailing", typeof(string));
-			dt.Columns.Add("Zip", typeof(string));
-			dt.Columns.Add("City", typeof(string));
-			dt.Columns.Add("Phone", typeof(string));
-			dt.Columns.Add("StateName", typeof(string));
-			
-			using (var ctx = new IndividualizedEducationProgramEntities())
-			{
-				//Execute stored procedure as a function
-				int buildingID = 0;
-				Int32.TryParse(id, out buildingID);
-				var list = ctx.up_ReportBuildings(buildingID);
-
-				foreach (var cs in list)
-					dt.Rows.Add(cs.BuildingName, cs.Address_Mailing, cs.Zip, cs.City, cs.Phone, cs.StateName);
-			}
 
 			return dt;
 		}
 
-		private List<tblProvider> GetProviders(int? providerUSD)
-		{
-		     var providers = (from p in db.tblProviders
-							 join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
-							 //where d.USD == studentInfo.AssignedUSD
-							 select p).ToList();
-
-			return providers;
-		}
-
-		private List<tblBuilding> GetBuildings()
-		{
-			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-
-			var buildingList = (from buildingMaps in db.tblBuildingMappings
-								   join buildings in db.tblBuildings
-									  on buildingMaps.BuildingID equals buildings.BuildingID
-								   where buildingMaps.UserID == user.UserID
-								   select buildings).Distinct().OrderBy(b => b.BuildingID).ToList();
-
-			return buildingList;
-		}
-
-		private tblBuilding GetBuilding(string id)
-		{	
-
-			var building = (from buildingMaps in db.tblBuildingMappings
-								join buildings in db.tblBuildings
-								   on buildingMaps.BuildingID equals buildings.BuildingID
-								where buildings.BuildingID == id && buildings.Active == 1
-								select buildings).Distinct().OrderBy(b => b.BuildingID).FirstOrDefault();
-
-			return building;
-		}
+		
 	}
 }
