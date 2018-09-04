@@ -7,84 +7,59 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>17009baf-459a-4415-9639-598e348111fd</rd:DataSourceID>
+      <rd:DataSourceID>f204f599-e782-4ae5-a662-f0052c9a70db</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="IndividualizedEducationProgramDataSet2">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>d641476f-2e66-4f36-87c9-3ee2c23531bf</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>IndividualizedEducationProgramDataSet</DataSourceName>
+        <DataSourceName>IndividualizedEducationProgramDataSet2</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="ServiceID">
-          <DataField>ServiceID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="DateType">
+          <DataField>DateType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SchoolYear">
-          <DataField>SchoolYear</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="StartDate">
-          <DataField>StartDate</DataField>
+        <Field Name="EvalDate">
+          <DataField>EvalDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="EndDate">
-          <DataField>EndDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="ServiceType">
-          <DataField>ServiceType</DataField>
+        <Field Name="StudentFirstName">
+          <DataField>StudentFirstName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Frequency">
-          <DataField>Frequency</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="DaysPerWeek">
-          <DataField>DaysPerWeek</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="Minutes">
-          <DataField>Minutes</DataField>
-          <rd:TypeName>System.Int16</rd:TypeName>
-        </Field>
-        <Field Name="Location">
-          <DataField>Location</DataField>
+        <Field Name="StudentLastName">
+          <DataField>StudentLastName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GoalTitle">
-          <DataField>GoalTitle</DataField>
+        <Field Name="TeacherFirstName">
+          <DataField>TeacherFirstName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="goalID">
-          <DataField>goalID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ProviderName">
-          <DataField>ProviderName</DataField>
+        <Field Name="TeacherLastName">
+          <DataField>TeacherLastName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="LastName">
-          <DataField>LastName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FirstName">
-          <DataField>FirstName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProviderID">
-          <DataField>ProviderID</DataField>
+        <Field Name="TeacherID">
+          <DataField>TeacherID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\IndividualizedEducationProgramDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>up_ReportProviderCaseload</rd:TableName>
+        <rd:DataSetName>IndividualizedEducationProgramDataSet2</rd:DataSetName>
+        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\IndividualizedEducationProgramDataSet2.xsd</rd:SchemaPath>
+        <rd:TableName>up_ReportProceduralDates</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>up_ReportProviderCaseloadTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>up_ReportProceduralDatesTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="DataSet2">
@@ -139,22 +114,13 @@
                   <Width>1.26347in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.05931in</Width>
+                  <Width>1.48223in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.83847in</Width>
+                  <Width>2.00305in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.7375in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>0.70833in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.41667in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.53125in</Width>
+                  <Width>2.5625in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -170,7 +136,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Student Name</Value>
+                                  <Value>Date</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -203,7 +169,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Location</Value>
+                                  <Value>Type</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -236,7 +202,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Frequency</Value>
+                                  <Value>Student Name</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
                                     <FontWeight>Bold</FontWeight>
@@ -271,11 +237,12 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Days per Week</Value>
+                                  <Value>Primary Provider</Value>
                                   <Style>
                                     <FontStyle>Normal</FontStyle>
                                     <FontWeight>Bold</FontWeight>
                                     <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -297,111 +264,6 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox9">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Minutes per Day</Value>
-                                  <Style>
-                                    <FontStyle>Normal</FontStyle>
-                                    <FontWeight>Bold</FontWeight>
-                                    <TextDecoration>None</TextDecoration>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox11">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Service Type</Value>
-                                  <Style>
-                                    <FontStyle>Normal</FontStyle>
-                                    <FontWeight>Bold</FontWeight>
-                                    <TextDecoration>None</TextDecoration>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox11</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Goal Title</Value>
-                                  <Style>
-                                    <FontStyle>Normal</FontStyle>
-                                    <FontWeight>Bold</FontWeight>
-                                    <TextDecoration>None</TextDecoration>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -409,68 +271,23 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ProviderName">
+                        <Textbox Name="EvalDate">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ProviderName.Value</Value>
+                                  <Value>=Fields!EvalDate.Value</Value>
                                   <Style>
-                                    <FontStyle>Italic</FontStyle>
-                                    <FontWeight>Bold</FontWeight>
+                                    <Format>MM/dd/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ProviderName</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>LightBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>7</ColSpan>
-                        <rd:Selected>true</rd:Selected>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="LastName">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!LastName.Value &amp; ", "  &amp; Fields!FirstName.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>LastName</rd:DefaultName>
+                          <rd:DefaultName>EvalDate</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -487,21 +304,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Location">
+                        <Textbox Name="DateType">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Location.Value</Value>
+                                  <Value>=Fields!DateType.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Location</rd:DefaultName>
+                          <rd:DefaultName>DateType</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -524,7 +341,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Frequency.Value</Value>
+                                  <Value>=Fields!StudentLastName.Value &amp; ", " &amp; Fields!StudentFirstName.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -554,7 +371,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DaysPerWeek.Value</Value>
+                                  <Value>=Fields!TeacherLastName.Value &amp; ", "  &amp; Fields!TeacherFirstName.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -562,96 +379,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>DaysPerWeek</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Minutes">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Minutes.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Minutes</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="ServiceType">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!ServiceType.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>ServiceType</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="GoalTitle">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!GoalTitle.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>GoalTitle</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -675,45 +402,13 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
-                <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember />
                 <TablixMember>
-                  <Group Name="ProviderName">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!ProviderID.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!ProviderName.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixMembers>
-                    <TablixMember>
-                      <KeepWithGroup>After</KeepWithGroup>
-                    </TablixMember>
-                    <TablixMember>
-                      <Group Name="Details">
-                        <GroupExpressions>
-                          <GroupExpression>=Fields!ProviderName.Value</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <SortExpressions>
-                        <SortExpression>
-                          <Value>=Fields!LastName.Value</Value>
-                        </SortExpression>
-                        <SortExpression>
-                          <Value>=Fields!FirstName.Value</Value>
-                        </SortExpression>
-                      </SortExpressions>
-                    </TablixMember>
-                  </TablixMembers>
+                  <Group Name="Details" />
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -721,8 +416,8 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>1.38417in</Top>
             <Left>0.01042in</Left>
-            <Height>0.92708in</Height>
-            <Width>7.555in</Width>
+            <Height>0.67708in</Height>
+            <Width>7.31125in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -747,39 +442,9 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox55</rd:DefaultName>
                 <Top>0.47708in</Top>
-                <Left>0.11874in</Left>
+                <Left>0.1in</Left>
                 <Height>0.25in</Height>
                 <Width>1in</Width>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-              <Textbox Name="Textbox57">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>Fiscal Year(s):</Value>
-                        <Style />
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox55</rd:DefaultName>
-                <Top>0.75in</Top>
-                <Left>0.11874in</Left>
-                <Height>0.25in</Height>
-                <Width>1in</Width>
-                <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -797,7 +462,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=IIF(Parameters!ProviderNames.Value = "", "All", Parameters!ProviderNames.Value)</Value>
+                        <Value>=Parameters!TeacherNames.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -809,37 +474,7 @@
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
                 <Width>5.5in</Width>
-                <ZIndex>2</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-              <Textbox Name="Textbox6">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>=IIF(Parameters!FiscalYears.Value = "", "All", Parameters!FiscalYears.Value)</Value>
-                        <Style />
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox6</rd:DefaultName>
-                <Top>0.75in</Top>
-                <Left>1.14097in</Left>
-                <Height>0.25in</Height>
-                <Width>5.48403in</Width>
-                <ZIndex>3</ZIndex>
+                <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -875,7 +510,7 @@
                 <Left>0.11874in</Left>
                 <Height>0.25in</Height>
                 <Width>1.67708in</Width>
-                <ZIndex>4</ZIndex>
+                <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -893,7 +528,7 @@
             <KeepTogether>true</KeepTogether>
             <Top>0.0675in</Top>
             <Left>0.08209in</Left>
-            <Height>1.13542in</Height>
+            <Height>0.86459in</Height>
             <Width>7.11458in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -920,7 +555,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Caseloads by Provider</Value>
+                      <Value>Procedural Dates</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontSize>14pt</FontSize>
@@ -1268,13 +903,7 @@
     </ReportSection>
   </ReportSections>
   <ReportParameters>
-    <ReportParameter Name="ProviderNames">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FiscalYears">
+    <ReportParameter Name="TeacherNames">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1295,12 +924,7 @@
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>ProviderNames</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>FiscalYears</ParameterName>
+          <ParameterName>TeacherNames</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>

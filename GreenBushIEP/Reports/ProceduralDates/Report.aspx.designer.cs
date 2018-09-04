@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GreenBushIEP.Reports.ProviderCaseload {
+namespace GreenBushIEP.Reports.ProceduralDates {
     
     
-    public partial class Report1 {
+    public partial class Report {
         
         /// <summary>
         /// buildingDD control.
@@ -22,22 +22,13 @@ namespace GreenBushIEP.Reports.ProviderCaseload {
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
         
         /// <summary>
-        /// providerDD control.
+        /// teacherDD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect providerDD;
-        
-        /// <summary>
-        /// fiscalYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect fiscalYear;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect teacherDD;
         
         /// <summary>
         /// Button1 control.
