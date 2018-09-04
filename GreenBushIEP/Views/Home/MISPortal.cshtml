@@ -1,5 +1,4 @@
-﻿@using GreenBushIEP.Models
-@model GreenBushIEP.Models.UserOrganizationViewModel
+﻿@model GreenBushIEP.Models.UserOrganizationViewModel
 @{
     ViewBag.Title = "Management Information System Portal";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -276,7 +275,7 @@
                 display: none;
             }
 
-    #mySettings, #add-system-user, #add-student-user  {
+    #mySettings, #add-system-user, #add-student-user {
         margin-left: 15px;
     }
 
@@ -436,24 +435,38 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 pull-left">
             <div class="form-group">
-                <label for="validate-text">Filter by District</label>
+                <label for="userDistricts">Filter by District</label>
                 <div class="input-group">
-                    <span class="input-group-addon danger"><span class="glyphicon glyphicon-option-vertical"></span></span>
-                    <select class="form-control" name="validate-select" id="validate-select" placeholder="Validate Select" required>
-                        <option value="">All District</option>
-                        <option value="item_1">Crawford - USD 250</option>
+                    <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
+                    <select class="form-control" name="userDistricts" id="userDistricts">
+                        <option value="-1">All District</option>
+                        @if (Model.districts.Count > 0)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+                                <option value="@(district.USD)">@(district.DistrictName)</option>
+                            }
+                        }
                     </select>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-md-6 pull-left">
+            <select class="hidden" name="AllUserBuildings" id="AllUserBuildings">
+                @if(Model.buildings.Count > 0)
+                {
+                    foreach(var building in Model.buildings)
+                    {
+                        <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                    }
+                }
+            </select>
             <div class="form-group">
-                <label for="validate-text">Filter by Building</label>
+                <label for="userBuildings">Filter by Building</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
-                    <select class="form-control" name="validate-select" required disabled>
-                        <option value="">All Buildings</option>
-                        <option value="item_1">Pittsburg High School</option>
+                    <select class="form-control" name="userBuildings" id="userBuildings" disabled>
+                        <option value="-1">All Buildings</option>
                     </select>
                 </div>
             </div>
@@ -504,16 +517,13 @@
                                 <button type="button" title="Assign this System User to a Building" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                     <span class="fa fa-building-o" aria-hidden="true"></span>
                                 </button>
-                            }
-
-                            @if (user.RoleID == "5")
-                            {
-                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
                             else
                             {
-                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
+
                         </div>
                     }
 

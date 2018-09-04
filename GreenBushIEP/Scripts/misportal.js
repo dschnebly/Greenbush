@@ -1,10 +1,5 @@
 ﻿$(function () {
     function init() {
-        // attach Event
-        // fires when a user clicks on the main new system user button
-        //$("#user-toggle .user-toggle-item button").on("click", function () {
-        //    $(this).parent().find("ul").toggleClass("show-buttons hide-buttons");
-        //})
 
         // attach event
         // fires when an delete button is pressed on a MIS role.
@@ -45,101 +40,32 @@
         });
 
         // attach event
-        // fires when clicking the search icon.
-        //$('[data-command="toggle-my-search"]').on('click', function (event) {
-        //    event.preventDefault;
+        // fires when the user chooses a district
+        $("#userDistricts").on('click', function () {
+            var selectedDistrict = $(this).val();
 
-        //    if ($(this).hasClass('hide-search')) {
-        //        $(this).removeClass('hide-search');
-        //        $('.c-my-search').closest('.row').slideUp(100);
-        //    }
-        //    else {
-        //        $('.c-my-search').closest('.row').slideDown(100);
-        //        $(this).addClass('hide-search');
-        //    }
-        //});
+            $("#userBuildings option").remove();
+
+            if (selectedDistrict != -1) {
+                $("#AllUserBuildings > option").each(function () {
+                    if ($(this).data('district') == selectedDistrict) {
+                        $("#userBuildings").append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                    }
+                });
+
+                $("#userBuildings").prop("disabled", false);
+            }
+            else {
+                $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                $("#userBuildings").prop("disabled", true);
+            }
+        });
 
         // attach event
         // fires where the button on an alert message is clicked
         $("#alertMessage button").on("click", function (e) {
             $(e.currentTarget).parent().hide();
         });
-
-        // attach event
-        // fires when the user is searching
-        //$('[name="contact-list-search"]').keyup(function (e) {
-        //    var val = $(e.currentTarget).val();
-        //    var code = e.keyCode || e.which;
-        //    if (code === '9') return;
-        //    if (code === '27') $(this).val(null);
-
-        //    var users = $('div.list-group-root').find('div.list-group-item');
-        //    users.show().filter(function () {
-        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        //        return !~text.indexOf(val);
-        //    }).hide();
-        //});
-
-        //////////////////////////////////////////////////////
-        //
-        // Events for Filtering the Search Results
-        //
-        /////////////////////////////////////////////////////
-
-        // attach event
-        // fires when clicking the search icon.
-        //$('[data-command="toggle-my-admin-search"]').on('click', function (event) {
-        //    event.preventDefault;
-
-        //    if ($(this).hasClass('hide-search')) {
-        //        $(this).removeClass('hide-search');
-        //        $('.c-my-search').closest('.row').slideUp(100);
-        //    }
-        //    else {
-        //        $('.c-my-search').closest('.row').slideDown(100);
-        //        $(this).addClass('hide-search');
-        //    }
-        //});
-
-        // attach event
-        // fires when the user is searching
-        //$('[name="contact-list-search"]').keyup(function (e) {
-        //    var val = $(e.currentTarget).val();
-        //    var code = e.keyCode || e.which;
-        //    if (code === '9') return;
-        //    if (code === '27') $(this).val(null);
-
-        //    var teachers = $('div.list-group-root').find('div.list-group-item');
-        //    teachers.show().filter(function () {
-        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        //        return !~text.indexOf(val.toLowerCase());
-        //    }).hide();
-        //});
-
-        // attach event
-        // fires when user select a filter option
-        //$(".filteroptions > li").on('click', function () {
-        //    $(".filteroptions >li").removeClass("selected-filter");
-        //    $(this).addClass("selected-filter");
-        //    var filter = $(this).find(".filteroption").text();
-
-        //    $('.filteredby').removeClass("filteredby");
-        //    switch (filter) {
-        //        case "Show Teachers Only":
-        //            $.each($('div.list-group-item > i.fa-child'), function () {
-        //                $(this).parent().addClass("filteredby");
-        //            });
-        //            break;
-        //        case "Show Students Only":
-        //            $.each($('.list-group-item > i.fa-graduation-cap'), function () {
-        //                $(this).parent().addClass("filteredby");
-        //                $(this).parent().nextAll('.list-group').addClass("filteredby");
-        //            });
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
 
         //////////////////////////////////////////////////////
         //
