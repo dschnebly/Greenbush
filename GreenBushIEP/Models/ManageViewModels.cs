@@ -89,6 +89,8 @@ namespace GreenBushIEP.Models
     {
         public tblUser user { get; set; }
         public List<tblUser> staff { get; set; }
+        public List<tblDistrict> districts { get; set; }
+        public List<tblBuilding> buildings { get; set; }
     }
 
     public class MISCalendarViewModel

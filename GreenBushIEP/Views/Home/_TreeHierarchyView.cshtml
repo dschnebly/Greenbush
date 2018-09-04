@@ -54,18 +54,13 @@
                     {
                         <i class="fa fa-child" aria-hidden="true"></i>
                         <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
-
                         <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right startIEP" style="position: relative; bottom: 4px;">
                             <span class="glyphicon glyphicon-log-out"></span>
                         </a>
-
-                        //if (Model.staff.Any(u => u.RoleID == "4"))
-                        //{
-                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                <span class="glyphicon glyphicon glyphicon-trash"></span>
-                            </button>
-                            <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                        @*}*@
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                        </button>
+                        <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                     }
 
                 </div>

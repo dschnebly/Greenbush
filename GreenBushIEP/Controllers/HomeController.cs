@@ -102,15 +102,30 @@ namespace GreenbushIep.Controllers
             if (MIS != null)
             {
                 // get all the admins in the database that are active and under this MIS user.
-                var admin = (from org in db.tblOrganizationMappings
+                var staff = (from org in db.tblOrganizationMappings
                              join user in db.tblUsers
                                  on org.UserID equals user.UserID
                              where (org.AdminID == MIS.UserID) && !(user.Archive ?? false)
                              select user).Distinct().OrderBy(u => u.RoleID).ToList();
 
+                var districts = (from org in db.tblOrganizationMappings
+                                 join district in db.tblDistricts
+                                    on org.USD equals district.USD
+                                 where org.UserID == MIS.UserID
+                                 select district).Distinct().ToList();
+
+                var buildings = (from buildingMap in db.tblBuildingMappings
+                                join building in db.tblBuildings
+                                    on buildingMap.USD equals building.USD
+                                where buildingMap.UserID == MIS.UserID
+                                select building).Distinct().ToList();
+
+
                 UserOrganizationViewModel model = new UserOrganizationViewModel();
                 model.user = MIS;
-                model.staff = admin.ToList();
+                model.staff = staff;
+                model.districts = districts;
+                model.buildings = buildings;
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
