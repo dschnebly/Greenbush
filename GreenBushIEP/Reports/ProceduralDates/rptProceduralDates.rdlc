@@ -117,10 +117,10 @@
                   <Width>1.48223in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.00305in</Width>
+                  <Width>2.0843in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5625in</Width>
+                  <Width>2.7625in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -278,7 +278,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!EvalDate.Value</Value>
+                                  <Value>=IIF(Fields!EvalDate.Value = DateTime.MinValue,"", FormatDateTime(Fields!EvalDate.Value, DateFormat.ShortDate))</Value>
                                   <Style>
                                     <Format>MM/dd/yyyy</Format>
                                   </Style>
@@ -299,7 +299,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -414,10 +413,10 @@
             </TablixRowHierarchy>
             <NoRowsMessage>There was no data found that matched the selected criteria.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>1.38417in</Top>
+            <Top>1.00917in</Top>
             <Left>0.01042in</Left>
             <Height>0.67708in</Height>
-            <Width>7.31125in</Width>
+            <Width>7.5925in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -433,7 +432,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>Provider(s):</Value>
+                        <Value>Teacher(s):</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -462,7 +461,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Parameters!TeacherNames.Value</Value>
+                        <Value>=IIF(Parameters!TeacherNames.Value = "", "All", Parameters!TeacherNames.Value)</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -473,7 +472,7 @@
                 <Top>0.47708in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>5.5in</Width>
+                <Width>6.25in</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -507,7 +506,7 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox14</rd:DefaultName>
                 <Top>0.09917in</Top>
-                <Left>0.11874in</Left>
+                <Left>0.09374in</Left>
                 <Height>0.25in</Height>
                 <Width>1.67708in</Width>
                 <ZIndex>2</ZIndex>
@@ -527,9 +526,9 @@
             </PageBreak>
             <KeepTogether>true</KeepTogether>
             <Top>0.0675in</Top>
-            <Left>0.08209in</Left>
+            <Left>0.04459in</Left>
             <Height>0.86459in</Height>
-            <Width>7.11458in</Width>
+            <Width>7.55833in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -538,7 +537,7 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>2.57292in</Height>
+        <Height>1.88542in</Height>
         <Style />
       </Body>
       <Width>7.68834in</Width>
@@ -591,7 +590,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -601,9 +602,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox59</rd:DefaultName>
               <Top>0.0625in</Top>
-              <Left>5.57584in</Left>
+              <Left>5.19667in</Left>
               <Height>0.25in</Height>
-              <Width>1.98958in</Width>
+              <Width>2.40625in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -623,7 +624,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed By: " &amp; Parameters!PrintedBy.Value</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -633,9 +636,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox60</rd:DefaultName>
               <Top>0.30625in</Top>
-              <Left>5.57584in</Left>
+              <Left>5.19667in</Left>
               <Height>0.25in</Height>
-              <Width>1.98958in</Width>
+              <Width>2.40625in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -787,7 +790,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Page: " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -862,8 +867,10 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Date Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style />
+                      <Value>="Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -873,9 +880,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox63</rd:DefaultName>
               <Top>0.28208in</Top>
-              <Left>5.95917in</Left>
+              <Left>5.99667in</Left>
               <Height>0.25in</Height>
-              <Width>1.5625in</Width>
+              <Width>1.60625in</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>

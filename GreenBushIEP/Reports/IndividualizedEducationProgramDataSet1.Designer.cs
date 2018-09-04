@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace GreenBushIEP {
+namespace GreenBushIEP.Reports {
     
     
     /// <summary>
@@ -770,7 +770,7 @@ namespace GreenBushIEP {
         }
     }
 }
-namespace GreenBushIEP.IndividualizedEducationProgramDataSetTableAdapters {
+namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapters {
     
     
     /// <summary>

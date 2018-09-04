@@ -1513,7 +1513,13 @@ namespace GreenbushIep.Controllers
             return forms.OrderBy(x => x.Text).ToList();
         }
 
-        [HttpGet]
+		[Authorize]
+		public ActionResult Reports()
+		{
+			return View("~/Views/Home/Reports.cshtml");
+		}
+
+		[HttpGet]
         [Authorize]
         public ActionResult PrintIEP(int id, int status = 0)
         {

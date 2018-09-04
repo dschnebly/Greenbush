@@ -248,3 +248,6 @@ ModelManifest.xml
 /GreenBushIEP/Content/Images/Uploads/s-l1600.jpg
 /GreenBushIEP/Content/Images/foundMeobyteClosed.gif
 /GreenBushIEP/Properties/PublishProfiles/FolderProfile.pubxml
+/up_ReportBuildings.sql
+/up_ReportProceduralDates.sql
+/up_ReportProviderCaseload.sql

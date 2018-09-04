@@ -284,12 +284,12 @@
     <Compile Include="Helper\RandomPassword.cs" />
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Helper\VersionCompare.cs" />
-    <Compile Include="IndividualizedEducationProgramDataSet1.Designer.cs">
+    <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="IndividualizedEducationProgramDataSet2.Designer.cs">
+    <Compile Include="Reports\IndividualizedEducationProgramDataSet2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
@@ -642,26 +642,26 @@
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\createstudent.js" />
     <Content Include="Scripts\editable.js" />
-    <Content Include="IndividualizedEducationProgramDataSet1.xsc">
+    <Content Include="Reports\IndividualizedEducationProgramDataSet1.xsc">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Content>
-    <None Include="IndividualizedEducationProgramDataSet1.xsd">
+    <None Include="Reports\IndividualizedEducationProgramDataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>IndividualizedEducationProgramDataSet1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="IndividualizedEducationProgramDataSet1.xss">
+    <Content Include="Reports\IndividualizedEducationProgramDataSet1.xss">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Content>
-    <Content Include="IndividualizedEducationProgramDataSet2.xsc">
+    <Content Include="Reports\IndividualizedEducationProgramDataSet2.xsc">
       <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
     </Content>
-    <None Include="IndividualizedEducationProgramDataSet2.xsd">
+    <None Include="Reports\IndividualizedEducationProgramDataSet2.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>IndividualizedEducationProgramDataSet2.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="IndividualizedEducationProgramDataSet2.xss">
+    <Content Include="Reports\IndividualizedEducationProgramDataSet2.xss">
       <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\IEP Backpack.pubxml" />
@@ -785,6 +785,7 @@
     <Content Include="Views\Form\PhysicianScript.cshtml" />
     <Content Include="Views\Home\Updates.cshtml" />
     <Content Include="Views\Home\_ModuleDistrictContact.cshtml" />
+    <Content Include="Views\Home\Reports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

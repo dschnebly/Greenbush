@@ -136,7 +136,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.26347in</Width>
+                  <Width>1.29472in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.05931in</Width>
@@ -440,7 +440,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>7</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -482,7 +481,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -717,12 +715,12 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <NoRowsMessage>There was no data found that matched the selected criteria.</NoRowsMessage>
+            <NoRowsMessage>No data found for the selected filters.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>1.38417in</Top>
+            <Top>1.30917in</Top>
             <Left>0.01042in</Left>
             <Height>0.92708in</Height>
-            <Width>7.555in</Width>
+            <Width>7.58625in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -805,10 +803,10 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox4</rd:DefaultName>
-                <Top>0.47708in</Top>
+                <Top>0.475in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>5.5in</Width>
+                <Width>6.15625in</Width>
                 <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
@@ -835,10 +833,10 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox6</rd:DefaultName>
-                <Top>0.75in</Top>
+                <Top>0.74792in</Top>
                 <Left>1.14097in</Left>
                 <Height>0.25in</Height>
-                <Width>5.48403in</Width>
+                <Width>6.14028in</Width>
                 <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
@@ -892,9 +890,9 @@
             </PageBreak>
             <KeepTogether>true</KeepTogether>
             <Top>0.0675in</Top>
-            <Left>0.08209in</Left>
+            <Left>0.05709in</Left>
             <Height>1.13542in</Height>
-            <Width>7.11458in</Width>
+            <Width>7.46458in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -903,7 +901,7 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>2.57292in</Height>
+        <Height>2.36459in</Height>
         <Style />
       </Body>
       <Width>7.68834in</Width>
@@ -956,7 +954,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -966,9 +966,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox59</rd:DefaultName>
               <Top>0.0625in</Top>
-              <Left>5.57584in</Left>
+              <Left>5.20084in</Left>
               <Height>0.25in</Height>
-              <Width>1.98958in</Width>
+              <Width>2.39583in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -988,7 +988,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Printed By: " &amp; Parameters!PrintedBy.Value</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -998,9 +1000,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox60</rd:DefaultName>
               <Top>0.30625in</Top>
-              <Left>5.57584in</Left>
+              <Left>5.20084in</Left>
               <Height>0.25in</Height>
-              <Width>1.98958in</Width>
+              <Width>2.39583in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1152,7 +1154,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Page: " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -1228,7 +1232,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Date Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1238,7 +1244,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox63</rd:DefaultName>
               <Top>0.28208in</Top>
-              <Left>5.95917in</Left>
+              <Left>5.99667in</Left>
               <Height>0.25in</Height>
               <Width>1.5625in</Width>
               <ZIndex>3</ZIndex>
