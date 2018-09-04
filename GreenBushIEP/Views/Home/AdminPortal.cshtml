@@ -254,7 +254,7 @@
                 display: none;
             }
 
-    #add-system-user, #addExistingTeacher {
+    #add-system-user, #addExistingTeacher, #reports {
         margin-left: 15px;
     }
 
@@ -404,6 +404,9 @@
                 </div>
                 <div class="user-toggle-item">
                     <a id="addExistingTeacher" class="btn btn-primary btn-circle btn-xl" data-id="@(Model.user.UserID)" ><i class="fa fa-users" title="Search Exsisting Teacher List" data-toggle="tooltip"></i></a>
+                </div>
+				<div class="user-toggle-item">
+                    <a id="reports"  class="btn btn-primary btn-circle btn-xl" data-toggle="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
                 </div>
             </div>
         </div>
