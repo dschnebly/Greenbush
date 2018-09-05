@@ -1,0 +1,142 @@
+﻿
+
+@{
+	ViewBag.Title = "Reports";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+	@Styles.Render("~/Content/transition.css")
+	@Styles.Render("~/Content/jquery-ui.min.css")
+
+	<style>
+
+		hr {
+			border-top: 1px solid #ddd;
+		}
+
+		.transition-page {
+			position: relative;
+		}
+
+		
+
+		.btn-group-primary .dropdown-menu {
+			background-color: #214680 !important;
+		}
+
+			.btn-group-primary .dropdown-menu li > a {
+				color: #fff;
+				font-size: 12px;
+			}
+
+				.btn-group-primary .dropdown-menu li > a:hover,
+				.btn-group-primary .dropdown-menu li > a:focus {
+					background-color: #214680 !important;
+					color: #ffffff;
+					text-decoration: underline;
+				}
+
+	
+		.alert-danger-iep {			
+			padding: 3px 4px;
+			color: #b94a48;			
+		}
+
+		
+	</style>
+}
+
+@using (Html.BeginForm("DownloadSpedPro", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
+{
+	<div class="transition-page">
+		<h2>SPED Pro Export</h2>
+
+		<div class="container" style="overflow:hidden; margin: 0 auto 75px;">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-2">
+						<label for="fiscalYear">Fiscal Year</label>
+						<div class="form-group">
+							<select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;" required>
+								<option value="2018">2017 - 2018</option>
+								<option value="2019">2018 - 2019</option>
+								<option value="2020">2019 - 2020</option>
+								<option value="2021">2020 - 2021</option>
+								<option value="2022">2021 - 2022</option>
+							</select>
+						</div>
+					</div>
+					@*<div class="col-md-3">
+						<label for="Frequency">Start Date</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input id="startDate" name="startDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; " required>
+						</div>
+					</div>*@
+					@*<div class="col-md-3">
+						<label for="Frequency">End Date</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input id="endDate" name="endDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; " required>
+						</div>
+					</div>*@
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<br />
+						<button type="button" id="exportButton" class="btn btn-default btn-lg "><i class="fa fa-file-export"></i> Submit</button>                                    
+					</div>
+				</div>
+			</div>
+			<div class="row voffset4">
+				@if (ViewBag.errors != null)
+				{
+					<label id="errorLabel" class="alert-danger-iep">Please correct the following errors and re-submit:</label>
+				<ul class="errorList">
+					
+					@foreach (var error in ViewBag.errors)
+					{
+						<li class="alert-danger-iep">@error.UserID @error.Description</li>
+					}
+				</ul>
+				}
+			</div>
+			@*<div class="ajax-loader">
+				<img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+			</div>*@
+		</div>
+
+	</div>
+}
+
+
+@section scripts {
+
+<script>
+	$(document).ready(function () {
+
+		$("#exportButton").click(function () {
+			$("ul.errorList").empty();
+			$("#errorLabel").hide();
+			$("#ajax-loader").show();
+			
+			$( ".form-inline" ).submit();
+		});
+
+        $(this).find('.dtField').each(function () {           
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true
+            });
+        });
+
+	});
+</script>
+
+}

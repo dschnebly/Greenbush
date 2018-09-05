@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -1754,7 +1755,298 @@ namespace GreenbushIep.Controllers
                 return null;
         }
 
-        [Authorize]
+		public ActionResult SpedProReport()
+		{
+			return View("~/Reports/SpedPro/Index.cshtml");
+		}
+
+		[Authorize]
+		public ActionResult DownloadSpedPro(FormCollection collection)		
+        {			
+			string fiscalYear = collection["fiscalYear"];
+			string iepStatus = IEPStatus.ACTIVE;
+			var exportErrors = new List<ExportErrorView>();
+			//string selectedDateStr = collection["startDate"];
+			//DateTime selectedDate = Convert.ToDateTime(selectedDateStr);
+			//DateTime startDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);  
+			//DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+			var query = (from iep in db.tblIEPs
+						 join student in db.tblUsers
+							 on iep.UserID equals student.UserID
+					     where iep.IepStatus == iepStatus						      
+						 select new { iep, student }).ToList();
+
+
+			if (query.Count() > 0)
+			{
+				StringBuilder sb = new StringBuilder();
+
+				foreach (var item in query.ToList())
+				{
+					IEP theIEP = new IEP()
+					{
+						current = item.iep,
+						studentFirstName = string.Format("{0}", item.student.FirstName),
+						studentLastName = string.Format("{0}", item.student.FirstName),
+
+					};
+
+					if (theIEP != null && theIEP.current != null)
+					{
+						var studentDetails = new StudentDetailsPrintViewModel();
+
+						theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+						theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
+						//var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
+						//theIEP.studentBehavior = GetBehaviorModel(theIEP.current.UserID, theIEP.current.IEPid);
+
+						tblStudentInfo info = null;
+						if (student != null)
+						{
+
+							info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
+							tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+							tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+						}
+
+						if (info != null && theIEP.current != null)
+						{
+							var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+							var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+							var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+							var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+
+							studentDetails.student = info;
+							studentDetails.gender = info.Gender;
+							studentDetails.building = studentBuilding;
+							studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+							studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
+							studentDetails.parentLang = info.ParentLanguage;
+							studentDetails.primaryDisability = info.Primary_DisabilityCode;
+							studentDetails.secondaryDisability = info.Secondary_DisabilityCode;
+							studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+							studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+						}
+
+						theIEP.studentDetails = studentDetails;
+					}
+
+					var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+
+					if (errors.Count > 0)
+						exportErrors.AddRange(errors);
+
+				}//end foreach
+
+
+				if (exportErrors.Count == 0)
+				{
+					Response.Clear();
+					Response.ClearHeaders();
+
+					Response.AppendHeader("Content-Length", sb.Length.ToString());
+					Response.ContentType = "text/plain";
+					Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
+
+					Response.Write(sb);
+					Response.End();
+				}
+				else
+				{
+					ViewBag.errors = exportErrors;
+				}
+			}
+			else
+			{
+				exportErrors.Add(new ExportErrorView()
+				{
+					UserID = "",
+					Description = "No data found to export."
+				});
+			}
+
+			return View("~/Reports/SpedPro/Index.cshtml");
+		}
+
+		private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, string schoolYear, StringBuilder sb)
+		{
+			var errors = new List<ExportErrorView>();
+			
+			//1 KidsID Req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.KIDSID);
+
+			//2 Last Name, Student’s Legal Req less < 60 characters
+			sb.AppendFormat("{0}\t", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
+
+			//3 Student’s Gender
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender);
+
+			//4 DOB MM/DD/YYYY
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
+
+			//5 School Year YYYY Req
+			sb.AppendFormat("{0}\t", schoolYear);
+
+			//6 Assign Child Count Req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.assignChildCount);
+
+			//7 Neighborhood Building Identifier Req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
+
+			//8 grade level req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Grade);
+
+			//9 status code req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.StatusCode);
+
+			//10 exit date
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
+
+			//11 School Psychologist Provider ID
+			sb.AppendFormat("{0}\t", "");
+
+			//12 slp provider id
+			sb.AppendFormat("{0}\t", "");
+
+			//13 case manager provider id
+			sb.AppendFormat("{0}\t", "");
+
+			//14 extended school year
+			sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
+
+			//15 sped transportation
+			sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.Transporation_Required.HasValue && studentIEP.studentOtherConsiderations.Transporation_Required.Value ? "1" : "0" : "");
+
+			//16 All Day Kindergarten
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
+
+			//17 Behavior Intervention Plan - BIP
+			sb.AppendFormat("{0}\t", "");
+
+			//18 Claiming Code req
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1": "");
+
+			//19 Placed By KDCF/JJA/LEA/Parent req
+			if (string.IsNullOrEmpty(studentIEP.studentDetails.student.PlacementCode))
+			{
+				errors.Add(new ExportErrorView()
+				{
+					UserID = string.Format("KIDSID: {0}",studentIEP.studentDetails.student.KIDSID.ToString()),
+					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
+				});
+				
+			}
+			else
+			{
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.PlacementCode);
+			}
+
+			//20 County of Residence  req
+			if (string.IsNullOrEmpty(studentIEP.studentDetails.studentCounty))
+			{
+				errors.Add(new ExportErrorView()
+				{
+					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
+				});
+
+			}
+			else
+			{
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.studentCounty);
+			}
+
+			//21 Language of Parent  req
+			if (string.IsNullOrEmpty(studentIEP.studentDetails.parentLang))
+			{
+				errors.Add(new ExportErrorView()
+				{
+					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
+				});
+			}
+			else
+			{
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
+			}
+
+
+			foreach (var service in studentIEP.studentServices)
+			{
+				//1 IEP date req
+				if (!studentIEP.current.begin_date.HasValue)
+				{
+					errors.Add(new ExportErrorView()
+					{
+						UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+						Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+					});
+				}
+				else
+				{
+					sb.AppendFormat("{0}\t", studentIEP.current.begin_date.Value.ToShortDateString());
+				}
+
+				//2 gap allow
+				sb.AppendFormat("{0}\t", "");
+
+				//3 Responsible School req
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
+
+				//4 primary disablity
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.primaryDisability);
+
+				//5 secondary disablity
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.secondaryDisability);
+
+				//6 gifted
+				sb.AppendFormat("{0}\t", service.ServiceCode == "GI" ? "1" : "");
+
+				//7 service location
+				sb.AppendFormat("{0}\t", service.LocationCode);
+
+				//8 Primary Service Location Indicator
+				sb.AppendFormat("{0}\t", "");
+
+				//9 setting code
+				sb.AppendFormat("{0}\t","");
+
+				//10 service code
+				sb.AppendFormat("{0}\t", service.ServiceCode);
+				
+				//11 provider id
+				sb.AppendFormat("{0}\t", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0,10) : service.tblProvider.ProviderCode : "");
+
+				//12 Primary Provider Indicator
+				sb.AppendFormat("{0}\t",  "");
+
+				//13 Service Start Date
+				sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
+
+				//14 Service end Date
+				sb.AppendFormat("{0}\t", service.EndDate.ToShortDateString());
+
+				//15 minutes
+				sb.AppendFormat("{0}\t", service.Minutes);
+
+				//16 days per
+				sb.AppendFormat("{0}\t", service.DaysPerWeek);
+
+				//17 freq
+				sb.AppendFormat("{0}\t", service.Frequency);
+
+				//18 total days
+				sb.AppendFormat("{0}\t", "");
+
+			}
+
+			sb.AppendFormat("{0}\r", "");
+
+			return errors;
+		}
+
+		[Authorize]
         public static string ScrubDocumentName(string documentName)
         {
             return documentName.Replace(',', ' ');

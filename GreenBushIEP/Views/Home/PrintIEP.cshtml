@@ -391,7 +391,7 @@
                     <td><label>Re-Eval Signed:</label></td>
                     <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.ToShortDateString() : "")</td>
                     <td><label>3 Year Re-Eval:</label></td>
-                    <td>**</td>
+                    <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.AddYears(3).ToShortDateString() : "")</td>
                 </tr>
                 <tr>
                     <td><label>Re-Eval Completion:</label></td>
@@ -2641,7 +2641,9 @@
                                         <text>&nbsp;&nbsp;&nbsp;</text>
                                     }
                                 </td>
-                                <td>**</td>
+                                <td>
+									@Model.studentDetails.student.PlacementCode
+								</td>
                                 <td>
                                     @if (Model.locations.Count > 0)
                                     {

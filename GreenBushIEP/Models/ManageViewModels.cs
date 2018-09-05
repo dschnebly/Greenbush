@@ -477,10 +477,11 @@ namespace GreenBushIEP.Models
             building = new tblBuilding();
             teacherBuilding = new tblBuilding();
             neighborhoodBuilding = new tblBuilding();
-        }
+			
+		}
 
         public tblUser teacher { get; set; }
-        public tblStudentInfo student { get; set; }
+		public tblStudentInfo student { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public string ethnicity { get; set; }
         public string gender { get; set; }
@@ -519,7 +520,12 @@ namespace GreenBushIEP.Models
 	{
 		public int UserID { get; set; }
 		public string Name { get; set; }
-		
+	}
+
+	public class ExportErrorView
+	{
+		public string UserID { get; set; }
+		public string Description { get; set; }
 
 	}
 }
