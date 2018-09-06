@@ -1763,7 +1763,10 @@ namespace GreenbushIep.Controllers
 		[Authorize]
 		public ActionResult DownloadSpedPro(FormCollection collection)		
         {			
-			string fiscalYear = collection["fiscalYear"];
+			string fiscalYearStr = collection["fiscalYear"];
+			int fiscalYear = 0;
+			Int32.TryParse(fiscalYearStr, out fiscalYear);
+
 			string iepStatus = IEPStatus.ACTIVE;
 			var exportErrors = new List<ExportErrorView>();
 			//string selectedDateStr = collection["startDate"];
@@ -1774,7 +1777,11 @@ namespace GreenbushIep.Controllers
 			var query = (from iep in db.tblIEPs
 						 join student in db.tblUsers
 							 on iep.UserID equals student.UserID
-					     where iep.IepStatus == iepStatus						      
+						 join services in db.tblServices
+						     on iep.IEPid equals services.IEPid
+						 where 
+						 iep.IepStatus == iepStatus
+						 && services.SchoolYear == fiscalYear
 						 select new { iep, student }).ToList();
 
 
@@ -1795,12 +1802,9 @@ namespace GreenbushIep.Controllers
 					if (theIEP != null && theIEP.current != null)
 					{
 						var studentDetails = new StudentDetailsPrintViewModel();
-
-						theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+						theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.SchoolYear == fiscalYear).ToList();
 						theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
-						//var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
-						//theIEP.studentBehavior = GetBehaviorModel(theIEP.current.UserID, theIEP.current.IEPid);
-
+						
 						tblStudentInfo info = null;
 						if (student != null)
 						{
@@ -1869,7 +1873,7 @@ namespace GreenbushIep.Controllers
 			return View("~/Reports/SpedPro/Index.cshtml");
 		}
 
-		private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, string schoolYear, StringBuilder sb)
+		private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, int schoolYear, StringBuilder sb)
 		{
 			var errors = new List<ExportErrorView>();
 			
