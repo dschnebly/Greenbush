@@ -1149,6 +1149,7 @@ namespace GreenbushIep.Controllers
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
                     service.Update_Date = DateTime.Now;
+					service.FiledOn = null; //need to clear so it can be pickedup by spedpro export
                     service.tblGoals.Clear();
 
                     // nullable serviceId
@@ -1782,6 +1783,7 @@ namespace GreenbushIep.Controllers
 						 where 
 						 iep.IepStatus == iepStatus
 						 && services.SchoolYear == fiscalYear
+						 && (services.FiledOn == null || iep.FiledOn == null)
 						 select new { iep, student }).ToList();
 
 
@@ -1833,13 +1835,23 @@ namespace GreenbushIep.Controllers
 							studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
 						}
 
+						theIEP.current.FiledOn = DateTime.Now;
 						theIEP.studentDetails = studentDetails;
 					}
 
 					var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
 
 					if (errors.Count > 0)
+					{
 						exportErrors.AddRange(errors);
+
+					}
+					else{
+
+						db.SaveChanges();
+
+					}
+
 
 				}//end foreach
 
@@ -1868,6 +1880,8 @@ namespace GreenbushIep.Controllers
 					UserID = "",
 					Description = "No data found to export."
 				});
+
+				ViewBag.errors = exportErrors;
 			}
 
 			return View("~/Reports/SpedPro/Index.cshtml");
@@ -1884,7 +1898,7 @@ namespace GreenbushIep.Controllers
 			sb.AppendFormat("{0}\t", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
 
 			//3 Student’s Gender
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender);
+			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender == "M" ? 1 : 0);
 
 			//4 DOB MM/DD/YYYY
 			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
@@ -1899,7 +1913,67 @@ namespace GreenbushIep.Controllers
 			sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
 			//8 grade level req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Grade);
+			var gradeCode = "";
+			switch (studentIEP.studentDetails.student.Grade)
+			{
+				case 0: gradeCode = "05";
+						break;
+				case 1:
+					gradeCode = "06";
+					break;
+
+				case 2:
+					gradeCode = "07";
+					break;
+
+				case 3:
+					gradeCode = "08";
+					break;
+
+				case 4:
+					gradeCode = "09";
+					break;
+
+				case 5:
+					gradeCode = "10";
+					break;
+
+				case 6:
+					gradeCode = "11";
+					break;
+
+				case 7:
+					gradeCode = "12";
+					break;
+
+				case 8:
+					gradeCode = "13";
+					break;
+				case 9:
+					gradeCode = "14";
+					break;
+				case 10:
+					gradeCode = "15";
+					break;
+				case 11:
+					gradeCode = "16";
+					break;
+				case 12:
+					gradeCode = "17";
+					break;
+			}
+			if (gradeCode == "")
+			{
+				errors.Add(new ExportErrorView()
+				{
+					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
+				});
+				
+			}else
+			{
+				sb.AppendFormat("{0}\t", gradeCode);
+			}
 
 			//9 status code req
 			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.StatusCode);
@@ -1937,7 +2011,7 @@ namespace GreenbushIep.Controllers
 				errors.Add(new ExportErrorView()
 				{
 					UserID = string.Format("KIDSID: {0}",studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
+					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
 				});
 				
 			}
@@ -1952,7 +2026,7 @@ namespace GreenbushIep.Controllers
 				errors.Add(new ExportErrorView()
 				{
 					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
+					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
 				});
 
 			}
@@ -1967,7 +2041,7 @@ namespace GreenbushIep.Controllers
 				errors.Add(new ExportErrorView()
 				{
 					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
+					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
 				});
 			}
 			else
@@ -1978,13 +2052,14 @@ namespace GreenbushIep.Controllers
 
 			foreach (var service in studentIEP.studentServices)
 			{
+				service.FiledOn = DateTime.Now;
 				//1 IEP date req
 				if (!studentIEP.current.begin_date.HasValue)
 				{
 					errors.Add(new ExportErrorView()
 					{
 						UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-						Description = string.Format("Student: {0},{1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+						Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
 					});
 				}
 				else
@@ -1996,7 +2071,7 @@ namespace GreenbushIep.Controllers
 				sb.AppendFormat("{0}\t", "");
 
 				//3 Responsible School req
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
 				//4 primary disablity
 				sb.AppendFormat("{0}\t", studentIEP.studentDetails.primaryDisability);
@@ -2008,13 +2083,13 @@ namespace GreenbushIep.Controllers
 				sb.AppendFormat("{0}\t", service.ServiceCode == "GI" ? "1" : "");
 
 				//7 service location
-				sb.AppendFormat("{0}\t", service.LocationCode);
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
 
 				//8 Primary Service Location Indicator
 				sb.AppendFormat("{0}\t", "");
 
 				//9 setting code
-				sb.AppendFormat("{0}\t","");
+				sb.AppendFormat("{0}\t",service.LocationCode);
 
 				//10 service code
 				sb.AppendFormat("{0}\t", service.ServiceCode);

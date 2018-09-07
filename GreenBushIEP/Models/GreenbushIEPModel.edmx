@@ -481,6 +481,7 @@
           <Property Name="IEPWrittenID" Type="int" />
           <Property Name="MeetingDate" Type="datetime" />
           <Property Name="end_Date" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="FiledOn" Type="datetime" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -656,6 +657,7 @@
           <Property Name="LocationCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="FiledOn" Type="datetime" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -1765,6 +1767,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="IEPWrittenID" Type="Int32" />
           <Property Name="MeetingDate" Type="DateTime" Precision="3" />
           <Property Name="end_Date" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="FiledOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -1938,6 +1941,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+          <Property Name="FiledOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -2802,6 +2806,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
                 <ScalarProperty Name="end_Date" ColumnName="end_Date" />
                 <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
                 <ScalarProperty Name="IEPWrittenID" ColumnName="IEPWrittenID" />
@@ -2986,6 +2991,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />

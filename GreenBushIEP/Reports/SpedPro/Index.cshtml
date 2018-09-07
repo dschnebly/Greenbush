@@ -95,14 +95,14 @@
 			<div class="row voffset4">
 				@if (ViewBag.errors != null)
 				{
-					<label id="errorLabel" class="alert-danger-iep">Please correct the following errors and re-submit:</label>
-				<ul class="errorList">
+					@*<label id="errorLabel" class="alert-danger-iep">Please correct the following errors and re-submit:</label>*@
+					<ul class="errorList">
 					
-					@foreach (var error in ViewBag.errors)
-					{
-						<li class="alert-danger-iep">@error.UserID @error.Description</li>
-					}
-				</ul>
+						@foreach (var error in ViewBag.errors)
+						{
+							<li class="alert-danger-iep">@error.UserID @error.Description</li>
+						}
+					</ul>
 				}
 			</div>
 			@*<div class="ajax-loader">
@@ -121,9 +121,8 @@
 
 		$("#exportButton").click(function () {
 			$("ul.errorList").empty();
-			$("#errorLabel").hide();
-			$("#ajax-loader").show();
-			
+			//$("#errorLabel").hide();
+			//$("#ajax-loader").show();			
 			$( ".form-inline" ).submit();
 		});
 

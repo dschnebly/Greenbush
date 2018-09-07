@@ -34,5 +34,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> IEPWrittenID { get; set; }
         public Nullable<System.DateTime> MeetingDate { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
+        public Nullable<System.DateTime> FiledOn { get; set; }
     }
 }
