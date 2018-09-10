@@ -10,9 +10,17 @@
     @Styles.Render("~/Content/jquery-ui.min.css")
 
     <style>
-        
         hr {
-            border-top: 1px solid #ddd;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            margin-top: 20px;
+            padding: 3px 0;
+            margin-bottom: 0;
+            list-style: none;
+            background-color: transparent;
         }
 
         .transition-page {
@@ -803,39 +811,48 @@
 }
 
 <div class="transition-page">
-    <h2>Reports</h2>
+    <div class="col-md-2 pull-right">
+        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
+    </div>
+    <hr />
+
+    <ul class="breadcrumb">
+        <li><i class="fa fa-file" aria-hidden="true" style="font-size: 30px;"></i>&nbsp;&nbsp;<a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Managed Information System Portal</a></li>
+        <li class="active" style="font-size: 20px;">Reports</li>
+    </ul>
+
     <div class="container" style="overflow:hidden; margin: 0 auto 75px;">
-        <div class="col-md-12">            
+        <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Name</th>                     
-						<th></th>                     
+                        <th>Name</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     <tr>
                         <td><label class="text-muted">Caseloads by Provider</label></td>
                         <td>
-                            <button type="button" class="btn btn-default btn-lg printForm" id="btnCaseLoad" onclick="return window.location.href = '/Reports/ProviderCaseload/Report.aspx';"><i class="fa fa-print"></i> View</button>                                    
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnCaseLoad" onclick="return window.location.href = '/Reports/ProviderCaseload/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Procedural Dates</label></td>
                         <td>
-                            <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Reports/ProceduralDates/Report.aspx';"><i class="fa fa-print"></i> View</button>                                    
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Reports/ProceduralDates/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">SPED Pro Export</label></td>
                         <td>
-                            <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Home/SpedProReport';"><i class="fa fa-print"></i> View</button>                                    
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Home/SpedProReport';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
 
-                    
-            </tbody>
+
+                </tbody>
             </table>
             <div class="ajax-loader">
                 <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
