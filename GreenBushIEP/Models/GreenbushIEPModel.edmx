@@ -1219,7 +1219,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCounties" EntityType="IndividualizedEducationProgramModel.tblCounty" />
           <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
-          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
           <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
@@ -1275,10 +1274,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </AssociationSet>
           <EntitySet Name="tblEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" />
           <EntitySet Name="tblGoalEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" />
-          <AssociationSet Name="FK_tblDistricts_tblUsers_UserID" Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID">
-            <End Role="tblUser" EntitySet="tblUsers" />
-            <End Role="tblDistrict" EntitySet="tblDistricts" />
-          </AssociationSet>
           <FunctionImport Name="up_ReportProviderCaseload" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProviderCaseload_Result)">
             <Parameter Name="ProviderId" Mode="In" Type="String" />
             <Parameter Name="FiscalYear" Mode="In" Type="String" />
@@ -1292,6 +1287,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
+          <AssociationSet Name="FK_tblDistricts_tblUsers_UserID" Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblDistrict" EntitySet="tblDistricts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1513,19 +1513,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DisabilityArea" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tblDistrict">
-          <Key>
-            <PropertyRef Name="USD" />
-          </Key>
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
-          <Property Name="DOC" Type="Boolean" Nullable="false" />
-          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactUserID" Type="Int32" />
-          <NavigationProperty Name="tblUser" Relationship="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" FromRole="tblDistrict" ToRole="tblUser" />
         </EntityType>
         <EntityType Name="tblFormArchive">
           <Key>
@@ -2243,18 +2230,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <Association Name="FK_tblDistricts_tblUsers_UserID">
-          <End Type="IndividualizedEducationProgramModel.tblUser" Role="tblUser" Multiplicity="0..1" />
-          <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="tblDistrict">
-              <PropertyRef Name="ContactUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="up_ReportProviderCaseload_Result">
           <Property Type="Int32" Name="ServiceID" Nullable="false" />
           <Property Type="Int32" Name="SchoolYear" Nullable="false" />
@@ -2311,6 +2286,31 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="TeacherLastName" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="TeacherID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="tblDistrict">
+          <Key>
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Int32" />
+          <Property Name="DOC" Type="Boolean" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactUserID" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" FromRole="tblDistrict" ToRole="tblUser" />
+        </EntityType>
+        <Association Name="FK_tblDistricts_tblUsers_UserID">
+          <End Type="IndividualizedEducationProgramModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblDistrict">
+              <PropertyRef Name="ContactUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2562,19 +2562,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="DisabilityArea" ColumnName="DisabilityArea" />
                 <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
                 <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblDistricts">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
-              <MappingFragment StoreEntitySet="tblDistricts">
-                <ScalarProperty Name="ContactUserID" ColumnName="ContactUserID" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="DOC" ColumnName="DOC" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3328,6 +3315,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblDistricts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
+              <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="ContactUserID" ColumnName="ContactUserID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="DOC" ColumnName="DOC" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3343,7 +3343,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

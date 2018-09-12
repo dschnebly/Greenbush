@@ -1082,7 +1082,8 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser user = db.tblUsers.FirstOrDefault(u => u.UserID == id);
-                List<tblDistrict> districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select d).Distinct().ToList();
+                //List<tblDistrict> districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select d).Distinct().ToList();
+                var districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select new { USD = d.USD, DistrictName = d.DistrictName,  }).Distinct().ToList();
                 if (districts != null)
                 {
                     return Json(new { Result = "success", Message = districts }, JsonRequestBehavior.AllowGet);

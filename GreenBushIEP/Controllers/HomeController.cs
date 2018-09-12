@@ -102,31 +102,8 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                // get all the admins in the database that are active and under this MIS user.
-                var staff = (from org in db.tblOrganizationMappings
-                             join user in db.tblUsers
-                                 on org.UserID equals user.UserID
-                             where (org.AdminID == MIS.UserID) && !(user.Archive ?? false)
-                             select user).Distinct().OrderBy(u => u.RoleID).ToList();
-
-                var districts = (from org in db.tblOrganizationMappings
-                                 join district in db.tblDistricts
-                                    on org.USD equals district.USD
-                                 where org.UserID == MIS.UserID
-                                 select district).Distinct().ToList();
-
-                var buildings = (from buildingMap in db.tblBuildingMappings
-                                join building in db.tblBuildings
-                                    on buildingMap.USD equals building.USD
-                                where buildingMap.UserID == MIS.UserID
-                                select building).Distinct().ToList();
-
-
-                UserOrganizationViewModel model = new UserOrganizationViewModel();
-                model.user = MIS;
-                model.staff = staff;
-                model.districts = districts;
-                model.buildings = buildings;
+                OrganizationUser misBoss = getOrgazationUser(MIS);
+                OrganizationChart model = buildOrganizationChart(misBoss);
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -2253,7 +2230,6 @@ namespace GreenbushIep.Controllers
 
         }
 
-
         private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
         {
             HtmlDocument doc = new HtmlDocument();
@@ -2515,6 +2491,44 @@ namespace GreenbushIep.Controllers
 
             return fullName;
 
+        }
+
+        public OrganizationUser getOrgazationUser(tblUser user)
+        {
+            var districts = (from org in db.tblOrganizationMappings
+                             join district in db.tblDistricts
+                                on org.USD equals district.USD
+                             where org.UserID == user.UserID
+                             select district).Distinct().ToList();
+
+            var buildings = (from buildingMap in db.tblBuildingMappings
+                             join building in db.tblBuildings
+                                 on new { buildingMap.USD, buildingMap.BuildingID } equals 
+                                    new { building.USD, building.BuildingID }
+                             where buildingMap.UserID == user.UserID
+                             select building).Distinct().ToList();
+
+            return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
+        }
+
+        public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
+        {
+            OrganizationChart chart = new OrganizationChart();
+            chart.boss = theBoss;
+
+            var staff = (from org in db.tblOrganizationMappings
+                         join user in db.tblUsers
+                             on org.UserID equals user.UserID
+                         where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
+                         select user).Distinct().OrderBy(u => u.RoleID).ToList();
+
+            foreach (var person in staff)
+            {
+                OrganizationUser staffMember = getOrgazationUser(person);
+                chart.staff.Add(buildOrganizationChart(staffMember));
+            }
+
+            return chart;
         }
     }
 }

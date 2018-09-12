@@ -41,7 +41,7 @@
 
         // attach event
         // fires when the user chooses a district
-        $("#userDistricts").on('click', function () {
+        $("#userDistricts").on('change', function () {
             var selectedDistrict = $(this).val();
 
             $("#userBuildings option").remove();
@@ -53,12 +53,48 @@
                     }
                 });
 
+                $('.list-group-item').each(function () {
+                    var districts = $(this).data('districts') + "";
+                    var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+                    
+                    if (hasDistricts) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
                 $("#userBuildings").prop("disabled", false);
             }
             else {
                 $("#userBuildings").append('<option value="-1">All Buildings</option>');
                 $("#userBuildings").prop("disabled", true);
+
+                $('.list-group-item').each(function () {
+                    $(this).show();
+                });
             }
+        });
+
+        // attach event
+        // fires when the user chooses a building
+        $("#userBuildings").on('change', function () {
+            var selectedBuilding = $(this).val();
+            var selectedDistrict = $("#userDistricts").val();
+
+            $('.list-group-item').each(function () {
+                var districts = $(this).data('districts') + "";
+                var buildings = $(this).data('buildings') + "";
+                var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+                var hasBuildings = buildings.split(",").indexOf(selectedBuilding) != -1;
+
+                if(hasDistricts && hasBuildings) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
         });
 
         // attach event
@@ -102,7 +138,7 @@
                 success: function (data) {
                     if (data.Result === "success") {
                         var buildings = data.Message;
-
+                        console.log(data.Message);
                         $("#selectedDistrict").find('option').remove();
                         $.each(buildings, function (key, value) {
                             // throw away the key. It's simply an index counter for the returned array.
@@ -149,6 +185,7 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
+
                         // blow away the list
                         $('#selectBuildings').empty();
 
@@ -215,7 +252,6 @@
             $(this).toggleClass('active');
         });
 
-
         //////////////////////////////////////////////////////
         //
         // Events for adding the hieracial classes
@@ -253,28 +289,28 @@
 
                         $(e.target).addClass("clickEventDisabled");
 
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Home/GetOrganization',
-                            data: { id: userId },
-                            dataType: 'html',
-                            success: function (data) {
-                                if ($.trim(data).length !== 0) {
-                                    $(div).find("i:first-child").toggleClass("fa-minus-square-o fa-plus-square-o");
-                                    $(data).insertAfter(div);
-                                    initHref();
+                        //$.ajax({
+                        //    type: 'GET',
+                        //    url: '/Home/GetOrganization',
+                        //    data: { id: userId },
+                        //    dataType: 'html',
+                        //    success: function (data) {
+                        //        if ($.trim(data).length !== 0) {
+                        //            $(div).find("i:first-child").toggleClass("fa-minus-square-o fa-plus-square-o");
+                        //            $(data).insertAfter(div);
+                        //            initHref();
 
-                                    $(e.target).removeClass("clickEventDisabled");
+                        //            $(e.target).removeClass("clickEventDisabled");
 
-                                }
-                                else {
-                                    $(div).find("i:first-child").removeClass().addClass("empty-icon");
-                                }
-                            },
-                            error: function (data) {
+                        //        }
+                        //        else {
+                        //            $(div).find("i:first-child").removeClass().addClass("empty-icon");
+                        //        }
+                        //    },
+                        //    error: function (data) {
 
-                            }
-                        });
+                        //    }
+                        //});
                     }
                 });
             });
