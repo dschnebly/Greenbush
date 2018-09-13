@@ -43,7 +43,7 @@
         // fires when the user chooses a district
         $("#userDistricts").on('change', function () {
             var selectedDistrict = $(this).val();
-            
+
             $("#alertMessage").removeClass('alert alert-info').hide();
             if (selectedDistrict != -1) {
                 $("#userBuildings option").remove();
@@ -54,22 +54,10 @@
                     }
                 });
 
-                if ($("#userBuildings > option").length == 0)
-                {
-                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
-                    $("#userBuildings").prop("disabled", true);
-
-                    $("#alertMessage").removeClass('alert alert-info').show();
-                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
-                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
-
-                    return;
-                }
-
                 $('.list-group-item').each(function () {
                     var districts = $(this).data('districts') + "";
                     var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
-                    
+
                     if (hasDistricts) {
                         $(this).show();
                     } else {
@@ -77,7 +65,17 @@
                     }
                 });
 
-                $("#userBuildings").prop("disabled", false);
+                if ($("#userBuildings > option").length == 0) {
+                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                    $("#userBuildings").prop("disabled", true);
+
+                    $("#alertMessage").removeClass('alert alert-info').show();
+                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
+                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
+                }
+                else {
+                    $("#userBuildings").prop("disabled", false);
+                }
             }
             else {
                 $("#userBuildings").append('<option value="-1">All Buildings</option>');
@@ -101,7 +99,7 @@
                 var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
                 var hasBuildings = buildings.split(",").indexOf(selectedBuilding) != -1;
 
-                if(hasDistricts && hasBuildings) {
+                if (hasDistricts && hasBuildings) {
                     $(this).show();
                 }
                 else {
