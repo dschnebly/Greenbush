@@ -78,6 +78,8 @@
                 }
             }
             else {
+                $("#userBuildings option").remove();
+
                 $("#userBuildings").append('<option value="-1">All Buildings</option>');
                 $("#userBuildings").prop("disabled", true);
 
