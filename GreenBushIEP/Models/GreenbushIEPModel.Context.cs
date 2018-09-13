@@ -231,5 +231,19 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result1>("up_ReportProceduralDates", teacherIdParameter, buildingIdParameter);
         }
+    
+        [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
+        public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
+        {
+            var mYSTRParameter = mYSTR != null ?
+                new ObjectParameter("MYSTR", mYSTR) :
+                new ObjectParameter("MYSTR", typeof(string));
+    
+            var dELIMITERParameter = dELIMITER != null ?
+                new ObjectParameter("DELIMITER", dELIMITER) :
+                new ObjectParameter("DELIMITER", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
+        }
     }
 }

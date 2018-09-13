@@ -43,15 +43,28 @@
         // fires when the user chooses a district
         $("#userDistricts").on('change', function () {
             var selectedDistrict = $(this).val();
-
-            $("#userBuildings option").remove();
-
+            
+            $("#alertMessage").removeClass('alert alert-info').hide();
             if (selectedDistrict != -1) {
+                $("#userBuildings option").remove();
+
                 $("#AllUserBuildings > option").each(function () {
                     if ($(this).data('district') == selectedDistrict) {
                         $("#userBuildings").append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
                     }
                 });
+
+                if ($("#userBuildings > option").length == 0)
+                {
+                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                    $("#userBuildings").prop("disabled", true);
+
+                    $("#alertMessage").removeClass('alert alert-info').show();
+                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
+                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
+
+                    return;
+                }
 
                 $('.list-group-item').each(function () {
                     var districts = $(this).data('districts') + "";
@@ -138,7 +151,6 @@
                 success: function (data) {
                     if (data.Result === "success") {
                         var buildings = data.Message;
-                        console.log(data.Message);
                         $("#selectedDistrict").find('option').remove();
                         $.each(buildings, function (key, value) {
                             // throw away the key. It's simply an index counter for the returned array.
