@@ -108,7 +108,7 @@ namespace GreenbushIep.Controllers
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
-                return View(model);
+                return View("MISPortal", model);
             }
 
             // Unknow error happened.
