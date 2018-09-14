@@ -519,7 +519,7 @@
     //duplicate service for next school year
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
-        var parent = $('div.collapse.in');
+        var parent = $('div:visible.collapse.in');
 
         if (parent != null) {
             var dupFiscalYear = parent.find('[name="fiscalYear"]').val();
@@ -908,7 +908,7 @@
         cloneService.removeAttr("id");
 
         // count the number of services and increment our counter in the accordian view.
-        var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 1;
+        var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 100;
         cloneService.children().children().prop("id", "accordion[" + serviceCount + "]");
 
         // set up the accordian click event.
