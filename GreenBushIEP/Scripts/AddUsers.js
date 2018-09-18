@@ -19,8 +19,10 @@
         };
     });
 
-    $("#ActionButton").on('click', function (e) {
-        e.preventDefault();
+    $()
+
+    $("#UserForm").on("submit", function () {
+
         var action = $(this).closest("form").attr("action");
         var districtCount = $("li.search-choice").length;
 
@@ -34,32 +36,8 @@
             return false;;
         }
 
-        $.ajax({
-            url: action,
-            type: 'POST',
-            data: $("#UserForm").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-                    alert("The user was successfully created.");
-                }
-                else
-                {
-                    $("#alertMessage .moreinfo").html(data.Message);
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
-            },
-            error: function (data)
-            {
-                $("#alertMessage .moreinfo").html("There was an error when attempt to connect to the server.");
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
-            }
-        });
-
-        return false;
+        $(".ajax-loader img").css("visibility", "visible");
+        return true;
     });
 });
 

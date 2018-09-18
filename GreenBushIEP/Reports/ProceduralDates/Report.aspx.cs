@@ -44,8 +44,6 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 			string teacherIds = "";
 			string teacherNames = "";
-			string fiscalYears = "";
-			string fiscalYearsNames = "";
 			string buildingID = this.buildingDD.Value;
 			string teacher = "";
 

@@ -112,6 +112,24 @@
     li.search-field input[type="text"] {
         height: 49px !important;
     }
+
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
 </style>
 
 
@@ -226,11 +244,15 @@
         </div>
     </div>
     <div class="form-group">
-        <button id="ActionButton" type="button" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
+        <button type="submit" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
             <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Create</span>
         </button>
     </div>
     <br />
+
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
+    </div>
 }
 
 <!-- loading the file even though it's an ajax call -->

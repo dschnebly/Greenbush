@@ -107,6 +107,24 @@
     li.search-field input[type="text"] {
         height: 49px !important;
     }
+
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
 </style>
 
 
@@ -198,7 +216,6 @@
                     </span>
                     @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", required = "required" } })
                     @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
-                    @*<input id="lastname" name="lastname" class="form-control" placeholder="Legal Last Name" type="text" required="required">*@
                 </div>
             </div>
         </div>
@@ -210,7 +227,6 @@
                     </span>
                     @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", id = "email", Name = "email", placeholder = "User email", required = "required" } })
                     @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
-                    @*<input id="email" name="email" class="form-control" placeholder="User email" type="email" required="required" />*@
                 </div>
             </div>
         </div>
@@ -286,7 +302,9 @@
         </div>
     </div>
     <br />
-    <br />
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
+    </div>
 
     <!-- Modal -->
     <div class="modal fadeInUp" id="confirmPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

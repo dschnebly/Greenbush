@@ -583,7 +583,7 @@
     <Content Include="Content\Images\newUser.png" />
     <Content Include="Content\Images\no_checked.png" />
     <Content Include="Content\Images\no_radio.png" />
-    <Content Include="Content\Images\owner1.jpg" />
+    <Content Include="Content\Images\processing.gif" />
     <Content Include="Content\Images\radio_no.png" />
     <Content Include="Content\Images\radio_yes.png" />
     <Content Include="Content\Images\student1.jpg" />
