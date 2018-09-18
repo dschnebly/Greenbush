@@ -786,7 +786,7 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="studentStreetAddress1" class="required">Street Address</label>
+                                                <label for="studentStreetAddress1" class="required">Student's Street Address</label>
                                                 <input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text" data-validate="true" />
                                             </div>
                                         </div>
@@ -1087,7 +1087,7 @@
                                         <div class="col-md-2 col-sm-12">
                                             <div class="form-group">
                                                 <input name="claimingCode" id="claimingCode" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" checked>
-                                                <label for="claimingCode" style="float: left; position: relative; bottom: 16px; left: 20%;">Federal/State MIS</label>
+                                                <label for="claimingCode" style="float: left; position: relative; bottom: 16px; left: 20%;">Claiming Code</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-12">
@@ -1108,7 +1108,7 @@
                                                         {
                                                             foreach (var code in Model.statusCode)
                                                             {
-                                                                <option value="@code.StatusCode">@code.Description</option>
+                                                                <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
                                                             }
                                                         }
                                                     </select>
@@ -1202,14 +1202,7 @@
                                                         <input name="contacts[0].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3 nopadding">
-                                                    <div class="form-group">
-                                                        <label>Middle Name</label>
-                                                        @Html.ValidationMessageFor(model => contact.MiddleName, "", new { @class = "text-danger" })
-                                                        <input name="contacts[0].ContactMiddleName" class="form-control text-box single-line" placeholder="Middle Name" type="text" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3 nopadding">
+                                                <div class="col-sm-5 nopadding">
                                                     <div class="form-group">
                                                         <label>Last Name</label>
                                                         @Html.ValidationMessageFor(model => contact.LastName, "", new { @class = "text-danger" })
@@ -1221,6 +1214,7 @@
                                                         <label>Relationship</label>
                                                         <select name="contacts[0].ContactRelationship" class="form-control text-box single-line" data-validate="true">
                                                             <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
+                                                            <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
                                                             <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
                                                             <option value="advocate" selected=@(contact.Realtionship == "advocate")>Education Advocate</option>
                                                             <option value="other" selected=@(contact.Realtionship == "other")>Other</option>
@@ -1546,7 +1540,7 @@
 <!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/createstudent.js"></var>
 
-<script>
+@*<script>
     function loadScript(url, callback) {
         // Adding the script tag to the head as suggested before
         var head = document.getElementsByTagName('head')[0];
@@ -1566,7 +1560,7 @@
     loadScript("/Scripts/jquery.maskedinput.min.js", function () {
         console.log("loaded maskedinput");
     });
-</script>
+</script>*@
 
 
 @section scripts {

@@ -132,10 +132,10 @@
         </div>
         <div class="row">
             <h4>Users in this district</h4>
-            @if (Model.contacts.Count > 0)
-            {
-                <ul class="list-group">
-                    @foreach (var contact in Model.contacts)
+            <ul class="list-group">
+                @if (Model.contacts.Count > 0)
+                {
+                    foreach (var contact in Model.contacts)
                     {
                         var isOpen = @contact.UserID == @Model.districtContact ? "list-group-item open" : "list-group-item";
                         <li class="@(isOpen)" data-contactId="@(contact.UserID)">
@@ -148,13 +148,9 @@
                             </ul>
                         </li>
                     }
-                </ul>
-            }
-            else
-            {
-                <p>Currently there is no one assigned to you in this District.</p>
-                <p>You can <a>make some new system users</a> or switch districts.</p>
-            }
+
+                }
+            </ul>
         </div>
     </div>
     <div class="ajax-loader" style="visibility: hidden;">
@@ -201,8 +197,7 @@
                         // fire off the event handlers.
                         init();
                     }
-                    else
-                    {
+                    else {
                         $('ul.list-group').empty();
 
                         $("#alertMessage").toggleClass("alert-success alert-danger");
@@ -228,61 +223,66 @@
 
     // hooks up all the events
     function init() {
-        $('.list-group-item > .show-menu').on('click', function (event) {
-            event.preventDefault();
-            var toggleElem = $(this).closest('li').toggleClass('open');
 
-            // close other opened li
-            $('.list-group-item').not(toggleElem).each(function () {
-                if ($(this).closest('li').hasClass('open')) {
-                    otherContact = $(this);
-                    $(this).removeClass('open');
-                }
-            });
+        if ($('.list-group-item').length > 0) {
 
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
+            $('.list-group-item > .show-menu').on('click', function (event) {
 
-            var districtUSD = $("#selectedDistrict option:selected").val();
-            var contactId = $(toggleElem).data('contactid');
-            var isContact = toggleElem.hasClass('open');
+                event.preventDefault();
+                var toggleElem = $(this).closest('li').toggleClass('open');
 
-            $.ajax({
-                type: 'POST',
-                url: '/Manage/AddDistrictContact',
-                dataType: 'json',
-                data: { USD: districtUSD, contactId: contactId, isContact: isContact },
-                async: false,
-                success: function (data) {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
-
-                    if (data.Result != "success") {
-                        toggleElem.removeClass('open');
-
-                        if (otherContact != null) {
-                            otherContact.addClass('open');
-                        }
+                // close other opened li
+                $('.list-group-item').not(toggleElem).each(function () {
+                    if ($(this).closest('li').hasClass('open')) {
+                        otherContact = $(this);
+                        $(this).removeClass('open');
                     }
+                });
 
-                    $("#alertMessage").removeClass("alert-danger");
-                    $("#alertMessage").addClass(" alert-success");
-                    $("#alertMessage .moreinfo").html(data.Message);
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                },
-                error: function (data) {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
 
-                    $("#alertMessage").toggleClass("alert-success alert-danger");
-                    $("#alertMessage .moreinfo").html('Unknown error occured while attempting to connect with the server.');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
+                var districtUSD = $("#selectedDistrict option:selected").val();
+                var contactId = $(toggleElem).data('contactid');
+                var isContact = toggleElem.hasClass('open');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/AddDistrictContact',
+                    dataType: 'json',
+                    data: { USD: districtUSD, contactId: contactId, isContact: isContact },
+                    async: false,
+                    success: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        if (data.Result !== "success") {
+                            toggleElem.removeClass('open');
+
+                            if (otherContact != null) {
+                                otherContact.addClass('open');
+                            }
+                        }
+
+                        $("#alertMessage").removeClass("alert-danger");
+                        $("#alertMessage").addClass(" alert-success");
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    },
+                    error: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        $("#alertMessage").toggleClass("alert-success alert-danger");
+                        $("#alertMessage .moreinfo").html('Unknown error occured while attempting to connect with the server.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                });
             });
-        });
+        }
     }
 </script>
