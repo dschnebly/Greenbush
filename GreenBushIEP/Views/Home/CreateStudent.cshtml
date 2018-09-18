@@ -1221,6 +1221,7 @@
                                                         <label>Relationship</label>
                                                         <select name="contacts[0].ContactRelationship" class="form-control text-box single-line" data-validate="true">
                                                             <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
+                                                            <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
                                                             <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
                                                             <option value="advocate" selected=@(contact.Realtionship == "advocate")>Education Advocate</option>
                                                             <option value="other" selected=@(contact.Realtionship == "other")>Other</option>
@@ -1546,7 +1547,7 @@
 <!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/createstudent.js"></var>
 
-<script>
+@*<script>
     function loadScript(url, callback) {
         // Adding the script tag to the head as suggested before
         var head = document.getElementsByTagName('head')[0];
@@ -1566,7 +1567,7 @@
     loadScript("/Scripts/jquery.maskedinput.min.js", function () {
         console.log("loaded maskedinput");
     });
-</script>
+</script>*@
 
 
 @section scripts {
