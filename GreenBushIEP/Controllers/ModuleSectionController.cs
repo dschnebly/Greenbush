@@ -576,8 +576,7 @@ namespace GreenBushIEP.Controllers
                     case "1":
                         model.Transporation_NotEligible = true;
                         break;
-                    case "2":
-                        //model.Transporation_Required = true;
+                    case "2":                       
                         model.Transporation_Disability_flag = true;
                         break;
                     case "3":
@@ -620,10 +619,10 @@ namespace GreenBushIEP.Controllers
                     OC.Transporation_NotEligible = model.Transporation_NotEligible;
                     OC.Transporation_Required = model.Transporation_Required;
                     OC.Transporation_Disability_flag = model.Transporation_Disability_flag;
-                    OC.Transporation_Disability_desc = model.Transporation_Disability_desc;
+                    //OC.Transporation_Disability_desc = model.Transporation_Disability_desc;
                     OC.Transporation_AttendOtherBuilding = model.Transporation_AttendOtherBuilding;
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
-                    OC.Transporation_Other_desc = model.Transporation_Other_desc;
+                    OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : model.Transporation_Other_desc;
                     OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
                     OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
                     OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;

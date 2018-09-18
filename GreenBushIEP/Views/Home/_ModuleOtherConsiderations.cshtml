@@ -14,7 +14,7 @@
 <div class="modal-body">
 
     @using (Html.BeginForm("EditOtherConsiderations", "ModuleSection", FormMethod.Post, new { }))
-    {
+	{
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPid)
@@ -112,21 +112,22 @@
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
                 </div>
+				@{
+					var showOther = false;
+					if ((Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value) ||
+						(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value) ||
+						(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value))
+					{
+						showOther = true;
+					}
+				}
+
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
-                    <p id="TP_Other_Desc" style="display: @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "block;" : "none;")">
+                    <p id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
                         <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>
                     </p>
                 </div>
-				<div class="form-check voffset2" id="TransporationPlanAOB_TextArea">
-                    <p id="TP_ABO_Desc" style="display: @( Model.Transporation_AttendOtherBuilding.HasValue &&  Model.Transporation_AttendOtherBuilding.Value ? "block;" : "none;")">
-                        <textarea class="form-control standard-font-size" id="Transporation_AOB_desc" name="Transporation_AOB_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>
-                    </p>
-                </div>
-                <div class="form-check voffset2" id="TransporationDisability_TextArea">
-                    <p id="TP_disability_Desc" style="display: @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "block;" : "none;")">
-                        <textarea class="form-control standard-font-size" id="Transporation_disability_desc" name="Transporation_disability_desc" type="text" placeholder="Describe nature of the student's disability" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Disability_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Disability_desc)</textarea>
-                    </p>
-                </div>
+				
             </div>
         </div>
         <hr />
@@ -260,28 +261,12 @@
     $("input[name=TransporationPlan").click(function (event) {
         var elementId = event.target.id;
 
-        if (elementId == "TP_Other") {
-            $("#TP_Other_Desc").show();
+        if (elementId == "TP_No") {
+            $("#TP_Other_Desc").hide();
         }
         else {
-            $("#TP_Other_Desc").hide();            
+            $("#TP_Other_Desc").show();            
         }
-
-        if (elementId == "TP_Req") {
-            $("#TP_disability_Desc").show();
-        }
-        else {
-            $("#TP_disability_Desc").hide();            
-		}
-
-		if (elementId == "TP_AOB") {
-            $("#TP_ABO_Desc").show();
-        }
-        else {
-            $("#TP_ABO_Desc").hide();            
-		}
-
-		
 
     });
 
