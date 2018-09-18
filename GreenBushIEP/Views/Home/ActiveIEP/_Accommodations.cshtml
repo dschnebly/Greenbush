@@ -1,0 +1,100 @@
+﻿@model GreenBushIEP.Models.AccomodationViewModel
+
+<style>
+ 
+	#serviceTable td, th { 
+		padding: 10px;
+		text-align:left;
+	}
+	#serviceTable  { 
+		width: 100%;		
+	}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+	<h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations and Modifications</h4>
+</div>
+<div class="modal-body">
+
+	<div class="row">
+		@if (Model != null && Model.AccomList.Count() > 0)
+		{
+			<table class="table-striped" id="serviceTable" >
+				<tr>
+					<th>Type</th>
+					<th>Description</th>
+					<th>Frequency</th>
+					<th>Location</th>
+					<th>Duration</th>
+					<th>Anticipated <br />Start Date</th>
+					<th>Anticipated <br />End Date</th>
+				</tr>
+				@foreach (var accom in Model.AccomList)
+				{
+					string shortDesc = "Accommodation ";
+
+					if (@accom.AccomType == 1)
+					{
+						shortDesc = "Accommodation ";
+					}
+					else if (@accom.AccomType == 2)
+					{
+						shortDesc = "Modification ";
+					}
+					else if (@accom.AccomType == 3)
+					{
+						shortDesc = "Supplemental Aids and Services ";
+					}
+					else if (@accom.AccomType == 4)
+					{
+						shortDesc = "Support for School Personnel ";
+					}
+					<tr>
+						<td>
+							@(shortDesc)
+						</td>
+						<td>
+							@accom.Description
+						<td>
+							@accom.Frequency
+						</td>
+						<td>
+							@accom.Location
+						</td>
+						<td>
+							@accom.Duration
+						</td>
+						<td>
+							@if (accom.AnticipatedStartDate.HasValue)
+							{
+								@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")
+							}
+						</td>
+						<td>
+							@if (accom.AnticipatedEndDate.HasValue)
+							{
+								@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")
+							}
+						</td>
+
+					</tr>
+				} <!--end for each-->
+			</table>
+		}
+		else
+		{
+			<p class="text-center">The Team has no concerns about in the area of Accommodations/Modifications at this time.</p>
+		}
+
+	</div>
+	<div class="row">
+		<div class="form-group" id="saveGroup">
+			<div class="col-md-12" style="text-align:center; padding-top: 25px;">
+				<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+			</div>
+		</div>
+	</div>
+
+
+</div>

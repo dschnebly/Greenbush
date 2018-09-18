@@ -628,20 +628,22 @@
                         @Model.studentFirstName does not have a visual impairment.
                     </p>
                 }
-                <fieldset class="form-group" id="HearingImpairmentInfo" style="display: block;">
-                    <div class="title"><label>Vision Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</div>
-                    <div class="title">
-                        <label>Vision Screening Result:</label>
+
+
+				<p><label>Vision Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</p>
+                <p class="title">
+						 <label>Vision Screening Result:</label>
                         @(Model.studentHealth.VisionResult == 1 ? "Pass" : "")
                         @(Model.studentHealth.VisionResult == 0 ? "Fail" : "")
                         @(Model.studentHealth.VisionResult == -1 ? "Unable to Test" : "")
-                    </div>
-                </fieldset>
+                </p>
+
                 <div>
+					<label>Health Care Plan:</label>
                     @if (Model.studentHealth.HealthCarePlan.HasValue && Model.studentHealth.HealthCarePlan.Value)
                      {
                         <span>
-                            @Model.studentFirstName does require a Health Care Plan.
+                            @Model.studentFirstName requires a Health Care Plan.
                         </span>
                         <p>@(Model.studentHealth.AdditionalHealthInfo)</p>
                     }
@@ -657,7 +659,7 @@
                         <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                         <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                         <p style="margin-top:5px;">@(Model.studentHealth.PLAAFP_Strengths)</p>
-                        <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                        <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                         <p style="margin-top:5px;">@(Model.studentHealth.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
@@ -700,10 +702,15 @@
                         {
                             textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentHealth.NeedMetByOtherDescription;
                         }
+						if ((Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value)
+                                   && (Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value))
+                        {
+                            textNeedMetBy =  " with accommodations or modifications and " + Model.studentHealth.NeedMetByOtherDescription;
+                        }
 
                     }
                     <div class="form-check form-group-label">
-                        <span>This need will be met @textNeedMetBy </span>
+                          <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                     </div>
                 </fieldset>
                 }
@@ -756,7 +763,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentMotor.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentMotor.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -801,9 +808,15 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
+                                   && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
+							}
+
                         }
                         <div class="form-check form-group-label">
-                            <p>This need will be met @textNeedMetBy </p>
+                             <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                         </div>
 
                     </fieldset>
@@ -848,7 +861,7 @@
                         <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                         <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                         <p style="margin-top:5px;">@(Model.studentCommunication.PLAAFP_Strengths)</p>
-                        <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                        <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                         <p style="margin-top:5px;">@(Model.studentCommunication.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
@@ -860,41 +873,48 @@
                 </fieldset>
                 <fieldset class="form-group">
                     @{
-                        var textNeedMetBy = "";
-                        if (Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                        {
-                            textNeedMetBy = "by goal(s)";
-                        }
-                        if (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value)
-                        {
-                            textNeedMetBy = "with accommodations or modifications";
-                        }
-                        if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
-                        {
-                            textNeedMetBy = Model.studentCommunication.NeedMetByOtherDescription;
-                        }
+						var textNeedMetBy = "";
+						if (Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+						{
+							textNeedMetBy = "by goal(s)";
+						}
+						if (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value)
+						{
+							textNeedMetBy = "with accommodations or modifications";
+						}
+						if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
+						{
+							textNeedMetBy = Model.studentCommunication.NeedMetByOtherDescription;
+						}
 
-                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                            && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
-                        {
-                            textNeedMetBy = "by goal(s) and accommodations or modifications";
-                        }
+						if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+							&& (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
+						{
+							textNeedMetBy = "by goal(s) and accommodations or modifications";
+						}
 
-                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                            && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value))
-                        {
-                            textNeedMetBy = "by goal(s) and " + Model.studentCommunication.NeedMetByOtherDescription;
-                        }
-                        if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
-                                   && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
-                                   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
-                        {
-                            textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
-                        }
+						if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+							&& (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value))
+						{
+							textNeedMetBy = "by goal(s) and " + Model.studentCommunication.NeedMetByOtherDescription;
+						}
+						if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
+								   && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
+								   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
+						{
+							textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
+						}
+
+						if ((Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
+								   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
+						{
+							textNeedMetBy =  " with accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
+						}
+
 
                     }
                     <div class="form-check form-group-label">
-                        <span>This need will be met @textNeedMetBy </span>
+                         <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                     </div>
                 </fieldset>
                 }
@@ -948,7 +968,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentSocial.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentSocial.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -992,9 +1012,14 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentSocial.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value)
+								   && (Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentSocial.NeedMetByOtherDescription;
+							}
                         }
                         <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
+                            <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                         </div>
                     </fieldset>
                     }
@@ -1023,7 +1048,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentIntelligence.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentIntelligence.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1060,7 +1085,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1104,9 +1129,15 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentAcademic.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+								   && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentAcademic.NeedMetByOtherDescription;
+							}
+
                         }
                         <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
+                             <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                         </div>
                     </fieldset>
                     }
@@ -1135,7 +1166,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1179,9 +1210,15 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentReading.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
+								   && (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentReading.NeedMetByOtherDescription;
+							}
+
                         }
                         <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
+                              <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                         </div>
                     </fieldset>                    
                     }
@@ -1212,7 +1249,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1256,9 +1293,15 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMath.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
+								   && (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentMath.NeedMetByOtherDescription;
+							}
+
                         }
                         <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
+                              <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </p>
                         </div>
 
                     </fieldset>
@@ -1289,7 +1332,7 @@
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
                             <span style="margin-top:5px;font-weight:100"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns(including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1333,9 +1376,15 @@
                                 textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentWritten.NeedMetByOtherDescription;
                             }
 
+							if ((Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
+								   && (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value))
+							{
+								textNeedMetBy =  " with accommodations or modifications and " + Model.studentWritten.NeedMetByOtherDescription;
+							}
+
                         }
                         <div class="form-check form-group-label">
-                            <span>This need will be met @textNeedMetBy </span>
+                            <span style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @textNeedMetBy </span>
                         </div>
                     </fieldset>
                     }

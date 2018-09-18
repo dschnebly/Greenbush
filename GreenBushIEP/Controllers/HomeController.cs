@@ -656,7 +656,8 @@ namespace GreenbushIep.Controllers
         public ActionResult LoadModuleSection(int studentId, string view)
         {
             var iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-
+			var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+			
             try
             {
                 switch (view)
@@ -668,7 +669,12 @@ namespace GreenbushIep.Controllers
                             healthModel = new tblIEPHealth();
                         }
 
-                        return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
+						if(isReadOnly)
+							return PartialView("ActiveIEP/_HealthSection", (tblIEPHealth)healthModel);
+						else
+							return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
+
+
                     case "AcademicModule":
                         ModuleAcademicViewModel academicModel = new ModuleAcademicViewModel();
                         academicModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == iep.IEPAcademicID).FirstOrDefault();
@@ -680,40 +686,50 @@ namespace GreenbushIep.Controllers
                         if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); }
                         if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); }
                         if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); }
-
-                        return PartialView("_ModuleAcademicSection", academicModel);
+						if (isReadOnly)
+							return PartialView("ActiveIEP/_AcademicSection", academicModel);
+						else
+							return PartialView("_ModuleAcademicSection", academicModel);
                     case "MotorModule":
                         tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPid == iep.IEPMotorID).FirstOrDefault();
                         if (motorModel == null)
                         {
                             motorModel = new tblIEPMotor();
                         }
-
-                        return PartialView("_ModuleMotorSection", motorModel);
+						if (isReadOnly)
+							return PartialView("ActiveIEP/_MotorSection", motorModel);
+						else
+							return PartialView("_ModuleMotorSection", motorModel);
                     case "CommunicationModule":
                         tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPid == iep.IEPCommunicationID).FirstOrDefault();
                         if (communicationModel == null)
                         {
                             communicationModel = new tblIEPCommunication();
                         }
-
-                        return PartialView("_ModuleCommunicationSection", communicationModel);
+						if (isReadOnly)
+							return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
+						else
+							return PartialView("_ModuleCommunicationSection", communicationModel);
                     case "SocialModule":
                         tblIEPSocial socialModel = db.tblIEPSocials.Where(s => s.IEPSocialID == iep.IEPSocialID).FirstOrDefault();
                         if (socialModel == null)
                         {
                             socialModel = new tblIEPSocial();
                         }
-
-                        return PartialView("_ModuleSocialSection", socialModel);
+						if (isReadOnly)
+							return PartialView("ActiveIEP/_SocialSection", socialModel);
+						else
+							return PartialView("_ModuleSocialSection", socialModel);
                     case "GeneralIntelligenceModule":
                         tblIEPIntelligence intelligenceModel = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == iep.IEPIntelligenceID).FirstOrDefault();
                         if (intelligenceModel == null)
                         {
                             intelligenceModel = new tblIEPIntelligence();
                         }
-
-                        return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
+						if (isReadOnly)
+							return PartialView("ActiveIEP/_GeneralIntelligenceSection", intelligenceModel);
+						else
+							return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
                     default:
                         return Json(new { Result = "error", Message = "Unknown View" }, JsonRequestBehavior.AllowGet);
                 }
@@ -1032,9 +1048,12 @@ namespace GreenbushIep.Controllers
                              select p).ToList();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-            if (iep != null)
+			bool isReadOnly = false;
+			if (iep != null)
             {
-                StudentServiceViewModel model = new StudentServiceViewModel();
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+				
+				StudentServiceViewModel model = new StudentServiceViewModel();
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
                 if (services != null)
@@ -1068,7 +1087,10 @@ namespace GreenbushIep.Controllers
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
 
-                return PartialView("_ModuleStudentServices", model);
+				if(isReadOnly)
+					return PartialView("ActiveIEP/_StudentServices", model);
+				else
+				   return PartialView("_ModuleStudentServices", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1181,13 +1203,20 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentTransition(int studentId)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-            if (iep != null)
+			bool isReadOnly = false;
+			if (iep != null)
             {
-                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+				
+				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
                 tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+				string studentFirstName = string.Format("{0}", student.FirstName);
+				string studentLastName = string.Format("{0}", student.LastName);
+				int studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 
-                tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+				tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
                 StudentTransitionViewModel model = new StudentTransitionViewModel();
@@ -1200,7 +1229,14 @@ namespace GreenbushIep.Controllers
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
 
-                return PartialView("_ModuleStudentTransition", model);
+				ViewBag.studentFirstName = studentFirstName;
+				ViewBag.studentLastName = studentLastName;
+				ViewBag.studentAge = studentAge;
+
+				if(isReadOnly)
+					return PartialView("ActiveIEP/_StudentTransition", model);
+				else
+					return PartialView("_ModuleStudentTransition", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1211,55 +1247,17 @@ namespace GreenbushIep.Controllers
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
+			bool isReadOnly = false;
             if (iep != null)
             {
-                var model = GetBehaviorModel(studentId, iep.IEPid);
-                //model.StudentId = studentId;
-                //model.IEPid = iep.IEPid;
-
-                //tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.IEPid == iep.IEPid).FirstOrDefault();
-                //if (BehaviorIEP != null)
-                //{
-                //    model.BehaviorID = BehaviorIEP.BehaviorID;
-                //    model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
-                //    model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
-                //    model.Crisis_Description = BehaviorIEP.Crisis_Description;
-                //    model.Crisis_Escalation = BehaviorIEP.Crisis_Escalation;
-                //    model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
-                //    model.Crisis_Other = BehaviorIEP.Crisis_Other;
-                //    model.ReviewedBy = BehaviorIEP.ReviewedBy;
-                //    model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
-                //    var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                //    if (triggerOther != null)
-                //        model.TriggerOther = triggerOther.OtherDescription;
-
-                //    model.SelectedStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorStrategyTypeID).ToList();
-                //    var stratOther = db.tblBehaviorStrategies.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                //    if (stratOther != null)
-                //        model.StrategiesOther = stratOther.OtherDescription;
-
-                //    model.SelectedHypothesis = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorHypothesisTypeID).ToList();
-                //    var hypoOther = db.tblBehaviorHypothesis.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
-                //    if (hypoOther != null)
-                //        model.HypothesisOther = hypoOther.OtherDescription;
-
-                //    var targetedBehaviors = db.tblBehaviorBaselines.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).ToList();
-                //    if (targetedBehaviors.Any())
-                //    {
-                //        if (targetedBehaviors[0] != null)
-                //            model.targetedBehavior1 = targetedBehaviors[0];
-                //        if (targetedBehaviors[1] != null)
-                //            model.targetedBehavior2 = targetedBehaviors[1];
-                //        if (targetedBehaviors[2] != null)
-                //            model.targetedBehavior3 = targetedBehaviors[2];
-                //    }
-                //}
-
-                //model.Triggers = db.tblBehaviorTriggerTypes.ToList();
-                //model.HypothesisList = db.tblBehaviorHypothesisTypes.ToList();
-                //model.Strategies = db.tblBehaviorStrategyTypes.ToList();
-
-                return PartialView("_ModuleBehavior", model);
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+				
+				var model = GetBehaviorModel(studentId, iep.IEPid);
+                
+				if(isReadOnly)
+				  return PartialView("ActiveIEP/_Behavior", model);
+				else
+				 return PartialView("_ModuleBehavior", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1271,9 +1269,13 @@ namespace GreenbushIep.Controllers
             var model = new AccomodationViewModel();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
-            if (iep != null)
+			bool isReadOnly = false;
+
+			if (iep != null)
             {
-                model.StudentId = studentId;
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+				
+				model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
                 if (accommodations.Any())
@@ -1299,7 +1301,10 @@ namespace GreenbushIep.Controllers
 
             ViewBag.Locations = locationList;
 
-            return PartialView("_ModuleAccommodations", model);
+			if(isReadOnly)
+				return PartialView("ActiveIEP/_Accommodations", model);
+			else
+			    return PartialView("_ModuleAccommodations", model);
         }
 
         [Authorize(Roles = teacher + ", " + mis)]
@@ -1307,11 +1312,13 @@ namespace GreenbushIep.Controllers
         {
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-
-            if (iep != null)
+			bool isReadOnly = false;
+			
+			if (iep != null)
             {
-
-                model.IEPid = iep.IEPid;
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+				
+				model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
                     model = oc.FirstOrDefault();
@@ -1333,7 +1340,10 @@ namespace GreenbushIep.Controllers
             ViewBag.StudentName = studentName;
             ViewBag.StudentId = studentId;
 
-            return PartialView("_ModuleOtherConsiderations", model);
+			if(isReadOnly)
+				return PartialView("ActiveIEP/_OtherConsiderations", model);
+			else
+				return PartialView("_ModuleOtherConsiderations", model);
         }
 
         [HttpPost]

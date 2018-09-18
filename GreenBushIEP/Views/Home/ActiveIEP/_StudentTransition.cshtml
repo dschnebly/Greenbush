@@ -1,0 +1,392 @@
+﻿@using GreenBushIEP.Models
+@model StudentTransitionViewModel
+
+
+<style>
+ 
+	#serviceTable td, th { 
+		padding: 10px;
+		text-align:left;
+	}
+	#serviceTable  { 
+		width: 100%;		
+	}
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;">
+        <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
+    </h4>
+</div>
+<div class="modal-body standard-font-size">
+	@if (Model != null && (ViewBag.studentAge > 12 || (Model.isDOC && ViewBag.studentAge > 20)))
+	{
+
+		<div>
+
+			<div class="row">
+				
+				@if (Model.assessments.Count > 0)
+				{
+					<label>Transition Assessment</label>
+
+					<table class="table-striped" id=serviceTable>
+						<tr>
+							<th>Transition Assessment Date</th>
+							<th>Narrative</th>
+							<th>Completed On</th>
+							<th>Performance</th>
+						</tr>
+						@foreach (var assessment in Model.assessments)
+						{
+							<tr>
+								<td>@(assessment.Create_Date.ToString("M/d/yyyy"))</td>
+								<td>@(assessment.Narrative)</td>
+								<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
+								<td>@(assessment.Performance)</td>
+							</tr>
+						}
+					</table>
+				}
+			</div>
+			<div class="row voffset4" >
+				<div class="col-md-12">
+					<div class="input-group">
+						<label>Transition Needs</label>
+						<p>@(Model.transition.Assessment_Needs) </p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<label>Transition Strengths</label>
+						<p>@(Model.transition.Assessment_Strengths)</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<label>Transition Preferences</label>
+						<p>@(Model.transition.Assessment_Prefrences)</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<label>Transition Interest</label>
+						<p>@(Model.transition.Assessment_Interest)</p>
+					</div>
+				</div>
+			</div>
+			<div class="row voffset4">
+				@if (Model.goals.Count > 0)
+				{
+					<label>Education/Training Goal</label>
+					foreach (var goal in Model.goals.Where(g => g.GoalType == "education"))
+					{
+						var edGrad = "";
+						if (goal.CompletetionType == "After Graduation")
+						{
+							edGrad = "After Graduation";
+						}
+						else if (goal.CompletetionType == "After leaving High School")
+						{
+							edGrad = "After leaving High School";
+						}
+						else if (goal.CompletetionType == "Upon completion of High School Program")
+						{
+							edGrad = "Upon completion of High School Program";
+						}
+						<p>@edGrad @ViewBag.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+					}
+				}
+			</div>
+			<div class="row">
+
+				@if (Model.goals.Count > 0)
+				{
+					<label>Employment Goal</label>
+					foreach (var goal in Model.goals.Where(g => g.GoalType == "employment"))
+					{
+						var edGrad = "";
+						if (goal.CompletetionType == "After Graduation")
+						{
+							edGrad = "After Graduation";
+						}
+						else if (goal.CompletetionType == "After leaving High School")
+						{
+							edGrad = "After leaving High School";
+						}
+						else if (goal.CompletetionType == "Upon completion of High School Program")
+						{
+							edGrad = "Upon completion of High School Program";
+						}
+
+						<p>@edGrad @ViewBag.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+					}
+				}
+			</div>
+			<div class="row" style="padding-top:8px">
+				@if (Model.goals.Count > 0)
+				{
+					<label>Independent Living</label>
+					foreach (var goal in Model.goals.Where(g => g.GoalType == "independent"))
+					{
+						var edGrad = "";
+						if (goal.CompletetionType == "After Graduation")
+						{
+							edGrad = "After Graduation";
+						}
+						else if (goal.CompletetionType == "After leaving High School")
+						{
+							edGrad = "After leaving High School";
+						}
+						else if (goal.CompletetionType == "Upon completion of High School Program")
+						{
+							edGrad = "Upon completion of High School Program";
+						}
+
+						<p>@edGrad @ViewBag.studentFirstName Will @(goal.Behavior) @(goal.WhereAndHow)</p>
+					}
+				}
+			</div>
+			<label>Post Secondary Transition Services reviewed annually.</label>
+			<div class="col-xs-12">
+				<div>
+					<label>Instruction Service</label>
+					<p>Instruction is the use of formal techniques to impact knowledge.It is typically in schools through academic instruction, general education classes, tutoring, etc.Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.</p>
+				</div>
+				<div>
+					@if (Model.services.Count > 0)
+					{
+						foreach (var service in Model.services.Where(s => s.ServiceType == "instruction"))
+						{
+							<label for="transitionServiceDescription">Description</label>
+							<p>@(service.ServiceDescription)</p>
+							<label for="transitionServiceFrequency">Frequency</label>
+							<p>@(service.Frequency)</p>
+							<label for="transitionServiceLocation">Location</label>
+							<p>@(service.Location)</p>
+							<label for="transitionServiceDuration">Duration</label>
+							<p>@(service.Duration)</p>
+						}
+					}
+				</div>
+				<div>
+					<label>Related Service</label>
+					<p>Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.</p>
+				</div>
+				<div class="row">
+					<div class="col-md-12" id="transitionRelatedServiceContainer">
+						@if (Model.services.Count > 0)
+						{
+							foreach (var related in Model.services.Where(s => s.ServiceType == "related"))
+							{
+								<label for="transitionServiceDescription">Description</label>
+								<p>@(related.ServiceDescription)</p>
+								<label for="transitionServiceFrequency">Frequency</label>
+								<p>@(related.Frequency)</p>
+								<label for="transitionServiceLocation">Location</label>
+								<p>@(related.Location)</p>
+								<label for="transitionServiceDuration">Duration</label>
+								<p>@(related.Duration)</p>
+							}
+						}
+					</div>
+				</div>
+
+				<div>
+
+					<label>Daily Living Skills Service</label>
+					<p>
+						Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)
+					</p>
+				</div>
+				<div class="row">
+					<div class="col-md-12" id="transitionRelatedServiceContainer">
+						@if (Model.services.Count > 0)
+						{
+							foreach (var daily in Model.services.Where(s => s.ServiceType == "daily"))
+							{
+								<label for="transitionServiceDescription">Description</label>
+								<p>@(daily.ServiceDescription)</p>
+
+								<label for="transitionServiceFrequency">Frequency</label>
+								<p>@(daily.Frequency)</p>
+
+
+								<label for="transitionServiceLocation">Location</label>
+								<p>@(daily.Location)</p>
+
+								<label for="transitionServiceDuration">Duration</label>
+								<p>@(daily.Duration)</p>
+							}
+						}
+					</div>
+				</div>
+				<div>
+					<label>Functional Vocational Service</label>
+					<p>
+						Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)
+					</p>
+				</div>
+				<div class="row">
+					<div class="col-md-12" id="transitionRelatedServiceContainer">
+						@if (Model.services.Count > 0)
+						{
+							foreach (var vocational in Model.services.Where(s => s.ServiceType == "vocational"))
+							{
+								<label for="transitionServiceDescription">Description</label>
+								<p>@(vocational.ServiceDescription)</p>
+
+								<label for="transitionServiceFrequency">Frequency</label>
+								<p>@(vocational.Frequency)</p>
+
+								<label for="transitionServiceLocation">Location</label>
+								<p>@(vocational.Location)</p>
+
+								<label for="transitionServiceDuration">Duration</label>
+								<p>@(vocational.Duration)</p>
+							}
+						}
+					</div>
+				</div>
+				<div>
+					<label>Recreation and Leisure Service</label>
+
+				</div>
+				<div class="row">
+					<div class="col-md-12" id="transitionRelatedServiceContainer">
+						@if (Model.services.Count > 0)
+						{
+							foreach (var leisure in Model.services.Where(s => s.ServiceType == "leisure"))
+							{
+								<label for="transitionServiceDescription">Description</label>
+								<p>@(leisure.ServiceDescription)</p>
+
+								<label for="transitionServiceFrequency">Frequency</label>
+								<p>@(leisure.Frequency)</p>
+
+								<label for="transitionServiceLocation">Location</label>
+								<p>@(leisure.Location)</p>
+
+								<label for="transitionServiceDuration">Duration</label>
+								<p>@(leisure.Duration)</p>
+							}
+						}
+					</div>
+				</div>
+
+
+				<div class="row @(Model.transition.CommunityParticipation ? String.Empty : "hidden")">
+					<div class="col-md-12">
+						<h4><b>Community Participation</b></h4>
+						<fieldset class="form-group">
+							<p> Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g.Girl Scouts or 4-H activities), community work experiences, and counseling services.</p>
+							<p style="width: 100%; margin: 25px 0 0 0;">@(Model.transition.CommunityParticipation_Description)</p>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row dont-break">
+					<div class="col-md-12">
+						<h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
+						<p>
+							@(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
+							He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
+							district and will be meaningful to his post secondary goal of working as an <span class="underline">@(Model.transition.Planning_Occupation)</span>. The courses he/she is enrolled in for school year
+							and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
+						</p>
+						<fieldset class="form-group">
+							@if (Model.transition.Planning_Facilitate)
+							{
+								<p>The transition courses of study does focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+							}
+							else
+							{
+								<p>The transition courses of study do not focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+							}
+
+						</fieldset>
+						<fieldset class="form-group">
+							@if (Model.transition.Planning_Align)
+							{
+								<p>The courses of study (and other education experiences) do align with the student's post goals</p>
+							}
+							else
+							{
+								<p>The courses of study (and other education experiences) do not align with the student's post goals</p>
+							}
+
+						</fieldset>
+						<p>
+							The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+							maintained in the counselor's office
+						</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+						<fieldset class="form-group">
+							<span><b>Anticipated Graduation Month/Year</b></span><span> @(Model.transition.Planning_GraduationMonth)-@(Model.transition.Planning_GraduationYear)</span>
+						</fieldset>
+					</div>
+					<div class="col-md-6">
+						<fieldset class="form-group">
+							@if (Model.transition.Planning_Completion == "Graduate with a High School Diploma")
+							{
+								<span>Graduate with a High School Diploma</span>
+							}
+							else if (Model.transition.Planning_Completion == "Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age")
+							{
+								<span>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</span>
+							}
+						</fieldset>
+					</div>
+					<div class="col-md-3">
+						<fieldset class="form-group">
+							<span><b>Total # of Credits required by district</b></span><span> @(Model.transition.Planning_Credits)</span>
+						</fieldset>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:15px;">
+					<div class="col-md-12">
+						<label class="underline">Vocational Rehabilitation</label><br /><br />
+						<fieldset class="form-group">
+							@if (Model.transition.Planning_BenefitKRS)
+							{
+								<p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
+							}
+							else
+							{
+								<p>The IEP Team did not determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
+							}
+
+						</fieldset>
+						<fieldset class="form-group @(Model.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
+							@if (Model.transition.Planning_ConsentPrior)
+							{
+								<p>Consent to release confidential information was obtained to prior to KRS notification</p>
+							}
+							else
+							{
+								<p>Consent to release confidential information was not obtained to prior to KRS notification</p>
+							}
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div><!--end transition-->
+	}
+	<div class="modal-footer" style="border-top: 0;">
+		<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+	</div>
+</div>

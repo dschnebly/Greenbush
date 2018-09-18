@@ -1,0 +1,25 @@
+﻿@model GreenBushIEP.Models.tblBehaviorBaseline
+@{
+
+    string number = ViewData["number"].ToString();
+    string idBehavior = string.Format("tbBehavior{0}", number);
+    string idBaseline = string.Format("tbBaseline{0}", number);
+    string id = string.Format("targetId{0}", number);
+
+}
+<table class="table" style="width:80%">
+    <thead>
+        <tr>
+            <th scope="col">Behavior @number</th>
+            <th scope="col">Baseline @number</th>
+
+        </tr>
+    </thead>
+    <tr>
+        <td>
+            <p>@Model.Behavior</p>
+            <input type="hidden" id='@id' name='@id' value="@Model.BehaviorBaselineID" />
+        </td>
+        <td><p>@Model.Baseline </p>
+    </tr>
+</table>

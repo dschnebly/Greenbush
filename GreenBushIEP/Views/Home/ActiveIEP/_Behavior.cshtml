@@ -1,0 +1,243 @@
+﻿@model GreenBushIEP.Models.BehaviorViewModel
+
+@{
+    bool showTriggerOther = false;
+    bool showHypothesisOther = false;
+    bool showStrategyOther = false;
+}
+<style>
+    label {
+        margin-bottom: 0;
+    }
+</style>
+<link href="/Content/chosen.css" rel="stylesheet" />
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
+</div>
+<div class="modal-body standard-font-size">
+
+    <fieldset class="form-group">
+        <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
+    </fieldset>
+
+    <div class="row">
+      
+
+            <div class="col-md-12 voffset2">
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strengths/Motivators</label>
+                    <div class="form-check">
+                        <p>@(Model.StrengthMotivator)</p>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group" style="margin-bottom:0;">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Behavior(s) of Concern</label>
+                    <div class="form-check">
+                        <p>@(Model.BehaviorConcern)</p>
+                    </div>
+                </fieldset>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Triggers</h3>
+
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Possible triggers for behaviors:</label>
+                        
+                            @if (Model.Triggers != null)
+							{
+								var triggerText = "";
+								foreach (var trigger in Model.Triggers)
+								{
+									string selected = Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
+									triggerText += Model.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? string.Format("{0}, ", @trigger.BehaviorTriggerType) : "";
+									if (selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
+									{
+										showTriggerOther = true;
+									}
+								}
+								@(triggerText.Trim().Trim(','))
+							}
+                        
+                        <div id="divTriggerOther" class="voffset2" style="display:none">
+                            <label>Other Description</label>
+                            <p>@Model.TriggerOther</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row voffset3">
+                    <div class="col-md-12">
+                        <h3>Hypothesis</h3>
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Hypothesis for the reason for the behavior(s)</label>
+                        
+                            @if (Model.HypothesisList != null)
+							{
+								var hypothesisText = "";
+								foreach (var hypothesis in Model.HypothesisList)
+								{
+									string selected = Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
+									hypothesisText += Model.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? string.Format("{0} ", hypothesis.BehaviorHypothesisType) : "";
+									if (selected == "selected=selected" && @hypothesis.BehaviorHypothesisType == "Other")
+									{
+										showHypothesisOther = true;
+									}
+								}
+
+								@(hypothesisText.Trim().Trim(','))
+							}
+                        
+                        <div id="divHypothesisOther" class="voffset2" style="display:none">
+                            <label>Other Description</label>
+                            <p>@Model.HypothesisOther</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Strategies</h3>
+
+                    </div>
+                </div>
+                <div class="row voffset1">
+                    <div class="col-md-12">
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strategies to address the reason(s) for the behavior</label>
+                        
+                            @if (Model.Strategies != null)
+							{
+								var stratText = "";
+								foreach (var strategy in Model.Strategies)
+								{
+									string selected = Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
+
+									stratText += Model.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? string.Format("{0} ", strategy.BehaviorStrategyType) : "";
+									if (selected == "selected=selected" && @strategy.BehaviorStrategyType == "Other")
+									{
+										showStrategyOther = true;
+									}
+								}
+
+								@(stratText.Trim().Trim(','))
+                            }
+                        
+                        <div id="divStrategyOther" class="voffset2" style="display:none">
+                            <label class="standard-font-size">Other Description</label>
+                            <p>@Model.StrategiesOther</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Targeted Behaviors</h3>
+
+                    </div>
+                </div>
+                <div class="row voffset2">
+                    <div class="col-md-12">
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;" for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
+                            <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
+                            <li><a data-toggle="tab" href="#sectionC"><b>Behavior 3</b></a></li>
+                        </ul>
+                        <div class="tab-content container">
+                            <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
+
+                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
+
+                            </div>
+                            <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
+
+                            </div>
+                            <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
+                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Crisis Management Plan</h3>
+
+                    </div>
+                </div>
+
+
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
+                    <div class="form-check">
+                        <p>@(Model.Crisis_Escalation)</p>
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Crisis (describe what this looks like for student)</label>
+                    <div class="form-check">
+                        <p>@(Model.Crisis_Description)</p>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
+                    <div class="form-check">
+                        <p>@(Model.Crisis_Implementation)</p>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Other</label>
+                    <div class="form-check">
+                        <p >@(Model.Crisis_Other)</p>
+                    </div>
+                </fieldset>
+
+                <div class="row voffset3">
+                    <div class="col-md-12">
+                        <h3>Action Plan</h3>
+                    </div>
+                </div>
+
+                <fieldset class="form-group">
+                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
+                    <div class="form-check">
+                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Time frame plan will be reviewed</label>
+                        <p>@(Model.ReviewedBy)</p>
+                    </div>
+                </fieldset>
+
+                <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                    <div class="form-group">
+                      
+                        <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+
+            </div>
+
+       
+    </div> <!--end parent row-->
+
+</div>
+
+
+
+
+

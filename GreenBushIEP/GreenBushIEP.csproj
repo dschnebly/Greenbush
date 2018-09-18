@@ -789,6 +789,18 @@
     <Content Include="Views\Home\Updates.cshtml" />
     <Content Include="Views\Home\_ModuleDistrictContact.cshtml" />
     <Content Include="Views\Home\Reports.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_HealthSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_MotorSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_CommunicationSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_SocialSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_GeneralIntelligenceSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_AcademicSection.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_OtherConsiderations.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_Behavior.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_TargetedBehaviorROPartial.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_StudentServices.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_Accommodations.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_StudentTransition.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
