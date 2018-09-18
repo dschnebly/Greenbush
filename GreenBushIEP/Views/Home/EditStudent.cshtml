@@ -1133,7 +1133,7 @@
                                                             foreach (var code in Model.statusCode)
                                                             {
                                                                 string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
-                                                                <option value="@code.StatusCode" @selected>@code.Description</option>
+                                                                <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                             }
                                                         }
                                                     </select>
