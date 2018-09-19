@@ -247,20 +247,20 @@ namespace GreenBushIEP.Controllers
                             db.tblOrganizationMappings.Add(org);
                             db.SaveChanges();
 
-                            tblBuildingMapping district = new tblBuildingMapping();
-                            district.BuildingID = "0";
-                            district.USD = usd;
-                            district.UserID = student.UserID;
+                            //tblBuildingMapping district = new tblBuildingMapping();
+                            //district.BuildingID = collection["AttendanceBuildingId"];
+                            //district.USD = usd;
+                            //district.UserID = student.UserID;
 
-                            try
-                            {
-                                db.tblBuildingMappings.Add(district);
-                                db.SaveChanges();
-                            }
-                            catch (Exception e)
-                            {
-                                return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
-                            }
+                            //try
+                            //{
+                            //    db.tblBuildingMappings.Add(district);
+                            //    db.SaveChanges();
+                            //}
+                            //catch (Exception e)
+                            //{
+                            //    return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                            //}
                         }
                     }
 
@@ -580,9 +580,11 @@ namespace GreenBushIEP.Controllers
                 {
                     foreach (string usd in collection["misDistrict"].ToString().Split(','))
                     {
+                        //because we don't know which building is in which district at this point.
                         mappings.Add(new tblBuildingMapping()
                         {
-                            BuildingID = "0",
+                            // add specific buildingId
+                            BuildingID = collection["AttendanceBuildingId"],
                             UserID = student.UserID,
                             USD = usd
                         });
@@ -605,6 +607,7 @@ namespace GreenBushIEP.Controllers
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
                 info.PlacementCode = collection["studentPlacement"];
+                info.USD = collection["misDistrict"];
             }
             else
             {
