@@ -1374,7 +1374,6 @@
                         @using (Html.BeginForm("EditStudentAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return false;" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.Hidden("studentId", 0)
                             @Html.Hidden("id", Model.student.UserID)
                             if (Model.contacts != null)
                             {
@@ -1426,23 +1425,18 @@
                 <input name="contact[#].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
             </div>
         </div>
-        <div class="col-sm-3 nopadding">
-            <div class="form-group">
-                <label>Middle Name</label>
-                <input name="contact[#].ContactMiddleName" class="form-control text-box single-line" placeholder="Middle Name" type="text" />
-            </div>
-        </div>
-        <div class="col-sm-3 nopadding">
+        <div class="col-sm-5 nopadding">
             <div class="form-group">
                 <label>Last Name</label>
                 <input name="contact[#].ContactLastName" class="form-control text-box single-line" placeholder="Last Name" type="text" data-validate="true" />
             </div>
         </div>
-        <div class="col-sm-2 nopadding">
+        <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Relationship</label>
                 <select name="contact[#].ContactRelationship" class="form-control text-box single-line" data-validate="true">
                     <option value="parent" selected="selected">Parent</option>
+                    <option value="foster">Foster Parent</option>
                     <option value="guardian">Guardian</option>
                     <option value="advocate">Education Advocate</option>
                     <option value="other">Other</option>

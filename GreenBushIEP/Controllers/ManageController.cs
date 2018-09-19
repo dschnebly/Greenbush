@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Web.Mvc;
 
@@ -207,6 +206,17 @@ namespace GreenBushIEP.Controllers
                         Update_Date = DateTime.Now,
                         PlacementCode = collection["studentPlacement"]
                     };
+
+                    // map the buildings in the building mapping table
+                    try
+                    {
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.USD, UserID = studentInfo.UserID });
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                    }
 
                     try
                     {
@@ -705,8 +715,11 @@ namespace GreenBushIEP.Controllers
                 {
                     // BLOW AWAY all the relationships to the students.
                     List<tblStudentRelationship> relationships = db.tblStudentRelationships.Where(r => r.UserID == student.UserID).ToList();
-                    db.tblStudentRelationships.RemoveRange(relationships);
-                    db.SaveChanges();
+                    if (relationships != null && relationships.Count > 0)
+                    {
+                        db.tblStudentRelationships.RemoveRange(relationships);
+                        db.SaveChanges();
+                    }
 
                     int j = 0;
                     while (++j < collection.Count - 1)
@@ -720,7 +733,6 @@ namespace GreenBushIEP.Controllers
                             RealtionshipID = 0,
                             UserID = studentId,
                             FirstName = collection[j].ToString(),
-                            MiddleName = collection[++j].ToString(),
                             LastName = collection[++j].ToString(),
                             Realtionship = collection[++j].ToString(),
                             Address1 = collection[++j].ToString(),
@@ -775,6 +787,12 @@ namespace GreenBushIEP.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
             if (student != null)
             {
+                var filePath = Server.MapPath("~/Avatar/" + student.ImageURL);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
                 // UPLOAD the image
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
@@ -1065,10 +1083,10 @@ namespace GreenBushIEP.Controllers
                 tblDistrict MISDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
 
                 var districtContacts = (from organization in db.tblOrganizationMappings
-                                                  join users in db.tblUsers
-                                                    on organization.UserID equals users.UserID
-                                                  where organization.USD == MISDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
-                                                  select new { UserId = users.UserID, LastName = users.LastName, FirstName = users.FirstName, isContact  = MISDistrict.ContactUserID == users.UserID }).ToList();
+                                        join users in db.tblUsers
+                                          on organization.UserID equals users.UserID
+                                        where organization.USD == MISDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
+                                        select new { UserId = users.UserID, LastName = users.LastName, FirstName = users.FirstName, isContact = MISDistrict.ContactUserID == users.UserID }).ToList();
 
                 return Json(new { Result = "success", Message = districtContacts }, JsonRequestBehavior.AllowGet);
             }
@@ -1083,7 +1101,7 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.FirstOrDefault(u => u.UserID == id);
                 //List<tblDistrict> districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select d).Distinct().ToList();
-                var districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select new { USD = d.USD, DistrictName = d.DistrictName,  }).Distinct().ToList();
+                var districts = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where user.UserID == bm.UserID select new { USD = d.USD, DistrictName = d.DistrictName, }).Distinct().ToList();
                 if (districts != null)
                 {
                     return Json(new { Result = "success", Message = districts }, JsonRequestBehavior.AllowGet);

@@ -8,7 +8,7 @@
 
     //// Loads the building scripts
     $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
-        $('#buildingIds').show();
+        $('#buildingIds').hide();
     });
 
     //// attach event
@@ -85,28 +85,6 @@
         }
 
         $(".ajax-loader").css("visibility", "visible");
-
-        $.ajax({
-            url: action,
-            type: 'POST',
-            data: $("#UserForm").serialize(),
-            success: function (data) {
-                $(".ajax-loader").css("visibility", "hidden");
-
-                if (data.Result === "error") {
-                    $("#alertMessage .moreinfo").html(data.Message);
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
-            },
-            error: function (data) {
-                $("#alertMessage .moreinfo").html("There was an error when attempt to connect to the server.");
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
-            }
-        });
 
         return true;
     });
