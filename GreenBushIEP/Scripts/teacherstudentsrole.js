@@ -72,9 +72,9 @@ function init() {
 
                         // rebuild the list with the new data.
                         $.each(data.Message, function (i, item) {
-                            var userImage = item.ImageURL !== null ? item.ImageURL : '/Content/Images/newUser.png';
-                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='county-name'>Crawford</div><div class='school-name'>Riverbank Elementary</div></div></li>");
-                        });  //close each()
+                            var userImage = item.ImageURL !== null ? '/Avatar/' + item.ImageURL : '/Content/Images/newUser.png';
+                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' height='60' width='60' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='county-name'>Crawford</div><div class='school-name'>Riverbank Elementary</div></div></li>");
+                        });
 
                         $("ul#studentList").append.apply($("ul#studentList"), items);
                         $(".listrap").listrap().getSelection();
@@ -159,21 +159,13 @@ jQuery.fn.extend({
             });
             return selection;
         };
-        var toggle = "li .listrap-toggle ";
+        var toggle = "li.listrap-toggle";
         var selectionChanged = function () {
-            // -- begin modification --
-            if ($(this).hasClass('img-circle')) {
-                $(this).toggleClass('img-selection-correction');
-            }
-            else {
-                $(this).next().toggleClass('img-selection-correction');
-            }
-            // -- end modification --
-            $(this).parent().parent().toggleClass("active");
+            $(this).closest("li").toggleClass("active");
+            $(this).find("img").toggleClass('img-selection-correction');
             listrap.trigger("selection-changed", [listrap.getSelection()]);
         };
-        $(listrap).find(toggle + "img").on("click", selectionChanged);
-        $(listrap).find(toggle + "span").on("click", selectionChanged);
+        $("#studentList li").on("click", selectionChanged);
         return listrap;
     }
 });
