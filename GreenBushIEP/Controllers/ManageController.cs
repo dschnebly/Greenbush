@@ -204,8 +204,9 @@ namespace GreenBushIEP.Controllers
                         CreatedBy = submitter.UserID,
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
-                        PlacementCode = collection["studentPlacement"]
-                    };
+                        PlacementCode = collection["studentPlacement"],
+						isGifted = collection["Is_Gifted"] != null &&  collection["Is_Gifted"] == "on" ? true : false
+				};
 
                     // map the buildings in the building mapping table
                     try
@@ -611,7 +612,9 @@ namespace GreenBushIEP.Controllers
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
                 info.PlacementCode = collection["studentPlacement"];
                 info.USD = collection["misDistrict"];
-            }
+				info.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
+
+			}
             else
             {
                 return Json(new { Result = "error", Message = "There was an error while trying to edit the user." });

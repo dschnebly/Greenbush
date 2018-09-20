@@ -2067,7 +2067,7 @@ namespace GreenbushIep.Controllers
 				sb.AppendFormat("{0}\t", studentIEP.studentDetails.secondaryDisability);
 
 				//6 gifted
-				sb.AppendFormat("{0}\t", service.ServiceCode == "GI" ? "1" : "");
+				sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.isGifted ? "1" : "0");
 
 				//7 service location
 				sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
