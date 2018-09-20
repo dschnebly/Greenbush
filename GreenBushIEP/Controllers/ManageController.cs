@@ -272,6 +272,7 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
         }
 
+        [HttpPost]
         public JsonResult CreateStudentOptions(FormCollection collection)
         {
             if (ModelState.IsValid)
@@ -363,7 +364,6 @@ namespace GreenBushIEP.Controllers
                             RealtionshipID = 0,
                             UserID = studentId,
                             FirstName = collection[++j].ToString(),
-                            MiddleName = collection[++j].ToString(),
                             LastName = collection[++j].ToString(),
                             Realtionship = collection[++j].ToString(),
                             Address1 = collection[++j].ToString(),
@@ -599,6 +599,7 @@ namespace GreenBushIEP.Controllers
                 info.UserID = student.UserID;
                 info.KIDSID = Convert.ToInt64(collection["kidsid"]);
                 info.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+                info.AssignedUSD = collection["assignChildCount"];
                 info.BuildingID = collection["AttendanceBuildingId"];
                 info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                 info.Ethicity = collection["ethnic"];
@@ -1149,7 +1150,7 @@ namespace GreenBushIEP.Controllers
             try
             {
                 var teacherDistricts = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.USD).Distinct().ToList();
-                var studentsInTheDistrict = (from i in db.tblStudentInfoes where teacherDistricts.Contains(i.AssignedUSD) select i.UserID).Distinct().ToList();
+                var studentsInTheDistrict = (from i in db.tblStudentInfoes where teacherDistricts.Contains(i.AssignedUSD) select i.UserID).ToList();
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
@@ -1158,10 +1159,10 @@ namespace GreenBushIEP.Controllers
                 foreach (tblUser student in students.ToList())
                 {
                     var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
-                    if (teacherDistricts.Except(studentDistricts).Any())
-                    {
-                        students.Remove(student);
-                    }
+                    //if (teacherDistricts.Except(studentDistricts).Any())
+                    //{
+                    //    students.Remove(student);
+                    //}
                 }
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
