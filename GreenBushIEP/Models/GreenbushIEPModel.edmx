@@ -711,6 +711,7 @@
           <Property Name="InitialEvalConsentSigned" Type="datetime" />
           <Property Name="InitialEvalDetermination" Type="datetime" />
           <Property Name="ReEvalConsentSigned" Type="datetime" />
+          <Property Name="isGifted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -1999,6 +2000,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="InitialEvalConsentSigned" Type="DateTime" Precision="3" />
           <Property Name="InitialEvalDetermination" Type="DateTime" Precision="3" />
           <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
+          <Property Name="isGifted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -3039,6 +3041,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="isGifted" ColumnName="isGifted" />
                 <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
                 <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
                 <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />

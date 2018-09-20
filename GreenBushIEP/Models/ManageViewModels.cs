@@ -508,7 +508,7 @@ namespace GreenBushIEP.Models
         public string studentCounty { get; set; }
         public string primaryDisability { get; set; }
         public string secondaryDisability { get; set; }
-        public tblBuilding building { get; set; }
+		public tblBuilding building { get; set; }
         public tblBuilding neighborhoodBuilding { get; set; }
         public tblBuilding teacherBuilding { get; set; }
         public int studentAgeAtIEP { get; set; }
