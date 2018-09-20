@@ -845,6 +845,8 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+
+                // EDIT the user
                 if (user != null)
                 {
                     if (!string.IsNullOrEmpty(collection["teacherid"])) { user.TeacherID = collection["teacherId"]; }
@@ -852,64 +854,81 @@ namespace GreenBushIEP.Controllers
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
                     user.Email = collection["Email"];
-
-                    List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
-
-                    if (collection["buildingIds"] != null)
-                    {
-                        foreach (string building in collection["buildingIds"].ToString().Split(','))
-                        {
-                            mappings.Add(new tblBuildingMapping()
-                            {
-                                BuildingID = building,
-                                UserID = id,
-                                USD = db.tblBuildings.Where(b => b.BuildingID == building).Single().USD
-                            });
-                        }
-                    }
-
-                    if (collection["misDistrict"] != null)
-                    {
-                        foreach (string usd in collection["misDistrict"].ToString().Split(','))
-                        {
-                            if (mappings.Where(m => m.USD == usd).Count() == 0)
-                            {
-                                mappings.Add(new tblBuildingMapping()
-                                {
-                                    BuildingID = "0",
-                                    UserID = id,
-                                    USD = usd
-                                });
-                            }
-                        }
-                    }
-
-                    // remove all relationships. Blow it all away.
-                    db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == id));
-                    db.SaveChanges();
-
-                    // add back the connections to the database.
-                    db.tblBuildingMappings.AddRange(mappings);
-                    db.SaveChanges();
-
-                    // if they are updating their avatar
-                    if (adminpersona != null)
-                    {
-                        if (!string.IsNullOrEmpty(user.ImageURL))
-                        {
-                            // Delete exiting file
-                            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Avatar/"), user.ImageURL));
-                        }
-
-                        // Save new file
-                        string filename = Guid.NewGuid() + Path.GetFileName(adminpersona.FileName);
-                        string path = Path.Combine(Server.MapPath("~/Avatar/"), filename);
-                        adminpersona.SaveAs(path);
-                        user.ImageURL = filename;
-                    }
-
-                    db.SaveChanges();
                 }
+
+                // EDIT their avatar
+                if (adminpersona != null)
+                {
+                    if (!string.IsNullOrEmpty(user.ImageURL))
+                    {
+                        // Delete exiting file
+                        System.IO.File.Delete(Path.Combine(Server.MapPath("~/Avatar/"), user.ImageURL));
+                    }
+
+                    // Save new file
+                    string filename = Guid.NewGuid() + Path.GetFileName(adminpersona.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), filename);
+                    adminpersona.SaveAs(path);
+                    user.ImageURL = filename;
+                }
+
+                db.SaveChanges();
+
+                List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
+                List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
+
+                // save the user to all the districts that was selected.
+                if (collection["misDistrict"] != null)
+                {
+                    foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                    {
+                        if (districtMappings.Where(m => m.USD == usd).Count() == 0)
+                        {
+
+                            districtMappings.Add(new tblOrganizationMapping()
+                            {
+                                AdminID = db.tblOrganizationMappings.Where(o => o.UserID == id).FirstOrDefault().AdminID,
+                                UserID = id,
+                                USD = usd
+                            });
+
+                            buildingMappings.Add(new tblBuildingMapping()
+                            {
+                                BuildingID = "0",
+                                UserID = id,
+                                USD = usd,
+                            });
+
+                        }
+                    }
+                }
+
+                // save the user to all the buildings that was selected.
+                if (collection["buildingIds"] != null)
+                {
+                    foreach (string building in collection["buildingIds"].ToString().Split(','))
+                    {
+                        buildingMappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = building,
+                            UserID = id,
+                            USD = db.tblBuildings.Where(b => b.BuildingID == building).Single().USD
+                        });
+                    }
+                }
+
+                //remove all the district relationships. Blow it all away.
+                db.tblOrganizationMappings.RemoveRange(db.tblOrganizationMappings.Where(o => o.UserID == id));
+
+                // remove all building relationships. Blow it all away.
+                db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == id));
+
+                db.SaveChanges();
+
+                // add back the connections to the database.
+                db.tblOrganizationMappings.AddRange(districtMappings);
+                db.tblBuildingMappings.AddRange(buildingMappings);
+                db.SaveChanges();
 
                 return RedirectToAction("Portal", "Home");
             }

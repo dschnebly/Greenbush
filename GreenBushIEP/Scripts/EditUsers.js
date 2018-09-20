@@ -66,7 +66,6 @@
 
     $("#UserForm").on("submit", function (e) {
 
-        e.preventDefault();
         var action = $(this).closest("form").attr("action");
         var districtCount = $("li.search-choice").length;
 
