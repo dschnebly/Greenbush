@@ -246,21 +246,6 @@ namespace GreenBushIEP.Controllers
 
                             db.tblOrganizationMappings.Add(org);
                             db.SaveChanges();
-
-                            //tblBuildingMapping district = new tblBuildingMapping();
-                            //district.BuildingID = collection["AttendanceBuildingId"];
-                            //district.USD = usd;
-                            //district.UserID = student.UserID;
-
-                            //try
-                            //{
-                            //    db.tblBuildingMappings.Add(district);
-                            //    db.SaveChanges();
-                            //}
-                            //catch (Exception e)
-                            //{
-                            //    return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
-                            //}
                         }
                     }
 
@@ -553,8 +538,10 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public JsonResult EditStudent(FormCollection collection)
         {
-            int studentId = Convert.ToInt32(collection["id"]);
 
+            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+            int studentId = Convert.ToInt32(collection["id"]);
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
             if (student != null)
             {
@@ -571,27 +558,43 @@ namespace GreenBushIEP.Controllers
             tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
             if (info != null)
             {
-                // remove all mapping. Blow it all away.
-                db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(x => x.UserID == studentId));
-                db.SaveChanges();
+                // remove all districts. Blow it all away.
+                db.tblOrganizationMappings.RemoveRange(db.tblOrganizationMappings.Where(o => o.UserID == studentId));
 
-                List<tblBuildingMapping> mappings = new List<tblBuildingMapping>();
-                if (collection["misDistrict"] != null)
+                // remove all the buildingId. Blow it all away.
+                db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == studentId));
+
+                // save to organization chart
+                // save the user to all the districts that was selected.
+                // tblOrganizationMapping and tblBuildingMapping
+                var districtValues = collection["misDistrict"];
+
+                if (!string.IsNullOrEmpty(districtValues))
                 {
-                    foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                    string[] districtArray = districtValues.Split(','); ;
+
+                    foreach (string usd in districtArray)
                     {
-                        //because we don't know which building is in which district at this point.
-                        mappings.Add(new tblBuildingMapping()
-                        {
-                            // add specific buildingId
-                            BuildingID = collection["AttendanceBuildingId"],
-                            UserID = student.UserID,
-                            USD = usd
-                        });
+                        tblOrganizationMapping org = new tblOrganizationMapping();
+                        org.AdminID = submitter.UserID;
+                        org.UserID = student.UserID;
+                        org.USD = usd;
+
+                        db.tblOrganizationMappings.Add(org);
+                        db.SaveChanges();
                     }
                 }
-                // add back the connections to the database.
-                db.tblBuildingMappings.AddRange(mappings);
+
+                // map the buildings in the building mapping table
+                try
+                {
+                    db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = info.BuildingID, USD = info.USD, UserID = info.UserID });
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                }
 
                 info.UserID = student.UserID;
                 info.KIDSID = Convert.ToInt64(collection["kidsid"]);
