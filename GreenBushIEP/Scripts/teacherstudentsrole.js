@@ -36,21 +36,6 @@ function init() {
     });
 
     // attach event
-    // fires when clicking the search icon.
-    $('[data-command="toggle-my-search"]').on('click', function (event) {
-        event.preventDefault;
-
-        if ($(this).hasClass('hide-search')) {
-            $(this).removeClass('hide-search');
-            $('.c-my-search').closest('.row').slideUp(100);
-        }
-        else {
-            $('.c-my-search').closest('.row').slideDown(100);
-            $(this).addClass('hide-search');
-        }
-    });
-
-    // attach event
     // fires off when you open up the Avaliable Students Modal
     $('#addExistingStudentModal').on('show.bs.modal', function () {
         var teacherId = $('#addExistingStudentModal').data('id');
@@ -73,7 +58,7 @@ function init() {
                         // rebuild the list with the new data.
                         $.each(data.Message, function (i, item) {
                             var userImage = item.ImageURL !== null ? '/Avatar/' + item.ImageURL : '/Content/Images/newUser.png';
-                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' height='60' width='60' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='county-name'>Crawford</div><div class='school-name'>Riverbank Elementary</div></div></li>");
+                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='county-name'>Crawford</div><div class='school-name'>Riverbank Elementary</div></div></li>");
                         });
 
                         $("ul#studentList").append.apply($("ul#studentList"), items);
