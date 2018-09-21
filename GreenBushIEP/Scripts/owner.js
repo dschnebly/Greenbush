@@ -17,6 +17,77 @@
         });
 
         // attach event
+        // fires when the user chooses a district
+        $("#userDistricts").on('change', function () {
+            var selectedDistrict = $(this).val();
+
+            $("#alertMessage").removeClass('alert alert-info').hide();
+            if (selectedDistrict != -1) {
+                $("#userBuildings option").remove();
+
+                $("#AllUserBuildings > option").each(function () {
+                    if ($(this).data('district') == selectedDistrict) {
+                        $("#userBuildings").append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                    }
+                });
+
+                $('.list-group-item').each(function () {
+                    var districts = $(this).data('districts') + "";
+                    var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+
+                    if (hasDistricts) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                if ($("#userBuildings > option").length == 0) {
+                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                    $("#userBuildings").prop("disabled", true);
+
+                    $("#alertMessage").removeClass('alert alert-info').show();
+                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
+                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
+                }
+                else {
+                    $("#userBuildings").prop("disabled", false);
+                }
+            }
+            else {
+                $("#userBuildings option").remove();
+
+                $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                $("#userBuildings").prop("disabled", true);
+
+                $('.list-group-item').each(function () {
+                    $(this).show();
+                });
+            }
+        });
+
+        // attach event
+        // fires when the user chooses a building
+        $("#userBuildings").on('change', function () {
+            var selectedBuilding = $(this).val();
+            var selectedDistrict = $("#userDistricts").val();
+
+            $('.list-group-item').each(function () {
+                var districts = $(this).data('districts') + "";
+                var buildings = $(this).data('buildings') + "";
+                var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+                var hasBuildings = buildings.split(",").indexOf(selectedBuilding) != -1;
+
+                if (hasDistricts && hasBuildings) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        // attach event
         // fires when you click yes on the module deleteForm.
         $('#deleteUser button[type=submit]').on('click', function (e) {
             if ($('#confirmDeletion').val() === 'DELETE') {

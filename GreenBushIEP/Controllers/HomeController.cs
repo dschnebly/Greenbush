@@ -75,21 +75,13 @@ namespace GreenbushIep.Controllers
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (owner != null)
             {
-                // get all the admins and orphans in the database.
-                var mis = (from org in db.tblOrganizationMappings
-                           join user in db.tblUsers
-                               on org.UserID equals user.UserID
-                           where (org.AdminID == owner.UserID || user.RoleID == "2") && !(user.Archive ?? false)
-                           select user).Distinct().OrderBy(u => u.RoleID).ToList();
-
-                UserOrganizationViewModel model = new UserOrganizationViewModel();
-                model.user = owner;
-                model.staff = mis.ToList();
+                OrganizationUser orgBoss = getOrgazationUser(owner);
+                OrganizationChart model = buildOrganizationChart(orgBoss);
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(owner);
 
-                return View(model);
+                return View("OwnerPortal", model);
             }
 
             // Unknow error happened.
@@ -506,25 +498,17 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = admin)]
         public ActionResult AdminPortal(int? userId)
         {
+
             tblUser admin = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (admin != null)
             {
-                // get all the admins in the database that are active and under this MIS user.
-                var teachers = (from org in db.tblOrganizationMappings
-                                join user in db.tblUsers
-                                    on org.UserID equals user.UserID
-                                where (org.AdminID == admin.UserID) && !(user.Archive ?? false)
-                                select user).Distinct().OrderBy(u => u.RoleID).ToList();
-
-                UserOrganizationViewModel model = new UserOrganizationViewModel();
-                model.user = admin;
-                model.staff = teachers.ToList();
+                OrganizationUser orgBoss = getOrgazationUser(admin);
+                OrganizationChart model = buildOrganizationChart(orgBoss);
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(admin);
 
-
-                return View(model);
+                return View("AdminPortal", model);
             }
 
             // Unknow error happened.
@@ -656,8 +640,8 @@ namespace GreenbushIep.Controllers
         public ActionResult LoadModuleSection(int studentId, string view)
         {
             var iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-			var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-			
+            var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
             try
             {
                 switch (view)
@@ -669,10 +653,10 @@ namespace GreenbushIep.Controllers
                             healthModel = new tblIEPHealth();
                         }
 
-						if(isReadOnly)
-							return PartialView("ActiveIEP/_HealthSection", (tblIEPHealth)healthModel);
-						else
-							return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_HealthSection", (tblIEPHealth)healthModel);
+                        else
+                            return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
 
 
                     case "AcademicModule":
@@ -686,50 +670,50 @@ namespace GreenbushIep.Controllers
                         if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); }
                         if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); }
                         if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); }
-						if (isReadOnly)
-							return PartialView("ActiveIEP/_AcademicSection", academicModel);
-						else
-							return PartialView("_ModuleAcademicSection", academicModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_AcademicSection", academicModel);
+                        else
+                            return PartialView("_ModuleAcademicSection", academicModel);
                     case "MotorModule":
                         tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPid == iep.IEPMotorID).FirstOrDefault();
                         if (motorModel == null)
                         {
                             motorModel = new tblIEPMotor();
                         }
-						if (isReadOnly)
-							return PartialView("ActiveIEP/_MotorSection", motorModel);
-						else
-							return PartialView("_ModuleMotorSection", motorModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_MotorSection", motorModel);
+                        else
+                            return PartialView("_ModuleMotorSection", motorModel);
                     case "CommunicationModule":
                         tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPid == iep.IEPCommunicationID).FirstOrDefault();
                         if (communicationModel == null)
                         {
                             communicationModel = new tblIEPCommunication();
                         }
-						if (isReadOnly)
-							return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
-						else
-							return PartialView("_ModuleCommunicationSection", communicationModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
+                        else
+                            return PartialView("_ModuleCommunicationSection", communicationModel);
                     case "SocialModule":
                         tblIEPSocial socialModel = db.tblIEPSocials.Where(s => s.IEPSocialID == iep.IEPSocialID).FirstOrDefault();
                         if (socialModel == null)
                         {
                             socialModel = new tblIEPSocial();
                         }
-						if (isReadOnly)
-							return PartialView("ActiveIEP/_SocialSection", socialModel);
-						else
-							return PartialView("_ModuleSocialSection", socialModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_SocialSection", socialModel);
+                        else
+                            return PartialView("_ModuleSocialSection", socialModel);
                     case "GeneralIntelligenceModule":
                         tblIEPIntelligence intelligenceModel = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == iep.IEPIntelligenceID).FirstOrDefault();
                         if (intelligenceModel == null)
                         {
                             intelligenceModel = new tblIEPIntelligence();
                         }
-						if (isReadOnly)
-							return PartialView("ActiveIEP/_GeneralIntelligenceSection", intelligenceModel);
-						else
-							return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
+                        if (isReadOnly)
+                            return PartialView("ActiveIEP/_GeneralIntelligenceSection", intelligenceModel);
+                        else
+                            return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
                     default:
                         return Json(new { Result = "error", Message = "Unknown View" }, JsonRequestBehavior.AllowGet);
                 }
@@ -1048,12 +1032,12 @@ namespace GreenbushIep.Controllers
                              select p).ToList();
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-			bool isReadOnly = false;
-			if (iep != null)
+            bool isReadOnly = false;
+            if (iep != null)
             {
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-				
-				StudentServiceViewModel model = new StudentServiceViewModel();
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
+                StudentServiceViewModel model = new StudentServiceViewModel();
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
                 if (services != null)
@@ -1087,10 +1071,10 @@ namespace GreenbushIep.Controllers
                     //model.IEPEndDate = iep.end_date ?? DateTime.Now;
                 }
 
-				if(isReadOnly)
-					return PartialView("ActiveIEP/_StudentServices", model);
-				else
-				   return PartialView("_ModuleStudentServices", model);
+                if (isReadOnly)
+                    return PartialView("ActiveIEP/_StudentServices", model);
+                else
+                    return PartialView("_ModuleStudentServices", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1148,7 +1132,7 @@ namespace GreenbushIep.Controllers
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
                     service.Update_Date = DateTime.Now;
-					service.FiledOn = null; //need to clear so it can be pickedup by spedpro export
+                    service.FiledOn = null; //need to clear so it can be pickedup by spedpro export
                     service.tblGoals.Clear();
 
                     // nullable serviceId
@@ -1203,20 +1187,20 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentTransition(int studentId)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-			bool isReadOnly = false;
-			if (iep != null)
+            bool isReadOnly = false;
+            if (iep != null)
             {
 
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-				
-				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
+                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
                 tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
-				string studentFirstName = string.Format("{0}", student.FirstName);
-				string studentLastName = string.Format("{0}", student.LastName);
-				int studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                string studentFirstName = string.Format("{0}", student.FirstName);
+                string studentLastName = string.Format("{0}", student.LastName);
+                int studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 
-				tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+                tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
                 StudentTransitionViewModel model = new StudentTransitionViewModel();
@@ -1229,14 +1213,14 @@ namespace GreenbushIep.Controllers
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
 
-				ViewBag.studentFirstName = studentFirstName;
-				ViewBag.studentLastName = studentLastName;
-				ViewBag.studentAge = studentAge;
+                ViewBag.studentFirstName = studentFirstName;
+                ViewBag.studentLastName = studentLastName;
+                ViewBag.studentAge = studentAge;
 
-				if(isReadOnly)
-					return PartialView("ActiveIEP/_StudentTransition", model);
-				else
-					return PartialView("_ModuleStudentTransition", model);
+                if (isReadOnly)
+                    return PartialView("ActiveIEP/_StudentTransition", model);
+                else
+                    return PartialView("_ModuleStudentTransition", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1247,17 +1231,17 @@ namespace GreenbushIep.Controllers
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
-			bool isReadOnly = false;
+            bool isReadOnly = false;
             if (iep != null)
             {
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-				
-				var model = GetBehaviorModel(studentId, iep.IEPid);
-                
-				if(isReadOnly)
-				  return PartialView("ActiveIEP/_Behavior", model);
-				else
-				 return PartialView("_ModuleBehavior", model);
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
+                var model = GetBehaviorModel(studentId, iep.IEPid);
+
+                if (isReadOnly)
+                    return PartialView("ActiveIEP/_Behavior", model);
+                else
+                    return PartialView("_ModuleBehavior", model);
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -1269,13 +1253,13 @@ namespace GreenbushIep.Controllers
             var model = new AccomodationViewModel();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
-			bool isReadOnly = false;
+            bool isReadOnly = false;
 
-			if (iep != null)
+            if (iep != null)
             {
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-				
-				model.StudentId = studentId;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
+                model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
                 if (accommodations.Any())
@@ -1301,10 +1285,10 @@ namespace GreenbushIep.Controllers
 
             ViewBag.Locations = locationList;
 
-			if(isReadOnly)
-				return PartialView("ActiveIEP/_Accommodations", model);
-			else
-			    return PartialView("_ModuleAccommodations", model);
+            if (isReadOnly)
+                return PartialView("ActiveIEP/_Accommodations", model);
+            else
+                return PartialView("_ModuleAccommodations", model);
         }
 
         [Authorize(Roles = teacher + ", " + mis)]
@@ -1312,13 +1296,13 @@ namespace GreenbushIep.Controllers
         {
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
-			bool isReadOnly = false;
-			
-			if (iep != null)
+            bool isReadOnly = false;
+
+            if (iep != null)
             {
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
-				
-				model.IEPid = iep.IEPid;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) ? true : false;
+
+                model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
                     model = oc.FirstOrDefault();
@@ -1340,10 +1324,10 @@ namespace GreenbushIep.Controllers
             ViewBag.StudentName = studentName;
             ViewBag.StudentId = studentId;
 
-			if(isReadOnly)
-				return PartialView("ActiveIEP/_OtherConsiderations", model);
-			else
-				return PartialView("_ModuleOtherConsiderations", model);
+            if (isReadOnly)
+                return PartialView("ActiveIEP/_OtherConsiderations", model);
+            else
+                return PartialView("_ModuleOtherConsiderations", model);
         }
 
         [HttpPost]
@@ -1517,13 +1501,13 @@ namespace GreenbushIep.Controllers
             return forms.OrderBy(x => x.Text).ToList();
         }
 
-		[Authorize]
-		public ActionResult Reports()
-		{
-			return View("~/Views/Home/Reports.cshtml");
-		}
+        [Authorize]
+        public ActionResult Reports()
+        {
+            return View("~/Views/Home/Reports.cshtml");
+        }
 
-		[HttpGet]
+        [HttpGet]
         [Authorize]
         public ActionResult PrintIEP(int id, int status = 0)
         {
@@ -1743,376 +1727,379 @@ namespace GreenbushIep.Controllers
                 return null;
         }
 
-		public ActionResult SpedProReport()
-		{
-			return View("~/Reports/SpedPro/Index.cshtml");
-		}
-
-		[Authorize]
-		public ActionResult DownloadSpedPro(FormCollection collection)		
-        {			
-			string fiscalYearStr = collection["fiscalYear"];
-			int fiscalYear = 0;
-			Int32.TryParse(fiscalYearStr, out fiscalYear);
-
-			string iepStatus = IEPStatus.ACTIVE;
-			var exportErrors = new List<ExportErrorView>();
-			//string selectedDateStr = collection["startDate"];
-			//DateTime selectedDate = Convert.ToDateTime(selectedDateStr);
-			//DateTime startDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);  
-			//DateTime endDate = startDate.AddMonths(1).AddDays(-1);
-
-			var query = (from iep in db.tblIEPs
-						 join student in db.tblUsers
-							 on iep.UserID equals student.UserID
-						 join services in db.tblServices
-						     on iep.IEPid equals services.IEPid
-						 where 
-						 iep.IepStatus == iepStatus
-						 && services.SchoolYear == fiscalYear
-						 && (services.FiledOn == null || iep.FiledOn == null)
-						 select new { iep, student }).ToList();
-
-
-			if (query.Count() > 0)
-			{
-				StringBuilder sb = new StringBuilder();
-
-				foreach (var item in query.ToList())
-				{
-					IEP theIEP = new IEP()
-					{
-						current = item.iep,
-						studentFirstName = string.Format("{0}", item.student.FirstName),
-						studentLastName = string.Format("{0}", item.student.FirstName),
-
-					};
-
-					if (theIEP != null && theIEP.current != null)
-					{
-						var studentDetails = new StudentDetailsPrintViewModel();
-						theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.SchoolYear == fiscalYear).ToList();
-						theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
-						
-						tblStudentInfo info = null;
-						if (student != null)
-						{
-
-							info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
-							tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-							tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-						}
-
-						if (info != null && theIEP.current != null)
-						{
-							var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-							var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-							var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-							var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
-
-							studentDetails.student = info;
-							studentDetails.gender = info.Gender;
-							studentDetails.building = studentBuilding;
-							studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-							studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
-							studentDetails.parentLang = info.ParentLanguage;
-							studentDetails.primaryDisability = info.Primary_DisabilityCode;
-							studentDetails.secondaryDisability = info.Secondary_DisabilityCode;
-							studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-							studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
-						}
-
-						theIEP.current.FiledOn = DateTime.Now;
-						theIEP.studentDetails = studentDetails;
-					}
-
-					var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
-
-					if (errors.Count > 0)
-					{
-						exportErrors.AddRange(errors);
-
-					}
-					else{
-
-						db.SaveChanges();
-
-					}
-
-
-				}//end foreach
-
-
-				if (exportErrors.Count == 0)
-				{
-					Response.Clear();
-					Response.ClearHeaders();
-
-					Response.AppendHeader("Content-Length", sb.Length.ToString());
-					Response.ContentType = "text/plain";
-					Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
-
-					Response.Write(sb);
-					Response.End();
-				}
-				else
-				{
-					ViewBag.errors = exportErrors;
-				}
-			}
-			else
-			{
-				exportErrors.Add(new ExportErrorView()
-				{
-					UserID = "",
-					Description = "No data found to export."
-				});
-
-				ViewBag.errors = exportErrors;
-			}
-
-			return View("~/Reports/SpedPro/Index.cshtml");
-		}
-
-		private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, int schoolYear, StringBuilder sb)
-		{
-			var errors = new List<ExportErrorView>();
-			
-			//1 KidsID Req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.KIDSID);
-
-			//2 Last Name, Student’s Legal Req less < 60 characters
-			sb.AppendFormat("{0}\t", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
-
-			//3 Student’s Gender
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender == "M" ? 1 : 0);
-
-			//4 DOB MM/DD/YYYY
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
-
-			//5 School Year YYYY Req
-			sb.AppendFormat("{0}\t", schoolYear);
-
-			//6 Assign Child Count Req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.assignChildCount);
-
-			//7 Neighborhood Building Identifier Req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
-
-			//8 grade level req
-			var gradeCode = "";
-			switch (studentIEP.studentDetails.student.Grade)
-			{
-				case 0: gradeCode = "05";
-						break;
-				case 1:
-					gradeCode = "06";
-					break;
-
-				case 2:
-					gradeCode = "07";
-					break;
-
-				case 3:
-					gradeCode = "08";
-					break;
-
-				case 4:
-					gradeCode = "09";
-					break;
-
-				case 5:
-					gradeCode = "10";
-					break;
-
-				case 6:
-					gradeCode = "11";
-					break;
-
-				case 7:
-					gradeCode = "12";
-					break;
-
-				case 8:
-					gradeCode = "13";
-					break;
-				case 9:
-					gradeCode = "14";
-					break;
-				case 10:
-					gradeCode = "15";
-					break;
-				case 11:
-					gradeCode = "16";
-					break;
-				case 12:
-					gradeCode = "17";
-					break;
-			}
-			if (gradeCode == "")
-			{
-				errors.Add(new ExportErrorView()
-				{
-					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
-				});
-				
-			}else
-			{
-				sb.AppendFormat("{0}\t", gradeCode);
-			}
-
-			//9 status code req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.StatusCode);
-
-			//10 exit date
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
-
-			//11 School Psychologist Provider ID
-			sb.AppendFormat("{0}\t", "");
-
-			//12 slp provider id
-			sb.AppendFormat("{0}\t", "");
-
-			//13 case manager provider id
-			sb.AppendFormat("{0}\t", "");
-
-			//14 extended school year
-			sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
-
-			//15 sped transportation
-			sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.Transporation_Required.HasValue && studentIEP.studentOtherConsiderations.Transporation_Required.Value ? "1" : "0" : "");
-
-			//16 All Day Kindergarten
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
-
-			//17 Behavior Intervention Plan - BIP
-			sb.AppendFormat("{0}\t", "");
-
-			//18 Claiming Code req
-			sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1": "");
-
-			//19 Placed By KDCF/JJA/LEA/Parent req
-			if (string.IsNullOrEmpty(studentIEP.studentDetails.student.PlacementCode))
-			{
-				errors.Add(new ExportErrorView()
-				{
-					UserID = string.Format("KIDSID: {0}",studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
-				});
-				
-			}
-			else
-			{
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.PlacementCode);
-			}
-
-			//20 County of Residence  req
-			if (string.IsNullOrEmpty(studentIEP.studentDetails.studentCounty))
-			{
-				errors.Add(new ExportErrorView()
-				{
-					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
-				});
-
-			}
-			else
-			{
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.studentCounty);
-			}
-
-			//21 Language of Parent  req
-			if (string.IsNullOrEmpty(studentIEP.studentDetails.parentLang))
-			{
-				errors.Add(new ExportErrorView()
-				{
-					UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-					Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
-				});
-			}
-			else
-			{
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
-			}
-
-
-			foreach (var service in studentIEP.studentServices)
-			{
-				service.FiledOn = DateTime.Now;
-				//1 IEP date req
-				if (!studentIEP.current.begin_date.HasValue)
-				{
-					errors.Add(new ExportErrorView()
-					{
-						UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-						Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
-					});
-				}
-				else
-				{
-					sb.AppendFormat("{0}\t", studentIEP.current.begin_date.Value.ToShortDateString());
-				}
-
-				//2 gap allow
-				sb.AppendFormat("{0}\t", "");
-
-				//3 Responsible School req
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
-
-				//4 primary disablity
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.primaryDisability);
-
-				//5 secondary disablity
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.secondaryDisability);
-
-				//6 gifted
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.isGifted ? "1" : "0");
-
-				//7 service location
-				sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
-
-				//8 Primary Service Location Indicator
-				sb.AppendFormat("{0}\t", "");
-
-				//9 setting code
-				sb.AppendFormat("{0}\t",service.LocationCode);
-
-				//10 service code
-				sb.AppendFormat("{0}\t", service.ServiceCode);
-				
-				//11 provider id
-				sb.AppendFormat("{0}\t", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0,10) : service.tblProvider.ProviderCode : "");
-
-				//12 Primary Provider Indicator
-				sb.AppendFormat("{0}\t",  "");
-
-				//13 Service Start Date
-				sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
-
-				//14 Service end Date
-				sb.AppendFormat("{0}\t", service.EndDate.ToShortDateString());
-
-				//15 minutes
-				sb.AppendFormat("{0}\t", service.Minutes);
-
-				//16 days per
-				sb.AppendFormat("{0}\t", service.DaysPerWeek);
-
-				//17 freq
-				sb.AppendFormat("{0}\t", service.Frequency);
-
-				//18 total days
-				sb.AppendFormat("{0}\t", "");
-
-			}
-
-			sb.AppendFormat("{0}\r", "");
-
-			return errors;
-		}
-
-		[Authorize]
+        public ActionResult SpedProReport()
+        {
+            return View("~/Reports/SpedPro/Index.cshtml");
+        }
+
+        [Authorize]
+        public ActionResult DownloadSpedPro(FormCollection collection)
+        {
+            string fiscalYearStr = collection["fiscalYear"];
+            int fiscalYear = 0;
+            Int32.TryParse(fiscalYearStr, out fiscalYear);
+
+            string iepStatus = IEPStatus.ACTIVE;
+            var exportErrors = new List<ExportErrorView>();
+            //string selectedDateStr = collection["startDate"];
+            //DateTime selectedDate = Convert.ToDateTime(selectedDateStr);
+            //DateTime startDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);  
+            //DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+            var query = (from iep in db.tblIEPs
+                         join student in db.tblUsers
+                             on iep.UserID equals student.UserID
+                         join services in db.tblServices
+                             on iep.IEPid equals services.IEPid
+                         where
+                         iep.IepStatus == iepStatus
+                         && services.SchoolYear == fiscalYear
+                         && (services.FiledOn == null || iep.FiledOn == null)
+                         select new { iep, student }).ToList();
+
+
+            if (query.Count() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var item in query.ToList())
+                {
+                    IEP theIEP = new IEP()
+                    {
+                        current = item.iep,
+                        studentFirstName = string.Format("{0}", item.student.FirstName),
+                        studentLastName = string.Format("{0}", item.student.FirstName),
+
+                    };
+
+                    if (theIEP != null && theIEP.current != null)
+                    {
+                        var studentDetails = new StudentDetailsPrintViewModel();
+                        theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.SchoolYear == fiscalYear).ToList();
+                        theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
+
+                        tblStudentInfo info = null;
+                        if (student != null)
+                        {
+
+                            info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
+                            tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+                            tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+                        }
+
+                        if (info != null && theIEP.current != null)
+                        {
+                            var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+                            var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+                            var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+                            var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+
+                            studentDetails.student = info;
+                            studentDetails.gender = info.Gender;
+                            studentDetails.building = studentBuilding;
+                            studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+                            studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
+                            studentDetails.parentLang = info.ParentLanguage;
+                            studentDetails.primaryDisability = info.Primary_DisabilityCode;
+                            studentDetails.secondaryDisability = info.Secondary_DisabilityCode;
+                            studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+                            studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+                        }
+
+                        theIEP.current.FiledOn = DateTime.Now;
+                        theIEP.studentDetails = studentDetails;
+                    }
+
+                    var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+
+                    if (errors.Count > 0)
+                    {
+                        exportErrors.AddRange(errors);
+
+                    }
+                    else
+                    {
+
+                        db.SaveChanges();
+
+                    }
+
+
+                }//end foreach
+
+
+                if (exportErrors.Count == 0)
+                {
+                    Response.Clear();
+                    Response.ClearHeaders();
+
+                    Response.AppendHeader("Content-Length", sb.Length.ToString());
+                    Response.ContentType = "text/plain";
+                    Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
+
+                    Response.Write(sb);
+                    Response.End();
+                }
+                else
+                {
+                    ViewBag.errors = exportErrors;
+                }
+            }
+            else
+            {
+                exportErrors.Add(new ExportErrorView()
+                {
+                    UserID = "",
+                    Description = "No data found to export."
+                });
+
+                ViewBag.errors = exportErrors;
+            }
+
+            return View("~/Reports/SpedPro/Index.cshtml");
+        }
+
+        private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, int schoolYear, StringBuilder sb)
+        {
+            var errors = new List<ExportErrorView>();
+
+            //1 KidsID Req
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.KIDSID);
+
+            //2 Last Name, Student’s Legal Req less < 60 characters
+            sb.AppendFormat("{0}\t", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
+
+            //3 Student’s Gender
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender == "M" ? 1 : 0);
+
+            //4 DOB MM/DD/YYYY
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
+
+            //5 School Year YYYY Req
+            sb.AppendFormat("{0}\t", schoolYear);
+
+            //6 Assign Child Count Req
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.assignChildCount);
+
+            //7 Neighborhood Building Identifier Req
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
+
+            //8 grade level req
+            var gradeCode = "";
+            switch (studentIEP.studentDetails.student.Grade)
+            {
+                case 0:
+                    gradeCode = "05";
+                    break;
+                case 1:
+                    gradeCode = "06";
+                    break;
+
+                case 2:
+                    gradeCode = "07";
+                    break;
+
+                case 3:
+                    gradeCode = "08";
+                    break;
+
+                case 4:
+                    gradeCode = "09";
+                    break;
+
+                case 5:
+                    gradeCode = "10";
+                    break;
+
+                case 6:
+                    gradeCode = "11";
+                    break;
+
+                case 7:
+                    gradeCode = "12";
+                    break;
+
+                case 8:
+                    gradeCode = "13";
+                    break;
+                case 9:
+                    gradeCode = "14";
+                    break;
+                case 10:
+                    gradeCode = "15";
+                    break;
+                case 11:
+                    gradeCode = "16";
+                    break;
+                case 12:
+                    gradeCode = "17";
+                    break;
+            }
+            if (gradeCode == "")
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
+                });
+
+            }
+            else
+            {
+                sb.AppendFormat("{0}\t", gradeCode);
+            }
+
+            //9 status code req
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.StatusCode);
+
+            //10 exit date
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
+
+            //11 School Psychologist Provider ID
+            sb.AppendFormat("{0}\t", "");
+
+            //12 slp provider id
+            sb.AppendFormat("{0}\t", "");
+
+            //13 case manager provider id
+            sb.AppendFormat("{0}\t", "");
+
+            //14 extended school year
+            sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
+
+            //15 sped transportation
+            sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.Transporation_Required.HasValue && studentIEP.studentOtherConsiderations.Transporation_Required.Value ? "1" : "0" : "");
+
+            //16 All Day Kindergarten
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
+
+            //17 Behavior Intervention Plan - BIP
+            sb.AppendFormat("{0}\t", "");
+
+            //18 Claiming Code req
+            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
+
+            //19 Placed By KDCF/JJA/LEA/Parent req
+            if (string.IsNullOrEmpty(studentIEP.studentDetails.student.PlacementCode))
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
+                });
+
+            }
+            else
+            {
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.PlacementCode);
+            }
+
+            //20 County of Residence  req
+            if (string.IsNullOrEmpty(studentIEP.studentDetails.studentCounty))
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
+                });
+
+            }
+            else
+            {
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.studentCounty);
+            }
+
+            //21 Language of Parent  req
+            if (string.IsNullOrEmpty(studentIEP.studentDetails.parentLang))
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
+                });
+            }
+            else
+            {
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
+            }
+
+
+            foreach (var service in studentIEP.studentServices)
+            {
+                service.FiledOn = DateTime.Now;
+                //1 IEP date req
+                if (!studentIEP.current.begin_date.HasValue)
+                {
+                    errors.Add(new ExportErrorView()
+                    {
+                        UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                        Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+                    });
+                }
+                else
+                {
+                    sb.AppendFormat("{0}\t", studentIEP.current.begin_date.Value.ToShortDateString());
+                }
+
+                //2 gap allow
+                sb.AppendFormat("{0}\t", "");
+
+                //3 Responsible School req
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
+
+                //4 primary disablity
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.primaryDisability);
+
+                //5 secondary disablity
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.secondaryDisability);
+
+                //6 gifted
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.isGifted ? "1" : "0");
+
+                //7 service location
+                sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
+
+                //8 Primary Service Location Indicator
+                sb.AppendFormat("{0}\t", "");
+
+                //9 setting code
+                sb.AppendFormat("{0}\t", service.LocationCode);
+
+                //10 service code
+                sb.AppendFormat("{0}\t", service.ServiceCode);
+
+                //11 provider id
+                sb.AppendFormat("{0}\t", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0, 10) : service.tblProvider.ProviderCode : "");
+
+                //12 Primary Provider Indicator
+                sb.AppendFormat("{0}\t", "");
+
+                //13 Service Start Date
+                sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
+
+                //14 Service end Date
+                sb.AppendFormat("{0}\t", service.EndDate.ToShortDateString());
+
+                //15 minutes
+                sb.AppendFormat("{0}\t", service.Minutes);
+
+                //16 days per
+                sb.AppendFormat("{0}\t", service.DaysPerWeek);
+
+                //17 freq
+                sb.AppendFormat("{0}\t", service.Frequency);
+
+                //18 total days
+                sb.AppendFormat("{0}\t", "");
+
+            }
+
+            sb.AppendFormat("{0}\r", "");
+
+            return errors;
+        }
+
+        [Authorize]
         public static string ScrubDocumentName(string documentName)
         {
             return documentName.Replace(',', ' ');
@@ -2505,6 +2492,11 @@ namespace GreenbushIep.Controllers
 
         public OrganizationUser getOrgazationUser(tblUser user)
         {
+            if (user.RoleID == owner)
+            {
+                return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
+            }
+
             var districts = (from org in db.tblOrganizationMappings
                              join district in db.tblDistricts
                                 on org.USD equals district.USD
@@ -2513,7 +2505,7 @@ namespace GreenbushIep.Controllers
 
             var buildings = (from buildingMap in db.tblBuildingMappings
                              join building in db.tblBuildings
-                                 on new { buildingMap.USD, buildingMap.BuildingID } equals 
+                                 on new { buildingMap.USD, buildingMap.BuildingID } equals
                                     new { building.USD, building.BuildingID }
                              where buildingMap.UserID == user.UserID
                              select building).Distinct().ToList();

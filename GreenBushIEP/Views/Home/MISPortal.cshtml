@@ -1,4 +1,5 @@
 ﻿@model GreenBushIEP.Models.OrganizationChart
+
 @{
     ViewBag.Title = "Management Information System Portal";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -48,7 +49,6 @@
             }
 
         </div>
-
 
         if (person.boss.user.RoleID != "5")
         {
@@ -463,7 +463,7 @@
 
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.boss.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="64" height="60" src="@(string.IsNullOrEmpty(Model.boss.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.boss.user.ImageURL  )">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.boss.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.boss.user.ImageURL  )">
         </a>
     </div>
 

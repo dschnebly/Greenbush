@@ -1156,7 +1156,7 @@ namespace GreenBushIEP.Controllers
                 var studentsInTheDistrict = (from i in db.tblStudentInfoes where teacherDistricts.Contains(i.AssignedUSD) select i.UserID).ToList();
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
-                // the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's District
+                //ALERT!! BUILDING, NOT DISTRICT - the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's building!!!!
                 List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheDistrict.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
                 foreach (tblUser student in students.ToList())

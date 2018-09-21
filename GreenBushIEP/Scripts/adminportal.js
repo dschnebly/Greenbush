@@ -139,66 +139,77 @@
             $('#addExistingTeacherModal').modal('hide');
         });
 
-        //////////////////////////////////////////////////////
-        //
-        // Events for Filtering the Search Results
-        //
-        /////////////////////////////////////////////////////
-
         // attach event
-        // fires when clicking the search icon.
-        $('[data-command="toggle-my-admin-search"]').on('click', function (event) {
-            event.preventDefault;
+        // fires when the user chooses a district
+        $("#userDistricts").on('change', function () {
+            var selectedDistrict = $(this).val();
 
-            if ($(this).hasClass('hide-search')) {
-                $(this).removeClass('hide-search');
-                $('.c-my-search').closest('.row').slideUp(100);
+            $("#alertMessage").removeClass('alert alert-info').hide();
+            if (selectedDistrict != -1) {
+                $("#userBuildings option").remove();
+
+                $("#AllUserBuildings > option").each(function () {
+                    if ($(this).data('district') == selectedDistrict) {
+                        $("#userBuildings").append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                    }
+                });
+
+                $('.list-group-item').each(function () {
+                    var districts = $(this).data('districts') + "";
+                    var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+
+                    if (hasDistricts) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                if ($("#userBuildings > option").length == 0) {
+                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                    $("#userBuildings").prop("disabled", true);
+
+                    $("#alertMessage").removeClass('alert alert-info').show();
+                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
+                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
+                }
+                else {
+                    $("#userBuildings").prop("disabled", false);
+                }
             }
             else {
-                $('.c-my-search').closest('.row').slideDown(100);
-                $(this).addClass('hide-search');
+                $("#userBuildings option").remove();
+
+                $("#userBuildings").append('<option value="-1">All Buildings</option>');
+                $("#userBuildings").prop("disabled", true);
+
+                $('.list-group-item').each(function () {
+                    $(this).show();
+                });
             }
         });
 
         // attach event
-        // fires when the user is searching
-        $('[name="contact-list-search"]').keyup(function (e) {
-            var val = $(e.currentTarget).val();
-            var code = e.keyCode || e.which;
-            if (code === '9') return;
-            if (code === '27') $(this).val(null);
+        // fires when the user chooses a building
+        $("#userBuildings").on('change', function () {
+            var selectedBuilding = $(this).val();
+            var selectedDistrict = $("#userDistricts").val();
 
-            var teachers = $('div.list-group-root').find('div.list-group-item');
-            teachers.show().filter(function () {
-                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                return !~text.indexOf(val.toLowerCase());
-            }).hide();
+            $('.list-group-item').each(function () {
+                var districts = $(this).data('districts') + "";
+                var buildings = $(this).data('buildings') + "";
+                var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
+                var hasBuildings = buildings.split(",").indexOf(selectedBuilding) != -1;
+
+                if (hasDistricts && hasBuildings) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
         });
 
-        // attach event
-        // fires when user select a filter option
-        $(".filteroptions > li").on('click', function () {
-            $(".filteroptions >li").removeClass("selected-filter");
-            $(this).addClass("selected-filter");
-            var filter = $(this).find(".filteroption").text();
-
-            $('.filteredby').removeClass("filteredby");
-            switch (filter) {
-                case "Show Teachers Only":
-                    $.each($('div.list-group-item > i.fa-child'), function () {
-                        $(this).parent().addClass("filteredby");
-                    });
-                    break;
-                case "Show Students Only":
-                    $.each($('.list-group-item > i.fa-graduation-cap'), function () {
-                        $(this).parent().addClass("filteredby");
-                        $(this).parent().nextAll('.list-group').addClass("filteredby");
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
 
         //////////////////////////////////////////////////////
         //
