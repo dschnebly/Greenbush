@@ -11,13 +11,7 @@
     {
         <div class="list-group-item" data-id="@(person.boss.user.UserID)" data-districts="@(String.Join(",", person.boss.districts.Select(d => d.USD.ToString())))" data-buildings="@(String.Join(",", person.boss.buildings.Select(b => b.BuildingID.ToString())))">
 
-            @if (person.boss.user.RoleID == "3")
-            {
-                <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-                <i class="fa fa-user-o" aria-hidden="true"></i>
-                <text>@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</text>
-            }
-            else if (person.boss.user.RoleID == "4")
+            @if (person.boss.user.RoleID == "4")
             {
                 <i class="fa fa-minus-square-o" aria-hidden="true"></i>
                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>

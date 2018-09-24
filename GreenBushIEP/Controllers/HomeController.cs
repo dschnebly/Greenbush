@@ -790,20 +790,16 @@ namespace GreenbushIep.Controllers
                 model.Teacher = user;
                 model.Students = (from o in db.tblOrganizationMappings
                                   join u in db.tblUsers on o.UserID equals u.UserID
+                                  join m in db.tblBuildingMappings on u.UserID equals m.UserID
+                                  join b in db.tblBuildings on m.BuildingID equals b.BuildingID
                                   where o.AdminID == id && u.RoleID == "5" && !(u.Archive ?? false)
                                   select new Student
                                   {
                                       UserID = u.UserID,
                                       FirstName = u.FirstName,
-                                      MiddleName = u.MiddleName,
                                       LastName = u.LastName,
-                                      City = u.City,
-                                      State = u.State,
                                       Email = u.Email,
-                                      Password = u.Password,
-                                      RoleID = u.RoleID,
-                                      ImageURL = u.ImageURL,
-                                      Archive = u.Archive,
+                                      BuildingName = b.BuildingName
                                   }).Distinct().ToList();
             }
 

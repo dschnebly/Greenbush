@@ -168,6 +168,7 @@ namespace GreenBushIEP.Models
         public string ImageURL { get; set; }
         public Nullable<bool> Agreement { get; set; }
         public Nullable<bool> Archive { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0000000000}", ApplyFormatInEditMode = true)]
         public long? KidsID { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Status { get; set; }

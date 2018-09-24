@@ -41,7 +41,7 @@ function init() {
         var teacherId = $('#addExistingStudentModal').data('id');
         $.ajax({
             type: 'GET',
-            url: '/Manage/GetAllStudentsInDistrict',
+            url: '/Manage/GetAllStudentsInBuildings',
             dataType: 'json',
             data: { id: teacherId },
             async: false,

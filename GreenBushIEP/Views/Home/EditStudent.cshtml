@@ -752,26 +752,26 @@
                                         <label for="studentPlacement">Placed By</label>
                                         <select name="studentPlacement" id="studentPlacement" class="form-control">
                                             @if (Model.placementCode != null)
+                                        {
+                                            foreach (var code in Model.placementCode)
                                             {
-                                                foreach (var code in Model.placementCode)
-                                                {
-                                                    string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
+                                                string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
                                                     <option value="@code.PlacementCode" @selected>@code.PlacementDescription</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="control-label required" for="assignChildCount">Assign Child Count</label>
                                         <select name="assignChildCount" id="assignChildCount" class="form-control">
                                             @if (Model.allDistricts != null)
+                                        {
+                                            foreach (var district in Model.allDistricts)
                                             {
-                                                foreach (var district in Model.allDistricts)
-                                                {
-                                                    string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
+                                                string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
                                                     <option value="@district.USD" @selected>@district.DistrictName</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -802,26 +802,26 @@
                                         <label for="primaryDisability">Primary Disability</label>
                                         <select class="form-control" name="primaryDisability" id="primaryDisability">
                                             @if (Model.primaryDisabilities != null)
+                                        {
+                                            foreach (var primary in Model.primaryDisabilities)
                                             {
-                                                foreach (var primary in Model.primaryDisabilities)
-                                                {
-                                                    string selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected=selected" : "";
+                                                string selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@primary.DisabilityCode" @selected>@primary.DisabilityDescription</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="secondaryDisability">Secondary Disability</label>
                                         <select class="form-control" name="secondaryDisability" id="secondaryDisability">
                                             @if (Model.secondaryDisabilities != null)
+                                        {
+                                            foreach (var secondary in Model.secondaryDisabilities)
                                             {
-                                                foreach (var secondary in Model.secondaryDisabilities)
-                                                {
-                                                    string selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected=selected" : "";
+                                                string selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@secondary.DisabilityCode" @selected>@secondary.DisabilityDescription</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
 									<div class="col-md-2">
@@ -845,13 +845,13 @@
                                         <label class="control-label required" for="misDistrict">District</label>
                                         <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                                             @if (Model.districts != null)
+                                        {
+                                            foreach (var district in Model.districts)
                                             {
-                                                foreach (var district in Model.districts)
-                                                {
-                                                    string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
+                                                string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
                                                     <option value="@district.USD" @selected>@district.DistrictName</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                 </div>
@@ -867,13 +867,13 @@
                                     <div class="col-md-10">
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required>
                                             @if (Model.buildings != null)
+                                        {
+                                            foreach (var building in Model.buildings)
                                             {
-                                                foreach (var building in Model.buildings)
-                                                {
-                                                    string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
+                                                string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
                                                     <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                 </div>
@@ -884,13 +884,13 @@
                                     <div class="col-md-10">
                                         <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding" data-validate="true">
                                             @if (Model.buildings != null)
+                                        {
+                                            foreach (var building in Model.buildings)
                                             {
-                                                foreach (var building in Model.buildings)
-                                                {
-                                                    string selected = Model.info.BuildingID == building.BuildingID ? "selected=selected" : "";
+                                                string selected = Model.info.BuildingID == building.BuildingID ? "selected=selected" : "";
                                                     <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
                                                 }
-                                            }
+                                        }
                                         </select>
                                     </div>
                                 </div>
@@ -1233,13 +1233,13 @@
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
                                                         @if (Model.statusCode != null)
-                                                        {
-                                                            foreach (var code in Model.statusCode)
-                                                            {
-                                                                string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+                                        {
+                                            foreach (var code in Model.statusCode)
+                                            {
+                                                string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                 <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                             }
-                                                        }
+                                        }
                                                     </select>
                                                 </div>
                                             </div>
@@ -1321,7 +1321,7 @@
 
                                 <div class="step22" id="student-contacts">
                                     @foreach (var contact in Model.contacts)
-                                    {
+                                        {
                                         <div class="student-contact">
                                             <div class="row">
                                                 <div class="col-sm-4 nopadding">

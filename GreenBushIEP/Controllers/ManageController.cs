@@ -1146,27 +1146,18 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult GetAllStudentsInDistrict(int id)
+        public ActionResult GetAllStudentsInBuildings(int id)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
             try
             {
-                var teacherDistricts = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.USD).Distinct().ToList();
-                var studentsInTheDistrict = (from i in db.tblStudentInfoes where teacherDistricts.Contains(i.AssignedUSD) select i.UserID).ToList();
+                var teacherBuildings = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.BuildingID).Distinct().ToList();
+                var studentsInTheBuildings = (from bm in db.tblBuildingMappings join user in db.tblUsers on bm.UserID equals user.UserID where user.RoleID == "5" && teacherBuildings.Contains(bm.BuildingID) select bm.UserID).ToList();
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
-                //ALERT!! BUILDING, NOT DISTRICT - the user is a student, the user is NOT already in the teachers list, and the user is in the Teachers's building!!!!
-                List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheDistrict.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
-
-                foreach (tblUser student in students.ToList())
-                {
-                    var studentDistricts = (from bm in db.tblBuildingMappings where bm.UserID == student.UserID select bm.USD).Distinct().ToList();
-                    //if (teacherDistricts.Except(studentDistricts).Any())
-                    //{
-                    //    students.Remove(student);
-                    //}
-                }
+                // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
+                List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheBuildings.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
@@ -1190,7 +1181,7 @@ namespace GreenBushIEP.Controllers
                     {
                         AdminID = teacher.UserID,
                         UserID = student,
-                        USD = (from bms in db.tblBuildingMappings join bmt in db.tblBuildingMappings on bms.USD equals bmt.USD select bms.USD).FirstOrDefault(),
+                        USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault()
                     };
                     db.tblOrganizationMappings.Add(newRelation);
                     db.SaveChanges();
