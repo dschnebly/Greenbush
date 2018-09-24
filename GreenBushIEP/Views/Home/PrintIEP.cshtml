@@ -1497,28 +1497,24 @@
                             </div>
                             <div class="row voffset1">
                                 <div class="col-md-12">
-                                    <label for="misTriggers">Possible triggers for behaviors</label>
+                                    <span for="misTriggers">Possible triggers for behaviors:</span>
                                       @if (Model.studentBehavior.Triggers != null)
                                       {
                                           var showTriggerOther = false;
 
-                                          foreach (var hypothesis in Model.studentBehavior.Triggers)
-                                          {
-                                              var selected = "";
-                                              if (Model.studentBehavior.SelectedTriggers.Contains(hypothesis.BehaviorTriggerTypeID))
-                                              {
-                                                  selected = hypothesis.BehaviorTriggerType;
+										  var triggerText = "";
+											foreach (var trigger in Model.studentBehavior.Triggers)
+											{
+												string selected = Model.studentBehavior.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? "selected=selected" : "";
+												triggerText += Model.studentBehavior.SelectedTriggers.Contains(trigger.BehaviorTriggerTypeID) ? string.Format("{0}, ", @trigger.BehaviorTriggerType) : "";
+												if (selected == "selected=selected" && @trigger.BehaviorTriggerType == "Other")
+												{
+													showTriggerOther = true;
+												}
+											}
+											@(triggerText.Trim().Trim(','))
 
-                                                  if (selected != "" && hypothesis.BehaviorTriggerType == "Other")
-                                                  {
-                                                      showTriggerOther = true;
-                                                  }
-
-                                                <text> @selected </text>
-                                                <br />
-                                              }
-
-                                          }
+                                          
                                           if (showTriggerOther)
                                           {
                                             <div class="voffset2">
@@ -1539,27 +1535,28 @@
                                 </div>
                                 <div class="row voffset1">
                                     <div class="col-md-12">
-                                        <label for="misTriggers">Hypothesis for the reason for the behavior(s)</label>
+                                        <span for="misTriggers">Hypothesis for the reason for the behavior(s):</span>
                                           @if (Model.studentBehavior.HypothesisList != null)
-                                          {
-                                              var showHypothesisOther = false;
+										  {
+											  var showHypothesisOther = false;
 
-                                              foreach (var hypothesis in Model.studentBehavior.HypothesisList)
-                                              {
-                                                  var selected = "";
-                                                  if (Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID))
-                                                  {
-                                                      selected = hypothesis.BehaviorHypothesisType;
+											   if (Model.studentBehavior.HypothesisList != null)
+											   {
+												   var hypothesisText = "";
+												   foreach (var hypothesis in Model.studentBehavior.HypothesisList)
+												   {
+													   string selected = Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? "selected=selected" : "";
+													   hypothesisText += Model.studentBehavior.SelectedHypothesis.Contains(hypothesis.BehaviorHypothesisTypeID) ? string.Format("{0} ", hypothesis.BehaviorHypothesisType) : "";
+													   if (selected == "selected=selected" && @hypothesis.BehaviorHypothesisType == "Other")
+													   {
+														   showHypothesisOther = true;
+													   }
+												   }
 
-                                                      if (selected != "" && hypothesis.BehaviorHypothesisType == "Other")
-                                                      {
-                                                          showHypothesisOther = true;
-                                                      }
+														@(hypothesisText.Trim().Trim(','))
+												}
 
-                                                    <text > @selected </text>
-                                                    <br />
-                                                  }
-                                              }
+                                             
                                               if (showHypothesisOther)
                                               {
                                                     <div id="divHypothesisOther" class="voffset2">
@@ -1570,34 +1567,34 @@
                                             }                                            
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row voffset1">
                                         <div class="col-md-12">
                                             <label class="underline">Strategies</label>
                                         </div>
                                     </div>
-                                     <div class="row voffset1">
+                                     <div class="row ">
                                 <div class="col-md-12">
-                                    <label for="misTriggers">Strategies to address the reason(s) for the behavior</label>
+                                    <span for="misTriggers">Strategies to address the reason(s) for the behavior:</span>
                                         @if (Model.studentBehavior.Strategies != null)
                                         {
                                             var showStrategyOther = false;
 
-                                            foreach (var strategy in Model.studentBehavior.Strategies)
-                                            {
 
-                                                var selected = "";
-                                                if (Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID))
-                                                {
-                                                    selected = strategy.BehaviorStrategyType;
+											var stratText = "";
+											foreach (var strategy in Model.studentBehavior.Strategies)
+											{
+												string selected = Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? "selected=selected" : "";
 
-                                                    if (selected != "" && strategy.BehaviorStrategyType == "Other")
-                                                    {
-                                                        showStrategyOther = true;
-                                                    }
+												stratText += Model.studentBehavior.SelectedStrategies.Contains(strategy.BehaviorStrategyTypeID) ? string.Format("{0} ", strategy.BehaviorStrategyType) : "";
+												if (selected == "selected=selected" && @strategy.BehaviorStrategyType == "Other")
+												{
+													showStrategyOther = true;
+												}
+											}
 
-                                                    <text> @selected </text><br />                                                }
+											@(stratText.Trim().Trim(','))
 
-                                            }
+                                         
                                             if (showStrategyOther)
                                             {
                                                 <div id="divStrategyOther" class="voffset2">
@@ -1609,7 +1606,7 @@
                                       
                                     </div>
                                     </div>
-                                        <div class="row voffset">
+                                        <div class="row voffset2">
                                             <div class="col-md-12">
                                                 <label class="underline">Targeted Behaviors</label>
                                                 <div>

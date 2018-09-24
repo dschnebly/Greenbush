@@ -2137,11 +2137,16 @@ namespace GreenbushIep.Controllers
                 {
                     //update only if user it printing IEP
                     user.Agreement = true;
-                }
+					db.SaveChanges();
+				}
 
-                db.SaveChanges();
+				if (string.IsNullOrEmpty(studentName))
+				{
+					studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
+				}
 
-                bool isDraft = false;
+
+				bool isDraft = false;
                 //if (isArchive == "1")
                 //{
                 //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
@@ -2149,9 +2154,7 @@ namespace GreenbushIep.Controllers
                 //    {
                 //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
                 //    }
-                //}
-
-
+                //}				
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -2161,16 +2164,23 @@ namespace GreenbushIep.Controllers
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
+				byte[] studentFile = null;
 
-                string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+				if (!string.IsNullOrEmpty(StudentHTMLContent))
+				{
+					string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
+					result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+					studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+				}
 
-                byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
                 byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
 
                 //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
                 List<byte[]> pdfByteContent = new List<byte[]>();
-                pdfByteContent.Add(studentFile);
+
+				if(studentFile != null)
+					pdfByteContent.Add(studentFile);
+
                 pdfByteContent.Add(iepFile);
 
                 var mergedFile = concatAndAddContent(pdfByteContent);
