@@ -843,34 +843,34 @@ namespace GreenbushIep.Controllers
                     model.studentPlan = new StudentPlan(student.UserID);
 
                     //check if any module has accommodations checked or behavior plan
-                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
                     if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && o.BehaviorInterventionPlan).Any())
                         enableBehaviorPlan = true;
 
-                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
 
@@ -1973,9 +1973,9 @@ namespace GreenbushIep.Controllers
             //16 All Day Kindergarten
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
-            //17 Behavior Intervention Plan - BIP
-            sb.AppendFormat("{0}\t", "");
-
+			//17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
+			sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+			
             //18 Claiming Code req
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
 
