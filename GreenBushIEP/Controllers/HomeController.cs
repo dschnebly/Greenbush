@@ -839,34 +839,34 @@ namespace GreenbushIep.Controllers
                     model.studentPlan = new StudentPlan(student.UserID);
 
                     //check if any module has accommodations checked or behavior plan
-                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
                     if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && o.BehaviorInterventionPlan).Any())
                         enableBehaviorPlan = true;
 
-                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation ?? true)).Any())
+                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
 
@@ -1969,9 +1969,9 @@ namespace GreenbushIep.Controllers
             //16 All Day Kindergarten
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
-            //17 Behavior Intervention Plan - BIP
-            sb.AppendFormat("{0}\t", "");
-
+			//17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
+			sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+			
             //18 Claiming Code req
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
 
@@ -2133,11 +2133,16 @@ namespace GreenbushIep.Controllers
                 {
                     //update only if user it printing IEP
                     user.Agreement = true;
-                }
+					db.SaveChanges();
+				}
 
-                db.SaveChanges();
+				if (string.IsNullOrEmpty(studentName))
+				{
+					studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
+				}
 
-                bool isDraft = false;
+
+				bool isDraft = false;
                 //if (isArchive == "1")
                 //{
                 //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
@@ -2145,9 +2150,7 @@ namespace GreenbushIep.Controllers
                 //    {
                 //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
                 //    }
-                //}
-
-
+                //}				
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -2157,16 +2160,23 @@ namespace GreenbushIep.Controllers
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
+				byte[] studentFile = null;
 
-                string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+				if (!string.IsNullOrEmpty(StudentHTMLContent))
+				{
+					string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
+					result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+					studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+				}
 
-                byte[] studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
                 byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
 
                 //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
                 List<byte[]> pdfByteContent = new List<byte[]>();
-                pdfByteContent.Add(studentFile);
+
+				if(studentFile != null)
+					pdfByteContent.Add(studentFile);
+
                 pdfByteContent.Add(iepFile);
 
                 var mergedFile = concatAndAddContent(pdfByteContent);

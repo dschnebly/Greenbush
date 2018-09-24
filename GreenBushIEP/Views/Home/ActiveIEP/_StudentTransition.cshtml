@@ -14,6 +14,7 @@
 </style>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+	<button type="button" class="print-module" ><span class="glyphicon glyphicon-print" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" style="font-size: 30px;">
         <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
@@ -22,8 +23,16 @@
 <div class="modal-body standard-font-size">
 	@if (Model != null && (ViewBag.studentAge > 12 || (Model.isDOC && ViewBag.studentAge > 20)))
 	{
-
-		<div>
+	<form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
+		<input type="hidden" id="printText" name="printText" />
+		<input type="hidden" id="studentText" name="studentText" />
+		<input type="hidden" id="isArchive" name="isArchive" />
+		<input type="hidden" id="studentName" name="studentName" value="" />
+		<input type="hidden" id="studentId" name="studentId" value="@Model.studentId" />
+		<input type="hidden" id="iepID" name="iepID" value="@Model.iepId" />
+		<input type="hidden" id="isIEP" name="isIEP" value="0" />	  
+	</form>
+		<div class="tran-plan-mod">
 
 			<div class="row">
 				
@@ -390,3 +399,20 @@
 		<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
 	</div>
 </div>
+
+<script>
+
+	   $(".print-module").click(function () {
+		   PrintText();
+	   });
+
+        function PrintText() {
+            var x = document.getElementsByClassName("form-print");
+            var markup = document.getElementsByClassName("tran-plan-mod")[0].innerHTML;
+            $("#printText").val("<h3 class='text-center'>TRANSITION PLAN</h3>" + markup);            
+            $("#isArchive").val(0);
+            x[0].submit();
+        }
+
+       
+    </script>

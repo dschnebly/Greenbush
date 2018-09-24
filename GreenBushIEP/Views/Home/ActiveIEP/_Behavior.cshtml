@@ -13,28 +13,38 @@
 <link href="/Content/chosen.css" rel="stylesheet" />
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+	
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>	
+	<button type="button" class="print-module" ><span class="glyphicon glyphicon-print" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
 </div>
-<div class="modal-body standard-font-size">
 
+ <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
+    <input type="hidden" id="printText" name="printText" />
+    <input type="hidden" id="studentText" name="studentText" />
+    <input type="hidden" id="isArchive" name="isArchive" />
+    <input type="hidden" id="studentName" name="studentName" value="" />
+    <input type="hidden" id="studentId" name="studentId" value="@Model.StudentId" />
+    <input type="hidden" id="iepID" name="iepID" value="@Model.IEPid" />
+    <input type="hidden" id="isIEP" name="isIEP" value="0" />	  
+</form>
+
+<div class="modal-body behavior-plan-mod standard-font-size">	
     <fieldset class="form-group">
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
     </fieldset>
 
     <div class="row">
-      
-
             <div class="col-md-12 voffset2">
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strengths/Motivators</label>
+                    <label style=" padding: 0 0 15px;">Strengths/Motivators</label>
                     <div class="form-check">
                         <p>@(Model.StrengthMotivator)</p>
                     </div>
                 </fieldset>
                 <fieldset class="form-group" style="margin-bottom:0;">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Behavior(s) of Concern</label>
+                    <label style="padding: 0 0 15px;">Behavior(s) of Concern</label>
                     <div class="form-check">
                         <p>@(Model.BehaviorConcern)</p>
                     </div>
@@ -43,13 +53,13 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Triggers</h3>
+                         <label class="underline">Triggers</label>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Possible triggers for behaviors:</label>
+                        <span style="padding: 0 0 15px;">Possible triggers for behaviors:</span>
                         
                             @if (Model.Triggers != null)
 							{
@@ -75,12 +85,12 @@
                 </div>
                 <div class="row voffset3">
                     <div class="col-md-12">
-                        <h3>Hypothesis</h3>
+                        <label class="underline">Hypothesis</label>
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Hypothesis for the reason for the behavior(s)</label>
+                        <span style="padding: 0 0 15px;">Hypothesis for the reason for the behavior(s):</span>
                         
                             @if (Model.HypothesisList != null)
 							{
@@ -106,15 +116,15 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row voffset2">
                     <div class="col-md-12">
-                        <h3>Strategies</h3>
+                        <label class="underline">Strategies</label>
 
                     </div>
                 </div>
                 <div class="row voffset1">
                     <div class="col-md-12">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Strategies to address the reason(s) for the behavior</label>
+                        <span style="padding: 0 0 15px;">Strategies to address the reason(s) for the behavior:</span>
                         
                             @if (Model.Strategies != null)
 							{
@@ -139,49 +149,69 @@
 
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
+                </div>               
+                 <div class="row voffset2">
                     <div class="col-md-12">
-                        <h3>Targeted Behaviors</h3>
+                        <label class="underline">Targeted Behaviors</label>
+                        <div>
+                            <table class="table dont-break">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Behavior 1</th>
+                                        <th scope="col"> Baseline 1</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>
+                                        @Model.targetedBehavior1.Behavior
+                                    </td>
+                                    <td>@Model.targetedBehavior1.Baseline</td>
+                                </tr>
+                            </table>
+                            <table class="table dont-break">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Behavior 2</th>
+                                        <th scope="col"> Baseline 2</th>
 
-                    </div>
-                </div>
-                <div class="row voffset2">
-                    <div class="col-md-12">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;" for="Crisis_Escalation">Choose up to three targeted behaviors and supporting baseline data for each:</label>
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#sectionA"><b>Behavior 1</b></a></li>
-                            <li><a data-toggle="tab" href="#sectionB"><b>Behavior 2</b></a></li>
-                            <li><a data-toggle="tab" href="#sectionC"><b>Behavior 3</b></a></li>
-                        </ul>
-                        <div class="tab-content container">
-                            <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>
+                                        @Model.targetedBehavior2.Behavior
 
-                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
+                                    </td>
+                                    <td>@Model.targetedBehavior2.Baseline</td>
+                                </tr>
+                            </table>
+                            <table class="table dont-break">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Behavior 3</th>
+                                        <th scope="col"> Baseline 3</th>
 
-                            </div>
-                            <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
-                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>
+                                        @Model.targetedBehavior3.Behavior
 
-                            </div>
-                            <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
-                                @Html.Partial("~/Views/Home/ActiveIEP/_TargetedBehaviorROPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
-                            </div>
+                                    </td>
+                                    <td>@Model.targetedBehavior3.Baseline</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Crisis Management Plan</h3>
-
+                        <label class="underline">Crisis Management Plan</label>
                     </div>
                 </div>
-
-
+				
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
+                    <label style="padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Escalation)</p>
                     </div>
@@ -189,21 +219,21 @@
 
 
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Crisis (describe what this looks like for student)</label>
+                    <label style=" padding: 0 0 15px;">Crisis (describe what this looks like for student)</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Description)</p>
                     </div>
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
+                    <label style=" padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Implementation)</p>
                     </div>
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Other</label>
+                    <label style=" padding: 0 0 15px;">Other</label>
                     <div class="form-check">
                         <p >@(Model.Crisis_Other)</p>
                     </div>
@@ -216,9 +246,9 @@
                 </div>
 
                 <fieldset class="form-group">
-                    <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
+                    <label style=" padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
                     <div class="form-check">
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Time frame plan will be reviewed</label>
+                        <label style=" padding: 0 0 15px;">Time frame plan will be reviewed</label>
                         <p>@(Model.ReviewedBy)</p>
                     </div>
                 </fieldset>
@@ -237,7 +267,19 @@
 
 </div>
 
+   <script>
 
+	   $(".print-module").click(function () {
+		   PrintText();
+	   });
 
+        function PrintText() {
+            var x = document.getElementsByClassName("form-print");
+            var markup = document.getElementsByClassName("behavior-plan-mod")[0].innerHTML;
+            $("#printText").val("<h3 class='text-center'>BEHAVIOR PLAN</h3>" + markup);
+            $("#isArchive").val(0);
+            x[0].submit();
+        }
 
-
+       
+    </script>
