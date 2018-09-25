@@ -290,6 +290,13 @@
     <Compile Include="Models\up_ReportServices_Result1.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ExcessCostReport\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ExcessCostReport\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ExceptionalityReport\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -646,6 +653,7 @@
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
@@ -834,6 +842,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
