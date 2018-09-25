@@ -51,62 +51,62 @@
 
         // attach event
         // fires when you click yes on the module confirmRemoval.
-        $('#removeUser').on('click', function (e) {
-            var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
+        //$('#removeUser').on('click', function (e) {
+        //    var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
 
-            $.ajax({
-                type: 'POST',
-                url: '/Manage/RemoveFromList',
-                data: { id: userId },
-                dataType: "json",
-                success: function (data) {
-                    var currentUser = $("div.list-group-item[data-id='" + userId + "']");
-                    $(currentUser).remove();
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: '/Manage/RemoveFromList',
+        //        data: { id: userId },
+        //        dataType: "json",
+        //        success: function (data) {
+        //            var currentUser = $("div.list-group-item[data-id='" + userId + "']");
+        //            $(currentUser).remove();
 
-                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                        $("#alertMessage .moreinfo").html(data.Message);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
-                },
-                error: function (data) {
-                    console.log("Unable to connect to the server or another related problem.");
-                }
-            });
-        });
+        //            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+        //                $("#alertMessage .moreinfo").html(data.Message);
+        //                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+        //                    $("#alertMessage").slideUp(500);
+        //                });
+        //            }
+        //        },
+        //        error: function (data) {
+        //            console.log("Unable to connect to the server or another related problem.");
+        //        }
+        //    });
+        //});
 
-        // attach event
-        // fires when you click the "avaliable teachers" button
-        $('#addExistingTeacher').on('click', function (e) {
-            var userId = $(e.currentTarget).data("id");
+        //// attach event
+        //// fires when you click the "avaliable teachers" button
+        //$('#addExistingTeacher').on('click', function (e) {
+        //    var userId = $(e.currentTarget).data("id");
 
-            $.ajax({
-                type: 'GET',
-                url: '/Home/AvailableTeachers',
-                data: { id: userId },
-                dataType: 'html',
-                success: function (data) {
-                    if (data.length !== 0) {
-                        $('ul.listrap').html(data);
-                        $(".listrap").listrap().getSelection();
-                        $('#addExistingTeacherModal').modal('show');
-                    }
-                    else {
-                        $("#alertMessage .moreinfo").html('Server Error');
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
-                },
-                error: function (data) {
-                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
-            });
-        });
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: '/Home/AvailableTeachers',
+        //        data: { id: userId },
+        //        dataType: 'html',
+        //        success: function (data) {
+        //            if (data.length !== 0) {
+        //                $('ul.listrap').html(data);
+        //                $(".listrap").listrap().getSelection();
+        //                $('#addExistingTeacherModal').modal('show');
+        //            }
+        //            else {
+        //                $("#alertMessage .moreinfo").html('Server Error');
+        //                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+        //                    $("#alertMessage").slideUp(500);
+        //                });
+        //            }
+        //        },
+        //        error: function (data) {
+        //            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+        //            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+        //                $("#alertMessage").slideUp(500);
+        //            });
+        //        }
+        //    });
+        //});
 
         // attach event
         // fires when the "add" button is clicked on the Available Users module.

@@ -801,6 +801,7 @@ namespace GreenBushIEP.Controllers
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
+                    db.SaveChanges();
                 }
 
                 // UPLOAD the image
@@ -815,9 +816,8 @@ namespace GreenBushIEP.Controllers
                     }
                     student.ImageURL = random;
                     adminpersona.SaveAs(path);
+                    db.SaveChanges();
                 }
-
-                db.SaveChanges();
             }
 
             return RedirectToAction("Portal", "Home");
