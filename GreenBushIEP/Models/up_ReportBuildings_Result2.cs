@@ -10,19 +10,14 @@
 namespace GreenBushIEP.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblDistrict
+    public partial class up_ReportBuildings_Result2
     {
-        public string USD { get; set; }
-        public string DistrictName { get; set; }
-        public Nullable<int> Active { get; set; }
-        public bool DOC { get; set; }
+        public string BuildingName { get; set; }
+        public string Address_Mailing { get; set; }
         public string Zip { get; set; }
-        public string State { get; set; }
-        public Nullable<int> ContactUserID { get; set; }
-        public bool isGBMedicaid { get; set; }
-    
-        public virtual tblUser tblUser { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
+        public string StateName { get; set; }
     }
 }

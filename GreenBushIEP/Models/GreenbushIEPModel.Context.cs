@@ -210,15 +210,6 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportBuildings_Result1> up_ReportBuildings(Nullable<int> buildingID)
-        {
-            var buildingIDParameter = buildingID.HasValue ?
-                new ObjectParameter("BuildingID", buildingID) :
-                new ObjectParameter("BuildingID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result1>("up_ReportBuildings", buildingIDParameter);
-        }
-    
         public virtual ObjectResult<up_ReportProceduralDates_Result1> up_ReportProceduralDates(string teacherId, string buildingId)
         {
             var teacherIdParameter = teacherId != null ?
@@ -244,6 +235,36 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("DELIMITER", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportBuildings_Result2> up_ReportBuildings(Nullable<int> buildingID)
+        {
+            var buildingIDParameter = buildingID.HasValue ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result2>("up_ReportBuildings", buildingIDParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportServices_Result1> up_ReportServices(string serviceId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
+        {
+            var serviceIdParameter = serviceId != null ?
+                new ObjectParameter("ServiceId", serviceId) :
+                new ObjectParameter("ServiceId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var reportStartDateParameter = reportStartDate.HasValue ?
+                new ObjectParameter("ReportStartDate", reportStartDate) :
+                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
+    
+            var reportEndDateParameter = reportEndDate.HasValue ?
+                new ObjectParameter("ReportEndDate", reportEndDate) :
+                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result1>("up_ReportServices", serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
         }
     }
 }

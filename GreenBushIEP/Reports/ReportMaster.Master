@@ -18,6 +18,8 @@
     <link href="/Content/bootstrap.css" rel="stylesheet"/>
 	<link href="/Content/site.css" rel="stylesheet"/>
 	<link href="/Content/transition.css" rel="stylesheet"/>
+	<link href="/Content/jquery-ui.min.css" rel="stylesheet"/>
+
 	<style>
 		.body-content {
 			padding-top:15px;
@@ -59,7 +61,7 @@
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
 			</asp:ContentPlaceHolder>
-			<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="900" Height="900" ShowPrintButton="true" ShowExportControls="true"></rsweb:ReportViewer>
+			<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="1000" Height="900" ShowPrintButton="true" ShowExportControls="true"></rsweb:ReportViewer>
     	</div>
     </form>
 
@@ -69,6 +71,11 @@
          $(document).ready(function () {
 			 
 			 $('.chosen-select').chosen({ width: "100%", placeholder_text_single: "Select..." });
+			 $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true
+            });
 
          });
 

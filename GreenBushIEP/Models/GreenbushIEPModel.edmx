@@ -225,6 +225,7 @@
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactUserID" Type="int" />
+          <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblEvaluationProcedures">
           <Key>
@@ -891,6 +892,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="UIC" />
             <PropertyRef Name="UserCreateDate" />
             <PropertyRef Name="UserUpdateDate" />
+            <PropertyRef Name="ServiceType_Billable" />
+            <PropertyRef Name="Location_Billable" />
           </Key>
           <Property Name="StudentNumber" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
@@ -908,6 +911,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="UserCreateDate" Type="datetime" Nullable="false" />
           <Property Name="UserUpdateDate" Type="datetime" Nullable="false" />
           <Property Name="IepStatus" Type="nvarchar" MaxLength="20" />
+          <Property Name="ServiceType_Billable" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Location_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="IEPStartDate" Type="datetime" />
           <Property Name="IEPEndDate" Type="datetime" />
         </EntityType>
@@ -1041,6 +1046,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="up_ReportServices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ServiceId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
+          <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
@@ -1151,6 +1162,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_StudentExport].[UserCreateDate] AS [UserCreateDate], 
     [vw_StudentExport].[UserUpdateDate] AS [UserUpdateDate], 
     [vw_StudentExport].[IepStatus] AS [IepStatus], 
+    [vw_StudentExport].[ServiceType_Billable] AS [ServiceType_Billable], 
+    [vw_StudentExport].[Location_Billable] AS [Location_Billable], 
     [vw_StudentExport].[IEPStartDate] AS [IEPStartDate], 
     [vw_StudentExport].[IEPEndDate] AS [IEPEndDate]
     FROM [dbo].[vw_StudentExport] AS [vw_StudentExport]</DefiningQuery>
@@ -1294,9 +1307,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result1)">
-          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="up_ReportProceduralDates" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDates_Result1)">
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
@@ -1309,6 +1319,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <FunctionImport Name="uf_Split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.uf_Split_Result)">
             <Parameter Name="MYSTR" Mode="In" Type="String" />
             <Parameter Name="DELIMITER" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result2)">
+          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportServices" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportServices_Result1)">
+            <Parameter Name="ServiceId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2173,6 +2192,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="UIC" />
             <PropertyRef Name="UserCreateDate" />
             <PropertyRef Name="UserUpdateDate" />
+            <PropertyRef Name="ServiceType_Billable" />
+            <PropertyRef Name="Location_Billable" />
           </Key>
           <Property Name="StudentNumber" Type="Int32" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -2192,6 +2213,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="IepStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IEPStartDate" Type="DateTime" Precision="3" />
           <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
+          <Property Name="ServiceType_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Location_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
@@ -2317,6 +2340,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContactUserID" Type="Int32" />
           <NavigationProperty Name="tblUser" Relationship="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" FromRole="tblDistrict" ToRole="tblUser" />
+          <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblDistricts_tblUsers_UserID">
           <End Type="IndividualizedEducationProgramModel.tblUser" Role="tblUser" Multiplicity="0..1" />
@@ -2333,6 +2357,61 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
           <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <ComplexType Name="up_ReportServices_Result">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="ServiceCode" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="ServiceType" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="Frequency" Nullable="false" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="104" />
+          <Property Type="Byte" Name="DaysPerWeek" Nullable="false" />
+          <Property Type="Int16" Name="Minutes" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="up_ReportBuildings_Result2">
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="up_ReportServices1_Result">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Primary_DisabilityCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="PrimaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="SecondaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="ServiceCode" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="ServiceType" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="Frequency" Nullable="false" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="104" />
+          <Property Type="Byte" Name="DaysPerWeek" Nullable="false" />
+          <Property Type="Int16" Name="Minutes" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="up_ReportServices_Result1">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Primary_DisabilityCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="PrimaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="SecondaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="ServiceCode" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="ServiceType" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="105" />
+          <Property Type="Int32" Name="Frequency" Nullable="false" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="104" />
+          <Property Type="Byte" Name="DaysPerWeek" Nullable="false" />
+          <Property Type="Int16" Name="Minutes" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3247,6 +3326,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="vw_StudentExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_StudentExport">
               <MappingFragment StoreEntitySet="vw_StudentExport">
+                <ScalarProperty Name="Location_Billable" ColumnName="Location_Billable" />
+                <ScalarProperty Name="ServiceType_Billable" ColumnName="ServiceType_Billable" />
                 <ScalarProperty Name="IEPEndDate" ColumnName="IEPEndDate" />
                 <ScalarProperty Name="IEPStartDate" ColumnName="IEPStartDate" />
                 <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
@@ -3314,18 +3395,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="up_ReportBuildings" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportBuildings">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportBuildings_Result1">
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="up_ReportProceduralDates" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportProceduralDates">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProceduralDates_Result1">
@@ -3342,6 +3411,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblDistricts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
               <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
                 <ScalarProperty Name="ContactUserID" ColumnName="ContactUserID" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
@@ -3357,6 +3427,39 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uf_Split_Result">
                 <ScalarProperty Name="idx" ColumnName="idx" />
                 <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportBuildings" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportBuildings">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportBuildings_Result2">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportServices" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportServices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportServices_Result1">
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
+                <ScalarProperty Name="PrimaryExceptionality" ColumnName="PrimaryExceptionality" />
+                <ScalarProperty Name="SecondaryExceptionality" ColumnName="SecondaryExceptionality" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

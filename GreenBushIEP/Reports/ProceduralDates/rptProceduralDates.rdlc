@@ -2,28 +2,29 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="IndividualizedEducationProgramDataSet">
+    <DataSource Name="IndividualizedEducationProgramDataSet1">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>f204f599-e782-4ae5-a662-f0052c9a70db</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="IndividualizedEducationProgramDataSet2">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>d641476f-2e66-4f36-87c9-3ee2c23531bf</rd:DataSourceID>
+      <rd:DataSourceID>3db6a129-ccb9-4bf3-83a4-3c2354ff9651</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>IndividualizedEducationProgramDataSet2</DataSourceName>
+        <DataSourceName>IndividualizedEducationProgramDataSet1</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="AnnualDate">
+          <DataField>AnnualDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ReEvalDate">
+          <DataField>ReEvalDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
         <Field Name="DateType">
           <DataField>DateType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -52,10 +53,18 @@
           <DataField>TeacherID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="BuildingID">
+          <DataField>BuildingID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="UserID">
+          <DataField>UserID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>IndividualizedEducationProgramDataSet2</rd:DataSetName>
-        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\IndividualizedEducationProgramDataSet2.xsd</rd:SchemaPath>
+        <rd:DataSetName>IndividualizedEducationProgramDataSet1</rd:DataSetName>
+        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\Reports\IndividualizedEducationProgramDataSet11.xsd</rd:SchemaPath>
         <rd:TableName>up_ReportProceduralDates</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -64,7 +73,7 @@
     </DataSet>
     <DataSet Name="DataSet2">
       <Query>
-        <DataSourceName>IndividualizedEducationProgramDataSet</DataSourceName>
+        <DataSourceName>IndividualizedEducationProgramDataSet1</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -94,8 +103,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\IndividualizedEducationProgramDataSet1.xsd</rd:SchemaPath>
+        <rd:DataSetName>IndividualizedEducationProgramDataSet1</rd:DataSetName>
+        <rd:SchemaPath>D:\Software Development\GitHub\Greenbush\GreenBushIEP\Reports\IndividualizedEducationProgramDataSet11.xsd</rd:SchemaPath>
         <rd:TableName>up_ReportBuildings</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

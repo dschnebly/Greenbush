@@ -284,18 +284,32 @@
     <Compile Include="Helper\RandomPassword.cs" />
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Helper\VersionCompare.cs" />
+    <Compile Include="Models\up_ReportServices1_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportServices_Result1.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ExceptionalityReport\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ExceptionalityReport\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\IndividualizedEducationProgramDataSet11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndividualizedEducationProgramDataSet11.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Models\uf_Split_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
+    <Compile Include="Models\up_ReportBuildings_Result2.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Reports\IndividualizedEducationProgramDataSet2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
+    <Compile Include="Models\up_ReportServices_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GreenbushIEPModel.Context.cs">
@@ -548,6 +562,13 @@
     <Compile Include="Reports\ReportMaster.Master.designer.cs">
       <DependentUpon>ReportMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ServiceReport\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ServiceReport\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -625,8 +646,10 @@
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
+    <Content Include="Reports\ServiceReport\Report.aspx" />
     <Content Include="Scripts\AddEdit.js" />
     <Content Include="Scripts\AddUsers.js" />
     <Content Include="Scripts\adminportal.js" />
@@ -645,27 +668,16 @@
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\createstudent.js" />
     <Content Include="Scripts\editable.js" />
-    <Content Include="Reports\IndividualizedEducationProgramDataSet1.xsc">
-      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
+    <Content Include="Reports\IndividualizedEducationProgramDataSet11.xsc">
+      <DependentUpon>IndividualizedEducationProgramDataSet11.xsd</DependentUpon>
     </Content>
-    <None Include="Reports\IndividualizedEducationProgramDataSet1.xsd">
+    <None Include="Reports\IndividualizedEducationProgramDataSet11.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>IndividualizedEducationProgramDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>IndividualizedEducationProgramDataSet11.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Reports\IndividualizedEducationProgramDataSet1.xss">
-      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\IndividualizedEducationProgramDataSet2.xsc">
-      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\IndividualizedEducationProgramDataSet2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>IndividualizedEducationProgramDataSet2.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Reports\IndividualizedEducationProgramDataSet2.xss">
-      <DependentUpon>IndividualizedEducationProgramDataSet2.xsd</DependentUpon>
+    <Content Include="Reports\IndividualizedEducationProgramDataSet11.xss">
+      <DependentUpon>IndividualizedEducationProgramDataSet11.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\IEP Backpack.pubxml" />
     <Content Include="Reports\ReportMaster.Master" />
@@ -822,8 +834,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
+    <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

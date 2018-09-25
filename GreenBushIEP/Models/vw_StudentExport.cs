@@ -32,5 +32,7 @@ namespace GreenBushIEP.Models
         public string IepStatus { get; set; }
         public Nullable<System.DateTime> IEPStartDate { get; set; }
         public Nullable<System.DateTime> IEPEndDate { get; set; }
+        public string ServiceType_Billable { get; set; }
+        public string Location_Billable { get; set; }
     }
 }

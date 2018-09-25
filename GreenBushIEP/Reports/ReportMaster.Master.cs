@@ -110,22 +110,16 @@ namespace GreenBushIEP.Report
 			}
 			else
 			{
-				
-				//var districtList = (from buildingMaps in db.tblBuildingMappings
-				//					join districts in db.tblDistricts
-				//						 on buildingMaps.USD equals districts.USD
-				//					where buildingMaps.UserID == user.UserID
-				//					select districts.USD).Distinct().ToArray();
-
-
-				//var districtArr = string.Join(",", districtList);
-
-
 				var providers = db.tblProviders.Where(p => p.UserID == user.UserID).ToList();
 
 				return providers;
 			}
 
+		}
+
+		public static List<tblServiceType> GetServices()
+		{
+			return db.tblServiceTypes.ToList();
 		}
 
 		public static string CurrentUser(string userName)
