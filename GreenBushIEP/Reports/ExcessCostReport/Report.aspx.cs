@@ -15,16 +15,13 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!IsPostBack)
-			{
-
-				
+			{	
 
 				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
 				this.buildingDD.DataSource = buildingList;
 				this.buildingDD.DataTextField = "BuildingName";
 				this.buildingDD.DataValueField = "BuildingID";
 				this.buildingDD.DataBind();
-
 
 			}
 
@@ -42,11 +39,8 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 			
 			string buildingID = this.buildingDD.Value;
+		
 			
-
-			DateTime startDate = DateTime.Parse(this.startDate.Value);
-			DateTime endDate = DateTime.Parse(this.endDate.Value);
-						
 			DataTable dt = GetData(buildingID);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);

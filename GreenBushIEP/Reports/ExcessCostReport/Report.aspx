@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div class="row"  style="margin-bottom: 15px;">
-		<h2>Exceptionality Report</h2>
+		<h2>Excess Cost Report</h2>
 	</div>
 	<div class="row"  style="margin-bottom: 15px;">
 		<div class="col-md-12" style="margin-bottom: 12px;">
@@ -16,32 +16,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-md-12" style="margin-bottom: 12px;">
-			<div class="col-md-2" >
-				<label for="startDate">Start Date</label>
-			</div>
-			<div class="col-md-6" >
-					<input id="startDate" runat="server" name="startDate" title="Start Date" type="text" class="dtField" value="" style="z-index: 99999; " required>
-			</div>
-		</div>
-		<div class="col-md-12" style="margin-bottom: 12px;">
-			<div class="col-md-2" >
-				<label for="endDate">End Date</label>
-			</div>
-			<div class="col-md-6" >
-					<input id="endDate" runat="server" name="startDate" title="Start Date" type="text" class="dtField" value="" style="z-index: 99999; " required>
-			</div>
-		</div>
-		<div class="col-md-12" style="margin-bottom: 12px;">
-			<div class="col-md-2" >
-				 <label   for="ServiceType">Service Type</label>
-			</div>
-			<div class="col-md-6" >
-				 <select class="" id="ServiceType" runat="server">
-                      <option value="">Select</option>
-                </select>
-			</div>
-		</div>
+		
 		 
     </div>
 	<div class="row">
