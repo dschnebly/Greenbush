@@ -195,8 +195,8 @@
                             <td>@student.KidsID</td>
                             <td>@student.FirstName.ToTitleCase()</td>
                             <td>@student.LastName.ToTitleCase()</td>
-                            <td>@DateTime.Parse(student.IEPDate).ToString("MM-dd-yyyy")</td>
-                            <td>@student.DateOfBirth.ToString("MM-dd-yyyy")</td>
+                            <td>@DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy")</td>
+                            <td>@student.DateOfBirth.ToString("MM/dd/yyyy")</td>
                             <td>
                                 <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right launchIEP">
                                     <span class="glyphicon glyphicon-log-out"></span>
