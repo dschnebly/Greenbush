@@ -20,11 +20,13 @@ namespace GreenBushIEP.Reports {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("IndividualizedEducationProgramDataSet1")]
+    [global::System.Xml.Serialization.XmlRootAttribute("IndividualizedEducationProgramDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class IndividualizedEducationProgramDataSet1 : global::System.Data.DataSet {
+    public partial class IndividualizedEducationProgramDataSet : global::System.Data.DataSet {
         
         private up_ReportBuildingsDataTable tableup_ReportBuildings;
+        
+        private up_ReportExcessCostDataTable tableup_ReportExcessCost;
         
         private up_ReportProceduralDatesDataTable tableup_ReportProceduralDates;
         
@@ -36,7 +38,7 @@ namespace GreenBushIEP.Reports {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public IndividualizedEducationProgramDataSet1() {
+        public IndividualizedEducationProgramDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -47,7 +49,7 @@ namespace GreenBushIEP.Reports {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected IndividualizedEducationProgramDataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected IndividualizedEducationProgramDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -62,6 +64,9 @@ namespace GreenBushIEP.Reports {
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
                 if ((ds.Tables["up_ReportBuildings"] != null)) {
                     base.Tables.Add(new up_ReportBuildingsDataTable(ds.Tables["up_ReportBuildings"]));
+                }
+                if ((ds.Tables["up_ReportExcessCost"] != null)) {
+                    base.Tables.Add(new up_ReportExcessCostDataTable(ds.Tables["up_ReportExcessCost"]));
                 }
                 if ((ds.Tables["up_ReportProceduralDates"] != null)) {
                     base.Tables.Add(new up_ReportProceduralDatesDataTable(ds.Tables["up_ReportProceduralDates"]));
@@ -97,6 +102,16 @@ namespace GreenBushIEP.Reports {
         public up_ReportBuildingsDataTable up_ReportBuildings {
             get {
                 return this.tableup_ReportBuildings;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public up_ReportExcessCostDataTable up_ReportExcessCost {
+            get {
+                return this.tableup_ReportExcessCost;
             }
         }
         
@@ -172,7 +187,7 @@ namespace GreenBushIEP.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            IndividualizedEducationProgramDataSet1 cln = ((IndividualizedEducationProgramDataSet1)(base.Clone()));
+            IndividualizedEducationProgramDataSet cln = ((IndividualizedEducationProgramDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -199,6 +214,9 @@ namespace GreenBushIEP.Reports {
                 ds.ReadXml(reader);
                 if ((ds.Tables["up_ReportBuildings"] != null)) {
                     base.Tables.Add(new up_ReportBuildingsDataTable(ds.Tables["up_ReportBuildings"]));
+                }
+                if ((ds.Tables["up_ReportExcessCost"] != null)) {
+                    base.Tables.Add(new up_ReportExcessCostDataTable(ds.Tables["up_ReportExcessCost"]));
                 }
                 if ((ds.Tables["up_ReportProceduralDates"] != null)) {
                     base.Tables.Add(new up_ReportProceduralDatesDataTable(ds.Tables["up_ReportProceduralDates"]));
@@ -248,6 +266,12 @@ namespace GreenBushIEP.Reports {
                     this.tableup_ReportBuildings.InitVars();
                 }
             }
+            this.tableup_ReportExcessCost = ((up_ReportExcessCostDataTable)(base.Tables["up_ReportExcessCost"]));
+            if ((initTable == true)) {
+                if ((this.tableup_ReportExcessCost != null)) {
+                    this.tableup_ReportExcessCost.InitVars();
+                }
+            }
             this.tableup_ReportProceduralDates = ((up_ReportProceduralDatesDataTable)(base.Tables["up_ReportProceduralDates"]));
             if ((initTable == true)) {
                 if ((this.tableup_ReportProceduralDates != null)) {
@@ -271,13 +295,15 @@ namespace GreenBushIEP.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "IndividualizedEducationProgramDataSet1";
+            this.DataSetName = "IndividualizedEducationProgramDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/IndividualizedEducationProgramDataSet11.xsd";
+            this.Namespace = "http://tempuri.org/IndividualizedEducationProgramDataSet1.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableup_ReportBuildings = new up_ReportBuildingsDataTable();
             base.Tables.Add(this.tableup_ReportBuildings);
+            this.tableup_ReportExcessCost = new up_ReportExcessCostDataTable();
+            base.Tables.Add(this.tableup_ReportExcessCost);
             this.tableup_ReportProceduralDates = new up_ReportProceduralDatesDataTable();
             base.Tables.Add(this.tableup_ReportProceduralDates);
             this.tableup_ReportProviderCaseload = new up_ReportProviderCaseloadDataTable();
@@ -289,6 +315,12 @@ namespace GreenBushIEP.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializeup_ReportBuildings() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializeup_ReportExcessCost() {
             return false;
         }
         
@@ -321,7 +353,7 @@ namespace GreenBushIEP.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            IndividualizedEducationProgramDataSet1 ds = new IndividualizedEducationProgramDataSet1();
+            IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -367,6 +399,9 @@ namespace GreenBushIEP.Reports {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void up_ReportBuildingsRowChangeEventHandler(object sender, up_ReportBuildingsRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void up_ReportExcessCostRowChangeEventHandler(object sender, up_ReportExcessCostRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void up_ReportProceduralDatesRowChangeEventHandler(object sender, up_ReportProceduralDatesRowChangeEvent e);
@@ -641,7 +676,7 @@ namespace GreenBushIEP.Reports {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                IndividualizedEducationProgramDataSet1 ds = new IndividualizedEducationProgramDataSet1();
+                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -660,6 +695,315 @@ namespace GreenBushIEP.Reports {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "up_ReportBuildingsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class up_ReportExcessCostDataTable : global::System.Data.TypedTableBase<up_ReportExcessCostRow> {
+            
+            private global::System.Data.DataColumn columnStudentFirstName;
+            
+            private global::System.Data.DataColumn columnStudentLastName;
+            
+            private global::System.Data.DataColumn columnKIDSID;
+            
+            private global::System.Data.DataColumn columnDateOfBirth;
+            
+            private global::System.Data.DataColumn columnBuildingID;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostDataTable() {
+                this.TableName = "up_ReportExcessCost";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal up_ReportExcessCostDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected up_ReportExcessCostDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn StudentFirstNameColumn {
+                get {
+                    return this.columnStudentFirstName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn StudentLastNameColumn {
+                get {
+                    return this.columnStudentLastName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn KIDSIDColumn {
+                get {
+                    return this.columnKIDSID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DateOfBirthColumn {
+                get {
+                    return this.columnDateOfBirth;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn BuildingIDColumn {
+                get {
+                    return this.columnBuildingID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostRow this[int index] {
+                get {
+                    return ((up_ReportExcessCostRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event up_ReportExcessCostRowChangeEventHandler up_ReportExcessCostRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event up_ReportExcessCostRowChangeEventHandler up_ReportExcessCostRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event up_ReportExcessCostRowChangeEventHandler up_ReportExcessCostRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event up_ReportExcessCostRowChangeEventHandler up_ReportExcessCostRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Addup_ReportExcessCostRow(up_ReportExcessCostRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostRow Addup_ReportExcessCostRow(string StudentFirstName, string StudentLastName, long KIDSID, System.DateTime DateOfBirth, string BuildingID) {
+                up_ReportExcessCostRow rowup_ReportExcessCostRow = ((up_ReportExcessCostRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        StudentFirstName,
+                        StudentLastName,
+                        KIDSID,
+                        DateOfBirth,
+                        BuildingID};
+                rowup_ReportExcessCostRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowup_ReportExcessCostRow);
+                return rowup_ReportExcessCostRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                up_ReportExcessCostDataTable cln = ((up_ReportExcessCostDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new up_ReportExcessCostDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnStudentFirstName = base.Columns["StudentFirstName"];
+                this.columnStudentLastName = base.Columns["StudentLastName"];
+                this.columnKIDSID = base.Columns["KIDSID"];
+                this.columnDateOfBirth = base.Columns["DateOfBirth"];
+                this.columnBuildingID = base.Columns["BuildingID"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnStudentFirstName = new global::System.Data.DataColumn("StudentFirstName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStudentFirstName);
+                this.columnStudentLastName = new global::System.Data.DataColumn("StudentLastName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStudentLastName);
+                this.columnKIDSID = new global::System.Data.DataColumn("KIDSID", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKIDSID);
+                this.columnDateOfBirth = new global::System.Data.DataColumn("DateOfBirth", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateOfBirth);
+                this.columnBuildingID = new global::System.Data.DataColumn("BuildingID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBuildingID);
+                this.columnStudentFirstName.MaxLength = 255;
+                this.columnStudentLastName.MaxLength = 255;
+                this.columnKIDSID.AllowDBNull = false;
+                this.columnDateOfBirth.AllowDBNull = false;
+                this.columnBuildingID.AllowDBNull = false;
+                this.columnBuildingID.MaxLength = 50;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostRow Newup_ReportExcessCostRow() {
+                return ((up_ReportExcessCostRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new up_ReportExcessCostRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(up_ReportExcessCostRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.up_ReportExcessCostRowChanged != null)) {
+                    this.up_ReportExcessCostRowChanged(this, new up_ReportExcessCostRowChangeEvent(((up_ReportExcessCostRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.up_ReportExcessCostRowChanging != null)) {
+                    this.up_ReportExcessCostRowChanging(this, new up_ReportExcessCostRowChangeEvent(((up_ReportExcessCostRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.up_ReportExcessCostRowDeleted != null)) {
+                    this.up_ReportExcessCostRowDeleted(this, new up_ReportExcessCostRowChangeEvent(((up_ReportExcessCostRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.up_ReportExcessCostRowDeleting != null)) {
+                    this.up_ReportExcessCostRowDeleting(this, new up_ReportExcessCostRowChangeEvent(((up_ReportExcessCostRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void Removeup_ReportExcessCostRow(up_ReportExcessCostRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "up_ReportExcessCostDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1056,7 +1400,7 @@ namespace GreenBushIEP.Reports {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                IndividualizedEducationProgramDataSet1 ds = new IndividualizedEducationProgramDataSet1();
+                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1538,7 +1882,7 @@ namespace GreenBushIEP.Reports {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                IndividualizedEducationProgramDataSet1 ds = new IndividualizedEducationProgramDataSet1();
+                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1608,7 +1952,15 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnStudentLastName;
             
+            private global::System.Data.DataColumn columnDateOfBirth;
+            
             private global::System.Data.DataColumn columnBuildingID;
+            
+            private global::System.Data.DataColumn columnPrimary_DisabilityCode;
+            
+            private global::System.Data.DataColumn columnPrimaryExceptionality;
+            
+            private global::System.Data.DataColumn columnSecondaryExceptionality;
             
             private global::System.Data.DataColumn columnUserID;
             
@@ -1625,12 +1977,6 @@ namespace GreenBushIEP.Reports {
             private global::System.Data.DataColumn columnDaysPerWeek;
             
             private global::System.Data.DataColumn columnMinutes;
-            
-            private global::System.Data.DataColumn columnDateOfBirth;
-            
-            private global::System.Data.DataColumn columnPrimaryExceptionality;
-            
-            private global::System.Data.DataColumn columnSecondaryExceptionality;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -1683,9 +2029,41 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DateOfBirthColumn {
+                get {
+                    return this.columnDateOfBirth;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn BuildingIDColumn {
                 get {
                     return this.columnBuildingID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Primary_DisabilityCodeColumn {
+                get {
+                    return this.columnPrimary_DisabilityCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PrimaryExceptionalityColumn {
+                get {
+                    return this.columnPrimaryExceptionality;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn SecondaryExceptionalityColumn {
+                get {
+                    return this.columnSecondaryExceptionality;
                 }
             }
             
@@ -1755,30 +2133,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn DateOfBirthColumn {
-                get {
-                    return this.columnDateOfBirth;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn PrimaryExceptionalityColumn {
-                get {
-                    return this.columnPrimaryExceptionality;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn SecondaryExceptionalityColumn {
-                get {
-                    return this.columnSecondaryExceptionality;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1814,12 +2168,16 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_ReportServicesRow Addup_ReportServicesRow(string StudentFirstName, string StudentLastName, string BuildingID, string ServiceCode, string ServiceType, string Provider, int Frequency, string Location, byte DaysPerWeek, short Minutes, string DateOfBirth, string PrimaryExceptionality, string SecondaryExceptionality) {
+            public up_ReportServicesRow Addup_ReportServicesRow(string StudentFirstName, string StudentLastName, System.DateTime DateOfBirth, string BuildingID, string Primary_DisabilityCode, string PrimaryExceptionality, string SecondaryExceptionality, string ServiceCode, string ServiceType, string Provider, int Frequency, string Location, byte DaysPerWeek, short Minutes) {
                 up_ReportServicesRow rowup_ReportServicesRow = ((up_ReportServicesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StudentFirstName,
                         StudentLastName,
+                        DateOfBirth,
                         BuildingID,
+                        Primary_DisabilityCode,
+                        PrimaryExceptionality,
+                        SecondaryExceptionality,
                         null,
                         ServiceCode,
                         ServiceType,
@@ -1827,10 +2185,7 @@ namespace GreenBushIEP.Reports {
                         Frequency,
                         Location,
                         DaysPerWeek,
-                        Minutes,
-                        DateOfBirth,
-                        PrimaryExceptionality,
-                        SecondaryExceptionality};
+                        Minutes};
                 rowup_ReportServicesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportServicesRow);
                 return rowup_ReportServicesRow;
@@ -1862,7 +2217,11 @@ namespace GreenBushIEP.Reports {
             internal void InitVars() {
                 this.columnStudentFirstName = base.Columns["StudentFirstName"];
                 this.columnStudentLastName = base.Columns["StudentLastName"];
+                this.columnDateOfBirth = base.Columns["DateOfBirth"];
                 this.columnBuildingID = base.Columns["BuildingID"];
+                this.columnPrimary_DisabilityCode = base.Columns["Primary_DisabilityCode"];
+                this.columnPrimaryExceptionality = base.Columns["PrimaryExceptionality"];
+                this.columnSecondaryExceptionality = base.Columns["SecondaryExceptionality"];
                 this.columnUserID = base.Columns["UserID"];
                 this.columnServiceCode = base.Columns["ServiceCode"];
                 this.columnServiceType = base.Columns["ServiceType"];
@@ -1871,9 +2230,6 @@ namespace GreenBushIEP.Reports {
                 this.columnLocation = base.Columns["Location"];
                 this.columnDaysPerWeek = base.Columns["DaysPerWeek"];
                 this.columnMinutes = base.Columns["Minutes"];
-                this.columnDateOfBirth = base.Columns["DateOfBirth"];
-                this.columnPrimaryExceptionality = base.Columns["PrimaryExceptionality"];
-                this.columnSecondaryExceptionality = base.Columns["SecondaryExceptionality"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1883,8 +2239,16 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnStudentFirstName);
                 this.columnStudentLastName = new global::System.Data.DataColumn("StudentLastName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStudentLastName);
+                this.columnDateOfBirth = new global::System.Data.DataColumn("DateOfBirth", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateOfBirth);
                 this.columnBuildingID = new global::System.Data.DataColumn("BuildingID", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBuildingID);
+                this.columnPrimary_DisabilityCode = new global::System.Data.DataColumn("Primary_DisabilityCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrimary_DisabilityCode);
+                this.columnPrimaryExceptionality = new global::System.Data.DataColumn("PrimaryExceptionality", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrimaryExceptionality);
+                this.columnSecondaryExceptionality = new global::System.Data.DataColumn("SecondaryExceptionality", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSecondaryExceptionality);
                 this.columnUserID = new global::System.Data.DataColumn("UserID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUserID);
                 this.columnServiceCode = new global::System.Data.DataColumn("ServiceCode", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1901,18 +2265,18 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnDaysPerWeek);
                 this.columnMinutes = new global::System.Data.DataColumn("Minutes", typeof(short), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMinutes);
-                this.columnDateOfBirth = new global::System.Data.DataColumn("DateOfBirth", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDateOfBirth);
-                this.columnPrimaryExceptionality = new global::System.Data.DataColumn("PrimaryExceptionality", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPrimaryExceptionality);
-                this.columnSecondaryExceptionality = new global::System.Data.DataColumn("SecondaryExceptionality", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSecondaryExceptionality);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnUserID}, true));
                 this.columnStudentFirstName.MaxLength = 255;
                 this.columnStudentLastName.MaxLength = 255;
+                this.columnDateOfBirth.AllowDBNull = false;
                 this.columnBuildingID.AllowDBNull = false;
                 this.columnBuildingID.MaxLength = 50;
+                this.columnPrimary_DisabilityCode.MaxLength = 2;
+                this.columnPrimaryExceptionality.ReadOnly = true;
+                this.columnPrimaryExceptionality.MaxLength = 105;
+                this.columnSecondaryExceptionality.ReadOnly = true;
+                this.columnSecondaryExceptionality.MaxLength = 105;
                 this.columnUserID.AutoIncrement = true;
                 this.columnUserID.AllowDBNull = false;
                 this.columnUserID.ReadOnly = true;
@@ -1995,7 +2359,7 @@ namespace GreenBushIEP.Reports {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                IndividualizedEducationProgramDataSet1 ds = new IndividualizedEducationProgramDataSet1();
+                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2234,6 +2598,111 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStateNameNull() {
                 this[this.tableup_ReportBuildings.StateNameColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class up_ReportExcessCostRow : global::System.Data.DataRow {
+            
+            private up_ReportExcessCostDataTable tableup_ReportExcessCost;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal up_ReportExcessCostRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableup_ReportExcessCost = ((up_ReportExcessCostDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string StudentFirstName {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportExcessCost.StudentFirstNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StudentFirstName\' in table \'up_ReportExcessCost\' is DBNull." +
+                                "", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportExcessCost.StudentFirstNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string StudentLastName {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportExcessCost.StudentLastNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StudentLastName\' in table \'up_ReportExcessCost\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportExcessCost.StudentLastNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public long KIDSID {
+                get {
+                    return ((long)(this[this.tableup_ReportExcessCost.KIDSIDColumn]));
+                }
+                set {
+                    this[this.tableup_ReportExcessCost.KIDSIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime DateOfBirth {
+                get {
+                    return ((global::System.DateTime)(this[this.tableup_ReportExcessCost.DateOfBirthColumn]));
+                }
+                set {
+                    this[this.tableup_ReportExcessCost.DateOfBirthColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string BuildingID {
+                get {
+                    return ((string)(this[this.tableup_ReportExcessCost.BuildingIDColumn]));
+                }
+                set {
+                    this[this.tableup_ReportExcessCost.BuildingIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsStudentFirstNameNull() {
+                return this.IsNull(this.tableup_ReportExcessCost.StudentFirstNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetStudentFirstNameNull() {
+                this[this.tableup_ReportExcessCost.StudentFirstNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsStudentLastNameNull() {
+                return this.IsNull(this.tableup_ReportExcessCost.StudentLastNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetStudentLastNameNull() {
+                this[this.tableup_ReportExcessCost.StudentLastNameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2891,12 +3360,74 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public System.DateTime DateOfBirth {
+                get {
+                    return ((global::System.DateTime)(this[this.tableup_ReportServices.DateOfBirthColumn]));
+                }
+                set {
+                    this[this.tableup_ReportServices.DateOfBirthColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string BuildingID {
                 get {
                     return ((string)(this[this.tableup_ReportServices.BuildingIDColumn]));
                 }
                 set {
                     this[this.tableup_ReportServices.BuildingIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Primary_DisabilityCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportServices.Primary_DisabilityCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Primary_DisabilityCode\' in table \'up_ReportServices\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportServices.Primary_DisabilityCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PrimaryExceptionality {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportServices.PrimaryExceptionalityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PrimaryExceptionality\' in table \'up_ReportServices\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportServices.PrimaryExceptionalityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string SecondaryExceptionality {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportServices.SecondaryExceptionalityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SecondaryExceptionality\' in table \'up_ReportServices\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportServices.SecondaryExceptionalityColumn] = value;
                 }
             }
             
@@ -3005,56 +3536,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string DateOfBirth {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.DateOfBirthColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DateOfBirth\' in table \'up_ReportServices\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportServices.DateOfBirthColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string PrimaryExceptionality {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.PrimaryExceptionalityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PrimaryExceptionality\' in table \'up_ReportServices\' is DBNu" +
-                                "ll.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportServices.PrimaryExceptionalityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string SecondaryExceptionality {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.SecondaryExceptionalityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SecondaryExceptionality\' in table \'up_ReportServices\' is DB" +
-                                "Null.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportServices.SecondaryExceptionalityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStudentFirstNameNull() {
                 return this.IsNull(this.tableup_ReportServices.StudentFirstNameColumn);
             }
@@ -3075,6 +3556,42 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStudentLastNameNull() {
                 this[this.tableup_ReportServices.StudentLastNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPrimary_DisabilityCodeNull() {
+                return this.IsNull(this.tableup_ReportServices.Primary_DisabilityCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPrimary_DisabilityCodeNull() {
+                this[this.tableup_ReportServices.Primary_DisabilityCodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPrimaryExceptionalityNull() {
+                return this.IsNull(this.tableup_ReportServices.PrimaryExceptionalityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPrimaryExceptionalityNull() {
+                this[this.tableup_ReportServices.PrimaryExceptionalityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsSecondaryExceptionalityNull() {
+                return this.IsNull(this.tableup_ReportServices.SecondaryExceptionalityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetSecondaryExceptionalityNull() {
+                this[this.tableup_ReportServices.SecondaryExceptionalityColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3112,42 +3629,6 @@ namespace GreenBushIEP.Reports {
             public void SetLocationNull() {
                 this[this.tableup_ReportServices.LocationColumn] = global::System.Convert.DBNull;
             }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsDateOfBirthNull() {
-                return this.IsNull(this.tableup_ReportServices.DateOfBirthColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetDateOfBirthNull() {
-                this[this.tableup_ReportServices.DateOfBirthColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsPrimaryExceptionalityNull() {
-                return this.IsNull(this.tableup_ReportServices.PrimaryExceptionalityColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetPrimaryExceptionalityNull() {
-                this[this.tableup_ReportServices.PrimaryExceptionalityColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSecondaryExceptionalityNull() {
-                return this.IsNull(this.tableup_ReportServices.SecondaryExceptionalityColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSecondaryExceptionalityNull() {
-                this[this.tableup_ReportServices.SecondaryExceptionalityColumn] = global::System.Convert.DBNull;
-            }
         }
         
         /// <summary>
@@ -3170,6 +3651,40 @@ namespace GreenBushIEP.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportBuildingsRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class up_ReportExcessCostRowChangeEvent : global::System.EventArgs {
+            
+            private up_ReportExcessCostRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostRowChangeEvent(up_ReportExcessCostRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportExcessCostRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3287,7 +3802,7 @@ namespace GreenBushIEP.Reports {
         }
     }
 }
-namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapters {
+namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapters {
     
     
     /// <summary>
@@ -3443,7 +3958,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet1.up_ReportBuildingsDataTable dataTable, global::System.Nullable<int> BuildingID) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportBuildingsDataTable dataTable, global::System.Nullable<int> BuildingID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((BuildingID.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((int)(BuildingID.Value));
@@ -3462,7 +3977,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet1.up_ReportBuildingsDataTable GetData(global::System.Nullable<int> BuildingID) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportBuildingsDataTable GetData(global::System.Nullable<int> BuildingID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((BuildingID.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((int)(BuildingID.Value));
@@ -3470,7 +3985,192 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            IndividualizedEducationProgramDataSet1.up_ReportBuildingsDataTable dataTable = new IndividualizedEducationProgramDataSet1.up_ReportBuildingsDataTable();
+            IndividualizedEducationProgramDataSet.up_ReportBuildingsDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportBuildingsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class up_ReportExcessCostTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public up_ReportExcessCostTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "up_ReportExcessCost";
+            tableMapping.ColumnMappings.Add("StudentFirstName", "StudentFirstName");
+            tableMapping.ColumnMappings.Add("StudentLastName", "StudentLastName");
+            tableMapping.ColumnMappings.Add("KIDSID", "KIDSID");
+            tableMapping.ColumnMappings.Add("DateOfBirth", "DateOfBirth");
+            tableMapping.ColumnMappings.Add("BuildingID", "BuildingID");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::GreenBushIEP.Properties.Settings.Default.IndividualizedEducationProgramConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "dbo.up_ReportExcessCost";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable dataTable, string BuildingId) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(BuildingId));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable GetData(string BuildingId) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(BuildingId));
+            }
+            IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3635,7 +4335,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet1.up_ReportProceduralDatesDataTable dataTable, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable dataTable, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3660,7 +4360,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet1.up_ReportProceduralDatesDataTable GetData(string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable GetData(string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3674,7 +4374,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
             else {
                 this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
             }
-            IndividualizedEducationProgramDataSet1.up_ReportProceduralDatesDataTable dataTable = new IndividualizedEducationProgramDataSet1.up_ReportProceduralDatesDataTable();
+            IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3846,7 +4546,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet1.up_ReportProviderCaseloadDataTable dataTable, string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable dataTable, string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((ProviderId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3883,7 +4583,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet1.up_ReportProviderCaseloadDataTable GetData(string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable GetData(string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((ProviderId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -3909,7 +4609,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = ((string)(BuildingId));
             }
-            IndividualizedEducationProgramDataSet1.up_ReportProviderCaseloadDataTable dataTable = new IndividualizedEducationProgramDataSet1.up_ReportProviderCaseloadDataTable();
+            IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -4038,7 +4738,11 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
             tableMapping.DataSetTable = "up_ReportServices";
             tableMapping.ColumnMappings.Add("StudentFirstName", "StudentFirstName");
             tableMapping.ColumnMappings.Add("StudentLastName", "StudentLastName");
+            tableMapping.ColumnMappings.Add("DateOfBirth", "DateOfBirth");
             tableMapping.ColumnMappings.Add("BuildingID", "BuildingID");
+            tableMapping.ColumnMappings.Add("Primary_DisabilityCode", "Primary_DisabilityCode");
+            tableMapping.ColumnMappings.Add("PrimaryExceptionality", "PrimaryExceptionality");
+            tableMapping.ColumnMappings.Add("SecondaryExceptionality", "SecondaryExceptionality");
             tableMapping.ColumnMappings.Add("UserID", "UserID");
             tableMapping.ColumnMappings.Add("ServiceCode", "ServiceCode");
             tableMapping.ColumnMappings.Add("ServiceType", "ServiceType");
@@ -4076,7 +4780,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet1.up_ReportServicesDataTable dataTable, string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportServicesDataTable dataTable, string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((ServiceId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -4113,7 +4817,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet1.up_ReportServicesDataTable GetData(string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportServicesDataTable GetData(string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((ServiceId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -4139,7 +4843,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            IndividualizedEducationProgramDataSet1.up_ReportServicesDataTable dataTable = new IndividualizedEducationProgramDataSet1.up_ReportServicesDataTable();
+            IndividualizedEducationProgramDataSet.up_ReportServicesDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportServicesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -4213,7 +4917,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private int UpdateUpdatedRows(IndividualizedEducationProgramDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(IndividualizedEducationProgramDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -4223,7 +4927,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private int UpdateInsertedRows(IndividualizedEducationProgramDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(IndividualizedEducationProgramDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -4233,7 +4937,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private int UpdateDeletedRows(IndividualizedEducationProgramDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(IndividualizedEducationProgramDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -4267,7 +4971,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSet1TableAdapte
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public virtual int UpdateAll(IndividualizedEducationProgramDataSet1 dataSet) {
+        public virtual int UpdateAll(IndividualizedEducationProgramDataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
