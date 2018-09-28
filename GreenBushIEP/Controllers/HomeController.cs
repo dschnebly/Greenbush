@@ -94,13 +94,121 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                OrganizationUser misBoss = getOrgazationUser(MIS);
-                OrganizationChart model = buildOrganizationChart(misBoss);
+                PortalViewModel model = new PortalViewModel();
+                model.user = MIS;
+                model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList();
+                model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
+
+                List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
+                List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) || myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
                 return View("MISPortal", model);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [Authorize(Roles = admin)]
+        public ActionResult AdminPortal(int? userId)
+        {
+
+            tblUser ADMIN = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (ADMIN != null)
+            {
+                PortalViewModel model = new PortalViewModel();
+                model.user = ADMIN;
+                model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList();
+                model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList();
+
+                List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
+                List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) || myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
+
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
+
+                return View("AdminPortal", model);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [Authorize(Roles = teacher)]
+        public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
+        {
+
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (teacher != null)
+            {
+                var users = (from u in db.tblUsers
+                             join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+                             where o.AdminID == teacher.UserID
+                             select new Student()
+                             {
+                                 UserID = u.UserID,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 City = u.City,
+                                 State = u.State,
+                                 Email = u.Email,
+                                 Password = u.Password,
+                                 ImageURL = u.ImageURL,
+                                 Archive = u.Archive,
+                             }).Distinct().ToList();
+
+                var info = (from i in db.tblStudentInfoes
+                            join o in db.tblOrganizationMappings on i.UserID equals o.UserID
+                            where o.AdminID == teacher.UserID
+                            select i).Distinct().ToList();
+
+
+
+                var students = (from user in users
+                                join i in info
+                                on user.UserID equals i.UserID
+                                where !(user.Archive ?? false)
+                                select new Student()
+                                {
+                                    UserID = user.UserID,
+                                    FirstName = user.FirstName,
+                                    MiddleName = user.MiddleName,
+                                    LastName = user.LastName,
+                                    City = user.City,
+                                    State = user.State,
+                                    Email = user.Email,
+                                    Password = user.Password,
+                                    USD = user.USD,
+                                    BuildingID = user.BuildingID,
+                                    ImageURL = user.ImageURL,
+                                    KidsID = i.KIDSID,
+                                    DateOfBirth = i.DateOfBirth,
+                                    CreatedBy = i.CreatedBy
+                                }).Distinct().OrderBy(u => u.LastName).ToList();
+
+                //get IEP Date
+                foreach (var student in students)
+                {
+                    IEP theIEP = new IEP(student.UserID);
+                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
+                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
+                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+
+                }
+                var model = new StudentViewModel();
+                model.Teacher = teacher;
+                model.Students = students.ToList();
+
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
+
+                return View(model);
             }
 
             // Unknow error happened.
@@ -492,103 +600,6 @@ namespace GreenbushIep.Controllers
 
             // Unknow user or view.
             return Json(new { Result = "error", Message = "The user doesn't have permission to access a resource, or sufficient privilege to perform a task initiated by the user." }, JsonRequestBehavior.AllowGet);
-        }
-
-
-        [Authorize(Roles = admin)]
-        public ActionResult AdminPortal(int? userId)
-        {
-
-            tblUser admin = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if (admin != null)
-            {
-                OrganizationUser orgBoss = getOrgazationUser(admin);
-                OrganizationChart model = buildOrganizationChart(orgBoss);
-
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(admin);
-
-                return View("AdminPortal", model);
-            }
-
-            // Unknow error happened.
-            return RedirectToAction("Index", "Home", null);
-        }
-
-        [Authorize(Roles = teacher)]
-        public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
-        {
-
-            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if (teacher != null)
-            {
-                var users = (from u in db.tblUsers
-                             join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                             where o.AdminID == teacher.UserID
-                             select new Student()
-                             {
-                                 UserID = u.UserID,
-                                 FirstName = u.FirstName,
-                                 MiddleName = u.MiddleName,
-                                 LastName = u.LastName,
-                                 City = u.City,
-                                 State = u.State,
-                                 Email = u.Email,
-                                 Password = u.Password,
-                                 ImageURL = u.ImageURL,
-                                 Archive = u.Archive,
-                             }).Distinct().ToList();
-
-                var info = (from i in db.tblStudentInfoes
-                            join o in db.tblOrganizationMappings on i.UserID equals o.UserID
-                            where o.AdminID == teacher.UserID
-                            select i).Distinct().ToList();
-
-
-
-                var students = (from user in users
-                                join i in info
-                                on user.UserID equals i.UserID
-                                where !(user.Archive ?? false)
-                                select new Student()
-                                {
-                                    UserID = user.UserID,
-                                    FirstName = user.FirstName,
-                                    MiddleName = user.MiddleName,
-                                    LastName = user.LastName,
-                                    City = user.City,
-                                    State = user.State,
-                                    Email = user.Email,
-                                    Password = user.Password,
-                                    USD = user.USD,
-                                    BuildingID = user.BuildingID,
-                                    ImageURL = user.ImageURL,
-                                    KidsID = i.KIDSID,
-                                    DateOfBirth = i.DateOfBirth,
-                                    CreatedBy = i.CreatedBy
-                                }).Distinct().OrderBy(u => u.LastName).ToList();
-
-                //get IEP Date
-                foreach (var student in students)
-                {
-                    IEP theIEP = new IEP(student.UserID);
-                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
-                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
-                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-
-                }
-                var model = new StudentViewModel();
-                model.Teacher = teacher;
-                model.Students = students.ToList();
-
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
-
-                return View(model);
-            }
-
-            // Unknow error happened.
-            return RedirectToAction("Index", "Home", null);
         }
 
         [HttpGet]
@@ -1969,9 +1980,9 @@ namespace GreenbushIep.Controllers
             //16 All Day Kindergarten
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
-			//17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
-			sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
-			
+            //17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
+            sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+
             //18 Claiming Code req
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
 
@@ -2133,16 +2144,16 @@ namespace GreenbushIep.Controllers
                 {
                     //update only if user it printing IEP
                     user.Agreement = true;
-					db.SaveChanges();
-				}
+                    db.SaveChanges();
+                }
 
-				if (string.IsNullOrEmpty(studentName))
-				{
-					studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
-				}
+                if (string.IsNullOrEmpty(studentName))
+                {
+                    studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
+                }
 
 
-				bool isDraft = false;
+                bool isDraft = false;
                 //if (isArchive == "1")
                 //{
                 //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
@@ -2160,22 +2171,22 @@ namespace GreenbushIep.Controllers
                 result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
-				byte[] studentFile = null;
+                byte[] studentFile = null;
 
-				if (!string.IsNullOrEmpty(StudentHTMLContent))
-				{
-					string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-					result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
-					studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
-				}
+                if (!string.IsNullOrEmpty(StudentHTMLContent))
+                {
+                    string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+                    studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+                }
 
                 byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
 
                 //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
                 List<byte[]> pdfByteContent = new List<byte[]>();
 
-				if(studentFile != null)
-					pdfByteContent.Add(studentFile);
+                if (studentFile != null)
+                    pdfByteContent.Add(studentFile);
 
                 pdfByteContent.Add(iepFile);
 
@@ -2358,15 +2369,6 @@ namespace GreenbushIep.Controllers
 
             // Redirect on error:
             filterContext.Result = RedirectToAction("Index", "Error");
-
-            // OR set the result without redirection:
-            //filterContext.Result = new ViewResult
-            //{
-            //  ViewName = "~/Views/Error/Index.cshtml"
-
-            //};
-
-
         }
 
         private BehaviorViewModel GetBehaviorModel(int studentId, int iepId)

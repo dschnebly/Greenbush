@@ -8,6 +8,7 @@ namespace GreenBushIEP.Models
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
+        public bool hasPlan { get; set; }
         public tblIEP current { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
@@ -40,6 +41,7 @@ namespace GreenBushIEP.Models
         
         public IEP()
         {
+            hasPlan = false;
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
             studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
@@ -56,6 +58,7 @@ namespace GreenBushIEP.Models
             if (stid != null)
             {
                 this.current = db.tblIEPs.SingleOrDefault(i => i.UserID == stid);
+                this.hasPlan = this.current != null;
             }
         }
 
@@ -305,6 +308,8 @@ namespace GreenBushIEP.Models
             this.current.IEPWrittenID = WrittenID;
 
             db.SaveChanges();
+
+            hasPlan = true;
 
             return this;
         }

@@ -93,7 +93,7 @@
             opacity: .2;
             margin-top: -2px;
         }
-			
+
 
         .yesConsentOverlay {
             display: none;
@@ -978,7 +978,6 @@
 
 <div class="transition-page">
     <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
-
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
                 <div class="student-information">
@@ -1003,7 +1002,6 @@
                 <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
@@ -1016,10 +1014,9 @@
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-top: 15px;">
             <div class="btn-group btn-group col-md-2">
-                @if (ViewBag.UserRoleId == "2" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
+                @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1047,11 +1044,9 @@
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
         </div>
-
         <div class="row">
             <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: 0;">
                 <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty )" id="HealthWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-heartbeat"></i>
@@ -1064,10 +1059,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="HealthModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.MotorNoConcern ? "widgetDisabled" : string.Empty )" id="MotorWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-cogs"></i>
@@ -1080,10 +1073,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="MotorModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.CommunicationNoConcern ? "widgetDisabled" : string.Empty )" id="CommunicationWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-commenting"></i>
@@ -1096,10 +1087,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="CommunicationModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.SocialNoConcern ? "widgetDisabled" : string.Empty )" id="SocialWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-smile-o"></i>
@@ -1112,10 +1101,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="SocialModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.IntelligenceAreaOfNeed | Model.studentPlan.IntelligenceProgressTowardGenEd ? string.Empty : "widgetDisabled")" id="IntelligenceWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-education"></i>
@@ -1128,10 +1115,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="GeneralIntelligenceModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-university"></i>
@@ -1144,10 +1129,8 @@
                             <button type="button" class="btn btn-default btn-lg module-section" data-view="AcademicModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning iep">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-trophy" aria-hidden="true"></i>
@@ -1159,10 +1142,8 @@
                             <button type="button" class="btn btn-default btn-lg goal-section" data-view="GoalModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning iep">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-handshake-o" aria-hidden="true" style="top: 15px;"></i>
@@ -1174,10 +1155,8 @@
                             <button type="button" class="btn btn-default btn-lg service-section" data-view="ServiceModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning iep">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
@@ -1189,10 +1168,8 @@
                             <button type="button" class="btn btn-default btn-lg other-considerations-section" data-view="OtherConsiderationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
-
                     <div class="hero-widget well  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
@@ -1208,10 +1185,8 @@
                             <button type="button" class="btn btn-default btn-lg accom-mod-section" data-view="AccommodationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
-
                     <div class="hero-widget well @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
                         @if (Model.needsBehaviorPlan)
                         {
@@ -1227,10 +1202,8 @@
                             <button type="button" class="btn btn-default btn-lg behavior-plan-section" data-view="BehaviorPlanModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter planning @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>
@@ -1242,10 +1215,8 @@
                             <button type="button" class="btn btn-default btn-lg transition-section" data-view="TransitionModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
                 <li class="ui-state-default filter legal ">
-
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-folder-open"></i>
@@ -1258,8 +1229,26 @@
                             <button type="button" class="btn btn-default btn-lg iep-form-section" id="IEPFormsModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-
                 </li>
+
+                @if (ViewBag.UserRoleId == "3")
+                {
+                    <li class="ui-state-default filter legal ">
+                        <div class="hero-widget well">
+                            <div class="icon">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
+                            <div class="text">
+                                <var>&nbsp;</var>
+                                <label class="text-muted">Medicaid Billing </label>
+                            </div>
+                            <div class="options">
+                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('https://serviceportal.compuclaim.com/login.aspx');"><i class="fa fa-external-link-square"></i> Launch</button>
+                            </div>
+                        </div>
+                    </li>
+                }
+
             </ul>
         </div>
 
@@ -1275,303 +1264,303 @@
 
                     @using (Html.BeginForm("Home", "StudentPlanning", new { }, FormMethod.Post, new { id = "thePlan" }))
                     {
-                        @Html.AntiForgeryToken()
-                        @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>
 
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="HealthNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchHealthConcerns" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchHealthConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="HealthProgressTowardGenEd" @(Model.studentPlan.HealthProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Supports</label>
-                                </div>
-                                <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="HealthDiagnosis" @(Model.studentPlan.HealthDiagnosis ? "checked" : String.Empty ) />Concerns that Impact Ability to Learn or Access to General Curriculum</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date</h6>
-                                    <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="0" @(Model.studentPlan.HealthHearingResult == 0 ? "checked" : String.Empty)>Fail</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="-1" @(Model.studentPlan.HealthHearingResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date</h6>
-                                    <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="0" @(Model.studentPlan.HealthVisionResult == 0 ? "checked" : String.Empty)>Fail</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="-1" @(Model.studentPlan.HealthVisionResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
-                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.studentPlan.HealthCarePlan ? "checked" : String.Empty ) />
-                                <label class="onoffswitch2-label" for="HealthCarePlan">
-                                    <span class="onoffswitch2-inner"></span>
-                                    <span class="onoffswitch2-switch"></span>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="HealthNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchHealthConcerns" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchHealthConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
                                 </label>
                             </div>
-                        </div>
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-cogs"></i> Motor</h5>
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="MotorNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchMotorConcerns" @(Model.studentPlan.MotorNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchMotorConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isMotorConcern @(Model.studentPlan.MotorNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="MotorProgress" @(Model.studentPlan.MotorProgress ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox isMotorConcern @(Model.studentPlan.MotorNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="MotorNeeds" @(Model.studentPlan.MotorNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
+                            <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="HealthProgressTowardGenEd" @(Model.studentPlan.HealthProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Supports</label>
                             </div>
-                            <div class="col-md-8 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Team Considerations:</h6>
-                                </div>
-                                <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1 ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed in Physical Education</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="3" @(Model.studentPlan.MotorParticipation == 3 ? "checked" : String.Empty )>&nbsp;Student has met Physical Education Requirements</label>
-                                </div>
+                            <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="HealthDiagnosis" @(Model.studentPlan.HealthDiagnosis ? "checked" : String.Empty ) />Concerns that Impact Ability to Learn or Access to General Curriculum</label>
                             </div>
                         </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-commenting" aria-hidden="true"></i> Communication</h5>
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="CommunicationNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchCommunicationConcerns" @(Model.studentPlan.CommunicationNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchCommunicationConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="CommunicationProgressTowardGenEd" @(Model.studentPlan.CommunicationProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="CommunicationAreaOfNeed" @(Model.studentPlan.CommunicationAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
-                                <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="CommunicationDeaf" @(Model.studentPlan.CommunicationDeaf ? "checked" : String.Empty ) />Deaf/Hard of Hearing</label>
-                                </div>
-                                <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="CommunicationEnglish" @(Model.studentPlan.CommunicationEnglish ? "checked" : String.Empty ) />Limited English Proficiency</label>
-                                </div>
+                        <div class="col-md-3 ">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date</h6>
+                                <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="0" @(Model.studentPlan.HealthHearingResult == 0 ? "checked" : String.Empty)>Fail</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="-1" @(Model.studentPlan.HealthHearingResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
                             </div>
                         </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-smile-o" aria-hidden="true"></i> Social-Emotional</h5>
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="SocialNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchSocialConcerns" @(Model.studentPlan.SocialNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchSocialConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="SocialProgressTowardGenEd" @(Model.studentPlan.SocialProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="SocialAreaOfNeed" @(Model.studentPlan.SocialAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
-                                <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="SocialMental" @(Model.studentPlan.SocialMental ? "checked" : String.Empty ) />Mental Health Diagnosis</label>
-                                </div>
-                                <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="SocialBehaviorSignificant" @(Model.studentPlan.SocialBehaviorSignificant ? "checked" : String.Empty ) />Significant Behaviors</label>
-                                </div>
-                                <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="SocialSkillsDeficit" @(Model.studentPlan.SocialSkillsDeficit ? "checked" : String.Empty ) />Social Skills Deficit</label>
-                                </div>
+                        <div class="col-md-3 ">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date</h6>
+                                <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
                             </div>
-                            <div class="col-md-4">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Does this student's behavior impede the learning of self or others?</h6>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="SocialBehaviorImpede" value="1" @(Model.studentPlan.SocialBehaviorImpede == true ? "checked" : String.Empty) />Yes</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="SocialBehaviorImpede" value="0" @(Model.studentPlan.SocialBehaviorImpede == false ? "checked" : String.Empty) />No</label>
-                                </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>
                             </div>
-                            <div class="col-md-4">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Does this student require a Behavior Intervention Plan?</h6>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="SocialInterventionPlan" value="1" @(Model.studentPlan.SocialInterventionPlan == true ? "checked" : String.Empty) />Yes</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="SocialInterventionPlan" value="0" @(Model.studentPlan.SocialInterventionPlan == false ? "checked" : String.Empty) />No</label>
-                                </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="0" @(Model.studentPlan.HealthVisionResult == 0 ? "checked" : String.Empty)>Fail</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="-1" @(Model.studentPlan.HealthVisionResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
+                        <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                            <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="onoffswitch2-checkbox" @(Model.studentPlan.HealthCarePlan ? "checked" : String.Empty ) />
+                            <label class="onoffswitch2-label" for="HealthCarePlan">
+                                <span class="onoffswitch2-inner"></span>
+                                <span class="onoffswitch2-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <hr />
 
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> General Intelligence/Cognitive Functioning</h5>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="IntelligenceProgressTowardGenEd" @(Model.studentPlan.IntelligenceProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="IntelligenceAreaOfNeed" @(Model.studentPlan.IntelligenceAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-cogs"></i> Motor</h5>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="MotorNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchMotorConcerns" @(Model.studentPlan.MotorNoConcern ? "checked" : String.Empty )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchMotorConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
+                                </label>
+                            </div>
+                            <div class="checkbox isMotorConcern @(Model.studentPlan.MotorNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="MotorProgress" @(Model.studentPlan.MotorProgress ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                            </div>
+                            <div class="checkbox isMotorConcern @(Model.studentPlan.MotorNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="MotorNeeds" @(Model.studentPlan.MotorNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                             </div>
                         </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-university" aria-hidden="true"></i> Academic Performance</h5>
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="AcademicNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty  )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
+                        <div class="col-md-8 ">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Team Considerations:</h6>
                             </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
-                                <h5 style="font-size:17px;font-weight:bold;">Reading </h5>
-                                <div>
-                                    <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />No Concerns</label>
-                                    <label><input type="checkbox" name="ReadingProgress" @(Model.studentPlan.ReadingProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                </div>
+                            <div class="checkbox">
+                                <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="1" @(Model.studentPlan.MotorParticipation == 1 || Model.studentPlan.MotorParticipation == -1 ? "checked" : String.Empty )>&nbsp;No Special Education supports needed in Physical Education.</label>
+                            </div>
+                            <div class="checkbox">
+                                <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="2" @(Model.studentPlan.MotorParticipation == 2 ? "checked" : String.Empty )>&nbsp;Modified or Adaptive Supports Needed in Physical Education</label>
+                            </div>
+                            <div class="checkbox">
+                                <label style="padding-left: 0;"><input type="radio" name="MotorParticipation" value="3" @(Model.studentPlan.MotorParticipation == 3 ? "checked" : String.Empty )>&nbsp;Student has met Physical Education Requirements</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-commenting" aria-hidden="true"></i> Communication</h5>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="CommunicationNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchCommunicationConcerns" @(Model.studentPlan.CommunicationNoConcern ? "checked" : String.Empty )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchCommunicationConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
+                                </label>
+                            </div>
+                            <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="CommunicationProgressTowardGenEd" @(Model.studentPlan.CommunicationProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                            </div>
+                            <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="CommunicationAreaOfNeed" @(Model.studentPlan.CommunicationAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                            </div>
+                            <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="CommunicationDeaf" @(Model.studentPlan.CommunicationDeaf ? "checked" : String.Empty ) />Deaf/Hard of Hearing</label>
+                            </div>
+                            <div class="checkbox isCommunicationConcern @(Model.studentPlan.CommunicationNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="CommunicationEnglish" @(Model.studentPlan.CommunicationEnglish ? "checked" : String.Empty ) />Limited English Proficiency</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-smile-o" aria-hidden="true"></i> Social-Emotional</h5>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="SocialNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchSocialConcerns" @(Model.studentPlan.SocialNoConcern ? "checked" : String.Empty )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchSocialConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
+                                </label>
+                            </div>
+                            <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="SocialProgressTowardGenEd" @(Model.studentPlan.SocialProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                            </div>
+                            <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="SocialAreaOfNeed" @(Model.studentPlan.SocialAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                            </div>
+                            <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="SocialMental" @(Model.studentPlan.SocialMental ? "checked" : String.Empty ) />Mental Health Diagnosis</label>
+                            </div>
+                            <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="SocialBehaviorSignificant" @(Model.studentPlan.SocialBehaviorSignificant ? "checked" : String.Empty ) />Significant Behaviors</label>
+                            </div>
+                            <div class="checkbox isSocialConcern @(Model.studentPlan.SocialNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="SocialSkillsDeficit" @(Model.studentPlan.SocialSkillsDeficit ? "checked" : String.Empty ) />Social Skills Deficit</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Does this student's behavior impede the learning of self or others?</h6>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="SocialBehaviorImpede" value="1" @(Model.studentPlan.SocialBehaviorImpede == true ? "checked" : String.Empty) />Yes</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="SocialBehaviorImpede" value="0" @(Model.studentPlan.SocialBehaviorImpede == false ? "checked" : String.Empty) />No</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Does this student require a Behavior Intervention Plan?</h6>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="SocialInterventionPlan" value="1" @(Model.studentPlan.SocialInterventionPlan == true ? "checked" : String.Empty) />Yes</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="SocialInterventionPlan" value="0" @(Model.studentPlan.SocialInterventionPlan == false ? "checked" : String.Empty) />No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> General Intelligence/Cognitive Functioning</h5>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="IntelligenceProgressTowardGenEd" @(Model.studentPlan.IntelligenceProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="IntelligenceAreaOfNeed" @(Model.studentPlan.IntelligenceAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-university" aria-hidden="true"></i> Academic Performance</h5>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="AcademicNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty  )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
+                                </label>
+                            </div>
+                            <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                            </div>
+                            <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
+                            <h5 style="font-size:17px;font-weight:bold;">Reading </h5>
+                            <div>
+                                <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />No Concerns</label>
+                                <label><input type="checkbox" name="ReadingProgress" @(Model.studentPlan.ReadingProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
+                            </div>
+                            <div class="checkbox isAcademicPerformanceConcern">
+                                <label><input type="checkbox" name="ReadingNeed" @(Model.studentPlan.ReadingNeed ? "checked" : String.Empty ) />Area of need which Impacts Performance in General Education</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                            <h5 style="font-size:17px;font-weight:bold;">Math </h5>
+                            <div>
+                                <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />No Concerns</label>
+                                <label><input type="checkbox" name="MathProgress" @(Model.studentPlan.MathProgress ? "checked=checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
                                 <div class="checkbox isAcademicPerformanceConcern">
-                                    <label><input type="checkbox" name="ReadingNeed" @(Model.studentPlan.ReadingNeed ? "checked" : String.Empty ) />Area of need which Impacts Performance in General Education</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                <h5 style="font-size:17px;font-weight:bold;">Math </h5>
-                                <div>
-                                    <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />No Concerns</label>
-                                    <label><input type="checkbox" name="MathProgress" @(Model.studentPlan.MathProgress ? "checked=checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                    <div class="checkbox isAcademicPerformanceConcern">
-                                        <label><input type="checkbox" name="MathNeed" @(Model.studentPlan.MathNeed ? "checked=checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                <h5 style="font-size:17px;font-weight:bold;">Written Language </h5>
-                                <div>
-                                    <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />No Concerns</label>
-                                    <label><input type="checkbox" name="WrittenProgress" @(Model.studentPlan.WrittenProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
-                                </div>
-                                <div class="checkbox isAcademicPerformanceConcern">
-                                    <label><input type="checkbox" name="WrittenNeed" @(Model.studentPlan.WrittenNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                                    <label><input type="checkbox" name="MathNeed" @(Model.studentPlan.MathNeed ? "checked=checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                                 </div>
                             </div>
                         </div>
-
-                        <hr />
-
-                        <div class="row @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ? String.Empty : "hidden")">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
-                                <br />
-                                <div style="padding-bottom: 8px;">
-                                    <b>Reminder: A transition plan is required for any student who will turn age 13, or are over the age of 13 during the IEP period</b>
-                                </div>
-                                <div>Had student been invited to the IEP meeting?</div>
-                                <div>Do you have written permission to invite other outside agencies to the IEP?</div>
-                                <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
+                        <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                            <h5 style="font-size:17px;font-weight:bold;">Written Language </h5>
+                            <div>
+                                <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />No Concerns</label>
+                                <label><input type="checkbox" name="WrittenProgress" @(Model.studentPlan.WrittenProgress ? "checked" : String.Empty ) />Progressing Towards Standards with General Education Supports in place</label>
+                            </div>
+                            <div class="checkbox isAcademicPerformanceConcern">
+                                <label><input type="checkbox" name="WrittenNeed" @(Model.studentPlan.WrittenNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                             </div>
                         </div>
-                        <hr class="@((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )" />
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="RequireAssistiveTechnology" @(Model.studentPlan.RequireAssistiveTechnology ? String.Empty : "checked" )>
-                                    <label class="truefalseswitch-label" for="RequireAssistiveTechnology">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div style="margin: 20px 0 0 0;">
-                                    Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?
-                                </div>
+                    <hr />
+
+                    <div class="row @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ? String.Empty : "hidden")">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-random" aria-hidden="true"></i> Transition</h5>
+                            <br />
+                            <div style="padding-bottom: 8px;">
+                                <b>Reminder: A transition plan is required for any student who will turn age 13, or are over the age of 13 during the IEP period</b>
+                            </div>
+                            <div>Had student been invited to the IEP meeting?</div>
+                            <div>Do you have written permission to invite other outside agencies to the IEP?</div>
+                            <div>Have other agencies represnting transition services been invited to the IEP meeting?</div>
+                        </div>
+                    </div>
+                    <hr class="@((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )" />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="RequireAssistiveTechnology" @(Model.studentPlan.RequireAssistiveTechnology ? String.Empty : "checked" )>
+                                <label class="truefalseswitch-label" for="RequireAssistiveTechnology">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
+                                </label>
+                            </div>
+                            <div style="margin: 20px 0 0 0;">
+                                Does the student require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment?
                             </div>
                         </div>
-                        <hr />
+                    </div>
+                    <hr />
 
-                        <div class="row" style="margin-bottom: 20px;">
-                            <div class="col-md-12">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-blackboard"></i> Extended School Year</h5>
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-md-12">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-blackboard"></i> Extended School Year</h5>
 
-                                <p>Are extended school year services necessary for @Model.student.FirstName?</p>
+                            <p>Are extended school year services necessary for @Model.student.FirstName?</p>
 
-                                <div class="form-check">
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Yes" value="1" @(Model.studentPlan.ExtendYear == 1 ? "checked" : String.Empty)>Yes</label><br />
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_No" value="0" @(Model.studentPlan.ExtendYear == 0 ? "checked" : String.Empty)>No</label><br />
-                                    <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Uk" value="-1" @(Model.studentPlan.ExtendYear == -1 ? "checked" : String.Empty)>Unknown</label><br />
+                            <div class="form-check">
+                                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Yes" value="1" @(Model.studentPlan.ExtendYear == 1 ? "checked" : String.Empty)>Yes</label><br />
+                                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_No" value="0" @(Model.studentPlan.ExtendYear == 0 ? "checked" : String.Empty)>No</label><br />
+                                <label class="radio-inline"><input style="font-size: 18px;" type="radio" name="ExtendYear" id="EY_Uk" value="-1" @(Model.studentPlan.ExtendYear == -1 ? "checked" : String.Empty)>Unknown</label><br />
 
-                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="modal-footer">
-                            <button id="saveplan" type="submit" class="btn btn-default btn-lg" data-dismiss="modal">Save Plan</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button id="saveplan" type="submit" class="btn btn-default btn-lg" data-dismiss="modal">Save Plan</button>
+                    </div>
                     }
                 </div>
             </div>
@@ -1582,7 +1571,6 @@
             <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
         </div>
         <!-- End fullscreen IEP Module Section-->
-
         <div class="ajax-loader" style="visibility: hidden;">
             <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
             <strong class="success"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>

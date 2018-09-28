@@ -45,8 +45,11 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
+        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
+        public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
         public virtual DbSet<tblIEPAcademic> tblIEPAcademics { get; set; }
         public virtual DbSet<tblIEPCommunication> tblIEPCommunications { get; set; }
@@ -78,13 +81,11 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
+        public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
         public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
-        public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
-        public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
-        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -265,6 +266,15 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ReportEndDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result1>("up_ReportServices", serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportExcessCost_Result> up_ReportExcessCost(string buildingId)
+        {
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", buildingIdParameter);
         }
     }
 }

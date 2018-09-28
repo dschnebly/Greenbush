@@ -1,56 +1,8 @@
-﻿@model GreenBushIEP.Models.OrganizationChart
+﻿@model GreenBushIEP.Models.PortalViewModel
 
 @{
     ViewBag.Title = "Special Education Administrator Portal";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@helper OrganizationTree(List<GreenBushIEP.Models.OrganizationChart> chart)
-{
-    foreach (var person in chart)
-    {
-        <div class="list-group-item" data-id="@(person.boss.user.UserID)" data-districts="@(String.Join(",", person.boss.districts.Select(d => d.USD.ToString())))" data-buildings="@(String.Join(",", person.boss.buildings.Select(b => b.BuildingID.ToString())))">
-
-            @if (person.boss.user.RoleID == "4")
-            {
-                <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                <a href="/Home/TeacherStudentsRole/@(person.boss.user.UserID)" class="launchListOfStudents" data-ftrans="slide">@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</a>
-            }
-            else
-            {
-                <i class="fa fa-child" aria-hidden="true"></i>
-                <text>@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</text>
-                <a href="/Home/StudentProcedures?stid=@(person.boss.user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right startIEP">
-                    <span class="glyphicon glyphicon-log-out"></span>
-                </a>
-            }
-
-            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(person.boss.user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                <span class="glyphicon glyphicon glyphicon-trash"></span>
-            </button>
-
-            @if (person.boss.user.RoleID != "5")
-            {
-                <button type="button" title="Assign this System User to a Building" class="btn btn-info btn-action pull-right" data-id="@(person.boss.user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                    <span class="fa fa-building-o" aria-hidden="true"></span>
-                </button>
-                <a href="/Manage/Edit/@(person.boss.user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-            }
-            else
-            {
-                <a href="/Manage/EditStudent/@(person.boss.user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-            }
-
-        </div>
-
-        if (person.boss.user.RoleID != "5")
-        {
-                <div class="list-group">
-                    @OrganizationTree(person.staff)
-                </div>
-        }
-    }
 }
 
 @section stylesheets {
@@ -58,6 +10,24 @@
 }
 
 <style>
+    .ajax-loader {
+        display: none;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0px;
+        right: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed;
+            top: 45%;
+            left: 40%;
+        }
+
     h3 a {
         margin: 0 5px;
     }
@@ -66,16 +36,6 @@
         margin-top: 0;
         margin-bottom: 20px;
     }
-
-    a {
-        color: #000;
-        text-decoration: none;
-    }
-
-        a:hover {
-            color: #000;
-            text-decoration: underline;
-        }
 
     .result {
         margin-top: 20px;
@@ -121,8 +81,10 @@
         margin-bottom: 20px;
     }
 
-    .btn {
-        margin: -4px 4px;
+    .btn-action {
+        margin: 4px 4px 4px 0px;
+        position: relative;
+        bottom: 8px;
     }
 
     .just-padding {
@@ -158,7 +120,7 @@
             font-size: 16px;
         }
 
-        .list-group.list-group-root > .list-group-item:first-child {
+    /*.list-group.list-group-root > .list-group-item:first-child {
             border-top-width: 0;
         }
 
@@ -172,7 +134,7 @@
 
         .list-group.list-group-root > .list-group > .list-group > .list-group > .list-group-item {
             padding-left: 60px;
-        }
+        }*/
 
     .subactivated {
         margin-bottom: 1px;
@@ -192,14 +154,10 @@
         margin-right: 19px;
     }
 
-    .fa-child {
-        padding-left: 20px;
-    }
-
-    #filter {
+    .edit-btn {
         position: relative;
-        right: 22px;
-        top: 3px;
+        bottom: 4px;
+        right: 4px;
     }
 
     .fa-check {
@@ -224,8 +182,8 @@
     }
 
     /*//////////////////////////////////////
-    ///  User Toggle Buttons Starts Here
-    //////////////////////////////////////*/
+        ///  User Toggle Buttons Starts Here
+        //////////////////////////////////////*/
 
     .btn-circle {
         width: 30px;
@@ -261,7 +219,7 @@
             margin-bottom: 10px;
         }
 
-    #addExistingTeacher i {
+    #add-student-user i {
         padding: 0;
     }
 
@@ -303,32 +261,16 @@
 
             #user-toggle .user-toggle-item ul.show-buttons {
                 display: inline-block;
-                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
-                -moz-animation: fadein 1s; /* Firefox < 16
-                -ms-animation: fadein 1s; /* Internet Explorer
-                -o-animation: fadein 1s; /* Opera < 12.1
-                animation: fadein 1s;*/
+                -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: fadein 1s; /* Firefox < 16 */
+                -ms-animation: fadein 1s; /* Internet Explorer */
+                -o-animation: fadein 1s; /* Opera < 12.1 */
+                animation: fadein 1s;
             }
 
             #user-toggle .user-toggle-item ul.hide-buttons {
                 display: none;
             }
-
-    #add-system-user, #addExistingTeacher, #reports {
-        margin-left: 15px;
-    }
-
-        #add-system-user:hover, #addExistingTeacher:hover {
-            -webkit-animation: pulse 1s ease 0s;
-            -o-animation: pulse 1s ease 0s;
-            -moz-animation: pulse 1s ease 0s;
-            animation: pulse 1s ease 0s;
-        }
-
-        #add-system-user i, #addExistingTeacher i {
-            vertical-align: -webkit-baseline-middle;
-            padding-left: 0;
-        }
 
     #mySettings, #add-system-user, #add-student-user, #reports {
         margin-left: 15px;
@@ -345,6 +287,7 @@
             vertical-align: -webkit-baseline-middle;
             padding-left: 0;
         }
+
 
     @@-webkit-keyframes pulse {
         0% {
@@ -461,8 +404,8 @@
     <h2>@ViewBag.Title</h2>
 
     <div class="user-head">
-        <a href="/Manage/Edit/@(Model.boss.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.boss.user.ImageURL) ? "/Content/Images/newAdmin.png" : "/Avatar/" + Model.boss.user.ImageURL  )">
+        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newAdmin.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
 
@@ -474,30 +417,27 @@
     <div class="row">
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
-                @*<div class="user-toggle-item">
-                    <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
-                </div>*@
                 <div class="user-toggle-item">
                     <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <a id="reports" class="btn btn-primary btn-circle btn-xl" data-toggle="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
+                    <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 pull-left">
+        <div class="col-xs-12 col-md-5 pull-left">
             <div class="form-group">
                 <label for="userDistricts">Filter by District</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="userDistricts" id="userDistricts">
                         <option value="-1">All District</option>
-                        @if (Model.boss.districts.Count > 0)
+                        @if (Model.districts.Count > 0)
                         {
-                            foreach (var district in Model.boss.districts)
+                            foreach (var district in Model.districts)
                             {
                                 <option value="@(district.USD)">@(district.DistrictName)</option>
                             }
@@ -510,22 +450,38 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 pull-left">
-            <select class="hidden" name="AllUserBuildings" id="AllUserBuildings">
-                @if (Model.boss.buildings.Count > 0)
-                {
-                    foreach (var building in Model.boss.buildings)
-                    {
-                        <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
-                    }
-                }
-            </select>
+        <div class="col-xs-12 col-md-5 pull-left">
             <div class="form-group">
                 <label for="userBuildings">Filter by Building</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
-                    <select class="form-control" name="userBuildings" id="userBuildings" disabled>
+                    <select class="form-control" name="userBuildings" id="userBuildings">
                         <option value="-1">All Buildings</option>
+                        @if (Model.buildings.Count > 0)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>This user is not assigned to any buildings.</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2 pull-left">
+            <div class="form-group">
+                <label for="userRoles">Filter by Role</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-user"></span></span>
+                    <select class="form-control" name="userRoles" id="userRoles">
+                        <option value="-1">All Roles</option>
+                        <option value="3">Administor</option>
+                        <option value="4">Teacher</option>
+                        <option value="5">Student</option>
                     </select>
                 </div>
             </div>
@@ -538,18 +494,46 @@
     </div>
 
     @{
-        if (Model.staff.Count > 0)
+        if (Model.members.Count > 0)
         {
             <div class="just-padding">
                 <div class="list-group list-group-root well">
 
-                    @OrganizationTree(Model.staff)
+                    @foreach (var user in Model.members)
+                    {
+                        <div class="list-group-item" data-id="@(user.UserID)">
+
+                            @if (user.RoleID == "4")
+                            {
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                </a>
+                            }
+                            else
+                            {
+                                <i class="fa fa-child" aria-hidden="true"></i>
+                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+
+                        </div>
+                    }
 
                 </div>
             </div>
         }
     }
 
+    <div class="ajax-loader">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+    </div>
 </div>
 
 <!-- Modal -->
@@ -577,47 +561,6 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
-<!-- end modal -->
-<!-- Modal -->
-<div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            @Html.Hidden("id", Model.boss.user.UserID.ToString())
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Assign this User to Buildings</h4>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12 district-selection">
-                    <label for="selectedDistrict">Your District:&nbsp;</label>
-                    <select id="selectedDistrict" style="min-width: 70%;"></select>
-                </div>
-                <div class="dual-list list-right col-md-12">
-                    <div class="well">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="btn-group">
-                                    <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="input-group">
-                                    <input type="text" name="SearchBuildingList" class="form-control" placeholder="search" />
-                                    <span class="input-group-addon glyphicon glyphicon-search"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <ul id="selectBuildings" class="list-group"></ul>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: 0 !important;">
-                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="savetheseBuildingsToThisUser">Save</button>
-                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <!-- end modal -->
 <!-- Modal -->
@@ -695,12 +638,9 @@
         </div>
     </div>
 </div>
+<!-- end modal-->
 
-
-<!-- end Modal-->
 @section scripts {
-
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
     @Scripts.Render("~/Scripts/adminportal.js")
-
 }

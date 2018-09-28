@@ -42,73 +42,181 @@
         // attach event
         // fires when the user chooses a district
         $("#userDistricts").on('change', function () {
-            var selectedDistrict = $(this).val();
+            var selectedDistrict = $(this).val() + "";
+            var selectedBuilding = $("#userBuildings option:selected").val() + "";
+            var selectedRole = $("#userRoles option:selected").val() + "";
 
-            $("#alertMessage").removeClass('alert alert-info').hide();
-            if (selectedDistrict != -1) {
-                $("#userBuildings option").remove();
+            $(".ajax-loader").show();
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/FilterUserList',
+                dataType: 'json',
+                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
 
-                $("#AllUserBuildings > option").each(function () {
-                    if ($(this).data('district') == selectedDistrict) {
-                        $("#userBuildings").append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+                        // blow away the building list 
+                        $('#userBuildings').empty();
+                        // blow away the user list
+                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
+
+                        var results = data.Message;
+                        $('#userBuildings').append('<option value="-1">All Buildings</option>');
+                        if (results.buildings.length > 0) {
+                            $.each(results.buildings, function (index, value) {
+                                console.log(value);
+                                $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
+                            });
+                        }
+
+                        if (results.members.length > 0) {
+                            $.each(results.members, function (index, value) {
+                                switch(value.RoleID)
+                                {
+                                    case "3":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "4":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "5":
+                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                }
+                            });
+                        }
+
+                        initHref();
                     }
-                });
-
-                $('.list-group-item').each(function () {
-                    var districts = $(this).data('districts') + "";
-                    var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
-
-                    if (hasDistricts) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                    else {
+                        alert('doh');
                     }
-                });
+                },
+                error: function (data) {
+                    alert('ERROR!!!');
 
-                if ($("#userBuildings > option").length == 0) {
-                    $("#userBuildings").append('<option value="-1">All Buildings</option>');
-                    $("#userBuildings").prop("disabled", true);
-
-                    $("#alertMessage").removeClass('alert alert-info').show();
-                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
-                    $("#alertMessage .moreinfo").html('There are no buildings assigned to you in this district.');
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
                 }
-                else {
-                    $("#userBuildings").prop("disabled", false);
-                }
-            }
-            else {
-                $("#userBuildings option").remove();
-
-                $("#userBuildings").append('<option value="-1">All Buildings</option>');
-                $("#userBuildings").prop("disabled", true);
-
-                $('.list-group-item').each(function () {
-                    $(this).show();
-                });
-            }
+            });
         });
 
         // attach event
         // fires when the user chooses a building
         $("#userBuildings").on('change', function () {
-            var selectedBuilding = $(this).val();
-            var selectedDistrict = $("#userDistricts").val();
+            var selectedDistrict = $("#userDistricts option:selected").val() + "";
+            var selectedBuilding = $(this).val() + "";
+            var selectedRole = $("#userRoles option:selected").val() + "";
 
-            $('.list-group-item').each(function () {
-                var districts = $(this).data('districts') + "";
-                var buildings = $(this).data('buildings') + "";
-                var hasDistricts = districts.split(",").indexOf(selectedDistrict) != -1;
-                var hasBuildings = buildings.split(",").indexOf(selectedBuilding) != -1;
+            $(".ajax-loader").show();
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/FilterUserList',
+                dataType: 'json',
+                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
 
-                if (hasDistricts && hasBuildings) {
-                    $(this).show();
-                }
-                else {
-                    $(this).hide();
+                        // blow away the user list
+                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
+
+                        var results = data.Message;
+                        if (results.members.length > 0) {
+                            $.each(results.members, function (index, value) {
+                                switch (value.RoleID) {
+                                    case "3":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "4":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "5":
+                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                }
+                            });
+                        }
+
+                        initHref();
+                    }
+                    else {
+                        alert('doh');
+                    }
+                },
+                error: function (data) {
+                    alert('ERROR!!!');
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
                 }
             });
         });
+
+        // attach event
+        // fires when the user chooses a role
+        $("#userRoles").on('change', function () {
+            var selectedDistrict = $("#userDistricts option:selected").val() + "";
+            var selectedBuilding = $("#userBuildings option:selected").val() + "";
+            var selectedRole = $(this).val() + "";
+
+            $(".ajax-loader").show();
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/FilterUserList',
+                dataType: 'json',
+                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
+
+                        // blow away the user list
+                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
+
+                        var results = data.Message;
+                        if (results.members.length > 0) {
+                            $.each(results.members, function (index, value) {
+                                switch (value.RoleID) {
+                                    case "3":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "4":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "5":
+                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                }
+                            });
+                        }
+
+                        initHref();
+                    }
+                    else {
+                        alert('doh');
+                    }
+                },
+                error: function (data) {
+                    alert('ERROR!!!');
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
+                }
+            });
+        })
 
         // attach event
         // fires where the button on an alert message is clicked
@@ -293,36 +401,12 @@
 
                     if (div.next().hasClass('list-group')) {
                         div.toggleClass('subactivated');
-                        $(div).find("i:first-child").toggleClass("fa-minus-square-o fa-plus-square-o");
                         div.next().toggle();
                     }
                     else {
                         if ($(e.target).hasClass("clickEventDisabled")) { return; }
 
                         $(e.target).addClass("clickEventDisabled");
-
-                        //$.ajax({
-                        //    type: 'GET',
-                        //    url: '/Home/GetOrganization',
-                        //    data: { id: userId },
-                        //    dataType: 'html',
-                        //    success: function (data) {
-                        //        if ($.trim(data).length !== 0) {
-                        //            $(div).find("i:first-child").toggleClass("fa-minus-square-o fa-plus-square-o");
-                        //            $(data).insertAfter(div);
-                        //            initHref();
-
-                        //            $(e.target).removeClass("clickEventDisabled");
-
-                        //        }
-                        //        else {
-                        //            $(div).find("i:first-child").removeClass().addClass("empty-icon");
-                        //        }
-                        //    },
-                        //    error: function (data) {
-
-                        //    }
-                        //});
                     }
                 });
             });

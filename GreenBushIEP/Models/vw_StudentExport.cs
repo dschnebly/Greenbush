@@ -24,15 +24,17 @@ namespace GreenBushIEP.Models
         public string Zip { get; set; }
         public string District { get; set; }
         public Nullable<bool> TransportationFlag { get; set; }
-        public long UIC { get; set; }
+        public string KIDSID { get; set; }
         public string Active { get; set; }
         public string MedicaidBeneficiaryID { get; set; }
         public System.DateTime UserCreateDate { get; set; }
         public System.DateTime UserUpdateDate { get; set; }
         public string IepStatus { get; set; }
-        public Nullable<System.DateTime> IEPStartDate { get; set; }
-        public Nullable<System.DateTime> IEPEndDate { get; set; }
         public string ServiceType_Billable { get; set; }
         public string Location_Billable { get; set; }
+        public string Service_Billable { get; set; }
+        public bool isGBMedicaid { get; set; }
+        public Nullable<System.DateTime> IEPStartDate { get; set; }
+        public Nullable<System.DateTime> IEPEndDate { get; set; }
     }
 }

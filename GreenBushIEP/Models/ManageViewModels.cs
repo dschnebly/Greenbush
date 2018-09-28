@@ -85,6 +85,22 @@ namespace GreenBushIEP.Models
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
 
+    public class PortalViewModel
+    {
+        public tblUser user { get; set; }
+        public List<tblDistrict> districts { get; set; }
+        public List<tblBuilding> buildings { get; set; }
+        public List<tblUser> members { get; set; }
+
+        public PortalViewModel()
+        {
+            user = new tblUser();
+            districts = new List<tblDistrict>();
+            buildings = new List<tblBuilding>();
+            members = new List<tblUser>();
+        }
+    }
+
     public class OrganizationUser
     {
         public tblUser user { get; set; }
