@@ -1,11 +1,11 @@
-﻿@model GreenBushIEP.Models.OrganizationChart
+﻿@model GreenBushIEP.Models.PortalViewModel
 
 @{
     ViewBag.Title = "Owner Portal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@helper OrganizationTree(List<GreenBushIEP.Models.OrganizationChart> chart)
+@*@helper OrganizationTree(List<GreenBushIEP.Models.OrganizationChart> chart)
 {
 foreach (var person in chart)
 {
@@ -63,7 +63,7 @@ foreach (var person in chart)
             </div>
     }
 }
-}
+}*@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
@@ -441,8 +441,8 @@ foreach (var person in chart)
     <h2>@ViewBag.Title</h2>
 
     <div class="user-head">
-        <a href="/Manage/Edit/@(Model.boss.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.boss.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.boss.user.ImageURL  )">
+        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
 
@@ -466,50 +466,66 @@ foreach (var person in chart)
                 <div class="user-toggle-item">
                     <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 pull-left">
+        <div class="col-xs-12 col-md-5 pull-left">
             <div class="form-group">
                 <label for="userDistricts">Filter by District</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="userDistricts" id="userDistricts">
                         <option value="-1">All District</option>
-                        @if (Model.boss.districts.Count > 0)
+                        @if (Model.districts.Count > 0)
                         {
-                            foreach (var district in Model.boss.districts)
+                            foreach (var district in Model.districts)
                             {
                                 <option value="@(district.USD)">@(district.DistrictName)</option>
                             }
                         }
                         else
                         {
-                            <option>This user is not assigned to any districts.</option>
+                            <option>There are no districts in the database.</option>
                         }
                     </select>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-6 pull-left">
-            <select class="hidden" name="AllUserBuildings" id="AllUserBuildings">
-                @if (Model.boss.buildings.Count > 0)
-                {
-                    foreach (var building in Model.boss.buildings)
-                    {
-                        <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
-                    }
-                }
-            </select>
+        <div class="col-xs-12 col-md-5 pull-left">
             <div class="form-group">
                 <label for="userBuildings">Filter by Building</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
-                    <select class="form-control" name="userBuildings" id="userBuildings" disabled>
+                    <select class="form-control" name="userBuildings" id="userBuildings">
                         <option value="-1">All Buildings</option>
+                        @if (Model.buildings.Count > 0)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>This are no buildings in the database.</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2 pull-left">
+            <div class="form-group">
+                <label for="userRoles">Filter by Role</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-user"></span></span>
+                    <select class="form-control" name="userRoles" id="userRoles">
+                        <option value="-1">All Roles</option>
+                        <option value="2">Manager Information Systems</option>
+                        <option value="3">Administor</option>
+                        <option value="4">Teacher</option>
+                        <option value="5">Student</option>
                     </select>
                 </div>
             </div>
@@ -522,12 +538,68 @@ foreach (var person in chart)
     </div>
 
     @{
-        if (Model.staff.Count > 0)
+        if (Model.members.Count > 0)
         {
             <div class="just-padding">
                 <div class="list-group list-group-root well">
 
-                    @OrganizationTree(Model.staff)
+                    @foreach (var user in Model.members)
+                    {
+                        <div class="list-group-item" data-id="@(user.UserID)">
+
+                            @if (user.RoleID == "2")
+                            {
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                            else if (user.RoleID == "3")
+                            {
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                            else if (user.RoleID == "4")
+                            {
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                            else
+                            {
+                                <i class="fa fa-child" aria-hidden="true"></i>
+                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+
+                        </div>
+                    }
 
                 </div>
             </div>
@@ -540,7 +612,7 @@ foreach (var person in chart)
 <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @Html.Hidden("id", Model.boss.user.UserID.ToString())
+            @Html.Hidden("id", Model.user.UserID.ToString())
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                 <h4 class="modal-title custom_align" id="Heading">Assign this User to Buildings</h4>
@@ -604,6 +676,7 @@ foreach (var person in chart)
     <!-- /.modal-dialog -->
 </div>
 <!-- end modal -->
+
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")

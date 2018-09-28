@@ -101,24 +101,24 @@ namespace GreenBushIEP.Models
         }
     }
 
-    public class OrganizationUser
-    {
-        public tblUser user { get; set; }
-        public List<tblDistrict> districts { get; set; }
-        public List<tblBuilding> buildings { get; set; }
-    }
+    //public class OrganizationUser
+    //{
+    //    public tblUser user { get; set; }
+    //    public List<tblDistrict> districts { get; set; }
+    //    public List<tblBuilding> buildings { get; set; }
+    //}
 
-    public class OrganizationChart
-    {
-        public OrganizationUser boss { get; set; }
-        public List<OrganizationChart> staff { get; set; }
+    //public class OrganizationChart
+    //{
+    //    public OrganizationUser boss { get; set; }
+    //    public List<OrganizationChart> staff { get; set; }
 
-        public OrganizationChart()
-        {
-            boss = new OrganizationUser();
-            staff = new List<OrganizationChart>();
-        }
-    }
+    //    public OrganizationChart()
+    //    {
+    //        boss = new OrganizationUser();
+    //        staff = new List<OrganizationChart>();
+    //    }
+    //}
 
     public class UserOrganizationViewModel
     {

@@ -72,14 +72,18 @@ namespace GreenbushIep.Controllers
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
 
-            tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if (owner != null)
+            tblUser OWNER = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (OWNER != null)
             {
-                OrganizationUser orgBoss = getOrgazationUser(owner);
-                OrganizationChart model = buildOrganizationChart(orgBoss);
+                PortalViewModel model = new PortalViewModel();
+                model.user = OWNER;
+                model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
+                model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
+
+                model.members = (from user in db.tblUsers where user.RoleID != owner select user).Distinct().ToList();
 
                 // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(owner);
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
 
                 return View("OwnerPortal", model);
             }
@@ -2498,47 +2502,47 @@ namespace GreenbushIep.Controllers
 
         }
 
-        public OrganizationUser getOrgazationUser(tblUser user)
-        {
-            if (user.RoleID == owner)
-            {
-                return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
-            }
+        //public OrganizationUser getOrgazationUser(tblUser user)
+        //{
+        //    if (user.RoleID == owner)
+        //    {
+        //        return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
+        //    }
 
-            var districts = (from org in db.tblOrganizationMappings
-                             join district in db.tblDistricts
-                                on org.USD equals district.USD
-                             where org.UserID == user.UserID
-                             select district).Distinct().ToList();
+        //    var districts = (from org in db.tblOrganizationMappings
+        //                     join district in db.tblDistricts
+        //                        on org.USD equals district.USD
+        //                     where org.UserID == user.UserID
+        //                     select district).Distinct().ToList();
 
-            var buildings = (from buildingMap in db.tblBuildingMappings
-                             join building in db.tblBuildings
-                                 on new { buildingMap.USD, buildingMap.BuildingID } equals
-                                    new { building.USD, building.BuildingID }
-                             where buildingMap.UserID == user.UserID
-                             select building).Distinct().ToList();
+        //    var buildings = (from buildingMap in db.tblBuildingMappings
+        //                     join building in db.tblBuildings
+        //                         on new { buildingMap.USD, buildingMap.BuildingID } equals
+        //                            new { building.USD, building.BuildingID }
+        //                     where buildingMap.UserID == user.UserID
+        //                     select building).Distinct().ToList();
 
-            return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
-        }
+        //    return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
+        //}
 
-        public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
-        {
-            OrganizationChart chart = new OrganizationChart();
-            chart.boss = theBoss;
+        //public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
+        //{
+        //    OrganizationChart chart = new OrganizationChart();
+        //    chart.boss = theBoss;
 
-            var staff = (from org in db.tblOrganizationMappings
-                         join user in db.tblUsers
-                             on org.UserID equals user.UserID
-                         where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
-                         select user).Distinct().OrderBy(u => u.RoleID).ToList();
+        //    var staff = (from org in db.tblOrganizationMappings
+        //                 join user in db.tblUsers
+        //                     on org.UserID equals user.UserID
+        //                 where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
+        //                 select user).Distinct().OrderBy(u => u.RoleID).ToList();
 
-            foreach (var person in staff)
-            {
-                OrganizationUser staffMember = getOrgazationUser(person);
-                chart.staff.Add(buildOrganizationChart(staffMember));
-            }
+        //    foreach (var person in staff)
+        //    {
+        //        OrganizationUser staffMember = getOrgazationUser(person);
+        //        chart.staff.Add(buildOrganizationChart(staffMember));
+        //    }
 
-            return chart;
-        }
+        //    return chart;
+        //}
     }
 }
