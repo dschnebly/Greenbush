@@ -62,15 +62,15 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 			dt.Columns.Add("StudentLastName", typeof(string));
 			dt.Columns.Add("DateOfBirth", typeof(DateTime));
 			dt.Columns.Add("KIDSID", typeof(string));
-			
-			//using (var ctx = new IndividualizedEducationProgramEntities())
-			//{
-			//	//Execute stored procedure as a function
-			//	var list = ctx.up_ReportExcessCost(buildingID);
 
-			//	foreach (var cs in list)
-			//		dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName,cs.DateOfBirth, cs.KIDSID);
-			//}
+			using (var ctx = new IndividualizedEducationProgramEntities())
+			{
+				//Execute stored procedure as a function
+				var list = ctx.up_ReportExcessCost(buildingID);
+
+				foreach (var cs in list)
+					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.DateOfBirth, cs.KIDSID);
+			}
 
 			return dt;
 		}
