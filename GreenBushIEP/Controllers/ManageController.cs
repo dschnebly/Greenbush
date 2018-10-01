@@ -1165,7 +1165,7 @@ namespace GreenBushIEP.Controllers
                     myRoles.Add("2");
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {

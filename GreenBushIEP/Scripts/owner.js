@@ -132,7 +132,7 @@
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert('Not connected to the network!');
 
                     console.log(data);
                 },
