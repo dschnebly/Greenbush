@@ -1799,50 +1799,7 @@ namespace GreenbushIep.Controllers
 			}
 		}
 
-		//private string RenderViewToString(ControllerContext context, string viewName, object model)
-		//{
-		//	//var context = new HomeController().ControllerContext;
-
-		//	if (string.IsNullOrEmpty(viewName))
-		//		viewName = context.RouteData.GetRequiredString("action");
-
-		//	var viewData = new ViewDataDictionary(model);
-
-		//	using (var sw = new StringWriter())
-		//	{
-		//		var viewResult = ViewEngines.Engines.FindPartialView(context, viewName);
-		//		var viewContext = new ViewContext(context, viewResult.View, viewData, new TempDataDictionary(), sw);
-		//		viewResult.View.Render(viewContext, sw);
-
-		//		return sw.GetStringBuilder().ToString();
-		//	}
-		//}
-
-		//private string RenderPartialViewToString(this ControllerBase controller, string partialPath, object model)
-		//{
-		//	if (string.IsNullOrEmpty(partialPath))
-		//		partialPath = controller.ControllerContext.RouteData.GetRequiredString("action");
-
-		//	controller.ViewData.Model = model;
-
-		//	using (StringWriter sw = new StringWriter())
-		//	{
-		//		ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, partialPath);
-		//		ViewContext viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
-		//		// copy model state items to the html helper 
-		//		foreach (var item in viewContext.Controller.ViewData.ModelState)
-		//			if (!viewContext.ViewData.ModelState.Keys.Contains(item.Key))
-		//			{
-		//				viewContext.ViewData.ModelState.Add(item);
-		//			}
-
-
-		//		viewResult.View.Render(viewContext, sw);
-
-		//		return sw.GetStringBuilder().ToString();
-		//	}
-		//}
-
+		
 		[Authorize]
         public ActionResult EditStudentInformation()
         {
