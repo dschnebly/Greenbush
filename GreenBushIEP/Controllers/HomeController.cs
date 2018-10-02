@@ -79,8 +79,7 @@ namespace GreenbushIep.Controllers
                 model.user = OWNER;
                 model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
                 model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
-
-                model.members = (from user in db.tblUsers where user.RoleID != owner select user).Distinct().ToList();
+                model.members = (from user in db.tblUsers where user.RoleID != owner select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
@@ -105,7 +104,12 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+
+                foreach(var student in model.members.Where(m => m.RoleID == student))
+                {
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -131,7 +135,12 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+
+                foreach (var student in model.members.Where(m => m.RoleID == student))
+                {
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
