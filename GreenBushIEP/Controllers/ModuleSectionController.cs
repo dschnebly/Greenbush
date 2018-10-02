@@ -832,8 +832,6 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = true, Message = baselineText }, JsonRequestBehavior.AllowGet);
         }
 
-
-
         [HttpPost]
         [Authorize]
         public ActionResult DeleteStudentBenchmark(int studentBenchmarkId)
@@ -854,7 +852,6 @@ namespace GreenBushIEP.Controllers
         [Authorize]
         public ActionResult EditStudentGoals(FormCollection collection)
         {
-
             int goalId = 0;
 
             if (ValidateRequest)

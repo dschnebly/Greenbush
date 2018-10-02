@@ -120,22 +120,6 @@
             font-size: 16px;
         }
 
-    /*.list-group.list-group-root > .list-group-item:first-child {
-                border-top-width: 0;
-            }
-
-            .list-group.list-group-root > .list-group > .list-group-item {
-                padding-left: 30px;
-            }
-
-            .list-group.list-group-root > .list-group > .list-group > .list-group-item {
-                padding-left: 50px;
-            }
-
-            .list-group.list-group-root > .list-group > .list-group > .list-group > .list-group-item {
-                padding-left: 60px;
-            }*/
-
     .subactivated {
         margin-bottom: 1px;
         background-color: #ddd;
@@ -481,6 +465,7 @@
                         <option value="-1">All Roles</option>
                         <option value="4">Teacher</option>
                         <option value="5">Student</option>
+                        <option value="6">Nurse</option>
                     </select>
                 </div>
             </div>
@@ -503,6 +488,13 @@
                         <div class="list-group-item" data-id="@(user.UserID)">
 
                             @if (user.RoleID == "4")
+                            {
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                </a>
+                            }
+                            else if (user.RoleID == "6")
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">

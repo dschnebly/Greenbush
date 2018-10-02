@@ -155,7 +155,6 @@
         }
 </style>
 
-
 @using (Html.BeginForm("Create", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
 {
     @Html.AntiForgeryToken()
@@ -200,18 +199,20 @@
                         <select class="form-control" id="role" Name="role" required="required">
                             @if (Int32.Parse(Model.submitter.RoleID) < 2)
                             {
-                            <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Management Information System</option>
+                                <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Management Information System</option>
                             }
                             @if (Int32.Parse(Model.submitter.RoleID) < 3)
                             {
-                            <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Special Education Administrator</option>
+                                <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Special Education Administrator</option>
                             }
                             <option value="4" @(Model.user.RoleID == "4" ? "selected='selected'" : "" )>Teacher</option>
+                            <option value="6"  @(Model.user.RoleID == "4" ? "selected='selected'" : "")>Nurse</option>
                         </select>
                     </div>
                 </div>
             </div>
         }
+
         <div class="form-group">
             <div class="col-md-12">
                 <div class="input-group">
@@ -251,7 +252,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-envelope" title="User Email"></i>
                     </span>
-                    @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", id = "email", name = "email", type = "email", placeholder = "User email", required = "required", pattern = "([A-Za-z0-9][._]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\\.?[A-Za-z0-9]){2}\\.(com?|net|org)+(\\.[A-Za-z0-9]{2,4})?", title = "Must be a valid email address." } })
+                    @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control", id = "email", Name = "email", type = "email", placeholder = "User email", required = "required", pattern = "([A-Za-z0-9][._]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\\.?[A-Za-z0-9]){2}\\.(com?|net|org)+(\\.[A-Za-z0-9]{2,4})?", title = "Must be a valid email address." } })
                     @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -274,9 +275,9 @@
     </div>
     <br />
 
-        <div class="ajax-loader" style="visibility: hidden;">
-            <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
-        </div>
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
+    </div>
 }
 
 <!-- loading the file even though it's an ajax call -->

@@ -5,66 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@helper OrganizationTree(List<GreenBushIEP.Models.OrganizationChart> chart)
-{
-foreach (var person in chart)
-{
-        <div class="list-group-item" data-id="@(person.boss.user.UserID)" data-districts="@(String.Join(" ,", person.boss.districts.Select(d=> d.USD.ToString())))" data-bui data-buildings="@(String.Join(",", person.boss.buildings.Select(b => b.BuildingID.ToString())))">
-
-            @if (person.boss.user.RoleID == "2")
-            {
-            <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-            <i class="fa fa-cog" aria-hidden="true"></i>
-            <text>@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</text>
-            }
-            else if (person.boss.user.RoleID == "3")
-            {
-            <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-            <text>@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</text>
-            }
-            else if (person.boss.user.RoleID == "4")
-            {
-            <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-            <a href="/Home/TeacherStudentsRole/@(person.boss.user.UserID)" class="launchListOfStudents" data-ftrans="slide">@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</a>
-            }
-            else
-            {
-            <i class="fa fa-child" aria-hidden="true"></i>
-            <text>@person.boss.user.FirstName.ToTitleCase()  @person.boss.user.LastName.ToTitleCase()</text>
-            <a href="/Home/StudentProcedures?stid=@(person.boss.user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right startIEP" style="position: relative; bottom: 4px;">
-                <span class="glyphicon glyphicon-log-out"></span>
-            </a>
-            }
-
-            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(person.boss.user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                <span class="glyphicon glyphicon glyphicon-trash"></span>
-            </button>
-
-            @if (person.boss.user.RoleID != "5")
-            {
-            <button type="button" title="Assign this System User to a Building" class="btn btn-info btn-action pull-right" data-id="@(person.boss.user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                <span class="fa fa-building-o" aria-hidden="true"></span>
-            </button>
-            <a href="/Manage/Edit/@(person.boss.user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-            }
-            else
-            {
-            <a href="/Manage/EditStudent/@(person.boss.user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-            }
-
-        </div>
-
-    if (person.boss.user.RoleID != "5")
-    {
-            <div class="list-group">
-                @OrganizationTree(person.staff)
-            </div>
-    }
-}
-}*@
-
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
 }
@@ -526,6 +466,7 @@ foreach (var person in chart)
                         <option value="3">Administor</option>
                         <option value="4">Teacher</option>
                         <option value="5">Student</option>
+                        <option value="6">Nurse</option>
                     </select>
                 </div>
             </div>
@@ -572,6 +513,20 @@ foreach (var person in chart)
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
                             else if (user.RoleID == "4")
+                            {
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                    <span class="fa fa-building-o" aria-hidden="true"></span>
+                                </button>
+                                <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                            }
+                            else if (user.RoleID == "6")
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">

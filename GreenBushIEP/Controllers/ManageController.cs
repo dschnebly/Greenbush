@@ -88,7 +88,6 @@ namespace GreenBushIEP.Controllers
                     return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
                 }
 
-
                 // Add to Database
                 db.tblUsers.Add(user);
                 db.SaveChanges();

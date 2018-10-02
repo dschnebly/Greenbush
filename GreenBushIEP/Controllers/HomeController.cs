@@ -26,6 +26,7 @@ namespace GreenbushIep.Controllers
         private const string admin = "3";
         private const string teacher = "4";
         private const string student = "5";
+        private const string nurse = "6";
 
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
@@ -60,6 +61,10 @@ namespace GreenbushIep.Controllers
                 else if (User.IsInRole(teacher))
                 {
                     return RedirectToAction("TeacherPortal");
+                }
+                else if (User.IsInRole(nurse))
+                {
+                    return RedirectToAction("NursePortal");
                 }
             }
 
@@ -104,9 +109,9 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
-                foreach(var student in model.members.Where(m => m.RoleID == student))
+                foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
                     student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
                 }
@@ -135,7 +140,7 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
@@ -181,8 +186,6 @@ namespace GreenbushIep.Controllers
                             where o.AdminID == teacher.UserID
                             select i).Distinct().ToList();
 
-
-
                 var students = (from user in users
                                 join i in info
                                 on user.UserID equals i.UserID
@@ -223,6 +226,77 @@ namespace GreenbushIep.Controllers
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
 
                 return View(model);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [Authorize(Roles = nurse)]
+        public ActionResult NursePortal(int? userId)
+        {
+            tblUser nurse = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (nurse != null)
+            {
+                var users = (from u in db.tblUsers
+                             join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+                             where o.AdminID == nurse.UserID
+                             select new Student()
+                             {
+                                 UserID = u.UserID,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 City = u.City,
+                                 State = u.State,
+                                 Email = u.Email,
+                                 Password = u.Password,
+                                 ImageURL = u.ImageURL,
+                                 Archive = u.Archive,
+                             }).Distinct().ToList();
+
+                var info = (from i in db.tblStudentInfoes
+                            join o in db.tblOrganizationMappings on i.UserID equals o.UserID
+                            where o.AdminID == nurse.UserID
+                            select i).Distinct().ToList();
+
+                var students = (from user in users
+                                join i in info
+                                on user.UserID equals i.UserID
+                                where !(user.Archive ?? false)
+                                select new Student()
+                                {
+                                    UserID = user.UserID,
+                                    FirstName = user.FirstName,
+                                    MiddleName = user.MiddleName,
+                                    LastName = user.LastName,
+                                    City = user.City,
+                                    State = user.State,
+                                    Email = user.Email,
+                                    Password = user.Password,
+                                    USD = user.USD,
+                                    BuildingID = user.BuildingID,
+                                    ImageURL = user.ImageURL,
+                                    KidsID = i.KIDSID,
+                                    DateOfBirth = i.DateOfBirth,
+                                    CreatedBy = i.CreatedBy
+                                }).Distinct().OrderBy(u => u.LastName).ToList();
+
+                //get IEP Date
+                foreach (var student in students)
+                {
+                    IEP theIEP = new IEP(student.UserID);
+                    student.hasIEP = theIEP.current != null;
+                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
+                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
+                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+
+                }
+                var model = new StudentViewModel();
+                model.Teacher = nurse;
+                model.Students = students.ToList();
+
+                return View();
             }
 
             // Unknow error happened.
