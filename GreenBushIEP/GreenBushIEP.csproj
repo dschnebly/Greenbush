@@ -827,6 +827,7 @@
     <Content Include="Views\Home\ActiveIEP\_StudentServices.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_Accommodations.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_StudentTransition.cshtml" />
+    <Content Include="Views\Home\_PrintPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
