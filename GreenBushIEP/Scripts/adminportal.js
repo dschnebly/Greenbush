@@ -94,7 +94,7 @@
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert('Not connected to the network!');
 
                     console.log(data);
                 },
@@ -200,7 +200,7 @@
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert('Not connected to the network!');
 
                     console.log(data);
                 },
@@ -217,148 +217,6 @@
         $("#alertMessage button").on("click", function (e) {
             $(e.currentTarget).parent().hide();
         });
-
-        //////////////////////////////////////////////////////
-        //
-        // Events for adding and removing an MIS from a building.
-        //
-        /////////////////////////////////////////////////////
-
-        //// attach event
-        //// fires when clicking the "checkbox" on the 'add a building' modal popup.
-        //$('.dual-list .selector').click(function () {
-        //    var $checkBox = $(this);
-        //    if (!$checkBox.hasClass('selected')) {
-        //        $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
-        //        $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
-        //    } else {
-        //        $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
-        //        $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
-        //    }
-        //});
-
-        //// attack event
-        //// fired off when edit a building is clicked
-        //$('#assignBuilding').on('show.bs.modal', function (e) {
-        //    // assign the userid to the id value in the form.
-        //    var userId = $(e.relatedTarget).data('id');
-        //    $(e.currentTarget).find('input[name="id"]').val(userId);
-
-        //    $.ajax({
-        //        type: 'GET',
-        //        url: '/Manage/GetDistricts',
-        //        data: { id: userId },
-        //        dataType: "json",
-        //        async: false,
-        //        success: function (data) {
-        //            if (data.Result === "success") {
-        //                var buildings = data.Message;
-
-        //                $.each(buildings, function (key, value) {
-        //                    // throw away the key. It's simply an index counter for the returned array.
-        //                    $("#selectedDistrict").find('option').remove().end().append($("<option></option>").attr("value", value.USD).text(value.DistrictName));
-        //                });
-
-        //                // fire off the selected building event by selecting an option in the newly created list.
-        //                $('#selectedDistrict option:first-child').attr("selected", "selected").change();
-        //            }
-        //        },
-        //        error: function (data) {
-        //            alert("Unable to connect to the server!");
-        //            console.log(data);
-        //        }
-        //    });
-
-        //});
-
-        //// attach event
-        //// fires when searching the building list in the 'add building' modal popup
-        //$('[name="SearchBuildingList"]').keyup(function (e) {
-        //    var code = e.keyCode || e.which;
-        //    if (code === '9') return;
-        //    if (code === '27') $(this).val(null);
-        //    var $rows = $(this).closest('.dual-list').find('.list-group li');
-        //    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-        //    $rows.show().filter(function () {
-        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        //        return !~text.indexOf(val);
-        //    }).hide();
-        //});
-
-        //// attach event
-        //// fires when we select a different district in the 'add building' modal popup
-        //$('#selectedDistrict').on('change', function () {
-        //    var districtId = $('#selectedDistrict option:selected').val();
-        //    var user = $("#assignBuilding").find('input[name="id"]').val();
-
-        //    $.ajax({
-        //        type: 'GET',
-        //        url: '/Manage/GetBuildings',
-        //        dataType: 'json',
-        //        data: { id: districtId, userId: user },
-        //        async: false,
-        //        success: function (data) {
-        //            if (data.Result === "success") {
-        //                // blow away the list
-        //                $('#selectBuildings').empty();
-
-        //                // rebuild the list with the new data.
-        //                var buildings = data.Message;
-        //                $.each(buildings, function () {
-        //                    $('#selectBuildings').append('<li class="list-group-item building-group-item" data-id="' + this.BuildingID + '"><i class="glyphicon glyphicon-home"></i>&nbsp;' + this.BuildingName + '</li>');
-        //                });
-        //            }
-        //            else {
-        //                console.log(data.Message);
-        //            }
-        //        },
-        //        error: function (data) {
-
-        //        }
-        //    });
-        //});
-
-        //// attach event
-        //// fires when the save button in the 'add building' modal popup is clicked.
-        //$('#savetheseBuildingsToThisUser').on('click', function (e) {
-        //    e.preventDefault();
-        //    var districtId = $('#selectedDistrict option:selected').val();
-        //    var userId = $('#assignBuilding').find('input[name="id"]').val();
-        //    var listOfBuildings = [];
-
-        //    $.each($('#selectBuildings li.active'), function (key, value) {
-        //        var buildingId = $(this).data("id");
-        //        listOfBuildings.push(buildingId);
-        //    });
-
-        //    if (listOfBuildings.length > 0) {
-        //        $.ajax({
-        //            type: 'GET',
-        //            url: '/Manage/SaveBuildingsToUser',
-        //            dataType: 'json',
-        //            traditional: true,
-        //            data: { USD: districtId, userId: userId, buildings: listOfBuildings },
-        //            async: false,
-        //            success: function (data) {
-        //                if (data.Result === "success") {
-        //                    $("#alertMessage").removeClass('alert alert-danger').addClass("alert alert-info").hide();
-        //                    $("#alertMessage").addClass("alert alert-info animated fadeInUp");
-        //                    $("#alertMessage .moreinfo").html('The user was successfully added to the buildings');
-        //                }
-        //                else {
-        //                    $("#alertMessage").removeClass('alert alert-info').show();
-        //                    $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
-        //                    $("#alertMessage .moreinfo").html(data.Message);
-        //                }
-        //            },
-        //            error: function (data) {
-        //                $("#alertMessage").removeClass('alert alert-info').show();
-        //                $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
-        //                $("#alertMessage .moreinfo").html(data.Message);
-        //            }
-        //        });
-        //    }
-        //});
 
         //////////////////////////////////////////////////////
         //

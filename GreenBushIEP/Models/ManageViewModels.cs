@@ -90,34 +90,24 @@ namespace GreenBushIEP.Models
         public tblUser user { get; set; }
         public List<tblDistrict> districts { get; set; }
         public List<tblBuilding> buildings { get; set; }
-        public List<tblUser> members { get; set; }
+        public List<StudentIEPViewModel> members { get; set; }
 
         public PortalViewModel()
         {
             user = new tblUser();
             districts = new List<tblDistrict>();
             buildings = new List<tblBuilding>();
-            members = new List<tblUser>();
+            members = new List<StudentIEPViewModel>();
         }
     }
 
-    public class OrganizationUser
+    public class StudentIEPViewModel
     {
-        public tblUser user { get; set; }
-        public List<tblDistrict> districts { get; set; }
-        public List<tblBuilding> buildings { get; set; }
-    }
-
-    public class OrganizationChart
-    {
-        public OrganizationUser boss { get; set; }
-        public List<OrganizationChart> staff { get; set; }
-
-        public OrganizationChart()
-        {
-            boss = new OrganizationUser();
-            staff = new List<OrganizationChart>();
-        }
+        public int UserID;
+        public string FirstName;
+        public string LastName;
+        public string RoleID;
+        public bool hasIEP;
     }
 
     public class UserOrganizationViewModel
@@ -195,6 +185,7 @@ namespace GreenBushIEP.Models
         public string Address2 { get; set; }
         public string Zip { get; set; }
         public string IEPDate { get; set; }
+        public bool hasIEP { get; set; }
     }
 
     public class StudentViewModel

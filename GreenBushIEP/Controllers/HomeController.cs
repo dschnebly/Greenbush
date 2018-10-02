@@ -26,6 +26,7 @@ namespace GreenbushIep.Controllers
         private const string admin = "3";
         private const string teacher = "4";
         private const string student = "5";
+        private const string nurse = "6";
 
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
@@ -61,6 +62,10 @@ namespace GreenbushIep.Controllers
                 {
                     return RedirectToAction("TeacherPortal");
                 }
+                else if (User.IsInRole(nurse))
+                {
+                    return RedirectToAction("NursePortal");
+                }
             }
 
             return RedirectToAction("Index");
@@ -72,14 +77,17 @@ namespace GreenbushIep.Controllers
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
 
-            tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if (owner != null)
+            tblUser OWNER = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (OWNER != null)
             {
-                OrganizationUser orgBoss = getOrgazationUser(owner);
-                OrganizationChart model = buildOrganizationChart(orgBoss);
+                PortalViewModel model = new PortalViewModel();
+                model.user = OWNER;
+                model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
+                model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
+                model.members = (from user in db.tblUsers where user.RoleID != owner select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
                 // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(owner);
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
 
                 return View("OwnerPortal", model);
             }
@@ -101,7 +109,12 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) || myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+
+                foreach (var student in model.members.Where(m => m.RoleID == student))
+                {
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -127,7 +140,12 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) || myBuildings.Contains(buildingMap.BuildingID)) select user).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+
+                foreach (var student in model.members.Where(m => m.RoleID == student))
+                {
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
@@ -168,7 +186,79 @@ namespace GreenbushIep.Controllers
                             where o.AdminID == teacher.UserID
                             select i).Distinct().ToList();
 
+                var students = (from user in users
+                                join i in info
+                                on user.UserID equals i.UserID
+                                where !(user.Archive ?? false)
+                                select new Student()
+                                {
+                                    UserID = user.UserID,
+                                    FirstName = user.FirstName,
+                                    MiddleName = user.MiddleName,
+                                    LastName = user.LastName,
+                                    City = user.City,
+                                    State = user.State,
+                                    Email = user.Email,
+                                    Password = user.Password,
+                                    USD = user.USD,
+                                    BuildingID = user.BuildingID,
+                                    ImageURL = user.ImageURL,
+                                    KidsID = i.KIDSID,
+                                    DateOfBirth = i.DateOfBirth,
+                                    CreatedBy = i.CreatedBy
+                                }).Distinct().OrderBy(u => u.LastName).ToList();
 
+                //get IEP Date
+                foreach (var student in students)
+                {
+                    IEP theIEP = new IEP(student.UserID);
+                    student.hasIEP = theIEP.current != null;
+                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
+                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
+                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+
+                }
+                var model = new StudentViewModel();
+                model.Teacher = teacher;
+                model.Students = students.ToList();
+
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
+
+                return View(model);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [Authorize(Roles = nurse)]
+        public ActionResult NursePortal(int? userId)
+        {
+            tblUser nurse = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (nurse != null)
+            {
+                var users = (from u in db.tblUsers
+                             join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+                             where o.AdminID == nurse.UserID
+                             select new Student()
+                             {
+                                 UserID = u.UserID,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 City = u.City,
+                                 State = u.State,
+                                 Email = u.Email,
+                                 Password = u.Password,
+                                 ImageURL = u.ImageURL,
+                                 Archive = u.Archive,
+                             }).Distinct().ToList();
+
+                var info = (from i in db.tblStudentInfoes
+                            join o in db.tblOrganizationMappings on i.UserID equals o.UserID
+                            where o.AdminID == nurse.UserID
+                            select i).Distinct().ToList();
 
                 var students = (from user in users
                                 join i in info
@@ -196,19 +286,17 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
+                    student.hasIEP = theIEP.current != null;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
 
                 }
                 var model = new StudentViewModel();
-                model.Teacher = teacher;
+                model.Teacher = nurse;
                 model.Students = students.ToList();
 
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
-
-                return View(model);
+                return View();
             }
 
             // Unknow error happened.
@@ -2598,47 +2686,47 @@ namespace GreenbushIep.Controllers
 
         }
 
-        public OrganizationUser getOrgazationUser(tblUser user)
-        {
-            if (user.RoleID == owner)
-            {
-                return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
-            }
+        //public OrganizationUser getOrgazationUser(tblUser user)
+        //{
+        //    if (user.RoleID == owner)
+        //    {
+        //        return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
+        //    }
 
-            var districts = (from org in db.tblOrganizationMappings
-                             join district in db.tblDistricts
-                                on org.USD equals district.USD
-                             where org.UserID == user.UserID
-                             select district).Distinct().ToList();
+        //    var districts = (from org in db.tblOrganizationMappings
+        //                     join district in db.tblDistricts
+        //                        on org.USD equals district.USD
+        //                     where org.UserID == user.UserID
+        //                     select district).Distinct().ToList();
 
-            var buildings = (from buildingMap in db.tblBuildingMappings
-                             join building in db.tblBuildings
-                                 on new { buildingMap.USD, buildingMap.BuildingID } equals
-                                    new { building.USD, building.BuildingID }
-                             where buildingMap.UserID == user.UserID
-                             select building).Distinct().ToList();
+        //    var buildings = (from buildingMap in db.tblBuildingMappings
+        //                     join building in db.tblBuildings
+        //                         on new { buildingMap.USD, buildingMap.BuildingID } equals
+        //                            new { building.USD, building.BuildingID }
+        //                     where buildingMap.UserID == user.UserID
+        //                     select building).Distinct().ToList();
 
-            return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
-        }
+        //    return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
+        //}
 
-        public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
-        {
-            OrganizationChart chart = new OrganizationChart();
-            chart.boss = theBoss;
+        //public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
+        //{
+        //    OrganizationChart chart = new OrganizationChart();
+        //    chart.boss = theBoss;
 
-            var staff = (from org in db.tblOrganizationMappings
-                         join user in db.tblUsers
-                             on org.UserID equals user.UserID
-                         where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
-                         select user).Distinct().OrderBy(u => u.RoleID).ToList();
+        //    var staff = (from org in db.tblOrganizationMappings
+        //                 join user in db.tblUsers
+        //                     on org.UserID equals user.UserID
+        //                 where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
+        //                 select user).Distinct().OrderBy(u => u.RoleID).ToList();
 
-            foreach (var person in staff)
-            {
-                OrganizationUser staffMember = getOrgazationUser(person);
-                chart.staff.Add(buildOrganizationChart(staffMember));
-            }
+        //    foreach (var person in staff)
+        //    {
+        //        OrganizationUser staffMember = getOrgazationUser(person);
+        //        chart.staff.Add(buildOrganizationChart(staffMember));
+        //    }
 
-            return chart;
-        }
+        //    return chart;
+        //}
     }
 }

@@ -11,10 +11,6 @@
 }
 
 <style>
-    .body-content {
-        margin-bottom: 4em;
-    }
-
     .ajax-loader {
         display: none;
         background-color: rgba(255,255,255,0.7);
@@ -28,9 +24,81 @@
     }
 
         .ajax-loader img {
-            position: fixed; /* or absolute */
+            position: fixed;
             top: 45%;
             left: 40%;
+        }
+
+    h3 a {
+        margin: 0 5px;
+    }
+
+    hr {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .result {
+        margin-top: 20px;
+    }
+
+    table tr {
+        height: 45px !important;
+    }
+
+    .list-group {
+        margin-bottom: 0;
+    }
+
+    .list-group-item {
+        padding-bottom: 0;
+    }
+
+    .panel-heading {
+        padding: 15px 15px;
+    }
+
+    .panel-body {
+        padding: 0;
+    }
+
+    .btn-action {
+        margin: 4px 4px 4px 0px;
+        position: relative;
+        bottom: 8px;
+    }
+
+    .just-padding {
+        padding: 0 0 15px 0;
+    }
+
+    .list-group-item > i {
+        cursor: pointer;
+    }
+
+    .list-group-item > text {
+        cursor: none;
+    }
+
+        .list-group-item > text:hover {
+            text-decoration: none;
+        }
+
+    .list-group.list-group-root {
+        padding: 0;
+        overflow: inherit;
+        margin-bottom: 42px;
+    }
+
+        .list-group.list-group-root .list-group {
+            margin-bottom: 0;
+        }
+
+        .list-group.list-group-root .list-group-item {
+            border-radius: 0;
+            border-width: 1px 0 0 0;
+            min-height: 45px;
+            font-size: 16px;
         }
 
     /*//////////////////////////////////////
@@ -71,11 +139,6 @@
             margin-bottom: 10px;
         }
 
-    .btn-action {
-        margin: 0px 4px 0px 0px;
-        position: relative;
-    }
-
     #add-student-user i {
         padding: 0;
     }
@@ -84,12 +147,67 @@
         margin-right: 20px;
     }
 
-        #user-toggle:hover {
+        #user-toggle .user-toggle-item {
+            display: inline-block;
+        }
+
+        #user-toggle button:first-child {
+            margin-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item button:hover {
             -webkit-animation: pulse 1s ease 0s;
             -o-animation: pulse 1s ease 0s;
             -moz-animation: pulse 1s ease 0s;
             animation: pulse 1s ease 0s;
         }
+
+        #user-toggle .user-toggle-item ul {
+            display: inline-block;
+            list-style-type: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            top: 10px;
+            padding-right: 12px;
+        }
+
+            #user-toggle .user-toggle-item ul li {
+                display: inline-block;
+                float: left;
+                padding-left: 15px;
+            }
+
+            #user-toggle .user-toggle-item ul.show-buttons {
+                display: inline-block;
+                -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: fadein 1s; /* Firefox < 16 */
+                -ms-animation: fadein 1s; /* Internet Explorer */
+                -o-animation: fadein 1s; /* Opera < 12.1 */
+                animation: fadein 1s;
+            }
+
+            #user-toggle .user-toggle-item ul.hide-buttons {
+                display: none;
+            }
+
+    #mySettings, #add-system-user, #add-student-user, #reports {
+        margin-left: 15px;
+    }
+
+        #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #mySettings i, #add-system-user i, #add-student-user i, #reports i {
+            vertical-align: -webkit-baseline-middle;
+            padding-left: 0;
+        }
+
 
     @@-webkit-keyframes pulse {
         0% {
@@ -146,6 +264,60 @@
             transform: scale(1);
         }
     }
+
+    @@keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Firefox < 16 */
+    @@-moz-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Safari, Chrome and Opera > 12.1 */
+    @@-webkit-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Internet Explorer */
+    @@-ms-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Opera < 12.1 */
+    @@-o-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
 </style>
 
 <h2>@ViewBag.Title</h2>
@@ -160,20 +332,21 @@
         @ViewBag.DisplayName <small> - my current list of students</small>
     </h3>
     <hr>
-    <div class="row voffset1">
+    <div class="row">
         <div class="col-md-12">
-			<a href="/Home/Reports" id="report-toggle" type="button" title="Reports" role="button" data-toggle="tooltip" style="margin-bottom:0;margin-top: 10px;" class="btn btn-primary btn-circle btn-xl pull-right" data-ftrans="slide"><i class="fa fa-file" style="position: relative; top: 8px;"></i></a>
-            <a href="/Manage/CreateStudent" id="user-toggle" type="button" title="Create New Student" role="button" data-toggle="tooltip" style="margin-bottom:0;margin-top: 10px;" class="btn btn-primary btn-circle btn-xl pull-right" data-ftrans="slide"><i class="fa fa-child" style="position: relative; top: 8px;"></i></a>
-			
-        </div>
-    </div>
-    <div class="row" style="margin-top: 12px;">
-        <div class="col-md-12">
-            <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none; margin-bottom: 12px;">
-                <strong class="moreinfo">Oh snap!</strong>
+            <div id="user-toggle" class="pull-right">
+                <div class="user-toggle-item">
+                    <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+    </div>
+
     @{
         if (Model.Students.Count > 0)
         {
@@ -198,19 +371,18 @@
                             <td>@DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy")</td>
                             <td>@student.DateOfBirth.ToString("MM/dd/yyyy")</td>
                             <td>
-                                <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info pull-right launchIEP">
-                                    <span class="glyphicon glyphicon-log-out"></span>
-                                </a>
-
-                                @if (student.CreatedBy == Model.Teacher.UserID)
+                                @if (student.hasIEP)
                                 {
-                                    <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent">
-                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right launchIEP">
+                                        <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 }
+                                <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -218,6 +390,7 @@
             </table>
         }
     }
+
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
     </div>

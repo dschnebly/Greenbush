@@ -88,7 +88,6 @@ namespace GreenBushIEP.Controllers
                     return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
                 }
 
-
                 // Add to Database
                 db.tblUsers.Add(user);
                 db.SaveChanges();
@@ -1062,6 +1061,66 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
+        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId)
+        {
+            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+            if (submitter != null)
+            {
+                List<String> myDistricts = new List<string>();
+                List<String> myBuildings = new List<string>();
+                List<String> myRoles = new List<string>() {"2", "3", "4", "5" };
+
+                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
+                NewPortalObject.Add("selectedDistrict", DistrictId);
+                NewPortalObject.Add("selectedBuilding", BuildingId);
+                NewPortalObject.Add("selectedRole", RoleId);
+
+                if (DistrictId == "-1")
+                {
+                    var districts = (from district in db.tblDistricts select new { district.USD, district.DistrictName }).Distinct().ToList();
+                    myDistricts = districts.Select(d => d.USD).ToList();
+                }
+                else
+                {
+                    var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.USD == DistrictId select new { district.USD, district.DistrictName }).Distinct().ToList();
+                    myDistricts = districts.Select(d => d.USD).ToList();
+                }
+
+                if (BuildingId == "-1")
+                {
+                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
+                    NewPortalObject.Add("buildings", buildings);
+                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
+                }
+                else
+                {
+                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
+                    NewPortalObject.Add("buildings", buildings);
+                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
+                }
+
+                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+
+                if (RoleId != "-1")
+                {
+                    foreach (var user in members.ToList())
+                    {
+                        if (user.RoleID != RoleId)
+                        {
+                            members.Remove(user);
+                        }
+                    }
+                }
+
+                NewPortalObject.Add("members", members);
+                return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
+        }
+
+        // POST: Manage/FilterUserList
+        [HttpPost]
         public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
@@ -1100,12 +1159,12 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                if(submitter.RoleID == "2")
+                if(submitter.RoleID == "2" || submitter.RoleID == "1")
                 {
                     myRoles.Add("2");
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {

@@ -40,6 +40,24 @@
         });
 
         // attach event
+        // fires when an start button in pressed on a student IEP
+        $('#initIEP').on('show.bs.modal', function (e) {
+            var user = $(e.relatedTarget).data('id');
+            $(e.currentTarget).find('input[name="id"]').val(user);
+            $('#confirmStart').val('');
+        });
+
+        // attach event
+        // fires when you click start on the module startInit form.
+        $('#initIEP button[type=submit]').on('click', function (e) {
+            if ($('#confirmStart').val() === 'START') {
+                var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
+
+                window.location = '/Home/StudentProcedures?stid=' + userId ;
+            }
+        });
+
+        // attach event
         // fires when the user chooses a district
         $("#userDistricts").on('change', function () {
             var selectedDistrict = $(this).val() + "";
@@ -94,7 +112,7 @@
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert('Not connected to the network!');
 
                     console.log(data);
                 },
