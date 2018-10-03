@@ -989,27 +989,27 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult UpdateIEPDates(int stId, string IEPStartDate, string IEPMeetingDate)
         {
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
 
-            if (iep != null)
-            {
-                DateTime startDate;
-                DateTime meetingDate;
-                if (DateTime.TryParseExact(IEPStartDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
-                {
-                    if (DateTime.TryParseExact(IEPMeetingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out meetingDate))
-                    {
-                        iep.begin_date = startDate;
-                        iep.MeetingDate = meetingDate;
+			tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
 
-                        db.SaveChanges();
-                    }
+			if (iep != null)
+			{
+				DateTime startDate;
+				DateTime meetingDate;
+				if (DateTime.TryParseExact(IEPStartDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
+				{
+					if (DateTime.TryParseExact(IEPMeetingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out meetingDate))
+					{
+						iep.begin_date = startDate;
+						iep.MeetingDate = meetingDate;
 
-                    return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
-                }
-            }
+						db.SaveChanges();
+					}
 
-            return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
+					return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
+				}
+			}
+			return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Manage/UpdateIEPStatus/5
@@ -1017,8 +1017,30 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult UpdateIEPStatusToActive(int stId)
         {
-            tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
-            if (iepDraft != null)
+			
+
+			try
+			{
+				//creating archive
+				var theIEP = GetIEPPrint(stId, 0);
+				var data = this.RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+
+				string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
+				HtmlDocument doc = new HtmlDocument();
+				doc.OptionWriteEmptyNodes = true;
+				doc.OptionFixNestedTags = true;
+				doc.LoadHtml(result);
+
+				var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
+				var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
+				var mergedFile = this.CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
+
+			}
+			catch { }
+
+
+			tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
+			if (iepDraft != null)
             {
                 iepDraft.IepStatus = IEPStatus.ACTIVE;
 
@@ -1602,157 +1624,183 @@ namespace GreenbushIep.Controllers
             return View("~/Views/Home/Reports.cshtml");
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult PrintIEP(int id, int status = 0)
-        {
-            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-            var studentDetails = new StudentDetailsPrintViewModel();
-
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
-
-            // Get the MIS id of the logged in teacher.
-            tblUser mis = FindSupervisor.GetByRole("2", teacher);
-
-            // check the passed value and change the status based on value.
-            //string iepStatus = IEPStatus.DRAFT;
-
-            //calculated fields for printing, are there going to multiple ieps?
-            //var iepObj = db.tblIEPs.Where(o => o.UserID == id).OrderByDescending(o => o.begin_date).FirstOrDefault();
-            //string initiationDate = "";
-            //if (iepObj != null && iepObj.begin_date.HasValue)
-            //{
-            //    initiationDate = iepObj.begin_date.Value.ToShortDateString();
-            //}
-
-            var query = (from iep in db.tblIEPs
-                         join health in db.tblIEPHealths
-                             on iep.IEPHealthID equals health.IEPHealthID
-                         join motor in db.tblIEPMotors
-                             on iep.IEPMotorID equals motor.IEPMotorID
-                         join communication in db.tblIEPCommunications
-                             on iep.IEPCommunicationID equals communication.IEPCommunicationID
-                         join social in db.tblIEPSocials
-                             on iep.IEPSocialID equals social.IEPSocialID
-                         join intelligence in db.tblIEPIntelligences
-                             on iep.IEPIntelligenceID equals intelligence.IEPIntelligenceID
-                         join academics in db.tblIEPAcademics
-                             on iep.IEPAcademicID equals academics.IEPAcademicID
-                         join reading in db.tblIEPReadings
-                             on iep.IEPReadingID equals reading.IEPReadingID
-                         join math in db.tblIEPMaths
-                             on iep.IEPMathID equals math.IEPMathID
-                         join written in db.tblIEPWrittens
-                             on iep.IEPWrittenID equals written.IEPWrittenID
-                         where iep.UserID == student.UserID //&& iep.IepStatus == iepStatus
-                         select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
-
-
-
-
-            if (query.Count() == 1)
-            {
-
-                IEP theIEP = new IEP()
-                {
-                    current = query.SingleOrDefault().iep,
-                    studentHealth = query.SingleOrDefault().health,
-                    studentMotor = query.SingleOrDefault().motor,
-                    studentCommunication = query.SingleOrDefault().communication,
-                    studentSocial = query.SingleOrDefault().social,
-                    studentIntelligence = query.SingleOrDefault().intelligence,
-                    studentAcademic = query.SingleOrDefault().academics,
-                    studentReading = query.SingleOrDefault().reading,
-                    studentMath = query.SingleOrDefault().math,
-                    studentWritten = query.SingleOrDefault().written,
-                    locations = db.tblLocations.ToList(),
-                    serviceTypes = db.tblServiceTypes.ToList(),
-                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
-                    studentFirstName = string.Format("{0}", student.FirstName),
-                    studentLastName = string.Format("{0}", student.LastName),
-
-                };
-
-
-                //student goalds
-                if (theIEP != null && theIEP.current != null)
-                {
-                    theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    foreach (var goal in theIEP.studentGoals)
-                    {
-                        theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
-                        theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
-                    }
-
-                    theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
-                    theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
-                    theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
-
-                    StudentTransitionViewModel stvw = new StudentTransitionViewModel();
-                    stvw.studentId = student.UserID;
-                    stvw.student = student;
-                    stvw.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
-
-                    theIEP.studentTransition = stvw;
-                    tblStudentInfo info = null;
-                    if (student != null)
-                    {
-
-                        info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
-                        tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-                        tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-
-                        theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-
-                        stvw.isDOC = district.DOC;
-
-
-                    }
-
-                    if (info != null && theIEP.current != null)
-                    {
-                        var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-                        var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-                        var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-                        var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
-
-                        studentDetails.student = info;
-                        studentDetails.teacher = teacher;
-                        studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
-                        studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
-                        studentDetails.contacts = contacts;
-                        studentDetails.building = studentBuilding;
-                        studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-                        studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
-                        studentDetails.parentLang = GetLanguage(info.ParentLanguage);
-                        studentDetails.studentLang = GetLanguage(info.StudentLanguage);
-                        studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
-                        studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
-                        studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-                        studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-                        studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-                        studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
-
-
-                    }
-
-                    theIEP.studentDetails = studentDetails;
-                }
-
-                return View("PrintIEP", theIEP);
+		[HttpGet]
+		[Authorize]
+		public ActionResult PrintIEP(int id, int status = 0)
+		{
+			var theIEP = GetIEPPrint(id, status);
+			if (theIEP != null)
+			{
+				return View("PrintIEP", theIEP);
+				
             }
 
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
 
-        [Authorize]
+		private IEP GetIEPPrint(int id, int status = 0)
+		{
+			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+			var studentDetails = new StudentDetailsPrintViewModel();
+
+			List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
+
+			// Get the MIS id of the logged in teacher.
+			tblUser mis = FindSupervisor.GetByRole("2", teacher);
+
+			// check the passed value and change the status based on value.
+			//string iepStatus = IEPStatus.DRAFT;
+
+			//calculated fields for printing, are there going to multiple ieps?
+			//var iepObj = db.tblIEPs.Where(o => o.UserID == id).OrderByDescending(o => o.begin_date).FirstOrDefault();
+			//string initiationDate = "";
+			//if (iepObj != null && iepObj.begin_date.HasValue)
+			//{
+			//    initiationDate = iepObj.begin_date.Value.ToShortDateString();
+			//}
+
+			var query = (from iep in db.tblIEPs
+						 join health in db.tblIEPHealths
+							 on iep.IEPHealthID equals health.IEPHealthID
+						 join motor in db.tblIEPMotors
+							 on iep.IEPMotorID equals motor.IEPMotorID
+						 join communication in db.tblIEPCommunications
+							 on iep.IEPCommunicationID equals communication.IEPCommunicationID
+						 join social in db.tblIEPSocials
+							 on iep.IEPSocialID equals social.IEPSocialID
+						 join intelligence in db.tblIEPIntelligences
+							 on iep.IEPIntelligenceID equals intelligence.IEPIntelligenceID
+						 join academics in db.tblIEPAcademics
+							 on iep.IEPAcademicID equals academics.IEPAcademicID
+						 join reading in db.tblIEPReadings
+							 on iep.IEPReadingID equals reading.IEPReadingID
+						 join math in db.tblIEPMaths
+							 on iep.IEPMathID equals math.IEPMathID
+						 join written in db.tblIEPWrittens
+							 on iep.IEPWrittenID equals written.IEPWrittenID
+						 where iep.UserID == student.UserID //&& iep.IepStatus == iepStatus
+						 select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
+
+
+
+
+			if (query.Count() == 1)
+			{
+
+				IEP theIEP = new IEP()
+				{
+					current = query.SingleOrDefault().iep,
+					studentHealth = query.SingleOrDefault().health,
+					studentMotor = query.SingleOrDefault().motor,
+					studentCommunication = query.SingleOrDefault().communication,
+					studentSocial = query.SingleOrDefault().social,
+					studentIntelligence = query.SingleOrDefault().intelligence,
+					studentAcademic = query.SingleOrDefault().academics,
+					studentReading = query.SingleOrDefault().reading,
+					studentMath = query.SingleOrDefault().math,
+					studentWritten = query.SingleOrDefault().written,
+					locations = db.tblLocations.ToList(),
+					serviceTypes = db.tblServiceTypes.ToList(),
+					serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
+					studentFirstName = string.Format("{0}", student.FirstName),
+					studentLastName = string.Format("{0}", student.LastName),
+
+				};
+
+
+				//student goalds
+				if (theIEP != null && theIEP.current != null)
+				{
+					theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+					foreach (var goal in theIEP.studentGoals)
+					{
+						theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
+						theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
+					}
+
+					theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+					theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+					var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
+					theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
+					theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
+
+					StudentTransitionViewModel stvw = new StudentTransitionViewModel();
+					stvw.studentId = student.UserID;
+					stvw.student = student;
+					stvw.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == theIEP.current.IEPid).ToList();
+					stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
+					stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+					stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
+
+					theIEP.studentTransition = stvw;
+					tblStudentInfo info = null;
+					if (student != null)
+					{
+
+						info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+						tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+						tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+
+						theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+
+						stvw.isDOC = district.DOC;
+
+
+					}
+
+					if (info != null && theIEP.current != null)
+					{
+						var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+						var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+						var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+						var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+
+						studentDetails.student = info;
+						studentDetails.teacher = teacher;
+						studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
+						studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
+						studentDetails.contacts = contacts;
+						studentDetails.building = studentBuilding;
+						studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+						studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+						studentDetails.parentLang = GetLanguage(info.ParentLanguage);
+						studentDetails.studentLang = GetLanguage(info.StudentLanguage);
+						studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
+						studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
+						studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+						studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+						studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+						studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+
+
+					}
+
+					theIEP.studentDetails = studentDetails;
+
+					return theIEP;
+				}
+			}
+
+			return null;
+		}
+
+		public string RenderRazorViewToString(string viewName, object model)
+		{
+			ViewData.Model = model;
+			using (var sw = new StringWriter())
+			{
+				var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+				var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+				viewResult.View.Render(viewContext, sw);
+				viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+				return sw.GetStringBuilder().ToString();
+			}
+		}
+
+		
+		[Authorize]
         public ActionResult EditStudentInformation()
         {
             return View();
@@ -2214,123 +2262,132 @@ namespace GreenbushIep.Controllers
             string isIEP = collection["isIEP"];
             string formName = collection["formName"];
 
-
-            if (!string.IsNullOrEmpty(HTMLContent))
-            {
-                string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
-                iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
-
-
-                int id = 0;
-                Int32.TryParse(studentId, out id);
-
-                int iepId = 0;
-                Int32.TryParse(iepIDStr, out iepId);
-
-                tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-                if (user != null && isIEP == "1")
-                {
-                    //update only if user it printing IEP
-                    user.Agreement = true;
-                    db.SaveChanges();
-                }
-
-                if (string.IsNullOrEmpty(studentName))
-                {
-                    studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
-                }
-
-
-                bool isDraft = false;
-                //if (isArchive == "1")
-                //{
-                //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-                //    if (iepObj != null)
-                //    {
-                //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
-                //    }
-                //}				
-
-                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-
-                var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
-
-                string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
-
-                string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
-                byte[] studentFile = null;
-
-                if (!string.IsNullOrEmpty(StudentHTMLContent))
-                {
-                    string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
-                    studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
-                }
-
-                byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
-
-                //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
-                List<byte[]> pdfByteContent = new List<byte[]>();
-
-                if (studentFile != null)
-                    pdfByteContent.Add(studentFile);
-
-                pdfByteContent.Add(iepFile);
-
-                var mergedFile = concatAndAddContent(pdfByteContent);
-
-                if (isArchive == "1")
-                {
-                    try
-                    {
-                        var archive = new tblFormArchive();
-                        archive.Creator_UserID = teacher.UserID;
-                        archive.Student_UserID = id;
-                        archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
-                        archive.FormFile = mergedFile;//fileIn;
-                        archive.IEPid = iepId;
-                        archive.ArchiveDate = DateTime.Now;
-
-                        db.tblFormArchives.Add(archive);
-                        db.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        string errorMessage = "";
-
-                        if (ex is DbEntityValidationException)
-                        {
-
-                            if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
-                            {
-                                var errors = ((DbEntityValidationException)(ex)).EntityValidationErrors;
-                                foreach (var failure in errors)
-                                {
-                                    foreach (var error in failure.ValidationErrors)
-                                    {
-                                        string propertyName = error.PropertyName;
-
-                                        errorMessage += propertyName + " " + error.ErrorMessage;
-
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            errorMessage = ex.Message;
-                        }
-                    }
-                }
-
-                return File(mergedFile, "application/pdf", "IEP.pdf");
-
-            }
-
-            return null;
+			var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
+			if(mergedFile != null)
+				return File(mergedFile, "application/pdf", "IEP.pdf");
+			else
+				return null;
 
         }
+
+		private byte[] CreateIEPPdf(string StudentHTMLContent,string HTMLContent, string studentName,string studentId,
+		string isArchive,	string iepIDStr,string isIEP, string formName )
+		{
+			if (!string.IsNullOrEmpty(HTMLContent))
+			{
+				string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
+				iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+
+
+				int id = 0;
+				Int32.TryParse(studentId, out id);
+
+				int iepId = 0;
+				Int32.TryParse(iepIDStr, out iepId);
+
+				tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+				if (user != null && isIEP == "1")
+				{
+					//update only if user it printing IEP
+					user.Agreement = true;
+					db.SaveChanges();
+				}
+
+				if (string.IsNullOrEmpty(studentName))
+				{
+					studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
+				}
+
+
+				bool isDraft = false;
+				//if (isArchive == "1")
+				//{
+				//    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+				//    if (iepObj != null)
+				//    {
+				//        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+				//    }
+				//}				
+
+				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+				var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
+
+				string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
+				result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
+
+				string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
+				byte[] studentFile = null;
+
+				if (!string.IsNullOrEmpty(StudentHTMLContent))
+				{
+					string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
+					result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+					studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+				}
+
+				byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
+
+				//var printFile = AddPageNumber(iepFile, studentName, imgfoot);
+				List<byte[]> pdfByteContent = new List<byte[]>();
+
+				if (studentFile != null)
+					pdfByteContent.Add(studentFile);
+
+				pdfByteContent.Add(iepFile);
+
+				var mergedFile = concatAndAddContent(pdfByteContent);
+
+				if (isArchive == "1")
+				{
+					try
+					{
+						var archive = new tblFormArchive();
+						archive.Creator_UserID = teacher.UserID;
+						archive.Student_UserID = id;
+						archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
+						archive.FormFile = mergedFile;//fileIn;
+						archive.IEPid = iepId;
+						archive.ArchiveDate = DateTime.Now;
+
+						db.tblFormArchives.Add(archive);
+						db.SaveChanges();
+					}
+					catch (Exception ex)
+					{
+						string errorMessage = "";
+
+						if (ex is DbEntityValidationException)
+						{
+
+							if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
+							{
+								var errors = ((DbEntityValidationException)(ex)).EntityValidationErrors;
+								foreach (var failure in errors)
+								{
+									foreach (var error in failure.ValidationErrors)
+									{
+										string propertyName = error.PropertyName;
+
+										errorMessage += propertyName + " " + error.ErrorMessage;
+
+									}
+								}
+							}
+						}
+						else
+						{
+							errorMessage = ex.Message;
+						}
+					}
+				}
+
+
+				return mergedFile;
+			}
+
+			return null;
+		}
 
         private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
         {

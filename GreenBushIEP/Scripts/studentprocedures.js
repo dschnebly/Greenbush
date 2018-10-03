@@ -214,7 +214,8 @@
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
-            });
+			});
+
         }
     });
 });
