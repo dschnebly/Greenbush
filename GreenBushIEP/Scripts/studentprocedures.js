@@ -545,39 +545,6 @@ $("input[name='WrittenNeed']").on('click', function (event) {
     }
 });
 
-$(".iep-form-section").on("click", function (e) {
-    var stId = $("#stid").val();
-    $('.ajax-loader').css("visibility", "visible");
-
-    $.ajax({
-        type: 'GET',
-        url: '/Home/IEPFormModule',
-        data: { studentId: stId },
-        dataType: 'html',
-        success: function (data) {
-            if (data.length !== 0) {
-                $("#module-form-section").html(data);
-                $('#moduleSection').modal('show');
-            }
-            else {
-                $("#alertMessage .moreinfo").html('Server Error');
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
-            }
-        },
-        error: function (data) {
-            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.').focus();
-            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                $("#alertMessage").slideUp(500);
-            });
-        },
-        complete: function () {
-            $('.ajax-loader').css("visibility", "hidden");
-        }
-    });
-
-});
 
 $(".module-section").on("click", function (e) {
     var tId = $("#tid").val();

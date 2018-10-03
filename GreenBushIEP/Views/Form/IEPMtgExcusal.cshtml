@@ -1,6 +1,6 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }

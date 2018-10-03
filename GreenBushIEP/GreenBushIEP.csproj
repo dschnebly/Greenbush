@@ -726,6 +726,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\nurse.js" />
+    <Content Include="Scripts\studentForms.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

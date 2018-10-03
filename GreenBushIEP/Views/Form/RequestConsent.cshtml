@@ -27,7 +27,13 @@
             <tr>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal><b>To </b><u>&nbsp;&nbsp;<b>@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(45 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))</b></u></p>
+                    <p class=MsoNormal><b>To </b><u>&nbsp;&nbsp;<b>
+						@if (Model.contacts != null && Model.contacts.Count > 0)
+						{
+							@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(45 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))
+						}
+
+						  </b></u></p>
                     <p class=MsoNormal>     (Parent/Legal Educational Decision Maker)</p>
                 </td>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
@@ -51,9 +57,12 @@
                     <p class=MsoNormal>
 
                         <b>Address</b> <u>
+						@if (Model.contacts != null && Model.contacts.Count > 0)
+						{
                             @(String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).PadRight(45 - String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).Length, ' ').Replace(" ", "\u00A0"))<br />
                             @(String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).PadRight(45 - String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).Length, ' ').Replace(" ", "\u00A0"))
-                        </u>
+						}
+						</u>
 
                     </p>
                 </td>
