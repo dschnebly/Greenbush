@@ -1068,7 +1068,7 @@ namespace GreenBushIEP.Controllers
             {
                 List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() {"2", "3", "4", "5" };
+                List<String> myRoles = new List<string>() {"2", "3", "4", "5", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
@@ -1128,7 +1128,7 @@ namespace GreenBushIEP.Controllers
             {
                 List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() { "3", "4", "5" };
+                List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);

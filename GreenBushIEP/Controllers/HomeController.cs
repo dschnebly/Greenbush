@@ -296,7 +296,7 @@ namespace GreenbushIep.Controllers
                 model.Teacher = nurse;
                 model.Students = students.ToList();
 
-                return View();
+                return View(model);
             }
 
             // Unknow error happened.

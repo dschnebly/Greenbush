@@ -60,7 +60,10 @@
                                         $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                     case "5":
-                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "6":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                 }
                             });
@@ -119,7 +122,10 @@
                                         $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                     case "5":
-                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "6":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                 }
                             });
@@ -178,7 +184,10 @@
                                         $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                     case "5":
-                                        $('.list-group-root').append('<div class="list-group-item bound" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                                        break;
+                                    case "6":
+                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
                                         break;
                                 }
                             });
@@ -245,67 +254,6 @@
                 checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
             }
         });
-
-        //////////////////////////////////////////////////////
-        //
-        // Events for Filtering the Search Results
-        //
-        /////////////////////////////////////////////////////
-
-        //// attach event
-        //// fires when clicking the search icon.
-        //$('[data-command="toggle-my-admin-search"]').on('click', function (event) {
-        //    event.preventDefault;
-
-        //    if ($(this).hasClass('hide-search')) {
-        //        $(this).removeClass('hide-search');
-        //        $('.c-my-search').closest('.row').slideUp(100);
-        //    }
-        //    else {
-        //        $('.c-my-search').closest('.row').slideDown(100);
-        //        $(this).addClass('hide-search');
-        //    }
-        //});
-
-        //// attach event
-        //// fires when the user is searching
-        //$('[name="contact-list-search"]').keyup(function (e) {
-        //    var val = $(e.currentTarget).val();
-        //    var code = e.keyCode || e.which;
-        //    if (code === '9') return;
-        //    if (code === '27') $(this).val(null);
-
-        //    var teachers = $('div.list-group-root').find('div.list-group-item');
-        //    teachers.show().filter(function () {
-        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        //        return !~text.indexOf(val.toLowerCase());
-        //    }).hide();
-        //});
-
-        //// attach event
-        //// fires when user select a filter option
-        //$(".filteroptions > li").on('click', function () {
-        //    $(".filteroptions >li").removeClass("selected-filter");
-        //    $(this).addClass("selected-filter");
-        //    var filter = $(this).find(".filteroption").text();
-
-        //    $('.filteredby').removeClass("filteredby");
-        //    switch (filter) {
-        //        case "Show Teachers Only":
-        //            $.each($('div.list-group-item > i.fa-child'), function () {
-        //                $(this).parent().addClass("filteredby");
-        //            });
-        //            break;
-        //        case "Show Students Only":
-        //            $.each($('.list-group-item > i.fa-graduation-cap'), function () {
-        //                $(this).parent().addClass("filteredby");
-        //                $(this).parent().nextAll('.list-group').addClass("filteredby");
-        //            });
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
 
         //////////////////////////////////////////////////////
         //
