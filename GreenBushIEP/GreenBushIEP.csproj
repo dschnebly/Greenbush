@@ -612,6 +612,7 @@
     <Content Include="Content\Images\misadministrator.jpg" />
     <Content Include="Content\Images\newAdmin.png" />
     <Content Include="Content\Images\newMIS.png" />
+    <Content Include="Content\Images\newNurse.png" />
     <Content Include="Content\Images\newStudent.PNG" />
     <Content Include="Content\Images\newTeacher.PNG" />
     <Content Include="Content\Images\newUser.png" />
@@ -724,6 +725,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\nurse.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
