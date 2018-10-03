@@ -1,356 +1,52 @@
 ﻿@model  GreenBushIEP.Models.IEPFormViewModel
-<style>
-    .drive-wrapper {
-        padding: 15px;
-        background: #f5f5f5;
-        overflow: hidden;
-    }
 
-        .drive-wrapper .drive-item {
-            width: 130px;
-            margin-right: 15px;
-            display: inline-block;
-            float: left;
-            background-color: #fff;
-            padding: 5px;
-            margin: 12px;
-        }
+@{
+	ViewBag.Title = "Student Forms";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	
+}
 
-            .drive-wrapper .drive-item:hover {
-                box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-                z-index: 1;
-            }
-
-        .drive-wrapper .drive-item-inner {
-            padding: 8px 10px 15px 7px;
-        }
-
-        .drive-wrapper .drive-item-title {
-            margin-bottom: 7px;
-            max-width: 100px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-            .drive-wrapper .drive-item-title a {
-                color: #494d55;
-                font-weight: bold;
-            }
-
-                .drive-wrapper .drive-item-title a:hover {
-                    color: #40babd;
-                }
-
-    .theme-2 .drive-wrapper .drive-item-title a:hover {
-        color: #6dbd63;
-    }
-
-    .theme-3 .drive-wrapper .drive-item-title a:hover {
-        color: #497cb1;
-    }
-
-    .theme-4 .drive-wrapper .drive-item-title a:hover {
-        color: #ec6952;
-    }
-
-    .drive-wrapper .drive-item-thumb {
-        width: 100px;
-        height: 80px;
-        margin: 0 auto;
-        color: #616670;
-        display: inline-block;
-    }
-
-        .drive-wrapper .drive-item-thumb a {
-            -webkit-opacity: .8;
-            -moz-opacity: .8;
-            opacity: .8;
-        }
-
-            .drive-wrapper .drive-item-thumb a:hover {
-                -webkit-opacity: 1;
-                -moz-opacity: 1;
-                opacity: 1;
-            }
-
-        .drive-wrapper .drive-item-thumb .fa {
-            display: inline-block;
-            margin: 0 auto;
-            font-size: 6em;
-        }
-
-    .drive-wrapper .drive-item-footer .utilities {
-        margin-bottom: 0;
-    }
-
-        .drive-wrapper .drive-item-footer .utilities li:last-child {
-            padding-right: 0;
-        }
-
-    .drive-list-view .name {
-        width: 75%;
-    }
-
-        .drive-list-view .name.truncate {
-            max-width: 100px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: middle;
-        }
-
-            .drive-list-view .name.truncate a {
-                font-weight: bold;
-                color: #777;
-            }
-
-    .drive-list-view .type {
-        vertical-align: middle;
-    }
-
-    .drive-list-view .type {
-        width: 15px;
-    }
-
-    .drive-list-view .date,
-    .drive-list-view .size {
-        max-width: 60px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .drive-list-view a {
-        color: #494d55;
-    }
-
-        .drive-list-view a:hover {
-            color: #40babd;
-        }
-
-    .theme-2 .drive-list-view a:hover {
-        color: #6dbd63;
-    }
-
-    .theme-3 .drive-list-view a:hover {
-        color: #497cb1;
-    }
-
-    .theme-4 .drive-list-view a:hover {
-        color: #ec6952;
-    }
-
-    .drive-list-view td.date,
-    .drive-list-view td.size {
-        color: #a2a6af;
-    }
-
-    .table {
-        margin-bottom: 0;
-    }
-
-
-    @@media (max-width:767px) {
-        .view-account .content-panel .title {
-            text-align: center;
-        }
-
-        .view-account .side-bar .user-info {
-            padding: 0;
-        }
-
-            .view-account .side-bar .user-info .img-profile {
-                width: 60px;
-                height: 60px;
-            }
-
-            .view-account .side-bar .user-info .meta li {
-                margin-bottom: 5px;
-            }
-
-        .view-account .content-panel .content-header-wrapper .actions {
-            position: static;
-            margin-bottom: 30px;
-        }
-
-        .view-account .content-panel {
-            padding: 0;
-        }
-
-            .view-account .content-panel .content-utilities .page-nav {
-                position: static;
-            }
-
-        .drive-wrapper .drive-item {
-            width: 100px;
-            margin-right: 5px;
-            float: none;
-        }
-
-        .drive-wrapper .drive-item-thumb {
-            width: auto;
-            height: 54px;
-        }
-
-            .drive-wrapper .drive-item-thumb .fa {
-                font-size: 24px;
-                padding-top: 0;
-            }
-
-        .view-account .content-panel .avatar .figure img {
-            float: none;
-            margin-bottom: 15px;
-        }
-
-        .view-account .file-uploader {
-            margin-bottom: 15px;
-        }
-
-        .view-account .mail-subject {
-            max-width: 100px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .view-account .content-panel .mails-wrapper .mail-item .time-container {
-            position: static;
-        }
-
-            .view-account .content-panel .mails-wrapper .mail-item .time-container .time {
-                width: auto;
-                text-align: left;
-            }
-
-        button.printForm span {
-            display: none;
-        }
-    }
-
-    @@media (min-width:768px) {
-        .view-account .side-bar .user-info {
-            padding: 0;
-            padding-bottom: 15px;
-        }
-
-        .view-account .mail-subject .subject {
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        button.printForm span {
-            display: normal;
-        }
-    }
-
-    @@media (min-width:992px) {
-        .view-account .content-panel {
-            min-height: 800px;
-            border-left: 1px solid #f3f3f7;
-            margin-left: 200px;
-        }
-
-        .view-account .mail-subject .subject {
-            max-width: 280px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .view-account .side-bar {
-            position: absolute;
-            width: 200px;
-            min-height: 600px;
-        }
-
-            .view-account .side-bar .user-info {
-                margin-bottom: 0;
-                border-bottom: none;
-                padding: 30px;
-            }
-
-                .view-account .side-bar .user-info .img-profile {
-                    width: 120px;
-                    height: 120px;
-                }
-
-            .view-account .side-bar .side-menu {
-                text-align: left;
-            }
-
-                .view-account .side-bar .side-menu .nav {
-                    display: block;
-                }
-
-                    .view-account .side-bar .side-menu .nav > li {
-                        display: block;
-                        float: none;
-                        font-size: 14px;
-                        border-bottom: 1px solid #f3f3f7;
-                        margin-right: 0;
-                        margin-bottom: 0;
-                    }
-
-                        .view-account .side-bar .side-menu .nav > li > a {
-                            display: block;
-                            color: #9499a3;
-                            padding: 10px 15px;
-                            padding-left: 30px;
-                        }
-
-                            .view-account .side-bar .side-menu .nav > li > a:hover {
-                                background: #f9f9fb;
-                            }
-
-                        .view-account .side-bar .side-menu .nav > li.active a {
-                            background: #f9f9fb;
-                            border-right: 4px solid #40babd;
-                            border-bottom: none;
-                        }
-
-        .theme-2 .view-account .side-bar .side-menu .nav > li.active a {
-            border-right-color: #6dbd63;
-        }
-
-        .theme-3 .view-account .side-bar .side-menu .nav > li.active a {
-            border-right-color: #497cb1;
-        }
-
-        .theme-4 .view-account .side-bar .side-menu .nav > li.active a {
-            border-right-color: #ec6952;
-        }
-
-        .view-account .side-bar .side-menu .nav > li .icon {
-            font-size: 24px;
-            vertical-align: middle;
-            text-align: center;
-            width: 40px;
-            display: inline-block;
-        }
-
-        button.printForm span {
-            display: normal;
-        }
-    }
-</style>
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+	<button type="button" class="close closeForms" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-folder-open" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Forms</h4>
 </div>
 <div class="modal-body">
     @Html.Hidden("stid", Model.StudentId)
 
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#sectionA"><b>Forms</b></a></li>
-        <li><a data-toggle="tab" href="#sectionB"><b>Archive</b></a></li>
+		<li class="active"><a data-toggle="tab" href="#sectionB"><b>Archive</b></a></li>
+        <li><a data-toggle="tab" href="#sectionA"><b>Forms</b></a></li>
+        
         
     </ul>
     <div class="tab-content container">
-        <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
+		    <div id="sectionB" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">            
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th class="name truncate">Form Name</th>
+                                <th class="date">Date</th>
+                                <th class="date">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var archive in Model.Archives)
+                                {
+                                    <tr>
+                                        
+                                        <td class="name truncate">@archive.FormName</td>
+                                        <td class="name truncate">@archive.ArchiveDate</td>
+                                        <td class="date"><button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa-print"></i><span>&nbsp;Download</span></button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+        </div>
+        
+        <div id="sectionA" class="tab-pane fade" style="padding-left:5px;padding-top:5px;">
 
             <div class="drive-wrapper drive-list-view">
                 <div class="table-responsive drive-items-table-wrapper">
@@ -379,83 +75,19 @@
             </div>
 
         </div>
-        <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
-            @*<div class="drive-wrapper drive-list-view">
-                <div class="table-responsive drive-items-table-wrapper">*@
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                
-                                <th class="name truncate">Form Name</th>
-                                <th class="date">Date</th>
-                                <th class="date">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                foreach (var archive in Model.Archives)
-                                {
-                                    <tr>
-                                        
-                                        <td class="name truncate">@archive.FormName</td>
-                                        <td class="name truncate">@archive.ArchiveDate</td>
-                                        <td class="date"><button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa-print"></i><span>&nbsp;Download</span></button></td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                @*</div>
-            </div>*@
-
-        </div>
-        
+    
     </div>
-
-
-
-
-   
-    <div class="ajax-loader">
-        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-    </div>
-
+	
 </div>
-<div class="modal-footer">
-    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+<div class="modal-footer" style="margin-bottom:50px;">    
+	<button type="button" class="closeForms formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>	
 </div>
 <script>
 
-    $(".name a, .printForm").not(".bound").addClass("bound").on("click", function (e) {
-        var id = $("#stid").val();
-
-        if (id) {
-            $('.ajax-loader').css("visibility", "visible");
-
-            var pageName = this.id;
-            window.location.href = '/Home/IEPFormFile?id=' + id + '&fileName=' + pageName;
-        }
-        else {
-            $("#alertMessage .moreinfo").html('Server Error');
-            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                $("#alertMessage").slideUp(500);
-            });
-        }
-    });
-
-
-    $(".downloadForm").on("click", function (e) {
-        var id = this.id;
-
-        if (id) {
-            window.location.href = '/Home/DownloadArchive?id=' + id;
-        }
-        else {
-            $("#alertMessage .moreinfo").html('Server Error');
-            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                $("#alertMessage").slideUp(500);
-            });
-        }
-    });
-
 </script>
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/studentForms.js"></var>
+@section scripts {
+    @Scripts.Render("~/Scripts/studentForms.js")
+
+}

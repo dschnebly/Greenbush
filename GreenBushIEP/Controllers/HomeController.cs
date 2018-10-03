@@ -1526,7 +1526,7 @@ namespace GreenbushIep.Controllers
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
 
 
-                viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).ToList();
+                viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
             }
 
             return PartialView("_IEPFormModule", viewModel);

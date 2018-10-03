@@ -10,10 +10,17 @@
 
         // attach Event
         // fires when a user clicks on the edit user button
-        $("#editStudent").on("click", function () {
+		$("#editStudent").on("click", function () {
             $(".ajax-loader").show();
             $(".ajax-loader img").show();
         });
+
+		// attach Event
+		// fires when a user clicks on the edit user button
+		$(".viewForms").on("click", function () {
+			$(".ajax-loader").show();
+			$(".ajax-loader img").show();
+		});
 
         // attach event
         // finds all launchIEP on the page and fires when the link is clicked.
@@ -57,7 +64,10 @@
                     }
                 });
             }
-        });
+		});
+
+		
+		
     }
     init();
 

@@ -1,6 +1,6 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
@@ -49,9 +49,13 @@
                     <p class=MsoNormal>
 
                         <b>Address:</b><u>
+						@if (Model.contacts != null && Model.contacts.Count > 0)
+						{
                             @(String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).PadRight(40 - String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).Length, ' ').Replace(" ", "\u00A0"))<br />
                             @(String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).PadRight(40 - String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).Length, ' ').Replace(" ", "\u00A0"))
-                        </u>
+
+						}
+						</u>
 
                     </p>
                 </td>

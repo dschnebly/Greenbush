@@ -377,6 +377,10 @@
                                         <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 }
+								
+								<a href="/Home/IEPFormModule?studentId=@(student.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                </a>
                                 <button type="button" title="Delete this student" class="btn btn-info btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                                 </button>
