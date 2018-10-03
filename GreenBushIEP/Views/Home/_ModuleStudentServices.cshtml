@@ -34,7 +34,11 @@
             left: 40%;
         }
 
-  
+    .search-choice span {
+        position: relative;
+        top: 9px;
+        font-size: 16px;
+    }
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -57,7 +61,7 @@
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
-         <input type="hidden" id="sid" value="@Model.studentId" />
+        <input type="hidden" id="sid" value="@Model.studentId" />
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
@@ -86,7 +90,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label   for="fiscalYear">Fiscal Year</label>
+                                            <label for="fiscalYear">Fiscal Year</label>
                                             <div class="form-group">
                                                 <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
                                                     <option value="2018">2017 - 2018</option>
@@ -98,42 +102,42 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label   for="Frequency">Initiation Date</label>
+                                            <label for="Frequency">Initiation Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
+                                                <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label   for="Frequency">End Date</label>
+                                            <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value=""  style="z-index: 99999; ">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <label   for="Location">Location</label>
+                                            <label for="Location">Location</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                 <div class="form-group">
                                                     <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
-                                                        
-                                                            @if (Model.serviceLocations.Count > 0)
+
+                                                        @if (Model.serviceLocations.Count > 0)
+                                                        {
+                                                            foreach (var serviceLocation in Model.serviceLocations)
                                                             {
-                                                                foreach (var serviceLocation in Model.serviceLocations)
-                                                                {
-                                                                    <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
-                                                                }
+                                                                <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
                                                             }
-                                                        
-                                                        </select>
+                                                        }
+
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label   for="Frequency">Frequency</label>
+                                            <label for="Frequency">Frequency</label>
                                             <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
                                                 <option value="1">Every week (1)</option>
                                                 <option value="2">Every 2 weeks (2)</option>
@@ -148,7 +152,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            <label   for="Days">Days per Week</label>
+                                            <label for="Days">Days per Week</label>
                                             <div class="input-group number-spinner">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
@@ -160,7 +164,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label  for="Duration">Minutes per Day </label>
+                                            <label for="Duration">Minutes per Day </label>
                                             <div class="input-group minute-spinner">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
@@ -172,7 +176,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label   for="ServiceType">Service Type</label>
+                                            <label for="ServiceType">Service Type</label>
                                             <div class="form-group">
                                                 <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;">
                                                     @if (Model.serviceTypes.Count > 0)
@@ -186,7 +190,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label   for="serviceProvider">Provider</label>
+                                            <label for="serviceProvider">Provider</label>
                                             <div class="form-group">
                                                 <select class="form-control" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
                                                     <option value="-1">-- No providers currently available --</option>
@@ -203,7 +207,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label  >Attach a Goal</label>
+                                            <label>Attach a Goal</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
                                                 <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" multiple="multiple" data-validate="true">
@@ -221,7 +225,7 @@
                                     <div class="row">
                                         <div class="col-md-12" style="text-align:center;">
                                             <div class="form-group">
-                                                <br/>
+                                                <br />
                                                 <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
                                                 <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
                                             </div>
@@ -241,7 +245,7 @@
             var needsIN = (Model.studentServices.IndexOf(service) == Model.studentServices.Count - 1) ? "in" : "";
 
             string serviceTitle = "Student Service";
-            if(!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
+            if (!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
             {
                 var serviceTypeObj = Model.serviceTypes.Where(o => o.ServiceCode == service.ServiceCode).FirstOrDefault();
                 if (serviceTypeObj != null)
@@ -288,14 +292,14 @@
                                                 <label for="Frequency">Initiation Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
+                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="Frequency">End Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("MM/dd/yyyy"))"  style="z-index: 99999; ">
+                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -442,10 +446,10 @@
 </div>
 
 <script>
-   
+
     $(document).ready(function () {
 
-        $(this).find('.dtField').each(function () {           
+        $(this).find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
@@ -470,49 +474,48 @@
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
-        
+
     //duplicate all services for next school year
     $('#duplicateAllService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
-        
-            var studentId = $("#sid").val();
-            if (studentId != undefined) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Home/DuplicateStudentServicesNextYear',
-                    data: { studentId: studentId },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.Result == "success") {
-                            $.each(data.Data, function (index, serviceObj) {
-                                
-                                var dupFiscalYear = serviceObj.SchoolYear;
-                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
-                                var dupserviceMinutesPerDay = serviceObj.Minutes;
-                                var dupFrequency = serviceObj.Frequency;
-                                var dupLocation = serviceObj.LocationCode;
-                                var dupServiceType = serviceObj.ServiceCode;
-                                var dupServiceProvider = serviceObj.ProviderID;
-                                var dupStartDate = serviceObj.StartDate;
-                                var dupEndDate = serviceObj.EndDate;
-                                
-                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
-                            });
-                        }
-                        else {
-                            _showAlert('There was a problem duplicating the Student Services.', false);
-                        }
-                    },
-                    error: function (data) {
-                        console.log("Unable to duplicate the student services.");
+
+        var studentId = $("#sid").val();
+        if (studentId != undefined) {
+            $.ajax({
+                type: 'GET',
+                url: '/Home/DuplicateStudentServicesNextYear',
+                data: { studentId: studentId },
+                dataType: "json",
+                success: function (data) {
+                    if (data.Result == "success") {
+                        $.each(data.Data, function (index, serviceObj) {
+
+                            var dupFiscalYear = serviceObj.SchoolYear;
+                            var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+                            var dupserviceMinutesPerDay = serviceObj.Minutes;
+                            var dupFrequency = serviceObj.Frequency;
+                            var dupLocation = serviceObj.LocationCode;
+                            var dupServiceType = serviceObj.ServiceCode;
+                            var dupServiceProvider = serviceObj.ProviderID;
+                            var dupStartDate = serviceObj.StartDate;
+                            var dupEndDate = serviceObj.EndDate;
+
+                            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+                        });
                     }
-                });
-            }
-            else
-            {
-                _showAlert('There was a problem duplicating the Student Services.', false);
-            }
-        
+                    else {
+                        _showAlert('There was a problem duplicating the Student Services.', false);
+                    }
+                },
+                error: function (data) {
+                    console.log("Unable to duplicate the student services.");
+                }
+            });
+        }
+        else {
+            _showAlert('There was a problem duplicating the Student Services.', false);
+        }
+
     });
 
     //duplicate service for next school year
@@ -534,8 +537,7 @@
             duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
 
         }
-        else
-        {
+        else {
             _showAlert("Please select a service to duplicate", false);
         }
     });
@@ -570,7 +572,7 @@
         $('.serviceContainer').append(cloneService);
 
 
-        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+        //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneService.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
@@ -584,7 +586,7 @@
 
         initService();
     });
-     
+
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
@@ -602,11 +604,11 @@
                         if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
                     }
                 }
-               
+
             });
 
             $(this).find(".dtField").on('change', function (e) {
-               
+
                 if (e.target.value == '') {
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
@@ -620,7 +622,7 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
                 _onDateChange(day, calendaryDay, e);
-                               
+
                 var isValid = _validateDate(fiscalYear, selectedDate);
                 if (!isValid) {
                     _showAlert("The Initiation and End Date must be within the selected school year", false);
@@ -648,13 +650,13 @@
                                 data: { studentServiceId: studentServiceId },
                                 dataType: "json",
                                 success: function (data) {
-									if (data.Result == "success") {
-										
+                                    if (data.Result == "success") {
+
                                         var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
                                         previousService.collapse('show');
-										_showAlert('Student Service successfully deleted.', true)                                        
-										$(window).trigger("deleting.bs.modal");
+                                        _showAlert('Student Service successfully deleted.', true)
+                                        $(window).trigger("deleting.bs.modal");
                                     }
                                     else {
                                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -734,7 +736,7 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-               
+
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
@@ -756,13 +758,13 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.Result == "success") {
-							_showAlert(data.Message, true);
-							$(window).trigger("saving.bs.modal");
+                            _showAlert(data.Message, true);
+                            $(window).trigger("saving.bs.modal");
                             return false;
                         }
                         else {
                             _showAlert('Unable to save the Student Service. Try again later.', false);
-                            
+
                         }
                     },
                     error: function (data) {
@@ -778,7 +780,7 @@
                 });
             });
 
-			$(this).find('.chosen-select').chosen({ width: "100%" });
+            $(this).find('.chosen-select').chosen({ width: "100%" });
 
         });
     }
@@ -817,7 +819,7 @@
     }
 
     function createDate2(newDate) {
-       
+
         var dateArr = newDate.split('/');
         var month = 0;
         var day = 0;
@@ -830,7 +832,7 @@
         }
 
         var returnDate = new Date(year, month - 1, day);
-        
+
         return returnDate;
     }
 
@@ -921,7 +923,7 @@
 
         $('.serviceContainer').append(cloneService);
 
-        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+        //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneService.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
@@ -950,7 +952,7 @@
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
             var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-            if(serviceType != undefined && serviceType != "")
+            if (serviceType != undefined && serviceType != "")
                 $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
             /* Closes all the other panel groups except the one you clicked on */
@@ -974,7 +976,7 @@
                         if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
                     }
                 }
-                
+
             });
 
             $(this).find(".dtField").on('change', function (e) {
@@ -992,7 +994,7 @@
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
 
                 _onDateChange(day, calendaryDay, e);
-               
+
                 var isValid = _validateDate(fiscalYear, selectedDate);
                 if (!isValid) {
                     _showAlert("The Initiation and End Date must be within the selected school year", false);
@@ -1026,7 +1028,7 @@
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
                                         previousService.collapse('show');
                                         _showAlert('Student Service successfully deleted.', true)
-                                        
+
                                     }
                                     else {
                                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1123,7 +1125,7 @@
             });
 
             $(this).find('.saveService').on("click", function () {
-               
+
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
 
@@ -1133,11 +1135,11 @@
 
                 //check dates before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
-               
+
                 //don't allow user to save
                 if (!isValid)
                     return false;
-                
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SaveStudentService',
@@ -1148,12 +1150,12 @@
                             _showAlert(data.Message, true);
                         }
                         else {
-                            _showAlert('Unable to save the Student Service. Try again later.', false);                            
+                            _showAlert('Unable to save the Student Service. Try again later.', false);
                         }
                     },
                     error: function (data) {
                         _showAlert('Unable to connect to the database.', false);
-                        
+
                     }
                 });
             })
@@ -1166,7 +1168,7 @@
             if (lastDaySchoolYear == undefined) {
                 var origStartDateVal = new Date(dupEndDate);
                 var newEndDate = new Date(origStartDateVal.setFullYear(nextYear));
-              
+
                 var Month = newEndDate.getMonth() + 1;
                 var Day = newEndDate.getDate();
                 var Year = newEndDate.getFullYear();
@@ -1177,20 +1179,20 @@
                 var Month = lastDaySchoolYear.Month;
                 var Day = lastDaySchoolYear.Day;
                 var Year = lastDaySchoolYear.Year;
-                var formattedDate = Month + "/" + Day + "/" + Year;                
+                var formattedDate = Month + "/" + Day + "/" + Year;
                 endDateElement.val(formattedDate);
             }
 
-         
-            
+
+
             //setup start date - find by first year of selected fiscal year
             var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
             var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
 
             if (firstDayNextYear == undefined) {
                 var origStartDateVal = new Date(dupStartDate);
-                var newStartDate = new Date(origStartDateVal.setFullYear(nextYear-1));
-              
+                var newStartDate = new Date(origStartDateVal.setFullYear(nextYear - 1));
+
                 var Month = newStartDate.getMonth() + 1;
                 var Day = newStartDate.getDate();
                 var Year = newStartDate.getFullYear();
@@ -1198,7 +1200,7 @@
                 startDateElement.val(formattedDate);
             }
             else {
-                
+
                 if (firstDayNextYear != undefined) {
                     var Month = firstDayNextYear.Month;
                     var Day = firstDayNextYear.Day;
@@ -1212,151 +1214,146 @@
         });
     }
 
-    function _validateStartDate(dateVal)
-    {
+    function _validateStartDate(dateVal) {
         var startDateElement = $("#iepStartDate").val();
         var iepStartDate = new Date(startDateElement);
-        
+
         if (dateVal < iepStartDate) {
             _showAlert("The Initiation date must be after the IEP Initiation (" + iepStartDate.toLocaleDateString("en-US") + ")", false);
             return false;
         }
 
         return true;
-        
+
     }
 
-	function _showAlert(message, positive) {
+    function _showAlert(message, positive) {
 
-		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-			if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
-			else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
-			$("#alertMessage .moreinfo").html(message);
-			$("#alertMessage").fadeTo(3000, 1000).slideUp(1000, function () {
-				$("#alertMessage").slideUp(5000);
-			});
-		}
-	}
+        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
+            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+            $("#alertMessage .moreinfo").html(message);
+            $("#alertMessage").fadeTo(3000, 1000).slideUp(1000, function () {
+                $("#alertMessage").slideUp(5000);
+            });
+        }
+    }
 
-	function _validateDate(fiscalYear, calendarDay)
-	{
-	    //start date must be within the school year
-	    var firstDaySchoolYear = searchFirstDay(fiscalYear, fiscalYear - 1, 8);
-	    var lastDaySchoolYear = searchLastDay(fiscalYear, 5);
-	    var isValid = true;
+    function _validateDate(fiscalYear, calendarDay) {
+        //start date must be within the school year
+        var firstDaySchoolYear = searchFirstDay(fiscalYear, fiscalYear - 1, 8);
+        var lastDaySchoolYear = searchLastDay(fiscalYear, 5);
+        var isValid = true;
 
-	    if (firstDaySchoolYear != undefined && lastDaySchoolYear != undefined) {
-	       
-	        var calDate = createDate2(calendarDay);
-	       
-	        var firstDay = new Date(firstDaySchoolYear.Year, firstDaySchoolYear.Month - 1, firstDaySchoolYear.Day);
-	        var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month - 1, lastDaySchoolYear.Day);
-	        
-	        if ((calDate >= firstDay) && (calDate <= lastDay)) {
-	            isValid = true;
-	        }
-	        else {
-	            var showFirstDay = firstDaySchoolYear.Month + "/" + firstDaySchoolYear.Day + "/" + firstDaySchoolYear.Year;
-	            var showLastDay = lastDaySchoolYear.Month + "/" + lastDaySchoolYear.Day + "/" + lastDaySchoolYear.Year;
-	            isValid = false;
-	        }
-	    }
+        if (firstDaySchoolYear != undefined && lastDaySchoolYear != undefined) {
 
-	    return isValid;
-	}
+            var calDate = createDate2(calendarDay);
 
-	function _dateCheck(startDateElement, endDateElement, fiscalYearElement)
-	{
-	    //check dates before saving
-	    var isValid = true;
-	    var eDate = endDateElement.val();
-	    var endDate = eDate.split('/');
-	    var endDateObj = new Date(eDate);
-	    var sDate = startDateElement.val();
-	    var startDate = sDate.split('/');
-	    var startDateObj = new Date(sDate);
-	    var fiscalYear = fiscalYearElement.val();
-	    var startDateOk = _validateDate(fiscalYear, startDateElement.val());
-	    var endDateOk = _validateDate(fiscalYear, endDateElement.val());
-	    var isNoServiceStartDate = isNoServiceDay(startDate[2], startDate[0], startDate[1]);
-	    var isNoServiceEndDate = isNoServiceDay(endDate[2], endDate[0], endDate[1]);
+            var firstDay = new Date(firstDaySchoolYear.Year, firstDaySchoolYear.Month - 1, firstDaySchoolYear.Day);
+            var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month - 1, lastDaySchoolYear.Day);
 
-	    if (!startDateOk) {
-	        isValid = false;
-	        _showAlert("The Initiation must be within the selected school year", false);
-	        startDateElement.parent.addClass('has-error');
-	        return false;
-	    }
+            if ((calDate >= firstDay) && (calDate <= lastDay)) {
+                isValid = true;
+            }
+            else {
+                var showFirstDay = firstDaySchoolYear.Month + "/" + firstDaySchoolYear.Day + "/" + firstDaySchoolYear.Year;
+                var showLastDay = lastDaySchoolYear.Month + "/" + lastDaySchoolYear.Day + "/" + lastDaySchoolYear.Year;
+                isValid = false;
+            }
+        }
 
-	    if (!endDateOk)
-	    {
-	        isValid = false;
-	        _showAlert("The End Date must be within the selected school year", false);
-	        endDateElement.parent.addClass('has-error');
-	        return false;
-	    }
-	     
-	    //start date must be after IEP start date
-	    var isAfterIEP = _validateStartDate(startDateObj);
-	    if (!isAfterIEP) {
-	        isValid = false;	        
-	        return false;
-	    }
+        return isValid;
+    }
 
-	    //end date must be after
-	    if (endDateObj < startDateObj) {
-	        _showAlert("The End date must be after the Initiation date.", false);
-	        isValid = false;
-	        return false;
-	    }
+    function _dateCheck(startDateElement, endDateElement, fiscalYearElement) {
+        //check dates before saving
+        var isValid = true;
+        var eDate = endDateElement.val();
+        var endDate = eDate.split('/');
+        var endDateObj = new Date(eDate);
+        var sDate = startDateElement.val();
+        var startDate = sDate.split('/');
+        var startDateObj = new Date(sDate);
+        var fiscalYear = fiscalYearElement.val();
+        var startDateOk = _validateDate(fiscalYear, startDateElement.val());
+        var endDateOk = _validateDate(fiscalYear, endDateElement.val());
+        var isNoServiceStartDate = isNoServiceDay(startDate[2], startDate[0], startDate[1]);
+        var isNoServiceEndDate = isNoServiceDay(endDate[2], endDate[0], endDate[1]);
 
-	    if (isNoServiceEndDate || isNoServiceStartDate) {
-	        isValid = false;
+        if (!startDateOk) {
+            isValid = false;
+            _showAlert("The Initiation must be within the selected school year", false);
+            startDateElement.parent.addClass('has-error');
+            return false;
+        }
 
-	        if (isNoServiceEndDate) {
-	            _showAlert("The End date is not a valid Service date.", false);
-	            endDateElement.parent.addClass('has-error');
-	        }
-	        else if (isNoServiceStartDate) {
-	            _showAlert("The Initiation date is not a valid Service date", false);
-	            startDateElement.parent.addClass('has-error');
-	        }
-	        else
-	            _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
-	        
-	    }
-        
-	    return isValid;
+        if (!endDateOk) {
+            isValid = false;
+            _showAlert("The End Date must be within the selected school year", false);
+            endDateElement.parent.addClass('has-error');
+            return false;
+        }
 
-	}
+        //start date must be after IEP start date
+        var isAfterIEP = _validateStartDate(startDateObj);
+        if (!isAfterIEP) {
+            isValid = false;
+            return false;
+        }
 
-	function _onDateChange(day, calendaryDay, e)
-	{
-	    // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-	    if (day == 0) {
-	        e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
-	        e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-	        e.target.parentNode.classList.add('has-error');
-	        var error = e.target.title;
-	        _showAlert(error, false);
-	    } else if (day == 6) {
-	        e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
-	        e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-	        e.target.parentNode.classList.add('has-error');
-	        var error = e.target.title;
-	        _showAlert(error, false);
-	    } else if (isNoServiceDay(calendaryDay[2], calendaryDay[0], calendaryDay[1])) {
-	        e.target.setCustomValidity('OH NOES! That day is not is session.');
-	        e.target.title = 'OH NOES! That day is not is session.';
-	        e.target.parentNode.classList.add('has-error');
-	        var error = e.target.title;
-	        _showAlert(error, false);
-	    }
-	    else {
-	        e.target.setCustomValidity('');
-	        e.target.title = '';
-	        e.target.parentNode.classList.remove('has-error');
-	    }
-	}
+        //end date must be after
+        if (endDateObj < startDateObj) {
+            _showAlert("The End date must be after the Initiation date.", false);
+            isValid = false;
+            return false;
+        }
+
+        if (isNoServiceEndDate || isNoServiceStartDate) {
+            isValid = false;
+
+            if (isNoServiceEndDate) {
+                _showAlert("The End date is not a valid Service date.", false);
+                endDateElement.parent.addClass('has-error');
+            }
+            else if (isNoServiceStartDate) {
+                _showAlert("The Initiation date is not a valid Service date", false);
+                startDateElement.parent.addClass('has-error');
+            }
+            else
+                _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
+
+        }
+
+        return isValid;
+
+    }
+
+    function _onDateChange(day, calendaryDay, e) {
+        // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+        if (day == 0) {
+            e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
+            e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
+            e.target.parentNode.classList.add('has-error');
+            var error = e.target.title;
+            _showAlert(error, false);
+        } else if (day == 6) {
+            e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
+            e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
+            e.target.parentNode.classList.add('has-error');
+            var error = e.target.title;
+            _showAlert(error, false);
+        } else if (isNoServiceDay(calendaryDay[2], calendaryDay[0], calendaryDay[1])) {
+            e.target.setCustomValidity('OH NOES! That day is not is session.');
+            e.target.title = 'OH NOES! That day is not is session.';
+            e.target.parentNode.classList.add('has-error');
+            var error = e.target.title;
+            _showAlert(error, false);
+        }
+        else {
+            e.target.setCustomValidity('');
+            e.target.title = '';
+            e.target.parentNode.classList.remove('has-error');
+        }
+    }
 
 </script>

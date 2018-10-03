@@ -1,7 +1,10 @@
 ﻿@model GreenBushIEP.Models.StudentGoalsViewModel
 
 <style>
-    .default { width: 100% !important} /*needed for chosen placeholder to show when the element is initially hidden*/
+    .default {
+        width: 100% !important;
+    }
+    /*needed for chosen placeholder to show when the element is initially hidden*/
     .form-inline .form-group {
         margin-right: 10px;
     }
@@ -73,7 +76,14 @@
         font-size: 24px;
         color: red;
     }
+
+    .search-choice span {
+        position: relative;
+        top: 9px;
+        font-size: 16px;
+    }
 </style>
+
 <link href="/Content/chosen.css" rel="stylesheet" />
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
@@ -82,17 +92,14 @@
 </div>
 <div class="modal-body">
     <div class="container" id="StudentGoals">
-
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
                 <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
-       
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
-
         <div class="StudentGoalBenchmark hidden" id="defaultObjective">
             <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
             <div class="form-group" style="margin-bottom: 0;">
@@ -112,7 +119,7 @@
                             <li data-value="5"><a href="#">Time Sample</a></li>
                             <li data-value="6"><a href="#">Demonstration/Performance</a></li>
                             <li data-value="7"><a href="#">Other</a></li>
-                        </ul>                        
+                        </ul>
                     </div>
                     <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
                     <span class="input-group-btn">
@@ -274,7 +281,7 @@
                                                     <li data-value="8"><a href="#">Math</a></li>
                                                     <li data-value="9"><a href="#">Written Language</a></li>
                                                 </ul>
-                                                
+
                                             </div>
                                             <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
                                             <span class="input-group-addon">
@@ -297,15 +304,15 @@
                                     </div>
                                     <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
                                     <div class="form-group">
-                                        <div class="input-group-btn bs-dropdown-to-select-group">                                          
-                                             <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..."  class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">                                                                                              
-                                                 <option value="1">Written Observation</option>
-                                                 <option value="2">Written Performance</option>
-                                                 <option value="3">Oral Performance</option>
-                                                 <option value="4">Criterion-Referenced Test</option>
-                                                 <option value="5">Time Sample</option>
-                                                 <option value="6">Demonstration/Performance</option>
-                                                 <option value="7">Other</option>                           
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..." class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                <option value="1">Written Observation</option>
+                                                <option value="2">Written Performance</option>
+                                                <option value="3">Oral Performance</option>
+                                                <option value="4">Criterion-Referenced Test</option>
+                                                <option value="5">Time Sample</option>
+                                                <option value="6">Demonstration/Performance</option>
+                                                <option value="7">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -480,7 +487,7 @@
                                                     <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
-                                                        <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString())" type="hidden">
+                                                        <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
                                                     </span>
                                                 </div>
                                             </div>
@@ -835,8 +842,8 @@
         cloneGoal.find("textarea[name='reportOfAnnualGoalComments40']").attr("name", "reportOfAnnualGoalComments4" + goalCount);
 
         var evals = cloneGoal.find("select[name='StudentGoalBenchmarkMethods0']").attr("id", "StudentGoalBenchmarkMethods" + goalCount);
-        evals.chosen({ width: "100%"});
-        
+        evals.chosen({ width: "100%" });
+
         // reset the id values of the panel and accordian elements
         var goalAccordion = cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
         goalAccordion.attr('href', '#collapse' + goalCount);
@@ -951,9 +958,9 @@
                     .children('.dropdown-toggle').dropdown('toggle');
                 $target.closest('.bs-dropdown-to-select-group')
                     .find('[data-bind="bs-drp-sel-label"]').text($target[0].innerText);
-                                
+
                 _checkGoal(selectedVal, goalBaselineElement);
-                
+
                 return false;
             });
 
@@ -1071,7 +1078,7 @@
             });
         });
 
-       
+
 
 
         initObjective();
@@ -1175,8 +1182,7 @@
         });
     }
 
-    function _checkGoal(goalTypeId, goalBaselineElement)
-    {
+    function _checkGoal(goalTypeId, goalBaselineElement) {
         var iepID = $("#IEPid").val();
 
         $.ajax({
@@ -1188,7 +1194,7 @@
                 if (data.Result) {
                     goalBaselineElement.val(data.Message);
                 }
-                
+
             },
             error: function (data) {
                 console.log("Error getting baseline goal text.");
@@ -1209,7 +1215,4 @@
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
     });
-
-
-
 </script>

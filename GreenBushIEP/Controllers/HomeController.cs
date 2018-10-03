@@ -290,8 +290,8 @@ namespace GreenbushIep.Controllers
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-
                 }
+
                 var model = new StudentViewModel();
                 model.Teacher = nurse;
                 model.Students = students.ToList();

@@ -1415,12 +1415,6 @@ namespace GreenBushIEP.Controllers
 
             // Redirect on error:
             filterContext.Result = RedirectToAction("Index", "Home");
-
-            // OR set the result without redirection:
-            //filterContext.Result = new ViewResult
-            //{
-            //    ViewName = "~/Views/Error/Index.cshtml"
-            //};
         }
 
         #region helpers
