@@ -648,11 +648,13 @@
                                 data: { studentServiceId: studentServiceId },
                                 dataType: "json",
                                 success: function (data) {
-                                    if (data.Result == "success") {
+									if (data.Result == "success") {
+										
                                         var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
                                         previousService.collapse('show');
-                                        _showAlert('Student Service successfully deleted.', true)                                        
+										_showAlert('Student Service successfully deleted.', true)                                        
+										$(window).trigger("deleting.bs.modal");
                                     }
                                     else {
                                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -754,7 +756,8 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.Result == "success") {
-                            _showAlert(data.Message, true);
+							_showAlert(data.Message, true);
+							$(window).trigger("saving.bs.modal");
                             return false;
                         }
                         else {
@@ -775,7 +778,7 @@
                 });
             });
 
-            $(this).find('.chosen-select').chosen({ width: "100%" });
+			$(this).find('.chosen-select').chosen({ width: "100%" });
 
         });
     }
