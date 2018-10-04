@@ -848,6 +848,7 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
+                tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
                 // EDIT the user
@@ -881,42 +882,41 @@ namespace GreenBushIEP.Controllers
                 List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
 
-                // save the user to all the districts that was selected.
-                if (collection["misDistrict"] != null)
+                List<string> districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                List<string> buildings = new List<string>(collection["buildingIds"].ToString().Split(','));
+
+                // removes any buildings not in the current list of usd's.
+                List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD)).ToList();
+
+                if(districts != null)
                 {
-                    foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                    foreach(string district in districts)
                     {
-                        if (districtMappings.Where(m => m.USD == usd).Count() == 0)
+                        districtMappings.Add(new tblOrganizationMapping()
                         {
+                            AdminID = submitter.UserID,
+                            UserID = id,
+                            USD = district
+                        });
 
-                            districtMappings.Add(new tblOrganizationMapping()
-                            {
-                                AdminID = db.tblOrganizationMappings.Where(o => o.UserID == id).FirstOrDefault().AdminID,
-                                UserID = id,
-                                USD = usd
-                            });
-
-                            buildingMappings.Add(new tblBuildingMapping()
-                            {
-                                BuildingID = "0",
-                                UserID = id,
-                                USD = usd,
-                            });
-
-                        }
+                        buildingMappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = "0",
+                            UserID = id,
+                            USD = district,
+                        });
                     }
                 }
 
-                // save the user to all the buildings that was selected.
-                if (collection["buildingIds"] != null)
+                if(buildings != null)
                 {
-                    foreach (string building in collection["buildingIds"].ToString().Split(','))
+                    foreach(tblBuilding building in userBuildings)
                     {
                         buildingMappings.Add(new tblBuildingMapping()
                         {
-                            BuildingID = building,
+                            BuildingID = building.BuildingID,
                             UserID = id,
-                            USD = db.tblBuildings.Where(b => b.BuildingID == building).Single().USD
+                            USD = building.USD
                         });
                     }
                 }
