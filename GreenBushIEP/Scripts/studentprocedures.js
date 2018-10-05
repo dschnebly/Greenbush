@@ -62,17 +62,6 @@
         $('.absolute-wrapper').toggleClass('slide-in');
     });
 
-    // Attach Event
-    // when the user clicks one of the filter buttons
-    $(".filter-button").on('click', function (e) {
-        var value = $(this).attr('data-filter');
-        if (value === "all") {
-            $('.filter').show('1000');
-        } else {
-            $('.filter').not('.' + value).hide('1000');
-            $('.filter').filter('.' + value).show('1000');
-        }
-    });
 
     // Attach Event
     // when the user clicks the Save Dates button
