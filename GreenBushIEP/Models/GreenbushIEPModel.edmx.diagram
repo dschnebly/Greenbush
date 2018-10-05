@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="28">
+      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="66">
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.sysdiagram" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="8" PointY="7" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAuditLog" Width="1.5" PointX="10.75" PointY="3.75" />
@@ -45,7 +45,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" Width="1.5" PointX="18.75" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblPlacementCode" Width="1.5" PointX="20.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" Width="1.5" PointX="3" PointY="8.375" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProvider" Width="1.5" PointX="0.75" PointY="3.375" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblRole" Width="1.5" PointX="20.75" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" Width="1.5" PointX="20.75" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblService" Width="1.5" PointX="3" PointY="2.375" />
@@ -66,9 +65,10 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="22.75" PointY="20.75" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProvider" Width="1.5" PointX="0.75" PointY="4.125" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

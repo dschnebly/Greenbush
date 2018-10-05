@@ -614,8 +614,9 @@
           </Key>
           <Property Name="ProviderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ProviderCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tblRoles">
           <Key>
@@ -1354,7 +1355,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
           <EntitySet Name="tblPlacementCodes" EntityType="IndividualizedEducationProgramModel.tblPlacementCode" />
           <EntitySet Name="tblProviderDistricts" EntityType="IndividualizedEducationProgramModel.tblProviderDistrict" />
-          <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <EntitySet Name="tblRoles" EntityType="IndividualizedEducationProgramModel.tblRole" />
           <EntitySet Name="tblServiceFrequencies" EntityType="IndividualizedEducationProgramModel.tblServiceFrequency" />
           <EntitySet Name="tblServices" EntityType="IndividualizedEducationProgramModel.tblService" />
@@ -1381,6 +1381,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblDistrict" EntitySet="tblDistricts" />
           </AssociationSet>
+          <AssociationSet Name="tblServiceGoals" Association="IndividualizedEducationProgramModel.tblServiceGoals">
+            <End Role="tblGoal" EntitySet="tblGoals" />
+            <End Role="tblService" EntitySet="tblServices" />
+          </AssociationSet>
+          <FunctionImport Name="up_ReportExcessCost" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportExcessCost_Result)">
+          <Parameter Name="BuildingId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblProviders" EntityType="IndividualizedEducationProgramModel.tblProvider" />
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
@@ -1389,13 +1397,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
-          <AssociationSet Name="tblServiceGoals" Association="IndividualizedEducationProgramModel.tblServiceGoals">
-            <End Role="tblGoal" EntitySet="tblGoals" />
-            <End Role="tblService" EntitySet="tblServices" />
-          </AssociationSet>
-          <FunctionImport Name="up_ReportExcessCost" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportExcessCost_Result)">
-            <Parameter Name="BuildingId" Mode="In" Type="String" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2131,17 +2132,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
         </EntityType>
-        <EntityType Name="tblProvider">
-          <Key>
-            <PropertyRef Name="ProviderID" />
-          </Key>
-          <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
-          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
-        </EntityType>
         <EntityType Name="tblRole">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -2176,8 +2166,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FiledOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -2490,6 +2480,29 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="tblServiceGoals">
+          <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
+          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="up_ReportExcessCost_Result">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int64" Name="KIDSID" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="tblProvider">
+          <Key>
+            <PropertyRef Name="ProviderID" />
+          </Key>
+          <Property Name="ProviderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
+        </EntityType>
         <Association Name="FK_tblProviderDistricts_ProviderID">
           <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
           <End Type="IndividualizedEducationProgramModel.tblProviderDistrict" Role="tblProviderDistrict" Multiplicity="*" />
@@ -2514,17 +2527,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="tblServiceGoals">
-          <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
-          <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
-        </Association>
-        <ComplexType Name="up_ReportExcessCost_Result">
-          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
-          <Property Type="Int64" Name="KIDSID" Nullable="false" />
-          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
-          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3267,16 +3269,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblProviders">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProvider">
-              <MappingFragment StoreEntitySet="tblProviders">
-                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblRoles">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblRole">
               <MappingFragment StoreEntitySet="tblRoles">
@@ -3608,6 +3600,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblProviders">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblProvider">
+              <MappingFragment StoreEntitySet="tblProviders">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
