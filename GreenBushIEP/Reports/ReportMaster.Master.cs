@@ -90,9 +90,9 @@ namespace GreenBushIEP.Report
 
 		
 
-		public static List<tblProvider> GetProviders(string userName)
+		public static List<ProviderViewModel> GetProviders(string userName)
 		{
-			
+			var providerList = new List<ProviderViewModel>();
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
 			{
@@ -103,17 +103,20 @@ namespace GreenBushIEP.Report
 								 join pd in db.tblProviderDistricts on info.USD equals pd.USD
 								 join p in db.tblProviders on pd.ProviderID equals p.ProviderID
 								 where o.AdminID == user.UserID && !u.Archive.HasValue
-								 select p).Distinct().ToList();
+								 select p).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
-
-				return providers;
+				foreach (var provider in providers)
+					providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID});
 			}
 			else
 			{
 				var providers = db.tblProviders.Where(p => p.UserID == user.UserID).ToList();
-
-				return providers;
+				foreach (var provider in providers)
+					providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID });
+							
 			}
+
+			return providerList;
 
 		}
 

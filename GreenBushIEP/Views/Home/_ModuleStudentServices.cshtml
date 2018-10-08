@@ -198,7 +198,7 @@
                                                     {
                                                         foreach (var serviceProvider in Model.serviceProviders)
                                                         {
-                                                            <option value="@serviceProvider.ProviderID">@serviceProvider.Name</option>
+                                                            <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                         }
                                                     }
                                                 </select>
@@ -387,7 +387,7 @@
                                                         {
                                                             foreach (var serviceProvider in Model.serviceProviders)
                                                             {
-                                                                <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.Name</option>
+                                                                <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                             }
                                                         }
                                                     </select>

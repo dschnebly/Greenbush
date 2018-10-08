@@ -153,8 +153,10 @@ namespace GreenBushIEP.Models
 
     public class ProviderViewModel
     {
-        public string Name { get; set; }
-        public int ProviderID { get; set; }
+		public string Name { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public int ProviderID { get; set; }
         public string ProviderCode { get; set; }
     }
 

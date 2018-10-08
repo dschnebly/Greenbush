@@ -216,7 +216,9 @@
                 {
                     foreach (var provider in Model.listOfProviders)
                     {
-                        <li class="list-group-item"><span>@provider.Name: @provider.ProviderCode </span><i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i><i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.Name", "@provider.ProviderCode");'></i></li>
+                        <li class="list-group-item"><span>@provider.FirstName @provider.LastName : @provider.ProviderCode </span>
+							<i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i>
+							<i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.FirstName", "@provider.LastName", "@provider.ProviderCode");'></i></li>
                     }
                 }
             </ul>
@@ -230,8 +232,10 @@
             <div class="modal-body">
                 <div class="col-md-12 district-selection">
                     <input type="hidden" id="providerId" name="providerId" class="form-control" value="0" />
-                    <label>Name</label><br />
-                    <input type="text" id="providerName" name="providerName" class="form-control" /><br />
+                    <label>First Name</label><br />
+                    <input type="text" id="providerFirstName" name="providerFirstName" class="form-control" /><br />
+					<label>Last Name</label><br />
+					<input type="text" id="providerLastName" name="providerLastName" class="form-control" /><br />
                     <label>District</label><br />
                     <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                         @if (Model.districts != null)
@@ -322,9 +326,10 @@
         }
     }
 
-    function editProvider(id, name, code) {
+    function editProvider(id, fname, lname, code) {
         var providerId = id;
-        var providerName = name;
+		var providerFirstName = fname;
+		var providerLastName = lname;
         var providerCode = code;
 
         //get districts
@@ -336,7 +341,7 @@
             success: function (data) {
                 if (data.length !== 0)
                 {
-                    edit(providerId, providerName, providerCode, data.districts);
+                    edit(providerId, providerFirstName, providerLastName, providerCode, data.districts);
                 }
                 else
                 {
@@ -358,9 +363,10 @@
         });
     }
 
-    function edit(providerId, name, code, districts) {
+    function edit(providerId, fname, lname, code, districts) {
 
-        $("#providerName").val(name);
+		$("#providerFirstName").val(fname);
+		$("#providerLastName").val(lname);
         $("#misDistrict").val(districts).trigger("chosen:updated");
         selectedDistricts = districts;
         $("#providerCode").val(code);
@@ -380,13 +386,17 @@
     }
 
     function updateProvider() {
-        var name = $("#providerName").val();
+		var fname = $("#providerFirstName").val();
+		var lname = $("#providerLastName").val();
         var district = selectedDistricts;
         var code = $("#providerCode").val();
         var id = $("#providerId").val();
         var errors = "";
-        if (name == "" || name == undefined) {
-            errors += "Name is required. ";
+        if (fname == "" || fname == undefined) {
+            errors += "First Name is required. ";
+		}
+		if (lname == "" || lname == undefined) {
+            errors += "Last Name is required. ";
         }
 
         if (code == "" || code == undefined) {
@@ -405,7 +415,7 @@
 
         console.log(district);
 
-        $.post('@Url.Action("UpdateProvidersList", "Home")', { pk: id, providerName: name, providerDistrict: district, providerCode: code }, function (response) {
+        $.post('@Url.Action("UpdateProvidersList", "Home")', { pk: id, providerFirstName: fname, providerLastName: lname, providerDistrict: district, providerCode: code }, function (response) {
             if (!$.isEmptyObject(response)) {
                 if (response.Result == "success") {
                     updateProviderList(response.providerList);
@@ -426,7 +436,8 @@
     }
 
     function clearModal() {
-        $("#providerName").val("");
+		$("#providerFirstName").val("");
+		$("#providerLastName").val("");
         $("#misDistrict").val("").trigger('chosen:updated');;
         selectedDistricts = "";
         $("#providerCode").val("");
@@ -450,9 +461,16 @@
 
         $('ul.list-group').append("<li class='head'>List of Providers</li>");
 
-        providerList.forEach(function (provider) {
-            var providerName = provider.Name.replace(/'/g, '&#39;');
-            var listgroupitem = '<li class="list-group-item"><span>' + provider.Name + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
+		providerList.forEach(function (provider) {
+			var providerFirstName = "";
+			var providerLastName = "";
+
+			if (provider.providerFirstName != null && provider.providerFirstName != undefined)
+				provider.providerFirstName.replace(/'/g, '&#39;');
+			if (provider.providerLastName != null && provider.providerLastName != undefined)
+				providerLastName = provider.providerLastName.replace(/'/g, '&#39;');
+
+            var listgroupitem = '<li class="list-group-item"><span>' + provider.FirstName + " " + provider.LastName + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerFirstName + "\", \"" + providerLastName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
 
             $('ul.list-group').append(listgroupitem);
         });

@@ -399,7 +399,7 @@ namespace GreenbushIep.Controllers
 
         [HttpPost]
         [Authorize(Roles = mis)]
-        public ActionResult UpdateProvidersList(int pk, string providerName, string[] providerDistrict, string providerCode)
+        public ActionResult UpdateProvidersList(int pk, string providerFirstName, string providerLastName, string[] providerDistrict, string providerCode)
         {
             tblUser owner = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -409,8 +409,9 @@ namespace GreenbushIep.Controllers
                 if (provider != null)
                 {
 
-                    provider.FirstName = providerName.ToString();
-                    provider.ProviderCode = providerCode.ToString();
+                    provider.FirstName = providerFirstName.ToString();
+					provider.LastName = providerLastName.ToString();
+					provider.ProviderCode = providerCode.ToString();
 
                     // blows away all the districts
                     foreach (var existingPD in provider.tblProviderDistricts.ToList())
@@ -426,15 +427,16 @@ namespace GreenbushIep.Controllers
                         db.SaveChanges();
                     }
 
-                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.FirstName });
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
 
-                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.LastName).ThenBy(o => o.FirstName) }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     tblProvider newProvider = new tblProvider();
-                    newProvider.FirstName = providerName.ToString();
-                    newProvider.ProviderCode = providerCode.ToString();
+                    newProvider.FirstName = providerFirstName.ToString();
+					newProvider.LastName = providerLastName.ToString();
+					newProvider.ProviderCode = providerCode.ToString();
                     newProvider.UserID = owner.UserID;
 
                     //can't have duplicate provider code
@@ -463,9 +465,9 @@ namespace GreenbushIep.Controllers
                         return Json(new { Result = "error", id = pk, errors = "Provider code already exists" }, JsonRequestBehavior.AllowGet);
                     }
 
-                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.FirstName });
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
 
-                    return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.LastName).ThenBy(o => o.FirstName) }, JsonRequestBehavior.AllowGet);
                 }
             }
 
@@ -488,9 +490,9 @@ namespace GreenbushIep.Controllers
                     db.tblProviders.Remove(provider);
                     db.SaveChanges();
 
-                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, Name = o.FirstName });
+                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
 
-                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.Name) }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", id = provider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.LastName).ThenBy(o => o.FirstName) }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { Result = "error", id = providerId, errors = "Unknown Provider Name." }, JsonRequestBehavior.AllowGet);
