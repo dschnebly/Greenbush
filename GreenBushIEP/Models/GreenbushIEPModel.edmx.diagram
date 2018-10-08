@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCounty" Width="1.5" PointX="14.75" PointY="4.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDisability" Width="1.5" PointX="14.75" PointY="7.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="8" PointY="2.125" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" Width="1.5" PointX="14.75" PointY="10.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormArchive" Width="1.5" PointX="14.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" Width="1.5" PointX="2.75" PointY="15.75" />
@@ -64,11 +63,13 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ServiceExport" Width="1.5" PointX="22.75" PointY="14.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="22.75" PointY="20.75" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblDistricts_tblUsers_UserID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblProvider" Width="1.5" PointX="0.75" PointY="4.125" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContact" Width="1.5" PointX="27.625" PointY="1" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="25.375" PointY="1.625" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

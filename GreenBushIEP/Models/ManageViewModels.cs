@@ -139,15 +139,15 @@ namespace GreenBushIEP.Models
 
     public class MISDistricContactViewModel
     {
-        public List<tblUser> contacts { get; set; }
-        public List<tblDistrict> currentDistricts { get; set; }
-        public int districtContact { get; set; }
+        public List<tblDistrict> myDistricts { get; set; }
+        public tblDistrict currentDistrict { get; set; }
+        public tblContact districtContact { get; set; }
 
         public MISDistricContactViewModel()
         {
-            contacts = new List<tblUser>();
-            currentDistricts = new List<tblDistrict>();
-            districtContact = 0;
+            myDistricts = new List<tblDistrict>();
+            currentDistrict = new tblDistrict();
+            districtContact = new tblContact();
         }
     }
 

@@ -371,24 +371,9 @@ namespace GreenbushIep.Controllers
             {
 
                 MISDistricContactViewModel model = new MISDistricContactViewModel();
-
-                List<tblDistrict> MISDistrict = (from organizations in db.tblOrganizationMappings
-                                                 join districts in db.tblDistricts
-                                                   on organizations.USD equals districts.USD
-                                                 where organizations.UserID == MIS.UserID
-                                                 select districts).ToList();
-
-                tblDistrict defaultDistrict = MISDistrict.FirstOrDefault();
-
-                List<tblUser> districtContacts = (from organization in db.tblOrganizationMappings
-                                                  join users in db.tblUsers
-                                                    on organization.UserID equals users.UserID
-                                                  where organization.USD == defaultDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
-                                                  select users).ToList();
-
-                model.currentDistricts = MISDistrict;
-                model.contacts = districtContacts;
-                model.districtContact = MISDistrict.FirstOrDefault().ContactUserID.GetValueOrDefault();
+                model.myDistricts = (from buildingMaps in db.tblBuildingMappings join districts in db.tblDistricts on buildingMaps.USD equals districts.USD where buildingMaps.UserID == MIS.UserID select districts).Distinct().ToList();
+                model.currentDistrict = model.myDistricts.FirstOrDefault();
+                model.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == model.currentDistrict.USD select contact).FirstOrDefault();
 
                 return PartialView("_ModuleDistrictContact", model);
             }

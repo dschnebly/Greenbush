@@ -14,15 +14,21 @@ namespace GreenBushIEP.Models
     
     public partial class tblDistrict
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblDistrict()
+        {
+            this.tblContacts = new HashSet<tblContact>();
+        }
+    
         public string USD { get; set; }
         public string DistrictName { get; set; }
         public Nullable<int> Active { get; set; }
         public bool DOC { get; set; }
         public string Zip { get; set; }
         public string State { get; set; }
-        public Nullable<int> ContactUserID { get; set; }
         public bool isGBMedicaid { get; set; }
     
-        public virtual tblUser tblUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblContact> tblContacts { get; set; }
     }
 }
