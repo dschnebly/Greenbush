@@ -465,10 +465,10 @@
 			var providerFirstName = "";
 			var providerLastName = "";
 
-			if (provider.providerFirstName != null && provider.providerFirstName != undefined)
-				provider.providerFirstName.replace(/'/g, '&#39;');
-			if (provider.providerLastName != null && provider.providerLastName != undefined)
-				providerLastName = provider.providerLastName.replace(/'/g, '&#39;');
+			if (provider.FirstName != null && provider.FirstName != undefined)
+				providerFirstName = provider.FirstName.replace(/'/g, '&#39;');
+			if (provider.LastName != null && provider.LastName != undefined)
+				providerLastName = provider.LastName.replace(/'/g, '&#39;');
 
             var listgroupitem = '<li class="list-group-item"><span>' + provider.FirstName + " " + provider.LastName + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerFirstName + "\", \"" + providerLastName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
 
