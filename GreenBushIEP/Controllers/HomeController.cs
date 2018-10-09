@@ -1069,17 +1069,26 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
-                StudentGoalsViewModel model = new StudentGoalsViewModel();
+				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+				//bool isReadOnly = false;
+				//bool canAddProgress = false;
+				StudentGoalsViewModel model = new StudentGoalsViewModel();
                 model.studentId = studentId;
                 model.iepId = iep.IEPid;
+				model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+				model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
 
-                List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
+
+				List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
                     model.studentGoals.Add(new StudentGoal(goal.goalID));
                 }
 
-                return PartialView("_ModuleStudentGoals", model);
+
+				
+
+				return PartialView("_ModuleStudentGoals", model);
             }
 
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());
