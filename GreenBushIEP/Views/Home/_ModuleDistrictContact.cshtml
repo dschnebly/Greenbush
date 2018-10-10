@@ -22,7 +22,7 @@
                         @foreach (var district in Model.myDistricts)
                         {
                             string Selected = Model.myDistricts.IndexOf(district) == 0 ? "Selected" : string.Empty;
-                            <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
+                        <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
                         }
                     </select>
                 </div>
@@ -35,67 +35,124 @@
         <div class="row">
             <h3>District Contact</h3>
         </div>
-        <div class="row" style="margin-top: 8px;">
-            <div class="col-md-12" style="padding-right: 0; padding-left: 0;">
-                <!-- form user info -->
-                <form class="form" role="form" autocomplete="off">
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">First name</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="Jane">
-                        </div>
+        <div class="form-group" style="margin-left: -15px; margin-top: 15px;">
+            <!-- form user info -->
+            <form class="form" role="form" id="districtForm">
+                <input type="hidden" name="districtUSD" id="districtUSD" value="@Model.currentDistrict.USD" />
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Full Name</label>
+                    <div class="col-md-10">
+                        <input name="districtContact" class="form-control" type="text" placeholder="i.e. Jane Smith" value="">
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">Last name</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="Bishop">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Email</label>
+                    <div class="col-md-10">
+                        <input name="districtEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">Email</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="email" value="email@gmail.com">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Address 1</label>
+                    <div class="col-md-10">
+                        <input name="districtContactAddress1" id="districtContactAddress1" class="form-control" placeholder="Street Address" type="text" data-validate="true" />
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">Address 1</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Address 2</label>
+                    <div class="col-md-10">
+                        <input name="districtContactAddress2" id="districtContactAddress2" class="form-control norequired" placeholder="Apartment/Suite/Room" type="text" />
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">Address 2</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="janeuser">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">City</label>
+                    <div class="col-md-10">
+                        <input name="districtCity" id="districtCity" class="form-control" placeholder="Girad" type="text" />
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">State</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="janeuser">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">State</label>
+                    <div class="col-md-10">
+                        <select name="districtState" id="districtState" class="form-control">
+                            <option value="AL">AL</option>
+                            <option value="AK">AK</option>
+                            <option value="AZ">AZ</option>
+                            <option value="AR">AR</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DE">DE</option>
+                            <option value="DC">DC</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="IA">IA</option>
+                            <option value="KS" selected="selected">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="ME">ME</option>
+                            <option value="MD">MD</option>
+                            <option value="MA">MA</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MS">MS</option>
+                            <option value="MO">MO</option>
+                            <option value="MT">MT</option>
+                            <option value="NE">NE</option>
+                            <option value="NV">NV</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NY">NY</option>
+                            <option value="NC">NC</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WV">WV</option>
+                            <option value="WI">WI</option>
+                            <option value="WY">WY</option>
+                        </select>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label">Zip Code</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" value="janeuser">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Zip Code</label>
+                    <div class="col-md-10">
+                        <input name="districtContactZipCode" id="districtContactZipCode" class="form-control" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true">
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label form-control-label"></label>
-                        <div class="col-md-10">
-                            <input type="reset" class="btn btn-secondary" value="Cancel">&nbsp;&nbsp;
-                            <input type="button" class="btn btn-primary" value="Save Changes">
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label">Phone</label>
+                    <div class="col-md-10">
+                        <input name="districtContactPhone" class="form-control" placeholder="620-111-1111" value="">
                     </div>
-                </form>
-                <!-- /form user info -->
-            </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label form-control-label"></label>
+                    <div class="col-md-10">
+                        <button type="button" class="formbtn btn btn-danger btn-lg pull-right" id="RemoveContact"><i class="glyphicon glyphicon-trash"></i>&nbsp;Remove</button>
+                        <button type="submit" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /form user info -->
         </div>
     </div>
-    <div class="ajax-loader" style="visibility: hidden;">
-        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="updating contacts">
-    </div>
+</div>
+<div class="ajax-loader" style="visibility: hidden;">
+    <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="updating contacts">
 </div>
 <div class="modal-footer">
     <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
@@ -103,8 +160,6 @@
 
 <script>
     $(function () {
-        init();
-
         // event fired if the user selects a different option in the select
         $('#selectedDistrict').on('change', function (event) {
 
@@ -124,23 +179,23 @@
                     $(".ajax-loader img").css("visibility", "hidden");
 
                     if (data.Result == "success") {
-
-                        // clear the ul li elements.
-                        $('ul.list-group').empty();
-
-                        // foreach contact, add them the ul
-                        data.Message.forEach(function (value, index) {
-                            var isOpen = (value.isContact) ? "open" : "";
-                            $('ul.list-group').append('<li class="list-group-item ' + isOpen + '" data-contactId="' + value.UserId + '">' + value.FirstName + ' ' + value.LastName + '<span class="show-menu"><span class="glyphicon glyphicon-chevron-right"></span></span><ul class="list-group-submenu"><li class="list-group-submenu-item success">District Contact</li></ul></li>');
-                        });
-
-                        // fire off the event handlers.
-                        init();
+                        if (data.Message == null) {
+                            $("#districtForm").trigger("reset");
+                            $('input[name="districtUSD"]').val(districtUSD);
+                        }
+                        else {
+                            $('input[name="districtUSD"]').val(data.Message.USD);
+                            $('input[name="districtContact"]').val(data.Message.ContactName);
+                            $('input[name="districtEmail"]').val(data.Message.Email);
+                            $('input[name="districtContactAddress1"]').val(data.Message.Address1);
+                            $('input[name="districtContactAddress2"]').val(data.Message.Address2);
+                            $('input[name="districtCity"]').val(data.Message.City);
+                            $('input[name="districtState"]').val(data.Message.State);
+                            $('input[name="districtContactZipCode"]').val(data.Message.Zip);
+                            $('input[name="districtContactPhone"]').val(data.Message.Phone);
+                        }
                     }
                     else {
-                        $('ul.list-group').empty();
-
-                        $("#alertMessage").toggleClass("alert-success alert-danger");
                         $("#alertMessage .moreinfo").html(data.Message);
                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                             $("#alertMessage").slideUp(500);
@@ -151,7 +206,115 @@
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
 
-                    $("#alertMessage").toggleClass("alert-success alert-danger");
+                    $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+        });
+
+        $('#RemoveContact').on('click', function () {
+            var answer = confirm("Are you sure you want to delete this contact?");
+
+            if (answer == true) {
+                $('.ajax-loader').css("visibility", "hidden");
+                $(".ajax-loader img").css("visibility", "hidden");
+
+                var districtUSD = $("#selectedDistrict option:selected").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/RemoveDistrictContact',
+                    dataType: 'json',
+                    data: { USD: districtUSD },
+                    async: true,
+                    success: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        if (data.Result == "success") {
+                            $("#alertMessage").toggleClass("alert-success alert-danger");
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                                $("#alertMessage").toggleClass("alert-success alert-danger");
+                            });
+
+                            $('#districtForm').find(':input').each(function () {
+                                switch (this.type) {
+                                    case 'email':
+                                    case 'number':
+                                    case 'text':
+                                        $(this).val('');
+                                        break;
+                                }
+
+                                $("#districtState option[value='KS']").attr("selected", "selected");
+                            });
+                        }
+                        else {
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+
+                        $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                });
+            }
+        });
+
+        $('#SaveForm').on('click', function (e) {
+            e.preventDefault();
+
+            // validate the form
+
+
+            $('.ajax-loader').css("visibility", "hidden");
+            $(".ajax-loader img").css("visibility", "hidden");
+
+            var districtUSD = $("#selectedDistrict option:selected").val();
+            var districtContact = $("#districtForm").serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/AddDistrictContact',
+                dataType: 'json',
+                data: districtContact,
+                async: false,
+                success: function (data) {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+
+                    if (data.Result == "success") {
+
+                        $("#alertMessage").toggleClass("alert-danger alert-success");
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                            $("#alertMessage").toggleClass("alert-danger alert-success");
+                        });
+                    }
+                    else {
+                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                },
+                error: function (data) {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+
                     $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
                     $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                         $("#alertMessage").slideUp(500);
@@ -161,68 +324,4 @@
         });
     });
 
-    // hooks up all the events
-    function init() {
-
-        if ($('.list-group-item').length > 0) {
-
-            $('.list-group-item > .show-menu').on('click', function (event) {
-
-                event.preventDefault();
-                var toggleElem = $(this).closest('li').toggleClass('open');
-
-                // close other opened li
-                $('.list-group-item').not(toggleElem).each(function () {
-                    if ($(this).closest('li').hasClass('open')) {
-                        otherContact = $(this);
-                        $(this).removeClass('open');
-                    }
-                });
-
-                $('.ajax-loader').css("visibility", "visible");
-                $(".ajax-loader img").css("visibility", "visible");
-
-                var districtUSD = $("#selectedDistrict option:selected").val();
-                var contactId = $(toggleElem).data('contactid');
-                var isContact = toggleElem.hasClass('open');
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/Manage/AddDistrictContact',
-                    dataType: 'json',
-                    data: { USD: districtUSD, contactId: contactId, isContact: isContact },
-                    async: false,
-                    success: function (data) {
-                        $('.ajax-loader').css("visibility", "hidden");
-                        $(".ajax-loader img").css("visibility", "hidden");
-
-                        if (data.Result !== "success") {
-                            toggleElem.removeClass('open');
-
-                            if (otherContact != null) {
-                                otherContact.addClass('open');
-                            }
-                        }
-
-                        $("#alertMessage").removeClass("alert-danger");
-                        $("#alertMessage").addClass(" alert-success");
-                        $("#alertMessage .moreinfo").html(data.Message);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    },
-                    error: function (data) {
-                        $('.ajax-loader').css("visibility", "hidden");
-                        $(".ajax-loader img").css("visibility", "hidden");
-
-                        $("#alertMessage").toggleClass("alert-success alert-danger");
-                        $("#alertMessage .moreinfo").html('Unknown error occured while attempting to connect with the server.');
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
-                });
-            });
-        }
-    }
 </script>

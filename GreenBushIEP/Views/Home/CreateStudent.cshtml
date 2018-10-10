@@ -479,7 +479,7 @@
         right: 0px;
     }
 
-	.onoffswitch2 {
+    .onoffswitch2 {
         position: relative;
         width: 110px;
         -webkit-user-select: none;
@@ -741,7 +741,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label required" for="dob">Date of Birth</label>
-                                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new {@Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
+                                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
                                                     @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -820,15 +820,15 @@
                                             }
                                         </select>
                                     </div>
-									<div class="col-md-2">
+                                    <div class="col-md-2">
                                         <label for="Is_Gifted">Gifted</label>
-										<div class="onoffswitch2" >
-											<input type="checkbox" name="Is_Gifted" id="Is_Gifted" class="onoffswitch2-checkbox" />
-											<label class="onoffswitch2-label" for="Is_Gifted">
-												<span class="onoffswitch2-inner"></span>
-												<span class="onoffswitch2-switch"></span>
-											</label>
-										</div>
+                                        <div class="onoffswitch2">
+                                            <input type="checkbox" name="Is_Gifted" id="Is_Gifted" class="onoffswitch2-checkbox" />
+                                            <label class="onoffswitch2-label" for="Is_Gifted">
+                                                <span class="onoffswitch2-inner"></span>
+                                                <span class="onoffswitch2-switch"></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -1645,26 +1645,26 @@
 <var data-reload="true" data-src="/Scripts/createstudent.js"></var>
 
 @*<script>
-    function loadScript(url, callback) {
-        // Adding the script tag to the head as suggested before
-        var head = document.getElementsByTagName('head')[0];
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = url;
+        function loadScript(url, callback) {
+            // Adding the script tag to the head as suggested before
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
 
-        // Then bind the event to the callback function.
-        // There are several events for cross browser compatibility.
-        script.onreadystatechange = callback;
-        script.onload = callback;
+            // Then bind the event to the callback function.
+            // There are several events for cross browser compatibility.
+            script.onreadystatechange = callback;
+            script.onload = callback;
 
-        // Fire the loading
-        head.appendChild(script);
-    }
+            // Fire the loading
+            head.appendChild(script);
+        }
 
-    loadScript("/Scripts/jquery.maskedinput.min.js", function () {
-        console.log("loaded maskedinput");
-    });
-</script>*@
+        loadScript("/Scripts/jquery.maskedinput.min.js", function () {
+            console.log("loaded maskedinput");
+        });
+    </script>*@
 
 
 @section scripts {

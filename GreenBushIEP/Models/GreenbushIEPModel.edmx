@@ -498,8 +498,9 @@
           <Property Name="IEPMathID" Type="int" />
           <Property Name="IEPWrittenID" Type="int" />
           <Property Name="MeetingDate" Type="datetime" />
-          <Property Name="end_Date" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="FiledOn" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="end_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -1363,7 +1364,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblIEPMaths" EntityType="IndividualizedEducationProgramModel.tblIEPMath" />
           <EntitySet Name="tblIEPMotors" EntityType="IndividualizedEducationProgramModel.tblIEPMotor" />
           <EntitySet Name="tblIEPReadings" EntityType="IndividualizedEducationProgramModel.tblIEPReading" />
-          <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
           <EntitySet Name="tblIEPSocials" EntityType="IndividualizedEducationProgramModel.tblIEPSocial" />
           <EntitySet Name="tblIEPWrittens" EntityType="IndividualizedEducationProgramModel.tblIEPWritten" />
           <EntitySet Name="tblLanguages" EntityType="IndividualizedEducationProgramModel.tblLanguage" />
@@ -1416,6 +1416,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblDistrict" EntitySet="tblDistricts" />
             <End Role="tblContact" EntitySet="tblContacts" />
           </AssociationSet>
+          <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1985,32 +1986,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblIEP">
-          <Key>
-            <PropertyRef Name="IEPid" />
-          </Key>
-          <Property Name="IEPid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="IepStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="begin_date" Type="DateTime" Precision="3" />
-          <Property Name="Amendment" Type="Boolean" Nullable="false" />
-          <Property Name="AmendingIEPid" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="StateAssessment" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StateAssessmentDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IEPHealthID" Type="Int32" />
-          <Property Name="IEPMotorID" Type="Int32" />
-          <Property Name="IEPCommunicationID" Type="Int32" />
-          <Property Name="IEPSocialID" Type="Int32" />
-          <Property Name="IEPIntelligenceID" Type="Int32" />
-          <Property Name="IEPAcademicID" Type="Int32" />
-          <Property Name="IEPReadingID" Type="Int32" />
-          <Property Name="IEPMathID" Type="Int32" />
-          <Property Name="IEPWrittenID" Type="Int32" />
-          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
-          <Property Name="end_Date" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
-          <Property Name="FiledOn" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
             <PropertyRef Name="IEPSocialID" />
@@ -2563,6 +2538,33 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblIEP">
+          <Key>
+            <PropertyRef Name="IEPid" />
+          </Key>
+          <Property Name="IEPid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IepStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="begin_date" Type="DateTime" Precision="3" />
+          <Property Name="Amendment" Type="Boolean" Nullable="false" />
+          <Property Name="AmendingIEPid" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StateAssessment" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StateAssessmentDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IEPHealthID" Type="Int32" />
+          <Property Name="IEPMotorID" Type="Int32" />
+          <Property Name="IEPCommunicationID" Type="Int32" />
+          <Property Name="IEPSocialID" Type="Int32" />
+          <Property Name="IEPIntelligenceID" Type="Int32" />
+          <Property Name="IEPAcademicID" Type="Int32" />
+          <Property Name="IEPReadingID" Type="Int32" />
+          <Property Name="IEPMathID" Type="Int32" />
+          <Property Name="IEPWrittenID" Type="Int32" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="FiledOn" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_Date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3134,33 +3136,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblIEPs">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
-              <MappingFragment StoreEntitySet="tblIEPs">
-                <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
-                <ScalarProperty Name="end_Date" ColumnName="end_Date" />
-                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
-                <ScalarProperty Name="IEPWrittenID" ColumnName="IEPWrittenID" />
-                <ScalarProperty Name="IEPMathID" ColumnName="IEPMathID" />
-                <ScalarProperty Name="IEPReadingID" ColumnName="IEPReadingID" />
-                <ScalarProperty Name="IEPAcademicID" ColumnName="IEPAcademicID" />
-                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
-                <ScalarProperty Name="IEPSocialID" ColumnName="IEPSocialID" />
-                <ScalarProperty Name="IEPCommunicationID" ColumnName="IEPCommunicationID" />
-                <ScalarProperty Name="IEPMotorID" ColumnName="IEPMotorID" />
-                <ScalarProperty Name="IEPHealthID" ColumnName="IEPHealthID" />
-                <ScalarProperty Name="StateAssessmentDescription" ColumnName="StateAssessmentDescription" />
-                <ScalarProperty Name="StateAssessment" ColumnName="StateAssessment" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="AmendingIEPid" ColumnName="AmendingIEPid" />
-                <ScalarProperty Name="Amendment" ColumnName="Amendment" />
-                <ScalarProperty Name="begin_date" ColumnName="begin_date" />
-                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblIEPSocials">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPSocial">
               <MappingFragment StoreEntitySet="tblIEPSocial">
@@ -3662,6 +3637,34 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblIEPs">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
+              <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="end_Date" ColumnName="end_Date" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="IEPWrittenID" ColumnName="IEPWrittenID" />
+                <ScalarProperty Name="IEPMathID" ColumnName="IEPMathID" />
+                <ScalarProperty Name="IEPReadingID" ColumnName="IEPReadingID" />
+                <ScalarProperty Name="IEPAcademicID" ColumnName="IEPAcademicID" />
+                <ScalarProperty Name="IEPIntelligenceID" ColumnName="IEPIntelligenceID" />
+                <ScalarProperty Name="IEPSocialID" ColumnName="IEPSocialID" />
+                <ScalarProperty Name="IEPCommunicationID" ColumnName="IEPCommunicationID" />
+                <ScalarProperty Name="IEPMotorID" ColumnName="IEPMotorID" />
+                <ScalarProperty Name="IEPHealthID" ColumnName="IEPHealthID" />
+                <ScalarProperty Name="StateAssessmentDescription" ColumnName="StateAssessmentDescription" />
+                <ScalarProperty Name="StateAssessment" ColumnName="StateAssessment" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="AmendingIEPid" ColumnName="AmendingIEPid" />
+                <ScalarProperty Name="Amendment" ColumnName="Amendment" />
+                <ScalarProperty Name="begin_date" ColumnName="begin_date" />
+                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

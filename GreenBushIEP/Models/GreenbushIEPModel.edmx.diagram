@@ -35,7 +35,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPMath" Width="1.5" PointX="6.75" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPMotor" Width="1.5" PointX="12.75" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPReading" Width="1.5" PointX="14.75" PointY="17.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEP" Width="1.5" PointX="16.75" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPSocial" Width="1.5" PointX="18.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEPWritten" Width="1.5" PointX="18.75" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblLanguage" Width="1.5" PointX="18.75" PointY="11.75" />
@@ -70,6 +69,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContact" Width="1.5" PointX="27.625" PointY="1" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="25.375" PointY="1.625" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEP" Width="1.5" PointX="16.75" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

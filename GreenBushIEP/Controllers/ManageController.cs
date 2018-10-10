@@ -888,9 +888,9 @@ namespace GreenBushIEP.Controllers
                 // removes any buildings not in the current list of usd's.
                 List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD)).ToList();
 
-                if(districts != null)
+                if (districts != null)
                 {
-                    foreach(string district in districts)
+                    foreach (string district in districts)
                     {
                         districtMappings.Add(new tblOrganizationMapping()
                         {
@@ -908,9 +908,9 @@ namespace GreenBushIEP.Controllers
                     }
                 }
 
-                if(buildings != null)
+                if (buildings != null)
                 {
-                    foreach(tblBuilding building in userBuildings)
+                    foreach (tblBuilding building in userBuildings)
                     {
                         buildingMappings.Add(new tblBuildingMapping()
                         {
@@ -1068,7 +1068,7 @@ namespace GreenBushIEP.Controllers
             {
                 List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() {"2", "3", "4", "5", "6" };
+                List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
@@ -1146,7 +1146,7 @@ namespace GreenBushIEP.Controllers
                     myDistricts = districts.Select(d => d.USD).ToList();
                 }
 
-                if(BuildingId == "-1")
+                if (BuildingId == "-1")
                 {
                     var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
@@ -1154,12 +1154,12 @@ namespace GreenBushIEP.Controllers
                 }
                 else
                 {
-                   var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
+                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                if(submitter.RoleID == "2" || submitter.RoleID == "1")
+                if (submitter.RoleID == "2" || submitter.RoleID == "1")
                 {
                     myRoles.Add("2");
                 }
@@ -1205,23 +1205,58 @@ namespace GreenBushIEP.Controllers
         // POST: Manage/AddDistrictContact
         [HttpPost]
         [Authorize]
-        public ActionResult AddDistrictContact(string USD, int contactId, bool isContact)
+        public ActionResult AddDistrictContact(FormCollection collection)
         {
-            //tblDistrict theDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
-            //if (theDistrict != null)
-            //{
-            //    if (isContact)
-            //    {
-            //        theDistrict.ContactUserID = contactId;
-            //    }
-            //    else
-            //    {
-            //        theDistrict.ContactUserID = null;
-            //    }
-            //    db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                    string USD = collection["districtUSD"].ToString();
 
-            //    return Json(new { Result = "success", Message = "Your district contact has been updated." }, JsonRequestBehavior.AllowGet);
-            //}
+                    tblContact districtContact = db.tblContacts.Where(c => c.USD == USD).FirstOrDefault();
+                    if (districtContact != null)
+                    {
+                        districtContact.ContactName = collection["districtContact"].ToString();
+                        districtContact.Email = collection["districtEmail"].ToString();
+                        districtContact.Address1 = collection["districtContactAddress1"].ToString();
+                        districtContact.Address2 = collection["districtContactAddress2"].ToString();
+                        districtContact.City = collection["districtCity"].ToString();
+                        districtContact.State = collection["districtState"].ToString();
+                        districtContact.Zip = collection["districtContactZipCode"].ToString();
+                        districtContact.Phone = collection["districtContactPhone"].ToString();
+                        districtContact.Update_Date = DateTime.Now;
+                    }
+                    else
+                    {
+                        districtContact = new tblContact();
+                        tblDistrict district = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
+                       
+                        districtContact.ContactName = collection["districtContact"].ToString();
+                        districtContact.Email = collection["districtEmail"].ToString();
+                        districtContact.Address1 = collection["districtContactAddress1"].ToString();
+                        districtContact.Address2 = collection["districtContactAddress2"].ToString();
+                        districtContact.City = collection["districtCity"].ToString();
+                        districtContact.State = collection["districtState"].ToString();
+                        districtContact.Zip = collection["districtContactZipCode"].ToString();
+                        districtContact.Phone = collection["districtContactPhone"].ToString();
+                        districtContact.Active = 1;
+                        districtContact.USD = district.USD;
+                        districtContact.Create_Date = DateTime.Now;
+                        districtContact.Update_Date = DateTime.Now;
+
+                        db.tblContacts.Add(districtContact);
+                    }
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = "Your district contact has been updated." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to edit/add the district contact. \n\n" + e.InnerException.ToString() });
+                }
+            }
 
             return Json(new { Result = "error", Message = "There was an error while saving the district contact. Please try again or contact your administrator." }, JsonRequestBehavior.AllowGet);
         }
@@ -1234,18 +1269,33 @@ namespace GreenBushIEP.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                //tblDistrict MISDistrict = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
+                tblContact districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == USD select contact).FirstOrDefault();
+                if(districtContact != null)
+                {
+                    return Json(new { Result = "success", Message = new { ContactID = districtContact.ContactID, USD = districtContact.USD, ContactName = districtContact.ContactName, Email = districtContact.Email, Phone = districtContact.Phone, Address1 = districtContact.Address1, Address2 = districtContact.Address2, City = districtContact.City, State = districtContact.State, Zip = districtContact.Zip } }, JsonRequestBehavior.AllowGet);
+                }
 
-                //var districtContacts = (from organization in db.tblOrganizationMappings
-                //                        join users in db.tblUsers
-                //                          on organization.UserID equals users.UserID
-                //                        where organization.USD == MISDistrict.USD && (users.RoleID == "3" || users.RoleID == "4")
-                //                        select new { UserId = users.UserID, LastName = users.LastName, FirstName = users.FirstName, isContact = MISDistrict.ContactUserID == users.UserID }).ToList();
-
-                //return Json(new { Result = "success", Message = districtContacts }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = districtContact }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "error", Message = "There was an error while getting contacts in the district" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult RemoveDistrictContact(string USD)
+        {
+            tblContact districtContact = db.tblContacts.Where(c => c.USD == USD).FirstOrDefault();
+            if (districtContact != null)
+            {
+                districtContact.Active = 0;
+
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "The district contact was removed." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to edit contacts. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

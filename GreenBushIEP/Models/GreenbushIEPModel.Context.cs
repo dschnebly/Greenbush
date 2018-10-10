@@ -57,7 +57,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblIEPMath> tblIEPMaths { get; set; }
         public virtual DbSet<tblIEPMotor> tblIEPMotors { get; set; }
         public virtual DbSet<tblIEPReading> tblIEPReadings { get; set; }
-        public virtual DbSet<tblIEP> tblIEPs { get; set; }
         public virtual DbSet<tblIEPSocial> tblIEPSocials { get; set; }
         public virtual DbSet<tblIEPWritten> tblIEPWrittens { get; set; }
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
@@ -87,6 +86,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblContact> tblContacts { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblIEP> tblIEPs { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

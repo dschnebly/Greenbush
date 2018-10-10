@@ -395,8 +395,8 @@ namespace GreenbushIep.Controllers
                 {
 
                     provider.FirstName = providerFirstName.ToString();
-					provider.LastName = providerLastName.ToString();
-					provider.ProviderCode = providerCode.ToString();
+                    provider.LastName = providerLastName.ToString();
+                    provider.ProviderCode = providerCode.ToString();
 
                     // blows away all the districts
                     foreach (var existingPD in provider.tblProviderDistricts.ToList())
@@ -420,8 +420,8 @@ namespace GreenbushIep.Controllers
                 {
                     tblProvider newProvider = new tblProvider();
                     newProvider.FirstName = providerFirstName.ToString();
-					newProvider.LastName = providerLastName.ToString();
-					newProvider.ProviderCode = providerCode.ToString();
+                    newProvider.LastName = providerLastName.ToString();
+                    newProvider.ProviderCode = providerCode.ToString();
                     newProvider.UserID = owner.UserID;
 
                     //can't have duplicate provider code
@@ -798,6 +798,7 @@ namespace GreenbushIep.Controllers
                         {
                             intelligenceModel = new tblIEPIntelligence();
                         }
+
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_GeneralIntelligenceSection", intelligenceModel);
                         else
@@ -1006,8 +1007,6 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult UpdateIEPStatusToActive(int stId)
         {
-
-
             try
             {
                 //creating archive
