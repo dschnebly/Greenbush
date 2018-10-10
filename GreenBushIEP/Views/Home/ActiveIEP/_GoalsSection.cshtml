@@ -1,0 +1,157 @@
+﻿@model GreenBushIEP.Models.StudentGoalsViewModel
+@if (Model.studentGoals.Count > 0)
+{
+	foreach (var studentGoal in Model.studentGoals)
+	{
+		
+		var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : "";
+		var sGoal = studentGoal.goal;
+
+		var progQ1 = "";
+        var progQ2 = "";
+        var progQ3 = "";
+        var progQ4 = "";
+
+		var ddlText = "";
+		switch (sGoal.Module)
+		{
+			case "1": { ddlText = "Health"; break; }
+			case "2": { ddlText = "Motor"; break; }
+			case "3": { ddlText = "Communication"; break; }
+			case "4": { ddlText = "Social-Emotional"; break; }
+			case "5": { ddlText = "General Intelligence"; break; }
+			case "6": { ddlText = "Academic Performance"; break; }
+			case "7": { ddlText = "Reading"; break; }
+			case "8": { ddlText = "Math"; break; }
+			case "9": { ddlText = "Written Language"; break; }
+		} //end switch
+
+		var evalText = "";
+		foreach (var ep in studentGoal.evaluationProcedures.Where(g => g.goalID == studentGoal.goal.goalID))
+		{
+			switch (ep.evaluationProcedureID)
+			{
+				case 1: { evalText += "Written Observation, "; break; }
+				case 2: { evalText += "Written Performance, "; break; }
+				case 3: { evalText += "Oral Performance, "; break; }
+				case 4: { evalText += "Criterion-Referenced Test, "; break; }
+				case 5: { evalText += "Time Sample, "; break; }
+				case 6: { evalText += "Demonstration/Performance, "; break; }
+				case 7: { evalText += "Other, "; break; }
+
+			} //end switch
+		}
+
+		<div class="row StudentGoal">
+
+			@using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
+			{
+
+				@Html.AntiForgeryToken()
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				@Html.Hidden("studentId", Model.studentId)
+				@Html.Hidden("IEPid", Model.iepId)
+
+				<div class="col-md-12">
+					<div class="panel-group" id="accordion@(studentGoal.goal.goalID)">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
+									<a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
+										<i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
+
+									</a>
+								</h4>
+							</div>
+							<div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
+								<div class="panel-body">
+									<div class="form-group">
+										<label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
+										<div class="input-group">
+											<div class="input-group-btn bs-dropdown-to-select-group">
+												<button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+													<span data-bind="bs-drp-sel-label">	@(ddlText)</span>
+													<span class="caret"></span>
+													<span class="sr-only">Toggle Dropdown</span>
+												</button>
+												<input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.goalID)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
+												@*<ul class="dropdown-menu" role="menu" style="font-size:16px;">
+														<li data-value="1"><a href="#">Health</a></li>
+														<li data-value="2"><a href="#">Motor</a></li>
+														<li data-value="3"><a href="#">Communication</a></li>
+														<li data-value="4"><a href="#">Social-Emotional</a></li>
+														<li data-value="5"><a href="#">General Intelligence</a></li>
+														<li data-value="6"><a href="#">Academic Performance</a></li>
+														<li data-value="7"><a href="#">Reading</a></li>
+														<li data-value="8"><a href="#">Math</a></li>
+														<li data-value="9"><a href="#">Written Language</a></li>
+													</ul>*@
+											</div>
+											<input type="hidden" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
+											<p class="form-control standard-font-size">@(studentGoal.goal.Title)</p>
+											<span class="input-group-addon">
+												<i class="fa fa-handshake-o " aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
+												<input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
+											</span>
+										</div>
+									</div>
+									<label class="standard-font-size" for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+									<div class="form-group">
+										<p class="form-control standard-font-size">@(studentGoal.goal.AnnualGoal)</p>
+										<input type="hidden" class="form-control StudentoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" data-validate="true" data-toggle="tooltip" data-placement="bottom" value=@(studentGoal.goal.AnnualGoal) />
+									</div>
+									<label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+									<div class="form-group">
+										<input type="hidden" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size" name="StudentGoalBaseline@(studentGoal.goal.goalID)" />
+										<p class="form-control standard-font-size">@(studentGoal.goal.Baseline)</p>
+
+									</div>
+									<label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
+									<div class="form-group">
+										<input type="hidden" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
+										<p class="form-control standard-font-size">@(studentGoal.goal.StateStandards)</p>
+									</div>
+									<label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
+									<div class="form-group">
+										<p class="form-control standard-font-size">@evalText.Trim().TrimEnd(',')</p>
+										<input type="hidden" value="@evalText.Trim().TrimEnd(',')" name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" />
+										@*<select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
+												<option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
+												<option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
+												<option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
+												<option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
+												<option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
+												<option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+												<option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
+											</select>*@
+									</div>
+
+									@if (Model.canAddProgress)
+									{
+
+										@Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal)
+
+										<div class="col-md-12" style="text-align:center; margin-top: 15px;">
+											<div class="form-group">
+												<button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+												<button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+											</div>
+										</div>
+									} 
+									else
+									{
+										@Html.Partial("~/Views/Home/ActiveIEP/_GoalsProgressRO.cshtml", studentGoal)
+									}@*//can add progress*@
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			}
+
+		</div>
+
+	}
+}
