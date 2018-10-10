@@ -5,6 +5,22 @@
         margin-top: 15px;
         font-size: 16px;
     }
+
+    .norequired {
+        border: 1px solid #aaa;
+    }
+
+    .text-danger {
+        display: none;
+    }
+
+    .contact-tooltip {
+        border: 2px solid #9F6000;
+    }
+
+        .contact-tooltip + span {
+            display: block !important;
+        }
 </style>
 
 <div class="modal-header">
@@ -22,7 +38,7 @@
                         @foreach (var district in Model.myDistricts)
                         {
                             string Selected = Model.myDistricts.IndexOf(district) == 0 ? "Selected" : string.Empty;
-                        <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
+                            <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
                         }
                     </select>
                 </div>
@@ -38,23 +54,28 @@
         <div class="form-group" style="margin-left: -15px; margin-top: 15px;">
             <!-- form user info -->
             <form class="form" role="form" id="districtForm">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                 <input type="hidden" name="districtUSD" id="districtUSD" value="@Model.currentDistrict.USD" />
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">Full Name</label>
                     <div class="col-md-10">
-                        <input name="districtContact" class="form-control" type="text" placeholder="i.e. Jane Smith" value="">
+                        <input name="districtContact" class="form-control text-box single-line" type="text" placeholder="i.e. Jane Smith" value="" data-validate="true" required>
+                        @Html.ValidationMessage("districtContact", "Field cannot be blank.", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">Email</label>
                     <div class="col-md-10">
-                        <input name="districtEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
+                        <input name="districtEmail" class="form-control text-box single-line" type="email" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" data-validate="true" required/>
+                        @Html.ValidationMessage("districtEmail", "The email field cannot be empty or invalid", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">Address 1</label>
                     <div class="col-md-10">
-                        <input name="districtContactAddress1" id="districtContactAddress1" class="form-control" placeholder="Street Address" type="text" data-validate="true" />
+                        <input name="districtContactAddress1" id="districtContactAddress1" class="form-control" placeholder="Street Address" type="text" data-validate="true" required/>
+                        @Html.ValidationMessage("districtContactAddress1", "The address field cannot be empty", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
@@ -66,13 +87,14 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">City</label>
                     <div class="col-md-10">
-                        <input name="districtCity" id="districtCity" class="form-control" placeholder="Girad" type="text" />
+                        <input name="districtCity" id="districtCity" class="form-control" placeholder="Girad" type="text" data-validate="true" required/>
+                        @Html.ValidationMessage("districtCity", "The city field cannot be empty", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">State</label>
                     <div class="col-md-10">
-                        <select name="districtState" id="districtState" class="form-control">
+                        <select name="districtState" id="districtState" class="form-control" data-validate="true">
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AZ">AZ</option>
@@ -130,13 +152,15 @@
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">Zip Code</label>
                     <div class="col-md-10">
-                        <input name="districtContactZipCode" id="districtContactZipCode" class="form-control" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true">
+                        <input name="districtContactZipCode" id="districtContactZipCode" class="form-control" placeholder="Zip Code" type="number" pattern="[0-9]{5}" title="Five digit zip code" maxlength="5" data-validate="true" required>
+                        @Html.ValidationMessage("districtContactZipCode", "The zip field cannot be empty or invalid", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label form-control-label">Phone</label>
                     <div class="col-md-10">
-                        <input name="districtContactPhone" class="form-control" placeholder="620-111-1111" value="">
+                        <input name="districtContactPhone" class="form-control" pplaceholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12"  title="Ten digits code" value="" data-validate="true" required>
+                        @Html.ValidationMessage("districtContactPhone", "The phone field cannot be empty", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
@@ -277,51 +301,80 @@
             e.preventDefault();
 
             // validate the form
+            if (formValidate()) {
 
+                $('.ajax-loader').css("visibility", "hidden");
+                $(".ajax-loader img").css("visibility", "hidden");
 
-            $('.ajax-loader').css("visibility", "hidden");
-            $(".ajax-loader img").css("visibility", "hidden");
+                var districtUSD = $("#selectedDistrict option:selected").val();
+                var districtContact = $("#districtForm").serialize();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manage/AddDistrictContact',
+                    dataType: 'json',
+                    data: districtContact,
+                    async: false,
+                    success: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
 
-            var districtUSD = $("#selectedDistrict option:selected").val();
-            var districtContact = $("#districtForm").serialize();
+                        if (data.Result == "success") {
 
-            $.ajax({
-                type: 'POST',
-                url: '/Manage/AddDistrictContact',
-                dataType: 'json',
-                data: districtContact,
-                async: false,
-                success: function (data) {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
+                            $("#alertMessage").toggleClass("alert-danger alert-success");
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                                $("#alertMessage").toggleClass("alert-danger alert-success");
+                            });
+                        }
+                        else {
+                            $("#alertMessage .moreinfo").html(data.Message);
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
 
-                    if (data.Result == "success") {
-
-                        $("#alertMessage").toggleClass("alert-danger alert-success");
-                        $("#alertMessage .moreinfo").html(data.Message);
+                        $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                             $("#alertMessage").slideUp(500);
-                            $("#alertMessage").toggleClass("alert-danger alert-success");
                         });
+                    }
+                });
+            }
+        });
+
+        function formValidate() {
+            var validates = true;
+            var $inputs = $("input[data-validate='true']");
+
+            $inputs.each(function () {
+                var input = $(this);
+                var is_valid = input.val();
+
+                if (is_valid === "" || is_valid === null) {
+                    if (input.is("select")) {
+                        $(this).next().addClass('contact-tooltip');
+                        input.addClass('contact-tooltip');
                     }
                     else {
-                        $("#alertMessage .moreinfo").html(data.Message);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
+                        input.addClass('contact-tooltip');
                     }
-                },
-                error: function (data) {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
 
-                    $("#alertMessage .moreinfo").html('There was an error connecting to the server.');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
+                    validates = false;
+                }
+                else {
+                    input.removeClass('contact-tooltip');
                 }
             });
-        });
+
+            return validates;
+        }
+
     });
 
 </script>

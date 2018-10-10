@@ -1077,15 +1077,11 @@ namespace GreenbushIep.Controllers
 				model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 				model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
 
-
 				List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
                     model.studentGoals.Add(new StudentGoal(goal.goalID));
                 }
-
-
-				
 
 				return PartialView("_ModuleStudentGoals", model);
             }
