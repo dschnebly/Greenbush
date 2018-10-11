@@ -75,10 +75,10 @@
                 <div class="form-check voffset2" id="StateAssessment_TextArea">
 
                     <div id="SA_NoAccom_Desc" style="display: @(Model.StateAssessment_NoAccommodations_flag.HasValue && Model.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                        <p>@(Model.StateAssessment_NoAccommodations_desc)</p>
+                        <p>Description: @(Model.StateAssessment_NoAccommodations_desc)</p>
                     </div>
                     <div id="SA_WithAccom_Desc" style="display: @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
-                        <p>@(Model.StateAssessment_WithAccommodations_desc)</p>
+                        <p>Description: @(Model.StateAssessment_WithAccommodations_desc)</p>
                     </div>
 
                 </div>
@@ -111,7 +111,7 @@
 
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
                     <div id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
-                        <p>@Model.Transporation_Other_desc</p>
+                        <p>Description: @Model.Transporation_Other_desc</p>
                     </div>
                 </div>
 				

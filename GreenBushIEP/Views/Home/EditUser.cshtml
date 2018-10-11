@@ -173,14 +173,14 @@
                         <select class="form-control" id="role" Name="role" required="required">
                             @if (Int32.Parse(Model.submitter.RoleID) < 2)
                             {
-                                <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Management Information System</option>
+                                <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Level 4</option>
                             }
                             @if (Int32.Parse(Model.submitter.RoleID) < 3)
                             {
-                                <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Special Education Administrator</option>
+                                <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Level 3</option>
                             }
-                            <option value="4" @(Model.user.RoleID == "4" ? "selected='selected'" : "" )>Teacher</option>
-                            <option value="6" @(Model.user.RoleID == "6" ? "selected='selected'" : "")>Nurse</option>
+                            <option value="4" @(Model.user.RoleID == "4" ? "selected='selected'" : "" )>Level 2</option>
+                            <option value="6" @(Model.user.RoleID == "6" ? "selected='selected'" : "")>Level 1</option>
                         </select>
                     </div>
                 </div>

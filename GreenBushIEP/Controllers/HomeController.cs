@@ -21,12 +21,12 @@ namespace GreenbushIep.Controllers
 {
     public class HomeController : Controller
     {
-        private const string owner = "1";
-        private const string mis = "2";
-        private const string admin = "3";
-        private const string teacher = "4";
+        private const string owner = "1"; //level 5
+        private const string mis = "2"; //level 4
+        private const string admin = "3"; //level 3
+        private const string teacher = "4"; //level 2
         private const string student = "5";
-        private const string nurse = "6";
+        private const string nurse = "6"; //level 1
 
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
