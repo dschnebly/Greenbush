@@ -519,7 +519,7 @@ namespace GreenBushIEP.Controllers
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();
-            model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.student.UserID == bm.UserID select d).Distinct().ToList();
+            model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
 
             foreach (var d in model.selectedDistrict)
             {
@@ -565,6 +565,8 @@ namespace GreenBushIEP.Controllers
                 // remove all the buildingId. Blow it all away.
                 db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == studentId));
 
+                db.SaveChanges();
+
                 // save to organization chart
                 // save the user to all the districts that was selected.
                 // tblOrganizationMapping and tblBuildingMapping
@@ -576,12 +578,13 @@ namespace GreenBushIEP.Controllers
 
                     foreach (string usd in districtArray)
                     {
-                        tblOrganizationMapping org = new tblOrganizationMapping();
-                        org.AdminID = submitter.UserID;
-                        org.UserID = student.UserID;
-                        org.USD = usd;
+                        db.tblOrganizationMappings.Add(new tblOrganizationMapping()
+                        {
+                            AdminID = submitter.UserID,
+                            UserID = student.UserID,
+                            USD = usd
+                        });
 
-                        db.tblOrganizationMappings.Add(org);
                         db.SaveChanges();
                     }
                 }
@@ -589,7 +592,13 @@ namespace GreenBushIEP.Controllers
                 // map the buildings in the building mapping table
                 try
                 {
-                    db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = info.BuildingID, USD = info.USD, UserID = info.UserID });
+                    db.tblBuildingMappings.Add(new tblBuildingMapping()
+                    {
+                        BuildingID = info.BuildingID,
+                        USD = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).Select(b => b.USD).FirstOrDefault(), //info.USD,
+                        UserID = info.UserID
+                    });
+
                     db.SaveChanges();
                 }
                 catch (Exception e)
@@ -614,7 +623,6 @@ namespace GreenBushIEP.Controllers
                 info.PlacementCode = collection["studentPlacement"];
                 info.USD = collection["misDistrict"];
                 info.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
-
             }
             else
             {
@@ -1231,7 +1239,7 @@ namespace GreenBushIEP.Controllers
                     {
                         districtContact = new tblContact();
                         tblDistrict district = db.tblDistricts.Where(d => d.USD == USD).FirstOrDefault();
-                       
+
                         districtContact.ContactName = collection["districtContact"].ToString();
                         districtContact.Email = collection["districtEmail"].ToString();
                         districtContact.Address1 = collection["districtContactAddress1"].ToString();

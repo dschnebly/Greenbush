@@ -277,5 +277,22 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", buildingIdParameter);
         }
+    
+        public virtual int uspCopyIEP(Nullable<int> fromIEP, Nullable<int> byUserID, Nullable<bool> ammend)
+        {
+            var fromIEPParameter = fromIEP.HasValue ?
+                new ObjectParameter("fromIEP", fromIEP) :
+                new ObjectParameter("fromIEP", typeof(int));
+    
+            var byUserIDParameter = byUserID.HasValue ?
+                new ObjectParameter("byUserID", byUserID) :
+                new ObjectParameter("byUserID", typeof(int));
+    
+            var ammendParameter = ammend.HasValue ?
+                new ObjectParameter("ammend", ammend) :
+                new ObjectParameter("ammend", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
+        }
     }
 }
