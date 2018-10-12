@@ -1015,15 +1015,33 @@
             </div>
         </div>
         <div class="row" style="margin-top: 15px;">
-            <div class="btn-group btn-group col-md-2">
+            <div class="col-md-2">
                 @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper())
+                            <span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper())&nbsp;&nbsp;<b class="caret"></b>
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" class="changeIEPStatus">@(IEPStatus.ACTIVE.ToUpper())</a></li>
+                        <ul class="dropdown-menu list-group">
+                            @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
+                            {
+
+                                int currentIEPId = Model.studentIEP.current.IEPid;
+                                foreach (tblIEP iep in Model.studentIEP.listOfStudentsIEPs)
+                                {
+                                    if (iep.IEPid == currentIEPId)
+                                    {
+                                        <li class="list-group-item"><a href="#">@(iep.IepStatus.ToUpper())</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="list-group-item"><a href="#">@(iep.IepStatus.ToUpper())</a></li>
+                                    }
+                                }
+                            }
+                            <li class="list-group-item" style="border-top: 1px dotted black;"><a href="#" class="changeIEPStatus list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Make Active</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Annual</a></li>
                         </ul>
                     </div>
                 }
@@ -1032,20 +1050,22 @@
                     <label class="btn btn-square-toround btn-xl btn-bordered-warning"><span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper()) </label>
                 }
             </div>
-            <div class="col-md-8">
-                <span class="form-group" style="margin-right: 15px;">
+            <div class="col-md-7">
+                <div class="form-group col-md-6 col-md-pull-1">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
-                </span>
-                <span class="form-group" style="margin-right: 15px;">
+                </div>
+                <div class="form-group col-md-6 col-md-pull-1">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
-                </span>
+                </div>
+            </div>
+            <div class="col-md-2 col-md-pull-1">
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
         </div>
         <div class="row">
-            <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: 0;">
+            <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: -18px;">
                 <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty )" id="HealthWidget">
                     <div class="hero-widget well">
                         <div class="icon">
@@ -1216,7 +1236,7 @@
                         </div>
                     </div>
                 </li>
-              
+
 
                 @if (ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
                 {

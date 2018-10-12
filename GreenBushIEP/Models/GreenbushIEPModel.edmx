@@ -37,12 +37,12 @@
             <PropertyRef Name="AuditLogID" />
           </Key>
           <Property Name="AuditLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TableName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ColumnName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ColumnName" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserID" Type="int" />
           <Property Name="IEPid" Type="int" />
           <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="ModifiedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -272,18 +272,18 @@
           <Property Name="Method" Type="int" Nullable="false" />
           <Property Name="ObjectiveBenchmark" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="TransitionActivity" Type="bit" Nullable="false" />
-          <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter4" Type="nvarchar" MaxLength="50" />
           <Property Name="ProgressDate_Quarter1" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter2" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter3" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter4" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -308,18 +308,18 @@
           <Property Name="hasSerivce" Type="bit" Nullable="false" />
           <Property Name="Baseline" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="StateStandards" Type="nvarchar" MaxLength="2000" Nullable="false" />
-          <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Progress_Quarter4" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Progress_Quarter4" Type="nvarchar" MaxLength="50" />
           <Property Name="ProgressDate_Quarter1" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter2" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter3" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter4" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="EvaluationProcedures" Type="int" />
@@ -1114,6 +1114,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
           <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="uspCopyIEP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromIEP" Type="int" Mode="In" />
+          <Parameter Name="byUserID" Type="int" Mode="In" />
+          <Parameter Name="ammend" Type="bit" Mode="In" />
+        </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
@@ -1417,6 +1422,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblContact" EntitySet="tblContacts" />
           </AssociationSet>
           <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
+          <FunctionImport Name="uspCopyIEP">
+            <Parameter Name="fromIEP" Mode="In" Type="Int32" />
+            <Parameter Name="byUserID" Mode="In" Type="Int32" />
+            <Parameter Name="ammend" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1577,10 +1587,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="AuditLogID" />
           </Key>
           <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="IEPid" Type="Int32" />
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1782,18 +1792,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Method" Type="Int32" Nullable="false" />
           <Property Name="ObjectiveBenchmark" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="TransitionActivity" Type="Boolean" Nullable="false" />
-          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -1818,18 +1828,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
           <Property Name="Baseline" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Progress_Quarter4" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Progress_Quarter4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EvaluationProcedures" Type="Int32" />
@@ -3668,6 +3678,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspCopyIEP" FunctionName="IndividualizedEducationProgramModel.Store.uspCopyIEP" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
