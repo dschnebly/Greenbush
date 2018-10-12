@@ -1025,13 +1025,13 @@
                         <ul class="dropdown-menu list-group">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
                             {
-                                int currentIEPId = Model.studentIEP.current.IEPid;
 
+                                int currentIEPId = Model.studentIEP.current.IEPid;
                                 foreach (tblIEP iep in Model.studentIEP.listOfStudentsIEPs)
                                 {
                                     if (iep.IEPid == currentIEPId)
                                     {
-                                        <li class="list-group-item"><span style="color: lightgrey; display: block; padding: 3px 20px; clear: both; font-weight: normal; line-height: 1.42857143; white-space: nowrap;">@(iep.IepStatus.ToUpper())</span></li>
+                                        <li class="list-group-item"><a href="#">@(iep.IepStatus.ToUpper())</a></li>
                                     }
                                     else
                                     {
@@ -1039,7 +1039,9 @@
                                     }
                                 }
                             }
-                            @*<li><a href="#" class="changeIEPStatus list-group-item">@(IEPStatus.ACTIVE.ToUpper())</a></li>*@
+                            <li class="list-group-item" style="border-top: 1px dotted black;"><a href="#" class="changeIEPStatus list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Make Active</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Annual</a></li>
                         </ul>
                     </div>
                 }
