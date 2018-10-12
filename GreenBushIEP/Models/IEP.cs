@@ -10,6 +10,7 @@ namespace GreenBushIEP.Models
 
         public bool hasPlan { get; set; }
         public tblIEP current { get; set; }
+        public List<tblIEP> listOfStudentIEP { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -38,10 +39,11 @@ namespace GreenBushIEP.Models
 
         //for printing
         public StudentDetailsPrintViewModel studentDetails { get; set; }
-        
+
         public IEP()
         {
             hasPlan = false;
+            listOfStudentIEP = new List<tblIEP>();
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
             studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
@@ -57,8 +59,8 @@ namespace GreenBushIEP.Models
         {
             if (stid != null)
             {
-                this.current = db.tblIEPs.SingleOrDefault(i => i.UserID == stid);
-                this.hasPlan = this.current != null;
+                current = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).FirstOrDefault();
+                hasPlan = current != null;
             }
         }
 
@@ -76,236 +78,239 @@ namespace GreenBushIEP.Models
 
             // Check that we don't already have a draft copy being used by this user. 
             // If we do we need to return an error.
-            if (this.current != null)
+            if (current != null)
             {
                 throw new System.ArgumentException("There is already a draft IEP for this user");
             }
 
-            this.current = new tblIEP();
-            this.current.UserID = stid;
-            this.current.IepStatus = IEPStatus.DRAFT;
-            this.current.Create_Date = DateTime.Now;
-            this.current.Amendment = false;
-            this.current.StateAssessment = String.Empty;
+            current = new tblIEP();
+            current.UserID = stid;
+            current.IepStatus = IEPStatus.DRAFT;
+            current.Create_Date = DateTime.Now;
+            current.end_Date = null;
+            current.Update_Date = DateTime.Now;
+            current.begin_date = null;
+            current.Amendment = false;
+            current.StateAssessment = string.Empty;
 
             try
             {
-                db.tblIEPs.Add(this.current);
+                db.tblIEPs.Add(current);
                 db.SaveChanges();
             }
-            catch
+            catch (Exception e)
             {
-                throw new System.ArgumentException("Failed to create the IEP table");
+                throw new System.ArgumentException("Failed to create the IEP table -" + e.InnerException.ToString());
             }
 
             // Adding Health Table
-            this.studentHealth = new tblIEPHealth();
-            this.studentHealth.IEPid = this.current.IEPid;
-            this.studentHealth.NoConcerns = true;
-            this.studentHealth.Concerns = false;
-            this.studentHealth.Diagnosis = false;
-            this.studentHealth.HearingDate = DateTime.Now;
-            this.studentHealth.HearingResult = -1;
-            this.studentHealth.VisionDate = DateTime.Now;
-            this.studentHealth.VisionResult = -1;
-            this.studentHealth.VisionImparied = false;
+            studentHealth = new tblIEPHealth();
+            studentHealth.IEPid = current.IEPid;
+            studentHealth.NoConcerns = true;
+            studentHealth.Concerns = false;
+            studentHealth.Diagnosis = false;
+            studentHealth.HearingDate = DateTime.Now;
+            studentHealth.HearingResult = -1;
+            studentHealth.VisionDate = DateTime.Now;
+            studentHealth.VisionResult = -1;
+            studentHealth.VisionImparied = false;
 
             try
             {
-                db.tblIEPHealths.Add(this.studentHealth);
+                db.tblIEPHealths.Add(studentHealth);
                 db.SaveChanges();
 
-                HealthID = this.studentHealth.IEPHealthID;
+                HealthID = studentHealth.IEPHealthID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Health table");
             }
 
             // Adding Motor Table
-            this.studentMotor = new tblIEPMotor();
-            this.studentMotor.IEPid = this.current.IEPid;
-            this.studentMotor.NoConcerns = true;
-            this.studentMotor.ProgressTowardGenEd = false;
-            this.studentMotor.Needs = false;
-            this.studentMotor.Participation = -1;
+            studentMotor = new tblIEPMotor();
+            studentMotor.IEPid = current.IEPid;
+            studentMotor.NoConcerns = true;
+            studentMotor.ProgressTowardGenEd = false;
+            studentMotor.Needs = false;
+            studentMotor.Participation = -1;
 
             try
             {
-                db.tblIEPMotors.Add(this.studentMotor);
+                db.tblIEPMotors.Add(studentMotor);
                 db.SaveChanges();
 
-                MotorID = this.studentMotor.IEPMotorID;
+                MotorID = studentMotor.IEPMotorID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Motor table");
             }
 
             // Add Communication Table
-            this.studentCommunication = new tblIEPCommunication();
-            this.studentCommunication.IEPid = this.current.IEPid;
-            this.studentCommunication.NoConcerns = true;
-            this.studentCommunication.ProgressTowardGenEd = false;
-            this.studentCommunication.SpeechImpactPerformance = false;
-            this.studentCommunication.Deaf = false;
-            this.studentCommunication.LimitedEnglish = false;
+            studentCommunication = new tblIEPCommunication();
+            studentCommunication.IEPid = current.IEPid;
+            studentCommunication.NoConcerns = true;
+            studentCommunication.ProgressTowardGenEd = false;
+            studentCommunication.SpeechImpactPerformance = false;
+            studentCommunication.Deaf = false;
+            studentCommunication.LimitedEnglish = false;
 
             try
             {
-                db.tblIEPCommunications.Add(this.studentCommunication);
+                db.tblIEPCommunications.Add(studentCommunication);
                 db.SaveChanges();
 
-                CommunicationID = this.studentCommunication.IEPCommunicationID;
+                CommunicationID = studentCommunication.IEPCommunicationID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Communication table");
             }
 
             // Add Social Table
-            this.studentSocial = new tblIEPSocial();
-            this.studentSocial.IEPid = this.current.IEPid;
-            this.studentSocial.NoConcerns = true;
-            this.studentSocial.ProgressTowardGenEd = false;
-            this.studentSocial.AreaOfNeed = false;
-            this.studentSocial.MentalHealthDiagnosis = false;
-            this.studentSocial.SignificantBehaviors = false;
-            this.studentSocial.BehaviorImepedeLearning = false;
-            this.studentSocial.BehaviorInterventionPlan = false;
+            studentSocial = new tblIEPSocial();
+            studentSocial.IEPid = current.IEPid;
+            studentSocial.NoConcerns = true;
+            studentSocial.ProgressTowardGenEd = false;
+            studentSocial.AreaOfNeed = false;
+            studentSocial.MentalHealthDiagnosis = false;
+            studentSocial.SignificantBehaviors = false;
+            studentSocial.BehaviorImepedeLearning = false;
+            studentSocial.BehaviorInterventionPlan = false;
 
             try
             {
-                db.tblIEPSocials.Add(this.studentSocial);
+                db.tblIEPSocials.Add(studentSocial);
                 db.SaveChanges();
 
-                SocialID = this.studentSocial.IEPSocialID;
+                SocialID = studentSocial.IEPSocialID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Social table");
             }
 
             // Add Intelligence Table
-            this.studentIntelligence = new tblIEPIntelligence();
-            this.studentIntelligence.IEPid = this.current.IEPid;
-            this.studentIntelligence.Concerns = false;
+            studentIntelligence = new tblIEPIntelligence();
+            studentIntelligence.IEPid = current.IEPid;
+            studentIntelligence.Concerns = false;
 
             try
             {
-                db.tblIEPIntelligences.Add(this.studentIntelligence);
+                db.tblIEPIntelligences.Add(studentIntelligence);
                 db.SaveChanges();
 
-                IntelligenceID = this.studentIntelligence.IEPIntelligenceID;
+                IntelligenceID = studentIntelligence.IEPIntelligenceID;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Intelligence table: " + e.InnerException.Message.ToString());
             }
 
             // Add Academic Table
-            this.studentAcademic = new tblIEPAcademic();
-            this.studentAcademic.IEPid = this.current.IEPid;
-            this.studentAcademic.NoConcerns = true;
-            this.studentAcademic.AreaOfNeed = false;
+            studentAcademic = new tblIEPAcademic();
+            studentAcademic.IEPid = current.IEPid;
+            studentAcademic.NoConcerns = true;
+            studentAcademic.AreaOfNeed = false;
 
             try
             {
-                db.tblIEPAcademics.Add(this.studentAcademic);
+                db.tblIEPAcademics.Add(studentAcademic);
                 db.SaveChanges();
 
-                AcademicID = this.studentAcademic.IEPAcademicID;
+                AcademicID = studentAcademic.IEPAcademicID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Academic table");
             }
 
             // Add Reading Table
-            this.studentReading = new tblIEPReading();
-            this.studentReading.IEPid = this.current.IEPid;
-            this.studentReading.NoConcerns = true;
-            this.studentReading.ProgressTowardGenEd = false;
-            this.studentReading.InstructionalTier1 = false;
-            this.studentReading.InstructionalTier2 = false;
-            this.studentReading.InstructionalTier3 = false;
-            this.studentReading.AreaOfNeed = false;
+            studentReading = new tblIEPReading();
+            studentReading.IEPid = current.IEPid;
+            studentReading.NoConcerns = true;
+            studentReading.ProgressTowardGenEd = false;
+            studentReading.InstructionalTier1 = false;
+            studentReading.InstructionalTier2 = false;
+            studentReading.InstructionalTier3 = false;
+            studentReading.AreaOfNeed = false;
 
             try
             {
-                db.tblIEPReadings.Add(this.studentReading);
+                db.tblIEPReadings.Add(studentReading);
                 db.SaveChanges();
 
-                ReadingID = this.studentReading.IEPReadingID;
+                ReadingID = studentReading.IEPReadingID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Reading table");
             }
 
             // Add Math Table
-            this.studentMath = new tblIEPMath();
-            this.studentMath.IEPid = this.current.IEPid;
-            this.studentMath.NoConcerns = true;
-            this.studentMath.ProgressTowardGenEd = false;
-            this.studentMath.InstructionalTier1 = false;
-            this.studentMath.InstructionalTier2 = false;
-            this.studentMath.InstructionalTier3 = false;
-            this.studentMath.AreaOfNeed = false;
+            studentMath = new tblIEPMath();
+            studentMath.IEPid = current.IEPid;
+            studentMath.NoConcerns = true;
+            studentMath.ProgressTowardGenEd = false;
+            studentMath.InstructionalTier1 = false;
+            studentMath.InstructionalTier2 = false;
+            studentMath.InstructionalTier3 = false;
+            studentMath.AreaOfNeed = false;
 
             try
             {
-                db.tblIEPMaths.Add(this.studentMath);
+                db.tblIEPMaths.Add(studentMath);
                 db.SaveChanges();
 
-                MathID = this.studentMath.IEPMathID;
+                MathID = studentMath.IEPMathID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Math table");
             }
 
             // Add Written Table
-            this.studentWritten = new tblIEPWritten();
-            this.studentWritten.IEPid = this.current.IEPid;
-            this.studentWritten.NoConcerns = true;
-            this.studentWritten.ProgressTowardGenEd = false;
-            this.studentWritten.InstructionalTier1 = false;
-            this.studentWritten.InstructionalTier2 = false;
-            this.studentWritten.InstructionalTier3 = false;
-            this.studentWritten.AreaOfNeed = false;
+            studentWritten = new tblIEPWritten();
+            studentWritten.IEPid = current.IEPid;
+            studentWritten.NoConcerns = true;
+            studentWritten.ProgressTowardGenEd = false;
+            studentWritten.InstructionalTier1 = false;
+            studentWritten.InstructionalTier2 = false;
+            studentWritten.InstructionalTier3 = false;
+            studentWritten.AreaOfNeed = false;
 
             try
             {
-                db.tblIEPWrittens.Add(this.studentWritten);
+                db.tblIEPWrittens.Add(studentWritten);
                 db.SaveChanges();
 
-                WrittenID = this.studentWritten.IEPWrittenID;
+                WrittenID = studentWritten.IEPWrittenID;
             }
             catch
             {
-                this.current.IepStatus = IEPStatus.DELETED;
+                current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Written table");
             }
 
             // Add references to all the new created tables.
-            this.current.IEPAcademicID = AcademicID;
-            this.current.IEPCommunicationID = CommunicationID;
-            this.current.IEPHealthID = HealthID;
-            this.current.IEPIntelligenceID = IntelligenceID;
-            this.current.IEPMathID = MathID;
-            this.current.IEPMotorID = MotorID;
-            this.current.IEPReadingID = ReadingID;
-            this.current.IEPSocialID = SocialID;
-            this.current.IEPWrittenID = WrittenID;
+            current.IEPAcademicID = AcademicID;
+            current.IEPCommunicationID = CommunicationID;
+            current.IEPHealthID = HealthID;
+            current.IEPIntelligenceID = IntelligenceID;
+            current.IEPMathID = MathID;
+            current.IEPMotorID = MotorID;
+            current.IEPReadingID = ReadingID;
+            current.IEPSocialID = SocialID;
+            current.IEPWrittenID = WrittenID;
 
             db.SaveChanges();
 
