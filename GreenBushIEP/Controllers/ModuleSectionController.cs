@@ -531,11 +531,11 @@ namespace GreenBushIEP.Controllers
             int studentId = 0;
 
 
-            try
-            {
-                Int32.TryParse(collection["StudentId"].ToString(), out studentId);
-
-                model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
+			try
+			{
+				Int32.TryParse(collection["StudentId"].ToString(), out studentId);
+				
+				model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
                 model.Parental_Concerns_flag = collection["Parental_Concerns_flag"] == "on" ? true : false;
                 model.ExtendedSchoolYear_RegressionRisk = collection["ExtendedSchoolYear_RegressionRisk"] == "on" ? true : false;
                 model.ExtendedSchoolYear_SeverityRisk = collection["ExtendedSchoolYear_SeverityRisk"] == "on" ? true : false;
@@ -588,9 +588,30 @@ namespace GreenBushIEP.Controllers
 
                 }
 
+				string otherDesc = "";
+				
+				var vehicleTypeValue = collection["inputVehicleType"];
+				var beginDate = collection["inputBegin"];
+				var endDate = collection["inputEnd"];
+				var minutesValue = collection["inputMinutes"];
+				var vehicleType = "";
+				var minutes = "25";
+				if (!string.IsNullOrEmpty(vehicleTypeValue))
+				{
+					if (vehicleTypeValue == "1")
+						vehicleType = "special education";
+					else if (vehicleTypeValue == "2")
+						vehicleType = "general education";
+					else
+						vehicleType = "";
+				}
 
-                //find existing if updating
-                tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
+				minutes = string.IsNullOrEmpty(minutesValue) ? "25" : minutesValue;
+
+				otherDesc = string.Format(@"The student will receive transportation each day that school is in session, on a {0} vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ({1} minutes estimated normal commute) beginning on {2} and ending on {3} following the school calendar.", vehicleType, minutes, beginDate, endDate);
+				
+				//find existing if updating
+				tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
 
                 if (OC == null)
                 {
@@ -622,8 +643,8 @@ namespace GreenBushIEP.Controllers
                     //OC.Transporation_Disability_desc = model.Transporation_Disability_desc;
                     OC.Transporation_AttendOtherBuilding = model.Transporation_AttendOtherBuilding;
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
-                    OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : model.Transporation_Other_desc;
-                    OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
+					OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
+					OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
                     OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
                     OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;
                     OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;

@@ -122,13 +122,18 @@
 					}
 				}
 
-                <div class="form-check voffset2" id="TransporationPlan_TextArea">
-                    <p id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
-						@*The student will receive transportation each day that school is in session, on a [  ] special education [  ] general education vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ([25] minutes estimated normal commute) beginning on [insert beginning date of services.] and ending on [ending date of service] following the school calendar.*@
-
-
-                        <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>
+                <div class="form-check voffset2" id="TP_Other_Desc"  style="display: @(showOther ? "block;" : "none;")">
+                    <p>
+						<p>The student will receive transportation each day that school is in session, on a <a href="#" id="inline-vehicle" name="inline-vehicle" data-type="select" data-title="Enter vehicle type" data-pk="1" placeholder="Select Vehicle Type" class="editable editable-click" style="display: inline;"></a>
+					 vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. (<a href="#" id="inline-minutes" name="inline-minutes" data-type="text" data-title="Enter minutes" placeholder="Enter Minutes" class="editable editable-click" style="display: inline;"></a> minutes estimated normal commute) beginning on 
+					<a href="#" id="inline-begin" name="inline-begin" data-type="text" data-title="Enter begin date" class="editable editable-click" style="display: inline;"></a> and ending on <a href="#" id="inline-end" name="inline-end" data-type="text" data-title="Enter end date" class="editable editable-click" style="display: inline;"></a> following the school calendar.</p>
+					
+                    @*<textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>*@
                     </p>
+					<input type="hidden" name="inputVehicleType" id="inputVehicleType" value="@ViewBag.vehicleType"/>
+					<input type="hidden" name="inputBegin" id="inputBegin" value="@ViewBag.begin"/>
+					<input type="hidden" name="inputEnd" id="inputEnd"  value="@ViewBag.end"/>
+					<input type="hidden" name="inputMinutes" id="inputMinutes" value="@ViewBag.minutes"/>
                 </div>
 				
             </div>
@@ -236,6 +241,8 @@
 <br />
 <br />
 
+<script src="~/Scripts/editable.js"></script>
+<script src="~/Scripts/jquery.maskedinput.min.js""></script>
 
 <script>
     
@@ -346,5 +353,57 @@
     /* When a user clicks on the question mark icon we turn on tooltips */
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
-    });
+	});
+
+	//inline editable
+	$('#inline-vehicle').editable({		
+		value: @ViewBag.vehicleType,
+		source: [
+			  {value: 0, text: 'Select Vehicle Type'},
+              {value: 1, text: 'special education'},
+              {value: 2, text: 'general education'}
+		]
+	});
+		
+    $('#inline-minutes').editable({
+        type: 'text',
+        title: 'Enter minutes',       
+        value: '@ViewBag.minutes'
+	});
+
+	$('#inline-begin').editable({
+		type: 'text',    
+		name: 'beginDate',
+		value: '@ViewBag.begin',
+		placeholder: 'Test',
+        tpl: '<input type="text" id ="begin" class="mask form-control input-sm dd" style="padding-right: 24px;">'       
+	});
+
+	$('#inline-end').editable({
+		type: 'text',    
+		name: 'endDate',
+		value: '@ViewBag.end',
+        tpl: '<input type="text" id ="end" class="mask form-control input-sm dd" style="padding-right: 24px;">'       
+	});
+
+
+	$('#inline-vehicle').on('save', function(e, params) {
+		$("#inputVehicleType").val(params.newValue);
+	});
+
+	$('#inline-begin').on('save', function(e, params) {
+		$("#inputBegin").val(params.newValue);
+	});
+
+	$('#inline-end').on('save', function(e, params) {
+		$("#inputEnd").val(params.newValue);
+	});
+
+	$('#inline-minutes').on('save', function(e, params) {
+		$("#inputMinutes").val(params.newValue);
+	});
+		
+	$(document).on("focus", ".mask", function () {
+		$(this).mask("99/99/9999");
+	});
 </script>
