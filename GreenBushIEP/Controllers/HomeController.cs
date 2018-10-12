@@ -735,7 +735,7 @@ namespace GreenbushIep.Controllers
                 switch (view)
                 {
                     case "HealthModule":
-                        tblIEPHealth healthModel = db.tblIEPHealths.Where(h => h.IEPid == iep.IEPHealthID).FirstOrDefault();
+                        tblIEPHealth healthModel = db.tblIEPHealths.Where(h => h.IEPHealthID == iep.IEPHealthID).FirstOrDefault();
                         if (healthModel == null)
                         {
                             healthModel = new tblIEPHealth();
@@ -763,7 +763,7 @@ namespace GreenbushIep.Controllers
                         else
                             return PartialView("_ModuleAcademicSection", academicModel);
                     case "MotorModule":
-                        tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPid == iep.IEPMotorID).FirstOrDefault();
+                        tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPMotorID == iep.IEPMotorID).FirstOrDefault();
                         if (motorModel == null)
                         {
                             motorModel = new tblIEPMotor();
@@ -773,7 +773,7 @@ namespace GreenbushIep.Controllers
                         else
                             return PartialView("_ModuleMotorSection", motorModel);
                     case "CommunicationModule":
-                        tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPid == iep.IEPCommunicationID).FirstOrDefault();
+                        tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == iep.IEPCommunicationID).FirstOrDefault();
                         if (communicationModel == null)
                         {
                             communicationModel = new tblIEPCommunication();

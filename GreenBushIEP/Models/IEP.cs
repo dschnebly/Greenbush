@@ -10,7 +10,7 @@ namespace GreenBushIEP.Models
 
         public bool hasPlan { get; set; }
         public tblIEP current { get; set; }
-        public List<tblIEP> listOfStudentIEP { get; set; }
+        public List<tblIEP> listOfStudentsIEPs { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -43,7 +43,7 @@ namespace GreenBushIEP.Models
         public IEP()
         {
             hasPlan = false;
-            listOfStudentIEP = new List<tblIEP>();
+            listOfStudentsIEPs = new List<tblIEP>();
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
             studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
@@ -59,7 +59,9 @@ namespace GreenBushIEP.Models
         {
             if (stid != null)
             {
-                current = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).FirstOrDefault();
+
+                listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).ToList();
+                current = listOfStudentsIEPs.OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).FirstOrDefault();
                 hasPlan = current != null;
             }
         }
