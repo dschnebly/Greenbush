@@ -124,6 +124,9 @@
 
                 <div class="form-check voffset2" id="TransporationPlan_TextArea">
                     <p id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
+						@*The student will receive transportation each day that school is in session, on a [  ] special education [  ] general education vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ([25] minutes estimated normal commute) beginning on [insert beginning date of services.] and ending on [ending date of service] following the school calendar.*@
+
+
                         <textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>
                     </p>
                 </div>
