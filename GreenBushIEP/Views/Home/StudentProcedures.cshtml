@@ -1025,23 +1025,19 @@
                         <ul class="dropdown-menu list-group">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
                             {
-
                                 int currentIEPId = Model.studentIEP.current.IEPid;
+
                                 foreach (tblIEP iep in Model.studentIEP.listOfStudentsIEPs)
                                 {
-                                    if (iep.IEPid == currentIEPId)
+                                    if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="#">@(iep.IepStatus.ToUpper())</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li class="list-group-item"><a href="#">@(iep.IepStatus.ToUpper())</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=38">@(iep.IepStatus.ToUpper())</a></li>
                                     }
                                 }
                             }
-                            <li class="list-group-item" style="border-top: 1px dotted black;"><a href="#" class="changeIEPStatus list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Make Active</a></li>
-                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Amendment</a></li>
-                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;Create An Annual</a></li>
+                            <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" class="changeIEPStatus list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create Next Year</a></li>
                         </ul>
                     </div>
                 }
@@ -1053,11 +1049,11 @@
             <div class="col-md-7">
                 <div class="form-group col-md-6 col-md-pull-1">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
+                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
                 <div class="form-group col-md-6 col-md-pull-1">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px;" />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
             </div>
             <div class="col-md-2 col-md-pull-1">

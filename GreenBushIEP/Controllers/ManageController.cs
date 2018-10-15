@@ -539,7 +539,6 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public JsonResult EditStudent(FormCollection collection)
         {
-
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
             int studentId = Convert.ToInt32(collection["id"]);
@@ -583,6 +582,13 @@ namespace GreenBushIEP.Controllers
                             AdminID = submitter.UserID,
                             UserID = student.UserID,
                             USD = usd
+                        });
+
+                        db.tblBuildingMappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = "0",
+                            UserID = student.UserID,
+                            USD = usd,
                         });
 
                         db.SaveChanges();
@@ -1099,6 +1105,7 @@ namespace GreenBushIEP.Controllers
                     var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
+                    myBuildings.Add("0");
                 }
                 else
                 {
@@ -1159,6 +1166,7 @@ namespace GreenBushIEP.Controllers
                     var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
+                    myBuildings.Add("0");
                 }
                 else
                 {
