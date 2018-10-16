@@ -304,11 +304,37 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        public ActionResult GetAnotherIEP(int stid, int iepId)
+        {
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (MIS != null)
+            {
+                // check that the student has this iep
+                tblIEP hasIEP = db.tblIEPs.Where(iep => iep.IEPid == iepId).FirstOrDefault();
+                if (hasIEP != null)
+                {
+                    // check that the student has more than one iep
+                    if (db.tblIEPs.Where(iep => iep.UserID == stid).Count() > 1)
+                    {
+                        // switch to the appropriate iep and return.
+                        return View();
+                    }
+                }
+
+                return RedirectToAction("StudentProcedures", "Home", stid);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
+
+        [HttpGet]
         [Authorize(Roles = mis)]
         public ActionResult LoadMISSection(string view)
         {
-            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (view == "CalendarModule" && MIS != null)
             {
                 int SchoolYear = (DateTime.Now.Month > 7) ? DateTime.Now.AddYears(1).Year : DateTime.Now.Year;
@@ -968,8 +994,6 @@ namespace GreenbushIep.Controllers
                     model.studentIEP = theIEP.CreateNewIEP(stid);
                     model.studentPlan = new StudentPlan();
                 }
-
-
             }
 
             return View(model);
@@ -1068,22 +1092,22 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
-				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-				//bool isReadOnly = false;
-				//bool canAddProgress = false;
-				StudentGoalsViewModel model = new StudentGoalsViewModel();
+                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                //bool isReadOnly = false;
+                //bool canAddProgress = false;
+                StudentGoalsViewModel model = new StudentGoalsViewModel();
                 model.studentId = studentId;
                 model.iepId = iep.IEPid;
-				model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
-				model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
+                model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
 
-				List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
+                List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
                     model.studentGoals.Add(new StudentGoal(goal.goalID));
                 }
 
-				return PartialView("_ModuleStudentGoals", model);
+                return PartialView("_ModuleStudentGoals", model);
             }
 
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());
@@ -1409,11 +1433,11 @@ namespace GreenbushIep.Controllers
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             bool isReadOnly = false;
-			ViewBag.vehicleType = 0;
-			ViewBag.minutes = "25";
-			ViewBag.begin = "";
-			ViewBag.end = "";
-			if (iep != null)
+            ViewBag.vehicleType = 0;
+            ViewBag.minutes = "25";
+            ViewBag.begin = "";
+            ViewBag.end = "";
+            if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -1433,38 +1457,38 @@ namespace GreenbushIep.Controllers
                 }
 
 
-				if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
-				{
-					var length = model.Transporation_Other_desc.Length;
-					var start = model.Transporation_Other_desc.IndexOf("session, on a");
-					var end = model.Transporation_Other_desc.IndexOf("vehicle,");
-					var val = model.Transporation_Other_desc.Substring(start + 13, (end - 13) - start).Trim();
-					var vehicleType = 0;
-					if (val == "special education")
-						vehicleType = 1;
-					else if (val == "general education")
-						vehicleType = 2;
+                if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
+                {
+                    var length = model.Transporation_Other_desc.Length;
+                    var start = model.Transporation_Other_desc.IndexOf("session, on a");
+                    var end = model.Transporation_Other_desc.IndexOf("vehicle,");
+                    var val = model.Transporation_Other_desc.Substring(start + 13, (end - 13) - start).Trim();
+                    var vehicleType = 0;
+                    if (val == "special education")
+                        vehicleType = 1;
+                    else if (val == "general education")
+                        vehicleType = 2;
 
-					ViewBag.vehicleType = vehicleType;
+                    ViewBag.vehicleType = vehicleType;
 
-					start = model.Transporation_Other_desc.IndexOf("returning destination. (");
-					end = model.Transporation_Other_desc.IndexOf("minutes estimated");
-					val = model.Transporation_Other_desc.Substring(start + 24, (end - start - 24)).Trim();
-					ViewBag.minutes = val;
-
-
-					start = model.Transporation_Other_desc.IndexOf("beginning on");
-					end = model.Transporation_Other_desc.IndexOf("and ending on");
-					val = model.Transporation_Other_desc.Substring(start + 13, (end - start -13)).Trim();
-					ViewBag.begin = val;
+                    start = model.Transporation_Other_desc.IndexOf("returning destination. (");
+                    end = model.Transporation_Other_desc.IndexOf("minutes estimated");
+                    val = model.Transporation_Other_desc.Substring(start + 24, (end - start - 24)).Trim();
+                    ViewBag.minutes = val;
 
 
-					start = model.Transporation_Other_desc.IndexOf("and ending on");
-					end = model.Transporation_Other_desc.IndexOf("following the");
-					val = model.Transporation_Other_desc.Substring(start + 13, (end - start -13)).Trim();
-					ViewBag.end = val;
+                    start = model.Transporation_Other_desc.IndexOf("beginning on");
+                    end = model.Transporation_Other_desc.IndexOf("and ending on");
+                    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
+                    ViewBag.begin = val;
 
-				}
+
+                    start = model.Transporation_Other_desc.IndexOf("and ending on");
+                    end = model.Transporation_Other_desc.IndexOf("following the");
+                    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
+                    ViewBag.end = val;
+
+                }
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();

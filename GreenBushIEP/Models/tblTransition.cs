@@ -34,5 +34,6 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public string Planning_Occupation { get; set; }
+        public bool Completed { get; set; }
     }
 }
