@@ -481,9 +481,10 @@ namespace GreenBushIEP.Models
         public List<tblTransitionAssessment> assessments { get; set; }
         public List<tblTransitionGoal> goals { get; set; }
         public List<tblTransitionService> services { get; set; }
+		public bool isRequired { get; set; }
+		public bool canComplete { get; set; }
 
-
-        public StudentTransitionViewModel()
+		public StudentTransitionViewModel()
         {
             iepId = 0;
             studentId = 0;

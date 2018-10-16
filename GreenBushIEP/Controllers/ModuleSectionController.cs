@@ -1059,6 +1059,9 @@ namespace GreenBushIEP.Controllers
                     int i = 2;
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+					bool hasEmploymentGoal = false;
+					bool hasEducationalGoal = false;
+					bool canComplete = false;
                     while (i < collection.Count - 2)
                     {
                         var transitionGoalID = Convert.ToInt32(collection[i++]);
@@ -1077,11 +1080,24 @@ namespace GreenBushIEP.Controllers
                             transitionGoal.Create_Date = DateTime.Now;
                             db.tblTransitionGoals.Add(transitionGoal);
                         }
-                    }
+
+						if (transitionGoal.GoalType == "education")
+						{
+							hasEducationalGoal = true;
+						}
+
+						if (transitionGoal.GoalType == "employment")
+						{
+							hasEmploymentGoal = true;
+						}
+
+					}
 
                     db.SaveChanges();
+					if (hasEmploymentGoal && hasEducationalGoal)
+						canComplete = true;
 
-                    return Json(new { Result = "success", Message = "The Student Transition Goals were added." }, JsonRequestBehavior.AllowGet);
+					return Json(new { Result = "success", Message = "The Student Transition Goals were added.", CanComplete= canComplete }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1204,7 +1220,7 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
 					transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
-
+					transition.Completed = collection["isComplete"] == "on" ? true : false;
 					db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
