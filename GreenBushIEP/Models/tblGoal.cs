@@ -43,6 +43,7 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public Nullable<int> EvaluationProcedures { get; set; }
+        public bool Completed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblService> tblServices { get; set; }

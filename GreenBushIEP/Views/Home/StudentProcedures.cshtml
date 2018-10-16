@@ -1031,7 +1031,7 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/GetAnotherIEP?stid=37&id=23">@(iep.IepStatus.ToUpper())</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper())</a></li>
                                     }
                                 }
                             }

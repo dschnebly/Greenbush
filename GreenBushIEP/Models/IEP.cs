@@ -55,13 +55,12 @@ namespace GreenBushIEP.Models
             studentDetails = new StudentDetailsPrintViewModel();
         }
 
-        public IEP(int? stid = null)
+        public IEP(int? stid = null, int? iepId = null)
         {
             if (stid != null)
             {
-
-                listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).ToList();
-                current = listOfStudentsIEPs.OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).FirstOrDefault();
+                listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
+                current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault() ;
                 hasPlan = current != null;
             }
         }

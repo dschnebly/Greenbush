@@ -303,31 +303,52 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult GetAnotherIEP(int stid, int iepId)
-        {
-            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            if (MIS != null)
-            {
-                // check that the student has this iep
-                tblIEP hasIEP = db.tblIEPs.Where(iep => iep.IEPid == iepId).FirstOrDefault();
-                if (hasIEP != null)
-                {
-                    // check that the student has more than one iep
-                    if (db.tblIEPs.Where(iep => iep.UserID == stid).Count() > 1)
-                    {
-                        // switch to the appropriate iep and return.
-                        return View();
-                    }
-                }
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult GetAnotherIEP(int stid, int iepId)
+        //{
+        //    tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+        //    if (MIS != null)
+        //    {
+        //        // check that the student has this iep
+        //        tblIEP hasIEP = db.tblIEPs.Where(iep => iep.IEPid == iepId).FirstOrDefault();
+        //        if (hasIEP != null)
+        //        {
+        //            // check that the student has more than one iep
+        //            if (db.tblIEPs.Where(iep => iep.UserID == stid).Count() > 1)
+        //            {
+        //                // switch to the appropriate iep and return.
+        //                tblUser ADMIN = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+        //                if (ADMIN != null)
+        //                {
+        //                    PortalViewModel model = new PortalViewModel();
+        //                    model.user = MIS;
+        //                    model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList();
+        //                    model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList();
 
-                return RedirectToAction("StudentProcedures", "Home", stid);
-            }
+        //                    List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
+        //                    List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
+        //                    model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
-            // Unknow error happened.
-            return RedirectToAction("Index", "Home", null);
-        }
+        //                    foreach (var student in model.members.Where(m => m.RoleID == student))
+        //                    {
+        //                        student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+        //                    }
+
+        //                    // show the latest updated version changes
+        //                    ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
+
+        //                    return View();
+        //                }
+        //            }
+        //        }
+
+        //        return RedirectToAction("StudentProcedures", "Home", stid);
+        //    }
+
+        //    // Unknow error happened.
+        //    return RedirectToAction("Index", "Home", null);
+        //}
 
         [HttpGet]
         [Authorize(Roles = mis)]
@@ -923,7 +944,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentProcedures(int stid)
+        public ActionResult StudentProcedures(int stid, int? iepID = null)
         {
             StudentProcedureViewModel model = new StudentProcedureViewModel();
 
@@ -945,7 +966,7 @@ namespace GreenbushIep.Controllers
                 model.isDoc = district.DOC;
                 model.isCreator = currentUser.UserID == info.CreatedBy;
 
-                IEP theIEP = new IEP(student.UserID);
+                IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID) ;
 
                 if (theIEP.current != null)
                 {

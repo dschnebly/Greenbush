@@ -45,5 +45,6 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public Nullable<bool> Transporation_Disability_flag { get; set; }
         public string Transporation_Disability_desc { get; set; }
+        public bool Completed { get; set; }
     }
 }

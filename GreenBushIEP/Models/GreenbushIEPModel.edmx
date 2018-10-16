@@ -31,6 +31,7 @@
           <Property Name="AnticipatedStartDate" Type="datetime" />
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -90,6 +91,7 @@
           <Property Name="ReviewedBy" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategies">
           <Key>
@@ -323,6 +325,7 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="EvaluationProcedures" Type="int" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -415,6 +418,7 @@
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
           <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -456,6 +460,7 @@
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
           <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -530,6 +535,7 @@
           <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="PLAAFP_Strengths" Type="nvarchar(max)" />
           <Property Name="PLAAFP_Concerns" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -613,6 +619,7 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Transporation_Disability_flag" Type="bit" />
           <Property Name="Transporation_Disability_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -681,6 +688,7 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="FiledOn" Type="datetime" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -1585,6 +1593,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="AnticipatedEndDate" Type="DateTime" Precision="3" />
           <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -1644,6 +1653,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ReviewedBy" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategy">
           <Key>
@@ -1848,6 +1858,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EvaluationProcedures" Type="Int32" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -1940,6 +1951,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPMath">
           <Key>
@@ -1981,6 +1993,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPReading">
           <Key>
@@ -2028,6 +2041,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="NeedMetByOtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Strengths" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PLAAFP_Concerns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPWritten">
           <Key>
@@ -2112,6 +2126,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Transporation_Disability_flag" Type="Boolean" />
           <Property Name="Transporation_Disability_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -2165,6 +2180,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="FiledOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
           <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -2701,6 +2717,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="AnticipatedEndDate" ColumnName="AnticipatedEndDate" />
                 <ScalarProperty Name="AnticipatedStartDate" ColumnName="AnticipatedStartDate" />
@@ -2766,6 +2783,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehavior">
               <MappingFragment StoreEntitySet="tblBehaviors">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="ReviewedBy" ColumnName="ReviewedBy" />
@@ -2970,6 +2988,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGoals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
               <MappingFragment StoreEntitySet="tblGoals">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="EvaluationProcedures" ColumnName="EvaluationProcedures" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
@@ -3076,6 +3095,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblIEPIntelligences">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPIntelligence">
               <MappingFragment StoreEntitySet="tblIEPIntelligence">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
                 <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
@@ -3117,6 +3137,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblIEPMotors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPMotor">
               <MappingFragment StoreEntitySet="tblIEPMotor">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
                 <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
@@ -3160,6 +3181,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblIEPSocials">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEPSocial">
               <MappingFragment StoreEntitySet="tblIEPSocial">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="PLAAFP_Concerns" ColumnName="PLAAFP_Concerns" />
                 <ScalarProperty Name="PLAAFP_Strengths" ColumnName="PLAAFP_Strengths" />
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
@@ -3236,6 +3258,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Transporation_Disability_desc" ColumnName="Transporation_Disability_desc" />
                 <ScalarProperty Name="Transporation_Disability_flag" ColumnName="Transporation_Disability_flag" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
@@ -3308,6 +3331,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />

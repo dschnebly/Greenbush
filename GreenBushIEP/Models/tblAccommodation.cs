@@ -26,6 +26,7 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> AnticipatedStartDate { get; set; }
         public Nullable<System.DateTime> AnticipatedEndDate { get; set; }
         public string Location { get; set; }
+        public bool Completed { get; set; }
     
         public virtual tblLocation tblLocation { get; set; }
     }
