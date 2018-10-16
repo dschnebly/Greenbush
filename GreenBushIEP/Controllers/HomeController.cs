@@ -1711,26 +1711,26 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult PrintIEP(int id, int status = 0)
+        public ActionResult PrintIEP(int stid, int iepId)
         {
-            var theIEP = GetIEPPrint(id, status);
+            var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
             {
                 return View("PrintIEP", theIEP);
-
             }
 
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
 
-        private IEP GetIEPPrint(int id, int status = 0)
+        private IEP GetIEPPrint(int stid, int iepId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+            tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
+            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid && i.IepStatus == "Active").FirstOrDefault().IEPid : iepId ;
             var studentDetails = new StudentDetailsPrintViewModel();
 
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == id).ToList();
+            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
 
             // Get the MIS id of the logged in teacher.
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
@@ -1754,7 +1754,7 @@ namespace GreenbushIep.Controllers
                              on iep.IEPMathID equals math.IEPMathID
                          join written in db.tblIEPWrittens
                              on iep.IEPWrittenID equals written.IEPWrittenID
-                         where iep.UserID == student.UserID //&& iep.IepStatus == iepStatus
+                         where iep.UserID == student.UserID && iep.IEPid == iepId
                          select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
 
             if (query.Count() == 1)

@@ -50,9 +50,18 @@
     //Attach Event
     // fires when the user prints the IEP
     $('#printIEP').not('.bound').addClass('bound').on("click", function (e) {
-        var id = getUrlParameter('stid');
+        var stid = getUrlParameter('stid');
+        var iepId = (getUrlParameter('iepID') !== undefined) ? getUrlParameter('iepID') : 0;
+        console.log(stid + " " + iepId);
+
         $('.ajax-loader').css("visibility", "visible");
-        window.location.href = '/Home/PrintIEP/' + id;
+        //$.ajax({
+        //    type: 'GET',
+        //    url: '/Home/PrintIEP',
+        //    data: { stid: stid, iepId: iepId },
+        //    dataType: 'json',
+        //});
+        window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
     });
 
     $('.navbar-toggle').click(function () {
