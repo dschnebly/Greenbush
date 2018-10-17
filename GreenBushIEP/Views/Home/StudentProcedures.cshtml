@@ -1035,8 +1035,8 @@
                                     }
                                 }
                             }
-                            <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" class="changeIEPStatus list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE") ? "disabled" : string.Empty) "><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
-                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" class="makeIEPActive list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE") ? "disabled" : string.Empty) "><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                            <li class="list-group-item"><a href="#" class="makeIEPAmendment list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                             <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                         </ul>
                     </div>
