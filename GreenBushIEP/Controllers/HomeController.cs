@@ -1323,8 +1323,14 @@ namespace GreenbushIep.Controllers
                 model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).ToList();
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
+				model.isRequired = (studentAge > 12 || (model.isDOC && studentAge <= 21)) ? true : false;
 
-                ViewBag.studentFirstName = studentFirstName;
+				var hasEmploymentGoal = model.goals.Any(o => o.GoalType == "employment");
+				var hasEducationGoal = model.goals.Any(o => o.GoalType == "education");
+				if (hasEmploymentGoal && hasEducationGoal)
+					model.canComplete = true;
+
+				ViewBag.studentFirstName = studentFirstName;
                 ViewBag.studentLastName = studentLastName;
                 ViewBag.studentAge = studentAge;
 

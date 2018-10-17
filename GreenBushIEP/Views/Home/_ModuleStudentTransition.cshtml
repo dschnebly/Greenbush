@@ -331,7 +331,8 @@
     <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
         <strong class="moreinfo">Oh snap!</strong>
     </div>
-
+	<input type="hidden" id="isRequired" value="@(Model.isRequired ? "Y" : "N")" />	
+	
     <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
         <div class="col-md-12 well">
 
@@ -1326,7 +1327,18 @@
                                         </fieldset>
                                     </div>
                                 </div>
-
+								<div class="row" style="margin-top:15px;">
+									  <div class="col-md-12">
+										<h4><b>Transition Plan Complete</b></h4>&nbsp;&nbsp;
+										<div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+													<input type="checkbox" name="isComplete" id="isComplete" class="onoffswitch2-checkbox" @(Model.transition.Completed ? "checked='checked'" : "" )>
+													<label class="onoffswitch2-label" for="isComplete">
+														<span class="onoffswitch2-inner"></span>
+														<span class="onoffswitch2-switch"></span>
+													</label>
+										</div>
+									 </div>
+								</div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>
@@ -1349,7 +1361,7 @@
 <script src="~/Scripts/editable.js"></script>
 <script>
     $(document).ready(function () {
-
+		var canComplete = '@Model.canComplete' == "True" ? true : false;
         var navListItems = $('ul.setup-panel li a'),
             allWells = $('.setup-content');
 
@@ -1421,7 +1433,8 @@
                 dataType: "json",
                 data: formData.serialize(),
                 success: function (data) {
-                    if (data.Result == "success") {
+					if (data.Result == "success") {
+						canComplete = data.CanComplete;
                         console.log("Goals successfull updated.");
                     }
                     else {
@@ -1484,6 +1497,12 @@
                 return;
             }
 
+			//can not mark complete unless educational goal and employement goal are filled out			
+			if ($('#isComplete').is(':checked') && $('#isRequired').val() == "Y" && !canComplete) {
+				alert("Education Goal and Employment Goal are required before the Transition Plan can be marked as completed.");
+                e.stopPropagation();
+				return;
+			}
             var formData = $('#transitionStudyForm');
 
             $.ajax({
@@ -1492,9 +1511,11 @@
                 dataType: "json",
                 data: formData.serialize() + '&occupationText=' + $("#inline-occupation").text(),
                 success: function (data) {
-                    if (data.Result == "success") {
-                        console.log("Course of Study successfull updated.");
-                        $('#moduleSection').modal('hide');
+					if (data.Result == "success") {
+						  $(window).trigger("saving.bs.modal");
+                        console.log("Course of Study successfully updated.");
+						$('#moduleSection').modal('hide');
+
                     }
                     else {
                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
