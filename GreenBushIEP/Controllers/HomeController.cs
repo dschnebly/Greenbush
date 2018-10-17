@@ -109,6 +109,7 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
+                myBuildings.Add("0");
                 model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
@@ -140,6 +141,7 @@ namespace GreenbushIep.Controllers
 
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
+                myBuildings.Add("0");
                 model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
@@ -302,53 +304,6 @@ namespace GreenbushIep.Controllers
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
-
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult GetAnotherIEP(int stid, int iepId)
-        //{
-        //    tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-        //    if (MIS != null)
-        //    {
-        //        // check that the student has this iep
-        //        tblIEP hasIEP = db.tblIEPs.Where(iep => iep.IEPid == iepId).FirstOrDefault();
-        //        if (hasIEP != null)
-        //        {
-        //            // check that the student has more than one iep
-        //            if (db.tblIEPs.Where(iep => iep.UserID == stid).Count() > 1)
-        //            {
-        //                // switch to the appropriate iep and return.
-        //                tblUser ADMIN = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-        //                if (ADMIN != null)
-        //                {
-        //                    PortalViewModel model = new PortalViewModel();
-        //                    model.user = MIS;
-        //                    model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList();
-        //                    model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList();
-
-        //                    List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
-        //                    List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
-        //                    model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
-
-        //                    foreach (var student in model.members.Where(m => m.RoleID == student))
-        //                    {
-        //                        student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
-        //                    }
-
-        //                    // show the latest updated version changes
-        //                    ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
-
-        //                    return View();
-        //                }
-        //            }
-        //        }
-
-        //        return RedirectToAction("StudentProcedures", "Home", stid);
-        //    }
-
-        //    // Unknow error happened.
-        //    return RedirectToAction("Index", "Home", null);
-        //}
 
         [HttpGet]
         [Authorize(Roles = mis)]
@@ -1069,11 +1024,13 @@ namespace GreenbushIep.Controllers
                 var mergedFile = this.CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
 
             }
-            catch { }
-
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
 
             tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
-            if (iepDraft != null)
+            if (iepDraft != null && iepDraft.begin_date != null && iepDraft.end_Date != null)
             {
                 iepDraft.IepStatus = IEPStatus.ACTIVE;
 

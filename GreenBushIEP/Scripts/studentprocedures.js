@@ -55,12 +55,6 @@
         console.log(stid + " " + iepId);
 
         $('.ajax-loader').css("visibility", "visible");
-        //$.ajax({
-        //    type: 'GET',
-        //    url: '/Home/PrintIEP',
-        //    data: { stid: stid, iepId: iepId },
-        //    dataType: 'json',
-        //});
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
     });
 
@@ -70,7 +64,6 @@
         $('#search').removeClass('in').addClass('collapse').slideUp(200);
         $('.absolute-wrapper').toggleClass('slide-in');
     });
-
 
     // Attach Event
     // when the user clicks the Save Dates button
@@ -182,8 +175,9 @@
     });
 
     // Attach Event
-    // if the user is an MIS and the Initiation Date it today or later AND the iep status is "active" then when they click the ul link.
-    $(".changeIEPStatus").on("click", function () {
+    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
+    $(".makeIEPActive").on("click", function () {
+
         var answer = confirm("Are you sure you want to make this IEP Active?");
         if(answer)
         {
@@ -213,9 +207,14 @@
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
 			});
-
         }
     });
+
+    // Attach Event
+    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
+    $(".makeIEPAmendment").on("click", function () {
+        alert("This will make an admendment to the iep but I'm lazy. 'This' being the iep and not David's awesome code.");
+    })
 });
 
 function getParameterByName(name, url) {
