@@ -2,6 +2,7 @@
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
@@ -27,7 +28,7 @@
 
         <p class=MsoNormal style=''>
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                Date:&nbsp;<u><b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(50, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Student: <u><b>@(String.Format(studentFormattedName).PadRight(80 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u><o:p></o:p>
+                Date:&nbsp;<u><b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(50, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Student: <u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u><o:p></o:p>
             </span>
         </p>
         <p class=MsoNormal style='margin-top:10px;'>
@@ -43,7 +44,7 @@
 
         <p class=MsoNormal style='margin-top:10px;'>
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                <u><b>@(String.Format("{0}", teacherFormattedName).PadRight(54, ' ').Replace(" ", "\u00A0"))</b></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>@(String.Format("{0}", "?").PadRight(96, ' ').Replace(" ", "\u00A0"))</b></u>
+                <u><b>@(String.Format("{0}", districtContactName).PadRight(63, ' ').Replace(" ", "\u00A0"))</b></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>@(String.Format("{0}", "").PadRight(96, ' ').Replace(" ", "\u00A0"))</b></u>
 
             </span>
         </p>
@@ -110,7 +111,7 @@ font-family:"Calibri",sans-serif'>
         <p class=MsoNormal align=center style='text-align:center'>
             <b style=''>
                 <u>
-                    <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>?<span style=''>                                                                                                                          </span><o:p></o:p></span>
+                    <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><span style=''>                                                                                                                          </span><o:p></o:p></span>
                 </u>
             </b>
         </p>

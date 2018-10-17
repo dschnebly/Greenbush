@@ -1649,12 +1649,17 @@ namespace GreenbushIep.Controllers
             {
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
                 fileViewModel.building = building != null ? building.BuildingName : "";
-            }
+
+				tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+				if (MIS != null)
+				{
+					fileViewModel.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == fileViewModel.studentInfo.AssignedUSD select contact).FirstOrDefault();					
+				}
+
+			}
 
             viewModel.fileModel = fileViewModel;
-
-
-
+					   
             return View("_IEPFormsFile", viewModel);
         }
 
@@ -1670,9 +1675,12 @@ namespace GreenbushIep.Controllers
                 model.StudentId = stid;
                 model.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
 
-            }
+				
+			}
 
-            return View(model);
+			
+
+					return View(model);
         }
 
         [Authorize]

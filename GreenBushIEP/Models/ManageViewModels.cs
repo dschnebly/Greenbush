@@ -291,14 +291,17 @@ namespace GreenBushIEP.Models
             student = new tblUser();
             studentInfo = new tblStudentInfo();
             contacts = new List<tblStudentRelationship>();
-        }
+			districtContact = new tblContact();
+		}
 
         public tblUser student { get; set; }
         public tblStudentInfo studentInfo { get; set; }
         public tblUser teacher { get; set; }
-        public List<tblStudentRelationship> contacts { get; set; }
-        public string building { get; set; }
-    }
+        public List<tblStudentRelationship> contacts { get; set; }		
+		public tblContact districtContact { get; set; }
+		public string building { get; set; }
+		
+	}
 
     public class IEPFormViewModel
     {
@@ -312,7 +315,8 @@ namespace GreenBushIEP.Models
         public List<tblFormArchive> Archives { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
-    }
+		
+	}
 
     public class IEPFormFileViewModel
     {
@@ -321,8 +325,9 @@ namespace GreenBushIEP.Models
         public string fileName { get; set; }
         public string fileDesc { get; set; }
         public StudentLegalView fileModel { get; set; }
+		
 
-        public IEPFormFileViewModel()
+		public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;

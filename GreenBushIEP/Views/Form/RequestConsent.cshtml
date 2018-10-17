@@ -1,6 +1,11 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+	string studentAddress = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
+	string studentCityStZip = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip: "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
@@ -9,14 +14,13 @@
     <div class=WordSection1>
 
         <div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;text-align:center'>
-            <center>
-                <h1 style='margin:0in;margin-bottom:.0001pt;border:none;padding:0in;'>
+           <p class=MsoNormal align=center style='text-align:center'>  
                     <span style='font-size: 12pt; font-weight: bold;'>PRIOR WRITTEN NOTICE FOR EVALUATION OR REEVALUATION</span>
-                </h1>
+               </p>
 
-                <h1 style='margin:0in;margin-bottom:.0001pt;border:none;padding:0in'>
+               <p class=MsoNormal align=center style='text-align:center'>  
                     <span style='font-size: 12pt; font-weight: bold;'>AND REQUEST FOR CONSENT</span>
-                </h1>
+                </p>
             </center>
         </div>
 
@@ -26,45 +30,60 @@
                style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
             <tr>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal><b>To </b><u>&nbsp;&nbsp;<b>
-						@if (Model.contacts != null && Model.contacts.Count > 0)
-						{
-							@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(45 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))
-						}
-
-						  </b></u></p>
-                    <p class=MsoNormal>     (Parent/Legal Educational Decision Maker)</p>
+                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
+                    <span style='font-size:  11.0pt'><b>To:</b>					
+					<u><b>@(String.Format(contactFormattedName).PadRight(65 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>					
+					
+					</span>
+                    <span style='font-size:11.0pt'><o:p></o:p></span>
+                </p>
+                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+                    <span style='font-size:10.0pt'>
+                        <span style='mso-tab-count:1'>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
+                    </span>
+                </p>
                 </td>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal><b>Date </b><u>&nbsp;&nbsp;<b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(45, ' ').Replace(" ", "\u00A0"))</b></u></p>
+                     <p class=MsoNormal style='tab-stops:lined 261.0pt'>
+                    <span style='font-size:  11.0pt'><b>Date:</b> <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(48, ' ').Replace(" ", "\u00A0"))</u></span>
+                    <span style='font-size:11.0pt'><o:p></o:p></span>
+                </p>
+                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+                    <span style='font-size:11.0pt'>
+                        <span style='mso-tab-count:1'>       </span>&nbsp;<o:p></o:p>
+                    </span>
+                </p>
                 </td>
             </tr>
             <tr>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal><b>On behalf of </b><u>&nbsp;&nbsp;<b>@(String.Format(studentFormattedName).PadRight(45 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></p>
-                    <p class=MsoNormal>
-                        (<span style='text-transform:uppercase'>s</span>tudent's
-                        <span style='text-transform:uppercase'>n</span>ame)
-                    </p>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
+                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
+                    <b>
+                        <span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+                    </b>
+                </p>
+                <p class=MsoNormal style='tab-stops:lined 261.0pt'>
+                    <b>
+                        <span style='font-size:  11.0pt'>On behalf of:</span>
+                    </b><span style='font-size:11.0pt;mso-bidi-font-weight:
+  bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+</p>
+<p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
+    <span style='font-size:10.0pt'>
+        <span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
+    </span>
+</p>
+<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
                 </td>
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal><b>&nbsp;</b></p>
-                    <p class=MsoNormal>
-
-                        <b>Address</b> <u>
-						@if (Model.contacts != null && Model.contacts.Count > 0)
-						{
-                            @(String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).PadRight(45 - String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).Length, ' ').Replace(" ", "\u00A0"))<br />
-                            @(String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).PadRight(45 - String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).Length, ' ').Replace(" ", "\u00A0"))
-						}
-						</u>
-
-                    </p>
+                    <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
+    <p class=MsoNormal>
+        <b style='mso-bidi-font-weight:normal'>
+            <span style='font-size:11.0pt'>Address:</span>
+        </b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
+    </p>
+    <p class=MsoNormal><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+    <p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(68 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
                 </td>
             </tr>
         </table>
@@ -93,9 +112,9 @@
 
 
         <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
-               style='border-collapse:collapse;border:none'>
+               style='border-collapse:collapse;border:solid;width:100%'>
             <tr>
-                <td width=674 valign=top style='width:505.45pt;border:solid windowtext 1.0pt;
+                <td valign=top style='width:505.45pt;border: none windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
                         <b>
@@ -115,46 +134,44 @@
                         collected in the areas checked on the following page that provide relevant
                         information that directly assists the team in determining:
                     </p>
-                    <p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              
                             </span>
                         </span>whether your child is a child with an exceptionality and the
                         educational needs of your child;
                     </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              
                             </span>
                         </span>the present levels of academic achievement and related
                         developmental needs of your child; and
                     </p>
-                    <p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               
                             </span>
                         </span>whether your child needs special education and related
                         services. 
                     </p>
                     <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'>
+                    <p class=MsoNormal style='text-indent:.25in'>
                         <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;&nbsp;</span>
+                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>
                         </b><b>
-                            <span style='font-family:"Courier New"'></span> No additional information is
-                            needed. 
-                        </b>Based on a review of currently available information, it has
+                            <span style='font-family:"Courier New"'></span>&nbsp;No additional information is needed. 
+                        </b></p>
+						<p class=MsoNormal style='margin-left:.5in'>Based on a review of currently available information, it has
                         been determined that no additional data are needed to conduct the initial
                         evaluation as described above.  Existing information will be used that will
                         provide relevant information that will directly assist the team in
-                        determining the educational needs of your child in the areas checked below.
-                    </p>
-                    <p class=MsoNormal style='margin-left:27.0pt;text-indent:-.25in'>
-                        <span style='font-size:3.0pt'>&nbsp;</span>
-                    </p>
+                        determining the educational needs of your child in the areas checked below.</p>
+                    
+                    
                     <p class=MsoNormal style='margin-left:.5in'>
                         However, you have the right to
                         request that an assessment be completed.   If you want such an assessment to
@@ -164,7 +181,7 @@
                 </td>
             </tr>
             <tr>
-                <td width=674 valign=top style='width:505.45pt;border:solid windowtext 1.0pt;
+                <td valign=top style='width:505.45pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
                         <b>
@@ -184,34 +201,34 @@
                         areas checked on the following page that provide relevant information that
                         directly assists the team in determining:
                     </p>
-                    <p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             
                             </span>
                         </span>whether your child continues to be a child with an
                         exceptionality and the educational needs of your child;
                     </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              
                             </span>
                         </span>the present levels of academic achievement and related
                         developmental needs of your child;
                     </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               
                             </span>
                         </span>whether your child continues to need special education and
                         related services; and
                     </p>
-                    <p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>
+                    <p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
                         <span style='font-family:Symbol'>
                             ·<span style='font:7.0pt "Times New Roman"'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               
                             </span>
                         </span>whether any additions or modifications to the special education
                         and related services are needed to enable your child to meet the measurable
@@ -219,9 +236,9 @@
                         appropriate, in the general education curriculum.
                     </p>
                     <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='margin-left:.5in;text-indent:-.25in'>
+                    <p class=MsoNormal style='margin-left:.5in;text-indent:.25in'>
                         <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;&nbsp;</span>No
+                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>&nbsp;No
                             additional information is needed. 
                         </b>Based on a review of currently
                         available information, it has been determined that no additional data are
@@ -230,9 +247,7 @@
                         the team in determining the educational needs of your child in the areas
                         checked below.
                     </p>
-                    <p class=MsoNormal style='margin-left:27.0pt;text-indent:-9.0pt'>
-                        <span style='font-size:3.0pt'>&nbsp;</span>
-                    </p>
+                   
                     <p class=MsoNormal style='margin-left:.5in'>
                         However, you have the right to
                         request that an assessment be completed.   If you want such an assessment to
@@ -242,7 +257,7 @@
                 </td>
             </tr>
             <tr style='height:23.0pt'>
-                <td width=674 style='width:505.45pt;border:solid windowtext 1.0pt;border-top:
+                <td  style='width:505.45pt;border:none windowtext 1.0pt;border-top:
   none;padding:0in 5.4pt 0in 5.4pt;height:23.0pt'>
                     <p class=MsoNormal>
                         <b>
@@ -254,7 +269,7 @@
                 </td>
             </tr>
             <tr style='height:21.65pt'>
-                <td width=674 style='width:505.45pt;border:solid windowtext 1.0pt;border-top:
+                <td  style='width:505.45pt;border:none windowtext 1.0pt;border-top:
   none;padding:0in 5.4pt 0in 5.4pt;height:22pt'>
                     <p class=MsoNormal>
                         <b>
@@ -265,54 +280,46 @@
                 </td>
             </tr>
         </table>
-        <p class='MsoNormal' style="margin-top:1px;">
-            <u>&nbsp;&nbsp;@(String.Format(teacherFormattedName).PadRight(103 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>at
-            <input type="text" />
-        </p>
-
+        <p style="padding-top:15px">
+			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea></u>&nbsp; immediately.</span>
+		</p>
         <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
-
-
-
-
+					   
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
-
-
-
-
+			   		 
         <p class=MsoNormal><span style='font-size:5.0pt'>&nbsp;</span></p>
 
         <div align=center>
 
-            <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=703
-                   style='width:527.5pt;border-collapse:collapse'>
+            <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=5 
+                   style='width:100%;border-collapse:collapse'>
                 <tr style='page-break-inside:avoid;height:23.85pt'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:23.85pt'>
                         <p class=MsoNormal><b>New Data</b></p>
                     </td>
-                    <td width=60 valign=top style='width:45.0pt;border:solid windowtext 1.0pt;
+                    <td width=60 valign=top style='width:45.0pt;border:none windowtext 1.0pt;
   border-left:none;padding:0in .05in 0in .05in;height:23.85pt'>
                         <p class=MsoNormal><b>Existing Data</b></p>
                     </td>
-                    <td width=605 valign=top style='width:453.5pt;border:none;border-bottom:solid windowtext 1.0pt;
+                    <td width=605 valign=top style='width:453.5pt;border:none;border-bottom:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:23pt'>
                         <p class=MsoNormal><b><span style='font-size:5.0pt'>&nbsp;</span></b></p>
                         <p class=MsoNormal><b><span style='font-size:14.0pt'>&nbsp;</span></b></p>
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></p>
                     </td>
                     <td width=60 valign=top style='width:45.0pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453.5pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Health/Motor Ability -</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -326,17 +333,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Vision -</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -349,17 +356,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Hearing -</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -372,17 +379,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Social/Emotional Status/Behavioral Status -</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -397,15 +404,15 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none; border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt; padding:0in .05in 0in .05in'>
+                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none; border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt; padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>General Intelligence –</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -419,17 +426,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Academic Performance –</b></p>
                         <p class=MsoNormal>&nbsp;</p>
@@ -444,17 +451,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Communicative Status –</b></p>
                         <p class=MsoNormal><b>&nbsp;</b></p>
@@ -469,17 +476,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Transition Skills –</b></p>
                         <p class=MsoNormal><b>&nbsp;</b></p>
@@ -492,17 +499,17 @@
                     </td>
                 </tr>
                 <tr style='page-break-inside:avoid;height:33.75pt'>
-                    <td width=39 valign=top style='width:29.0pt;border:solid windowtext 1.0pt;
+                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in;height:33pt'>
                         <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:34pt'>
                         <p class=MsoNormal><b><span style='font-size:14pt; font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:33pt'>
                         <p class=MsoNormal><b>Other Specify:</b></p>
                         <textarea class="form-control" cols="100" rows="4"></textarea>
@@ -553,7 +560,7 @@
 
         <textarea class="form-control" cols="100" rows="4"></textarea>
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
-        <div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 0in 14.0pt;
+        <div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 0in 14.0pt;
 margin-left:9.0pt;margin-right:0in'>
 
             <p class=MsoNormal align=center style='text-align:center;border:none;
@@ -599,7 +606,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
         <p class=MsoNormal>&nbsp;</p>
 
-        <div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+        <div style='mso-element:para-border-div;border:none windowtext 1.0pt;
     mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
     margin-left:27.0pt;margin-right:27.0pt'>
 
@@ -709,14 +716,11 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
         <p class=MsoNormal>&nbsp;</p>
 
-        <p class=MsoNormal><textarea style="width:100px;height:20px"></textarea> at <textarea style="width:100px;height:20px"></textarea> </p>
-
-        <p class=MsoNormal>
-            (School Contact Person)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Phone)
-        </p>
-
-
-
+       <p style="padding-top:15px">
+			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea></u>&nbsp; immediately.</span>
+		</p>
+        <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
+		<br/><br/>
         <p class="MsoNormal" style="text-align:left;">
             <b>
                 If you wish to consent to the special education actions
@@ -727,7 +731,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
         <p class=MsoNormal>&nbsp;</p>
 
-        <div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+        <div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
 margin-left:.25in;margin-right:-.7pt'>
 
 
