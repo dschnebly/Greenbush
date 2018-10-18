@@ -47,22 +47,22 @@
 
     #providerModal {
         display: block !important;
+        overflow: auto;
+        position: fixed;
+        top: 25px;
+        right: 0;
+        bottom: 25px;
+        left: 0;
         z-index: 1065;
-        position: relative;
+        outline: 0;
+        height: 530px !important;
         width: 57%;
         margin: auto;
-        position: relative;
-        top: -250px;
         background-color: #fff;
-        -webkit-background-clip: padding-box;
         background-clip: padding-box;
-        border: 1px solid #999;
         border: 1px solid rgba(0, 0, 0, .2);
         border-radius: 6px;
-        outline: 0;
-        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
         box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-        height: auto !important;
     }
 
         #providerModal.modal.fade #providerModal.modal-dialog {
@@ -216,9 +216,11 @@
                 {
                     foreach (var provider in Model.listOfProviders)
                     {
-                        <li class="list-group-item"><span>@provider.FirstName @provider.LastName : @provider.ProviderCode </span>
-							<i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i>
-							<i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.FirstName", "@provider.LastName", "@provider.ProviderCode");'></i></li>
+                        <li class="list-group-item">
+                            <span>@provider.FirstName @provider.LastName : @provider.ProviderCode </span>
+                            <i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i>
+                            <i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.FirstName", "@provider.LastName", "@provider.ProviderCode");'></i>
+                        </li>
                     }
                 }
             </ul>
@@ -234,8 +236,8 @@
                     <input type="hidden" id="providerId" name="providerId" class="form-control" value="0" />
                     <label>First Name</label><br />
                     <input type="text" id="providerFirstName" name="providerFirstName" class="form-control" /><br />
-					<label>Last Name</label><br />
-					<input type="text" id="providerLastName" name="providerLastName" class="form-control" /><br />
+                    <label>Last Name</label><br />
+                    <input type="text" id="providerLastName" name="providerLastName" class="form-control" /><br />
                     <label>District</label><br />
                     <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                         @if (Model.districts != null)
@@ -328,8 +330,8 @@
 
     function editProvider(id, fname, lname, code) {
         var providerId = id;
-		var providerFirstName = fname;
-		var providerLastName = lname;
+        var providerFirstName = fname;
+        var providerLastName = lname;
         var providerCode = code;
 
         //get districts
@@ -365,8 +367,8 @@
 
     function edit(providerId, fname, lname, code, districts) {
 
-		$("#providerFirstName").val(fname);
-		$("#providerLastName").val(lname);
+        $("#providerFirstName").val(fname);
+        $("#providerLastName").val(lname);
         $("#misDistrict").val(districts).trigger("chosen:updated");
         selectedDistricts = districts;
         $("#providerCode").val(code);
@@ -386,16 +388,16 @@
     }
 
     function updateProvider() {
-		var fname = $("#providerFirstName").val();
-		var lname = $("#providerLastName").val();
+        var fname = $("#providerFirstName").val();
+        var lname = $("#providerLastName").val();
         var district = selectedDistricts;
         var code = $("#providerCode").val();
         var id = $("#providerId").val();
         var errors = "";
         if (fname == "" || fname == undefined) {
             errors += "First Name is required. ";
-		}
-		if (lname == "" || lname == undefined) {
+        }
+        if (lname == "" || lname == undefined) {
             errors += "Last Name is required. ";
         }
 
@@ -436,8 +438,8 @@
     }
 
     function clearModal() {
-		$("#providerFirstName").val("");
-		$("#providerLastName").val("");
+        $("#providerFirstName").val("");
+        $("#providerLastName").val("");
         $("#misDistrict").val("").trigger('chosen:updated');;
         selectedDistricts = "";
         $("#providerCode").val("");
@@ -461,14 +463,14 @@
 
         $('ul.list-group').append("<li class='head'>List of Providers</li>");
 
-		providerList.forEach(function (provider) {
-			var providerFirstName = "";
-			var providerLastName = "";
+        providerList.forEach(function (provider) {
+            var providerFirstName = "";
+            var providerLastName = "";
 
-			if (provider.FirstName != null && provider.FirstName != undefined)
-				providerFirstName = provider.FirstName.replace(/'/g, '&#39;');
-			if (provider.LastName != null && provider.LastName != undefined)
-				providerLastName = provider.LastName.replace(/'/g, '&#39;');
+            if (provider.FirstName != null && provider.FirstName != undefined)
+                providerFirstName = provider.FirstName.replace(/'/g, '&#39;');
+            if (provider.LastName != null && provider.LastName != undefined)
+                providerLastName = provider.LastName.replace(/'/g, '&#39;');
 
             var listgroupitem = '<li class="list-group-item"><span>' + provider.FirstName + " " + provider.LastName + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerFirstName + "\", \"" + providerLastName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
 

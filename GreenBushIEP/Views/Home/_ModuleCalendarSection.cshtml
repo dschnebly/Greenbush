@@ -107,22 +107,22 @@
 
     #calendarCopyModal {
         display: block !important;
+        overflow: auto;
+        position: fixed;
+        top: 25px;
+        right: 0;
+        bottom: 25px;
+        left: 0;
         z-index: 1065;
-        position: relative;
+        outline: 0;
+        height: 530px !important;
         width: 57%;
         margin: auto;
-        position: relative;
-        top: -250px;
         background-color: #fff;
-        -webkit-background-clip: padding-box;
         background-clip: padding-box;
-        border: 1px solid #999;
         border: 1px solid rgba(0, 0, 0, .2);
         border-radius: 6px;
-        outline: 0;
-        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
         box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-        height: auto !important;
     }
 
         #calendarCopyModal.modal.fade #calendarCopyModal.modal-dialog {
