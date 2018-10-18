@@ -803,7 +803,8 @@
                                             {
                                                 foreach (var primary in Model.primaryDisabilities)
                                                 {
-                                                    <option value="@primary.DisabilityCode">@primary.DisabilityDescription</option>
+                                                    var selected = (primary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                                    <option value="@primary.DisabilityCode" @(selected)>@primary.DisabilityDescription</option>
                                                 }
                                             }
                                         </select>
@@ -815,7 +816,8 @@
                                             {
                                                 foreach (var secondary in Model.secondaryDisabilities)
                                                 {
-                                                    <option value="@secondary.DisabilityCode">@secondary.DisabilityDescription</option>
+                                                    var selected = (secondary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                                    <option value="@secondary.DisabilityCode" @(selected)>@secondary.DisabilityDescription</option>
                                                 }
                                             }
                                         </select>
