@@ -54,11 +54,11 @@
         <div class="row voffset2">
             <div class="col-md-12">
                 <label style="font-size:16px">Participation in District-Wide Assessments</label>
-                <label style="font-size:16px">When the student's age or grade level is being assess, the IEP team has determined the following options(s) to be most appropriate.  In considering the unique curricular needs of the student, the IEP team may select multiple options below.  The intent is that all students will be part of the District accountability system as appropriate.</label>
+                <label style="font-size:16px">When the student's age or grade level is being assessed, the IEP team has determined the following options(s) to be most appropriate.  In considering the unique curricular needs of the student, the IEP team may select multiple options below.  The intent is that all students will be part of the District accountability system as appropriate.</label>
                 <div class="form-check">
-                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_NoAccommodations_flag" value="1" @(Model.DistrictAssessment_NoAccommodations_flag.HasValue && Model.DistrictAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</label><br />
+                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_NoAccommodations_flag" value="1" @(Model.DistrictAssessment_NoAccommodations_flag.HasValue && Model.DistrictAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in District-Wide Assessment(s) without accommodations in the following curricular area(s):</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_WithAccommodations_flag" value="2" @(Model.DistrictAssessment_WithAccommodations_flag.HasValue && Model.DistrictAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_Alternative_flag" value="3" @(Model.DistrictAssessment_Alternative_flag.HasValue && Model.DistrictAssessment_Alternative_flag.Value ? "checked" : String.Empty)>Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
+                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_Alternative_flag" value="3" @(Model.DistrictAssessment_Alternative_flag.HasValue && Model.DistrictAssessment_Alternative_flag.Value ? "checked" : String.Empty)>Student will participate in an alternative District Assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="DistrictWideAssessments" id="DistrictAssessment_GradeNotAssessed" value="4" @(Model.DistrictAssessment_GradeNotAssessed.HasValue && Model.DistrictAssessment_GradeNotAssessed.Value ? "checked" : String.Empty)>Grade in which student is enrolled is not being assessed.</label><br />
                 </div>
                 <div class="form-check voffset2" id="DistrictAssessment_TextArea">
@@ -192,7 +192,7 @@
         <div class="row voffset2">
             <div class="col-md-12">
                 <fieldset class="form-group">
-                    <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @studentName</label>&nbsp;&nbsp;
+                    <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @(studentName).</label>&nbsp;&nbsp;
                     <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
                         <input type="checkbox" name="Parental_Concerns_flag" id="Parental_Concerns_flag" class="onoffswitch2-checkbox" @(Model.Parental_Concerns_flag != null && Model.Parental_Concerns_flag.Value ? "checked" : String.Empty ) />
                         <label class="onoffswitch2-label" for="Parental_Concerns_flag">
@@ -219,7 +219,7 @@
 
         <div class="row voffset2">
             <div class="col-md-12" style="font-size:16px">
-                <p>The parent(s)/legal education decision maker will be informed of (@studentName)'s progress in writing at least one time every quarter.</p>
+                <p>The parent(s)/legal education decision maker will be informed of @(studentName)'s progress in writing at least one time every quarter.</p>
 
                 <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
                 <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
