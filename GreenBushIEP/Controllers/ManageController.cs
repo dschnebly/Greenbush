@@ -1337,11 +1337,11 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult CreateIEPAmendment(int Stid, int IepId)
+        public ActionResult CreateIEPAmendment(int Stid, int IepId, bool? amend = true)
         {
             try
             {
-                var AmendmentId = db.uspCopyIEP(IepId, Stid, true);
+                var AmendmentId = db.uspCopyIEP(IepId, Stid, amend);
 
                 return Json(new { Result = "success", Message = AmendmentId}, JsonRequestBehavior.AllowGet);
             }

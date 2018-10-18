@@ -176,7 +176,7 @@
     // Attach Event
     // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
     $("#makeIEPActive").on("click", function () {
-        if ($("makeIEPActive").hasClass("disabled")) { return false; } // the link is disabled.
+        if ($("#makeIEPActive").hasClass("disabled")) { return false; } // the link is disabled.
 
         var answer = confirm("Are you sure you want to make this IEP Active?");
         if(answer)
@@ -226,11 +226,11 @@
             $.ajax({
                 type: 'GET',
                 url: '/Manage/CreateIEPAmendment',
-                data: { Stid: stId, IepId: iepId },
+                data: { Stid: stId, IepId: iepId, amend: true },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/StudentProcedures/?stid=' + stid + '&iepID=' + data.Message;
+                        window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
                     } else {
                         alert(data.Message);
                         location.reload(true);
@@ -252,11 +252,34 @@
     $("#makeIEPAnnual").on("click", function () {
         if ($("#makeIEPAnnual").hasClass("disabled")) { return false; } // the link is disabled
 
-        var answer = confirm("Are you sure you want to make an Amendment to this IEP?");
+        var answer = confirm("Are you sure you want to make an Annual IEP?");
         if (answer) {
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
+            var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
 
+            $.ajax({
+                type: 'GET',
+                url: '/Manage/CreateIEPAmendment',
+                data: { Stid: stId, IepId: iepId, amend: false },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        window.location.href = '/Home/StudentProcedures/?stid=' + stid + '&iepID=' + data.Message;
+                    } else {
+                        alert(data.Message);
+                        location.reload(true);
+                    }
+                },
+                error: function (data) {
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                },
+                complete: function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+                }
+            });
         }
     });
 });

@@ -1030,10 +1030,12 @@ namespace GreenbushIep.Controllers
             }
 
             // switch the flag
-            tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
-            if (iepDraft != null && iepDraft.begin_date != null && iepDraft.end_Date != null)
+            tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT && !i.Amendment).FirstOrDefault();
+            if (iepDraft != null)
             {
                 iepDraft.IepStatus = IEPStatus.ACTIVE;
+                iepDraft.begin_date = DateTime.Now;
+                iepDraft.end_Date = iepDraft.begin_date.Value.AddYears(1);
 
                 try
                 {
