@@ -1241,6 +1241,7 @@ namespace GreenBushIEP.Controllers
                         districtContact.State = collection["districtState"].ToString();
                         districtContact.Zip = collection["districtContactZipCode"].ToString();
                         districtContact.Phone = collection["districtContactPhone"].ToString();
+                        districtContact.Active = 1;
                         districtContact.Update_Date = DateTime.Now;
                     }
                     else

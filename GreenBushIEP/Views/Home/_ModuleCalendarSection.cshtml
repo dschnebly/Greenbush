@@ -240,20 +240,20 @@
     }
 
     .child-ajax-loader {
-        visibility: hidden;
         background-color: rgba(255,255,255,0.7);
         position: absolute;
         z-index: 2000 !important;
         width: auto;
-        top: -100px;
-        left: -50px;
+        top: -50px;
+        left: 0;
         right: 0;
+        bottom: 0;
     }
 
-        .child-ajax-loader img {
-            margin: 0 auto;
-            margin-top: 30%;
-        }
+    .child-ajax-loader img {
+        margin: 0 auto;
+        margin-top: 30%;
+    }
 
     .form-control-input {
         box-shadow: none;
@@ -1525,7 +1525,6 @@
             var $innermodal = $m1.find(".modal");     //get reference to nested modal
             $m1.after($innermodal);
 
-
             var zIndex = 1040 + (10 * $('.modal:visible').length);
             $(this).css('z-index', zIndex);
             setTimeout(function () {
@@ -1631,9 +1630,9 @@
         });
 
         $("input[type=number]").bind('change', function (evt) {
-            if ($(this).data("old") == $(this).val()){ return; }
+            if ($(this).data("old") == $(this).val()) { return; }
 
-            var input= $(this);
+            var input = $(this);
             var usd = $('#selectedDistrict').val();
             var bId = $('#selectedBuilding').val();
             var max = parseInt(input.attr('max'));
@@ -1653,7 +1652,7 @@
                 $.ajax({
                     type: 'GET',
                     url: '/Home/SaveCalendarReports',
-                    data: { SchoolYear: schoolYear, usd: usd, building: bId, daysPerWeek: daysAWeek, totalDays: total, totalWeeks: allWeeks, minutesPerDay : minutes },
+                    data: { SchoolYear: schoolYear, usd: usd, building: bId, daysPerWeek: daysAWeek, totalDays: total, totalWeeks: allWeeks, minutesPerDay: minutes },
                     dataType: 'json',
                     success: function (data) {
                         if (data.Result != "error") {
