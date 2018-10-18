@@ -1007,11 +1007,11 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = mis)]
         public ActionResult UpdateIEPStatusToActive(int stId)
         {
+            //create archive
             try
             {
-                //creating archive
                 var theIEP = GetIEPPrint(stId, 0);
-                var data = this.RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+                var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
 
                 string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
                 HtmlDocument doc = new HtmlDocument();
@@ -1021,7 +1021,7 @@ namespace GreenbushIep.Controllers
 
                 var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                 var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                var mergedFile = this.CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
+                var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
 
             }
             catch (Exception e)
@@ -1029,6 +1029,7 @@ namespace GreenbushIep.Controllers
                 return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
 
+            // switch the flag
             tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault();
             if (iepDraft != null && iepDraft.begin_date != null && iepDraft.end_Date != null)
             {
@@ -1684,7 +1685,7 @@ namespace GreenbushIep.Controllers
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
-            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid && i.IepStatus == "Active").FirstOrDefault().IEPid : iepId ;
+            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid : iepId ;
             var studentDetails = new StudentDetailsPrintViewModel();
 
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();

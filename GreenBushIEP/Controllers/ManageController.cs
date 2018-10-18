@@ -1337,6 +1337,22 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult CreateIEPAmendment(int Stid, int IepId)
+        {
+            try
+            {
+                var AmendmentId = db.uspCopyIEP(IepId, Stid, true);
+
+                return Json(new { Result = "success", Message = AmendmentId}, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception e)
+            {
+                return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened :" + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult GetAllStudentsInBuildings(int id)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);

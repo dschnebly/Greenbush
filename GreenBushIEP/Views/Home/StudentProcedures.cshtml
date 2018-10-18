@@ -1,6 +1,18 @@
 ﻿@using GreenBushIEP.Models
 @model StudentProcedureViewModel
 
+@helper DisplayIEPStatus(tblIEP iep)
+{
+    if (iep.Amendment)
+    {
+        <span>AMENDMENT</span>
+    }
+    else
+    {
+        <span>@(iep.IepStatus.ToUpper())</span>
+    }
+}
+
 @{
     ViewBag.Title = "Student Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -978,6 +990,7 @@
 
 <div class="transition-page">
     <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
+        <input type="hidden" name="studentIEPId" id="studentIEPId" value="@(Model.studentIEP.current.IEPid)" />
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
                 <div class="student-information">
@@ -1020,7 +1033,7 @@
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper())&nbsp;&nbsp;<b class="caret"></b>
+                            <span class="glyphicon glyphicon-chevron-right"></span> @(DisplayIEPStatus(Model.studentIEP.current))&nbsp;&nbsp;<b class="caret"></b>
                         </button>
                         <ul class="dropdown-menu list-group">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
@@ -1031,13 +1044,13 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper())</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(DisplayIEPStatus(iep))</a></li>
                                     }
                                 }
                             }
-                            <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" class="makeIEPActive list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE") ? "disabled" : string.Empty) "><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
-                            <li class="list-group-item"><a href="#" class="makeIEPAmendment list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                            <li class="list-group-item"><a href="#" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                            <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE") ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                            <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.All(i => i.IepStatus.ToUpper() != "ACTIVE") ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.All(i => i.IepStatus.ToUpper() != "ACTIVE") ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                         </ul>
                     </div>
                 }
@@ -1047,16 +1060,16 @@
                 }
             </div>
             <div class="col-md-7">
-                <div class="form-group col-md-6 col-md-pull-1">
+                <div class="form-group col-md-6">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
-                <div class="form-group col-md-6 col-md-pull-1">
+                <div class="form-group col-md-6">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
             </div>
-            <div class="col-md-2 col-md-pull-1">
+            <div class="col-md-2">
                 <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
             </div>
         </div>
