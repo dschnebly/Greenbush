@@ -1364,9 +1364,29 @@ namespace GreenBushIEP.Controllers
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
-                List<tblUser> students = db.tblUsers.Where(u => u.Archive != true && studentsInTheBuildings.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
+                //var students = db.tblUsers.Where(u => u.Archive != true && studentsInTheBuildings.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
-                return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
+				var students = (from u in db.tblUsers 
+								   join su in db.tblStudentInfoes on u.UserID equals su.UserID
+								   join cty in db.tblCounties on su.County equals cty.CountyCode
+								   join b in db.tblBuildings on su.BuildingID equals b.BuildingID
+								   where 
+								   u.RoleID == "5" 
+								   && !(u.Archive ?? false)
+								   && studentsInTheBuildings.Contains(u.UserID) 
+								   && !alreadyAssignedStudents.Contains(u.UserID)
+								   && teacherBuildings.Contains(b.BuildingID)
+								   select new Student
+								   {
+									   UserID = u.UserID,
+									   FirstName = u.FirstName,
+									   LastName = u.LastName,
+									   ImageURL = u.ImageURL,
+									   BuildingName = b.BuildingName,
+									   County = cty.CountyName
+								   }).Distinct().ToList();
+
+				return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

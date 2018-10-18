@@ -3,6 +3,7 @@
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
@@ -13,7 +14,7 @@
         <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
 text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
-        <p class=MsoNormal align=center style='text-align:center'>
+        <p class=MsoNormal align=center style='text-align:center;padding-bottom:25px'>
             <b>
                 <u>
                     FOR PARTICULAR
@@ -146,7 +147,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             As the
-            school representative on this student’s IEP team, I, <u>@(String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0")) </u>,
+            school representative on this student’s IEP team, I, <u>@(String.Format(districtContactName).PadRight(40 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0")) </u>,
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:

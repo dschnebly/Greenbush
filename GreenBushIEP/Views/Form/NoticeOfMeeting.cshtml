@@ -1,16 +1,22 @@
 ﻿@{
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+	string studentAddress = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
+	string studentCityStZip = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip: "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	
 }
 
 <div class="module-page">
 
     <div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in'>
 
-        <h1 style='margin:0in;margin-bottom:.0001pt;border:none;padding:0in;'>
+        <p class=MsoNormal align=center style='text-align:center'>   
             <span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
-        </h1>
+        </p>
 
     </div>
 
@@ -23,25 +29,22 @@
             <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
 
                 <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>To:</b> <u>
-						@if (Model.contacts != null && Model.contacts.Count > 0)
-						{
-							@(String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).PadRight(73 - String.Format(Model.contacts[0].FirstName + " " + Model.contacts[0].LastName).Length, ' ').Replace(" ", "\u00A0"))
-						}
-							</u></span>
+                    <span style='font-size:  11.0pt'><b>To:</b>					
+					<u><b>@(String.Format(contactFormattedName).PadRight(65 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>					
+					
+					</span>
                     <span style='font-size:11.0pt'><o:p></o:p></span>
                 </p>
                 <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-                    <span style='font-size:11.0pt'>
-                        <span style='mso-tab-count:1'>       </span>(Parent/Legal
-                        Educational Decision Maker)<o:p></o:p>
+                    <span style='font-size:10.0pt'>
+                        <span style='mso-tab-count:1'>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
                     </span>
                 </p>
             </td>
             <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
 
                 <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>Date:</b> <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(45, ' ').Replace(" ", "\u00A0"))</u></span>
+                    <span style='font-size:  11.0pt'><b>Date:</b> <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(48, ' ').Replace(" ", "\u00A0"))</u></span>
                     <span style='font-size:11.0pt'><o:p></o:p></span>
                 </p>
                 <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
@@ -65,12 +68,11 @@
                         <span style='font-size:
   11.0pt'>On behalf of:</span>
                     </b><span style='font-size:11.0pt;mso-bidi-font-weight:
-  bold'><u><b>@(String.Format(studentFormattedName).PadRight(56 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+  bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
-    <span style='font-size:11.0pt'>
-        <span style='mso-tab-count:1'>                      </span>(Student’s
-        name)<o:p></o:p>
+    <span style='font-size:10.0pt'>
+        <span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
     </span>
 </p>
 <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
@@ -80,20 +82,10 @@
     <p class=MsoNormal>
         <b style='mso-bidi-font-weight:normal'>
             <span style='font-size:11.0pt'>Address:</span>
-        </b><span style='font-size:11.0pt'><u>
-		@if (Model.contacts != null && Model.contacts.Count > 0)
-		{
-			@(String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).PadRight(68 - String.Format(Model.contacts[0].Address1 + " " + Model.contacts[0].Address2).Length, ' ').Replace(" ", "\u00A0"))
-		}
-	</u><o:p></o:p></span>
+        </b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
     </p>
     <p class=MsoNormal><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-    <p class=MsoNormal><span style='font-size:11.0pt'><u>
-		@if (Model.contacts != null && Model.contacts.Count > 0)
-		{
-			@(String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).PadRight(68 - String.Format(Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip).Length, ' ').Replace(" ", "\u00A0"))
-		}
-		  </u><o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(68 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
 </td>
 </tr>
 </table>
@@ -445,17 +437,15 @@
         to review the evaluation results, please contact
     </span>
 </p>
-
-<p  >
-    <span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(teacherFormattedName).PadRight(103 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>at <textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)"></textarea>&nbsp; immediately.</span>
+<p>
+    <span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea></u>&nbsp; immediately.</span>
 </p>
-
-<p class='section-break' style='tab-stops:261.0pt'>
+<p style='tab-stops:261.0pt'>
     <span style='font-size:10.0pt;
     mso-bidi-font-size:12.0pt'>(School Contact)<span style='mso-tab-count:1'>                                                                             </span></span>
 </p>
-
-<div style='margin-top:15px;mso-element:para-border-div;border:solid windowtext 1.0pt;
+<br/><br/>
+<div style='margin-top:25px;mso-element:para-border-div;border:solid windowtext 1.0pt;
     mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
 
     <p class=MsoNormal align=center style='text-align:center;border:none;
