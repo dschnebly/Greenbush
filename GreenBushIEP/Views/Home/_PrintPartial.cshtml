@@ -3,14 +3,7 @@
 
 @{
 
-	Layout = "";
-	//var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	//var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	//var imageRadioChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_yes.png");
-	//var imageRadioNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_no.png");
-	//var imageSliderChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/yes_checked.png");
-	//var imageSliderNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/no_checked.png");
-	//var headerLogo = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/GBlogo1A.jpg");
+	Layout = "";	
 	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
@@ -1802,7 +1795,7 @@
 
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-md-12">
-                                        <label class="underline">Vocational Rehabilitation</label><br /><br />
+                                        <label class="underline">Other Agency Collaboration</label><br /><br />
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_BenefitKRS)
                                              {
