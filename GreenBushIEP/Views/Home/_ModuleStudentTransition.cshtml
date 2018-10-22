@@ -365,7 +365,7 @@
     <div class="@(!Model.isDOC ? String.Empty : "hidden" )" id="studentBirthdayAgeOver21">
         <div class="row">
             <div class="col-md-12">
-
+				
                 <div class="row form-group" style="margin-bottom: 0px;">
                     <div class="col-xs-12">
                         <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -841,6 +841,25 @@
                                                         <input class="form-control" id="transitionServiceDuration" maxlength="2000" name="transitionServiceDuration" type="text" placeholder="30 minutes at a time" value="">
                                                     </div>
                                                 </div>
+												 <div class="col-md-3">
+													<label for="transitionServiceStartDate">Start Date</label>
+													<div class="input-group">
+														<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+														<input type="text" data-val="true" value="" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																id="transitionServiceStartDate" name="transitionServiceStartDate" class="form-control standard-font-size" aria-describedby="basic-addon1" style="z-index: 99999; " />
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label for="transitionServiceEndDate">End Date</label>
+													<div class="input-group">
+														<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+														<input type="text" data-val="true" value="" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																id="transitionServiceEndDate" name="transitionServiceEndDate"
+																class="form-control standard-font-size " aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+													</div>
+												</div>   
                                             </div>
                                         </div>
                                     </div>
@@ -920,6 +939,25 @@
                                                                             <input class="form-control" id="transitionInstructionServiceDuration1" maxlength="2000" name="transitionInstructionServiceDuration@(service.TransitionServiceID)" type="text" placeholder="30 minutes at a time" value="@(service.Duration)">
                                                                         </div>
                                                                     </div>
+																	 <div class="col-md-3">
+																		<label for="transitionInstructionServiceStartDate">Start Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(service.StartDate.HasValue ? service.StartDate.Value.ToShortDateString() : "")" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																				   id="transitionInstructionServiceStartDate@(service.TransitionServiceID)" name="transitionInstructionServiceStartDate@(service.TransitionServiceID)" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; "  />
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="transitionInstructionServiceEndDate">End Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(service.EndDate.HasValue ? service.EndDate.Value.ToShortDateString() : "")" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																				   id="transitionInstructionServiceEndDate@(service.TransitionServiceID)" name="transitionInstructionServiceEndDate@(service.TransitionServiceID)"
+																				   class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+																		</div>
+																	</div>   
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -991,6 +1029,25 @@
                                                                             <input class="form-control" id="transitionRelatedServiceDuration@(related.TransitionServiceID)" maxlength="2000" name="transitionRelatedServiceDuration@(related.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(related.Duration)">
                                                                         </div>
                                                                     </div>
+																	 <div class="col-md-3">
+																		<label for="transitionRelatedServiceStartDate">Start Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(related.StartDate.HasValue ? related.StartDate.Value.ToShortDateString() : "")" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																				   id="transitionRelatedServiceStartDate@(related.TransitionServiceID)" name="transitionRelatedServiceStartDate@(related.TransitionServiceID)" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="transitionRelatedServiceEndDate">End Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(related.EndDate.HasValue ? related.EndDate.Value.ToShortDateString() : "")" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																				   id="transitionRelatedServiceEndDate@(related.TransitionServiceID)" name="transitionRelatedServiceEndDate@(related.TransitionServiceID)"
+																				   class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+																		</div>
+																	</div>  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1062,6 +1119,25 @@
                                                                             <input class="form-control" id="transitionDailyServiceDuration@(daily.TransitionServiceID)" maxlength="2000" name="transitionDailyServiceDuration@(daily.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(daily.Duration)">
                                                                         </div>
                                                                     </div>
+																	 <div class="col-md-3">
+																		<label for="transitionDailyServiceStartDate">Start Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(daily.StartDate.HasValue ? daily.StartDate.Value.ToShortDateString() : "")" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																				   id="transitionDailyServiceStartDate@(daily.TransitionServiceID)" name="transitionDailyServiceStartDate@(daily.TransitionServiceID)" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="transitionDailyServiceEndDate">End Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(daily.EndDate.HasValue ? daily.EndDate.Value.ToShortDateString() : "")" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																				   id="transitionDailyServiceEndDate@(daily.TransitionServiceID)" name="transitionDailyServiceEndDate@(daily.TransitionServiceID)"
+																				   class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+																		</div>
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1127,6 +1203,25 @@
                                                                             <input class="form-control" id="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" maxlength="2000" name="transitionVocationalServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
                                                                         </div>
                                                                     </div>
+																	 <div class="col-md-3">
+																		<label for="transitionVocationServiceStartDate">Start Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(vocational.StartDate.HasValue ? vocational.StartDate.Value.ToShortDateString() : "")" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																				   id="transitionVocationServiceStartDate@(vocational.TransitionServiceID)" name="transitionVocationServiceStartDate@(vocational.TransitionServiceID)" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="transitionVocationServiceEndDate">End Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(vocational.StartDate.HasValue ? vocational.StartDate.Value.ToShortDateString() : "")" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																				   id="transitionVocationServiceEndDate@(vocational.TransitionServiceID)" name="transitionVocationServiceEndDate@(vocational.TransitionServiceID)"
+																				   class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+																		</div>
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1192,6 +1287,25 @@
                                                                             <input class="form-control" id="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" maxlength="2000" name="transitionLeisureServiceDuration@(vocational.TransitionServiceID)" type="text" placeholder="30 minuets at a time" value="@(vocational.Duration)">
                                                                         </div>
                                                                     </div>
+																	 <div class="col-md-3">
+																		<label for="transitionLeisureServiceStartDate">Start Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(vocational.StartDate.HasValue ? vocational.StartDate.Value.ToShortDateString() : "")" data-val-date="The field Start date must be a date." data-val-required="The Start Date field is required."
+																				   id="transitionLeisureServiceStartDate@(vocational.TransitionServiceID)" name="transitionLeisureServiceStartDate@(vocational.TransitionServiceID)" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="transitionLeisureServiceEndDate">End Date</label>
+																		<div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+																			<input type="text" data-val="true" value="@(vocational.EndDate.HasValue ? vocational.EndDate.Value.ToShortDateString() : "")" data-val-date="The field End date must be a date." data-val-required="The End Date field is required."
+																				   id="transitionLeisureServiceEndDate@(vocational.TransitionServiceID)" name="transitionLeisureServiceEndDate@(vocational.TransitionServiceID)"
+																				   class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+																		</div>
+																	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1314,6 +1428,7 @@
                                                     <span class="onoffswitch2-switch"></span>
                                                 </label>
                                             </div>
+											<input type="text" name="otherAgencies" id="otherAgencies" class="form-control" placeholder="List other agencies" value="@(Model.transition.Planning_BenefitKRS_OtherAgencies)" />
                                         </fieldset>
                                         <fieldset class="form-group @(Model.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
                                             <label style="padding: 5px 0 10px;">Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
@@ -1628,7 +1743,13 @@
         cloneAssessment.find("#transitionAssessmentNarrativeDefault").prop("id", "transitionAssessmentNarrative" + assessmentCount).attr("name", "transitionAssessmentNarrative" + assessmentCount);
         cloneAssessment.find("#transitionAssessmentCompletedDefault").prop("id", "transitionAssessmentCompleted" + assessmentCount).attr("name", "transitionAssessmentCompleted" + assessmentCount);
         cloneAssessment.find("#transitionAssessmentPerformanceDefault").prop("id", "transitionAssessmentPerformance" + assessmentCount).attr("name", "transitionAssessmentPerformance" + assessmentCount);
-
+		cloneAssessment.find('.dtField').each(function () {
+			$(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+			$(this).datepicker({
+                dateFormat: "mm/dd/yy",
+                
+            });
+        });
         // close all but the last assessment.
         $(".transitionAssessment").not("#assessmentDefault").find(".panel-collapse.in").collapse("hide");
 
@@ -1924,6 +2045,17 @@
         cloneInstruction.find("#transitionServiceFrequency").prop("id", "transitionInstructionServiceFrequency" + instructionCount).attr("name", "transitionInstructionServiceFrequency" + instructionCount);
         cloneInstruction.find("#transitionServiceLocation").prop("id", "transitionInstructionServiceLocation" + instructionCount).attr("name", "transitionInstructionServiceLocation" + instructionCount);
         cloneInstruction.find("#transitionServiceDuration").prop("id", "transitionInstructionServiceDuration" + instructionCount).attr("name", "transitionInstructionServiceDuration" + instructionCount);
+		var stDate = cloneInstruction.find("#transitionServiceStartDate").prop("id", "transitionInstructionServiceStartDate" + instructionCount).attr("name", "transitionInstructionServiceStartDate" + instructionCount);
+		var endDate = cloneInstruction.find("#transitionServiceEndDate").prop("id", "transitionInstructionServiceEndDate" + instructionCount).attr("name", "transitionInstructionServiceEndDate" + instructionCount);
+		stDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
+		
+		endDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+        });
 
         // close all but the last assessment.
         $(".transitionInstructionService").find(".panel-collapse.in").collapse("hide");
@@ -1997,8 +2129,20 @@
         cloneRelated.find("#transitionServiceDescription").prop("id", "transitionRelatedServiceDescription" + relatedCount).attr("name", "transitionRelatedServiceDescription" + relatedCount);
         cloneRelated.find("#transitionServiceFrequency").prop("id", "transitionRelatedServiceFrequency" + relatedCount).attr("name", "transitionRelatedServiceFrequency" + relatedCount);
         cloneRelated.find("#transitionServiceLocation").prop("id", "transitionRelatedServiceLocation" + relatedCount).attr("name", "transitionRelatedServiceLocation" + relatedCount);
-        cloneRelated.find("#transitionServiceDuration").prop("id", "transitionRelatedServiceDuration" + relatedCount).attr("name", "transitionRelatedServiceDuration" + relatedCount);
+		cloneRelated.find("#transitionServiceDuration").prop("id", "transitionRelatedServiceDuration" + relatedCount).attr("name", "transitionRelatedServiceDuration" + relatedCount);
+		var stDate = cloneRelated.find("#transitionServiceStartDate").prop("id", "transitionRelatedServiceStartDate" + relatedCount).attr("name", "transitionRelatedServiceStartDate" + relatedCount);
+		var endDate = cloneRelated.find("#transitionServiceEndDate").prop("id", "transitionRelatedServiceEndDate" + relatedCount).attr("name", "transitionRelatedServiceEndDate" + relatedCount);
 
+		stDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
+		
+		endDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+            });
+		
         // close all but the last assessment.
         $(".transitionRelatedService").find(".panel-collapse.in").collapse("hide");
 
@@ -2071,7 +2215,18 @@
         cloneDaily.find("#transitionServiceDescription").prop("id", "transitionDailyServiceDescription" + dailyCount).attr("name", "transitionDailyServiceDescription" + dailyCount);
         cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionDailyServiceFrequency" + dailyCount).attr("name", "transitionDailyServiceFrequency" + dailyCount);
         cloneDaily.find("#transitionServiceLocation").prop("id", "transitionDailyServiceLocation" + dailyCount).attr("name", "transitionDailyServiceLocation" + dailyCount);
-        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionDailyServiceDuration" + dailyCount).attr("name", "transitionDailyServiceDuration" + dailyCount);
+		cloneDaily.find("#transitionServiceDuration").prop("id", "transitionDailyServiceDuration" + dailyCount).attr("name", "transitionDailyServiceDuration" + dailyCount);
+		var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionDailyServiceStartDate" + dailyCount).attr("name", "transitionDailyServiceStartDate" + dailyCount);
+		var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionDailyServiceEndDate" + dailyCount).attr("name", "transitionDailyServiceEndDate" + dailyCount);
+		stDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
+		
+		endDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
 
         // close all but the last assessment.
         $(".transitionDailyService").find(".panel-collapse.in").collapse("hide");
@@ -2145,7 +2300,19 @@
         cloneDaily.find("#transitionServiceDescription").prop("id", "transitionVocationalServiceDescription" + vocationalCount).attr("name", "transitionVocationalServiceDescription" + vocationalCount);
         cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionVocationalServiceFrequency" + vocationalCount).attr("name", "transitionVocationalServiceFrequency" + vocationalCount);
         cloneDaily.find("#transitionServiceLocation").prop("id", "transitionVocationalServiceLocation" + vocationalCount).attr("name", "transitionVocationalServiceLocation" + vocationalCount);
-        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionVocationalServiceDuration" + vocationalCount).attr("name", "transitionVocationalServiceDuration" + vocationalCount);
+		cloneDaily.find("#transitionServiceDuration").prop("id", "transitionVocationalServiceDuration" + vocationalCount).attr("name", "transitionVocationalServiceDuration" + vocationalCount);
+		var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionVocationalServiceStartDate" + vocationalCount).attr("name", "transitionVocationalServiceStartDate" + vocationalCount);
+		var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionVocationalServiceEndDate" + vocationalCount).attr("name", "transitionVocationalServiceEndDate" + vocationalCount);
+		
+		stDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
+		
+		endDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
 
         // close all but the last assessment.
         $(".transitionVocationalService").find(".panel-collapse.in").collapse("hide");
@@ -2219,7 +2386,19 @@
         cloneLeisure.find("#transitionServiceDescription").prop("id", "transitionLeisureServiceDescription" + leisureCount).attr("name", "transitionLeisureServiceDescription" + leisureCount);
         cloneLeisure.find("#transitionServiceFrequency").prop("id", "transitionLeisureServiceFrequency" + leisureCount).attr("name", "transitionLeisureServiceeFrequency" + leisureCount);
         cloneLeisure.find("#transitionServiceLocation").prop("id", "transitionLeisureServiceLocation" + leisureCount).attr("name", "transitionLeisureServiceLocation" + leisureCount);
-        cloneLeisure.find("#transitionServiceDuration").prop("id", "transitionLeisureServiceDuration" + leisureCount).attr("name", "transitionLeisureServiceDuration" + leisureCount);
+		cloneLeisure.find("#transitionServiceDuration").prop("id", "transitionLeisureServiceDuration" + leisureCount).attr("name", "transitionLeisureServiceDuration" + leisureCount);
+		var stDate = cloneLeisure.find("#transitionServiceStartDate").prop("id", "transitionLeisureServiceStartDate" + leisureCount).attr("name", "transitionLeisureServiceStartDate" + leisureCount);
+		var endDate = cloneLeisure.find("#transitionServiceEndDate").prop("id", "transitionLeisureServiceEndDate" + leisureCount).attr("name", "transitionLeisureServiceEndDate" + leisureCount);
+		
+		stDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
+		
+		endDate.datepicker({
+                dateFormat: "mm/dd/yy",
+                
+		});
 
         // close all but the last assessment.
         $(".transitionLeisureService").find(".panel-collapse.in").collapse("hide");

@@ -1074,8 +1074,7 @@ namespace GreenbushIep.Controllers
             if (iep != null)
             {
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                //bool isReadOnly = false;
-                //bool canAddProgress = false;
+                
                 StudentGoalsViewModel model = new StudentGoalsViewModel();
                 model.studentId = studentId;
                 model.iepId = iep.IEPid;
@@ -1336,7 +1335,7 @@ namespace GreenbushIep.Controllers
 				ViewBag.studentFirstName = studentFirstName;
                 ViewBag.studentLastName = studentLastName;
                 ViewBag.studentAge = studentAge;
-
+								
                 if (isReadOnly)
                     return PartialView("ActiveIEP/_StudentTransition", model);
                 else
@@ -1407,7 +1406,7 @@ namespace GreenbushIep.Controllers
 
 
             ViewBag.Locations = locationList;
-
+			
             if (isReadOnly)
                 return PartialView("ActiveIEP/_Accommodations", model);
             else

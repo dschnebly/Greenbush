@@ -145,7 +145,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="text" data-val="true" value="@Model.DefaultEndDate" data-val-date="The field End date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                        <input type="text" data-val="true" value="@Model.DefaultEndDate" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
                                                                class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
                                                     </div>
@@ -233,16 +233,12 @@
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
         $("#ExistingAccommodations").append(cloneGoal);
-
+		
         //have to remove the hasdatepicker before we can appy new datepicker to clone        
         cloneGoal.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                //beforeShow: function () {
-                //    alert('before');
-
-                //}
+                dateFormat: "mm/dd/yy",                
             });
         });
 

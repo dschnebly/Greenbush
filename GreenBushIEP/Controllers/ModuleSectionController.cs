@@ -1150,7 +1150,19 @@ namespace GreenBushIEP.Controllers
                         transitionService.Frequency = collection[i++].ToString();
                         transitionService.Duration = collection[i++].ToString();
                         transitionService.Location = collection[i++].ToString();
-                        transitionService.Update_Date = DateTime.Now;
+						string startDateStr = collection[i++].ToString();
+						string endDateStr = collection[i++].ToString();
+						if (!string.IsNullOrEmpty(startDateStr))
+						{
+							transitionService.StartDate = Convert.ToDateTime(startDateStr);
+						}
+						if (!string.IsNullOrEmpty(endDateStr))
+						{
+							transitionService.EndDate = Convert.ToDateTime(endDateStr);
+						}
+
+
+						transitionService.Update_Date = DateTime.Now;
 
                         if (transitionServiceID == 0)
                         {
@@ -1221,6 +1233,7 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
 					transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
 					transition.Completed = collection["isComplete"] == "on" ? true : false;
+					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
 					db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);

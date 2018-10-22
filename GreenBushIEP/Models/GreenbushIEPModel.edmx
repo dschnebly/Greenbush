@@ -815,6 +815,7 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="Planning_Occupation" Type="nvarchar" MaxLength="50" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="Planning_BenefitKRS_OtherAgencies" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
@@ -830,6 +831,8 @@
           <Property Name="ServiceDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblUsers">
           <Key>
@@ -2307,6 +2310,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Planning_Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="Planning_BenefitKRS_OtherAgencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
@@ -2322,6 +2326,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ServiceDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -3458,6 +3464,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="Planning_BenefitKRS_OtherAgencies" ColumnName="Planning_BenefitKRS_OtherAgencies" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Planning_Occupation" ColumnName="Planning_Occupation" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -3485,6 +3492,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitionServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
               <MappingFragment StoreEntitySet="tblTransitionServices">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />

@@ -185,6 +185,10 @@
 							<p>@(service.Location)</p>
 							<label for="transitionServiceDuration">Duration</label>
 							<p>@(service.Duration)</p>
+							<label for="transitionServiceDuration">Start Date</label>
+							<p>@(service.StartDate.HasValue ? service.StartDate.Value.ToShortDateString() : "")</p>
+							<label for="transitionServiceDuration">End Date</label>
+							<p>@(service.EndDate.HasValue ? service.EndDate.Value.ToShortDateString() : "")</p>
 						}
 					}
 				</div>
@@ -206,6 +210,10 @@
 								<p>@(related.Location)</p>
 								<label for="transitionServiceDuration">Duration</label>
 								<p>@(related.Duration)</p>
+								<label for="transitionServiceDuration">Start Date</label>
+								<p>@(related.StartDate.HasValue ? related.StartDate.Value.ToShortDateString() : "")</p>
+								<label for="transitionServiceDuration">End Date</label>
+								<p>@(related.EndDate.HasValue ? related.EndDate.Value.ToShortDateString() : "")</p>
 							}
 						}
 					</div>
@@ -236,6 +244,10 @@
 
 								<label for="transitionServiceDuration">Duration</label>
 								<p>@(daily.Duration)</p>
+								<label for="transitionServiceDuration">Start Date</label>
+								<p>@(daily.StartDate.HasValue ? daily.StartDate.Value.ToShortDateString() : "")</p>
+								<label for="transitionServiceDuration">End Date</label>
+								<p>@(daily.EndDate.HasValue ? daily.EndDate.Value.ToShortDateString() : "")</p>
 							}
 						}
 					</div>
@@ -263,6 +275,10 @@
 
 								<label for="transitionServiceDuration">Duration</label>
 								<p>@(vocational.Duration)</p>
+								<label for="transitionServiceDuration">Start Date</label>
+								<p>@(vocational.StartDate.HasValue ? vocational.StartDate.Value.ToShortDateString() : "")</p>
+								<label for="transitionServiceDuration">End Date</label>
+								<p>@(vocational.EndDate.HasValue ? vocational.EndDate.Value.ToShortDateString() : "")</p>
 							}
 						}
 					</div>
@@ -288,6 +304,10 @@
 
 								<label for="transitionServiceDuration">Duration</label>
 								<p>@(leisure.Duration)</p>
+								<label for="transitionServiceDuration">Start Date</label>
+								<p>@(leisure.StartDate.HasValue ? leisure.StartDate.Value.ToShortDateString() : "")</p>
+								<label for="transitionServiceDuration">End Date</label>
+								<p>@(leisure.EndDate.HasValue ? leisure.EndDate.Value.ToShortDateString() : "")</p>
 							}
 						}
 					</div>
@@ -368,11 +388,12 @@
 
 				<div class="row" style="margin-top:15px;">
 					<div class="col-md-12">
-						<label class="underline">Other Agency Collaboration</label><br /><br />
+						<label class="underline">Other Agency Collaboration</label>
 						<fieldset class="form-group">
 							@if (Model.transition.Planning_BenefitKRS)
 							{
 								<p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
+								<p>Other Agencies: @(Model.transition.Planning_BenefitKRS_OtherAgencies)</p>
 							}
 							else
 							{
