@@ -103,7 +103,8 @@
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.student.FundSource</td>
                     <td><label>KG Full Day:</label></td>
-                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "")</tdcolspan="3">
+                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "")</td>
+					
                 </tr>
             </table>
             <hr />
@@ -141,9 +142,7 @@
                     <td><label>Next Hearing:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>
                 </tr>
-               
-            </table>
-            <table style="width:100%">
+          
                 <tr>
                     <td><label>Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
@@ -199,7 +198,7 @@
                     <td></td>
                     <td></td>
                     <td><label>Grade:</label></td>
-                    <td>@Model.studentDetails.student.Grade</td>
+                    <td>@(Model.studentDetails.student.Grade == 0 ? " " : Model.studentDetails.student.Grade.ToString())</td>
                 </tr>
                 <tr>
                     <td><label>Phones:</label></td>
