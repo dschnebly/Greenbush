@@ -3,16 +3,16 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
+    <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
 </div>
 <div class="modal-body">
 
-    @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new {  }))
+    @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new { }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPHealthID)
-        
+
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
@@ -20,7 +20,7 @@
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label  for="HealthProgressTowardGenEd" class="standard-font-size" style="">Health Concerns progressing with General Education Supports</label>
+                <label for="HealthProgressTowardGenEd" class="standard-font-size" style="">Health Concerns progressing with General Education Supports</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) />
@@ -100,34 +100,44 @@
                 <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
-            <fieldset class="form-group">
-                <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
-                <div class="form-check">
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                        <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-                        <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
-                    </div>
-                </div>
-                <div class="form-check" id="MeetByOtherTextArea">
-                    <br />
-                    <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
-                        <span class="standard-font-size"> *if other, please explain</span><br />
-                        <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
-                    </p>
-                </div>
-            </fieldset>
-
-            <div class="row">
-                <div class="col-md-12" style="text-align:center;">
-                    <div class="form-group">
-                        <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                        <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                        <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-                    </div>
+        <fieldset class="form-group">
+            <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                    <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                    <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
                 </div>
             </div>
+            <div class="form-check" id="MeetByOtherTextArea">
+                <br />
+                <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                    <span class="standard-font-size"> *if other, please explain</span><br />
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
+                </p>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center;">
+                <div class="form-group">
+                    <button type="reset" class="formbtn btn btn-default btn-lg pull-left" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                    <button type="button" class="formbtn btn btn-warning btn-lg" id="savecompleted"><i class="glyphicon glyphicon-floppy-saved"></i>&nbsp;Save &amp; Complete</button>
+                    <button type="button" class="formbtn btn btn-default btn-lg pull-right" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
     }
+
+    <div class="completed-loader" style="visibility: visible;">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <br />
@@ -205,8 +215,29 @@
     $("#HearingDate").datepicker({
         dateFormat: "mm/dd/yy"
     })
+
     $("#VisionDate").datepicker({
         dateFormat: "mm/dd/yy"
     })
 
+    $("#isCompletedModule").on("click", function () {
+        $(".completed-loader").delay(250).fadeOut();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Manage/ModuleCompleted',
+            data: { module : 'health' },
+            dataType: "json",
+            success: function (data) {
+                // this is where you will save the form and stuff
+            },
+            error: function (data) {
+                console.log("Unable to mark Health Module as complete.");
+            },
+            complete: function (){
+                console.log("wrap it up son.");
+                $("#savecompleted").removeClass('btn-warning').addClass('btn-success');
+            }
+        });
+    });
 </script>
