@@ -748,7 +748,6 @@ namespace GreenbushIep.Controllers
                         else
                             return PartialView("_ModuleHealthSection", (tblIEPHealth)healthModel);
 
-
                     case "AcademicModule":
                         ModuleAcademicViewModel academicModel = new ModuleAcademicViewModel();
                         academicModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == iep.IEPAcademicID).FirstOrDefault();
@@ -764,6 +763,7 @@ namespace GreenbushIep.Controllers
                             return PartialView("ActiveIEP/_AcademicSection", academicModel);
                         else
                             return PartialView("_ModuleAcademicSection", academicModel);
+
                     case "MotorModule":
                         tblIEPMotor motorModel = db.tblIEPMotors.Where(m => m.IEPMotorID == iep.IEPMotorID).FirstOrDefault();
                         if (motorModel == null)
@@ -774,6 +774,7 @@ namespace GreenbushIep.Controllers
                             return PartialView("ActiveIEP/_MotorSection", motorModel);
                         else
                             return PartialView("_ModuleMotorSection", motorModel);
+
                     case "CommunicationModule":
                         tblIEPCommunication communicationModel = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == iep.IEPCommunicationID).FirstOrDefault();
                         if (communicationModel == null)
@@ -784,6 +785,7 @@ namespace GreenbushIep.Controllers
                             return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
                         else
                             return PartialView("_ModuleCommunicationSection", communicationModel);
+
                     case "SocialModule":
                         tblIEPSocial socialModel = db.tblIEPSocials.Where(s => s.IEPSocialID == iep.IEPSocialID).FirstOrDefault();
                         if (socialModel == null)
@@ -794,6 +796,7 @@ namespace GreenbushIep.Controllers
                             return PartialView("ActiveIEP/_SocialSection", socialModel);
                         else
                             return PartialView("_ModuleSocialSection", socialModel);
+
                     case "GeneralIntelligenceModule":
                         tblIEPIntelligence intelligenceModel = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == iep.IEPIntelligenceID).FirstOrDefault();
                         if (intelligenceModel == null)
@@ -805,6 +808,7 @@ namespace GreenbushIep.Controllers
                             return PartialView("ActiveIEP/_GeneralIntelligenceSection", intelligenceModel);
                         else
                             return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
+
                     default:
                         return Json(new { Result = "error", Message = "Unknown View" }, JsonRequestBehavior.AllowGet);
                 }
