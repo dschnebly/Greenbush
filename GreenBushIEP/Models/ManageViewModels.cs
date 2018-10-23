@@ -272,7 +272,9 @@ namespace GreenBushIEP.Models
             hasAccommodations = false;
             needsBehaviorPlan = false;
             isCreator = false;
-        }
+			isGiftedOnly = false;
+
+		}
 
         public bool isDoc { get; set; }
         public int studentAge { get; set; }
@@ -284,7 +286,8 @@ namespace GreenBushIEP.Models
         public bool hasAccommodations { get; set; }
         public bool needsBehaviorPlan { get; set; }
         public bool isCreator { get; set; }
-    }
+		public bool isGiftedOnly { get; set; }
+	}
 
     public class StudentLegalView
     {
@@ -490,6 +493,7 @@ namespace GreenBushIEP.Models
         public List<tblTransitionService> services { get; set; }
 		public bool isRequired { get; set; }
 		public bool canComplete { get; set; }
+		public bool isGiftedOnly { get; set; }
 
 		public StudentTransitionViewModel()
         {
@@ -497,6 +501,7 @@ namespace GreenBushIEP.Models
             studentId = 0;
             student = new tblUser();
             isDOC = false;
+			isGiftedOnly = false;
             transition = new tblTransition();
             assessments = new List<tblTransitionAssessment>();
             goals = new List<tblTransitionGoal>();
