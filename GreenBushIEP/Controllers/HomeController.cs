@@ -1486,7 +1486,7 @@ namespace GreenbushIep.Controllers
 
             ViewBag.StudentName = studentName;
             ViewBag.StudentId = studentId;
-
+			isReadOnly = false;
             if (isReadOnly)
                 return PartialView("ActiveIEP/_OtherConsiderations", model);
             else
