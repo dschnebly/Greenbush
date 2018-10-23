@@ -1235,7 +1235,7 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @((Model.studentAge > 12 || (Model.isDoc && Model.studentAge <= 21)) ?  String.Empty : "hidden" )">
+                <li class="ui-state-default filter planning @((Model.studentAge > 12 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )">
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>

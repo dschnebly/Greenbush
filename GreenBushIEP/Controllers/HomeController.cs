@@ -919,7 +919,9 @@ namespace GreenbushIep.Controllers
                 model.birthDate = info.DateOfBirth;
                 model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 model.isDoc = district.DOC;
-                model.isCreator = currentUser.UserID == info.CreatedBy;
+				model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
+
+				model.isCreator = currentUser.UserID == info.CreatedBy;
 
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID) ;
 
@@ -1782,8 +1784,8 @@ namespace GreenbushIep.Controllers
                         tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
                         theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-
-                        stvw.isDOC = district.DOC;
+						stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
+						stvw.isDOC = district.DOC;
 
 
                     }

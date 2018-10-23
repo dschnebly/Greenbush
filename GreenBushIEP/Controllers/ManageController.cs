@@ -626,6 +626,7 @@ namespace GreenBushIEP.Controllers
                 info.Grade = Convert.ToInt32(collection["studentGrade"]);
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
+				info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
                 info.PlacementCode = collection["studentPlacement"];
                 info.USD = collection["misDistrict"];
                 info.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
