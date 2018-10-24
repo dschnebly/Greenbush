@@ -103,9 +103,12 @@ else
             text-shadow: 0 1px 0 #fff;
             filter: alpha(opacity=20);
             opacity: .2;
-            margin-top: -2px;
+            margin-top: 3px;
         }
 
+        .modal-header .close {
+            margin-top: 4px;
+        }
 
         .yesConsentOverlay {
             display: none;
@@ -820,7 +823,7 @@ else
 
         .completed-loader {
             visibility: visible;
-            background-color: rgba(255,255,255,0.7);
+            background-color: rgba(255,255,255,0.4);
             position: absolute;
             z-index: 100 !important;
             top: 0;
@@ -831,15 +834,15 @@ else
 
             .completed-loader .completed-checkbox label {
                 position: fixed;
-                top: 50%;
-                left: 40%;
-                font-size: 200% !important;
+                top: 28px;
+                left: 45%;
+                font-size: 110% !important;
                 font-weight: bold;
             }
 
             .completed-loader .completed-label {
                 position: relative;
-                top: 5px;
+                top: -3px;
                 color: green;
             }
 
@@ -1111,10 +1114,10 @@ else
                         </div>
                         <div class="text">
                             <var>&nbsp;</var>
-                            <label class="text-muted">Health</label>
+                            <label class="text-muted">Health&nbsp;</label>
                         </div>
                         <div class="options">
-                            <button type="button" class="btn btn-default btn-lg module-section" data-view="HealthModule"><i class="glyphicon glyphicon-search"></i> View</button>
+                            <button type="button" class="btn btn-default btn-lg module-section" data-view="HealthModule"><i class="glyphicon glyphicon-search"></i> View&nbsp;<i class="glyphicon glyphicon-ok" style="color: black; position: absolute;top: 65px; left: 75px; font-size: 784%; opacity: 0.55;"></i></button>
                         </div>
                     </div>
                 </li>
@@ -1606,6 +1609,33 @@ else
             </div>
         </div>
         <!-- End fullscreen Module studentPlanning-->
+        <!-- Modal IEP Needs Dates -->
+        <div id="modal-iepdatesEmpty" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
+            <div class="modal-dialog" style="margin: 0 auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Please set the IEP dates.</h4>
+                </div>
+                <div class="modal-body" style="margin-top: 25%; font-size: 125% !important;">
+                    <div class="row">
+                        <div class="form-group col-md-5 col-md-offset-1">
+                            <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
+                            <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
+                        </div>
+                        <div class="form-group col-md-5 col-md-offset-1">
+                            <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
+                            <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
+                        </div>
+                    </div>
+                    <div class="row center-block">
+                        <div class="col-md-12" style="margin-top: 35px;">
+                            <button id="saveplan" type="submit" class="btn btn-default btn-lg center-block" data-dismiss="modal">Save Plan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal IEP Needs Dates -->
         <!-- Modal fullscreen IEP Module Section -->
         <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
             <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
