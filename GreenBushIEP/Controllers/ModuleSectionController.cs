@@ -571,7 +571,9 @@ namespace GreenBushIEP.Controllers
                 }
 
                 var tp = collection["TransporationPlan"];
-                switch (tp)
+				
+
+				switch (tp)
                 {
                     case "1":
                         model.Transporation_NotEligible = true;
@@ -612,11 +614,12 @@ namespace GreenBushIEP.Controllers
 				
 				//find existing if updating
 				tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
-
-                if (OC == null)
+				
+				if (OC == null)
                 {
                     model.Create_Date = DateTime.Now;
-                    db.tblOtherConsiderations.Add(model);
+					model.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
+					db.tblOtherConsiderations.Add(model);
                     db.SaveChanges();
                     return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
                 }

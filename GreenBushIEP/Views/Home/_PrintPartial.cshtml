@@ -35,38 +35,35 @@
                 </tr>
             </table>
             <hr />
-            <table style="width:100%;">
+            <table>
                 <tr>
-                    <td><label>Student Legal Name:</label></td>
-                    <td>@(studentFullName)</td>
-                    <td><label>KIDS ID:</label></td>
-                    <td colspan="3">@(Model.studentDetails.student.KIDSID)</td>
-
-                </tr>
+                    <td style="width:150px;"><label>Student Legal Name:</label></td>
+                    <td style="width:100px;">@(studentFullName)</td>
+                    <td style="width:75px;"><label>KIDS ID:</label></td>
+                    <td style="width:75px;">@(Model.studentDetails.student.KIDSID)</td>
+					<td style="width:80px;"><label>Birth Date:</label></td>
+                    <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>                          
                 <tr>
-                    <td><label>Birth Date:</label></td>
-                    <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
-                    <td><label>Age at<br />Annual<br />Meeting:</label></td>
-                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtAnnualMeeting > 0 ? Model.studentDetails.studentAgeAtAnnualMeeting.ToString() : "")</td>
                     <td><label>Gender:</label></td>
-                    <td>@Model.studentDetails.gender</td>
-                </tr>
+                    <td>@Model.studentDetails.gender</td>                      
+                    <td colspan="2"><label>Age at<br />Annual Meeting:</label></td>
+                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtAnnualMeeting > 0 ? Model.studentDetails.studentAgeAtAnnualMeeting.ToString() : "")</td>
+                    
+                </tr>              
                 <tr>
                     <td><label>Language of the Student:</label></td>
-                    <td>@Model.studentDetails.studentLang</td>
-                    <td></td>
-                    <td></td>
-                    <td><label>Language of the Parent:</label></td>
-                    <td>@Model.studentDetails.parentLang</td>
+                    <td>@Model.studentDetails.studentLang</td>                    
+                    <td colspan="2"><label>Language of the Parent:</label></td>
+                    <td>@Model.studentDetails.parentLang</td>					
                 </tr>
             </table>
 
             @if (primeContact != null)
             {
                 <hr />
-                <table style="width:100%;">
+                <table>
                     <tr>
-                        <td><label>Contact 1:</label></td>
+                        <td style="width:75px;"><label>Contact 1:</label></td>
                         <td>@primeContact.FirstName @primeContact.LastName</td>
                     </tr>
                     <tr>
@@ -84,35 +81,30 @@
                 </table>
             }
             <hr />
-            <table style="width:100%">
+            <table  style="width:100%">
                 <tr>
-                    <td><label>Neighborhood School:</label></td>
+                    <td ><label>Neighborhood School:</label></td>
                     <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
-
-                </tr>
-                <tr>
-                    <td><label>Responsible School:</label></td>
+					<td ><label>Responsible School:</label></td>
                     <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+					<td ></td>
+                    <td ></td>
+                </tr>                
                 <tr>
                     <td><label>Assign Child Count:</label></td>
-                    <td>@Model.studentDetails.assignChildCount</td>
-                    <td></td>
-                    <td></td>
+                    <td>@Model.studentDetails.assignChildCount</td>                    
                     <td><label>County of Residence:</label></td>
-                    <td>@Model.studentDetails.studentCounty</td>
+                    <td colspan="3">@Model.studentDetails.studentCounty</td>
+					
                 </tr>
                 <tr>
-                    <td><label>Grade:</label></td>
-                    <td>@Model.studentDetails.student.Grade</td>
+					<td><label>Grade:</label></td>
+                    <td>@(Model.studentDetails.student.Grade == 0 ? " " : Model.studentDetails.student.Grade.ToString())</td>                   
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.student.FundSource</td>
                     <td><label>KG Full Day:</label></td>
                     <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "")</td>
+					
                 </tr>
             </table>
             <hr />
@@ -150,64 +142,19 @@
                     <td><label>Next Hearing:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>
                 </tr>
-                <tr>
-                    <td><label>Evidence:</label></td>
-                    <td colspan="5">**</td>
-                </tr>
-            </table>
-            <table style="width:100%">
+          
                 <tr>
                     <td><label>Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
                     <td><label>Ed Status:</label></td>
+					<td></td>
                     <td><label>Next Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
                 </tr>
             </table>
-            <br />
-            <hr />
-            @*<div>
-                <h3 class="text-center">Anticipated Service to be Provided</h3>
-                <table style="width:100%">
-                    <tr>
-                        <td><label>Exceptionality:</label></td>
-                        <td></td>
-                        <td><label>Primary<br />Disability:</label></td>
-                        <td>@Model.studentDetails.primaryDisability</td>
-                        <td><label>Secondary<br />Disability:</label></td>
-                        <td>@Model.studentDetails.secondaryDisability</td>
-                    </tr>
-                    <tr>
-                        <td><label>Gifted:</label></td>
-                        <td colspan="5"></td>
-                    </tr>
-                </table>
-            </div>*@
-        <!--end services-->
-
-            <hr />
-            @*<table>
-                <tr>
-                    <th>Special Transportation Provided:</th>
-                    <td>**</td>
-                </tr>
-                <tr>
-                    <th>Extended School Term Previous Summer:</th>
-                    <td>**</td>
-                </tr>
-            </table>
-            <hr />
-            <table>
-                <tr>
-                    <th>Electronic Communication Consent:</th>
-                    <td>**</td>
-                </tr>
-                <tr>
-                    <th>Electronic Consent Recieved:</th>
-                    <td>**</td>
-                </tr>
-            </table>*@
-
+            <br />          
+            <hr />           
+	  <br />     <br />   
         </div> <!--end student page-->
         <br />
         <div class="module-page">
@@ -251,7 +198,7 @@
                     <td></td>
                     <td></td>
                     <td><label>Grade:</label></td>
-                    <td>@Model.studentDetails.student.Grade</td>
+                    <td>@(Model.studentDetails.student.Grade == 0 ? " " : Model.studentDetails.student.Grade.ToString())</td>
                 </tr>
                 <tr>
                     <td><label>Phones:</label></td>
@@ -330,7 +277,7 @@
                 }
                 else if (Model.studentHealth.Diagnosis)
                 {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Health; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Health that impact the ability to learn or access the general curriculum.</p>
                 }
 
                 if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
@@ -397,9 +344,9 @@
                 <fieldset class="form-group">
                     <div>
                         <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                        <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                        <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                         <p style="margin-top:5px;">@(Model.studentHealth.PLAAFP_Strengths)</p>
-                        <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                        <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                         <p style="margin-top:5px;">@(Model.studentHealth.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
@@ -470,7 +417,7 @@
                   }
                   else if (Model.studentMotor.Needs)
                   {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Motor; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Motor that impact the ability to learn or access the general curriculum.</p>
                   }
 
                   var motorVal = "";
@@ -501,9 +448,9 @@
                     <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentMotor.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentMotor.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -580,7 +527,7 @@
                  }
                  else if (Model.studentCommunication.AreaOfNeed.HasValue && Model.studentCommunication.AreaOfNeed.Value)
                  {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Communication; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Communication that impact the ability to learn or access the general curriculum.</p>
                  }
 
                  if (Model.studentCommunication.Deaf)
@@ -599,9 +546,9 @@
                 <fieldset class="form-group">
                     <div>
                         <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                        <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                        <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                         <p style="margin-top:5px;">@(Model.studentCommunication.PLAAFP_Strengths)</p>
-                        <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                        <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                         <p style="margin-top:5px;">@(Model.studentCommunication.PLAAFP_Concerns)</p>
                     </div>
                 </fieldset>
@@ -674,7 +621,7 @@
                    }
                    if (Model.studentSocial.AreaOfNeed.HasValue && Model.studentSocial.AreaOfNeed.Value)
                    {
-                    <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional; that impact the ability to learn or access the general curriculum </p>
+                    <p> The Team has concerns about @Model.studentFirstName in the area of Social and Emotional that impact the ability to learn or access the general curriculum.</p>
                    }
 
                    if (Model.studentSocial.MentalHealthDiagnosis)
@@ -706,9 +653,9 @@
                     <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentSocial.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentSocial.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -780,15 +727,15 @@
                 }
                 else if (Model.studentIntelligence.AreaOfNeed == true)
                 {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of General Intelligence that impact the ability to learn or access the general curriculum.</p>
                 }
 
                                 <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentIntelligence.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentIntelligence.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -817,15 +764,15 @@
                     }
                     else if (Model.studentAcademic.AreaOfNeed)
                     {
-                        <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; that impact the ability to learn or access the general curriculum</p>
+                        <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance that impact the ability to learn or access the general curriculum.</p>
                     }
 
                                 <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentAcademic.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -899,14 +846,14 @@
                }
                else if (Model.studentReading.AreaOfNeed)
                {
-                <p>The Team has concerns about @Model.studentFirstName in the area of Reading; that impact the ability to learn or access the general curriculum</p>
+                <p>The Team has concerns about @Model.studentFirstName in the area of Reading that impact the ability to learn or access the general curriculum.</p>
                }
                     <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentReading.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -981,15 +928,15 @@
                  }
                  else if (Model.studentMath.AreaOfNeed)
                  {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Math; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Math that impact the ability to learn or access the general curriculum.</p>
                  }
 
                             <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentMath.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -1054,25 +1001,25 @@
             </div>
             <hr />
             <div>
-            <h3 class="text-center">WRITTEN</h3>
+            <h3 class="text-center">WRITTEN LANGUAGE</h3>
             @if (!Model.studentWritten.NoConcerns)
             {
 
                 if (Model.studentWritten.ProgressTowardGenEd)
                 {
-                                <p>The Team has concerns about @Model.studentFirstName in the area of Writing; however,  progress is being made with general education supports.</p>
+                                <p>The Team has concerns about @Model.studentFirstName in the area of Written Language; however,  progress is being made with general education supports.</p>
                 }
                 else if (Model.studentWritten.AreaOfNeed)
                 {
-                    <p>The Team has concerns about @Model.studentFirstName in the area of Writing; that impact the ability to learn or access the general curriculum</p>
+                    <p>The Team has concerns about @Model.studentFirstName in the area of Written Language that impact the ability to learn or access the general curriculum.</p>
                 }
 
                     <fieldset class="form-group">
                         <div>
                             <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                            <span style="margin-top:5px;font-weight:100"> Strengths:</span>
+                            <span style="margin-top:5px;font-weight:600"> Strengths:</span>
                             <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Strengths)</p>
-                            <span style="margin-top:5px;font-weight:100"> Concerns (including Baseline):</span>
+                            <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
                             <p style="margin-top:5px;">@(Model.studentWritten.PLAAFP_Concerns)</p>
                         </div>
                     </fieldset>
@@ -2110,12 +2057,12 @@
                                 @if (Model.studentOtherConsiderations.AssistiveTechnology_Require.HasValue && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value)
 													{
 
-									 <p>The student requires Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment</p>
+									 <p>The student requires Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment.</p>
 
 								}
                                 else
                                 {
-                                    <p>The student does not require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment</p>
+                                    <p>The student does not require Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment.</p>
                                 }                               
                                 <div class="form-check" id="AssistiveTechnology_Text">
                                     <p id="AT_Desc" style="display: @(Model.studentOtherConsiderations.AssistiveTechnology_Require.HasValue && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value ? "block;" : "none;")">
@@ -2132,16 +2079,15 @@
                     </div>
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
-                            <label >Participation in District-Wide Assessments</label>
-                            @*<label>When the student's age or grade level is being assess, the IEP team has determined the following options(s) to be most appropriate.  In considering the unique curricular needs of the student, the IEP team may select multiple options below.  The intent is that all students will be part of the District accountability system as appropriate.</label>*@
-                            <div class="form-check" style="padding-top:5px;">
+                            <label >Participation in District-Wide Assessments</label>                           
+                            <div class="form-check" style="padding-top:5px;padding-right:5px">
                                  @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
                                  {
                                     <p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")" >Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
                                  }
                                  @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
                                  {
-                                   <p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): <i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+                                   <p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
                                  }
                                  @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
                                  {
@@ -2172,16 +2118,14 @@
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
                             <label >Participation in State Assessments</label>
-                            @*<label>Changes occur annually in the grade or age level administration of Kansas State Assessments. In planning to meet the needs of the student, the IEP team has determined the student will participate as indicated below:</label>*@
-
-                            <div class="form-check" >
+                            <div class="form-check"  style="padding-top:5px;padding-right:5px">
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
                                 {
                                     <p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
                                 }
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
                                 {
-                                    <p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+                                    <p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
                                 }
                                  @if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
                                  {
@@ -2191,24 +2135,20 @@
                             <div >
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
                                 {                                    
-                                    <p >@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>                                    
+                                    <p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>                                    
                                 }
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
                                 {                                 
-                                    <p >@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>                                 
+                                    <p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>                                 
                                 }
                             </div>
 
                         </div>
                     </div>
-                    <hr />
-                    <div class="row voffset2 dont-break">
-                        <div class="col-md-12">
-                            <label>Transportation Plan</label>
-                        </div>
-                    </div>
+                    <hr />                   
                     <div class="row voffset2">
                         <div class="col-md-12">
+							<label>Transportation Plan</label>
                             <div class="form-check">
                                  @if (Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value)
                                  {
@@ -2228,19 +2168,17 @@
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
                             <label>Regular Education Environment</label>
+							 <p>@(Model.studentOtherConsiderations.RegularEducation_NotParticipate)</p>
                             <p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
                         </div>
                     </div>
-                    <div class="row voffset2">
-                        <div class="col-md-12">
-                            @*<label>
-                                To what extent, if any, will the child not participate with non-identified children in general education classes, the general education curriculum, extracurricular activities, and other non academic activities?
-                            </label>*@
+                    @*<div class="row voffset2">
+                        <div class="col-md-12">                           
                             <div>
-                                <p>@(Model.studentOtherConsiderations.RegularEducation_NotParticipate)</p>
+                               
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     if (@showExtendYear)
                     {
                         <hr />
@@ -2285,6 +2223,7 @@
                                 @if (Model.studentOtherConsiderations.Parental_Concerns_flag.HasValue && Model.studentOtherConsiderations.Parental_Concerns_flag.Value)
                                 {
                                      <p>The parent(s)/legal education decision maker has concerns for enhancing the education of @Model.studentFirstName</p>
+									 <p>Concerns: @(Model.studentOtherConsiderations.Parental_Concerns_Desc)</p>
                                 }
                                 else
                                 {
@@ -2301,7 +2240,7 @@
                     </div>
                     <div class="row voffset2">
                         <div class="col-md-12">
-                            <p>The parent(s)/legal education decision maker will be informed of (@Model.studentFirstName)'s progress in writing at least one time every quarter.</p>
+                            <p>The parent(s)/legal education decision maker will be informed of @Model.studentFirstName's progress in writing at least one time every quarter.</p>
                             <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
                             <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
                         </div>
