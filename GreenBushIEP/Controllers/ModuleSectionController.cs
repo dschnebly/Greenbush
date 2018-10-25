@@ -882,23 +882,27 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-                    string verification = collection[0];
-                    int studentId = Convert.ToInt32(collection[1]);
-                    int iepId = Convert.ToInt32(collection[2]);
+					//bool isReadOnly = collection["isReadOnly"] == "True" ? true : false; 
+					//bool canAddProgress = collection["canAddProgress"] == "True" ? true : false;
 
-                    int j = 2;
+					string verification = collection[0];
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iepId = Convert.ToInt32(collection["IEPid"]);
+
+
+					int j = 2;
                     DateTime temp;
                     int tempInt;
                     bool keyParse = Int32.TryParse(collection[++j], out goalId);
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
                     
                     studentGoal.goal.IEPid = iepId;
-                    studentGoal.goal.Module = collection[++j].ToString();
-                    studentGoal.goal.Title = collection[++j].ToString();
-                    studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
-                    studentGoal.goal.AnnualGoal = collection[++j].ToString();
-                    studentGoal.goal.Baseline = collection[++j].ToString();
-                    studentGoal.goal.StateStandards = collection[++j].ToString();
+					studentGoal.goal.Module = collection[++j].ToString();
+					studentGoal.goal.Title = collection[++j].ToString();
+					studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
+					studentGoal.goal.AnnualGoal = collection[++j].ToString();
+					studentGoal.goal.Baseline = collection[++j].ToString();
+					studentGoal.goal.StateStandards = collection[++j].ToString();
 
 					var evalProcedures = "";
 					if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
@@ -910,6 +914,7 @@ namespace GreenBushIEP.Controllers
 							j++;//only increment when values are submitted otherwise it throws the count off for the rest
 						}
 					}
+					
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
