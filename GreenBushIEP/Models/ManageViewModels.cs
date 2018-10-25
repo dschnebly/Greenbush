@@ -540,8 +540,9 @@ namespace GreenBushIEP.Models
         public string inititationDate { get; set; }
         public int studentAgeAtAnnualMeeting { get; set; }
         public string assignChildCount { get; set; }
-
-    }
+		public string placementCodeDesc { get; set; }
+		public string edStatusCodeDesc { get; set; }
+	}
 
     public class StudentServiceObject
     {

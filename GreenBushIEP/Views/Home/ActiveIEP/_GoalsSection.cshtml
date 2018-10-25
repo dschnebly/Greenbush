@@ -3,14 +3,14 @@
 {
 	foreach (var studentGoal in Model.studentGoals)
 	{
-		
+
 		var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : "";
 		var sGoal = studentGoal.goal;
 
 		var progQ1 = "";
-        var progQ2 = "";
-        var progQ3 = "";
-        var progQ4 = "";
+		var progQ2 = "";
+		var progQ3 = "";
+		var progQ4 = "";
 
 		var ddlText = "";
 		switch (sGoal.Module)
@@ -27,8 +27,10 @@
 		} //end switch
 
 		var evalText = "";
+		var evalValues = "";
 		foreach (var ep in studentGoal.evaluationProcedures.Where(g => g.goalID == studentGoal.goal.goalID))
 		{
+			evalValues += ep.evaluationProcedureID + ",";
 			switch (ep.evaluationProcedureID)
 			{
 				case 1: { evalText += "Written Observation, "; break; }
@@ -51,7 +53,7 @@
 				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 				@Html.Hidden("studentId", Model.studentId)
 				@Html.Hidden("IEPid", Model.iepId)
-
+				
 				<div class="col-md-12">
 					<div class="panel-group" id="accordion@(studentGoal.goal.goalID)">
 						<div class="panel panel-default">
@@ -66,6 +68,8 @@
 							</div>
 							<div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
 								<div class="panel-body">
+									
+
 									<div class="form-group">
 										<label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
 										<div class="input-group">
@@ -74,57 +78,42 @@
 													<span data-bind="bs-drp-sel-label">	@(ddlText)</span>
 													<span class="caret"></span>
 													<span class="sr-only">Toggle Dropdown</span>
-												</button>
-												<input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.goalID)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
-												@*<ul class="dropdown-menu" role="menu" style="font-size:16px;">
-														<li data-value="1"><a href="#">Health</a></li>
-														<li data-value="2"><a href="#">Motor</a></li>
-														<li data-value="3"><a href="#">Communication</a></li>
-														<li data-value="4"><a href="#">Social-Emotional</a></li>
-														<li data-value="5"><a href="#">General Intelligence</a></li>
-														<li data-value="6"><a href="#">Academic Performance</a></li>
-														<li data-value="7"><a href="#">Reading</a></li>
-														<li data-value="8"><a href="#">Math</a></li>
-														<li data-value="9"><a href="#">Written Language</a></li>
-													</ul>*@
-											</div>
-											<input type="hidden" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
-											<p class="form-control standard-font-size">@(studentGoal.goal.Title)</p>
-											<span class="input-group-addon">
-												<i class="fa fa-handshake-o " aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
+												</button>	
+												<input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.Title)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
+											</div>											
+											<div>
+											<input type="hidden" name="StudentGoalTitle@(studentGoal.goal.goalID)" value="@(studentGoal.goal.Title)" />
+											<span class="input-group-addon" style="width:60px;height:49px;border-right:1px #ccc solid;border-radius:4px">
+												<i class="fa fa-handshake-o" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>												
 												<input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
 											</span>
+											</div>
 										</div>
+										<p class="read-only" style="margin-top:8px;">@(studentGoal.goal.Title)</p>
+										
+										
 									</div>
 									<label class="standard-font-size" for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
 									<div class="form-group">
-										<p class="form-control standard-font-size">@(studentGoal.goal.AnnualGoal)</p>
-										<input type="hidden" class="form-control StudentoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" data-validate="true" data-toggle="tooltip" data-placement="bottom" value=@(studentGoal.goal.AnnualGoal) />
+										<p class="read-only">@(studentGoal.goal.AnnualGoal)</p>
+										<input type="hidden" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" value="@(studentGoal.goal.AnnualGoal)" />
 									</div>
 									<label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
 									<div class="form-group">
-										<input type="hidden" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size" name="StudentGoalBaseline@(studentGoal.goal.goalID)" />
-										<p class="form-control standard-font-size">@(studentGoal.goal.Baseline)</p>
-
+										<p class="read-only">@(studentGoal.goal.Baseline)</p>
+										<input type="hidden" name="StudentGoalBaseline@(studentGoal.goal.goalID)" value="@(studentGoal.goal.Baseline)" />
 									</div>
 									<label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
-									<div class="form-group">
-										<input type="hidden" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
-										<p class="form-control standard-font-size">@(studentGoal.goal.StateStandards)</p>
+									<div class="form-group">										
+										<p class="read-only">@(studentGoal.goal.StateStandards)</p>
+										<input type="hidden" value="@(studentGoal.goal.StateStandards)" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)"  />
+
 									</div>
 									<label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
 									<div class="form-group">
-										<p class="form-control standard-font-size">@evalText.Trim().TrimEnd(',')</p>
-										<input type="hidden" value="@evalText.Trim().TrimEnd(',')" name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" />
-										@*<select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
-												<option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
-												<option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
-												<option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
-												<option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
-												<option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
-												<option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
-												<option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
-											</select>*@
+										<p class="read-only">@evalText.Trim().TrimEnd(',')</p>
+										<input type="hidden" value="@evalValues.Trim().TrimEnd(',')" name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" />
+										
 									</div>
 
 									@if (Model.canAddProgress)
@@ -149,6 +138,10 @@
 					</div>
 				</div>
 
+
+				//keep these at the bottom so it doesn't throw off the save form collection count
+				@Html.Hidden("isReadOnly", Model.isReadOnly)
+				@Html.Hidden("canAddProgress", Model.canAddProgress)
 			}
 
 		</div>

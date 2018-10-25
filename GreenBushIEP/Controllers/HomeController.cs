@@ -1085,8 +1085,7 @@ namespace GreenbushIep.Controllers
                 model.studentId = studentId;
                 model.iepId = iep.IEPid;
                 model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
-                model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
-
+				model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
@@ -1817,9 +1816,10 @@ namespace GreenbushIep.Controllers
                         studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
                         studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+						studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
+						studentDetails.edStatusCodeDesc = info != null ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
 
-
-                    }
+					}
 
                     theIEP.studentDetails = studentDetails;
 
