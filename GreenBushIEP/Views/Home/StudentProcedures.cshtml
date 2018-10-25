@@ -220,7 +220,6 @@ else
             background-color: transparent;
         }
 
-
         .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
             margin-bottom: 5px;
             visibility: visible;
@@ -771,7 +770,6 @@ else
             display: none;
         }
 
-        /* color:#F0AD4E; */
         .btn-bordered-warning {
             color: #337ab7;
             background: #FFFFFF;
@@ -845,6 +843,18 @@ else
                 top: -3px;
                 color: green;
             }
+
+        #missingIEPDates {
+            visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.55);
+        }
+
+        #IEPBeginDate.NoDates, #IEPMeetingDate.NoDates {
+            border: solid red 2px;
+        }
 
         @@-moz-document url-prefix() {
             fieldset {
@@ -1094,11 +1104,11 @@ else
             <div class="col-md-7">
                 <div class="form-group col-md-6">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
+                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" class="@(Model.studentIEP.current.begin_date == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
                 <div class="form-group col-md-6">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" class="@(Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
                 </div>
             </div>
             <div class="col-md-2">
@@ -1106,7 +1116,7 @@ else
             </div>
         </div>
         <div class="row">
-            <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: -18px;">
+            <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: -20px; ">
                 <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty )" id="HealthWidget">
                     <div class="hero-widget well">
                         <div class="icon">
@@ -1115,9 +1125,10 @@ else
                         <div class="text">
                             <var>&nbsp;</var>
                             <label class="text-muted">Health&nbsp;</label>
+                            <i class="glyphicon glyphicon-ok" style="color: black; position: absolute; top: 30px; left: 10px; font-size: 185pt; opacity: 0.55;"></i>
                         </div>
                         <div class="options">
-                            <button type="button" class="btn btn-default btn-lg module-section" data-view="HealthModule"><i class="glyphicon glyphicon-search"></i> View&nbsp;<i class="glyphicon glyphicon-ok" style="color: black; position: absolute;top: 65px; left: 75px; font-size: 784%; opacity: 0.55;"></i></button>
+                            <button type="button" class="btn btn-default btn-lg module-section" data-view="HealthModule"><i class="glyphicon glyphicon-search"></i> View&nbsp;</button>
                         </div>
                     </div>
                 </li>
@@ -1234,7 +1245,7 @@ else
                     <div class="hero-widget well  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
-                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
                         }
                         <div class="icon">
                             <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="top: 15px;"></i>
@@ -1251,7 +1262,7 @@ else
                     <div class="hero-widget well @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
                         @if (Model.needsBehaviorPlan)
                         {
-                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
                         }
                         <div class="icon">
                             <i class="glyphicon glyphicon-road" aria-hidden="true" style="top: 15px;"></i>
@@ -1281,23 +1292,24 @@ else
 
                 @if (ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
                 {
-                    <li class="ui-state-default filter legal ">
-                        <div class="hero-widget well">
-                            <div class="icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                            <div class="text">
-                                <var>&nbsp;</var>
-                                <label class="text-muted">Medicaid Billing </label>
-                            </div>
-                            <div class="options">
-                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('https://serviceportal.compuclaim.com/login.aspx');"><i class="fa fa-external-link-square"></i> Launch</button>
-                            </div>
+                <li class="ui-state-default filter legal ">
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="fa fa-plus-square"></i>
                         </div>
-                    </li>
+                        <div class="text">
+                            <var>&nbsp;</var>
+                            <label class="text-muted">Medicaid Billing </label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg" onclick="window.open('https://serviceportal.compuclaim.com/login.aspx');"><i class="fa fa-external-link-square"></i> Launch</button>
+                        </div>
+                    </div>
+                </li>
                 }
 
             </ul>
+            <div id="missingIEPDates" style="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visibility: visible;" : String.Empty)"></div>
         </div>
 
         <!-- Modal fullscreen Student Planning -->
@@ -1609,33 +1621,6 @@ else
             </div>
         </div>
         <!-- End fullscreen Module studentPlanning-->
-        <!-- Modal IEP Needs Dates -->
-        <div id="modal-iepdatesEmpty" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
-            <div class="modal-dialog" style="margin: 0 auto;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-                    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-warning-sign" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Please set the IEP dates.</h4>
-                </div>
-                <div class="modal-body" style="margin-top: 25%; font-size: 125% !important;">
-                    <div class="row">
-                        <div class="form-group col-md-5 col-md-offset-1">
-                            <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                            <input type="text" name="IEPBeginDate" id="IEPBeginDate" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
-                        </div>
-                        <div class="form-group col-md-5 col-md-offset-1">
-                            <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                            <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" />
-                        </div>
-                    </div>
-                    <div class="row center-block">
-                        <div class="col-md-12" style="margin-top: 35px;">
-                            <button id="saveplan" type="submit" class="btn btn-default btn-lg center-block" data-dismiss="modal">Save Plan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal IEP Needs Dates -->
         <!-- Modal fullscreen IEP Module Section -->
         <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
             <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
@@ -1646,6 +1631,7 @@ else
             <strong class="success"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
             <strong class="failure"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
         </div>
+        <div class="needDates-loader" style="visibility: hidden;"></div>
     </div>
 </div>
 

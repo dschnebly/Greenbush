@@ -31,11 +31,6 @@
         $("#modal-studentPlanning").modal('show');
     }
 
-    // If student plan was created but the IEP dates are blank than pop this up before doing ANYTHING else.
-    //if ($("#modal-studentPlanning").not('.needsPlan')) {
-    //    $("#modal-iepdatesEmpty").modal('show');
-    //}
-
     // Attach Event
     // fires when the "form" evaluation consent button was clicked. *if the teacher wants to reprint the consent form
     $('#EvaluationConsent').not('.bound').addClass('bound').on("click", function (e) {
