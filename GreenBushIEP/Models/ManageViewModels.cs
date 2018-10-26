@@ -273,7 +273,6 @@ namespace GreenBushIEP.Models
             needsBehaviorPlan = false;
             isCreator = false;
 			isGiftedOnly = false;
-
 		}
 
         public bool isDoc { get; set; }

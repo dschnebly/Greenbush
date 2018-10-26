@@ -1131,8 +1131,8 @@ else
         </div>
         <div class="row">
             <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: -20px; ">
-                <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty ) @(Model.studentIEP.studentHealth.Completed ? "module-completed" : String.Empty )" id="HealthWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty )" id="HealthWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isHealthCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-heartbeat"></i>
                         </div>
@@ -1145,8 +1145,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.MotorNoConcern ? "widgetDisabled" : string.Empty ) @(Model.studentIEP.studentMotor.Completed ? "module-completed" : String.Empty)" id="MotorWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.MotorNoConcern ? "widgetDisabled" : string.Empty )" id="MotorWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isMotorCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-cogs"></i>
                         </div>
@@ -1159,8 +1159,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.CommunicationNoConcern ? "widgetDisabled" : string.Empty ) @(Model.studentIEP.studentCommunication.Completed ? "module-completed" : String.Empty)" id="CommunicationWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.CommunicationNoConcern ? "widgetDisabled" : string.Empty )" id="CommunicationWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isCommunicationCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-commenting"></i>
                         </div>
@@ -1173,8 +1173,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.SocialNoConcern ? "widgetDisabled" : string.Empty ) @(Model.studentIEP.studentCommunication.Completed ? "module-completed" : String.Empty)" id="SocialWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.SocialNoConcern ? "widgetDisabled" : string.Empty )" id="SocialWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isSocialCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-smile-o"></i>
                         </div>
@@ -1187,8 +1187,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.IntelligenceAreaOfNeed | Model.studentPlan.IntelligenceProgressTowardGenEd ? string.Empty : "widgetDisabled") @(Model.studentIEP.studentIntelligence.Completed ? "module-completed" : String.Empty)" id="IntelligenceWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.IntelligenceAreaOfNeed | Model.studentPlan.IntelligenceProgressTowardGenEd ? string.Empty : "widgetDisabled")" id="IntelligenceWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isIntelligenceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-education"></i>
                         </div>
@@ -1201,8 +1201,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty ) @(Model.studentIEP.studentAcademic.Completed ? "module-completed" : String.Empty)" id="AcademicWidget">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isAcademicCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-university"></i>
                         </div>

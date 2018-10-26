@@ -132,13 +132,6 @@
             success: function (data) {
                 if (data.Result === 'success') {
 
-                    //$("#IEPBeginDate").removeClass("date-error");
-
-                    //$(".ajax-loader img").css("visibility", "hidden");
-                    //$(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-                    //    $('.ajax-loader').css("visibility", "hidden");
-                    //});
-
                     location.reload();
 
                 } else {

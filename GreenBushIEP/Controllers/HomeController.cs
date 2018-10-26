@@ -966,7 +966,6 @@ namespace GreenbushIep.Controllers
                     if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
                         enableAccommodations = true;
 
-
                     model.hasAccommodations = enableAccommodations;
                     model.needsBehaviorPlan = enableBehaviorPlan;
                 }

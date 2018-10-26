@@ -9,6 +9,12 @@ namespace GreenBushIEP.Models
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         public bool hasPlan { get; set; }
+        public bool isHealthCompleted { get; set; }
+        public bool isMotorCompleted { get; set; }
+        public bool isCommunicationCompleted { get; set; }
+        public bool isSocialCompleted { get; set; }
+        public bool isIntelligenceCompleted { get; set; }
+        public bool isAcademicCompleted { get; set; }
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
 
@@ -62,6 +68,12 @@ namespace GreenBushIEP.Models
                 listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault() ;
                 hasPlan = current != null;
+                isHealthCompleted = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).First().Completed;
+                isMotorCompleted = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).First().Completed;
+                isCommunicationCompleted = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).First().Completed;
+                isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPCommunicationID).First().Completed;
+                isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
+                isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
             }
         }
 
@@ -115,6 +127,7 @@ namespace GreenBushIEP.Models
             studentHealth.VisionDate = DateTime.Now;
             studentHealth.VisionResult = -1;
             studentHealth.VisionImparied = false;
+            studentHealth.Completed = false;
 
             try
             {
@@ -136,6 +149,7 @@ namespace GreenBushIEP.Models
             studentMotor.ProgressTowardGenEd = false;
             studentMotor.Needs = false;
             studentMotor.Participation = -1;
+            studentMotor.Completed = false;
 
             try
             {
@@ -158,6 +172,7 @@ namespace GreenBushIEP.Models
             studentCommunication.SpeechImpactPerformance = false;
             studentCommunication.Deaf = false;
             studentCommunication.LimitedEnglish = false;
+            studentCommunication.Completed = false;
 
             try
             {
@@ -182,6 +197,7 @@ namespace GreenBushIEP.Models
             studentSocial.SignificantBehaviors = false;
             studentSocial.BehaviorImepedeLearning = false;
             studentSocial.BehaviorInterventionPlan = false;
+            studentSocial.Completed = false;
 
             try
             {
@@ -200,6 +216,7 @@ namespace GreenBushIEP.Models
             studentIntelligence = new tblIEPIntelligence();
             studentIntelligence.IEPid = current.IEPid;
             studentIntelligence.Concerns = false;
+            studentIntelligence.Completed = false;
 
             try
             {
@@ -219,6 +236,7 @@ namespace GreenBushIEP.Models
             studentAcademic.IEPid = current.IEPid;
             studentAcademic.NoConcerns = true;
             studentAcademic.AreaOfNeed = false;
+            studentAcademic.Completed = false;
 
             try
             {
