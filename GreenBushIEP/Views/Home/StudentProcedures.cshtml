@@ -822,8 +822,15 @@ else
                 color: red;
             }
 
-        .completed-loader {
+        .completed-loader-hidden {
+            visibility: hidden;
+        }
+
+        .completed-loader-visible {
             visibility: visible;
+        }
+
+        .completed-loader {
             background-color: rgba(255,255,255,0.4);
             position: absolute;
             z-index: 100 !important;
@@ -1203,6 +1210,7 @@ else
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAcademicCompleted ? "module-completed" : string.Empty )">
+ >
                         <div class="icon">
                             <i class="fa fa-university"></i>
                         </div>

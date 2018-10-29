@@ -71,7 +71,7 @@ namespace GreenBushIEP.Models
                 isHealthCompleted = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).First().Completed;
                 isMotorCompleted = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).First().Completed;
                 isCommunicationCompleted = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).First().Completed;
-                isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPCommunicationID).First().Completed;
+                isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).First().Completed;
                 isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
                 isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
             }
