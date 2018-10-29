@@ -1442,7 +1442,7 @@
                                         </fieldset>
                                     </div>
                                 </div>
-								<div class="row" style="margin-top:15px;">
+								@*<div class="row" style="margin-top:15px;">
 									  <div class="col-md-12">
 										<h4><b>Transition Plan Complete</b></h4>&nbsp;&nbsp;
 										<div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
@@ -1453,7 +1453,7 @@
 													</label>
 										</div>
 									 </div>
-								</div>
+								</div>*@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>
@@ -1612,13 +1612,13 @@
                 return;
             }
 
-			//can not mark complete unless educational goal and employement goal are filled out			
-			if ($('#isComplete').is(':checked') && $('#isRequired').val() == "Y" && !canComplete) {
-				alert("Education Goal and Employment Goal are required before the Transition Plan can be marked as completed.");
-                e.stopPropagation();
-				return;
-			}
-            var formData = $('#transitionStudyForm');
+			////can not mark complete unless educational goal and employement goal are filled out			
+			//if ($('#isComplete').is(':checked') && $('#isRequired').val() == "Y" && !canComplete) {
+			//	alert("Education Goal and Employment Goal are required before the Transition Plan can be marked as completed.");
+            //    e.stopPropagation();
+			//	return;
+			//}
+            //var formData = $('#transitionStudyForm');
 
             $.ajax({
                 type: 'POST',

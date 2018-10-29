@@ -130,7 +130,7 @@
             data: { Stid: stId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
             dataType: 'json',
             success: function (data) {
-                if (data.Result === 'success') {
+                if (data.Result == 'success') {
 
                     location.reload();
 
@@ -138,7 +138,7 @@
 
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
-                        $('.ajax-loader').css("visibility", "hidden");
+                        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
                     });
                 }
             },

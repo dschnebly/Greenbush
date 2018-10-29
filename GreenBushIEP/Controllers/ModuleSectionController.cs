@@ -1240,7 +1240,7 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
 					transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
-					transition.Completed = collection["isComplete"] == "on" ? true : false;
+					//transition.Completed = collection["isComplete"] == "on" ? true : false;
 					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
 					db.SaveChanges();
 
