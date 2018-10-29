@@ -1231,9 +1231,8 @@
                                                     <label class="control-label required" for="statusCode">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <select name="statusCode" id="statusCode" class="form-control">
-                                                        
-														 @if (Model.statusCode != null)
+                                                    <select name="statusCode" id="statusCode" class="form-control">                                                        
+														@if (Model.statusCode != null)
                                                         {
 															<optgroup label="Active">
                                                             @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
@@ -1250,11 +1249,6 @@
                                                             }
 															</optgroup>
                                                         }
-
-
-
-
-
                                                     </select>
                                                 </div>
                                             </div>
