@@ -1212,10 +1212,18 @@
                                                     <select name="statusCode" id="statusCode" class="form-control">
                                                         @if (Model.statusCode != null)
                                                         {
-                                                            foreach (var code in Model.statusCode)
+															<optgroup label="Active">
+                                                            @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
                                                             {
                                                                 <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
                                                             }
+															 </optgroup>
+															<optgroup label="Inactive">
+															@foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
+                                                            {
+                                                                <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
+                                                            }
+															</optgroup>
                                                         }
                                                     </select>
                                                 </div>
