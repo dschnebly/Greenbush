@@ -215,7 +215,7 @@
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
                     <div class="form-check">
                         <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Time frame plan will be reviewed</label>
-                        <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@Model.ReviewedBy" data-toggle="tooltip" data-placement="bottom" placeholder="Time frame plan will be reviewed" />
+                        <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@(string.IsNullOrEmpty(Model.ReviewedBy) ? "Plan is to be reviewed annually or sooner as determined by the IEP team." : Model.ReviewedBy)" data-toggle="tooltip" data-placement="bottom" placeholder="Time frame plan will be reviewed" />
                     </div>
                 </fieldset>
 

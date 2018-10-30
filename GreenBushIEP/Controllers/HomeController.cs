@@ -1362,7 +1362,7 @@ namespace GreenbushIep.Controllers
                 isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
                 var model = GetBehaviorModel(studentId, iep.IEPid);
-
+				
                 if (isReadOnly)
                     return PartialView("ActiveIEP/_Behavior", model);
                 else
