@@ -12,6 +12,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPHealthID)
+        @Html.HiddenFor(model => model.Completed)
 
         <div class="funkyradio">
             <div class="funkyradio-success">
@@ -220,23 +221,33 @@
         dateFormat: "mm/dd/yy"
     })
 
+    $("#savecompleted").on("click", function (e) {
+        $("#Completed").val(true);
+        $("#savecompleted").removeClass('btn-warning').addClass('btn-success');
+
+        $(".modal-body form").submit();
+    });
+
     $("#isCompletedModule").on("click", function () {
-        $(".completed-loader").delay(250).fadeOut();
+        var IEPId = $("#studentIEPId").val();
 
         $.ajax({
-            type: 'POST',
-            url: '/Manage/ModuleCompleted',
-            data: { module : 'health' },
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Health" },
             dataType: "json",
             success: function (data) {
-                // this is where you will save the form and stuff
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+
+                    $("#savecompleted").removeClass('btn-success').addClass('btn-warning');
+                    $("#HealthWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
             },
             error: function (data) {
                 console.log("Unable to mark Health Module as complete.");
-            },
-            complete: function (){
-                console.log("wrap it up son.");
-                $("#savecompleted").removeClass('btn-warning').addClass('btn-success');
             }
         });
     });

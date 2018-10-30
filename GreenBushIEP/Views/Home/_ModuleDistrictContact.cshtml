@@ -35,10 +35,10 @@
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="glyphicon glyphicon-option-vertical"></span></span>
                     <select class="form-control" name="selectedDistrict" id="selectedDistrict" required>
+                        <option value="-1">Select a district...</option>
                         @foreach (var district in Model.myDistricts)
                         {
-                            string Selected = Model.myDistricts.IndexOf(district) == 0 ? "Selected" : string.Empty;
-                            <option value="@(district.USD)" @Selected>@(district.DistrictName)</option>
+                            <option value="@(district.USD)">@(district.DistrictName)</option>
                         }
                     </select>
                 </div>
@@ -186,6 +186,8 @@
     $(function () {
         // event fired if the user selects a different option in the select
         $('#selectedDistrict').on('change', function (event) {
+
+            if($("#selectedDistrict option:selected").val() == -1) { return; }
 
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");

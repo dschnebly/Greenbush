@@ -2685,48 +2685,5 @@ namespace GreenbushIep.Controllers
             return fullName;
 
         }
-
-        //public OrganizationUser getOrgazationUser(tblUser user)
-        //{
-        //    if (user.RoleID == owner)
-        //    {
-        //        return new OrganizationUser() { user = user, districts = db.tblDistricts.ToList(), buildings = db.tblBuildings.ToList() };
-        //    }
-
-        //    var districts = (from org in db.tblOrganizationMappings
-        //                     join district in db.tblDistricts
-        //                        on org.USD equals district.USD
-        //                     where org.UserID == user.UserID
-        //                     select district).Distinct().ToList();
-
-        //    var buildings = (from buildingMap in db.tblBuildingMappings
-        //                     join building in db.tblBuildings
-        //                         on new { buildingMap.USD, buildingMap.BuildingID } equals
-        //                            new { building.USD, building.BuildingID }
-        //                     where buildingMap.UserID == user.UserID
-        //                     select building).Distinct().ToList();
-
-        //    return new OrganizationUser() { user = user, districts = districts, buildings = buildings };
-        //}
-
-        //public OrganizationChart buildOrganizationChart(OrganizationUser theBoss)
-        //{
-        //    OrganizationChart chart = new OrganizationChart();
-        //    chart.boss = theBoss;
-
-        //    var staff = (from org in db.tblOrganizationMappings
-        //                 join user in db.tblUsers
-        //                     on org.UserID equals user.UserID
-        //                 where (org.AdminID == theBoss.user.UserID) && !(user.Archive ?? false)
-        //                 select user).Distinct().OrderBy(u => u.RoleID).ToList();
-
-        //    foreach (var person in staff)
-        //    {
-        //        OrganizationUser staffMember = getOrgazationUser(person);
-        //        chart.staff.Add(buildOrganizationChart(staffMember));
-        //    }
-
-        //    return chart;
-        //}
     }
 }
