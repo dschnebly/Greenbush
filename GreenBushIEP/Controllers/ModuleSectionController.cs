@@ -38,10 +38,11 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         HealthIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         HealthIEP.AreaOfNeedDescription = collection["AreaOfNeedDescription"].ToString();
-                        HealthIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false ;
-                        HealthIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false ;
-                        HealthIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false ;
+                        HealthIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
+                        HealthIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
+                        HealthIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
                         HealthIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
+                        HealthIEP.Completed = Convert.ToBoolean(collection["Completed"]);
 
                         db.SaveChanges();
 
@@ -252,7 +253,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Academic.NeedMetByGoal = collection["ModuleAcademicMetByGoal"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByAccommodation = collection["ModuleAcademicMetByAccommodation"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByOther = collection["ModuleAcademicMetByOther"] == "on" ? true : false;
-                        viewModel.Academic.NeedMetByOtherDescription= collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
+                        viewModel.Academic.NeedMetByOtherDescription = collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
 
                         viewModel.Reading.NoConcerns = collection["ModuleReadingNoConcern"] == "on" ? true : false;
                         viewModel.Reading.ProgressTowardGenEd = collection["ModuleReadingProgressTowardGenEd"] == "on" ? true : false;
@@ -531,11 +532,11 @@ namespace GreenBushIEP.Controllers
             int studentId = 0;
 
 
-			try
-			{
-				Int32.TryParse(collection["StudentId"].ToString(), out studentId);
-				
-				model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
+            try
+            {
+                Int32.TryParse(collection["StudentId"].ToString(), out studentId);
+
+                model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
                 model.Parental_Concerns_flag = collection["Parental_Concerns_flag"] == "on" ? true : false;
                 model.ExtendedSchoolYear_RegressionRisk = collection["ExtendedSchoolYear_RegressionRisk"] == "on" ? true : false;
                 model.ExtendedSchoolYear_SeverityRisk = collection["ExtendedSchoolYear_SeverityRisk"] == "on" ? true : false;
@@ -571,14 +572,14 @@ namespace GreenBushIEP.Controllers
                 }
 
                 var tp = collection["TransporationPlan"];
-				
 
-				switch (tp)
+
+                switch (tp)
                 {
                     case "1":
                         model.Transporation_NotEligible = true;
                         break;
-                    case "2":                       
+                    case "2":
                         model.Transporation_Disability_flag = true;
                         break;
                     case "3":
@@ -590,36 +591,36 @@ namespace GreenBushIEP.Controllers
 
                 }
 
-				string otherDesc = "";
-				
-				var vehicleTypeValue = collection["inputVehicleType"];
-				var beginDate = collection["inputBegin"];
-				var endDate = collection["inputEnd"];
-				var minutesValue = collection["inputMinutes"];
-				var vehicleType = "";
-				var minutes = "25";
-				if (!string.IsNullOrEmpty(vehicleTypeValue))
-				{
-					if (vehicleTypeValue == "1")
-						vehicleType = "special education";
-					else if (vehicleTypeValue == "2")
-						vehicleType = "general education";
-					else
-						vehicleType = "";
-				}
+                string otherDesc = "";
 
-				minutes = string.IsNullOrEmpty(minutesValue) ? "25" : minutesValue;
+                var vehicleTypeValue = collection["inputVehicleType"];
+                var beginDate = collection["inputBegin"];
+                var endDate = collection["inputEnd"];
+                var minutesValue = collection["inputMinutes"];
+                var vehicleType = "";
+                var minutes = "25";
+                if (!string.IsNullOrEmpty(vehicleTypeValue))
+                {
+                    if (vehicleTypeValue == "1")
+                        vehicleType = "special education";
+                    else if (vehicleTypeValue == "2")
+                        vehicleType = "general education";
+                    else
+                        vehicleType = "";
+                }
 
-				otherDesc = string.Format(@"The student will receive transportation each day that school is in session, on a {0} vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ({1} minutes estimated normal commute) beginning on {2} and ending on {3} following the school calendar.", vehicleType, minutes, beginDate, endDate);
-				
-				//find existing if updating
-				tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
-				
-				if (OC == null)
+                minutes = string.IsNullOrEmpty(minutesValue) ? "25" : minutesValue;
+
+                otherDesc = string.Format(@"The student will receive transportation each day that school is in session, on a {0} vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ({1} minutes estimated normal commute) beginning on {2} and ending on {3} following the school calendar.", vehicleType, minutes, beginDate, endDate);
+
+                //find existing if updating
+                tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
+
+                if (OC == null)
                 {
                     model.Create_Date = DateTime.Now;
-					model.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
-					db.tblOtherConsiderations.Add(model);
+                    model.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
+                    db.tblOtherConsiderations.Add(model);
                     db.SaveChanges();
                     return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
                 }
@@ -646,8 +647,8 @@ namespace GreenBushIEP.Controllers
                     //OC.Transporation_Disability_desc = model.Transporation_Disability_desc;
                     OC.Transporation_AttendOtherBuilding = model.Transporation_AttendOtherBuilding;
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
-					OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
-					OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
+                    OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
+                    OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
                     OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
                     OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;
                     OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;
@@ -699,7 +700,7 @@ namespace GreenBushIEP.Controllers
                             id = newId,
                             iep = model.IEPid,
                             isNew = true,
-                            newDate = model.AnticipatedStartDate.HasValue ? model.AnticipatedStartDate.Value.ToShortDateString() : "" ,
+                            newDate = model.AnticipatedStartDate.HasValue ? model.AnticipatedStartDate.Value.ToShortDateString() : "",
                             accomType = model.AccomType
                         });
                     }
@@ -805,14 +806,14 @@ namespace GreenBushIEP.Controllers
         {
             string baselineText = "";
             switch (goalTypeId)
-            { 
+            {
                 case 1:
                     var healthGoal = db.tblIEPHealths.Where(g => g.IEPid == iepID && g.Concerns).FirstOrDefault();
                     if (healthGoal != null)
                         baselineText = healthGoal.PLAAFP_Concerns;
-                break;
+                    break;
                 case 2:
-                    var motorGoal = db.tblIEPMotors.Where(g => g.IEPid == iepID  && !g.NoConcerns).FirstOrDefault();
+                    var motorGoal = db.tblIEPMotors.Where(g => g.IEPid == iepID && !g.NoConcerns).FirstOrDefault();
                     if (motorGoal != null)
                         baselineText = motorGoal.PLAAFP_Concerns;
                     break;
@@ -882,39 +883,39 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-					//bool isReadOnly = collection["isReadOnly"] == "True" ? true : false; 
-					//bool canAddProgress = collection["canAddProgress"] == "True" ? true : false;
+                    //bool isReadOnly = collection["isReadOnly"] == "True" ? true : false; 
+                    //bool canAddProgress = collection["canAddProgress"] == "True" ? true : false;
 
-					string verification = collection[0];
+                    string verification = collection[0];
                     int studentId = Convert.ToInt32(collection["studentId"]);
                     int iepId = Convert.ToInt32(collection["IEPid"]);
 
 
-					int j = 2;
+                    int j = 2;
                     DateTime temp;
                     int tempInt;
                     bool keyParse = Int32.TryParse(collection[++j], out goalId);
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
-                    
-                    studentGoal.goal.IEPid = iepId;
-					studentGoal.goal.Module = collection[++j].ToString();
-					studentGoal.goal.Title = collection[++j].ToString();
-					studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
-					studentGoal.goal.AnnualGoal = collection[++j].ToString();
-					studentGoal.goal.Baseline = collection[++j].ToString();
-					studentGoal.goal.StateStandards = collection[++j].ToString();
 
-					var evalProcedures = "";
-					if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
-					{
-						var evalProceduresStr = collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).FirstOrDefault();
-						evalProcedures = collection[evalProceduresStr];
-						if (evalProcedures != null)
-						{
-							j++;//only increment when values are submitted otherwise it throws the count off for the rest
-						}
-					}
-					
+                    studentGoal.goal.IEPid = iepId;
+                    studentGoal.goal.Module = collection[++j].ToString();
+                    studentGoal.goal.Title = collection[++j].ToString();
+                    studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
+                    studentGoal.goal.AnnualGoal = collection[++j].ToString();
+                    studentGoal.goal.Baseline = collection[++j].ToString();
+                    studentGoal.goal.StateStandards = collection[++j].ToString();
+
+                    var evalProcedures = "";
+                    if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
+                    {
+                        var evalProceduresStr = collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).FirstOrDefault();
+                        evalProcedures = collection[evalProceduresStr];
+                        if (evalProcedures != null)
+                        {
+                            j++;//only increment when values are submitted otherwise it throws the count off for the rest
+                        }
+                    }
+
 
                     studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
@@ -945,16 +946,16 @@ namespace GreenBushIEP.Controllers
                                 benchmark.goalID = studentGoal.goal.goalID;
                                 benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
                                 benchmark.ObjectiveBenchmark = collection[++j].ToString();
-                                benchmark.TransitionActivity = (collection[++j].ToLower() ==  "true") ? true : false;
+                                benchmark.TransitionActivity = (collection[++j].ToLower() == "true") ? true : false;
                                 benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                                 benchmark.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
-                                benchmark.Progress_Quarter1 =   ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                                benchmark.Progress_Quarter1 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.Progress_Quarter2 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.Progress_Quarter3 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.Progress_Quarter4 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
-                                benchmark.ProgressDescription_Quarter1 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() :"";
+                                benchmark.ProgressDescription_Quarter1 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.ProgressDescription_Quarter2 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.ProgressDescription_Quarter3 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.ProgressDescription_Quarter4 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
@@ -976,7 +977,6 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
-            // return RedirectToAction("StudentProcedures", "Home", new { stid = Convert.ToInt32(collection[1]) });
         }
 
         [HttpPost]
@@ -1012,9 +1012,9 @@ namespace GreenBushIEP.Controllers
                         tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault() ?? new tblTransitionAssessment();
                         assessment.TransitionID = transition.TransitionID;
                         assessment.Narrative = collection[i++].ToString();
-						var completedOn = collection[i++];
-						if(completedOn != null && completedOn != "")
-							assessment.CompletedOn =  Convert.ToDateTime(completedOn);
+                        var completedOn = collection[i++];
+                        if (completedOn != null && completedOn != "")
+                            assessment.CompletedOn = Convert.ToDateTime(completedOn);
                         assessment.Performance = collection[i++].ToString();
                         assessment.IEPid = transition.IEPid;
                         assessment.Update_Date = DateTime.Now;
@@ -1067,9 +1067,9 @@ namespace GreenBushIEP.Controllers
                     int i = 2;
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
-					bool hasEmploymentGoal = false;
-					bool hasEducationalGoal = false;
-					bool canComplete = false;
+                    bool hasEmploymentGoal = false;
+                    bool hasEducationalGoal = false;
+                    bool canComplete = false;
                     while (i < collection.Count - 2)
                     {
                         var transitionGoalID = Convert.ToInt32(collection[i++]);
@@ -1089,23 +1089,23 @@ namespace GreenBushIEP.Controllers
                             db.tblTransitionGoals.Add(transitionGoal);
                         }
 
-						if (transitionGoal.GoalType == "education")
-						{
-							hasEducationalGoal = true;
-						}
+                        if (transitionGoal.GoalType == "education")
+                        {
+                            hasEducationalGoal = true;
+                        }
 
-						if (transitionGoal.GoalType == "employment")
-						{
-							hasEmploymentGoal = true;
-						}
+                        if (transitionGoal.GoalType == "employment")
+                        {
+                            hasEmploymentGoal = true;
+                        }
 
-					}
+                    }
 
                     db.SaveChanges();
-					if (hasEmploymentGoal && hasEducationalGoal)
-						canComplete = true;
+                    if (hasEmploymentGoal && hasEducationalGoal)
+                        canComplete = true;
 
-					return Json(new { Result = "success", Message = "The Student Transition Goals were added.", CanComplete= canComplete }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", Message = "The Student Transition Goals were added.", CanComplete = canComplete }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1158,19 +1158,19 @@ namespace GreenBushIEP.Controllers
                         transitionService.Frequency = collection[i++].ToString();
                         transitionService.Duration = collection[i++].ToString();
                         transitionService.Location = collection[i++].ToString();
-						string startDateStr = collection[i++].ToString();
-						string endDateStr = collection[i++].ToString();
-						if (!string.IsNullOrEmpty(startDateStr))
-						{
-							transitionService.StartDate = Convert.ToDateTime(startDateStr);
-						}
-						if (!string.IsNullOrEmpty(endDateStr))
-						{
-							transitionService.EndDate = Convert.ToDateTime(endDateStr);
-						}
+                        string startDateStr = collection[i++].ToString();
+                        string endDateStr = collection[i++].ToString();
+                        if (!string.IsNullOrEmpty(startDateStr))
+                        {
+                            transitionService.StartDate = Convert.ToDateTime(startDateStr);
+                        }
+                        if (!string.IsNullOrEmpty(endDateStr))
+                        {
+                            transitionService.EndDate = Convert.ToDateTime(endDateStr);
+                        }
 
 
-						transitionService.Update_Date = DateTime.Now;
+                        transitionService.Update_Date = DateTime.Now;
 
                         if (transitionServiceID == 0)
                         {
@@ -1182,7 +1182,7 @@ namespace GreenBushIEP.Controllers
                     }
 
                     // for catching the Community Participation info at the end of the form.
-                    if(i < collection.Count)
+                    if (i < collection.Count)
                     {
                         transition.CommunityParticipation = collection["isCommunityParticipation"] == "on" ? true : false;
                         transition.CommunityParticipation_Description = collection["communityParticipationDesc"].ToString();
@@ -1239,10 +1239,10 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
-					transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
-					//transition.Completed = collection["isComplete"] == "on" ? true : false;
-					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
-					db.SaveChanges();
+                    transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
+                    //transition.Completed = collection["isComplete"] == "on" ? true : false;
+                    transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
+                    db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
                 }
@@ -1253,6 +1253,26 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "failure", Message = "The Student Course of Study was not added." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ModuleCompleted(int stdIEPId, string module)
+        {
+            switch (module)
+            {
+                case "Health":
+                    db.tblIEPHealths.Where(h => h.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Health Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Motor":
+                    db.tblIEPMotors.Where(m => m.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Health Module was updated." }, JsonRequestBehavior.AllowGet);
+                default:
+
+                    return Json(new { Result = "error", Message = "Unable to find the module you requested to update." }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
