@@ -249,7 +249,7 @@
                     <label style=" padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
                     <div class="form-check">
                         <label style=" padding: 0 0 15px;">Time frame plan will be reviewed</label>
-                        <p>@(Model.ReviewedBy)</p>
+                        <p>@(string.IsNullOrEmpty(Model.ReviewedBy) ? "Plan is to be reviewed annually or sooner as determined by the IEP team." : Model.ReviewedBy)</p>
                     </div>
                 </fieldset>
 

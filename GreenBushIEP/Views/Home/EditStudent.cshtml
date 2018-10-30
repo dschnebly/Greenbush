@@ -1231,14 +1231,23 @@
                                                     <label class="control-label required" for="statusCode">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <select name="statusCode" id="statusCode" class="form-control">
-                                                        @if (Model.statusCode != null)
+                                                    <select name="statusCode" id="statusCode" class="form-control">                                                        
+														@if (Model.statusCode != null)
                                                         {
-                                                            foreach (var code in Model.statusCode)
+															<optgroup label="Active">
+                                                            @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
                                                             {
-                                                                string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+																string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                 <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                             }
+															 </optgroup>
+															<optgroup label="Inactive">
+															@foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
+                                                            {
+																string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+                                                                <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
+                                                            }
+															</optgroup>
                                                         }
                                                     </select>
                                                 </div>
