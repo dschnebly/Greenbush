@@ -584,12 +584,12 @@ namespace GreenBushIEP.Controllers
                             USD = usd
                         });
 
-                        db.tblBuildingMappings.Add(new tblBuildingMapping()
-                        {
-                            BuildingID = "0",
-                            UserID = student.UserID,
-                            USD = usd,
-                        });
+                        //db.tblBuildingMappings.Add(new tblBuildingMapping()
+                        //{
+                        //    BuildingID = "0",
+                        //    UserID = student.UserID,
+                        //    USD = usd,
+                        //});
 
                         db.SaveChanges();
                     }
