@@ -121,10 +121,8 @@
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
                 <div class="form-group">
-                    <button type="reset" class="formbtn btn btn-default btn-lg pull-left" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <button type="button" class="formbtn btn btn-warning btn-lg" id="savecompleted"><i class="glyphicon glyphicon-floppy-saved"></i>&nbsp;Save &amp; Complete</button>
-                    <button type="button" class="formbtn btn btn-default btn-lg pull-right" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
         </div>
@@ -221,10 +219,8 @@
         dateFormat: "mm/dd/yy"
     })
 
-    $("#savecompleted").on("click", function (e) {
+    $("#saveHealthCompleted").on("click", function (e) {
         $("#Completed").val(true);
-        $("#savecompleted").removeClass('btn-warning').addClass('btn-success');
-
         $(".modal-body form").submit();
     });
 
@@ -240,7 +236,6 @@
                 if (data.Result == "success") {
                     $(".completed-loader").fadeOut();
 
-                    $("#savecompleted").removeClass('btn-success').addClass('btn-warning');
                     $("#HealthWidget .hero-widget").removeClass("module-completed");
                 } else {
                     console.log("Error when updating the module.")
@@ -251,4 +246,5 @@
             }
         });
     });
+
 </script>

@@ -85,6 +85,7 @@ namespace GreenBushIEP.Controllers
                         MotorIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         MotorIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
                         MotorIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
+                        MotorIEP.Completed = Convert.ToBoolean(collection["Completed"]);
 
                         db.SaveChanges();
 
@@ -128,6 +129,7 @@ namespace GreenBushIEP.Controllers
                         CommunicationIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         CommunicationIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
                         CommunicationIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
+                        CommunicationIEP.Completed = Convert.ToBoolean(collection["Completed"]);
 
                         db.SaveChanges();
 
@@ -150,7 +152,7 @@ namespace GreenBushIEP.Controllers
             var socialId = Convert.ToInt32(collection["IEPSocialID"]);
 
             tblIEPSocial SocialIEP = db.tblIEPSocials.Where(s => s.IEPSocialID == socialId).SingleOrDefault();
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPCommunicationID == SocialIEP.IEPSocialID).FirstOrDefault();
+            tblIEP IEP = db.tblIEPs.Where(i => i.IEPSocialID == socialId).FirstOrDefault();
             if (SocialIEP != null)
             {
                 if (ValidateRequest)
@@ -172,6 +174,7 @@ namespace GreenBushIEP.Controllers
                         SocialIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         SocialIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
                         SocialIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
+                        SocialIEP.Completed = Convert.ToBoolean(collection["Completed"]);
 
                         db.SaveChanges();
 
@@ -194,7 +197,7 @@ namespace GreenBushIEP.Controllers
             var intelligenceId = Convert.ToInt32(collection["IEPIntelligenceID"]);
 
             tblIEPIntelligence IntellgienceIEP = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == intelligenceId).SingleOrDefault();
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPIntelligenceID == IntellgienceIEP.IEPIntelligenceID).FirstOrDefault();
+            tblIEP IEP = db.tblIEPs.Where(i => i.IEPIntelligenceID == intelligenceId).FirstOrDefault();
             if (IntellgienceIEP != null)
             {
                 if (ValidateRequest)
@@ -206,6 +209,7 @@ namespace GreenBushIEP.Controllers
                         IntellgienceIEP.AreaOfNeedDescription = collection["ModuleIntelligenceAreaOfNeedDescription"].ToString();
                         IntellgienceIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         IntellgienceIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
+                        IntellgienceIEP.Completed = Convert.ToBoolean(collection["Completed"]);
 
                         db.SaveChanges();
 
@@ -254,6 +258,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Academic.NeedMetByAccommodation = collection["ModuleAcademicMetByAccommodation"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByOther = collection["ModuleAcademicMetByOther"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByOtherDescription = collection["ModuleAcademicMeetNeedByOtherDescription"].ToString();
+                        viewModel.Academic.Completed = Convert.ToBoolean(collection["Academic.Completed"]);
 
                         viewModel.Reading.NoConcerns = collection["ModuleReadingNoConcern"] == "on" ? true : false;
                         viewModel.Reading.ProgressTowardGenEd = collection["ModuleReadingProgressTowardGenEd"] == "on" ? true : false;
@@ -1268,7 +1273,23 @@ namespace GreenBushIEP.Controllers
                 case "Motor":
                     db.tblIEPMotors.Where(m => m.IEPid == stdIEPId).FirstOrDefault().Completed = false;
                     db.SaveChanges();
-                    return Json(new { Result = "success", Message = "The Health Module was updated." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", Message = "The Motore Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Communication":
+                    db.tblIEPCommunications.Where(c => c.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Communication Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Social":
+                    db.tblIEPSocials.Where(s => s.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Social Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Intelligence":
+                    db.tblIEPIntelligences.Where(i => i.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The General Intelligence Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Academic":
+                    db.tblIEPAcademics.Where(a => a.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Academic Performance Module was updated." }, JsonRequestBehavior.AllowGet);
                 default:
 
                     return Json(new { Result = "error", Message = "Unable to find the module you requested to update." }, JsonRequestBehavior.AllowGet);

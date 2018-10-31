@@ -12,6 +12,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPIntelligenceID)
+        @Html.HiddenFor(model => model.Completed)
 
         <div class="funkyradio">
             <div class="funkyradio-primary">
@@ -42,18 +43,26 @@
                 <textarea class="form-control standard-font-size" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
-
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
                 <div class="form-group">
-                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveIntelligenceCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
         </div>
 
     }
+
+    <div class="completed-loader @(Model.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <br />
@@ -86,5 +95,33 @@
 	///* When a user clicks on the question mark icon we turn on tooltips */
 	$('.tooltip-help').on('click', function () {
 		$('[data-toggle="tooltip"]').tooltip('toggle');
+	});
+
+	$("#saveIntelligenceCompleted").on("click", function (e) {
+	    $("#Completed").val(true);
+	    $(".modal-body form").submit();
+	});
+
+	$("#isCompletedModule").on("click", function () {
+	    var IEPId = $("#studentIEPId").val();
+
+	    $.ajax({
+	        type: 'GET',
+	        url: '/ModuleSection/ModuleCompleted',
+	        data: { stdIEPId: IEPId, module: "Intelligence" },
+	        dataType: "json",
+	        success: function (data) {
+	            if (data.Result == "success") {
+	                $(".completed-loader").fadeOut();
+
+	                $("#IntelligenceWidget .hero-widget").removeClass("module-completed");
+	            } else {
+	                console.log("Error when updating the module.")
+	            }
+	        },
+	        error: function (data) {
+	            console.log("Unable to mark Health Module as complete.");
+	        }
+	    });
 	});
 </script>
