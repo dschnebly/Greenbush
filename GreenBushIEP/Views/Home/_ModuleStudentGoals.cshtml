@@ -1,16 +1,17 @@
 ﻿@model GreenBushIEP.Models.StudentGoalsViewModel
 
 <style>
-	p.read-only {
-		display: table;
-		margin: auto;
-		border: 1px black solid;
-		border-radius: 4px;
-		padding:5px;
-		width:100%;
-		min-height:50px;
-		overflow:scroll;
-	}
+    p.read-only {
+        display: table;
+        margin: auto;
+        border: 1px black solid;
+        border-radius: 4px;
+        padding: 5px;
+        width: 100%;
+        min-height: 50px;
+        overflow: scroll;
+    }
+
     .default {
         width: 100% !important;
     }
@@ -92,6 +93,10 @@
         top: 9px;
         font-size: 16px;
     }
+
+    .thisGoalNotCompleted {
+        visibility: hidden;
+    }
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -102,8 +107,8 @@
 </div>
 <div class="modal-body">
     <div class="container" id="StudentGoals">
-		<!--needed for creating new short term benchmarks-->
-		 <div class="StudentGoalBenchmark hidden" id="defaultObjective">
+        <!--needed for creating new short term benchmarks-->
+        <div class="StudentGoalBenchmark hidden" id="defaultObjective">
             <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
             <div class="form-group" style="margin-bottom: 0;">
                 <div class="input-group" style="background-color: #F9F9F9;">
@@ -238,327 +243,343 @@
             </div>
         </div>
 
-		@if (Model.isReadOnly)
-		{
-			@Html.Partial("~/Views/Home/ActiveIEP/_GoalsSection.cshtml", Model)
-		}
-		else
-		{
-
-        <div class="row">
-            <div class="col-md-12" style="margin-bottom: 12px;">
-                <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+        @if (Model.isReadOnly)
+        {
+            @Html.Partial("~/Views/Home/ActiveIEP/_GoalsSection.cshtml", Model)
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 12px;">
+                    <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                </div>
             </div>
-        </div>
-        <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
-            <strong class="moreinfo">Oh snap!</strong>
-        </div>
-       
+            <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+                <strong class="moreinfo">Oh snap!</strong>
+            </div>
 
-        <div class="row StudentGoal hidden" id="defaultGoal">
+            <div class="row StudentGoal hidden" id="defaultGoal">
 
-            @using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
-			{
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.Hidden("studentId", Model.studentId)
-                @Html.Hidden("IEPid", Model.iepId)
-				
-                <div class="col-md-12">
-                    <div class="panel-group" id="accordion0">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <input type="hidden" name="StudentGoalId" value="0" />
-                                    <a data-toggle="collapse" data-parent="#accordion0" href="#collapse0">
-                                        <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">Student Goal</span>
-                                        <span class="pull-right">
-                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                        </span>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse0" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
-                                        <div class="input-group">
-                                            <div class="input-group-btn bs-dropdown-to-select-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select studentGoalType" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                                                    <span data-bind="bs-drp-sel-label">Select Module...</span>
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <input type="hidden" name="StudentGoalSelectedModule0" data-bind="bs-drp-sel-value" value="1">
-                                                <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                                                    <li data-value="1"><a href="#">Health</a></li>
-                                                    <li data-value="2"><a href="#">Motor</a></li>
-                                                    <li data-value="3"><a href="#">Communication</a></li>
-                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>
-                                                    <li data-value="5"><a href="#">General Intelligence</a></li>
-                                                    <li data-value="6"><a href="#">Academic Performance</a></li>
-                                                    <li data-value="7"><a href="#">Reading</a></li>
-                                                    <li data-value="8"><a href="#">Math</a></li>
-                                                    <li data-value="9"><a href="#">Written Language</a></li>
-                                                </ul>
+                @using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.Hidden("studentId", Model.studentId)
+                    @Html.Hidden("IEPid", Model.iepId)
+                    @Html.Hidden("completed", false)
 
-                                            </div>
-                                            <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: 1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="This column indicates if a service will be required to achieve this goal."></i>
-                                                <input name="hasService0" value="true" type="hidden">
+                    <div class="col-md-12">
+                        <div class="panel-group" id="accordion0">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <input type="hidden" name="StudentGoalId" value="0" />
+                                        <a data-toggle="collapse" data-parent="#accordion0" href="#collapse0">
+                                            <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">Student Goal</span>
+                                            <i class="glyphicon glyphicon-ok thisGoalCompleted thisGoalNotCompleted"></i>
+                                            <span class="pull-right">
+                                                <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                             </span>
-                                        </div>
-                                    </div>
-                                    <label for="StudentGoalAnnualGoal" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
-                                    <div class="form-group">
-                                        <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal0" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit."></textarea>
-                                    </div>
-                                    <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
-                                    <div class="form-group">
-                                        <input type="text" value="" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
-                                    </div>
-                                    <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
-                                    <div class="form-group">
-                                        <input type="text" value="" class="form-control standard-font-size" name="StudentGoalStateStandards0" placeholder="Add State Standards" />
-                                    </div>
-                                    <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
-                                    <div class="form-group">
-                                        <div class="input-group-btn bs-dropdown-to-select-group">
-                                            <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..." class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">
-                                                <option value="1">Written Observation</option>
-                                                <option value="2">Written Performance</option>
-                                                <option value="3">Oral Performance</option>
-                                                <option value="4">Criterion-Referenced Test</option>
-                                                <option value="5">Time Sample</option>
-                                                <option value="6">Demonstration/Performance</option>
-                                                <option value="7">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
-                                        <thead class="thead-inverse">
-                                            <tr>
-                                                <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
-                                            </tr>
-                                            <tr class="PTAGDisplay hidden">
-                                                <th>
-                                                    <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">1<sup>st</sup></div>
-                                                    <div class="col-md-8 date">
-                                                        <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">2<sup>nd</sup></div>
-                                                    <div class="col-md-9 date">
-                                                        <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">3<sup>rd</sup></div>
-                                                    <div class="col-md-9 date">
-                                                        <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">4<sup>th</sup></div>
-                                                    <div class="col-md-9 date">
-                                                        <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="PTAGDisplay hidden">
-                                            <tr>
-                                                <td>
-                                                    <div class="input-group input-append">
-                                                        <select class="form-control" name="ReportAnnualGoal10">
-                                                            <option value="1">Anticipate Meeting Goal</option>
-                                                            <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                            <option value="3">Goal Met (indicate date)</option>
-                                                        </select>
-                                                        <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments10"><span class="glyphicon glyphicon-edit"></span></span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group input-append">
-                                                        <select class="form-control" name="ReportAnnualGoal20">
-                                                            <option value="1">Anticipate Meeting Goal</option>
-                                                            <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                            <option value="3">Goal Met (indicate date)</option>
-                                                        </select>
-                                                        <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group input-append">
-                                                        <select class="form-control" name="ReportAnnualGoal30">
-                                                            <option value="1">Anticipate Meeting Goal</option>
-                                                            <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                            <option value="3">Goal Met (indicate date)</option>
-                                                        </select>
-                                                        <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments30"><span class="glyphicon glyphicon-edit"></span></span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input-group input-append">
-                                                        <select class="form-control" name="ReportAnnualGoal40">
-                                                            <option value="1">Anticipate Meeting Goal</option>
-                                                            <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                            <option value="3">Goal Met (indicate date)</option>
-                                                        </select>
-                                                        <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments40"><span class="glyphicon glyphicon-edit"></span></span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="hidden">
-                                                <td colspan="4">
-                                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
-                                                    <div class="form-group shortTermComments">
-                                                        <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                        <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                        <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                        <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <br />
-                                    <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
-                                    <br />
-                                    <label class="input-labels" style="font-size:16px;margin-top: 5px;">Short Term Benchmark(s)</label>
-                                    <label class="input-labels pull-right" style="margin-top: -40px; font-size: 26px; margin-right: 5px">
-                                        <span class="glyphicon glyphicon-plus-sign toggleReportsOfProgress"></span>
-                                    </label>
-                                    <label class="input-labels pull-right" style="font-size:16px;margin-right: 15px;">T.A.</label>
-                                    <div class="StudentGoalBenchmarks">
-
-                                    </div>
-                                    <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse0" class="panel-collapse collapse in">
+                                    <div class="panel-body">
                                         <div class="form-group">
-                                            <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                            <button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                            <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
+                                            <div class="input-group">
+                                                <div class="input-group-btn bs-dropdown-to-select-group">
+                                                    <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select studentGoalType" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                                                        <span data-bind="bs-drp-sel-label">Select Module...</span>
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <input type="hidden" name="StudentGoalSelectedModule0" data-bind="bs-drp-sel-value" value="1">
+                                                    <ul class="dropdown-menu" role="menu" style="font-size:16px;">
+                                                        <li data-value="1"><a href="#">Health</a></li>
+                                                        <li data-value="2"><a href="#">Motor</a></li>
+                                                        <li data-value="3"><a href="#">Communication</a></li>
+                                                        <li data-value="4"><a href="#">Social-Emotional</a></li>
+                                                        <li data-value="5"><a href="#">General Intelligence</a></li>
+                                                        <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                        <li data-value="7"><a href="#">Reading</a></li>
+                                                        <li data-value="8"><a href="#">Math</a></li>
+                                                        <li data-value="9"><a href="#">Written Language</a></li>
+                                                    </ul>
+
+                                                </div>
+                                                <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: 1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="This column indicates if a service will be required to achieve this goal."></i>
+                                                    <input name="hasService0" value="true" type="hidden">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <label for="StudentGoalAnnualGoal" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                                        <div class="form-group">
+                                            <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal0" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit."></textarea>
+                                        </div>
+                                        <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                        <div class="form-group">
+                                            <input type="text" value="" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
+                                        </div>
+                                        <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
+                                        <div class="form-group">
+                                            <input type="text" value="" class="form-control standard-font-size" name="StudentGoalStateStandards0" placeholder="Add State Standards" />
+                                        </div>
+                                        <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
+                                        <div class="form-group">
+                                            <div class="input-group-btn bs-dropdown-to-select-group">
+                                                <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..." class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                    <option value="1">Written Observation</option>
+                                                    <option value="2">Written Performance</option>
+                                                    <option value="3">Oral Performance</option>
+                                                    <option value="4">Criterion-Referenced Test</option>
+                                                    <option value="5">Time Sample</option>
+                                                    <option value="6">Demonstration/Performance</option>
+                                                    <option value="7">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
+                                                </tr>
+                                                <tr class="PTAGDisplay hidden">
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">1<sup>st</sup></div>
+                                                        <div class="col-md-8 date">
+                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">2<sup>nd</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">3<sup>rd</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="pull-left col-md-offset-2 standard-font-size" style="margin-top: 5px;">4<sup>th</sup></div>
+                                                        <div class="col-md-9 date">
+                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="PTAGDisplay hidden">
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal10">
+                                                                <option value="1">Anticipate Meeting Goal</option>
+                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3">Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments10"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal20">
+                                                                <option value="1">Anticipate Meeting Goal</option>
+                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3">Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal30">
+                                                                <option value="1">Anticipate Meeting Goal</option>
+                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3">Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments30"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal40">
+                                                                <option value="1">Anticipate Meeting Goal</option>
+                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3">Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments40"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="hidden">
+                                                    <td colspan="4">
+                                                        <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                        <div class="form-group shortTermComments">
+                                                            <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                            <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                            <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                            <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+                                        <br />
+                                        <label class="input-labels" style="font-size:16px;margin-top: 5px;">Short Term Benchmark(s)</label>
+                                        <label class="input-labels pull-right" style="margin-top: -40px; font-size: 26px; margin-right: 5px">
+                                            <span class="glyphicon glyphicon-plus-sign toggleReportsOfProgress"></span>
+                                        </label>
+                                        <label class="input-labels pull-right" style="font-size:16px;margin-right: 15px;">T.A.</label>
+                                        <div class="StudentGoalBenchmarks">
+
+                                        </div>
+                                        <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                                            @*<div class="form-group">
+                                                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                                                    <button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                </div>*@
+                                            <div class="form-group">
+                                                <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-			}
+                }
+            </div>
 
-        </div>
+            if (Model.studentGoals.Count > 0)
+            {
+                foreach (var studentGoal in Model.studentGoals)
+                {
+                    var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : "";
 
-        if (Model.studentGoals.Count > 0)
-		{
-			foreach (var studentGoal in Model.studentGoals)
-			{
-				var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : "";
+                    <div class="row StudentGoal">
 
-                <div class="row StudentGoal">
+                        @using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
+                        {
 
-                    @using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
-					{
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.Hidden("studentId", Model.studentId)
+                            @Html.Hidden("IEPid", Model.iepId)
+                            @Html.Hidden("completed", studentGoal.goal.Completed)
 
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.Hidden("studentId", Model.studentId)
-                        @Html.Hidden("IEPid", Model.iepId)
-
-                        <div class="col-md-12">
-                            <div class="panel-group" id="accordion@(studentGoal.goal.goalID)">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
-                                            <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
-                                                <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
-                                                <span class="pull-right">
-                                                    <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                                </span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-btn bs-dropdown-to-select-group">
-                                                        <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                                                            <span data-bind="bs-drp-sel-label">Select Module...</span>
-                                                            <span class="caret"></span>
-                                                            <span class="sr-only">Toggle Dropdown</span>
-                                                        </button>
-                                                        <input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.goalID)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
-                                                        <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                                                            <li data-value="1"><a href="#">Health</a></li>
-                                                            <li data-value="2"><a href="#">Motor</a></li>
-                                                            <li data-value="3"><a href="#">Communication</a></li>
-                                                            <li data-value="4"><a href="#">Social-Emotional</a></li>
-                                                            <li data-value="5"><a href="#">General Intelligence</a></li>
-                                                            <li data-value="6"><a href="#">Academic Performance</a></li>
-                                                            <li data-value="7"><a href="#">Reading</a></li>
-                                                            <li data-value="8"><a href="#">Math</a></li>
-                                                            <li data-value="9"><a href="#">Written Language</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
-                                                        <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
+                            <div class="col-md-12">
+                                <div class="panel-group" id="accordion@(studentGoal.goal.goalID)">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
+                                                <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
+                                                    <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
+                                                    <i class="glyphicon glyphicon-ok thisGoalCompleted @( studentGoal.goal.Completed != true ? "thisGoalNotCompleted" : string.Empty )"></i>
+                                                    <span class="pull-right">
+                                                        <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                                     </span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                                                                <span data-bind="bs-drp-sel-label">Select Module...</span>
+                                                                <span class="caret"></span>
+                                                                <span class="sr-only">Toggle Dropdown</span>
+                                                            </button>
+                                                            <input type="hidden" name="StudentGoalSelectedModule@(studentGoal.goal.goalID)" data-bind="bs-drp-sel-value" value="@(studentGoal.goal.Module)">
+                                                            <ul class="dropdown-menu" role="menu" style="font-size:16px;">
+                                                                <li data-value="1"><a href="#">Health</a></li>
+                                                                <li data-value="2"><a href="#">Motor</a></li>
+                                                                <li data-value="3"><a href="#">Communication</a></li>
+                                                                <li data-value="4"><a href="#">Social-Emotional</a></li>
+                                                                <li data-value="5"><a href="#">General Intelligence</a></li>
+                                                                <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                                <li data-value="7"><a href="#">Reading</a></li>
+                                                                <li data-value="8"><a href="#">Math</a></li>
+                                                                <li data-value="9"><a href="#">Written Language</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-handshake-o StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? "1.0" : "0.2")" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
+                                                            <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <label class="standard-font-size" for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
-                                            <div class="form-group">
-                                                <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@(studentGoal.goal.AnnualGoal)</textarea>
-                                            </div>
-                                            <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
-                                            <div class="form-group">
-                                                <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
-                                            </div>
-                                            <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
-                                            <div class="form-group">
-                                                <input type="text" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
-                                            </div>
-                                            <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
-                                            <div class="form-group">
-                                                <select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
-                                                    <option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
-                                                    <option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
-                                                    <option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
-                                                    <option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
-                                                    <option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
-                                                    <option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
-                                                    <option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
-                                                </select>
-                                            </div>
-	
-											@Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal)
-												
-											<div class="col-md-12" style="text-align:center; margin-top: 15px;">
-												<div class="form-group">
-													<button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-													<button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-												</div>
-											</div>
+                                                <label class="standard-font-size" for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                                                <div class="form-group">
+                                                    <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@(studentGoal.goal.AnnualGoal)</textarea>
+                                                </div>
+                                                <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                                <div class="form-group">
+                                                    <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
+                                                </div>
+                                                <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
+                                                <div class="form-group">
+                                                    <input type="text" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
+                                                </div>
+                                                <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
+                                                <div class="form-group">
+                                                    <select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                        <option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
+                                                        <option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
+                                                        <option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
+                                                        <option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
+                                                        <option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
+                                                        <option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+                                                        <option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
+                                                    </select>
+                                                </div>
 
+                                                @Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal)
+
+                                                <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                                                    <div class="form-group">
+                                                        <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                        <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                                    </div>
+                                                    @*<div class="form-group">
+                                                            <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                                                            <button type="button" class="SaveForm formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                        </div>*@
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
 
-					}
+                    </div>
+                }
+            }
 
+        }  @*//end else readonly*@
+    </div>
+    <div class="completed-loader @(Model.studentGoals.Count != 0 && Model.studentGoals.All(sg => sg.goal.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
                 </div>
-
-			}
-		}
-
-		}@*//end else readonly*@
+            </div>
+        </div>
     </div>
     <div class="ajax-loader" style="visibility: hidden;">
         <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
@@ -753,8 +774,8 @@
 
             //* Binding */
             /* when the teacher clicks + icon to see Reports of Progress under each benchmark */
-			$(this).find('.toggleReportsOfProgress').on('click', function (event) {
-				$(this).toggleClass('active');
+            $(this).find('.toggleReportsOfProgress').on('click', function (event) {
+                $(this).toggleClass('active');
                 $(this).closest('.StudentGoal ').find('.slideReportProgress').slideToggle("slow");
             });
 
@@ -766,16 +787,20 @@
 
                 var studentGoal = $(this).closest('.StudentGoal');
                 var studentGoalId = studentGoal.find("input[name='StudentGoalId']");
+                var completedGoal = studentGoal.find("a i.thisGoalCompleted");
 
                 var data = $(this).closest('.goalForm').serialize();
                 $.post('/ModuleSection/EditStudentGoals', data)
                 .done(function (results) {
+
+                    completedGoal.removeClass("thisGoalNotCompleted");
+                    studentGoalId.val(results.GoalId);
+                    $("#GoalWidget .hero-widget").removeClass("module-completed");
+
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
                         $('.ajax-loader').css("visibility", "hidden");
                     });
-
-                    studentGoalId.val(results.GoalId);
 
                     $(window).trigger("saving.bs.modal");
                 })
@@ -789,6 +814,13 @@
                         });
                     });
                 });
+            });
+
+            $(this).find(".saveCompletedGoal").on('click', function (e) {
+
+
+                $(this).closest("form").find("input[name='completed']").val(true);
+                $(this).prev().trigger(event.type);
             });
 
             //* Binding */
@@ -1001,5 +1033,32 @@
     ///* When a user clicks on the question mark icon we turn on tooltips */
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
+
+
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Goals" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+
+                    // var completedGoal = studentGoal.find("a i.thisGoalCompleted");
+                    //  addClass("thisGoalNotCompleted");
+
+                    $("#GoalWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Health Module as complete.");
+            }
+        });
     });
 </script>

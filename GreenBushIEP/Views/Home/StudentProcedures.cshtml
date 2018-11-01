@@ -1223,7 +1223,7 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning iep">
+                <li class="ui-state-default filter planning iep" id="GoalWidget">
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-trophy" aria-hidden="true"></i>
@@ -1236,7 +1236,7 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning iep">
+                <li class="ui-state-default filter planning iep" id="ServiceWidget">
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="fa fa-handshake-o" aria-hidden="true" style="top: 15px;"></i>
@@ -1249,8 +1249,8 @@ else
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning iep">
-                    <div class="hero-widget well">
+                <li class="ui-state-default filter planning iep" id="OtherWidget">
+                    <div class="hero-widget well @(Model.studentIEP.isOtherCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
                         </div>

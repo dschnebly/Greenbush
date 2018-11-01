@@ -15,6 +15,9 @@ namespace GreenBushIEP.Models
         public bool isSocialCompleted { get; set; }
         public bool isIntelligenceCompleted { get; set; }
         public bool isAcademicCompleted { get; set; }
+        public bool isGoalCompleted { get; set; }
+        public bool isServiceCompleted { get; set; }
+        public bool isOtherCompleted { get; set; }
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
 
@@ -59,6 +62,12 @@ namespace GreenBushIEP.Models
             serviceProviders = new List<tblProvider>();
             accommodations = new List<tblAccommodation>();
             studentDetails = new StudentDetailsPrintViewModel();
+            isHealthCompleted = false;
+            isMotorCompleted = false;
+            isCommunicationCompleted = false;
+            isSocialCompleted = false;
+            isIntelligenceCompleted = false;
+            isOtherCompleted = false;
         }
 
         public IEP(int? stid = null, int? iepId = null)
@@ -66,14 +75,19 @@ namespace GreenBushIEP.Models
             if (stid != null)
             {
                 listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
-                current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault() ;
+                current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = current != null;
-                isHealthCompleted = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).First().Completed;
-                isMotorCompleted = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).First().Completed;
-                isCommunicationCompleted = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).First().Completed;
-                isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).First().Completed;
-                isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
-                isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
+
+                if (current != null)
+                {
+                    isHealthCompleted = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).First().Completed;
+                    isMotorCompleted = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).First().Completed;
+                    isCommunicationCompleted = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).First().Completed;
+                    isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).First().Completed;
+                    isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
+                    isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
+                    isOtherCompleted = db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault().Completed : false ;
+                }
             }
         }
 

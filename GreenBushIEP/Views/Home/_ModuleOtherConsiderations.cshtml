@@ -18,14 +18,15 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPid)
-        <input type="hidden" name="StudentId" id="StudentId" value="@studentId" />
         @Html.HiddenFor(model => Model.OtherConsiderationID)
+        @Html.HiddenFor(model => Model.Completed)
+        <input type="hidden" name="StudentId" id="StudentId" value="@studentId" />
+
         <div class="row voffset2">
             <div class="col-md-12">
                 <label style="font-size: 20px;">Assistive Technology</label>
             </div>
         </div>
-
         <div class="row voffset2">
             <div class="col-md-12">
                 <fieldset class="form-group">
@@ -188,7 +189,6 @@
                 <label class="standard-font-size">Parental Concerns</label>
             </div>
         </div>
-
         <div class="row voffset2">
             <div class="col-md-12">
                 <fieldset class="form-group">
@@ -209,14 +209,12 @@
                 </fieldset>
             </div>
         </div>
-
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
                 <label class="standard-font-size">Considerations</label>
             </div>
         </div>
-
         <div class="row voffset2">
             <div class="col-md-12" style="font-size:16px">
                 <p>The parent(s)/legal education decision maker will be informed of @(studentName)'s progress in writing at least one time every quarter.</p>
@@ -228,14 +226,22 @@
         <div class="row">
             <div class="col-md-12" style="text-align:center; margin-top: 10px;">
                 <div class="form-group">
-                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveOtherCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
         </div>
-
     }
+
+    <div class="completed-loader @(Model.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <br />
@@ -386,7 +392,6 @@
         tpl: '<input type="text" id ="end" class="mask form-control input-sm dd" style="padding-right: 24px;">'       
 	});
 
-
 	$('#inline-vehicle').on('save', function(e, params) {
 		$("#inputVehicleType").val(params.newValue);
 	});
@@ -405,5 +410,35 @@
 		
 	$(document).on("focus", ".mask", function () {
 		$(this).mask("99/99/9999");
+	});
+
+	$("#saveOtherCompleted").on("click", function (e) {
+
+
+	    $("#Completed").val(true);
+	    $(".modal-body form").submit();
+	});
+
+	$("#isCompletedModule").on("click", function () {
+	    var IEPId = $("#studentIEPId").val();
+
+	    $.ajax({
+	        type: 'GET',
+	        url: '/ModuleSection/ModuleCompleted',
+	        data: { stdIEPId: IEPId, module: "Other" },
+	        dataType: "json",
+	        success: function (data) {
+	            if (data.Result == "success") {
+	                $(".completed-loader").fadeOut();
+
+	                $("#OtherWidget .hero-widget").removeClass("module-completed");
+	            } else {
+	                console.log("Error when updating the module.")
+	            }
+	        },
+	        error: function (data) {
+	            console.log("Unable to mark Health Module as complete.");
+	        }
+	    });
 	});
 </script>
