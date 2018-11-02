@@ -1224,7 +1224,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="GoalWidget">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isGoalCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-trophy" aria-hidden="true"></i>
                         </div>
@@ -1237,7 +1237,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="ServiceWidget">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isServiceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-handshake-o" aria-hidden="true" style="top: 15px;"></i>
                         </div>

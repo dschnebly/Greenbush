@@ -1288,6 +1288,10 @@ namespace GreenBushIEP.Controllers
                     db.tblGoals.Where(g => g.IEPid == stdIEPId).ToList().ForEach(g => g.Completed = false);
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The Goals Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Services":
+                    db.tblServices.Where(s => s.IEPid == stdIEPId).ToList().ForEach(s => s.Completed = false);
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Service Module was updated." }, JsonRequestBehavior.AllowGet);
                 default:
 
                     return Json(new { Result = "error", Message = "Unable to find the module you requested to update." }, JsonRequestBehavior.AllowGet);

@@ -1204,6 +1204,7 @@ namespace GreenbushIep.Controllers
         {
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
+            bool isCompleted = Convert.ToBoolean(collection["completed"]);
 
             DateTime temp;
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
@@ -1222,13 +1223,14 @@ namespace GreenbushIep.Controllers
                     service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
+                    service.Completed = isCompleted;
                     service.Create_Date = DateTime.Now;
                     service.Update_Date = DateTime.Now;
 
                     // nullable serviceId
                     service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
 
-                    for (int i = 11; i < collection.Count; i++)
+                    for (int i = 12; i < collection.Count; i++)
                     {
                         int goalId = Convert.ToInt32(collection[i]);
                         tblGoal goal = db.tblGoals.Where(g => g.goalID == goalId).First();
@@ -1250,6 +1252,7 @@ namespace GreenbushIep.Controllers
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
                     service.Update_Date = DateTime.Now;
+                    service.Completed = isCompleted;
                     service.FiledOn = null; //need to clear so it can be pickedup by spedpro export
                     service.tblGoals.Clear();
 
