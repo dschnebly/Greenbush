@@ -2160,7 +2160,7 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
             //17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
-            sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+            sb.AppendFormat("{0}\t", studentIEP.studentSocial != null && studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
 
             //18 Claiming Code req
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
