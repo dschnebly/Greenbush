@@ -2679,7 +2679,7 @@ namespace GreenbushIep.Controllers
             var disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
             if (disablity != null)
             {
-                fullName = string.Format("{0} - {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
+                fullName = string.Format("({0}) {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
             }
 
             return fullName;
