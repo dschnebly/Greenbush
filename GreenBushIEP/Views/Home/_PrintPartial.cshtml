@@ -103,7 +103,16 @@
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.placementCodeDesc</td>
                     <td><label>KG Full Day:</label></td>
-                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Y" : "")</td>
+                    <td style="width:50px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>
+					
+                </tr>
+				 <tr>
+					<td><label>Primary Disability:</label></td>
+                    <td>@(Model.studentDetails.primaryDisability)</td>                   
+                    <td><label>Seconary Disability:</label></td>
+                    <td>@(Model.studentDetails.secondaryDisability)</td>
+                    <td><label>Gifted</label></td>
+                    <td style="width:50px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
 					
                 </tr>
             </table>

@@ -2163,7 +2163,7 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
             //17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
-            sb.AppendFormat("{0}\t", studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+            sb.AppendFormat("{0}\t", studentIEP.studentSocial != null && studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
 
             //18 Claiming Code req
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
@@ -2682,7 +2682,7 @@ namespace GreenbushIep.Controllers
             var disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
             if (disablity != null)
             {
-                fullName = string.Format("{0} - {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
+                fullName = string.Format("({0}) {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
             }
 
             return fullName;
