@@ -175,6 +175,7 @@
 	        success: function (data) {
 	            if (data.Result == "success") {
 	                $(".completed-loader").fadeOut();
+	                $("#Completed").val(false);
 
 	                $("#CommunicationWidget .hero-widget").removeClass("module-completed");
 	            } else {

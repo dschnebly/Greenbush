@@ -520,6 +520,7 @@
             success: function (data) {
                 if (data.Result == "success") {
                     $(".completed-loader").fadeOut();
+                    $("#Completed").val(false);
 
                     $("#AcademicWidget .hero-widget").removeClass("module-completed");
                 } else {
