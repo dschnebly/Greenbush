@@ -252,6 +252,7 @@ namespace GreenBushIEP.Models
                     studentHealth.VisionResult = this.HealthVisionResult;
                     studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
                     studentHealth.HealthCarePlan = this.HealthCarePlan;
+                    studentHealth.Completed = this.HealthNoConcern;
                 }
                 db.SaveChanges();
 
@@ -263,6 +264,7 @@ namespace GreenBushIEP.Models
                     studentMotor.NoConcerns = this.MotorNoConcern;
                     studentMotor.Participation = this.MotorParticipation;
                     studentMotor.ProgressTowardGenEd = this.MotorProgress;
+                    studentMotor.Completed = this.MotorNoConcern;
                 }
                 db.SaveChanges();
 
@@ -275,6 +277,7 @@ namespace GreenBushIEP.Models
                     studentCommunication.NoConcerns = this.CommunicationNoConcern;
                     studentCommunication.AreaOfNeed = this.CommunicationAreaOfNeed;
                     studentCommunication.ProgressTowardGenEd = this.CommunicationProgressTowardGenEd;
+                    studentCommunication.Completed = this.CommunicationNoConcern;
                 }
                 db.SaveChanges();
 
@@ -290,6 +293,7 @@ namespace GreenBushIEP.Models
                     studentSocial.ProgressTowardGenEd = this.SocialProgressTowardGenEd;
                     studentSocial.AreaOfNeed = this.SocialAreaOfNeed;
                     studentSocial.SkillDeficit = this.SocialSkillsDeficit;
+                    studentSocial.Completed = this.SocialNoConcern;
                 }
                 db.SaveChanges();
 
@@ -300,6 +304,7 @@ namespace GreenBushIEP.Models
                     studentInt.Concerns = this.IntelligenceConcern;
                     studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
                     studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
+                    studentInt.Completed = !this.IntelligenceConcern;
                 }
                 db.SaveChanges();
 
@@ -310,6 +315,7 @@ namespace GreenBushIEP.Models
                     studentAcademic.AreaOfNeed = this.AcademicNeeds;
                     studentAcademic.NoConcerns = this.AcademicNoConcern;
                     studentAcademic.ProgressTowardGenEd = this.AcademicProgressTowardGenEd;
+                    studentAcademic.Completed = this.AcademicNoConcern;
                 }
                 db.SaveChanges();
 
@@ -349,6 +355,7 @@ namespace GreenBushIEP.Models
                 {
                     otherConsideration.ExtendedSchoolYear_Necessary = this.ExtendYear.ToString();
                     otherConsideration.AssistiveTechnology_Require = this.RequireAssistiveTechnology;
+                    otherConsideration.Completed = this.CommunicationNoConcern;
                     
                 }
                 db.SaveChanges();
