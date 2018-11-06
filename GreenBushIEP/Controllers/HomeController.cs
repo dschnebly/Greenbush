@@ -1811,7 +1811,7 @@ namespace GreenbushIep.Controllers
                         studentDetails.studentLang = GetLanguage(info.StudentLanguage);
                         studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
                         studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
-                        studentDetails.studentAgeAtIEP = (info.InitialIEPDate.HasValue ? (info.InitialIEPDate.Value.Year - info.DateOfBirth.Year - 1) + (((info.InitialIEPDate.Value.Month > info.DateOfBirth.Month) || ((info.InitialIEPDate.Value.Month == info.DateOfBirth.Month) && (info.InitialIEPDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+                        studentDetails.studentAgeAtIEP = (theIEP.current.begin_date.HasValue ? (theIEP.current.begin_date.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.begin_date.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.begin_date.Value.Month == info.DateOfBirth.Month) && (theIEP.current.begin_date.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
                         studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
                         studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
