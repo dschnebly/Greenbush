@@ -3,14 +3,14 @@
 
 @helper DisplayIEPStatus(tblIEP iep)
 {
-if (iep.Amendment)
-{
+    if (iep.Amendment)
+    {
         <span>AMENDMENT</span>
-}
-else
-{
+    }
+    else
+    {
         <span>@(iep.IepStatus.ToUpper())</span>
-}
+    }
 }
 
 @{
@@ -1263,7 +1263,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
-                    <div class="hero-widget well  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
+                    <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
                             <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
@@ -1280,7 +1280,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
-                    <div class="hero-widget well @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
+                    <div class="hero-widget well @(Model.studentIEP.isBehaviorCompleted ? "module-completed" : string.Empty ) @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
                         @if (Model.needsBehaviorPlan)
                         {
                             <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
@@ -1297,7 +1297,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning @((Model.studentAge > 12 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isTransitionCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>
                         </div>
