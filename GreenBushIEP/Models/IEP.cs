@@ -87,6 +87,8 @@ namespace GreenBushIEP.Models
                     isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
                     isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
                     isOtherCompleted = db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault().Completed : false ;
+                    isGoalCompleted = db.tblGoals.Where(g => g.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList().All(g => g.Completed) : false ;
+                    isServiceCompleted = db.tblServices.Where(s => s.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblServices.Where(s => s.IEPid == current.IEPid).ToList().All(s => s.Completed) : false ;
                 }
             }
         }

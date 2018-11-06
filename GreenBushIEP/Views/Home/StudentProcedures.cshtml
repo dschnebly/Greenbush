@@ -1087,7 +1087,7 @@ else
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 15px;">
+        <div class="row" style="margin-top: 15px; ">
             <div class="col-md-2">
                 @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
                 {
@@ -1110,7 +1110,7 @@ else
                             }
                             @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3")
                             {
-                                <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE") ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE" ) || !Model.isAllCompleted() ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                             <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "DRAFT" && i.Amendment) ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                             <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "DRAFT" && !i.Amendment) ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
@@ -1137,7 +1137,7 @@ else
             </div>
         </div>
         <div class="row">
-            <ul id="sortable" class="ui-sortable col-md-12" style="margin-top: -20px; ">
+            <ul id="sortable" class="ui-sortable col-md-12">
                 <li class="ui-state-default filter iep @(Model.studentPlan.HealthNoConcern ? "widgetDisabled" : string.Empty )" id="HealthWidget">
                     <div class="hero-widget well @(Model.studentIEP.isHealthCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
@@ -1210,7 +1210,7 @@ else
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAcademicCompleted ? "module-completed" : string.Empty )">
- >
+ 
                         <div class="icon">
                             <i class="fa fa-university"></i>
                         </div>
@@ -1224,7 +1224,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="GoalWidget">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isGoalCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-trophy" aria-hidden="true"></i>
                         </div>
@@ -1237,7 +1237,7 @@ else
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="ServiceWidget">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isServiceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-handshake-o" aria-hidden="true" style="top: 15px;"></i>
                         </div>

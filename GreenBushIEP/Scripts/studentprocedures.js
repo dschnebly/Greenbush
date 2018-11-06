@@ -80,7 +80,7 @@
         var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
         var startDiff = parseInt(daysToStart / 365);
         var endDiff = parseInt(daysToEnd / 365);
- 
+
         if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
             $("#IEPBeginDate").addClass("date-error");
 
@@ -88,37 +88,33 @@
         }
 
         //If the student is over 21 or under 3, notify the teacher but let them save regardless.
-        if (startDiff < 3)
-        {
+        if (startDiff < 3) {
             $("#IEPBeginDate").addClass("date-error");
 
-            if(!confirm('The student will be younger than 3 when this IEP starts. Please be aware that this could be an issue.'))
-            {
+            if (!confirm('The student will be younger than 3 when this IEP starts. Please be aware that this could be an issue.')) {
                 return;
             }
         }
 
-        if (endDiff > 21)
-        {
+        if (endDiff > 21) {
             $("#IEPBeginDate").addClass("date-error");
 
-            if(!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.'))
-            {
+            if (!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.')) {
                 return;
             }
-		}
+        }
 
 
-		var dayStart = a.getUTCDay(); //start date
-		var dayEnd = b.getUTCDay(); //end date
-		// Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-		if (dayStart === 0 || dayStart === 6) {
-			$("#IEPBeginDate").addClass("date-error");
-			return alert("Please select a Weekday for the Initiation Date.");
-		}
-		else {
-			$("#IEPBeginDate").removeClass("date-error");
-		}
+        var dayStart = a.getUTCDay(); //start date
+        var dayEnd = b.getUTCDay(); //end date
+        // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+        if (dayStart === 0 || dayStart === 6) {
+            $("#IEPBeginDate").addClass("date-error");
+            return alert("Please select a Weekday for the Initiation Date.");
+        }
+        else {
+            $("#IEPBeginDate").removeClass("date-error");
+        }
 
         $("#IEPBeginDate").attr('disabled', true);
         $('.ajax-loader').css("visibility", "visible");
@@ -152,7 +148,7 @@
             }
         });
     });
-    
+
     $("#IEPBeginDate").datepicker({
         dateFormat: "mm/dd/yy"
     });
@@ -175,11 +171,10 @@
         if ($("#makeIEPActive").hasClass("disabled")) { return false; } // the link is disabled.
 
         var answer = confirm("Are you sure you want to make this IEP Active?");
-        if(answer)
-        {
+        if (answer) {
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
-           
+
             var stId = $("#stid").val();
 
             $.ajax({
@@ -202,7 +197,7 @@
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
-			});
+            });
         }
     });
 
@@ -345,7 +340,6 @@ function formatDate(date) {
     return ([year, month, day].join('-')).toString();
 }
 
-
 var moduleFormSerialize = '';
 
 // Prevents the user from using the back button
@@ -396,6 +390,16 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
             e.preventDefault();
         }
     }
+
+    // this checks if all of the modules are completed.
+    var allCompleted = true;
+    $.each($(".iep"), function () {
+        if (!$(this).find(".hero-widget").hasClass("module-completed")) {
+            allCompleted = false;
+            return false; // breaks us out of the $.each loop.
+        }
+    });
+    allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
 });
 
 ///////////

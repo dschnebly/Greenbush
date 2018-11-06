@@ -39,6 +39,16 @@
         top: 9px;
         font-size: 16px;
     }
+
+    .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+            height: 100% !important;
+            padding-top: 15px !important;
+    }
+
+    .thisServiceNotCompleted {
+        visibility: hidden;
+    }
+
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -75,11 +85,14 @@
                     <form action="/Home/saveStudentService" method="post">
                         <input type="hidden" name="StudentId" value="@Model.studentId" />
                         <input type="hidden" name="StudentSerivceId" value="0" />
+                        <input type="hidden" name="completed" value="false" />
+
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
                                         <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
+                                        <i class="glyphicon glyphicon-ok isServiceCompleted thisServiceNotCompleted"></i>
                                         <span class="pull-right">
                                             <i class="glyphicon glyphicon-trash deleteService"></i>
                                         </span>
@@ -226,8 +239,8 @@
                                         <div class="col-md-12" style="text-align:center;">
                                             <div class="form-group">
                                                 <br />
-                                                <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                <button type="button" class="formbtn btn btn-primary btn-lg saveService"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -262,11 +275,14 @@
                         <form action="/Home/saveStudentService" method="post">
                             <input type="hidden" name="StudentId" value="@Model.studentId" />
                             <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
+                            <input type="hidden" name="completed" value="@(service.Completed.ToString())" />
+
                             <div class="panel panel-default panel-existing">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
                                             <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
+                                            <i class="glyphicon glyphicon-ok isServiceCompleted @( service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
                                             <span class="pull-right">
                                                 <i class="glyphicon glyphicon-trash deleteService"></i>
                                             </span>
@@ -418,16 +434,14 @@
                                             <div class="col-md-12" style="text-align:center;">
                                                 <div class="form-group">
                                                     <br />
-                                                    <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                    <button type="button" class="saveService formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                                    <button type="button" class="formbtn btn btn-primary btn-lg saveService"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                    <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </form>
 
                     </div>
@@ -436,7 +450,15 @@
         }
 
     </div>
-
+    <div class="completed-loader @(Model.studentServices.Count > 0 && Model.studentServices.All(ss => ss.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="duplication-loader">
         <img src="~/Content/Images/copying-icon.gif" class="img-responsive" alt="copying services.." />
     </div>
@@ -739,8 +761,10 @@
 
                 var alertBox = $(this).closest('.oneStudentService').prev();
                 var form = $(this).closest('.oneStudentService').find('form').serialize();
-
+                var studentService = $(this).closest('.oneStudentService');
+                var completedService = studentService.find("a i.isServiceCompleted");
                 var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+
                 if (serviceType != undefined && serviceType != "")
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
@@ -758,6 +782,22 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.Result == "success") {
+
+                            if (studentService.find("input[name='completed']").val() == "true") {
+                                studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+
+                                var allCompleted = true;
+                                $('.oneStudentService').not(':hidden').each(function () {
+                                    if ($(this).find("a i.isServiceCompleted").hasClass("thisServiceNotCompleted")) {
+                                        allCompleted = false;
+                                    }
+                                });
+
+                                if (allCompleted) {
+                                    $("#ServiceWidget .hero-widget").addClass("module-completed");
+                                }
+                            }
+
                             _showAlert(data.Message, true);
                             $(window).trigger("saving.bs.modal");
                             return false;
@@ -771,6 +811,14 @@
                         _showAlert('Unable to connect to the database.', false);
                     }
                 });
+            });
+
+
+            $(this).find(".saveCompletedService").on('click', function (e) {
+
+
+                $(this).closest("form").find("input[name='completed']").val(true);
+                $(this).prev().trigger(event.type);
             });
 
             /* Closes all the other panel groups except the one you clicked on */
@@ -1355,5 +1403,30 @@
             e.target.parentNode.classList.remove('has-error');
         }
     }
+
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Services" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+                    $('.oneStudentService ').not('#defaultStudentService').each(function () {
+                        $(this).find("a i.isServiceCompleted").addClass("thisServiceNotCompleted");
+                    })
+                    $("#ServiceWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Health Module as complete.");
+            }
+        });
+    });
 
 </script>

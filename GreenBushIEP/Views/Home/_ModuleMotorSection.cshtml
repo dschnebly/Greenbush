@@ -153,6 +153,7 @@
 
     ///// Save and Complete /////
 	$("#motorSaveComplete").on("click", function (e) {
+
 	    $("#Completed").val(true);
 	    $(".modal-body form").submit();
 	});
@@ -168,6 +169,7 @@
 	        success: function (data) {
 	            if (data.Result == "success") {
 	                $(".completed-loader").fadeOut();
+	                $("#Completed").val(false);
 
 	                $("#MotorWidget .hero-widget").removeClass("module-completed");
 	            } else {

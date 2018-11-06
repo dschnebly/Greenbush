@@ -430,6 +430,7 @@
 	        success: function (data) {
 	            if (data.Result == "success") {
 	                $(".completed-loader").fadeOut();
+	                $("#Completed").val(false);
 
 	                $("#OtherWidget .hero-widget").removeClass("module-completed");
 	            } else {
