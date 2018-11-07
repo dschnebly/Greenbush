@@ -1358,6 +1358,7 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
             bool isReadOnly = false;
+
             if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1408,9 +1409,7 @@ namespace GreenbushIep.Controllers
 
                 model.DefaultStartDate = iep.begin_date.HasValue ? iep.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
                 model.DefaultEndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
-
             }
-
 
             ViewBag.Locations = locationList;
 			
@@ -1439,7 +1438,9 @@ namespace GreenbushIep.Controllers
                 model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
                 if (oc.Any())
+                {
                     model = oc.FirstOrDefault();
+                }
                 else
                 {
                     //default value
@@ -1448,7 +1449,6 @@ namespace GreenbushIep.Controllers
                     model.Transporation_Other_flag = true;
                     model.Transporation_Disability_flag = false;
                 }
-
 
                 if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
                 {
@@ -2572,6 +2572,7 @@ namespace GreenbushIep.Controllers
             if (BehaviorIEP != null)
             {
                 model.BehaviorID = BehaviorIEP.BehaviorID;
+                model.Completed = BehaviorIEP.Completed;
                 model.BehaviorConcern = BehaviorIEP.BehaviorConcern;
                 model.StrengthMotivator = BehaviorIEP.StrengthMotivator;
                 model.Crisis_Description = BehaviorIEP.Crisis_Description;

@@ -546,7 +546,7 @@
                                                 <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                                     <div class="form-group">
                                                         <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                                                        <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                                        <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                     </div>
                                                 </div>
 
@@ -901,9 +901,6 @@
             });
         });
 
-
-
-
         initObjective();
     }
 
@@ -1017,7 +1014,6 @@
                 if (data.Result) {
                     goalBaselineElement.val(data.Message);
                 }
-
             },
             error: function (data) {
                 console.log("Error getting baseline goal text.");

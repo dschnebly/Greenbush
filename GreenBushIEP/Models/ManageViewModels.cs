@@ -408,6 +408,7 @@ namespace GreenBushIEP.Models
         public List<System.Web.Mvc.SelectListItem> Locations { get; set; }
         public string DefaultStartDate { get; set; }
         public string DefaultEndDate { get; set; }
+        public bool Completed { get; set; }
     }
 
     public class BehaviorViewModel
@@ -424,11 +425,13 @@ namespace GreenBushIEP.Models
             targetedBehavior1 = new tblBehaviorBaseline();
             targetedBehavior2 = new tblBehaviorBaseline();
             targetedBehavior3 = new tblBehaviorBaseline();
+            Completed = false;
         }
 
         public int StudentId { get; set; }
         public int BehaviorID { get; set; }
         public int IEPid { get; set; }
+        public bool Completed { get; set; }
 
         public List<int> SelectedTriggers { get; set; }
         public string TriggerOther { get; set; }

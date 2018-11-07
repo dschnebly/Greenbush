@@ -311,7 +311,6 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult UpdateAccom(tblAccommodation model)
         {
-
             var avm = new AccomodationViewModel();
             avm.AccDescription = model.Description;
             avm.AccommodationID = model.AccommodationID;
@@ -362,7 +361,6 @@ namespace GreenBushIEP.Controllers
                 int iepId = model.IEPid;
                 int behaviorId = model.BehaviorID;
 
-
                 if (BehaviorIEP == null)
                 {
                     BehaviorIEP = new tblBehavior();
@@ -373,6 +371,7 @@ namespace GreenBushIEP.Controllers
                 }
 
                 BehaviorIEP.IEPid = iepId;
+                BehaviorIEP.Completed = model.Completed;
                 BehaviorIEP.BehaviorConcern = model.BehaviorConcern;
                 BehaviorIEP.Crisis_Description = model.Crisis_Description;
                 BehaviorIEP.Crisis_Escalation = model.Crisis_Escalation;
@@ -386,18 +385,17 @@ namespace GreenBushIEP.Controllers
                 {
                     BehaviorIEP.Create_Date = DateTime.Now;
                     db.tblBehaviors.Add(BehaviorIEP);
-
                 }
                 db.SaveChanges();
                 behaviorId = BehaviorIEP.BehaviorID;
 
                 //triggers
                 var existingTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == behaviorId);
-
                 foreach (var existingTrigger in existingTriggers)
                 {
                     db.tblBehaviorTriggers.Remove(existingTrigger);
                 }
+
                 db.SaveChanges();
 
                 foreach (var trigger in model.SelectedTriggers)
@@ -435,7 +433,6 @@ namespace GreenBushIEP.Controllers
 
                 //Strategies  
                 var existingStrategies = db.tblBehaviorStrategies.Where(o => o.BehaviorID == behaviorId);
-
                 foreach (var existingStrategy in existingStrategies)
                 {
                     db.tblBehaviorStrategies.Remove(existingStrategy);
@@ -453,7 +450,6 @@ namespace GreenBushIEP.Controllers
                     db.tblBehaviorStrategies.Add(new tblBehaviorStrategy { IEPid = iepId, BehaviorID = behaviorId, BehaviorStrategyTypeID = strategy, Create_Date = DateTime.Now, OtherDescription = otherDesc });
                 }
                 db.SaveChanges();
-
 
                 //targeted behaviors
 
@@ -499,7 +495,6 @@ namespace GreenBushIEP.Controllers
                     }
                 }
 
-
                 //3
                 tbid = collection["targetId3"].ToString();
                 tbBehavior = collection["tbBehavior3"].ToString();
@@ -525,10 +520,8 @@ namespace GreenBushIEP.Controllers
 
                 return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
             }
-            else
-                return RedirectToAction("StudentProcedures", "Home", new { stid = model.StudentId });
 
-
+            return RedirectToAction("StudentProcedures", "Home", new { stid = model.StudentId });
         }
 
         [HttpPost]
@@ -670,7 +663,6 @@ namespace GreenBushIEP.Controllers
             throw new Exception("Unable to save changes to Other Considerations Module");
         }
 
-
         [HttpPost]
         public ActionResult EditAccom(AccomodationViewModel model)
         {
@@ -687,7 +679,6 @@ namespace GreenBushIEP.Controllers
                     isNew = true;
                     AccomodationIEP = new tblAccommodation();
                 }
-
 
                 if (AccomodationIEP != null)
                 {
@@ -735,6 +726,7 @@ namespace GreenBushIEP.Controllers
             {
                 AccomodationIEP.AccomType = model.AccomType;
                 AccomodationIEP.Description = model.AccDescription;
+                AccomodationIEP.Completed = model.Completed;
 
                 if (model.AnticipatedStartDate.HasValue)
                     AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
@@ -760,8 +752,6 @@ namespace GreenBushIEP.Controllers
                 int newId = AccomodationIEP.AccommodationID;
 
                 return newId;
-
-
             }
             catch (Exception e)
             {
@@ -1292,6 +1282,14 @@ namespace GreenBushIEP.Controllers
                     db.tblServices.Where(s => s.IEPid == stdIEPId).ToList().ForEach(s => s.Completed = false);
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The Service Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Accommodation":
+                    db.tblAccommodations.Where(a => a.IEPid == stdIEPId).ToList().ForEach(a => a.Completed = false);
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Accommodations Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Behavior":
+                    db.tblBehaviors.Where(b => b.IEPid == stdIEPId).FirstOrDefault().Completed = false;
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Behavior Module was updated." }, JsonRequestBehavior.AllowGet);
                 default:
 
                     return Json(new { Result = "error", Message = "Unable to find the module you requested to update." }, JsonRequestBehavior.AllowGet);

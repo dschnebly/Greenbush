@@ -212,7 +212,7 @@
                 color: #fff;
             }
 
-            .iep, .iep > .well .options button {
+            .filter, .filter > .well .options button {
                 border: 1px solid #45906D;
                 position: relative;
             }
@@ -866,7 +866,6 @@
             border: solid red 2px;
         }
 
-
         .module-completed:before {
             content: "\e013";
             font-family: "Glyphicons Halflings";
@@ -1262,7 +1261,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning  @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
+                <li class="ui-state-default filter planning @(Model.hasAccommodations ? "needsAttention" : string.Empty)" id="AccommodationWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
@@ -1279,7 +1278,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
+                <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)" id="BehaviorWidget">
                     <div class="hero-widget well @(Model.studentIEP.isBehaviorCompleted ? "module-completed" : string.Empty ) @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
                         @if (Model.needsBehaviorPlan)
                         {
@@ -1296,7 +1295,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @((Model.studentAge > 12 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )">
+                <li class="ui-state-default filter planning @((Model.studentAge > 12 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
                     <div class="hero-widget well @(Model.studentIEP.isTransitionCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>
@@ -1309,7 +1308,6 @@
                         </div>
                     </div>
                 </li>
-
 
                 @if (ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
                 {

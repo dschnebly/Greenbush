@@ -30,6 +30,7 @@
             @Html.HiddenFor(model => model.BehaviorID)
             @Html.HiddenFor(model => model.IEPid)
             @Html.HiddenFor(model => model.StudentId)
+            @Html.HiddenFor(model => model.Completed)
 
             <div class="col-md-12 voffset2">
                 <fieldset class="form-group">
@@ -45,11 +46,9 @@
                     </div>
                 </fieldset>
 
-
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Triggers</h3>
-
                     </div>
                 </div>
                 <div class="row voffset1">
@@ -72,7 +71,6 @@
                         <div id="divTriggerOther" class="voffset2" style="display:none">
                             <label>Other Description</label>
                             <input type="text" id="TriggerOther" name="TriggerOther" class="form-control" value="@Model.TriggerOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-
                         </div>
                     </div>
                 </div>
@@ -109,7 +107,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Strategies</h3>
-
                     </div>
                 </div>
                 <div class="row voffset1">
@@ -132,15 +129,12 @@
                         <div id="divStrategyOther" class="voffset2" style="display:none">
                             <label class="standard-font-size">Other Description</label>
                             <input type="text" id="StrategiesOther" name="StrategiesOther" class="form-control standard-font-size" value="@Model.StrategiesOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Targeted Behaviors</h3>
-
                     </div>
                 </div>
                 <div class="row voffset2">
@@ -153,13 +147,10 @@
                         </ul>
                         <div class="tab-content container">
                             <div id="sectionA" class="tab-pane fade in active" style="padding-left:5px;padding-top:5px;">
-
                                 @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior1, new ViewDataDictionary { { "number", 1 } })
-
                             </div>
                             <div id="sectionB" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
                                 @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior2, new ViewDataDictionary { { "number", 2 } })
-
                             </div>
                             <div id="sectionC" class="tab-pane fade " style="padding-left:5px;padding-top:5px;">
                                 @Html.Partial("~/Views/Home/_TargetedBehaviorPartial.cshtml", Model.targetedBehavior3, new ViewDataDictionary { { "number", 3 } })
@@ -167,50 +158,41 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Crisis Management Plan</h3>
 
                     </div>
                 </div>
-
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
                     <div class="form-check">
                         <textarea id="Crisis_Escalation" name="Crisis_Escalation" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Escalation)</textarea>
                     </div>
                 </fieldset>
-
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Crisis (describe what this looks like for student)</label>
                     <div class="form-check">
                         <textarea id="Crisis_Description" name="Crisis_Description" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Description)</textarea>
                     </div>
                 </fieldset>
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
                     <div class="form-check">
                         <textarea id="Crisis_Implementation" name="Crisis_Implementation" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Implementation)</textarea>
                     </div>
                 </fieldset>
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Other</label>
                     <div class="form-check">
                         <textarea id="Crisis_Other" name="Crisis_Other" class="form-control" rows="3" style="font-size: 18px;" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(Model.Crisis_Other)</textarea>
                     </div>
                 </fieldset>
-
                 <div class="row voffset3">
                     <div class="col-md-12">
                         <h3>Action Plan</h3>
                     </div>
                 </div>
-
                 <fieldset class="form-group">
                     <label style="font-size: 18px; font-weight:400; padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
                     <div class="form-check">
@@ -218,22 +200,34 @@
                         <input type="text" id="ReviewedBy" name="ReviewedBy" class="form-control" value="@(string.IsNullOrEmpty(Model.ReviewedBy) ? "Plan is to be reviewed annually or sooner as determined by the IEP team." : Model.ReviewedBy)" data-toggle="tooltip" data-placement="bottom" placeholder="Time frame plan will be reviewed" />
                     </div>
                 </fieldset>
-
                 <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                     <div class="form-group">
-                        <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                        <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                        <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                        <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                        <button type="button" class="formbtn btn btn-success btn-lg" id="saveBehaviorCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                     </div>
+                    @*<div class="form-group">
+                            <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
+                            <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                            <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+                        </div>*@
                 </div>
-
             </div>
-
         }
     </div> <!--end parent row-->
 
-</div>
+    <div class="completed-loader @(Model.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
+<br />
+<br />
 
 <script>
     // Attach Event
@@ -258,61 +252,62 @@
     });
 
     function init() {
-
         var showTrigger = '@showTriggerOther';
         var showHypothesis = '@showHypothesisOther';
         var showStrategyOther = '@showStrategyOther';
 
-        if (showTrigger == "True") {
-            $("#divTriggerOther").show();
-        } else {
-            $("#divTriggerOther").hide();
-        }
-
-        if (showHypothesis == "True") {
-            $("#divHypothesisOther").show();
-        } else {
-            $("#divHypothesisOther").hide();
-        }
-
-        if (showStrategyOther == "True") {
-            $("#divStrategyOther").show();
-        } else {
-            $("#divStrategyOther").hide();
-        }
+        (showTrigger == "True") ? $("#divTriggerOther").show() : $("#divTriggerOther").hide() ;
+        (showHypothesis == "True") ?  $("#divHypothesisOther").show() : $("#divHypothesisOther").hide() ;
+        (showStrategyOther == "True") ? $("#divStrategyOther").show() : $("#divStrategyOther").hide() ;
 
         $(".chosen-select").chosen({ width: "100%" });
 
         $("#SelectedStrategies").change(function () {
             var triggerValue = $("#SelectedStrategies option:selected").text();
-            if (triggerValue.includes("Other")) {
-                $("#divStrategyOther").show();
-            }
-            else {
-                $("#divStrategyOther").hide();
-            }
+            (triggerValue.includes("Other")) ? $("#divStrategyOther").show() : $("#divStrategyOther").hide() ;
         });
 
         $("#SelectedTriggers").change(function () {
             var triggerValue = $("#SelectedTriggers option:selected").text();
-            if (triggerValue.includes("Other")) {
-                $("#divTriggerOther").show();
-            }
-            else {
-                $("#divTriggerOther").hide();
-            }
+            (triggerValue.includes("Other")) ? $("#divTriggerOther").show() : $("#divTriggerOther").hide() ;
         });
 
         $("#SelectedHypothesis").change(function () {
             var hyValue = $("#SelectedHypothesis option:selected").text();
-            if (hyValue.includes("Other")) {
-                $("#divHypothesisOther").show();
-            }
-            else {
-                $("#divHypothesisOther").hide();
-            }
+            (hyValue.includes("Other")) ? $("#divHypothesisOther").show() : $("#divHypothesisOther").hide() ;
         });
     }
+
+    $("#saveBehaviorCompleted").on("click", function (e) {
+
+
+        $("#Completed").val(true);
+        $(".modal-body form").submit();
+    });
+
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Behavior" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+                    $("#Completed").val(false);
+
+                    $("#BehaviorWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Behavior Module as complete.");
+            }
+        });
+    });
 </script>
 
 
