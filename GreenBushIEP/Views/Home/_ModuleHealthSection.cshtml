@@ -6,7 +6,6 @@
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
 </div>
 <div class="modal-body">
-
     @using (Html.BeginForm("EditHealth", "ModuleSection", FormMethod.Post, new { }))
     {
         @Html.AntiForgeryToken()
@@ -104,7 +103,7 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
-                <div class="checkbox">
+                <div class="checkbox needsCheckbox">
                     <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                     <label><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                     <label><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
@@ -137,7 +136,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <br />
 <br />
@@ -165,14 +163,11 @@
     });
 
     // Attach Event
-    // reset the form because jquery does not have built in reset functionality.
-    $("#resetForm").trigger("reset");
-
-    // Attach Event
     // if an option other than no concern is selected than turn off noconcern
     $("input[name='HealthProgressTowardGenEd']").on('click', function (event) {
         $("input[name='HealthNoConcerns']").prop('checked', false)
     });
+
     $("input[name='HealthDiagnosis']").on('click', function (event) {
         $("input[name='HealthNoConcerns']").prop('checked', false)
     });
@@ -218,13 +213,58 @@
         dateFormat: "mm/dd/yy"
     })
 
+    // Attach Event
+    // When the user clicks the "save & complete" button
     $("#saveHealthCompleted").on("click", function (e) {
-        
+
+        // validation.
+        var lastCheck = new Date($("#HearingDate").val());
+        if (Math.round(new Date() - lastCheck) / (1000 * 3600 * 24 * 365.25) > 3) // validate within 3 years.
+        {
+            alert('Hearing Screening Date needs to be within the last 3 years');
+            return false;
+        }
+
+        var lastCheck = new Date($("#VisionDate").val());
+        if (Math.round(new Date() - lastCheck) / (1000 * 3600 * 24 * 365.25) > 2) // validate within 2 years.
+        {
+            alert('Vision Screening Date needs to be within the last 2 years');
+            return false;
+        }
+
+        if (!$("input[name='HealthNoConcerns']").is(':checked'))
+        {
+            if($("#PLAAFP_Strengths").val().length == 0)
+            {
+                alert('The following field is required not to be empty: Strengths');
+                return false;
+            }
+
+            if($("#PLAAFP_Concerns").val().length == 0)
+            {
+                alert('The following field is required not to be empty: Concerns');
+                return false;
+            }
+
+            if($("#AreaOfNeedDescription").val().length == 0)
+            {
+                alert('The following field is required not to be empty: Area of Need');
+                return false;
+            }
+
+            if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3)
+            {
+                alert("At least one check mark under 'met by' should be checked");
+                return false;
+            }
+        }
 
         $("#Completed").val(true);
         $(".modal-body form").submit();
     });
 
+    // Attach Event
+    // when the use clicks the completed checkbox
     $("#isCompletedModule").on("click", function () {
         var IEPId = $("#studentIEPId").val();
 

@@ -79,12 +79,10 @@
             <div class="col-md-12">
                 <label class="standard-font-size">Participation in State Assessments</label>
                 <label style="font-size:16px">Changes occur annually in the grade or age level administration of Kansas State Assessments. In planning to meet the needs of the student, the IEP team has determined the student will participate as indicated below:</label>
-
                 <div class="form-check">
                     <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_NoAccom" value="1" @(Model.StateAssessment_NoAccommodations_flag.HasValue && Model.StateAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_WithAccom" value="2" @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="3" @(Model.StateAssessment_RequiredCompleted.HasValue && Model.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty)>Student has completed all required State Assessments.</label><br />
-
                 </div>
                 <div class="form-check voffset2" id="StateAssessment_TextArea">
 
@@ -218,7 +216,6 @@
         <div class="row voffset2">
             <div class="col-md-12" style="font-size:16px">
                 <p>The parent(s)/legal education decision maker will be informed of @(studentName)'s progress in writing at least one time every quarter.</p>
-
                 <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
                 <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
             </div>
@@ -242,7 +239,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <br />
 <br />
