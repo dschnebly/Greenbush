@@ -49,7 +49,6 @@
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="col-md-10 tab-pane fade in active" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="academic">
-
                     <div class="funkyradio">
                         <div class="funkyradio-success">
                             <input type="checkbox" name="ModuleAcademicNoConcern" id="ModuleAcademicNoConcern" @(Model.Academic.NoConcerns ? "checked" : String.Empty) />
@@ -77,7 +76,6 @@
                             <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Concerns" name="ModuleAcademic_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Academic.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
-                    
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
@@ -87,7 +85,7 @@
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
                         <div class="form-check">
-                            <div class="checkbox">
+                            <div class="checkbox academicNeedsCheckbox">
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByGoal" @(Model.Academic.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByAccommodation" @(Model.Academic.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByOther" @(Model.Academic.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
@@ -103,7 +101,6 @@
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="reading">
-
                     <div class="funkyradio">
                         <div class="funkyradio-success">
                             <input type="checkbox" name="ModuleReadingNoConcern" id="ModuleReadingNoConcern" @(Model.Reading.NoConcerns ? "checked" : String.Empty ) />
@@ -131,7 +128,6 @@
                             <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Concerns" name="ModuleReading_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Reading.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
-                   
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
@@ -141,7 +137,7 @@
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
-                            <div class="checkbox">
+                            <div class="checkbox readingNeedsCheckbox">
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByGoal" @(Model.Reading.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByAccommodation" @(Model.Reading.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByOther" @(Model.Reading.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
@@ -194,7 +190,7 @@
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
-                            <div class="checkbox">
+                            <div class="checkbox mathNeedsCheckbox">
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByGoal" @(Model.Math.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByAccommodation" @(Model.Math.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByOther" @(Model.Math.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
@@ -210,7 +206,6 @@
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="written">
-
                     <div class="funkyradio">
                         <div class="funkyradio-success">
                             <input type="checkbox" name="ModuleWrittenNoConcern" id="ModuleWrittenNoConcern" @(Model.Written.NoConcerns ? "checked" : String.Empty) />
@@ -238,7 +233,6 @@
                             <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Concerns" name="ModuleWritten_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Written.PLAAFP_Concerns)</textarea>
                         </div>
                     </fieldset>
-                  
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                         <div class="form-check">
@@ -248,7 +242,7 @@
                     <fieldset class="form-group">
                         <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
                         <div class="form-check">
-                            <div class="checkbox">
+                            <div class="checkbox writtenNeedsCheckbox">
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByGoal" @(Model.Written.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByAccommodation" @(Model.Written.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
                                 <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByOther" @(Model.Written.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
@@ -506,6 +500,93 @@
     });
 
     $("#saveAcademicCompleted").on("click", function (e) {
+        if ($("input[name='ModuleAcademicAreaOfNeed']").is(':checked')) {
+            if ($("#ModuleAcademic_PLAAFP_Strengths").val().length == 0) {
+                alert('The following field is required not to be empty: Academic Strengths');
+                return false;
+            }
+
+            if ($("#ModuleAcademic_PLAAFP_Concerns").val().length == 0) {
+                alert('The following field is required not to be empty: Academic Concerns');
+                return false;
+            }
+
+            if ($("#ModuleAcademicAreaOfNeedDescription").val().length == 0) {
+                alert('The following field is required not to be empty: Area of Need');
+                return false;
+            }
+
+            if ($(".academicNeedsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+                alert("At least one check mark under Academic 'met by' should be checked");
+                return false;
+            }
+        }
+
+        if ($("input[name='ModuleReadingAreaOfNeed']").is(':checked')) {
+            if ($("#ModuleReading_PLAAFP_Strengths").val().length == 0) {
+                alert('The following field is required not to be empty: Reading Strengths');
+                return false;
+            }
+
+            if ($("#ModuleReading_PLAAFP_Concerns").val().length == 0) {
+                alert('The following field is required not to be empty: Reading Concerns');
+                return false;
+            }
+
+            if ($("#ModuleReadingAreaOfNeedDescription").val().length == 0) {
+                alert('The following field is required not to be empty: Reading Area of Need');
+                return false;
+            }
+
+            if ($(".readingNeedsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+                alert("At least one check mark under Reading 'met by' should be checked");
+                return false;
+            }
+        }
+
+        if ($("input[name='ModuleMathAreaOfNeed']").is(':checked')) {
+            if ($("#ModuleMath_PLAAFP_Strengths").val().length == 0) {
+                alert('The following field is required not to be empty: Math Strengths');
+                return false;
+            }
+
+            if ($("#ModuleMath_PLAAFP_Concerns").val().length == 0) {
+                alert('The following field is required not to be empty: Math Concerns');
+                return false;
+            }
+
+            if ($("#ModuleMathAreaOfNeedDescription").val().length == 0) {
+                alert('The following field is required not to be empty: Math Area of Need');
+                return false;
+            }
+
+            if ($(".mathNeedsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+                alert("At least one check mark under Math 'met by' should be checked");
+                return false;
+            }
+        }
+
+        if ($("input[name='ModuleWrittenAreaOfNeed']").is(':checked')) {
+            if ($("#ModuleWritten_PLAAFP_Strengths").val().length == 0) {
+                alert('The following field is required not to be empty: Written Strengths');
+                return false;
+            }
+
+            if ($("#ModuleWritten_PLAAFP_Concerns").val().length == 0) {
+                alert('The following field is required not to be empty: Written Concerns');
+                return false;
+            }
+
+            if ($("#ModuleWrittenAreaOfNeedDescription").val().length == 0) {
+                alert('The following field is required not to be empty: Written Area of Need');
+                return false;
+            }
+
+            if ($(".writtenNeedsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+                alert("At least one check mark under Written 'met by' should be checked");
+                return false;
+            }
+        }
 
         $("#Academic_Completed").val(true);
         $(".modal-body form").submit();
