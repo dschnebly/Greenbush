@@ -2,6 +2,7 @@
 
 <style>
     @@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+
         .nav-stacked {
             display: none;
         }
@@ -505,6 +506,7 @@
     });
 
     $("#saveAcademicCompleted").on("click", function (e) {
+
         $("#Academic_Completed").val(true);
         $(".modal-body form").submit();
     });
@@ -520,7 +522,7 @@
             success: function (data) {
                 if (data.Result == "success") {
                     $(".completed-loader").fadeOut();
-                    $("#Completed").val(false);
+                    $("#Academic_Completed").val(false);
 
                     $("#AcademicWidget .hero-widget").removeClass("module-completed");
                 } else {

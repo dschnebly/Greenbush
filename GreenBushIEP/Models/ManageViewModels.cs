@@ -290,7 +290,9 @@ namespace GreenBushIEP.Models
         {
             return this.studentIEP.isHealthCompleted && this.studentIEP.isMotorCompleted && this.studentIEP.isCommunicationCompleted &&
                 this.studentIEP.isSocialCompleted && this.studentIEP.isIntelligenceCompleted && this.studentIEP.isAcademicCompleted &&
-                this.studentIEP.isOtherCompleted && this.studentIEP.isGoalCompleted && this.studentIEP.isServiceCompleted;
+                this.studentIEP.isOtherCompleted && this.studentIEP.isGoalCompleted && this.studentIEP.isServiceCompleted &&
+                this.studentIEP.isAccommodationsCompleted && this.studentIEP.isBehaviorCompleted && this.studentIEP.isTransitionCompleted;
+               
         }
 	}
 

@@ -18,6 +18,9 @@ namespace GreenBushIEP.Models
         public bool isGoalCompleted { get; set; }
         public bool isServiceCompleted { get; set; }
         public bool isOtherCompleted { get; set; }
+        public bool isAccommodationsCompleted { get; set; }
+        public bool isBehaviorCompleted { get; set; }
+        public bool isTransitionCompleted { get; set; }
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
 
@@ -68,6 +71,9 @@ namespace GreenBushIEP.Models
             isSocialCompleted = false;
             isIntelligenceCompleted = false;
             isOtherCompleted = false;
+            isAcademicCompleted = false;
+            isBehaviorCompleted = false;
+            isTransitionCompleted = false;
         }
 
         public IEP(int? stid = null, int? iepId = null)
