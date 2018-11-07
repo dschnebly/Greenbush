@@ -98,6 +98,24 @@
 	});
 
 	$("#saveIntelligenceCompleted").on("click", function (e) {
+	    if ($("input[name='ModuleIntelligenceAreaOfNeed']").is(':checked')) {
+
+	        if ($("#PLAAFP_Strengths").val().length == 0) {
+	            alert('The following field is required not to be empty: Strengths');
+	            return false;
+	        }
+
+	        if ($("#PLAAFP_Concerns").val().length == 0) {
+	            alert('The following field is required not to be empty: Concerns');
+	            return false;
+	        }
+
+	        if ($("#ModuleIntelligenceAreaOfNeedDescription").val().length == 0) {
+	            alert('The following field is required not to be empty: Area of Need');
+	            return false;
+	        }
+	    }
+
 	    $("#Completed").val(true);
 	    $(".modal-body form").submit();
 	});
