@@ -58,7 +58,7 @@
         <fieldset class="form-group">
             <label  class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
-                <div class="checkbox">
+                <div class="checkbox needsCheckbox">
                     <label class="standard-font-size"><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
                     <label class="standard-font-size"><input type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
                     <label class="standard-font-size"><input type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
@@ -153,6 +153,29 @@
 
     ///// Save and Complete /////
 	$("#motorSaveComplete").on("click", function (e) {
+
+	    if (!$("input[name='ModuleMotorNoConcerns']").is(':checked')) {
+	        if ($("#PLAAFP_Strengths").val().length == 0) {
+	            alert('The following field is required not to be empty: Strengths');
+	            return false;
+	        }
+
+	        if ($("#PLAAFP_Concerns").val().length == 0) {
+	            alert('The following field is required not to be empty: Concerns');
+	            return false;
+	        }
+
+	        if ($("#ModuleMotorAreaOfNeedDescription").val().length == 0) {
+	            alert('The following field is required not to be empty: Area of Need');
+	            return false;
+	        }
+
+	        if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+	            alert("At least one check mark under 'met by' should be checked");
+	            return false;
+	        }
+	    }
+
 
 	    $("#Completed").val(true);
 	    $(".modal-body form").submit();
