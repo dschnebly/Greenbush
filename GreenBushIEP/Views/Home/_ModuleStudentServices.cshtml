@@ -70,7 +70,7 @@
                 <button id="duplicateAllService" class="btn btn-default">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
-        <input type="hidden" value="@Model.IEPStartDate.ToString("yyyy-MM-dd")" id="iepStartDate" />
+        <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
         <input type="hidden" id="sid" value="@Model.studentId" />
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
@@ -223,7 +223,7 @@
                                             <label>Attach a Goal</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" multiple="multiple" data-validate="true">
+                                                <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" name="studentGoalsSelect" multiple="multiple" data-validate="true">
                                                     @if (Model.studentGoals.Count > 0)
                                                     {
                                                         foreach (var goal in Model.studentGoals)
@@ -289,7 +289,7 @@
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapse@(service.ServiceID)" class="panel-collapse collapse @(needsIN)">
+                                <div id="collapse@(service.ServiceID)" class="panel-collapse collapse @(needsIN)" data-val=@(service.ServiceID)>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-2">
@@ -520,9 +520,10 @@
                             var dupServiceType = serviceObj.ServiceCode;
                             var dupServiceProvider = serviceObj.ProviderID;
                             var dupStartDate = serviceObj.StartDate;
-                            var dupEndDate = serviceObj.EndDate;
+							var dupEndDate = serviceObj.EndDate;
+							var dupGoals = serviceObj.Goals;
 
-                            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+                            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
                         });
                     }
                     else {
@@ -545,18 +546,43 @@
         $(".duplication-loader").css('visibility', 'visible');
         var parent = $('div:visible.collapse.in');
 
-        if (parent != null) {
-            var dupFiscalYear = parent.find('[name="fiscalYear"]').val();
-            var dupServiceDaysPerWeek = parent.find('[name="serviceDaysPerWeek"]').val();
-            var dupserviceMinutesPerDay = parent.find('[name="serviceMinutesPerDay"]').val();
-            var dupFrequency = parent.find('[name="Frequency"]').find(":selected").val();
-            var dupLocation = parent.find('[name="Location"]').find(":selected").val();
-            var dupServiceType = parent.find('[name="ServiceType"]').find(":selected").val();
-            var dupServiceProvider = parent.find('[name="serviceProvider"]').find(":selected").val();
-            var dupStartDate = parent.find('[name="serviceStartDate"]').val();
-            var dupEndDate = parent.find('[name="serviceEndDate"]').val();
+        if (parent != null){
+			var studentId = $("#sid").val();
+			var serviceId = parent.data("val");
+			if (studentId != undefined && serviceId != undefined) {
+				$.ajax({
+					type: 'GET',
+					url: '/Home/DuplicateStudentServicesNextYear',
+					data: { studentId: studentId, serviceId: serviceId },
+					dataType: "json",
+					success: function (data) {
+						if (data.Result == "success") {
+							$.each(data.Data, function (index, serviceObj) {
 
-            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+								var dupFiscalYear = serviceObj.SchoolYear;
+								var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+								var dupserviceMinutesPerDay = serviceObj.Minutes;
+								var dupFrequency = serviceObj.Frequency;
+								var dupLocation = serviceObj.LocationCode;
+								var dupServiceType = serviceObj.ServiceCode;
+								var dupServiceProvider = serviceObj.ProviderID;
+								var dupStartDate = serviceObj.StartDate;
+								var dupEndDate = serviceObj.EndDate;
+								var dupGoals = serviceObj.Goals;
+
+								duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
+							});
+						}
+						else {
+							_showAlert('There was a problem duplicating the Student Services.', false);
+						}
+					},
+					error: function (data) {
+						console.log("Unable to duplicate the student services.");
+					}
+				});
+			}
+            
 
         }
         else {
@@ -614,18 +640,10 @@
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
                 var year = $(this).val();
+				var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
+				var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
+				_checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
 
-                for (var i = 0; i < calendarReportsArray.length; i++) {
-                    if (calendarReportsArray[i].SchoolYear == year) {
-                        var serviceDaysPerWeek = $(this).closest(".row").find("input[name='serviceDaysPerWeek']");
-                        var serviceMinutesPerDay = $(this).closest(".row").find("input[name='serviceMinutesPerDay']");
-
-                        serviceDaysPerWeek.prop("max", calendarReportsArray[i].DaysPerWeek);
-                        if (serviceDaysPerWeek.val() > calendarReportsArray[i].DaysPerWeek) { serviceDaysPerWeek.prop("value", calendarReportsArray[i].DaysPerWeek); }
-                        serviceMinutesPerDay.prop("max", calendarReportsArray[i].MinutesPerDay);
-                        if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
-                    }
-                }
 
             });
 
@@ -643,14 +661,8 @@
                 var selectedDate = e.target.value;
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
-                _onDateChange(day, calendaryDay, e);
-
-                var isValid = _validateDate(fiscalYear, selectedDate);
-                if (!isValid) {
-                    _showAlert("The Initiation and End Date must be within the selected school year", false);
-                    e.target.parentNode.classList.add('has-error');
-                }
-
+                _onDateChange(fiscalYear, day, selectedDate, e);
+				
 
             });
 
@@ -768,7 +780,7 @@
                 if (serviceType != undefined && serviceType != "")
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
-                //check dates before saving
+				 //check dates before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //don't allow user to save
@@ -802,8 +814,9 @@
                             $(window).trigger("saving.bs.modal");
                             return false;
                         }
-                        else {
-                            _showAlert('Unable to save the Student Service. Try again later.', false);
+						else {
+
+							_showAlert(data.Message, false);
 
                         }
                     },
@@ -856,16 +869,6 @@
     }
     initGoalEvents();
 
-    function isNoServiceDay(year, month, day) {
-        for (var i = 0; i < calendarArrayOfDates.length; i++) {
-            if (calendarArrayOfDates[i].Day == day && calendarArrayOfDates[i].Month == month && calendarArrayOfDates[i].Year == year) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     function createDate2(newDate) {
 
         var dateArr = newDate.split('/');
@@ -884,71 +887,71 @@
         return returnDate;
     }
 
-    function getEndOfSchoolYear(element, selectedYear, dateElementName, startMonth) {
-        var iepDate = $('#' + dateElementName).val();
-        var lastDay;
-        //var startMonth = 6;
+    //function getEndOfSchoolYear(element, selectedYear, dateElementName, startMonth) {
+    //    var iepDate = $('#' + dateElementName).val();
+    //    var lastDay;
+    //    //var startMonth = 6;
 
-        var Month = 0;
-        var Day = 0;
-        var Year = 0;
+    //    var Month = 0;
+    //    var Day = 0;
+    //    var Year = 0;
 
-        var iepEndMonth = 0;
-        var iepEndDay = 0;
-        var iepEndYear = 0;
-        var iepEndDateArr = iepDate.split('-');
+    //    var iepEndMonth = 0;
+    //    var iepEndDay = 0;
+    //    var iepEndYear = 0;
+    //    var iepEndDateArr = iepDate.split('-');
 
-        if (iepEndDateArr.length > 0 && iepEndDateArr.length == 3) {
-            iepEndYear = iepEndDateArr[0];
-            iepEndMonth = iepEndDateArr[1];
-            iepEndDay = iepEndDateArr[2];
-        }
+    //    if (iepEndDateArr.length > 0 && iepEndDateArr.length == 3) {
+    //        iepEndYear = iepEndDateArr[0];
+    //        iepEndMonth = iepEndDateArr[1];
+    //        iepEndDay = iepEndDateArr[2];
+    //    }
 
-        var iepEDDate = new Date(iepEndYear, iepEndMonth - 1, iepEndDay);
+    //    var iepEDDate = new Date(iepEndYear, iepEndMonth - 1, iepEndDay);
 
-        for (var i = startMonth; i > 0; i--) {
-            Month = 0, Day = 0, Year = 0;
+    //    for (var i = startMonth; i > 0; i--) {
+    //        Month = 0, Day = 0, Year = 0;
 
-            var dateFound = searchLastDay(selectedYear, i)
-            if (dateFound != undefined) {
-                Month = dateFound.Month;
-                Day = dateFound.Day;
-                Year = dateFound.Year;
-                var dfDate = new Date(Year, Month - 1, Day);
-                if (dfDate <= iepEDDate) {
-                    lastDay = dfDate;
-                    break;
-                }
-            }
-        }
+    //        var dateFound = searchLastDay(selectedYear, i)
+    //        if (dateFound != undefined) {
+    //            Month = dateFound.Month;
+    //            Day = dateFound.Day;
+    //            Year = dateFound.Year;
+    //            var dfDate = new Date(Year, Month - 1, Day);
+    //            if (dfDate <= iepEDDate) {
+    //                lastDay = dfDate;
+    //                break;
+    //            }
+    //        }
+    //    }
 
-        if (lastDay != undefined) {
-            // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-            // January - 0, February - 1, etc.
-            var formattedDate = formatDate(lastDay);
-            element.val(formattedDate);
-        }
-    }
+    //    if (lastDay != undefined) {
+    //        // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+    //        // January - 0, February - 1, etc.
+    //        var formattedDate = formatDate(lastDay);
+    //        element.val(formattedDate);
+    //    }
+    //}
 
-    function searchLastDay(selectedYear, startMonth) {
-        var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + ")]");
-        if (dates.length > 0) {
-            var lastItem = dates.length - 1;
-            var lastDay = dates[lastItem];
-            return lastDay;
-        }
+    //function searchLastDay(selectedYear, startMonth) {
+    //    //var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + ")]");
+    //    //if (dates.length > 0) {
+    //    //    var lastItem = dates.length - 1;
+    //    //    var lastDay = dates[lastItem];
+    //    //    return lastDay;
+    //    //}
 
-    }
+    //}
 
-    function searchFirstDay(selectedYear, firstYearOfFiscalYear, startMonth) {
-        var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + " && @@.Year == " + firstYearOfFiscalYear + ")]");
-        if (dates.length > 0) {
-            return dates[0];
-        }
+    //function searchFirstDay(selectedYear, firstYearOfFiscalYear, startMonth) {
+    //    //var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + " && @@.Year == " + firstYearOfFiscalYear + ")]");
+    //    //if (dates.length > 0) {
+    //    //    return dates[0];
+    //    //}
 
-    }
+    //}
 
-    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate) {
+    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
@@ -983,10 +986,10 @@
 
         panelCollapse.collapse("show");
 
-        initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate);
+        initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
     }
 
-    function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate) {
+    function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
             //set to next year
@@ -996,7 +999,11 @@
             $(this).find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
             $(this).find("select[name='Location']").val(dupLocation).prop('selected', true);
             $(this).find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
-            $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+			$(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+			$(this).find("input[name='serviceStartDate']").val(dupStartDate);
+			$(this).find("input[name='serviceEndDate']").val(dupEndDate);
+			$(this).find("select[id='studentGoalsSelect']").val(dupGoals);
+
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
             var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
@@ -1011,19 +1018,10 @@
             });
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
-                var year = $(this).val();
-
-                for (var i = 0; i < calendarReportsArray.length; i++) {
-                    if (calendarReportsArray[i].SchoolYear == year) {
-                        var serviceDaysPerWeek = $(this).closest(".row").find("input[name='serviceDaysPerWeek']");
-                        var serviceMinutesPerDay = $(this).closest(".row").find("input[name='serviceMinutesPerDay']");
-
-                        serviceDaysPerWeek.prop("max", calendarReportsArray[i].DaysPerWeek);
-                        if (serviceDaysPerWeek.val() > calendarReportsArray[i].DaysPerWeek) { serviceDaysPerWeek.prop("value", calendarReportsArray[i].DaysPerWeek); }
-                        serviceMinutesPerDay.prop("max", calendarReportsArray[i].MinutesPerDay);
-                        if (serviceMinutesPerDay.val() > calendarReportsArray[i].MinutesPerDay) { serviceMinutesPerDay.prop("value", calendarReportsArray[i].MinutesPerDay); }
-                    }
-                }
+				var year = $(this).val();
+				var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
+				var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
+				_checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);                
 
             });
 
@@ -1041,13 +1039,8 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
 
-                _onDateChange(day, calendaryDay, e);
+                _onDateChange(fiscalYear, day, selectedDate, e);
 
-                var isValid = _validateDate(fiscalYear, selectedDate);
-                if (!isValid) {
-                    _showAlert("The Initiation and End Date must be within the selected school year", false);
-                    e.target.parentNode.classList.add('has-error');
-                }
 
             });
 
@@ -1172,6 +1165,13 @@
                 }
             });
 
+
+			 $(this).find(".saveCompletedService").on('click', function (e) {
+
+                $(this).closest("form").find("input[name='completed']").val(true);
+                $(this).prev().trigger(event.type);
+            });
+
             $(this).find('.saveService').on("click", function () {
 
                 var alertBox = $(this).closest('.oneStudentService').prev();
@@ -1179,15 +1179,15 @@
 
                 var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
                 if (serviceType != undefined && serviceType != "")
-                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
-
-                //check dates before saving
+					$(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+				
+				//check dates before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //don't allow user to save
                 if (!isValid)
                     return false;
-
+							   
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SaveStudentService',
@@ -1198,7 +1198,7 @@
                             _showAlert(data.Message, true);
                         }
                         else {
-                            _showAlert('Unable to save the Student Service. Try again later.', false);
+                            _showAlert(data.Message, false);
                         }
                     },
                     error: function (data) {
@@ -1208,55 +1208,55 @@
                 });
             })
 
-            //setup end date
-            var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
-            var lastDaySchoolYear = searchLastDay(nextYear, 5);
+            ////setup end date
+            //var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
+            //var lastDaySchoolYear = searchLastDay(nextYear, 5);
 
 
-            if (lastDaySchoolYear == undefined) {
-                var origStartDateVal = new Date(dupEndDate);
-                var newEndDate = new Date(origStartDateVal.setFullYear(nextYear));
+            //if (lastDaySchoolYear == undefined) {
+            //    var origStartDateVal = new Date(dupEndDate);
+            //    var newEndDate = new Date(origStartDateVal.setFullYear(nextYear));
 
-                var Month = newEndDate.getMonth() + 1;
-                var Day = newEndDate.getDate();
-                var Year = newEndDate.getFullYear();
-                var formattedDate = Month + "/" + Day + "/" + Year;
-                endDateElement.val(formattedDate);
-            }
-            else {
-                var Month = lastDaySchoolYear.Month;
-                var Day = lastDaySchoolYear.Day;
-                var Year = lastDaySchoolYear.Year;
-                var formattedDate = Month + "/" + Day + "/" + Year;
-                endDateElement.val(formattedDate);
-            }
+            //    var Month = newEndDate.getMonth() + 1;
+            //    var Day = newEndDate.getDate();
+            //    var Year = newEndDate.getFullYear();
+            //    var formattedDate = Month + "/" + Day + "/" + Year;
+            //    endDateElement.val(formattedDate);
+            //}
+            //else {
+            //    var Month = lastDaySchoolYear.Month;
+            //    var Day = lastDaySchoolYear.Day;
+            //    var Year = lastDaySchoolYear.Year;
+            //    var formattedDate = Month + "/" + Day + "/" + Year;
+            //    endDateElement.val(formattedDate);
+            //}
 
 
 
-            //setup start date - find by first year of selected fiscal year
-            var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
-            var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
+            ////setup start date - find by first year of selected fiscal year
+            //var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
+            //var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
 
-            if (firstDayNextYear == undefined) {
-                var origStartDateVal = new Date(dupStartDate);
-                var newStartDate = new Date(origStartDateVal.setFullYear(nextYear - 1));
+            //if (firstDayNextYear == undefined) {
+            //    var origStartDateVal = new Date(dupStartDate);
+            //    var newStartDate = new Date(origStartDateVal.setFullYear(nextYear - 1));
 
-                var Month = newStartDate.getMonth() + 1;
-                var Day = newStartDate.getDate();
-                var Year = newStartDate.getFullYear();
-                var formattedDate = Month + "/" + Day + "/" + Year;
-                startDateElement.val(formattedDate);
-            }
-            else {
+            //    var Month = newStartDate.getMonth() + 1;
+            //    var Day = newStartDate.getDate();
+            //    var Year = newStartDate.getFullYear();
+            //    var formattedDate = Month + "/" + Day + "/" + Year;
+            //    startDateElement.val(formattedDate);
+            //}
+            //else {
 
-                if (firstDayNextYear != undefined) {
-                    var Month = firstDayNextYear.Month;
-                    var Day = firstDayNextYear.Day;
-                    var Year = firstDayNextYear.Year;
-                    var formattedDate = Month + "/" + Day + "/" + Year;
-                    startDateElement.val(formattedDate);
-                }
-            }
+            //    if (firstDayNextYear != undefined) {
+            //        var Month = firstDayNextYear.Month;
+            //        var Day = firstDayNextYear.Day;
+            //        var Year = firstDayNextYear.Year;
+            //        var formattedDate = Month + "/" + Day + "/" + Year;
+            //        startDateElement.val(formattedDate);
+            //    }
+            //}
 
             $(".duplication-loader").css('visibility', 'hidden');
         });
@@ -1265,9 +1265,8 @@
     function _validateStartDate(dateVal) {
         var startDateElement = $("#iepStartDate").val();
         var iepStartDate = new Date(startDateElement);
-
         if (dateVal < iepStartDate) {
-            _showAlert("The Initiation date must be after the IEP Initiation (" + iepStartDate.toLocaleDateString("en-US") + ")", false);
+            _showAlert("The Initiation date must be after the IEP Initiation (" + startDateElement + ")", false);
             return false;
         }
 
@@ -1287,61 +1286,89 @@
         }
     }
 
-    function _validateDate(fiscalYear, calendarDay) {
-        //start date must be within the school year
-        var firstDaySchoolYear = searchFirstDay(fiscalYear, fiscalYear - 1, 8);
-        var lastDaySchoolYear = searchLastDay(fiscalYear, 5);
-        var isValid = true;
+	function _checkCalendarReporting(fiscalYear, minutesElement, daysPerWeekElement) {
+		
+		var studentId = $("#sid").val();
+		var args = { fiscalYear: fiscalYear, studentId: studentId };
+		var maxDaysPerWeek = daysPerWeekElement;
+		var maxMinutesPerDay =minutesElement;
 
-        if (firstDaySchoolYear != undefined && lastDaySchoolYear != undefined) {
+		$.ajax({
+            type: 'POST',
+            url: '/Home/ValidateCalendarReporting',
+            data: args,
+			dataType: 'json',			
+			success: function (data) {				
+				maxDaysPerWeek.prop("max", data.DaysPerWeek);
+				maxMinutesPerDay.prop("max", data.MinutesPerDay);
 
-            var calDate = createDate2(calendarDay);
-
-            var firstDay = new Date(firstDaySchoolYear.Year, firstDaySchoolYear.Month - 1, firstDaySchoolYear.Day);
-            var lastDay = new Date(lastDaySchoolYear.Year, lastDaySchoolYear.Month - 1, lastDaySchoolYear.Day);
-
-            if ((calDate >= firstDay) && (calDate <= lastDay)) {
-                isValid = true;
+				if (maxDaysPerWeek.val() >  data.DaysPerWeek) {
+					maxDaysPerWeek.prop("value",  data.DaysPerWeek);
+				}
+                
+				if (maxMinutesPerDay.val() > data.MinutesPerDay) {
+					maxMinutesPerDay.prop("value", data.MinutesPerDay);
+				}
             }
-            else {
-                var showFirstDay = firstDaySchoolYear.Month + "/" + firstDaySchoolYear.Day + "/" + firstDaySchoolYear.Year;
-                var showLastDay = lastDaySchoolYear.Month + "/" + lastDaySchoolYear.Day + "/" + lastDaySchoolYear.Year;
-                isValid = false;
-            }
-        }
+		});   
+		
+	}
+	
 
-        return isValid;
-    }
 
-    function _dateCheck(startDateElement, endDateElement, fiscalYearElement) {
-        //check dates before saving
-        var isValid = true;
-        var eDate = endDateElement.val();
-        var endDate = eDate.split('/');
-        var endDateObj = new Date(eDate);
-        var sDate = startDateElement.val();
-        var startDate = sDate.split('/');
-        var startDateObj = new Date(sDate);
-        var fiscalYear = fiscalYearElement.val();
-        var startDateOk = _validateDate(fiscalYear, startDateElement.val());
-        var endDateOk = _validateDate(fiscalYear, endDateElement.val());
-        var isNoServiceStartDate = isNoServiceDay(startDate[2], startDate[0], startDate[1]);
-        var isNoServiceEndDate = isNoServiceDay(endDate[2], endDate[0], endDate[1]);
+	function _validateDate(fiscalYear, calendarDay, e) {
+		
+		var studentId = $("#sid").val();
+		var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, studentId: studentId };
 
-        if (!startDateOk) {
-            isValid = false;
-            _showAlert("The Initiation must be within the selected school year", false);
-            startDateElement.parent.addClass('has-error');
-            return false;
-        }
+		$.ajax({
+            type: 'POST',
+            url: '/Home/ValidateServiceDate',
+            data: args,
+			dataType: 'json',			
+			success: function (data) {				
+				var errorMessage = "";			
 
-        if (!endDateOk) {
-            isValid = false;
-            _showAlert("The End Date must be within the selected school year", false);
-            endDateElement.parent.addClass('has-error');
-            return false;
-        }
+				if (!data.IsValid) {
+					errorMessage = "The Initiation and End Date must be within the selected school year";				
+				}
 
+				if (!data.IsService) {
+					errorMessage = 'OH NOES! That day is not is session.';
+				}
+
+				if (errorMessage != "") {
+					e.target.setCustomValidity(errorMessage);
+					e.target.title = errorMessage;
+					e.target.parentNode.classList.add('has-error');
+					var error = e.target.title;
+					_showAlert(error, false);					
+				}	
+				else {
+					e.target.setCustomValidity('');
+					e.target.title = '';
+					e.target.parentNode.classList.remove('has-error');
+				}
+							
+				},
+				error: function (data) {
+					_showAlert('Unable to connect to the database.', false);
+
+				}
+		});
+		
+	}
+	
+
+	function _dateCheck(startDateElement, endDateElement) {
+
+       //check dates before saving   
+	   var isValid = true;
+       var eDate = endDateElement.val();
+       var endDateObj = new Date(eDate);
+       var sDate = startDateElement.val();
+       var startDateObj = new Date(sDate);
+               
         //start date must be after IEP start date
         var isAfterIEP = _validateStartDate(startDateObj);
         if (!isAfterIEP) {
@@ -1354,29 +1381,12 @@
             _showAlert("The End date must be after the Initiation date.", false);
             isValid = false;
             return false;
-        }
+		}
 
-        if (isNoServiceEndDate || isNoServiceStartDate) {
-            isValid = false;
-
-            if (isNoServiceEndDate) {
-                _showAlert("The End date is not a valid Service date.", false);
-                endDateElement.parent.addClass('has-error');
-            }
-            else if (isNoServiceStartDate) {
-                _showAlert("The Initiation date is not a valid Service date", false);
-                startDateElement.parent.addClass('has-error');
-            }
-            else
-                _showAlert("Please review the Initiation and End dates to make sure they are valid for the IEP Dates.", false);
-
-        }
-
-        return isValid;
-
+		return isValid;
     }
 
-    function _onDateChange(day, calendaryDay, e) {
+    function _onDateChange(fiscalYear, day, calendaryDay, e) {
         // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
         if (day == 0) {
             e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
@@ -1390,18 +1400,10 @@
             e.target.parentNode.classList.add('has-error');
             var error = e.target.title;
             _showAlert(error, false);
-        } else if (isNoServiceDay(calendaryDay[2], calendaryDay[0], calendaryDay[1])) {
-            e.target.setCustomValidity('OH NOES! That day is not is session.');
-            e.target.title = 'OH NOES! That day is not is session.';
-            e.target.parentNode.classList.add('has-error');
-            var error = e.target.title;
-            _showAlert(error, false);
-        }
-        else {
-            e.target.setCustomValidity('');
-            e.target.title = '';
-            e.target.parentNode.classList.remove('has-error');
-        }
+		} else {
+			_validateDate(fiscalYear, calendaryDay, e);			
+		}
+		
     }
 
     $("#isCompletedModule").on("click", function () {

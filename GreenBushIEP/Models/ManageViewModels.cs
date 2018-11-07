@@ -567,8 +567,9 @@ namespace GreenBushIEP.Models
         public short Minutes { get; set; }
         public int ProviderID { get; set; }
         public string LocationCode { get; set; }
+		public string Goals { get; set; }
 
-    }	
+	}	
 
 	public class TeacherView
 	{

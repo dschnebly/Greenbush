@@ -1098,33 +1098,65 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = teacher)]
-        public ActionResult DuplicateStudentServicesNextYear(int studentId)
+		//[Authorize(Roles = teacher)]
+		[Authorize]
+		public ActionResult DuplicateStudentServicesNextYear(int studentId, int? serviceId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
-                //get latest year
-                var maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
-                if (maxYear > 0)
+				//get latest year
+				int maxYear = DateTime.Now.AddYears(1).Year;
+				if(serviceId.HasValue)
+					db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
+				else
+					db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+
+				if (maxYear > 0)
                 {
-                    List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear).ToList();
-                    List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
+					
+					tblUser mis = FindSupervisor.GetByRole("2", teacher);
+					tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+					int startMonth = 8; //august
+					int endMonth = 5;
+					//start date must be within the school year
+					var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear +1);
+
+					var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.Year == maxYear).FirstOrDefault();   
+					var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();//searchLastDay(fiscalYear, 5);
+
+					List<tblService> services = null;
+					if (serviceId.HasValue)
+						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear && s.ServiceID == serviceId).ToList();
+					else
+						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear).ToList();
+
+					List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
                     foreach (var service in services)
                     {
 
                         var item = new StudentServiceObject();
                         item.DaysPerWeek = service.DaysPerWeek;
-                        item.StartDate = service.StartDate.AddYears(1).ToShortDateString();
-                        item.EndDate = service.EndDate.AddYears(1).ToShortDateString();
+						item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+						item.EndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue ? lastDaySchoolYear.calendarDate.Value.ToShortDateString(): DateTime.Now.ToShortDateString();
                         item.LocationCode = service.LocationCode;
                         item.Minutes = service.Minutes;
                         item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
                         item.SchoolYear = service.SchoolYear;
                         item.ServiceCode = service.ServiceCode;
                         item.Frequency = service.Frequency;
+						if (service.tblGoals.Any())
+						{
+							foreach (var goal in service.tblGoals)
+							{
+								item.Goals += goal.goalID + ",";
+							}
+
+							item.Goals = item.Goals.Trim(',');
+						}
+						
                         serviceList.Add(item);
                     }
 
@@ -1198,15 +1230,82 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
-        [HttpPost]
+		[Authorize]
+		public ActionResult ValidateServiceDate(int fiscalYear, string calendarDay, int studentId)
+		{
+			bool isValid = false;
+			bool isService = true;
+
+			IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService);
+
+			return Json(new { IsValid = isValid, IsService = isService }, JsonRequestBehavior.AllowGet);
+
+		}
+
+		[Authorize]
+		public ActionResult ValidateCalendarReporting(int fiscalYear, int studentId)
+		{
+			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			tblUser mis = FindSupervisor.GetByRole("2", teacher);
+			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+
+			var reporting = db.tblCalendarReportings.Where(r => r.UserID == mis.UserID && r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear == fiscalYear).FirstOrDefault();
+			
+
+			return Json(new { MinutesPerDay = reporting.MinutesPerDay, DaysPerWeek = reporting.DaysPerWeek }, JsonRequestBehavior.AllowGet);
+
+		}
+
+		
+
+		private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService)
+		{
+			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			tblUser mis = FindSupervisor.GetByRole("2", teacher);
+			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+			int startMonth = 8; //august
+			int endMonth = 5; //may
+
+			DateTime searchDate = Convert.ToDateTime(calendarDay);
+			isValid = false;
+			isService = true;
+
+			//start date must be within the school year
+			var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == fiscalYear);
+
+			var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();   //searchFirstDay(fiscalYear, fiscalYear - 1, 8);
+			var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();//searchLastDay(fiscalYear, 5);
+
+			if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
+			{
+				isService = false;
+			}
+			if (firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue && lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue)
+			{
+				if ((searchDate >= firstDaySchoolYear.calendarDate.Value) && (searchDate <= lastDaySchoolYear.calendarDate.Value))
+				{
+					isValid = true;
+				}
+
+			}
+		}
+
+		[HttpPost]
         [Authorize]
         public ActionResult SaveStudentService(FormCollection collection)
         {
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
+			//check dates
+			bool isValidStartDate = false;
+			bool isValidServiceStartDate = true;			
+			bool isValidEndDate = false;
+			bool isValidServiceEndDate = true;
+			bool isSuccess = false;
+			string errorMessage = "There was a problem saving the service";
 
-            DateTime temp;
+			DateTime temp;
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
             if (iep != null)
             {
@@ -1227,8 +1326,8 @@ namespace GreenbushIep.Controllers
                     service.Create_Date = DateTime.Now;
                     service.Update_Date = DateTime.Now;
 
-                    // nullable serviceId
-                    service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
+					// nullable serviceId
+					service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
 
                     for (int i = 12; i < collection.Count; i++)
                     {
@@ -1238,7 +1337,11 @@ namespace GreenbushIep.Controllers
                     }
 
                     db.tblServices.Add(service);
-                }
+
+					//check dates
+					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate);
+					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate);
+				}
                 else // exsisting service
                 {
                     tblService service = db.tblServices.Where(s => s.ServiceID == StudentSerivceId).FirstOrDefault();
@@ -1277,15 +1380,47 @@ namespace GreenbushIep.Controllers
                             }
                         }
                     }
-                }
 
-                //save the service
-                db.SaveChanges();
+					//check dates
+					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate);
+					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate);
+				}
+
+
+				if (isValidStartDate && isValidServiceStartDate && isValidEndDate && isValidServiceEndDate)
+				{
+					//save the service
+					db.SaveChanges();
+					isSuccess = true;
+				}
+				else
+				{
+					errorMessage = "";
+					
+					if (!isValidStartDate || !isValidServiceStartDate)
+					{
+						errorMessage += "The Initiation Date must be a valid date within the selected school year.<br/>";
+					}
+					if (!isValidEndDate || !isValidServiceEndDate)
+					{
+						errorMessage += "The End Date must be a valid date within the selected school year.<br/>";
+					}
+
+				}
             }
 
-            //return Json Dummie.
-            return Json(new { Result = "success", Message = "The service has been saved." }, JsonRequestBehavior.AllowGet);
-        }
+			if (isSuccess)
+			{
+				//return Json Dummie.
+				return Json(new { Result = "success", Message = "The service has been saved." }, JsonRequestBehavior.AllowGet);
+			}
+			else
+			{
+				return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
+			}
+
+
+		}
 
         [HttpPost]
         [Authorize]
