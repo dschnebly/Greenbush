@@ -323,12 +323,12 @@
                                         </div>
                                         <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                         <div class="form-group">
-                                            <input type="text" value="" class="form-control standard-font-size" name="StudentGoalStateStandards0" placeholder="Add State Standards" />
+                                            <input type="text" value="" class="form-control standard-font-size studentGoalStateStandards" name="StudentGoalStateStandards0" placeholder="Add State Standards" />
                                         </div>
                                         <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
                                         <div class="form-group">
                                             <div class="input-group-btn bs-dropdown-to-select-group">
-                                                <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..." class="standard-font-size" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                <select name="StudentGoalBenchmarkMethods0" data-placeholder="Choose Methods..." class="standard-font-size StudentGoalBenchmarkMethods" id="StudentGoalBenchmarkMethods0" multiple="multiple" style="min-height: 49px; " data-validate="true">
                                                     <option value="1">Written Observation</option>
                                                     <option value="2">Written Performance</option>
                                                     <option value="3">Oral Performance</option>
@@ -435,9 +435,7 @@
                                             <span class="glyphicon glyphicon-plus-sign toggleReportsOfProgress"></span>
                                         </label>
                                         <label class="input-labels pull-right" style="font-size:16px;margin-right: 15px;">T.A.</label>
-                                        <div class="StudentGoalBenchmarks">
-
-                                        </div>
+                                        <div class="StudentGoalBenchmarks"></div>
                                         <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                             <div class="form-group">
                                                 <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
@@ -520,15 +518,15 @@
                                                 </div>
                                                 <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                                 <div class="form-group">
-                                                    <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
+                                                    <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
                                                 </div>
                                                 <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                                 <div class="form-group">
-                                                    <input type="text" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
+                                                    <input type="text" value="@(studentGoal.goal.StateStandards)" class="form-control standard-font-size studentGoalStateStandards" name="StudentGoalStateStandards@(studentGoal.goal.Baseline)" placeholder="Add State Standards" />
                                                 </div>
                                                 <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
                                                 <div class="form-group">
-                                                    <select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple" style="min-height: 49px; " data-validate="true">
+                                                    <select name="StudentGoalBenchmarkMethods@(studentGoal.goal.goalID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size StudentGoalBenchmarkMethods" multiple="multiple" style="min-height: 49px; " data-validate="true">
                                                         <option value="1" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
                                                         <option value="2" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
                                                         <option value="3" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
@@ -578,7 +576,6 @@
 
 <script>
     $(document).ready(function () {
-
         $(".dropdown-menu").each(function (index) {
             var menuValue = $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-value"]').val();
             if (menuValue > 0) {
@@ -814,11 +811,31 @@
             });
 
             $(this).find(".saveCompletedGoal").on('click', function (e) {
-
-
                 $.each($(".StudentGoal").not("#defaultGoal"), function (index, value) {
-                    
-                    
+                    if ($(this).find('.StudentGoalTitle').val().length == 0) {
+                        alert('The following field is required not to be empty: Student Goal Title');
+                        return false;
+                    }
+
+                    if ($(this).find('.StudentGoalAnnualGoal').val().length == 0) {
+                        alert('The following field is required not to be empty: Measurable Annual Goal');
+                        return false;
+                    }
+
+                    if ($(this).find('.studentGoalBaseline').val().length == 0) {
+                        alert('The following field is required not to be empty: Goal Baseline');
+                        return false;
+                    }
+
+                    if ($(this).find('.studentGoalStateStandards').val().length == 0) {
+                        alert('The following field is required not to be empty: State Standards');
+                        return false;
+                    }
+
+                    if ($(".StudentGoalBenchmarkMethods option:selected").length == 0) {
+                        alert('The following field is required not to be empty: Evaluation Procedure');
+                        return false;
+                    }
                 });
 
                 //$(this).closest("form").find("input[name='completed']").val(true);

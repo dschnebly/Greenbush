@@ -79,7 +79,7 @@
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" checked>Accommodation</label><br />
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;">Supplemental Aids and Services</label><br />
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;">Support for School Personnel</label><br />                                                
+                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;">Support for School Personnel</label><br />
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Description</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control standard-font-size", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.",  @rows = 3 })
+                                                @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control standard-font-size", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -95,15 +95,15 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Frequency</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.",  @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
-                                     <div class="row voffset2" >
+                                    <div class="row voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Location</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300, @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Duration</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.",  @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -135,9 +135,9 @@
 
                                                         <input type="text" data-val="true" value="@Model.DefaultEndDate" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
+                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +164,7 @@
     <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
 </div>
 <script>
-       
+
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -215,12 +215,12 @@
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
         $("#ExistingAccommodations").append(cloneGoal);
-		
-        //have to remove the hasdatepicker before we can appy new datepicker to clone        
+
+        //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneGoal.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",                
+                dateFormat: "mm/dd/yy",
             });
         });
 
@@ -264,20 +264,20 @@
                         var togglePanel = cloneGoal.find('.panel-collapse');
                         togglePanel.attr('id', "collapse" + data.id);
                         var toggleButton = cloneGoal.find('.btnToggle');
-                        
+
                         toggleButton.attr("href", "#collapse" + data.id);
 
                         toggleButton.attr('data-val', "collapse" + data.id);
-                                                
+
                         var parentAcc = toggleButton.closest('.panel-group').attr("id", "accordion[" + data.id + "]");
-                        
+
                         toggleButton.attr('data-parent', "#" + "accordion[" + data.id + "]");
 
                         var label = cloneGoal.find('.studentGoalLabel');
                         label.text(_getTypeName(data.accomType) + " " + data.newDate);
 
                         var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
-                        
+
                         toggleButton.removeClass("collapsed");
 
                         $(window).trigger("saving.bs.modal");
@@ -334,8 +334,6 @@
                 console.log("Unable to delete the Accommodation/Modification.");
             }
         });
-
-
     }
 
     function initGoal(element) {
@@ -352,7 +350,7 @@
                     e.target.setCustomValidity(error);
                     e.target.title = error;
                     e.target.parentNode.classList.add('has-error');
-                    _showAlert(error , false);
+                    _showAlert(error, false);
                 } else if (day == 6) {
                     var error = 'The selected date is a Saturday. Please select a Week Date.';
                     e.target.setCustomValidity(error);
@@ -411,14 +409,11 @@
                     $(this).collapse('hide');
                 });
             });
-;
+
             $(this).find(".deleteGoal").on("click", function () {
                 _deleteRow($(this));
             });
-    
         });
-       
-       
     }
 
     function _deleteRow(element) {
@@ -427,15 +422,14 @@
         if (confirm("Do you really want to delete this Accommodation/Modification?")) {
 
             if (dataId != undefined && dataId != null) {
-                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response)
-                {
+                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
                     if (response.result != undefined && response.result) {
 
                         $(element).closest('.oneStudentGoal').remove();
 
                         $(window).trigger("deleting.bs.modal");
                     }
-                    else{
+                    else {
                         _showAlert("There was a problem deleting the Accommodation or Modification.", false);
                     }
                 });
@@ -450,8 +444,8 @@
         }
     }
 
-    function _showAlert(message, positive) {
-
+    function _showAlert(message, positive)
+    {
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
             if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
             else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
@@ -463,46 +457,35 @@
     }
 
     $(document).ready(function () {
-       
         $(".oneStudentGoal").each(function () {
             initGoal($(this));
         });
-       
+
         $(this).find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
-                //beforeShow: function () {
-                //    alert('before');
-
-                //}
             });
         });
-       
     });
 
-    function _getTypeName(val)
-    {
+    function _getTypeName(val) {
         var shortDesc = "Accommodation ";
 
-        if (val == 1)
-        {
+        if (val == 1) {
             shortDesc = "Accommodation ";
         }
-        else if (val == 2)
-        {
+        else if (val == 2) {
             shortDesc = "Modification ";
         }
-        else if (val == 3)
-        {
+        else if (val == 3) {
             shortDesc = "Supplemental Aids and Services ";
         }
-        else if (val == 4)
-        {
+        else if (val == 4) {
             shortDesc = "Support for School Personnel ";
         }
 
         return shortDesc;
     }
-    
+
 </script>

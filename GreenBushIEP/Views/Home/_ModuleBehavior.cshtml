@@ -18,6 +18,7 @@
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
 </div>
 <div class="modal-body">
+    @Html.HiddenFor(Model => Model.isBehaviorPlanInSocialModuleChecked)
     <fieldset class="form-group">
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
     </fieldset>
@@ -268,7 +269,69 @@
     }
 
     $("#saveBehaviorCompleted").on("click", function (e) {
-        
+        if ($("input[name='isBehaviorPlanInSocialModuleChecked']").val())
+        {
+            if($("#StrengthMotivator").val().length == 0)
+            {
+                alert('The following field is required not to be empty: Strengths/Motivators');
+                return false;
+            }
+
+            if ($("#BehaviorConcern").val().length == 0) {
+                alert('The following field is required not to be empty: Behavior(s) of Concern');
+                return false;
+            }
+
+            if ($("#SelectedTriggers option:selected").length == 0) {
+                alert('The following field is required not to be empty: Triggers');
+                return false;
+            }
+
+            if ($("#SelectedHypothesis option:selected").length == 0) {
+                alert('The following field is required not to be empty: Hypothesis');
+                return false;
+            }
+
+            if ($("#tbBehavior1").val().length == 0) {
+                alert('The following field is required not to be empty: Behavior 1');
+                return false;
+            }
+
+            if ($("#tbBaseline1").val().length == 0) {
+                alert('The following field is required not to be empty: Baseline 1');
+                return false;
+            }
+
+            if ($("#Crisis_Escalation").val().length == 0) {
+                alert('The following field is required not to be empty: Crisis Management Plan');
+                return false;
+            }
+
+            if ($("#Crisis_Escalation").val().length == 0) {
+                alert('The following field is required not to be empty: Crisis Management Plan');
+                return false;
+            }
+
+            if ($("#Crisis_Description").val().length == 0) {
+                alert('The following field is required not to be empty: Crisis');
+                return false;
+            }
+
+            if ($("#Crisis_Implementation").val().length == 0) {
+                alert('The following field is required not to be empty: Implementation Steps/De-escalation Strategies');
+                return false;
+            }
+
+            if ($("#Crisis_Implementation").val().length == 0) {
+                alert('The following field is required not to be empty: Implementation Steps/De-escalation Strategies');
+                return false;
+            }
+
+            if ($("#ReviewedBy").val().length == 0) {
+                alert('The following field is required not to be empty: Action Plan');
+                return false;
+            }
+        }
 
         $("#Completed").val(true);
         $(".modal-body form").submit();
