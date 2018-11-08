@@ -425,8 +425,8 @@ namespace GreenBushIEP.Models
             targetedBehavior1 = new tblBehaviorBaseline();
             targetedBehavior2 = new tblBehaviorBaseline();
             targetedBehavior3 = new tblBehaviorBaseline();
-            Completed = false;
             isBehaviorPlanInSocialModuleChecked = false;
+            Completed = false;
         }
 
         public int StudentId { get; set; }

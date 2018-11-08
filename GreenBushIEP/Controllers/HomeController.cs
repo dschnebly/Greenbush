@@ -1624,7 +1624,6 @@ namespace GreenbushIep.Controllers
                     end = model.Transporation_Other_desc.IndexOf("following the");
                     val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
                     ViewBag.end = val;
-
                 }
             }
 
@@ -1788,9 +1787,7 @@ namespace GreenbushIep.Controllers
 				
 			}
 
-			
-
-					return View(model);
+		    return View(model);
         }
 
         [Authorize]
