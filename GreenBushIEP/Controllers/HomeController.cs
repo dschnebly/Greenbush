@@ -1429,8 +1429,6 @@ namespace GreenbushIep.Controllers
 			{
 				return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
 			}
-
-
 		}
 
         [HttpPost]
@@ -2726,6 +2724,7 @@ namespace GreenbushIep.Controllers
                 model.Crisis_Implementation = BehaviorIEP.Crisis_Implementation;
                 model.Crisis_Other = BehaviorIEP.Crisis_Other;
                 model.ReviewedBy = BehaviorIEP.ReviewedBy;
+                model.isBehaviorPlanInSocialModuleChecked = db.tblIEPSocials.Where(b => b.IEPid == BehaviorIEP.IEPid).FirstOrDefault().BehaviorInterventionPlan;
                 model.SelectedTriggers = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID).Select(o => o.BehaviorTriggerTypeID).ToList();
                 var triggerOther = db.tblBehaviorTriggers.Where(o => o.BehaviorID == BehaviorIEP.BehaviorID && o.OtherDescription != "").FirstOrDefault();
                 if (triggerOther != null)

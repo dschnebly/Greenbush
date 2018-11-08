@@ -426,12 +426,14 @@ namespace GreenBushIEP.Models
             targetedBehavior2 = new tblBehaviorBaseline();
             targetedBehavior3 = new tblBehaviorBaseline();
             Completed = false;
+            isBehaviorPlanInSocialModuleChecked = false;
         }
 
         public int StudentId { get; set; }
         public int BehaviorID { get; set; }
         public int IEPid { get; set; }
         public bool Completed { get; set; }
+        public bool isBehaviorPlanInSocialModuleChecked { get; set; }
 
         public List<int> SelectedTriggers { get; set; }
         public string TriggerOther { get; set; }
