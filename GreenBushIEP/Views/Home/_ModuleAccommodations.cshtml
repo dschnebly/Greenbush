@@ -14,8 +14,6 @@
     .panel-group {
         margin-bottom: 12px;
     }
-
-   
 </style>
 
 <div class="modal-header">
@@ -25,21 +23,17 @@
         <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations and Modifications
     </h4>
 </div>
-
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12" style="margin-bottom: 12px;">
             <button id="newgoal" class="btn btn-default">New Accommodation/Modification&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
         </div>
     </div>
-    
     <div class="container goalContainer">
-
         <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
         </div>
-
         <div id="ExistingAccommodations" style="margin: 5px;">
             @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
             {
@@ -55,7 +49,6 @@
                 </table>
             }
         </div>
-
         <div class="row oneStudentGoal hidden" id="defaultgoal">
             @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
             {
@@ -64,10 +57,8 @@
                 @Html.HiddenFor(model => model.IEPid)
                 @Html.HiddenFor(model => model.StudentId)
 
-
                 <div class="col-md-12">
                     <div class="panel-group" id="accordion[0]">
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -150,7 +141,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="form-group" id="saveGroup">
                                             <div class="col-md-12" style="text-align:center; padding-top: 15px;">
@@ -162,22 +152,17 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             }
+
         </div> <!--end oneStudentGoal-->
-
     </div><!--end container student goal-->
-
 </div>
 
 <div class="modal-footer" style="border-top: 0;">
     <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
 </div>
-
-
 <script>
        
     /* Binding */

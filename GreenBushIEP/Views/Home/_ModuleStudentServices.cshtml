@@ -1,4 +1,5 @@
 ﻿@using GreenBushIEP.Models
+
 @model StudentServiceViewModel
 
 <style>
@@ -599,6 +600,7 @@
     /* Event */
     /* when clicking on the New Student Goal button */
     $('#newService').on('click', function () {
+
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
@@ -618,7 +620,6 @@
         var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
 
         $('.serviceContainer').append(cloneService);
-
 
         //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneService.find('.dtField').each(function () {

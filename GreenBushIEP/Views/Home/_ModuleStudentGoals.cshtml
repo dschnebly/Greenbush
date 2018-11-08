@@ -242,7 +242,6 @@
                 </table>
             </div>
         </div>
-
         @if (Model.isReadOnly)
         {
             @Html.Partial("~/Views/Home/ActiveIEP/_GoalsSection.cshtml", Model)
@@ -257,7 +256,6 @@
             <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
                 <strong class="moreinfo">Oh snap!</strong>
             </div>
-
             <div class="row StudentGoal hidden" id="defaultGoal">
 
                 @using (Html.BeginForm("EditStudentGoals", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
@@ -549,7 +547,6 @@
                                                         <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -823,8 +820,13 @@
             $(this).find(".saveCompletedGoal").on('click', function (e) {
 
 
-                $(this).closest("form").find("input[name='completed']").val(true);
-                $(this).prev().trigger(event.type);
+                $.each($(".StudentGoal").not("#defaultGoal"), function (index, value) {
+                    
+                    
+                });
+
+                //$(this).closest("form").find("input[name='completed']").val(true);
+                //$(this).prev().trigger(event.type);
             });
 
             //* Binding */

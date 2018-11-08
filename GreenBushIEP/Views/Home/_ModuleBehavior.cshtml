@@ -5,24 +5,22 @@
     bool showHypothesisOther = false;
     bool showStrategyOther = false;
 }
+<link href="/Content/chosen.css" rel="stylesheet" />
 <style>
-    label {
+    label 
+    {
         margin-bottom: 0;
     }
 </style>
-<link href="/Content/chosen.css" rel="stylesheet" />
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-road" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Behavior Plan</h4>
 </div>
 <div class="modal-body">
-
     <fieldset class="form-group">
         <p>A behavior plan defines the behavior/s being targeted and how it will be addressed and changed.</p>
     </fieldset>
-
     <div class="row">
         @using (Html.BeginForm("EditBehvior", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
         {
@@ -99,11 +97,9 @@
                         <div id="divHypothesisOther" class="voffset2" style="display:none">
                             <label>Other Description</label>
                             <input type="text" id="HypothesisOther" name="HypothesisOther" class="form-control standard-font-size" value="@Model.HypothesisOther" data-toggle="tooltip" data-placement="bottom" title="1000 character limit." maxlength="1000" />
-
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Strategies</h3>
@@ -161,7 +157,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Crisis Management Plan</h3>
-
                     </div>
                 </div>
                 <fieldset class="form-group">
@@ -205,11 +200,6 @@
                         <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                         <button type="button" class="formbtn btn btn-success btn-lg" id="saveBehaviorCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                     </div>
-                    @*<div class="form-group">
-                            <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                            <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
-                            <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-                        </div>*@
                 </div>
             </div>
         }
@@ -224,7 +214,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <br />
 <br />
@@ -279,7 +268,7 @@
     }
 
     $("#saveBehaviorCompleted").on("click", function (e) {
-
+        
 
         $("#Completed").val(true);
         $(".modal-body form").submit();

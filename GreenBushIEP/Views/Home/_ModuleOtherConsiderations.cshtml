@@ -14,7 +14,7 @@
 <div class="modal-body">
 
     @using (Html.BeginForm("EditOtherConsiderations", "ModuleSection", FormMethod.Post, new { }))
-	{
+    {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IEPid)
@@ -38,7 +38,7 @@
                             <span class="onoffswitch2-switch"></span>
                         </label>
                     </div>
-                    <div class="form-check" id="AssistiveTechnology_Text">
+                    <div class="form-check" id="AssistiveTechnology_Text" style="margin-top: 15px;">
                         <p id="AT_Desc" style="display: @(Model.AssistiveTechnology_Require.HasValue && Model.AssistiveTechnology_Require.Value ? "block;" : "none;")">
                             <input class="form-control standard-font-size" id="AssistiveTechnology_Description" name="AssistiveTechnology_Description" type="text" value="@(Model.AssistiveTechnology_Description)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                         </p>
@@ -46,7 +46,7 @@
                 </fieldset>
             </div>
         </div>
-        <hr />
+        <hr style="margin: 0;" />
         <div class="row voffset2">
             <div class="col-md-12">
                 <label class="standard-font-size">Assessments</label>
@@ -92,9 +92,7 @@
                     <p id="SA_WithAccom_Desc" style="display: @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
                         <input class="form-control standard-font-size" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.StateAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
-
                 </div>
-
             </div>
         </div>
         <hr />
@@ -105,36 +103,31 @@
         </div>
         <div class="row voffset2">
             <div class="col-md-12">
-                <div class="form-check">
+                <div class="form-check transportationCheck">
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.Transporation_NotEligible.HasValue && Model.Transporation_NotEligible.Value ? "checked" : String.Empty)>The student is not eligible for transportation.</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
                 </div>
-				@{
-					var showOther = false;
-					if ((Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value) ||
-						(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value) ||
-						(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value))
-					{
-						showOther = true;
-					}
-				}
-
-                <div class="form-check voffset2" id="TP_Other_Desc"  style="display: @(showOther ? "block;" : "none;")">
+                @{var showOther = false;
+                    if ((Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value) ||
+                        (Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value) ||
+                        (Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value))
+                    {
+                        showOther = true;
+                    }
+                }
+                <div class="form-check voffset2" id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
                     <p>
-						<p>The student will receive transportation each day that school is in session, on a <a href="#" id="inline-vehicle" name="inline-vehicle" data-type="select" data-title="Enter vehicle type" data-pk="1" placeholder="Select Vehicle Type" class="editable editable-click" style="display: inline;"></a>
-					 vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. (<a href="#" id="inline-minutes" name="inline-minutes" data-type="text" data-title="Enter minutes" placeholder="Enter Minutes" class="editable editable-click" style="display: inline;"></a> minutes estimated normal commute) beginning on 
-					<a href="#" id="inline-begin" name="inline-begin" data-type="text" data-title="Enter begin date" class="editable editable-click" style="display: inline;"></a> and ending on <a href="#" id="inline-end" name="inline-end" data-type="text" data-title="Enter end date" class="editable editable-click" style="display: inline;"></a> following the school calendar.</p>
-					
-                    @*<textarea class="form-control standard-font-size" id="Transporation_Other_desc" name="Transporation_Other_desc" type="text" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.Transporation_Other_desc == null ? String.Format("Transportation will be provided every day school is in session, beginning when {0} gets on bus until {1} gets off bus at school. Transportation will resume when school is dismissed until {2} arrives home.", studentName, studentName, studentName) : Model.Transporation_Other_desc)</textarea>*@
+                        The student will receive transportation each day that school is in session, on a <a href="#" id="inline-vehicle" name="inline-vehicle" data-type="select" data-title="Enter vehicle type" data-pk="1" placeholder="Select Vehicle Type" class="editable editable-click" style="display: inline;"></a>
+                        vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. (<a href="#" id="inline-minutes" name="inline-minutes" data-type="text" data-title="Enter minutes" placeholder="Enter Minutes" class="editable editable-click" style="display: inline;"></a> minutes estimated normal commute) beginning on
+                        <a href="#" id="inline-begin" name="inline-begin" data-type="text" data-title="Enter begin date" class="editable editable-click" style="display: inline;"></a> and ending on <a href="#" id="inline-end" name="inline-end" data-type="text" data-title="Enter end date" class="editable editable-click" style="display: inline;"></a> following the school calendar.
                     </p>
-					<input type="hidden" name="inputVehicleType" id="inputVehicleType" value="@ViewBag.vehicleType"/>
-					<input type="hidden" name="inputBegin" id="inputBegin" value="@ViewBag.begin"/>
-					<input type="hidden" name="inputEnd" id="inputEnd"  value="@ViewBag.end"/>
-					<input type="hidden" name="inputMinutes" id="inputMinutes" value="@ViewBag.minutes"/>
+                    <input type="hidden" name="inputVehicleType" id="inputVehicleType" value="@ViewBag.vehicleType" />
+                    <input type="hidden" name="inputBegin" id="inputBegin" value="@ViewBag.begin" />
+                    <input type="hidden" name="inputEnd" id="inputEnd" value="@ViewBag.end" />
+                    <input type="hidden" name="inputMinutes" id="inputMinutes" value="@ViewBag.minutes" />
                 </div>
-				
             </div>
         </div>
         <hr />
@@ -154,81 +147,76 @@
                 </div>
             </div>
         </div>
-
-        if (@showExtendYear)
-        {
-            //if question above is answered yes, the following should appear in Other Consideration module
-            <hr />
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label class=" standard-font-size">Extended School Year</label>
-                    <p style="font-size:16px">The IEP team has enough information to determine that @studentName does require extended school term services.</p>
-                </div>
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <label class="radio-inline" style="font-size: 16px;"><input type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.ExtendedSchoolYear_RegressionRisk.HasValue && Model.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty)> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
-                        <label class="radio-inline" style="font-size: 15px;"><input type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.ExtendedSchoolYear_SeverityRisk.HasValue && Model.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty)> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
-
+                    if (@showExtendYear)
+                    {
+                        //if question above is answered yes, the following should appear in Other Consideration module
+                        <hr />
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <label class=" standard-font-size">Extended School Year</label>
+                                <p style="font-size:16px">The IEP team has enough information to determine that @studentName does require extended school term services.</p>
+                            </div>
+                        </div>
+                        <div class="row voffset2">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <label class="radio-inline" style="font-size: 16px;"><input type="checkbox" name="ExtendedSchoolYear_RegressionRisk" id="Ext_No" @(Model.ExtendedSchoolYear_RegressionRisk.HasValue && Model.ExtendedSchoolYear_RegressionRisk.Value ? "checked" : String.Empty)> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</label><br /><br />
+                                    <label class="radio-inline" style="font-size: 15px;"><input type="checkbox" name="ExtendedSchoolYear_SeverityRisk" id="Ext_Req" @(Model.ExtendedSchoolYear_SeverityRisk.HasValue && Model.ExtendedSchoolYear_SeverityRisk.Value ? "checked" : String.Empty)> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</label><br />
+                                </div>
+                                <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
+                                    <label class="standard-font-size">Severity Justification/Reasoning:</label>
+                                    <textarea class="form-control standard-font-size" name="ExtendedSchoolYear_Justification" id="ExtendedSchoolYear_Justification" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.ExtendedSchoolYear_Justification)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                    <div class="row voffset2">
+                        <div class="col-md-12">
+                            <label class="standard-font-size">Parental Concerns</label>
+                        </div>
                     </div>
-
-                    <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
-                        <label class="standard-font-size">Severity Justification/Reasoning:</label>
-                        <textarea class="form-control standard-font-size" name="ExtendedSchoolYear_Justification" id="ExtendedSchoolYear_Justification" rows="3" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit.">@(Model.ExtendedSchoolYear_Justification)</textarea>
+                    <div class="row voffset2">
+                        <div class="col-md-12">
+                            <fieldset class="form-group">
+                                <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @(studentName).</label>&nbsp;&nbsp;
+                                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="Parental_Concerns_flag" id="Parental_Concerns_flag" class="onoffswitch2-checkbox" @(Model.Parental_Concerns_flag != null && Model.Parental_Concerns_flag.Value ? "checked" : String.Empty ) />
+                                    <label class="onoffswitch2-label" for="Parental_Concerns_flag">
+                                        <span class="onoffswitch2-inner"></span>
+                                        <span class="onoffswitch2-switch"></span>
+                                    </label>
+                                </div>
+                                <div class="form-check voffset2" id="ParentalConcerns_TextArea">
+                                    <p id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
+                                        <input class="form-control standard-font-size" id="Parental_Concerns_Desc" name="Parental_Concerns_Desc" type="text" value="@(Model.Parental_Concerns_Desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                                    </p>
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-
-        <hr />
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <label class="standard-font-size">Parental Concerns</label>
-            </div>
-        </div>
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <fieldset class="form-group">
-                    <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @(studentName).</label>&nbsp;&nbsp;
-                    <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                        <input type="checkbox" name="Parental_Concerns_flag" id="Parental_Concerns_flag" class="onoffswitch2-checkbox" @(Model.Parental_Concerns_flag != null && Model.Parental_Concerns_flag.Value ? "checked" : String.Empty ) />
-                        <label class="onoffswitch2-label" for="Parental_Concerns_flag">
-                            <span class="onoffswitch2-inner"></span>
-                            <span class="onoffswitch2-switch"></span>
-                        </label>
+                    <hr style="margin: 0;"/>
+                    <div class="row voffset2">
+                        <div class="col-md-12">
+                            <label class="standard-font-size">Considerations</label>
+                        </div>
                     </div>
-
-                    <div class="form-check voffset2" id="ParentalConcerns_TextArea">
-                        <p id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
-                            <input class="form-control standard-font-size" id="Parental_Concerns_Desc" name="Parental_Concerns_Desc" type="text" value="@(Model.Parental_Concerns_Desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
-                        </p>
+                    <div class="row voffset2">
+                        <div class="col-md-12" style="font-size:16px">
+                            <p>The parent(s)/legal education decision maker will be informed of @(studentName)'s progress in writing at least one time every quarter.</p>
+                            <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
+                            <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
+                        </div>
                     </div>
-                </fieldset>
-            </div>
-        </div>
-        <hr />
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <label class="standard-font-size">Considerations</label>
-            </div>
-        </div>
-        <div class="row voffset2">
-            <div class="col-md-12" style="font-size:16px">
-                <p>The parent(s)/legal education decision maker will be informed of @(studentName)'s progress in writing at least one time every quarter.</p>
-                <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
-                <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" style="text-align:center; margin-top: 10px;">
-                <div class="form-group">
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveOtherCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
-                </div>
-            </div>
-        </div>
-    }
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center; margin-top: 10px;">
+                            <div class="form-group">
+                                <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                <button type="button" class="formbtn btn btn-success btn-lg" id="saveOtherCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                    }
 
     <div class="completed-loader @(Model.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
         <div class="text-center completed-checkbox">
@@ -244,10 +232,9 @@
 <br />
 
 <script src="~/Scripts/editable.js"></script>
-<script src="~/Scripts/jquery.maskedinput.min.js""></script>
-
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
 <script>
-    
+
     $("input:checkbox[name=Parental_Concerns_flag]").on('click', function (event) {
         if ($("input:checkbox[name=Parental_Concerns_flag]").is(':checked')) {
             $("#PC_Desc").show();
@@ -265,10 +252,8 @@
         else {
             $("#AT_Desc").hide();
             $("#AssistiveTechnology_Description").val('');
-            
         }
     });
-
 
     $("input[name=TransporationPlan").click(function (event) {
         var elementId = event.target.id;
@@ -277,9 +262,8 @@
             $("#TP_Other_Desc").hide();
         }
         else {
-            $("#TP_Other_Desc").show();            
+            $("#TP_Other_Desc").show();
         }
-
     });
 
     $("input[name=DistrictWideAssessments").click(function (event) {
@@ -317,7 +301,6 @@
             $("#DistrictAssessment_Alternative_desc").val('');
             $("#DistrictAssessment_WithAccommodations_desc").val('');
         }
-
     });
 
     $("input[name=StateWideAssessments").click(function (event) {
@@ -338,7 +321,6 @@
             $("#StateAssessment_NoAccommodations_desc").val('');
             $("#StateAssessment_WithAccommodations_desc").val('');
         }
-
     });
 
     // Attach Event
@@ -355,87 +337,131 @@
     /* When a user clicks on the question mark icon we turn on tooltips */
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
-	});
+    });
 
-	//inline editable
-	$('#inline-vehicle').editable({		
-		value: @ViewBag.vehicleType,
-		source: [
+    //inline editable
+    $('#inline-vehicle').editable({
+        value: @ViewBag.vehicleType,
+        source: [
 			  {value: 0, text: 'Select Vehicle Type'},
               {value: 1, text: 'special education'},
               {value: 2, text: 'general education'}
-		]
-	});
-		
+        ]
+    });
+
     $('#inline-minutes').editable({
         type: 'text',
-        title: 'Enter minutes',       
+        title: 'Enter minutes',
         value: '@ViewBag.minutes'
-	});
+    });
 
-	$('#inline-begin').editable({
-		type: 'text',    
-		name: 'beginDate',
-		value: '@ViewBag.begin',
-		placeholder: 'Test',
-        tpl: '<input type="text" id ="begin" class="mask form-control input-sm dd" style="padding-right: 24px;">'       
-	});
+    $('#inline-begin').editable({
+        type: 'text',
+        name: 'beginDate',
+        value: '@ViewBag.begin',
+        placeholder: 'Test',
+        tpl: '<input type="text" id ="begin" class="mask form-control input-sm dd" style="padding-right: 24px;">'
+    });
 
-	$('#inline-end').editable({
-		type: 'text',    
-		name: 'endDate',
-		value: '@ViewBag.end',
-        tpl: '<input type="text" id ="end" class="mask form-control input-sm dd" style="padding-right: 24px;">'       
-	});
+    $('#inline-end').editable({
+        type: 'text',
+        name: 'endDate',
+        value: '@ViewBag.end',
+        tpl: '<input type="text" id ="end" class="mask form-control input-sm dd" style="padding-right: 24px;">'
+    });
 
-	$('#inline-vehicle').on('save', function(e, params) {
-		$("#inputVehicleType").val(params.newValue);
-	});
+    $('#inline-vehicle').on('save', function(e, params) {
+        $("#inputVehicleType").val(params.newValue);
+    });
 
-	$('#inline-begin').on('save', function(e, params) {
-		$("#inputBegin").val(params.newValue);
-	});
+    $('#inline-begin').on('save', function(e, params) {
+        $("#inputBegin").val(params.newValue);
+    });
 
-	$('#inline-end').on('save', function(e, params) {
-		$("#inputEnd").val(params.newValue);
-	});
+    $('#inline-end').on('save', function(e, params) {
+        $("#inputEnd").val(params.newValue);
+    });
 
-	$('#inline-minutes').on('save', function(e, params) {
-		$("#inputMinutes").val(params.newValue);
-	});
-		
-	$(document).on("focus", ".mask", function () {
-		$(this).mask("99/99/9999");
-	});
+    $('#inline-minutes').on('save', function(e, params) {
+        $("#inputMinutes").val(params.newValue);
+    });
 
-	$("#saveOtherCompleted").on("click", function (e) {
+    $(document).on("focus", ".mask", function () {
+        $(this).mask("99/99/9999");
+    });
 
+    $("#saveOtherCompleted").on("click", function (e) {
+        if($("#AssistiveTechnology_Require").is(':checked'))
+        {
+            if($("#AssistiveTechnology_Description").val().length == 0)
+            {
+                alert('You must explain when assistive technology is required.');
+                return false;
+            }
+        }
 
-	    $("#Completed").val(true);
-	    $(".modal-body form").submit();
-	});
+        var results = true;
+        $(".transportationCheck  input").each(function() {
+            if($(this).is(":checked") && $(this).val() != 1)
+            {
+                if($("#inline-vehicle").text() == "Select Vehicle Type")
+                {
+                    alert('Please select a vechical type.');
+                    results = false;
+                    return false;
+                }
 
-	$("#isCompletedModule").on("click", function () {
-	    var IEPId = $("#studentIEPId").val();
+                if($("#inline-begin").text() == "Empty")
+                {
+                    alert('Please select a beginning date for transportation.');
+                    results = false;
+                    return false;
+                }
 
-	    $.ajax({
-	        type: 'GET',
-	        url: '/ModuleSection/ModuleCompleted',
-	        data: { stdIEPId: IEPId, module: "Other" },
-	        dataType: "json",
-	        success: function (data) {
-	            if (data.Result == "success") {
-	                $(".completed-loader").fadeOut();
-	                $("#Completed").val(false);
+                if($("#inline-end").text() == "Empty")
+                {
+                    alert('Please select an ending date for transportation.');
+                    results = false;
+                    return false;
+                }
+            }
+        });
+        if(!results){ return false; }
 
-	                $("#OtherWidget .hero-widget").removeClass("module-completed");
-	            } else {
-	                console.log("Error when updating the module.")
-	            }
-	        },
-	        error: function (data) {
-	            console.log("Unable to mark Health Module as complete.");
-	        }
-	    });
-	});
+        if($("#Parental_Concerns_flag").is(':checked'))
+        {
+            if($("#Parental_Concerns_Desc").val().length == 0)
+            {
+                alert('Please explaing the parental concerns.');
+                return false;
+            }
+        }
+
+        $("#Completed").val(true);
+        $(".modal-body form").submit();
+    });
+
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Other" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+                    $("#Completed").val(false);
+
+                    $("#OtherWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Health Module as complete.");
+            }
+        });
+    });
 </script>
