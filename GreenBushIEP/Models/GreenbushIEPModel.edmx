@@ -620,6 +620,8 @@
           <Property Name="Transporation_Disability_flag" Type="bit" />
           <Property Name="Transporation_Disability_desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="StateAssesment_Alternative_flag" Type="bit" />
+          <Property Name="StateAssesment_Alternative_Desc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -2130,6 +2132,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Transporation_Disability_flag" Type="Boolean" />
           <Property Name="Transporation_Disability_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="StateAssesment_Alternative_flag" Type="Boolean" />
+          <Property Name="StateAssesment_Alternative_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -3264,6 +3268,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="StateAssesment_Alternative_Desc" ColumnName="StateAssesment_Alternative_Desc" />
+                <ScalarProperty Name="StateAssesment_Alternative_flag" ColumnName="StateAssesment_Alternative_flag" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Transporation_Disability_desc" ColumnName="Transporation_Disability_desc" />
                 <ScalarProperty Name="Transporation_Disability_flag" ColumnName="Transporation_Disability_flag" />

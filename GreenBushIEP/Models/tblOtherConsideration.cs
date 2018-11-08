@@ -46,5 +46,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> Transporation_Disability_flag { get; set; }
         public string Transporation_Disability_desc { get; set; }
         public bool Completed { get; set; }
+        public Nullable<bool> StateAssesment_Alternative_flag { get; set; }
+        public string StateAssesment_Alternative_Desc { get; set; }
     }
 }

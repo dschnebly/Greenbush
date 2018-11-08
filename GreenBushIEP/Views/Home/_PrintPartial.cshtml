@@ -2138,12 +2138,16 @@
                                 {
                                     <p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
                                 }
+								@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+                                {                                    
+                                    <p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>                                    
+                                }
                                  @if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
                                  {
                                     <p>Student has completed all required State Assessments.</p>
                                  }
                             </div>
-                            <div >
+                            <div  class="form-check voffset2" id="StateAssessment_TextArea">
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
                                 {                                    
                                     <p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>                                    
@@ -2151,6 +2155,10 @@
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
                                 {                                 
                                     <p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>                                 
+                                }
+								@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+                                {                                    
+                                    <p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>                                    
                                 }
                             </div>
 
