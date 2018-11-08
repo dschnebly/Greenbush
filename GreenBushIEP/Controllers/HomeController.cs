@@ -1248,11 +1248,18 @@ namespace GreenbushIep.Controllers
 			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 			tblUser mis = FindSupervisor.GetByRole("2", teacher);
 			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+			int minutesPerDay = 60;
+			int daysPerWeek = 5;
 
 			var reporting = db.tblCalendarReportings.Where(r => r.UserID == mis.UserID && r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear == fiscalYear).FirstOrDefault();
-			
 
-			return Json(new { MinutesPerDay = reporting.MinutesPerDay, DaysPerWeek = reporting.DaysPerWeek }, JsonRequestBehavior.AllowGet);
+			if (reporting != null)
+			{
+				minutesPerDay = reporting.MinutesPerDay;
+				daysPerWeek = reporting.DaysPerWeek;
+			}
+
+			return Json(new { MinutesPerDay = minutesPerDay, DaysPerWeek = daysPerWeek }, JsonRequestBehavior.AllowGet);
 
 		}
 
@@ -1273,20 +1280,24 @@ namespace GreenbushIep.Controllers
 			//start date must be within the school year
 			var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == fiscalYear);
 
-			var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();   //searchFirstDay(fiscalYear, fiscalYear - 1, 8);
-			var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();//searchLastDay(fiscalYear, 5);
+			if (availableCalendarDays != null)
+			{
 
-			if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
-			{
-				isService = false;
-			}
-			if (firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue && lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue)
-			{
-				if ((searchDate >= firstDaySchoolYear.calendarDate.Value) && (searchDate <= lastDaySchoolYear.calendarDate.Value))
+				var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();   
+				var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
+
+				if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
 				{
-					isValid = true;
+					isService = false;
 				}
+				if (firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue && lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue)
+				{
+					if ((searchDate >= firstDaySchoolYear.calendarDate.Value) && (searchDate <= lastDaySchoolYear.calendarDate.Value))
+					{
+						isValid = true;
+					}
 
+				}
 			}
 		}
 
