@@ -568,7 +568,10 @@ namespace GreenBushIEP.Controllers
                     case "3":
                         model.StateAssessment_RequiredCompleted = true;
                         break;
-                }
+					case "4":
+						model.StateAssesment_Alternative_flag = true;
+						break;
+				}
 
                 var tp = collection["TransporationPlan"];
                 switch (tp)
@@ -635,7 +638,9 @@ namespace GreenBushIEP.Controllers
                     OC.StateAssessment_NoAccommodations_desc = model.StateAssessment_NoAccommodations_desc;
                     OC.StateAssessment_WithAccommodations_flag = model.StateAssessment_WithAccommodations_flag;
                     OC.StateAssessment_WithAccommodations_desc = model.StateAssessment_WithAccommodations_desc;
-                    OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
+					OC.StateAssesment_Alternative_flag = model.StateAssesment_Alternative_flag;
+					OC.StateAssesment_Alternative_Desc = model.StateAssesment_Alternative_Desc;
+					OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
                     OC.Transporation_NotEligible = model.Transporation_NotEligible;
                     OC.Transporation_Required = model.Transporation_Required;
                     OC.Transporation_Disability_flag = model.Transporation_Disability_flag;

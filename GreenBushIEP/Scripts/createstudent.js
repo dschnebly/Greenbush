@@ -20,7 +20,27 @@
     }).datepicker("setDate", "0");
     $("#IEPEndDate").datepicker({
         dateFormat: "mm/dd/yy"
-    }).datepicker("setDate", "0");
+	}).datepicker("setDate", "0");
+
+
+	
+	$("#assignChildCount").on('change', function (e) {
+		var optionSelected = $("option:selected", this);
+		var valueSelected = this.value;
+		
+
+		var optionExists = ($("#misDistrict option[value=" + valueSelected + "]").length > 0);
+		if (optionExists) {
+			var currentValues = $("#misDistrict").val();
+			currentValues.push(valueSelected);
+			$("#misDistrict").val(currentValues);
+			$("#misDistrict").trigger("change");
+			$("#misDistrict").trigger("chosen:updated");
+			
+		}
+
+		
+	});
 });
 
 function init() {

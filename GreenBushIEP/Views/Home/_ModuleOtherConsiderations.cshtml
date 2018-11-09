@@ -64,13 +64,13 @@
                 </div>
                 <div class="form-check voffset2" id="DistrictAssessment_TextArea">
                     <p id="DA_NoAccom_Desc" style="display: @(Model.DistrictAssessment_NoAccommodations_flag.HasValue && Model.DistrictAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="@(Model.DistrictAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <input class="form-control standard-font-size" id="DistrictAssessment_NoAccommodations_desc" name="DistrictAssessment_NoAccommodations_desc" type="text" value="@(Model.DistrictAssessment_NoAccommodations_desc)" placeholder="Describe curricular area(s)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="DA_WithAccom_Desc" style="display: @(Model.DistrictAssessment_WithAccommodations_flag.HasValue && Model.DistrictAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="@(Model.DistrictAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <input class="form-control standard-font-size" id="DistrictAssessment_WithAccommodations_desc" name="DistrictAssessment_WithAccommodations_desc" type="text" value="@(Model.DistrictAssessment_WithAccommodations_desc)" placeholder="Describe curricular area(s)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="DA_Alt_Desc" style="display: @(Model.DistrictAssessment_Alternative_flag.HasValue && Model.DistrictAssessment_Alternative_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="@(Model.DistrictAssessment_Alternative_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <input class="form-control standard-font-size" id="DistrictAssessment_Alternative_desc" name="DistrictAssessment_Alternative_desc" type="text" value="@(Model.DistrictAssessment_Alternative_desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
             </div>
@@ -82,15 +82,20 @@
                 <div class="form-check">
                     <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_NoAccom" value="1" @(Model.StateAssessment_NoAccommodations_flag.HasValue && Model.StateAssessment_NoAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</label><br />
                     <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_WithAccom" value="2" @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "checked" : String.Empty)>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s):<br /><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="3" @(Model.StateAssessment_RequiredCompleted.HasValue && Model.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty)>Student has completed all required State Assessments.</label><br />
+					<label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_Alt" value="4" @(Model.StateAssesment_Alternative_flag.HasValue && Model.StateAssesment_Alternative_flag.Value ? "checked" : String.Empty)>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</label><br />
+                    <label class="radio-inline" style="font-size: 16px;"><input style="font-size: 15px;" type="radio" name="StateWideAssessments" id="SA_Complete" value="3" @(Model.StateAssessment_RequiredCompleted.HasValue && Model.StateAssessment_RequiredCompleted.Value ? "checked" : String.Empty)>Student has completed all required State Assessments.</label><br />
+					
                 </div>
                 <div class="form-check voffset2" id="StateAssessment_TextArea">
 
                     <p id="SA_NoAccom_Desc" style="display: @(Model.StateAssessment_NoAccommodations_flag.HasValue && Model.StateAssessment_NoAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="@(Model.StateAssessment_NoAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <input class="form-control standard-font-size" id="StateAssessment_NoAccommodations_desc" name="StateAssessment_NoAccommodations_desc" type="text" value="@(Model.StateAssessment_NoAccommodations_desc)" placeholder="Describe curricular area(s)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                     <p id="SA_WithAccom_Desc" style="display: @(Model.StateAssessment_WithAccommodations_flag.HasValue && Model.StateAssessment_WithAccommodations_flag.Value ? "block;" : "none;")">
-                        <input class="form-control standard-font-size" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.StateAssessment_WithAccommodations_desc)" placeholder="Describe Curricular Areas" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        <input class="form-control standard-font-size" id="StateAssessment_WithAccommodations_desc" name="StateAssessment_WithAccommodations_desc" type="text" value="@(Model.StateAssessment_WithAccommodations_desc)" placeholder="Describe curricular area(s)" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                    </p>
+					<p id="SA_Alt_Desc" style="display: @(Model.StateAssesment_Alternative_flag.HasValue && Model.StateAssesment_Alternative_flag.Value ? "block;" : "none;")">
+                        <input class="form-control standard-font-size" id="StateAssesment_Alternative_Desc" name="StateAssesment_Alternative_Desc" type="text" value="@(Model.StateAssesment_Alternative_Desc)" placeholder="Describe" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                     </p>
                 </div>
             </div>
@@ -307,19 +312,27 @@
         var elementId = event.target.id;
         if (elementId == "SA_NoAccom") {
             $("#SA_NoAccom_Desc").show();
-            $("#SA_WithAccom_Desc").hide();
+			$("#SA_WithAccom_Desc").hide();
+			$("#SA_Alt_Desc").hide();
             $("#StateAssessment_WithAccommodations_desc").val('');
 
         } else if (elementId == "SA_WithAccom") {
-            $("#SA_NoAccom_Desc").hide();
+			$("#SA_NoAccom_Desc").hide();
+			$("#SA_Alt_Desc").hide();
             $("#SA_WithAccom_Desc").show();
             $("#StateAssessment_NoAccommodations_desc").val('');
-        }
-        else {
+		} else if (elementId == "SA_Alt") {			
             $("#SA_NoAccom_Desc").hide();
-            $("#SA_WithAccom_Desc").hide();
+			$("#SA_WithAccom_Desc").hide();
+			$("#SA_Alt_Desc").show();
+            $("#StateAssesment_Alternative_Desc").val('');
+	}  else {
+            $("#SA_NoAccom_Desc").hide();
+			$("#SA_WithAccom_Desc").hide();
+			$("#SA_Alt_Desc").hide();
             $("#StateAssessment_NoAccommodations_desc").val('');
-            $("#StateAssessment_WithAccommodations_desc").val('');
+			$("#StateAssessment_WithAccommodations_desc").val('');
+			$("#StateAssesment_Alternative_Desc").val('');
         }
     });
 
