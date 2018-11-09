@@ -1,168 +1,158 @@
 ﻿@model GreenBushIEP.Models.tblAccommodation
-@using (Html.BeginForm("UpdateAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
-{
-<div class="row oneStudentGoal " id="defaultgoal_@Model.AccommodationID" >
-  @Html.HiddenFor(model => model.AccommodationID)
-  @Html.HiddenFor(model => model.IEPid)
-    
-    @{ 
-        string shortDesc = "Accommodation ";
 
-        if (Model.AccomType == 1)
-        {
-            shortDesc = "Accommodation ";
-        }
-        else if (Model.AccomType == 2)
-        {
-            shortDesc = "Modification ";
-        }
-        else if (Model.AccomType == 3)
-        {
-            shortDesc = "Supplemental Aids and Services ";
-        }
-        else if (Model.AccomType == 4)
-        {
-            shortDesc = "Support for School Personnel ";
+<div class="row oneStudentGoal " id="defaultgoal_@Model.AccommodationID">
+    @using (Html.BeginForm("UpdateAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+    {
+        @Html.HiddenFor(model => model.AccommodationID)
+        @Html.HiddenFor(model => model.IEPid)
+        @Html.HiddenFor(model => model.Completed)
+
+        @{
+            string shortDesc = "Accommodation ";
+
+            if (Model.AccomType == 1)
+            {
+                shortDesc = "Accommodation ";
+            }
+            else if (Model.AccomType == 2)
+            {
+                shortDesc = "Modification ";
+            }
+            else if (Model.AccomType == 3)
+            {
+                shortDesc = "Supplemental Aids and Services ";
+            }
+            else if (Model.AccomType == 4)
+            {
+                shortDesc = "Support for School Personnel ";
+            }
+
+            if (Model.AnticipatedStartDate.HasValue)
+            {
+                shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
+            }
         }
 
-        if (Model.AnticipatedStartDate.HasValue)
-        {
-            shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
-        }
-
-    }
-    <div class="col-md-12">
-        <div class="panel-group" id="accordion[@Model.AccommodationID]">
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[@Model.AccommodationID]" href=@string.Format("#collapse{0}",Model.AccommodationID) data-val=@string.Format("collapse{0}", Model.AccommodationID)>
-                            <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">@shortDesc</span>
-                            <span class="pull-right">
-                                <i class="glyphicon glyphicon-trash deleteGoal" accom-id="@Model.AccommodationID" ></i>
-                            </span>
-                        </a>
-                    </h4>
-                </div>
-                <div id=@string.Format("collapse{0}", Model.AccommodationID) class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label style="font-size: 18px;" for="AccType">Type</label>
-                                <div class="form-check" style="margin-left:8px">
-                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" @(Model.AccomType == 1 ? "checked=true" : String.Empty )>Accommodation</label><br />
-                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;" @(Model.AccomType == 2 ? "checked=true" : String.Empty )>Modification</label><br />
-                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;" @(Model.AccomType == 3 ? "checked=true" : String.Empty )>Supplemental Aids and Services</label><br />
-                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;" @(Model.AccomType == 4 ? "checked=true" : String.Empty )>Support for School Personnel</label><br />                                                
-                                </div>
-                            </div>
+            <div class="col-md-12">
+                <div class="panel-group" id="accordion[@Model.AccommodationID]">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[@Model.AccommodationID]" href=@(string.Format("#collapse{0}", Model.AccommodationID)) data-val=@(string.Format("collapse{0}", Model.AccommodationID))>
+                                    <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">@(shortDesc)</span>
+                                    <span class="pull-right">
+                                        <i class="glyphicon glyphicon-trash deleteGoal" accom-id="@(Model.AccommodationID)"></i>
+                                    </span>
+                                </a>
+                            </h4>
                         </div>
-                        <div class="row voffset2">
-                            <div class="col-md-12">
-                                <label style="font-size: 18px;">Description</label>
-                                <div>
-                                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control standard-font-size", @maxlength = 500,  @rows=3 })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row voffset2" >
-                            <div class="col-md-12">
-                                <label style="font-size: 18px;">Frequency</label>
-                                <div>
-                                    @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
-                                </div>
-                            </div>
-                        </div>
-                         <div class="row voffset2" >
-                            <div class="col-md-12">
-                                <label style="font-size: 18px;">Location</label>
-                                <div>
-                                    @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
-                                </div>
-                            </div>
-                        </div>                         
-                        <div class="row voffset2">
-                            <div class="col-md-12">
-                                <label style="font-size: 18px;">Duration</label>
-                                <div>
-                                    @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size", @maxlength = 300 , @rows = 3 })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row voffset4" >
-                                    
-                                    <div class="col-md-3">
-                                        <label style="font-size: 18px;" for="AnticipatedStartDate">Anticipated Start Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            
-                                            @if (Model.AnticipatedStartDate.HasValue)
-                                            {
-
-                                                <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                       id="AnticipatedStartDate" name="AnticipatedStartDate"
-                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")"  style="z-index: 99999; "/>
-
-                                            }
-                                            else
-                                            {
-                                                <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                       id="AnticipatedStartDate" name="AnticipatedStartDate"
-                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
-
-                                            }
+                        <div id=@(string.Format("collapse{0}", Model.AccommodationID)) class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label style="font-size: 18px;" for="AccType">Type</label>
+                                        <div class="form-check" style="margin-left:8px">
+                                            <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" @(Model.AccomType == 1 ? "checked=true" : String.Empty )>Accommodation</label><br />
+                                            <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;" @(Model.AccomType == 2 ? "checked=true" : String.Empty )>Modification</label><br />
+                                            <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;" @(Model.AccomType == 3 ? "checked=true" : String.Empty )>Supplemental Aids and Services</label><br />
+                                            <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;" @(Model.AccomType == 4 ? "checked=true" : String.Empty )>Support for School Personnel</label><br />
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label style="font-size: 18px;" for="AnticipatedEndDate">Anticipated End Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                            @if (Model.AnticipatedEndDate.HasValue)
-                                            {
-
-                                                <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
-                                                       id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")"   style="z-index: 99999; "/>
-
-                                            }
-                                            else
-                                            {
-                                                <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
-                                                       id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                       class="form-control standard-font-size dtField" aria-describedby="basic-addon1"  style="z-index: 99999; "/>
-
-                                            }
-
-
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label style="font-size: 18px;">Description</label>
+                                        <div>
+                                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control standard-font-size", @maxlength = 500, @rows = 3 })
                                         </div>
                                     </div>
-                                   
                                 </div>
-                            </div>
-                        </div>                       
-                        <div class="row">
-                            <div class="form-group" id="saveGroup">
-                                <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                    <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
-                                    <button type="submit"  onclick="_update(@Model.AccommodationID); return false;" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label style="font-size: 18px;">Frequency</label>
+                                        <div>
+                                            @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size", @maxlength = 300, @rows = 3 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label style="font-size: 18px;">Location</label>
+                                        <div>
+                                            @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300, @rows = 3 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row voffset2">
+                                    <div class="col-md-12">
+                                        <label style="font-size: 18px;">Duration</label>
+                                        <div>
+                                            @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size", @maxlength = 300, @rows = 3 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row voffset4">
+                                            <div class="col-md-3">
+                                                <label style="font-size: 18px;" for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    @if (Model.AnticipatedStartDate.HasValue)
+                                                    {
+
+                                                    <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                           id="AnticipatedStartDate" name="AnticipatedStartDate"
+                                                           class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")" style="z-index: 99999; " />
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                    <input type="text" data-val="true" data-val-date="The field Start Date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                           id="AnticipatedStartDate" name="AnticipatedStartDate"
+                                                           class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label style="font-size: 18px;" for="AnticipatedEndDate">Anticipated End Date</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                    @if (Model.AnticipatedEndDate.HasValue)
+                                                    {
+
+                                                    <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                           id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                           class="form-control standard-font-size dtField" aria-describedby="basic-addon1" value="@Model.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")" style="z-index: 99999; " />
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                    <input type="text" data-val="true" data-val-date="The field End Date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                           id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                           class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" id="saveGroup">
+                                        <div class="col-md-12" style="text-align:center; padding-top: 15px;">
+                                            <button type="reset" name="btnReset" class="btn btn-default" id="resetModuleAccForm">Reset</button>
+                                            <button type="submit" onclick="_update(@Model.AccommodationID); return false;" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                
-
             </div>
-           
-        </div>
-        
-    </div>
-    
+            }
 </div>
-}
-

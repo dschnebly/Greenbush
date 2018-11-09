@@ -56,6 +56,7 @@
                 @Html.HiddenFor(model => model.AccommodationID)
                 @Html.HiddenFor(model => model.IEPid)
                 @Html.HiddenFor(model => model.StudentId)
+                @Html.HiddenFor(model => model.Completed)
 
                 <div class="col-md-12">
                     <div class="panel-group" id="accordion[0]">
@@ -124,7 +125,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="text" data-val="true" value="@Model.DefaultStartDate" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                        <input type="text" data-val="true" value="@(Model.DefaultStartDate)" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
                                                                id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
                                                     </div>
                                                 </div>
@@ -133,7 +134,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
 
-                                                        <input type="text" data-val="true" value="@Model.DefaultEndDate" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                        <input type="text" data-val="true" value="@(Model.DefaultEndDate)" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
                                                                class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
                                                     </div>
