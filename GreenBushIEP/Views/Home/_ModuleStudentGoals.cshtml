@@ -15,6 +15,7 @@
     .default {
         width: 100% !important;
     }
+
     /*needed for chosen placeholder to show when the element is initially hidden*/
     .form-inline .form-group {
         margin-right: 10px;
@@ -242,6 +243,10 @@
                 </table>
             </div>
         </div>
+
+        <!--which modules need a goal-->
+        @Html.HiddenFor(m => m.modulesNeedingGoals)
+
         @if (Model.isReadOnly)
         {
             @Html.Partial("~/Views/Home/ActiveIEP/_GoalsSection.cshtml", Model)
@@ -287,7 +292,7 @@
                                             <label class="standard-font-size" for="StudentGoalTitle">Student Goal</label>
                                             <div class="input-group">
                                                 <div class="input-group-btn bs-dropdown-to-select-group">
-                                                    <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select studentGoalType" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                                                    <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
                                                         <span data-bind="bs-drp-sel-label">Select Module...</span>
                                                         <span class="caret"></span>
                                                         <span class="sr-only">Toggle Dropdown</span>
@@ -317,9 +322,9 @@
                                         <div class="form-group">
                                             <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal0" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit."></textarea>
                                         </div>
-                                        <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                        <label for="StudentGoalBaseline" class="standard-font-size aStudentBaseLine" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                         <div class="form-group">
-                                            <input type="text" value="" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
+                                            <input type="text" value="" class="form-control standard-font-size" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
                                         </div>
                                         <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                         <div class="form-group">
@@ -518,7 +523,7 @@
                                                 </div>
                                                 <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                                 <div class="form-group">
-                                                    <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size studentGoalBaseline" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
+                                                    <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size aStudentBaseLine" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
                                                 </div>
                                                 <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                                 <div class="form-group">
@@ -731,7 +736,7 @@
             });
 
             //get baseline goal text
-            var goalBaselineElement = $(this).find(".studentGoalBaseline");
+            var goalBaselineElement = $(this).find(".aStudentBaseLine");
 
             //check if default selected type has a baseline goal
             _checkGoal(1, goalBaselineElement);
@@ -773,7 +778,7 @@
                 var data = $(this).closest('.goalForm').serialize();
                 $.post('/ModuleSection/EditStudentGoals', data)
                 .done(function (results) {
-                    
+
                     if (studentGoal.find("input[name='completed']").val() == "true") {
                         completedGoal.removeClass("thisGoalNotCompleted");
 
@@ -811,7 +816,13 @@
             });
 
             $(this).find(".saveCompletedGoal").on('click', function (e) {
+
+                var modulesNeedingGoals = $("#modulesNeedingGoals").val();
                 $.each($(".StudentGoal").not("#defaultGoal"), function (index, value) {
+
+                    var goalFor = $(this).find("[data-bind='bs-drp-sel-label']").text();
+                    modulesNeedingGoals = modulesNeedingGoals.replace(goalFor, "");
+
                     if ($(this).find('.StudentGoalTitle').val().length == 0) {
                         alert('The following field is required not to be empty: Student Goal Title');
                         return false;
@@ -822,7 +833,7 @@
                         return false;
                     }
 
-                    if ($(this).find('.studentGoalBaseline').val().length == 0) {
+                    if ($(this).find('.aStudentBaseLine').val().length == 0) {
                         alert('The following field is required not to be empty: Goal Baseline');
                         return false;
                     }
@@ -838,8 +849,13 @@
                     }
                 });
 
-                //$(this).closest("form").find("input[name='completed']").val(true);
-                //$(this).prev().trigger(event.type);
+                if (modulesNeedingGoals.trim(' ', "").length != 0) {
+                    alert('You need to make a Student Goal of type(s) : ' + modulesNeedingGoals.trim().replace(' ',', '));
+                    return false;
+                }
+
+                $(this).closest("form").find("input[name='completed']").val(true);
+                $(this).prev().trigger(event.type);
             });
 
             //* Binding */
@@ -1027,7 +1043,10 @@
             dataType: "json",
             success: function (data) {
                 if (data.Result) {
-                    goalBaselineElement.val(data.Message);
+                    if (data.Message.length != 0)
+                    {
+                        goalBaselineElement.val(data.Message);
+                    }
                 }
             },
             error: function (data) {

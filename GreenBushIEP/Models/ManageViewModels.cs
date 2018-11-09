@@ -372,12 +372,16 @@ namespace GreenBushIEP.Models
         public List<StudentGoal> studentGoals { get; set; } = new List<StudentGoal>();
 		public bool isReadOnly { get; set; }
 		public bool canAddProgress  { get; set; }
+        public string modulesNeedingGoals { get; set; }
 
 		public StudentGoalsViewModel()
         {
             iepId = 0;
             studentId = 0;
             studentGoals = new List<StudentGoal>();
+            isReadOnly = false;
+            canAddProgress = false;
+            modulesNeedingGoals = string.Empty;
         }
     }
 

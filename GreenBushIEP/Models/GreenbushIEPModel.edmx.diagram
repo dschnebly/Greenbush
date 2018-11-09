@@ -70,6 +70,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="25.375" PointY="1.625" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEP" Width="1.5" PointX="16.75" PointY="17.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" Width="1.5" PointX="15.375" PointY="23.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

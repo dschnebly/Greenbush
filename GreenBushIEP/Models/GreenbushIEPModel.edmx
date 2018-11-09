@@ -620,6 +620,8 @@
           <Property Name="Transporation_Disability_flag" Type="bit" />
           <Property Name="Transporation_Disability_desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="StateAssesment_Alternative_flag" Type="bit" />
+          <Property Name="StateAssesment_Alternative_Desc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -895,6 +897,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="Location_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Service_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_ModuleGoalFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="NeedMetByGoal" Type="int" />
+          <Property Name="Module" Type="varchar" MaxLength="13" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_PrimaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1208,6 +1221,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_GoalExport].[isGBMedicaid] AS [isGBMedicaid]
     FROM [dbo].[vw_GoalExport] AS [vw_GoalExport]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_ModuleGoalFlags" EntityType="Self.vw_ModuleGoalFlags" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ModuleGoalFlags].[IEPid] AS [IEPid], 
+    [vw_ModuleGoalFlags].[NeedMetByGoal] AS [NeedMetByGoal], 
+    [vw_ModuleGoalFlags].[Module] AS [Module]
+    FROM [dbo].[vw_ModuleGoalFlags] AS [vw_ModuleGoalFlags]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_PrimaryDisabilities" EntityType="Self.vw_PrimaryDisabilities" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_PrimaryDisabilities].[DisabilityCode] AS [DisabilityCode], 
@@ -1442,6 +1462,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="byUserID" Mode="In" Type="Int32" />
             <Parameter Name="ammend" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="vw_ModuleGoalFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2130,6 +2151,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Transporation_Disability_flag" Type="Boolean" />
           <Property Name="Transporation_Disability_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="StateAssesment_Alternative_flag" Type="Boolean" />
+          <Property Name="StateAssesment_Alternative_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -2604,6 +2627,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="FiledOn" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="end_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_ModuleGoalFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="NeedMetByGoal" Type="Int32" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3264,6 +3296,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="StateAssesment_Alternative_Desc" ColumnName="StateAssesment_Alternative_Desc" />
+                <ScalarProperty Name="StateAssesment_Alternative_flag" ColumnName="StateAssesment_Alternative_flag" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Transporation_Disability_desc" ColumnName="Transporation_Disability_desc" />
                 <ScalarProperty Name="Transporation_Disability_flag" ColumnName="Transporation_Disability_flag" />
@@ -3724,6 +3758,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="uspCopyIEP" FunctionName="IndividualizedEducationProgramModel.Store.uspCopyIEP" />
+          <EntitySetMapping Name="vw_ModuleGoalFlags">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ModuleGoalFlags">
+              <MappingFragment StoreEntitySet="vw_ModuleGoalFlags">
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
