@@ -391,7 +391,6 @@ namespace GreenBushIEP.Models
         {
             AccomList = new List<tblAccommodation>();
             Locations = new List<System.Web.Mvc.SelectListItem>();
-            
         }
 
         public int StudentId { get; set; }
@@ -400,8 +399,8 @@ namespace GreenBushIEP.Models
         public int AccomType { get; set; }
         public int AccommodationID { get; set; }
         public int IEPid { get; set; }
-        public string AccDescription { get; set; }
         public string LocationCode { get; set; } //not currently used
+        public string Description { get; set; }
         public string Location { get; set; }
         public string Frequency { get; set; }
         public string Duration { get; set; }

@@ -1,6 +1,11 @@
 ﻿@model GreenBushIEP.Models.AccomodationViewModel
 
 <style>
+    #saveGroup {
+        text-align: center;
+        margin-top: 15px;
+    }
+
     .form-inline .form-group {
         margin-right: 10px;
     }
@@ -14,19 +19,23 @@
     .panel-group {
         margin-bottom: 12px;
     }
+
+    .thisGoalNotCompleted {
+        visibility: hidden;
+    }
 </style>
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" style="font-size: 30px;">
-        <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations and Modifications
+        <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations, Modifications, Supplemental Aids, Supports, Transportation
     </h4>
 </div>
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12" style="margin-bottom: 12px;">
-            <button id="newgoal" class="btn btn-default">New Accommodation/Modification&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+            <button id="newgoal" class="btn btn-default">New Accommodations, Modifications, Supplemental Aids, Supports or Transportation&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
         </div>
     </div>
     <div class="container goalContainer">
@@ -37,26 +46,21 @@
         <div id="ExistingAccommodations" style="margin: 5px;">
             @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
             {
-                <table class="table-striped col-md-12">
-                    @foreach (var accom in Model.AccomList)
-                    {
-                        <tr>
-                            <td>
-                                @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom)
-                            </td>
-                        </tr>
-                    }
-                </table>
+                foreach (var accom in Model.AccomList)
+                {
+                    @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom);
+                }
             }
         </div>
         <div class="row oneStudentGoal hidden" id="defaultgoal">
+
             @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
             {
-                @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AccommodationID)
                 @Html.HiddenFor(model => model.IEPid)
                 @Html.HiddenFor(model => model.StudentId)
                 @Html.HiddenFor(model => model.Completed)
+                @Html.AntiForgeryToken()
 
                 <div class="col-md-12">
                     <div class="panel-group" id="accordion[0]">
@@ -65,6 +69,7 @@
                                 <h4 class="panel-title">
                                     <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
                                         <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
+                                        <i class="glyphicon glyphicon-ok isGoalCompleted thisGoalNotCompleted"></i>
                                         <span class="pull-right">
                                             <i class="glyphicon glyphicon-trash deleteGoal"></i>
                                         </span>
@@ -81,6 +86,7 @@
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;">Supplemental Aids and Services</label><br />
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;">Support for School Personnel</label><br />
+                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="5" style="position: relative; right: 5px;">Transportation</label><br />
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +94,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Description</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.AccDescription, new { @class = "form-control standard-font-size", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.", @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control standard-font-size accommodationDescription", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +102,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Frequency</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size accommodationFrequency", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +110,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Location</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size", @maxlength = 300, @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size accommodationLocation", @maxlength = 300, @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +118,7 @@
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Duration</label>
                                             <div>
-                                                @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
+                                                @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size accommodationDuration", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
                                             </div>
                                         </div>
                                     </div>
@@ -144,9 +150,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group" id="saveGroup">
-                                            <div class="col-md-12" style="text-align:center; padding-top: 15px;">
-                                                <button type="reset" class="formbtn btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom" title="Reset form to initial values."><i class="glyphicon glyphicon-repeat"></i>&nbsp;Reset</button>
-                                                <button type="button" name="btnSubmit" id="btnSubmit" class="btnSubmit formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save</button>
+                                            <div class="form-group">
+                                                <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -159,13 +165,23 @@
 
         </div> <!--end oneStudentGoal-->
     </div><!--end container student goal-->
+    <div class="completed-loader @(Model.AccomList.Count != 0 && Model.AccomList.All(a => a.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label style="top: 30%;"><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+        <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
+        <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
+    </div>
 </div>
 
-<div class="modal-footer" style="border-top: 0;">
-    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-</div>
 <script>
-
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -177,8 +193,6 @@
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
     });
-
-    $("#resetModuleAccForm").trigger("reset");
 
     /* Event */
     /* when clicking on the New Student Goal button */
@@ -203,15 +217,6 @@
 
         panelCollapse.collapse('show');
 
-        var saveButton = cloneGoal.find('#btnSubmit');
-        saveButton.click(function () {
-            var buttonVal = $(this).attr('accom-id');
-            if (buttonVal == undefined)
-                _save(0);
-            else
-                _save(buttonVal);
-        });
-
         //clear location list when form has existing accommodations
         cloneGoal.find('#LocationCode').prop('selectedIndex', 0);
 
@@ -230,112 +235,32 @@
         return false;
     });
 
-    function _save(elementValue) {
-        event.preventDefault();
-
-        var element = $("#defaultgoal_X");
-        if (elementValue != 0)
-            element = $("#defaultgoal_" + elementValue);
-        var datastring = element.find('select, textarea, input').serialize();
-        var accomType = $('input[name=AccomType]:checked').val();
-        datastring = datastring + "&AccomType=" + accomType;
-        var url = '/ModuleSection/EditAccom';
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
 
         $.ajax({
-            type: 'POST',
-            url: url,
-            data: datastring,
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Accommodation" },
             dataType: "json",
             success: function (data) {
-                if (data.success) {
-                    _showAlert("The Accommodation/Modification has been saved.", true);
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
 
-                    if (data.isNew) {
-                        var cloneGoal = element;
+                    $('.oneStudentGoal').not('#defaultGoal').each(function () {
+                        $(this).find("a i.isGoalCompleted").addClass("thisGoalNotCompleted");
+                    });
 
-                        cloneGoal.attr('id', 'defaultgoal_' + data.id);
-                        var deleteButton = cloneGoal.find('.deleteGoal');
-                        deleteButton.attr('accom-id', data.id);
-
-                        var saveButton = cloneGoal.find('#btnSubmit');
-                        saveButton.attr('accom-id', data.id);
-                        saveButton.attr('id', "btnSave_" + data.id);
-
-                        //collapse panel collapse0
-                        var togglePanel = cloneGoal.find('.panel-collapse');
-                        togglePanel.attr('id', "collapse" + data.id);
-                        var toggleButton = cloneGoal.find('.btnToggle');
-
-                        toggleButton.attr("href", "#collapse" + data.id);
-
-                        toggleButton.attr('data-val', "collapse" + data.id);
-
-                        var parentAcc = toggleButton.closest('.panel-group').attr("id", "accordion[" + data.id + "]");
-
-                        toggleButton.attr('data-parent', "#" + "accordion[" + data.id + "]");
-
-                        var label = cloneGoal.find('.studentGoalLabel');
-                        label.text(_getTypeName(data.accomType) + " " + data.newDate);
-
-                        var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
-
-                        toggleButton.removeClass("collapsed");
-
-                        $(window).trigger("saving.bs.modal");
-                    }
-                }
-                else {
-                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                        $("#alertMessage .moreinfo").html(data.error);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
+                    $("#AccommodationWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
                 }
             },
             error: function (data) {
-                console.log("Unable to delete the Accommodation/Modification.");
+                console.log("Unable to mark Health Module as complete.");
             }
         });
-    }
-
-    function _update(id) {
-
-        event.preventDefault();
-        var element = $("#defaultgoal_X");
-        if (id != 0)
-            element = $("#defaultgoal_" + id);
-
-        var datastring = element.find('select, textarea, input').serialize();
-        var accomType = $('input[name=AccomType]:checked').val();
-        datastring = datastring + "&AccomType=" + accomType;
-        var url = '/ModuleSection/UpdateAccom';
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: datastring,
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    _showAlert("The Accommodation/Modification has been updated.", true);
-
-                    $(window).trigger("saving.bs.modal");
-                }
-                else {
-                    if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                        $("#alertMessage .moreinfo").html(data.error);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
-                }
-            },
-            error: function (data) {
-                console.log("Unable to delete the Accommodation/Modification.");
-            }
-        });
-    }
+    });
 
     function initGoal(element) {
 
@@ -359,116 +284,180 @@
                     e.target.parentNode.classList.add('has-error');
                     _showAlert(error, false);
                 } else {
-
                     e.target.setCustomValidity('');
                     e.target.title = '';
                     e.target.parentNode.classList.remove('has-error');
                 }
-
             });
-
-            $(this).find(".number-spinner button").on("click", function () {
-                var btn = $(this),
-                    oldValue = btn.closest('.number-spinner').find('input').val().trim(),
-                    newValue = parseInt(oldValue);
-
-                if (btn.attr('data-dir') == 'up') {
-                    if (newValue < 5) {
-                        newValue = newValue + 1;
-                    }
-                } else {
-                    if (oldValue > 1) {
-                        newValue = newValue - 1;
-                    }
-                }
-
-                btn.closest('.number-spinner').find('input').val(newValue);
-                return false;
-            });
-
-            $(this).find(".minute-spinner button").on("click", function () {
-                var btn = $(this),
-                    oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
-                    newValue = parseInt(oldValue);
-
-                if (btn.attr('data-dir') == 'up') {
-                    if (newValue < 720) {
-                        newValue = newValue + 1;
-                    }
-                } else {
-                    if (oldValue > 1) {
-                        newValue = newValue - 1;
-                    }
-                }
-
-                btn.closest('.minute-spinner').find('input').val(newValue);
-                return false;
-            });
-
             $(this).find(".panel-title a").on("click", function () {
                 $(".panel-collapse").each(function () {
                     $(this).collapse('hide');
                 });
             });
-
             $(this).find(".deleteGoal").on("click", function () {
-                _deleteRow($(this));
+                var dataId = $(this).attr('accom-id');
+
+                if (confirm("Do you really want to delete this Accommodation/Modification?")) {
+                    var accommodation = $(this).parents('.oneStudentGoal');
+                    var accommodationId = accommodation.find('input:hidden:first').prop("value");
+
+                    if (accommodationId == 0) {
+                        return accommodation.remove();
+                    }
+
+                    $.post('/Home/DeleteAccommodation', { accomId: dataId }, function (response) {
+                        if (response.result != undefined && response.result) {
+
+                            accommodation.remove();
+
+                            $(window).trigger("deleting.bs.modal");
+                        }
+                        else {
+                            _showAlert("There was a problem deleting the Accommodation or Modification.", false);
+                        }
+                    });
+                }
+            })
+            $(this).find(".saveCompletedGoal").on('click', function (e) {
+                if ($(this).closest('.oneStudentGoal').find('.accommodationDescription').val().length == 0) {
+                    alert('The following field is required not to be empty: Description');
+                    return false;
+                }
+
+                if ($(this).closest('.oneStudentGoal').find('.accommodationFrequency').val().length == 0) {
+                    alert('The following field is required not to be empty: Frequency');
+                    return false;
+                }
+
+                if ($(this).closest('.oneStudentGoal').find('.accommodationLocation').val().length == 0) {
+                    alert('The following field is required not to be empty: Location');
+                    return false;
+                }
+
+                if ($(this).closest('.oneStudentGoal').find('.accommodationDuration').val().length == 0) {
+                    alert('The following field is required not to be empty: Duration');
+                    return false;
+                }
+
+                $(this).closest("form").find("input[name='Completed']").val(true);
+                $(this).prev().trigger(event.type);
+            });
+
+            $(this).find(".SaveForm").on('click', function () {
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var studentGoal = $(this).closest('.oneStudentGoal');
+                var studentGoalId = studentGoal.find("input[name='AccommodationID']").val();
+                var completedGoal = studentGoal.find("a i.isGoalCompleted");
+                var accomType = studentGoal.find("input[name='AccomType']:checked").val();
+                var startDate = studentGoal.find("input[name='AnticipatedStartDate']").val();
+                var datastring = $(this).closest("form[name='frm']").serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/ModuleSection/EditAccomodation',
+                    data: datastring,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            $(".ajax-loader img").css("visibility", "hidden");
+                            $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                                $('.ajax-loader').css("visibility", "hidden");
+                            });
+
+                            if (studentGoal.find("input[name='Completed']").val() == "true") {
+                                completedGoal.removeClass("thisGoalNotCompleted");
+
+                                var allCompleted = true;
+                                $('.oneStudentGoal').not('#defaultgoal').each(function () {
+                                    if ($(this).find("a i.isGoalCompleted").hasClass("thisGoalNotCompleted")) {
+                                        allCompleted = false;
+                                    }
+                                });
+
+                                if (allCompleted) {
+                                    $("#AccommodationWidget .hero-widget").addClass("module-completed");
+                                }
+                            }
+
+                            if (data.isNew) {
+                                _showAlert("The Accommodation/Modification has been saved.", true);
+
+                                var cloneGoal = element;
+
+                                cloneGoal.attr('id', 'defaultgoal_' + data.id);
+                                var deleteButton = cloneGoal.find('.deleteGoal');
+                                deleteButton.attr('accom-id', data.id);
+
+                                var saveButton = cloneGoal.find('#btnSubmit');
+                                saveButton.attr('accom-id', data.id);
+                                saveButton.attr('id', "btnSave_" + data.id);
+
+                                //collapse panel collapse0
+                                var togglePanel = cloneGoal.find('.panel-collapse');
+                                togglePanel.attr('id', "collapse" + data.id);
+                                var toggleButton = cloneGoal.find('.btnToggle');
+
+                                toggleButton.attr("href", "#collapse" + data.id);
+
+                                toggleButton.attr('data-val', "collapse" + data.id);
+
+                                var parentAcc = toggleButton.closest('.panel-group').attr("id", "accordion[" + data.id + "]");
+
+                                toggleButton.attr('data-parent', "#" + "accordion[" + data.id + "]");
+
+                                var label = cloneGoal.find('.studentGoalLabel');
+                                label.text(_getTypeName(accomType) + " " + startDate);
+
+                                var accomIdInput = cloneGoal.find('#AccommodationID').val(data.id);
+
+                                toggleButton.removeClass("collapsed");
+                            }
+                            else {
+                                var label = studentGoal.find('.studentGoalLabel');
+                                label.text(_getTypeName(accomType) + " " + startDate);
+
+                                _showAlert("The Accommodation/Modification has been updated.", true);
+                            }
+
+                            $(window).trigger("saving.bs.modal");
+                        }
+                        else {
+                            $(".ajax-loader img").css("visibility", "hidden");
+                            $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                                $('.ajax-loader').css("visibility", "hidden");
+                                $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                    $("#alertMessage").slideUp(500);
+                                });
+                            });
+                        }
+                    },
+                    cache: false
+                }).fail(function (jqXHR, textStatus, error) {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $("#alertMessage .moreinfo").html('There was a connection error.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    });
+                });
             });
         });
     }
 
-    function _deleteRow(element) {
-        var dataId = element.attr('accom-id');
-
-        if (confirm("Do you really want to delete this Accommodation/Modification?")) {
-
-            if (dataId != undefined && dataId != null) {
-                $.post('@Url.Action("DeleteAccommodation", "Home")', { accomId: dataId }, function (response) {
-                    if (response.result != undefined && response.result) {
-
-                        $(element).closest('.oneStudentGoal').remove();
-
-                        $(window).trigger("deleting.bs.modal");
-                    }
-                    else {
-                        _showAlert("There was a problem deleting the Accommodation or Modification.", false);
-                    }
-                });
-            }
-            else // it's a new accomodation
-            {
-                var currentGoal = $(element).closest('.oneStudentGoal');
-                var previousGoal = currentGoal.prev(".oneStudentGoal:visible").find(".panel-collapse");
-                currentGoal.remove();
-                return previousGoal.collapse('show');
-            }
-        }
-    }
-
-    function _showAlert(message, positive)
-    {
+    function _showAlert(message, positive) {
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
-            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+            (positive) ? $("#alertMessage").removeClass('alert-danger').addClass('alert-success') : $("#alertMessage").removeClass('alert-success').addClass('alert-danger');
             $("#alertMessage .moreinfo").html(message);
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);
             });
         }
     }
-
-    $(document).ready(function () {
-        $(".oneStudentGoal").each(function () {
-            initGoal($(this));
-        });
-
-        $(this).find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-            });
-        });
-    });
 
     function _getTypeName(val) {
         var shortDesc = "Accommodation ";
@@ -485,8 +474,23 @@
         else if (val == 4) {
             shortDesc = "Support for School Personnel ";
         }
+        else if (val == 5) {
+            shortDesc = "Transportation ";
+        }
 
         return shortDesc;
     }
 
+    $(document).ready(function () {
+        $(".oneStudentGoal").each(function () {
+            initGoal($(this));
+        });
+
+        $(this).find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+            });
+        });
+    });
 </script>

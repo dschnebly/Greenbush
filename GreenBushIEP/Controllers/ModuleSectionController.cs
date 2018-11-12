@@ -307,50 +307,6 @@ namespace GreenBushIEP.Controllers
             throw new Exception("Unable to log you in.");
         }
 
-        // POST: ModuleSection/Edit/5
-        [HttpPost]
-        public ActionResult UpdateAccom(tblAccommodation model)
-        {
-            var avm = new AccomodationViewModel();
-            avm.AccDescription = model.Description;
-            avm.AccommodationID = model.AccommodationID;
-            avm.AccomType = model.AccomType;
-            avm.AnticipatedEndDate = model.AnticipatedEndDate;
-            avm.AnticipatedStartDate = model.AnticipatedStartDate;
-            avm.Location = model.Location;
-            avm.Duration = model.Duration;
-            avm.Frequency = model.Frequency;
-
-            if (ModelState.IsValid)
-            {
-                tblAccommodation existingIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).FirstOrDefault();
-                if (existingIEP != null)
-                {
-                    avm.IEPid = existingIEP.IEPid;
-                    int newId = EditAccomodation(existingIEP, avm);
-                    return Json(new { success = true, id = newId });
-                }
-                else
-                {
-                    return Json(new { success = false });
-                }
-
-            }
-            else
-            {
-                string errorMessage = "";
-                foreach (ModelState modelState in ViewData.ModelState.Values)
-                {
-                    foreach (ModelError error in modelState.Errors)
-                    {
-                        errorMessage += " " + error.ErrorMessage;
-                    }
-                }
-
-                return Json(new { success = false, error = errorMessage }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
         [HttpPost]
         public ActionResult EditBehvior(BehaviorViewModel model, FormCollection collection)
         {
@@ -568,10 +524,10 @@ namespace GreenBushIEP.Controllers
                     case "3":
                         model.StateAssessment_RequiredCompleted = true;
                         break;
-					case "4":
-						model.StateAssesment_Alternative_flag = true;
-						break;
-				}
+                    case "4":
+                        model.StateAssesment_Alternative_flag = true;
+                        break;
+                }
 
                 var tp = collection["TransporationPlan"];
                 switch (tp)
@@ -638,9 +594,9 @@ namespace GreenBushIEP.Controllers
                     OC.StateAssessment_NoAccommodations_desc = model.StateAssessment_NoAccommodations_desc;
                     OC.StateAssessment_WithAccommodations_flag = model.StateAssessment_WithAccommodations_flag;
                     OC.StateAssessment_WithAccommodations_desc = model.StateAssessment_WithAccommodations_desc;
-					OC.StateAssesment_Alternative_flag = model.StateAssesment_Alternative_flag;
-					OC.StateAssesment_Alternative_Desc = model.StateAssesment_Alternative_Desc;
-					OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
+                    OC.StateAssesment_Alternative_flag = model.StateAssesment_Alternative_flag;
+                    OC.StateAssesment_Alternative_Desc = model.StateAssesment_Alternative_Desc;
+                    OC.StateAssessment_RequiredCompleted = model.StateAssessment_RequiredCompleted;
                     OC.Transporation_NotEligible = model.Transporation_NotEligible;
                     OC.Transporation_Required = model.Transporation_Required;
                     OC.Transporation_Disability_flag = model.Transporation_Disability_flag;
@@ -669,99 +625,63 @@ namespace GreenBushIEP.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAccom(AccomodationViewModel model)
+        public ActionResult EditAccomodation(AccomodationViewModel model)
         {
             int studentId = model.StudentId;
+            int IEPid = model.IEPid;
 
             if (ModelState.IsValid)
             {
-                //find existing if updating
-                tblAccommodation AccomodationIEP = db.tblAccommodations.Where(c => c.AccommodationID == model.AccommodationID).FirstOrDefault();
-                bool isNew = false;
-
-                if (AccomodationIEP == null)
+                tblAccommodation accommodation = db.tblAccommodations.Where(a => a.AccommodationID == model.AccommodationID).FirstOrDefault();
+                if (accommodation != null)
                 {
-                    isNew = true;
-                    AccomodationIEP = new tblAccommodation();
+                    accommodation.AccomType = model.AccomType;
+                    accommodation.Completed = model.Completed;
+                    accommodation.Description = model.Description;
+                    accommodation.Duration = model.Duration;
+                    accommodation.Frequency = model.Frequency;
+                    accommodation.Location = model.Location;
+                    accommodation.IEPid = model.IEPid;
+
+                    if (model.AnticipatedStartDate.HasValue)
+                        accommodation.AnticipatedStartDate = model.AnticipatedStartDate;
+
+                    if (model.AnticipatedEndDate.HasValue)
+                        accommodation.AnticipatedEndDate = model.AnticipatedEndDate;
+
+                    accommodation.Update_Date = DateTime.Now;
+                    db.SaveChanges();
+
+                    return Json(new { success = true, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
                 }
-
-                if (AccomodationIEP != null)
+                else
                 {
-                    int newId = EditAccomodation(AccomodationIEP, model);
-                    if (isNew)
-                    {
-                        return Json(new
-                        {
-                            success = true,
-                            id = newId,
-                            iep = model.IEPid,
-                            isNew = true,
-                            newDate = model.AnticipatedStartDate.HasValue ? model.AnticipatedStartDate.Value.ToShortDateString() : "",
-                            accomType = model.AccomType
-                        });
-                    }
-                    else
-                    {
-                        return Json(new { success = true, id = model.AccommodationID, iep = model.IEPid, isNew = false });
-                    }
+                    tblAccommodation newAccomodation = new tblAccommodation();
+                    newAccomodation.AccomType = model.AccomType;
+                    newAccomodation.Completed = model.Completed;
+                    newAccomodation.Description = model.Description;
+                    newAccomodation.Duration = model.Duration;
+                    newAccomodation.Frequency = model.Frequency;
+                    newAccomodation.Location = model.Location;
+                    newAccomodation.IEPid = model.IEPid;
+
+                    if (model.AnticipatedStartDate.HasValue)
+                        newAccomodation.AnticipatedStartDate = model.AnticipatedStartDate;
+
+                    if (model.AnticipatedEndDate.HasValue)
+                        newAccomodation.AnticipatedEndDate = model.AnticipatedEndDate;
+
+                    newAccomodation.Update_Date = DateTime.Now;
+                    newAccomodation.Create_Date = DateTime.Now;
+
+                    db.tblAccommodations.Add(newAccomodation);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, id = newAccomodation.AccommodationID, iep = newAccomodation.IEPid, isNew = true });
                 }
             }
 
-            string errorMessage = "";
-            foreach (ModelState modelState in ViewData.ModelState.Values)
-            {
-                foreach (ModelError error in modelState.Errors)
-                {
-                    errorMessage += " " + error.ErrorMessage;
-                }
-            }
-
-            model.Message = errorMessage;
-
-
-            return Json(new { success = false, error = model.Message }, JsonRequestBehavior.AllowGet);
-
-        }
-
-        private int EditAccomodation(tblAccommodation AccomodationIEP, AccomodationViewModel model)
-        {
-            AccomodationIEP.IEPid = model.IEPid;
-
-            try
-            {
-                AccomodationIEP.AccomType = model.AccomType;
-                AccomodationIEP.Description = model.AccDescription;
-                AccomodationIEP.Completed = model.Completed;
-
-                if (model.AnticipatedStartDate.HasValue)
-                    AccomodationIEP.AnticipatedStartDate = model.AnticipatedStartDate;
-
-                if (model.AnticipatedEndDate.HasValue)
-                    AccomodationIEP.AnticipatedEndDate = model.AnticipatedEndDate;
-
-                AccomodationIEP.Duration = model.Duration;
-                AccomodationIEP.Frequency = model.Frequency;
-                AccomodationIEP.Location = model.Location;
-                AccomodationIEP.IEPid = model.IEPid;
-
-                if (model.AccommodationID == 0)
-                {
-                    AccomodationIEP.Create_Date = DateTime.Now;
-                    AccomodationIEP.Update_Date = DateTime.Now;
-
-                    db.tblAccommodations.Add(AccomodationIEP);
-
-                }
-
-                db.SaveChanges();
-                int newId = AccomodationIEP.AccommodationID;
-
-                return newId;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Unable to save changes to Accommodation/Modification Module: " + e.InnerException);
-            }
+            return Json(new { success = false, error = "Unable to edit your accomodation" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
