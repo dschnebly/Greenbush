@@ -1111,6 +1111,7 @@
                             {
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE" ) || !Model.isAllCompleted() ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
+                            <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                             <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                         </ul>

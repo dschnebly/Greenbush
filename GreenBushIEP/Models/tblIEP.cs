@@ -36,5 +36,6 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> FiledOn { get; set; }
         public System.DateTime Update_Date { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
+        public bool IsActive { get; set; }
     }
 }

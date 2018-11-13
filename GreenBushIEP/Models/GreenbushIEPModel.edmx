@@ -509,6 +509,7 @@
           <Property Name="FiledOn" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="end_Date" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -1456,13 +1457,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblDistrict" EntitySet="tblDistricts" />
             <End Role="tblContact" EntitySet="tblContacts" />
           </AssociationSet>
-          <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
           <FunctionImport Name="uspCopyIEP">
             <Parameter Name="fromIEP" Mode="In" Type="Int32" />
             <Parameter Name="byUserID" Mode="In" Type="Int32" />
             <Parameter Name="ammend" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" />
+          <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2601,6 +2602,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_ModuleGoalFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="NeedMetByGoal" Type="Int32" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="tblIEP">
           <Key>
             <PropertyRef Name="IEPid" />
@@ -2627,15 +2637,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="FiledOn" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="end_Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="vw_ModuleGoalFlags">
-          <Key>
-            <PropertyRef Name="IEPid" />
-            <PropertyRef Name="Module" />
-          </Key>
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="NeedMetByGoal" Type="Int32" />
-          <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3729,9 +3731,20 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspCopyIEP" FunctionName="IndividualizedEducationProgramModel.Store.uspCopyIEP" />
+          <EntitySetMapping Name="vw_ModuleGoalFlags">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ModuleGoalFlags">
+              <MappingFragment StoreEntitySet="vw_ModuleGoalFlags">
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="end_Date" ColumnName="end_Date" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
@@ -3753,16 +3766,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="begin_date" ColumnName="begin_date" />
                 <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="uspCopyIEP" FunctionName="IndividualizedEducationProgramModel.Store.uspCopyIEP" />
-          <EntitySetMapping Name="vw_ModuleGoalFlags">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ModuleGoalFlags">
-              <MappingFragment StoreEntitySet="vw_ModuleGoalFlags">
-                <ScalarProperty Name="Module" ColumnName="Module" />
-                <ScalarProperty Name="NeedMetByGoal" ColumnName="NeedMetByGoal" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
               </MappingFragment>
             </EntityTypeMapping>

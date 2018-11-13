@@ -86,8 +86,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblContact> tblContacts { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
-        public virtual DbSet<tblIEP> tblIEPs { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
+        public virtual DbSet<tblIEP> tblIEPs { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
