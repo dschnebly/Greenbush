@@ -263,7 +263,7 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
                 <div class="form-group">
-                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="saveAcademicCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
@@ -279,7 +279,11 @@
             </div>
         </div>
     </div>
-
+    <div class="ajax-loader" style="visibility: hidden;">
+        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+        <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
+        <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
+    </div>
 </div>
 <br />
 <br />
@@ -499,6 +503,53 @@
         $('[data-toggle="tooltip"]').tooltip('toggle');
     });
 
+    $("#SaveForm").on("click", function (e) {
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
+        
+        var form = $(this).closest("form");
+        $.ajax({
+            type: 'POST',
+            url: '/ModuleSection/EditAcademic',
+            data: form.serialize(),
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
+
+                    if (data.Completed)
+                    {
+                        $("#AcademicWidget .hero-widget").addClass("module-completed");
+                    }
+
+                    $(window).trigger("saving.bs.modal");
+                } else {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    });
+                }
+            },
+            error: function (data) {
+                $(".ajax-loader img").css("visibility", "hidden");
+                $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                });
+            }
+        });
+    })
+
     $("#saveAcademicCompleted").on("click", function (e) {
         if ($("input[name='ModuleAcademicAreaOfNeed']").is(':checked')) {
             if ($("#ModuleAcademic_PLAAFP_Strengths").val().length == 0) {
@@ -588,8 +639,8 @@
             }
         }
 
-        $("#Academic_Completed").val(true);
-        $(".modal-body form").submit();
+        $(this).closest("form").find("input[name='Academic.Completed']").val(true);
+        $(this).prev().trigger(event.type);
     });
 
     $("#isCompletedModule").on("click", function () {
@@ -606,6 +657,8 @@
                     $("#Academic_Completed").val(false);
 
                     $("#AcademicWidget .hero-widget").removeClass("module-completed");
+
+                    $(window).trigger("saving.bs.modal");
                 } else {
                     console.log("Error when updating the module.")
                 }

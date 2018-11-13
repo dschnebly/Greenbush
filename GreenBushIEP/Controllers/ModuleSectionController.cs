@@ -295,16 +295,16 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return Json(new { Result = "success", Message = "Academic Module Saved.", Completed = viewModel.Academic.Completed }, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
-                        throw new Exception("Unable to save changes to Communication Module: " + e.InnerException);
+                        return Json(new { Result = "error", Message = "Unknown Error. " + e.Message, Completed = false }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
 
-            throw new Exception("Unable to log you in.");
+            return Json(new { Result = "error", Message = "Unknown Error. Unable update the Academic module.", Completed = false }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
