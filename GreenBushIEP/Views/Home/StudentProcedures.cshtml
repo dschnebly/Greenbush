@@ -1111,8 +1111,8 @@
                             {
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE" ) || !Model.isAllCompleted() ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "DRAFT" && i.Amendment) ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                            <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "DRAFT" && !i.Amendment) ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                            <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                            <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                         </ul>
                     </div>
                 }
@@ -1271,7 +1271,7 @@
                             <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="top: 15px;"></i>
                         </div>
                         <div class="text">
-                            <label class="text-muted" style="font-size: 97%;">Accommodations/Modifications</label>
+                            <label class="text-muted" style="font-size: 90%;">Accommodations, Modifications, <br/>Supplemental Aids, Supports, <br/>Transportation</label>
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg accom-mod-section" data-view="AccommodationsModule"><i class="glyphicon glyphicon-search"></i> View</button>

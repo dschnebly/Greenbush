@@ -205,6 +205,7 @@ namespace GreenBushIEP.Controllers
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
                         PlacementCode = collection["studentPlacement"],
+                        ClaimingCode = true, // set to default true unless they change it on the second page.
                         isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false
                     };
 

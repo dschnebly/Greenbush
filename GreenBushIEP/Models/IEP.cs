@@ -21,6 +21,7 @@ namespace GreenBushIEP.Models
         public bool isAccommodationsCompleted { get; set; }
         public bool isBehaviorCompleted { get; set; }
         public bool isTransitionCompleted { get; set; }
+        public bool isAllCompleted { get; set;}
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
 

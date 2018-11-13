@@ -1600,41 +1600,41 @@ namespace GreenbushIep.Controllers
                     //default value
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
-                    model.Transporation_Other_flag = true;
-                    model.Transporation_Disability_flag = false;
+                    //model.Transporation_Other_flag = true;
+                    //model.Transporation_Disability_flag = false;
                 }
 
-                if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
-                {
-                    var length = model.Transporation_Other_desc.Length;
-                    var start = model.Transporation_Other_desc.IndexOf("session, on a");
-                    var end = model.Transporation_Other_desc.IndexOf("vehicle,");
-                    var val = model.Transporation_Other_desc.Substring(start + 13, (end - 13) - start).Trim();
-                    var vehicleType = 0;
-                    if (val == "special education")
-                        vehicleType = 1;
-                    else if (val == "general education")
-                        vehicleType = 2;
+                //if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
+                //{
+                //    var length = model.Transporation_Other_desc.Length;
+                //    var start = model.Transporation_Other_desc.IndexOf("session, on a");
+                //    var end = model.Transporation_Other_desc.IndexOf("vehicle,");
+                //    var val = model.Transporation_Other_desc.Substring(start + 13, (end - 13) - start).Trim();
+                //    var vehicleType = 0;
+                //    if (val == "special education")
+                //        vehicleType = 1;
+                //    else if (val == "general education")
+                //        vehicleType = 2;
 
-                    ViewBag.vehicleType = vehicleType;
+                //    ViewBag.vehicleType = vehicleType;
 
-                    start = model.Transporation_Other_desc.IndexOf("returning destination. (");
-                    end = model.Transporation_Other_desc.IndexOf("minutes estimated");
-                    val = model.Transporation_Other_desc.Substring(start + 24, (end - start - 24)).Trim();
-                    ViewBag.minutes = val;
-
-
-                    start = model.Transporation_Other_desc.IndexOf("beginning on");
-                    end = model.Transporation_Other_desc.IndexOf("and ending on");
-                    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
-                    ViewBag.begin = val;
+                //    start = model.Transporation_Other_desc.IndexOf("returning destination. (");
+                //    end = model.Transporation_Other_desc.IndexOf("minutes estimated");
+                //    val = model.Transporation_Other_desc.Substring(start + 24, (end - start - 24)).Trim();
+                //    ViewBag.minutes = val;
 
 
-                    start = model.Transporation_Other_desc.IndexOf("and ending on");
-                    end = model.Transporation_Other_desc.IndexOf("following the");
-                    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
-                    ViewBag.end = val;
-                }
+                //    start = model.Transporation_Other_desc.IndexOf("beginning on");
+                //    end = model.Transporation_Other_desc.IndexOf("and ending on");
+                //    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
+                //    ViewBag.begin = val;
+
+
+                //    start = model.Transporation_Other_desc.IndexOf("and ending on");
+                //    end = model.Transporation_Other_desc.IndexOf("following the");
+                //    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
+                //    ViewBag.end = val;
+                //}
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
