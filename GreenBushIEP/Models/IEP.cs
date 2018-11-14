@@ -8,7 +8,6 @@ namespace GreenBushIEP.Models
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
-        public bool hasPlan { get; set; }
         public bool isHealthCompleted { get; set; }
         public bool isMotorCompleted { get; set; }
         public bool isCommunicationCompleted { get; set; }
@@ -21,7 +20,11 @@ namespace GreenBushIEP.Models
         public bool isAccommodationsCompleted { get; set; }
         public bool isBehaviorCompleted { get; set; }
         public bool isTransitionCompleted { get; set; }
-        public bool isAllCompleted { get; set;}
+        public bool isAllCompleted { get; set; }
+        public bool hasAccommodations { get; set; }
+        public bool hasBehavior { get; set; }
+        public bool hasPlan { get; set; }
+
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
 
@@ -34,6 +37,7 @@ namespace GreenBushIEP.Models
         public tblIEPReading studentReading { get; set; }
         public tblIEPMath studentMath { get; set; }
         public tblIEPWritten studentWritten { get; set; }
+        public tblOtherConsideration studentOtherConsiderations { get; set; }
 
         public List<tblGoal> studentGoals { get; set; }
         public List<tblGoalBenchmark> studentGoalBenchmarks { get; set; }
@@ -43,9 +47,10 @@ namespace GreenBushIEP.Models
         public List<tblServiceType> serviceTypes { get; set; }
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblAccommodation> accommodations { get; set; }
+
         public BehaviorViewModel studentBehavior { get; set; }
-        public tblOtherConsideration studentOtherConsiderations { get; set; }
         public StudentTransitionViewModel studentTransition { get; set; }
+
         public string studentFirstName { get; set; }
         public string studentLastName { get; set; }
         public int studentAge { get; set; }
@@ -55,7 +60,21 @@ namespace GreenBushIEP.Models
 
         public IEP()
         {
+            isHealthCompleted = false;
+            isMotorCompleted = false;
+            isCommunicationCompleted = false;
+            isSocialCompleted = false;
+            isIntelligenceCompleted = false;
+            isOtherCompleted = false;
+            isAcademicCompleted = false;
+            isBehaviorCompleted = false;
+            isTransitionCompleted = false;
+            hasAccommodations = false;
+            isAllCompleted = false;
+            hasAccommodations = false;
+            hasBehavior = false;
             hasPlan = false;
+
             listOfStudentsIEPs = new List<tblIEP>();
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
@@ -66,15 +85,6 @@ namespace GreenBushIEP.Models
             serviceProviders = new List<tblProvider>();
             accommodations = new List<tblAccommodation>();
             studentDetails = new StudentDetailsPrintViewModel();
-            isHealthCompleted = false;
-            isMotorCompleted = false;
-            isCommunicationCompleted = false;
-            isSocialCompleted = false;
-            isIntelligenceCompleted = false;
-            isOtherCompleted = false;
-            isAcademicCompleted = false;
-            isBehaviorCompleted = false;
-            isTransitionCompleted = false;
         }
 
         public IEP(int? stid = null, int? iepId = null)
@@ -85,19 +95,45 @@ namespace GreenBushIEP.Models
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = current != null;
 
+                studentHealth = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).FirstOrDefault();
+                studentMotor = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).FirstOrDefault();
+                studentCommunication = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).FirstOrDefault();
+                studentSocial = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).FirstOrDefault();
+                studentIntelligence = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).FirstOrDefault();
+                studentAcademic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).FirstOrDefault();
+                studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault();
+                studentGoals = db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList();
+                studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
+                accommodations = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).ToList();
+
+                // all our database information should be loaded by now. Just query our student lists.
                 if (current != null)
                 {
-                    isHealthCompleted = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).First().Completed;
-                    isMotorCompleted = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).First().Completed;
-                    isCommunicationCompleted = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == current.IEPCommunicationID).First().Completed;
-                    isSocialCompleted = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).First().Completed;
-                    isIntelligenceCompleted = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).First().Completed;
-                    isAcademicCompleted = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).First().Completed;
-                    isOtherCompleted = db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault().Completed : false ;
-                    isGoalCompleted = db.tblGoals.Where(g => g.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList().All(g => g.Completed) : false ;
-                    isServiceCompleted = db.tblServices.Where(s => s.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblServices.Where(s => s.IEPid == current.IEPid).ToList().All(s => s.Completed) : false ;
+                    isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;
+                    isMotorCompleted = studentMotor != null ? studentMotor.Completed : false;
+                    isCommunicationCompleted = studentCommunication != null ? studentCommunication.Completed : false;
+                    isSocialCompleted = studentSocial != null ? studentSocial.Completed : false;
+                    isIntelligenceCompleted = studentIntelligence != null ? studentIntelligence.Completed : false;
+                    isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
+                    isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
+                    isGoalCompleted = studentGoals != null ? studentGoals.All(g => g.Completed) : false;
+                    isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) : false;
+                    isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
                     isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : false;
-                    isAccommodationsCompleted = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblAccommodations.Where(a => a.IEPid == current.IEPid).FirstOrDefault().Completed : false ;
+                    isAllCompleted = isHealthCompleted | isMotorCompleted | isCommunicationCompleted | isSocialCompleted | isIntelligenceCompleted | isAcademicCompleted | isOtherCompleted | isGoalCompleted | isServiceCompleted | isAccommodationsCompleted | isBehaviorCompleted;
+
+                    var healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
+                    var motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
+                    var communicationNeeds = (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value));
+                    var socialNeeds = (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value));
+                    var academicNeeds = (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value));
+                    var intelligenceNeeds = (studentIntelligence != null && (studentIntelligence.NeedMetByAccommodation.HasValue && studentIntelligence.NeedMetByAccommodation.Value));
+                    var readingNeeds = (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value));
+                    var writtensNeeds = (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value));
+                    var mathNeeds = (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value));
+
+                    hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
+                    hasBehavior = (studentSocial != null && (studentSocial.BehaviorInterventionPlan));
                 }
             }
         }
@@ -152,6 +188,8 @@ namespace GreenBushIEP.Models
             studentHealth.VisionDate = DateTime.Now;
             studentHealth.VisionResult = -1;
             studentHealth.VisionImparied = false;
+            studentHealth.HearingImparied = false;
+            studentHealth.HealthCarePlan = false;
             studentHealth.Completed = false;
 
             try

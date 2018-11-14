@@ -286,14 +286,6 @@ namespace GreenBushIEP.Models
         public bool needsBehaviorPlan { get; set; }
         public bool isCreator { get; set; }
 		public bool isGiftedOnly { get; set; }
-        public bool isAllCompleted()
-        {
-            return this.studentIEP.isHealthCompleted & this.studentIEP.isMotorCompleted & this.studentIEP.isCommunicationCompleted &
-                this.studentIEP.isSocialCompleted & this.studentIEP.isIntelligenceCompleted & this.studentIEP.isAcademicCompleted &
-                this.studentIEP.isOtherCompleted & this.studentIEP.isGoalCompleted & this.studentIEP.isServiceCompleted &
-                this.studentIEP.isAccommodationsCompleted & this.studentIEP.isBehaviorCompleted;
-               
-        }
 	}
 
     public class StudentLegalView

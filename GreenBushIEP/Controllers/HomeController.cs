@@ -912,8 +912,6 @@ namespace GreenbushIep.Controllers
             tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
             tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
             tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-            bool enableAccommodations = false;
-            bool enableBehaviorPlan = false;
 
             ViewBag.UserRoleId = currentUser.RoleID;
 
@@ -924,56 +922,24 @@ namespace GreenbushIep.Controllers
                 model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 model.isDoc = district.DOC;
 				model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
-
 				model.isCreator = currentUser.UserID == info.CreatedBy;
 
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID) ;
-
                 if (theIEP.current != null)
                 {
                     model.hasplan = true;
                     model.studentIEP = theIEP;
                     model.studentPlan = new StudentPlan(student.UserID);
-
-                    //check if any module has accommodations checked or behavior plan
-                    if (db.tblIEPAcademics.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPCommunications.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPHealths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPIntelligences.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPMotors.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPReadings.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPSocials.Where(o => o.IEPid == theIEP.current.IEPid && o.BehaviorInterventionPlan).Any())
-                        enableBehaviorPlan = true;
-
-                    if (db.tblIEPWrittens.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    if (db.tblIEPMaths.Where(o => o.IEPid == theIEP.current.IEPid && (o.NeedMetByAccommodation.HasValue && o.NeedMetByAccommodation.Value ? true : false)).Any())
-                        enableAccommodations = true;
-
-                    model.hasAccommodations = enableAccommodations;
-                    model.needsBehaviorPlan = enableBehaviorPlan;
+                    model.hasAccommodations = theIEP.hasAccommodations;
+                    model.needsBehaviorPlan = theIEP.hasBehavior;
                 }
                 else
                 {
                     model.hasplan = false;
                     model.studentIEP = theIEP.CreateNewIEP(stid);
                     model.studentPlan = new StudentPlan();
+                    model.hasAccommodations = false;
+                    model.needsBehaviorPlan = false;
                 }
             }
 
