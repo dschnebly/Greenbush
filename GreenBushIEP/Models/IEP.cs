@@ -27,6 +27,8 @@ namespace GreenBushIEP.Models
 
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
+        public bool hasActiveStatus { get; set; }
+        public string displayIEPStatus { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -76,6 +78,10 @@ namespace GreenBushIEP.Models
             hasPlan = false;
 
             listOfStudentsIEPs = new List<tblIEP>();
+            current = new tblIEP();
+            hasActiveStatus = false;
+            displayIEPStatus = "Draft";
+
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
             studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
@@ -94,6 +100,8 @@ namespace GreenBushIEP.Models
                 listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = current != null;
+                hasActiveStatus = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE");
+                displayIEPStatus = (current.Amendment) ? "Amendment" : current.IepStatus.ToUpper() ;
 
                 studentHealth = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).FirstOrDefault();
                 studentMotor = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).FirstOrDefault();
@@ -122,15 +130,15 @@ namespace GreenBushIEP.Models
                     isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : false;
                     isAllCompleted = isHealthCompleted | isMotorCompleted | isCommunicationCompleted | isSocialCompleted | isIntelligenceCompleted | isAcademicCompleted | isOtherCompleted | isGoalCompleted | isServiceCompleted | isAccommodationsCompleted | isBehaviorCompleted;
 
-                    var healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
-                    var motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
-                    var communicationNeeds = (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value));
-                    var socialNeeds = (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value));
-                    var academicNeeds = (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value));
-                    var intelligenceNeeds = (studentIntelligence != null && (studentIntelligence.NeedMetByAccommodation.HasValue && studentIntelligence.NeedMetByAccommodation.Value));
-                    var readingNeeds = (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value));
-                    var writtensNeeds = (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value));
-                    var mathNeeds = (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value));
+                    bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
+                    bool motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
+                    bool communicationNeeds = (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value));
+                    bool socialNeeds = (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value));
+                    bool academicNeeds = (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value));
+                    bool intelligenceNeeds = (studentIntelligence != null && (studentIntelligence.NeedMetByAccommodation.HasValue && studentIntelligence.NeedMetByAccommodation.Value));
+                    bool readingNeeds = (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value));
+                    bool writtensNeeds = (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value));
+                    bool mathNeeds = (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value));
 
                     hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
                     hasBehavior = (studentSocial != null && (studentSocial.BehaviorInterventionPlan));

@@ -1,18 +1,6 @@
 ﻿@using GreenBushIEP.Models
 @model StudentProcedureViewModel
 
-@helper DisplayIEPStatus(tblIEP iep)
-{
-    if (iep.Amendment)
-    {
-        <span>AMENDMENT</span>
-    }
-    else
-    {
-        <span>@(iep.IepStatus.ToUpper())</span>
-    }
-}
-
 @{
     ViewBag.Title = "Student Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -1092,7 +1080,7 @@
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-chevron-right"></span> @(DisplayIEPStatus(Model.studentIEP.current))&nbsp;&nbsp;<b class="caret"></b>
+                            <span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.displayIEPStatus)&nbsp;&nbsp;<b class="caret"></b>
                         </button>
                         <ul class="dropdown-menu list-group">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
@@ -1103,15 +1091,15 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(DisplayIEPStatus(iep))</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(Model.studentIEP.displayIEPStatus)</a></li>
                                     }
                                 }
                             }
                             @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3")
                             {
-                                <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE" ) || !Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(Model.studentIEP.hasActiveStatus || !Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
+                            <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item @Html.Raw(Model.studentIEP.hasActiveStatus || !Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                             <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item disabled"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                         </ul>

@@ -110,12 +110,11 @@ namespace GreenBushIEP.Models
         // Read the student's plan
         public StudentPlan(int stid)
         {
-            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid);
 
+            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid);
             if (studentIEP != null)
             {
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);
-
                 if (studentHealth != null)
                 {
                     this.HealthDiagnosis = studentHealth.Diagnosis;
@@ -131,7 +130,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPMotor studentMotor = db.tblIEPMotors.FirstOrDefault(m => m.IEPMotorID == studentIEP.IEPMotorID);
-
                 if (studentMotor != null)
                 {
                     this.MotorNeeds = studentMotor.Needs;
@@ -141,7 +139,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPCommunication studentCommunication = db.tblIEPCommunications.FirstOrDefault(s => s.IEPCommunicationID == studentIEP.IEPCommunicationID);
-
                 if (studentCommunication != null)
                 {
                     this.CommunicationDeaf = studentCommunication.Deaf;
@@ -152,7 +149,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPSocial studentSocial = db.tblIEPSocials.FirstOrDefault(s => s.IEPSocialID == studentIEP.IEPSocialID);
-
                 if (studentSocial != null)
                 {
                     this.SocialBehaviorImpede = studentSocial.BehaviorImepedeLearning;
@@ -166,7 +162,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPIntelligence studentInt = db.tblIEPIntelligences.FirstOrDefault(i => i.IEPIntelligenceID == studentIEP.IEPIntelligenceID);
-
                 if (studentInt != null)
                 {
                     this.IntelligenceConcern = studentInt.Concerns;
@@ -175,7 +170,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPAcademic studentAcademic = db.tblIEPAcademics.FirstOrDefault(a => a.IEPAcademicID == studentIEP.IEPAcademicID);
-
                 if (studentAcademic != null)
                 {
                     this.AcademicNeeds = studentAcademic.AreaOfNeed;
@@ -184,7 +178,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPReading studentReading = db.tblIEPReadings.FirstOrDefault(r => r.IEPReadingID == studentIEP.IEPReadingID);
-
                 if (studentReading != null)
                 {
                     this.ReadingNeed = studentReading.AreaOfNeed;
@@ -193,7 +186,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
-
                 if (studentMath != null)
                 {
                     this.MathNeed = studentMath.AreaOfNeed;
@@ -202,7 +194,6 @@ namespace GreenBushIEP.Models
                 }
 
                 tblIEPWritten studentWritten = db.tblIEPWrittens.FirstOrDefault(s => s.IEPWrittenID == studentIEP.IEPWrittenID);
-
                 if (studentWritten != null)
                 {
                     this.WrittenNeed = studentWritten.AreaOfNeed;
