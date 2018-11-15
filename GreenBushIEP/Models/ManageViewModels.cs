@@ -585,7 +585,9 @@ namespace GreenBushIEP.Models
 public class IEPStatus
 {
     public const string ACTIVE = "Active";
-    public const string ARCHIVE = "Archive";
+    public const string ARCHIVE = "ARCHIVED";
     public const string DRAFT = "Draft";
     public const string DELETED = "DELETED";
+    public const string AMMENDMENT = "AMMENDMENT";
+    public const string ANNUAL = "ANNUAL";
 }

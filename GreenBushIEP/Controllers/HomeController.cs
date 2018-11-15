@@ -114,7 +114,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
                 }
 
                 // show the latest updated version changes
@@ -1020,6 +1020,21 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { Result = "error", Message = "Unknown Error. Unable to change the IEP status." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "1,2")]
+        public ActionResult UpdateIEPStatusToInActive(int Stid, int IepId)
+        {
+            tblIEP studehtIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
+            if(studehtIEP != null)
+            {
+                studehtIEP.IsActive = false;
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "IEP is archived." }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { Result = "error", Message = "Unknown Error. Unable make the IEP Inactive." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

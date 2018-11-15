@@ -27,7 +27,7 @@ namespace GreenBushIEP.Models
 
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
-        public bool hasActiveStatus { get; set; }
+        public bool anyStudentIEPActive { get; set; }
         public string displayIEPStatus { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
@@ -79,8 +79,8 @@ namespace GreenBushIEP.Models
 
             listOfStudentsIEPs = new List<tblIEP>();
             current = new tblIEP();
-            hasActiveStatus = false;
-            displayIEPStatus = "Draft";
+            anyStudentIEPActive = false;
+            displayIEPStatus = IEPStatus.DRAFT;
 
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
@@ -97,11 +97,11 @@ namespace GreenBushIEP.Models
         {
             if (stid != null)
             {
-                listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
+                listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = current != null;
-                hasActiveStatus = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == "ACTIVE");
-                displayIEPStatus = (current.Amendment) ? "Amendment" : current.IepStatus.ToUpper() ;
+                anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE.ToUpper());
+                displayIEPStatus = (current.Amendment) ? IEPStatus.AMMENDMENT : current.IepStatus.ToUpper() ;
 
                 studentHealth = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).FirstOrDefault();
                 studentMotor = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).FirstOrDefault();
