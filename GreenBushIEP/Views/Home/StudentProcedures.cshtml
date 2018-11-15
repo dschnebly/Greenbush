@@ -1103,8 +1103,11 @@
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
-                            <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @(Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE && Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                            <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @(Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE && Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE)
+                            {
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                            }
                         </ul>
                     </div>
                 }
@@ -1201,7 +1204,7 @@
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.AcademicNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAcademicCompleted ? "module-completed" : string.Empty )">
- 
+
                         <div class="icon">
                             <i class="fa fa-university"></i>
                         </div>
@@ -1263,7 +1266,7 @@
                             <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="top: 15px;"></i>
                         </div>
                         <div class="text">
-                            <label class="text-muted" style="font-size: 90%;">Accommodations, Modifications, <br/>Supplemental Aids, Supports, <br/>Transportation</label>
+                            <label class="text-muted" style="font-size: 90%;">Accommodations, Modifications, <br />Supplemental Aids, Supports, <br />Transportation</label>
                         </div>
                         <div class="options">
                             <button type="button" class="btn btn-default btn-lg accom-mod-section" data-view="AccommodationsModule"><i class="glyphicon glyphicon-search"></i> View</button>
