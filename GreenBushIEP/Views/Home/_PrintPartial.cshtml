@@ -35,46 +35,45 @@
                 </tr>
             </table>
             <hr />
-            <table>
+            <table  style="width:100%">
                 <tr>
                     <td style="width:150px;"><label>Student Legal Name:</label></td>
                     <td style="width:100px;">@(studentFullName)</td>
                     <td style="width:75px;"><label>KIDS ID:</label></td>
                     <td style="width:75px;">@(Model.studentDetails.student.KIDSID)</td>
+				</tr><tr>
 					<td style="width:80px;"><label>Birth Date:</label></td>
                     <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>                          
-                <tr>
+                
                     <td><label>Gender:</label></td>
                     <td>@Model.studentDetails.gender</td>                      
-                    <td colspan="2"><label>Age at<br />Annual Meeting:</label></td>
-                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtAnnualMeeting > 0 ? Model.studentDetails.studentAgeAtAnnualMeeting.ToString() : "")</td>
-                    
-                </tr>              
-                <tr>
+				</tr><tr>                    
                     <td><label>Language of the Student:</label></td>
                     <td>@Model.studentDetails.studentLang</td>                    
-                    <td colspan="2"><label>Language of the Parent:</label></td>
-                    <td>@Model.studentDetails.parentLang</td>					
+					<td ><label>Language of the Parent:</label></td>
+                    <td>@Model.studentDetails.parentLang</td>
+				</tr><tr>
+					<td><label>Age at<br />Annual Meeting:</label></td>
+                    <td style="width:25px;">@(Model.studentDetails.studentAgeAtAnnualMeeting > 0 ? Model.studentDetails.studentAgeAtAnnualMeeting.ToString() : "")</td>
+                   <td colspan="2"></td>
                 </tr>
             </table>
 
             @if (primeContact != null)
             {
                 <hr />
-                <table>
+                <table  style="width:100%">
                     <tr>
                         <td style="width:75px;"><label>Contact 1:</label></td>
                         <td>@primeContact.FirstName @primeContact.LastName</td>
-                    </tr>
-                    <tr>
+                    
                         <td><label>Address:</label></td>
                         <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
                     </tr>
                     <tr>
                         <td><label>Phones:</label></td>
                         <td>@primeContact.Phone</td>
-                    </tr>
-                    <tr>
+                    
                         <td><label>Email:</label></td>
                         <td>@primeContact.Email</td>
                     </tr>
@@ -86,81 +85,77 @@
                     <td ><label>Neighborhood School:</label></td>
                     <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
 					<td ><label>Responsible School:</label></td>
-                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>
-					<td ></td>
-                    <td ></td>
+                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
                 </tr>                
                 <tr>
                     <td><label>Assign Child Count:</label></td>
                     <td>@Model.studentDetails.assignChildCount</td>                    
                     <td><label>County of Residence:</label></td>
-                    <td colspan="3">@Model.studentDetails.studentCounty</td>
-					
+                    <td>@Model.studentDetails.studentCounty</td>					
                 </tr>
                 <tr>
 					<td><label>Grade:</label></td>
                     <td>@(Model.studentDetails.student.Grade == 0 ? " " : Model.studentDetails.student.Grade.ToString())</td>                   
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.placementCodeDesc</td>
-                    <td><label>KG Full Day:</label></td>
-                    <td style="width:50px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>
-					
-                </tr>
+				</tr>                
 				 <tr>
 					<td><label>Primary Disability:</label></td>
                     <td>@(Model.studentDetails.primaryDisability)</td>                   
                     <td><label>Seconary Disability:</label></td>
                     <td>@(Model.studentDetails.secondaryDisability)</td>
+				</tr>                
+				 <tr>
                     <td><label>Gifted</label></td>
                     <td style="width:50px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
-					
+					     <td><label>KG Full Day:</label></td>
+                    <td style="width:50px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
                 </tr>
             </table>
             <hr />
             <table style="width:100%">
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
-                    <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>
-                    <td><label>Vision Screening:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
-                    <td><label>Hearing Screening:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.ToShortDateString() : string.Empty)</td>
-                </tr>
-                <tr>
+                    <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>                
                     <td><label>Init Eval Determination:</label></td>
                     <td>@(Model.studentDetails.student.InitialEvalDetermination.HasValue ? Model.studentDetails.student.InitialEvalDetermination.Value.ToShortDateString() : "")</td>
+				 </tr>
+                <tr>
                     <td><label>Re-Eval Signed:</label></td>
                     <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.ToShortDateString() : "")</td>
                     <td><label>3 Year Re-Eval:</label></td>
                     <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.AddYears(3).ToShortDateString() : "")</td>
-                </tr>
-                <tr>
+				</tr>
+				<tr>				
                     <td><label>Re-Eval Completion:</label></td>
                     <td>**</td>
-                    <td></td>
-                    <td></td>
-                    <td><label>Next Vision:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
-
-                </tr>
+					<td><label>Initiation:</label></td>
+                    <td>@Model.studentDetails.inititationDate</td>                
+                </tr>                
                 <tr>
-                    <td><label>Initiation:</label></td>
-                    <td>@Model.studentDetails.inititationDate</td>
                     <td><label>Exit:</label></td>
                     <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
-                    <td><label>Next Hearing:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>
                 </tr>          
                 <tr>
                     <td><label>Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
                     <td><label>Next Annual Meeting:</label></td>
-                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
-					<td></td>
-					<td></td>
+                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>					
+                </tr>
+				<tr>
+					<td><label>Vision Screening:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
+                    <td><label>Next Vision:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
+                </tr>
+                <tr>
+					<td><label>Hearing Screening:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.ToShortDateString() : string.Empty)</td>
+                    <td><label>Next Hearing:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>                    
                 </tr>
 				<tr>                   
-                    <td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</tdcolspan="6">
+                    <td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
                 </tr>
             </table>
             <br />          
