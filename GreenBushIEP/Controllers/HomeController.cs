@@ -1212,10 +1212,10 @@ namespace GreenbushIep.Controllers
 		{
 			bool isValid = false;
 			bool isService = true;
+			string validDates = "";
+			IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService, out validDates);
 
-			IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService);
-
-			return Json(new { IsValid = isValid, IsService = isService }, JsonRequestBehavior.AllowGet);
+			return Json(new { IsValid = isValid, IsService = isService, ValidDates =  validDates}, JsonRequestBehavior.AllowGet);
 
 		}
 
@@ -1241,17 +1241,18 @@ namespace GreenbushIep.Controllers
 		}
 
 
-		private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService)
+		private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService, out string validDates)
 		{
 			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 			tblUser mis = FindSupervisor.GetByRole("2", teacher);
 			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 			int startMonth = 8; //august
 			int endMonth = 5; //may
-
+			
 			DateTime searchDate = Convert.ToDateTime(calendarDay);
 			isValid = false;
 			isService = true;
+			validDates = "";
 
 			//start date must be within the school year
 			var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == fiscalYear);
@@ -1268,6 +1269,7 @@ namespace GreenbushIep.Controllers
 				}
 				if (firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue && lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue)
 				{
+					validDates = string.Format("Start Date: {0} End Date: {1}.", firstDaySchoolYear.calendarDate.Value.ToShortDateString(), lastDaySchoolYear.calendarDate.Value.ToShortDateString());
 					if ((searchDate >= firstDaySchoolYear.calendarDate.Value) && (searchDate <= lastDaySchoolYear.calendarDate.Value))
 					{
 						isValid = true;
@@ -1290,6 +1292,7 @@ namespace GreenbushIep.Controllers
 			bool isValidEndDate = false;
 			bool isValidServiceEndDate = true;
 			bool isSuccess = false;
+			string validDates = "";
 			string errorMessage = "There was a problem saving the service";
 
 			DateTime temp;
@@ -1326,8 +1329,9 @@ namespace GreenbushIep.Controllers
                     db.tblServices.Add(service);
 
 					//check dates
-					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate);
-					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate);
+
+					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
+					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
 				}
                 else // exsisting service
                 {
@@ -1369,8 +1373,8 @@ namespace GreenbushIep.Controllers
                     }
 
 					//check dates
-					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate);
-					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate);
+					IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
+					IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
 				}
 
 
@@ -1386,11 +1390,11 @@ namespace GreenbushIep.Controllers
 					
 					if (!isValidStartDate || !isValidServiceStartDate)
 					{
-						errorMessage += "The Initiation Date must be a valid date within the selected school year.<br/>";
+						errorMessage += "The Initiation Date must be a valid date within the selected Fiscal Year. " + validDates + "<br/>";
 					}
 					if (!isValidEndDate || !isValidServiceEndDate)
 					{
-						errorMessage += "The End Date must be a valid date within the selected school year.<br/>";
+						errorMessage += "The End Date must be a valid date within the selected Fiscal Year. " + validDates + "<br/>";
 					}
 
 				}

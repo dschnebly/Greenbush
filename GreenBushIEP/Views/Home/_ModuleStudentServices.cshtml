@@ -883,70 +883,6 @@
         return returnDate;
     }
 
-    //function getEndOfSchoolYear(element, selectedYear, dateElementName, startMonth) {
-    //    var iepDate = $('#' + dateElementName).val();
-    //    var lastDay;
-    //    //var startMonth = 6;
-
-    //    var Month = 0;
-    //    var Day = 0;
-    //    var Year = 0;
-
-    //    var iepEndMonth = 0;
-    //    var iepEndDay = 0;
-    //    var iepEndYear = 0;
-    //    var iepEndDateArr = iepDate.split('-');
-
-    //    if (iepEndDateArr.length > 0 && iepEndDateArr.length == 3) {
-    //        iepEndYear = iepEndDateArr[0];
-    //        iepEndMonth = iepEndDateArr[1];
-    //        iepEndDay = iepEndDateArr[2];
-    //    }
-
-    //    var iepEDDate = new Date(iepEndYear, iepEndMonth - 1, iepEndDay);
-
-    //    for (var i = startMonth; i > 0; i--) {
-    //        Month = 0, Day = 0, Year = 0;
-
-    //        var dateFound = searchLastDay(selectedYear, i)
-    //        if (dateFound != undefined) {
-    //            Month = dateFound.Month;
-    //            Day = dateFound.Day;
-    //            Year = dateFound.Year;
-    //            var dfDate = new Date(Year, Month - 1, Day);
-    //            if (dfDate <= iepEDDate) {
-    //                lastDay = dfDate;
-    //                break;
-    //            }
-    //        }
-    //    }
-
-    //    if (lastDay != undefined) {
-    //        // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-    //        // January - 0, February - 1, etc.
-    //        var formattedDate = formatDate(lastDay);
-    //        element.val(formattedDate);
-    //    }
-    //}
-
-    //function searchLastDay(selectedYear, startMonth) {
-    //    //var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + ")]");
-    //    //if (dates.length > 0) {
-    //    //    var lastItem = dates.length - 1;
-    //    //    var lastDay = dates[lastItem];
-    //    //    return lastDay;
-    //    //}
-
-    //}
-
-    //function searchFirstDay(selectedYear, firstYearOfFiscalYear, startMonth) {
-    //    //var dates = jsonPath(availableCalendarDaysArray, "$..[?(@@.SchoolYear == " + selectedYear + " && @@.Month == " + startMonth + " && @@.Year == " + firstYearOfFiscalYear + ")]");
-    //    //if (dates.length > 0) {
-    //    //    return dates[0];
-    //    //}
-
-    //}
-
     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
@@ -1276,7 +1212,7 @@
             if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
             else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
             $("#alertMessage .moreinfo").html(message);
-            $("#alertMessage").fadeTo(3000, 1000).slideUp(1000, function () {
+            $("#alertMessage").fadeTo(3000, 1000).slideUp(5000, function () {
                 $("#alertMessage").slideUp(5000);
             });
         }
@@ -1326,11 +1262,17 @@
 				var errorMessage = "";			
 
 				if (!data.IsValid) {
-					errorMessage = "The Initiation and End Date must be within the selected school year";				
+					errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;				
 				}
 
 				if (!data.IsService) {
-					errorMessage = 'OH NOES! That day is not is session.';
+					//if the accidentally select the wrong fiscal year, but think are picking something within that fy
+					if (!data.IsValid) {
+						errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;				
+					}
+					else {
+						errorMessage = 'OH NOES! That day is not is session. ';
+					}
 				}
 
 				if (errorMessage != "") {
