@@ -128,7 +128,7 @@ namespace GreenBushIEP.Models
                     isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) : false;
                     isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
                     isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : false;
-                    isAllCompleted = isHealthCompleted | isMotorCompleted | isCommunicationCompleted | isSocialCompleted | isIntelligenceCompleted | isAcademicCompleted | isOtherCompleted | isGoalCompleted | isServiceCompleted | isAccommodationsCompleted | isBehaviorCompleted;
+                    isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
                     displayIEPStatus = (current.Amendment) ? IEPStatus.AMMENDMENT : current.IepStatus.ToUpper();
 
                     bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));

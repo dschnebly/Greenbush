@@ -286,6 +286,23 @@ namespace GreenBushIEP.Models
         public bool needsBehaviorPlan { get; set; }
         public bool isCreator { get; set; }
 		public bool isGiftedOnly { get; set; }
+
+        public string GetIEPStatus(tblIEP thisIEP)
+        {
+            if(thisIEP != null)
+            {
+                if (thisIEP.Amendment)
+                    return IEPStatus.AMMENDMENT;
+                if (!thisIEP.IsActive)
+                    return IEPStatus.ARCHIVE;
+                if (thisIEP.AmendingIEPid != null)
+                    return IEPStatus.ANNUAL;
+
+                return thisIEP.IepStatus.ToUpper();
+            }
+
+            return string.Empty;
+        }
 	}
 
     public class StudentLegalView
@@ -484,7 +501,6 @@ namespace GreenBushIEP.Models
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();
             MeetingDate = new DateTime();
-
         }
     }
 

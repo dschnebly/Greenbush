@@ -201,6 +201,14 @@
           <Property Name="SchoolWeek" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SchoolQuarter" Type="tinyint" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblCareerPaths">
+          <Key>
+            <PropertyRef Name="CareerPathID" />
+          </Key>
+          <Property Name="CareerPathID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CareerPath" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblContacts">
           <Key>
             <PropertyRef Name="ContactID" />
@@ -819,6 +827,7 @@
           <Property Name="Planning_Occupation" Type="nvarchar" MaxLength="50" />
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="nvarchar" MaxLength="500" />
+          <Property Name="CareerPathID" Type="int" />
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
@@ -1165,6 +1174,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblCalendar" EntityType="Self.tblCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarReporting" EntityType="Self.tblCalendarReporting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCareerPaths" EntityType="Self.tblCareerPaths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblContacts" EntityType="Self.tblContacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCounties" EntityType="Self.tblCounties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
@@ -1464,6 +1474,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </FunctionImport>
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" />
           <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
+          <EntitySet Name="tblCareerPaths" EntityType="IndividualizedEducationProgramModel.tblCareerPath" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2335,6 +2346,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Planning_Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CareerPathID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
@@ -2638,6 +2650,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="end_Date" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCareerPath">
+          <Key>
+            <PropertyRef Name="CareerPathID" />
+          </Key>
+          <Property Name="CareerPathID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CareerPath" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3500,6 +3520,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="CareerPathID" ColumnName="CareerPathID" />
                 <ScalarProperty Name="Planning_BenefitKRS_OtherAgencies" ColumnName="Planning_BenefitKRS_OtherAgencies" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Planning_Occupation" ColumnName="Planning_Occupation" />
@@ -3767,6 +3788,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCareerPaths">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCareerPath">
+              <MappingFragment StoreEntitySet="tblCareerPaths">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CareerPath" ColumnName="CareerPath" />
+                <ScalarProperty Name="CareerPathID" ColumnName="CareerPathID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

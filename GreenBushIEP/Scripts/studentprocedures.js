@@ -279,10 +279,11 @@
     $("#makeIEPInActive").on("click", function () {
         if ($("#makeIEPInActive").hasClass("disabled")) { return false; } // the link is disabled
 
-        var answer = confirm("Are you sure you want to make this archive this DRAFT?");
+        var answer = confirm("Are you sure you want to set this DRAFT to inactive?");
         if (answer) {
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
+
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
 

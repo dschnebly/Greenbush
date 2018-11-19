@@ -1091,7 +1091,7 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(Model.studentIEP.displayIEPStatus)</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(Model.GetIEPStatus(iep))</a></li>
                                     }
                                 }
                             }
@@ -1103,7 +1103,7 @@
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
-                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE)
+                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE.ToUpper())
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                                 <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
