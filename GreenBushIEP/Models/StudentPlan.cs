@@ -295,7 +295,7 @@ namespace GreenBushIEP.Models
                     studentInt.Concerns = this.IntelligenceConcern;
                     studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
                     studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
-                    studentInt.Completed = !this.IntelligenceConcern;
+                    studentInt.Completed = this.IntelligenceProgressTowardGenEd | this.IntelligenceAreaOfNeed;
                 }
                 db.SaveChanges();
 
