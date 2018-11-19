@@ -899,7 +899,12 @@ namespace GreenBushIEP.Controllers
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
 
                 List<string> districts = new List<string>(collection["misDistrict"].ToString().Split(','));
-                List<string> buildings = new List<string>(collection["buildingIds"].ToString().Split(','));
+                List<string> buildings = new List<string>(); 
+
+                if(collection["buildingIds"]!= null)
+                {
+                    buildings = new List<string>(collection["buildingIds"].ToString().Split(','));
+                }
 
                 // removes any buildings not in the current list of usd's.
                 List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD)).ToList();
