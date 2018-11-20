@@ -22,7 +22,42 @@
         <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
     </h4>
 </div>
+
+
+
 <div class="modal-body standard-font-size">
+
+
+	<div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
+        <div class="col-md-12 well">
+
+            If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
+            that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
+            the student's IEP or placement if it can demostrate a bona fide security or compelling penological interest that cannot otherwise
+            be accmomodated. The following laws and regulations are not required for the students in adult correctional factilites:
+            <ul>
+                <li>participation of students in state or local assemssmentsl and &lt;needs to be a statement on the IEP&gt;</li>
+                <li>
+                    transitions planning and services with respect to an disabled student whose eligibility for special education services will end,
+                    because of the student's age, before the student is eligible to be released from correctional facility based on consideration of the student's
+                    sentence and elibiglty for early release.
+                </li>
+            </ul>
+            @*<fieldset class="form-group">
+                <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
+                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox">
+                    <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
+                        <span class="onoffswitch2-inner"></span>
+                        <span class="onoffswitch2-switch"></span>
+                    </label>
+                </div>
+            </fieldset>*@
+
+        </div>
+    </div>
+
+
 	@if (Model != null && (ViewBag.studentAge > 12 || (Model.isDOC && ViewBag.studentAge > 20)))
 	{
 	<form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    

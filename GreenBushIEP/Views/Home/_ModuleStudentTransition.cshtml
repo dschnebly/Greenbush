@@ -1416,7 +1416,7 @@
                                         <fieldset class="form-group">
                                             <label for="Duration">Anticipated Graduation Month/Year</label>
                                             <div class="input-group">
-                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear)-0@(Model.transition.Planning_GraduationMonth)" style="width: 24rem;">
+                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear)-@(Model.transition.Planning_GraduationMonth.Value < 10 ? string.Format("0{0}",Model.transition.Planning_GraduationMonth.Value): Model.transition.Planning_GraduationMonth.Value.ToString())" style="width: 24rem;">
                                             </div>
                                         </fieldset>
                                     </div>
