@@ -1,6 +1,8 @@
 ﻿@using GreenBushIEP.Models
 @model StudentTransitionViewModel
-
+@{
+	var genderPronoun = Model.gender == "Female" ? "her" : Model.gender == "Male" ? "his" : "his/her";
+}
 
 <style>
  
@@ -326,12 +328,19 @@
 				<div class="row dont-break">
 					<div class="col-md-12">
 						<h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
+						
 						<p>
-							@(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
-							He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-							district and will be meaningful to his post secondary goal of working as an <span class="underline">@(Model.transition.Planning_Occupation)</span>. The courses he/she is enrolled in for school year
-							and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
-						</p>
+                            @(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
+                            The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
+                            district and will be meaningful to @(genderPronoun) post secondary goal of working as <span class="underline">@(Model.transition.Planning_Occupation)</span>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
+                            The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                            maintained in the counselor's office
+                        </p>										
+						<fieldset class="form-group">
+							<p>The Student will participate in coursework to support the Career Path of @(Model.careers.Count > 0 ? Model.careers.FirstOrDefault().CareerPath : "").</p>
+						</fieldset>
+
+
 						<fieldset class="form-group">
 							@if (Model.transition.Planning_Facilitate)
 							{
@@ -354,10 +363,9 @@
 							}
 
 						</fieldset>
-						<p>
-							The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-							maintained in the counselor's office
-						</p>
+						 <p>To @(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName):</p>
+						 <p>Beginning on the date you turn eighteen years of age, we will provide you and your parents with all notices required by special education laws and regulations.  All other rights accorded to parents under special education laws and regulations will be transferred to you or, if you have a legal guardian, to the legal guardian.</p>
+                                    
 					</div>
 				</div>
 

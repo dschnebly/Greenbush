@@ -109,7 +109,7 @@
                     <td>@(Model.studentDetails.secondaryDisability)</td>
 				</tr>                
 				 <tr>
-                    <td><label>Gifted</label></td>
+                    <td><label>Gifted:</label></td>
                     <td style="width:50px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
 					     <td><label>KG Full Day:</label></td>
                     <td style="width:50px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
@@ -160,10 +160,7 @@
 				<tr>                   
                     <td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
                 </tr>
-            </table>
-            <br />          
-            <hr />           
-	  <br />     <br />   
+            </table>                            
         </div> <!--end student page-->
         <br />
         <div class="module-page">
@@ -1945,8 +1942,6 @@
                                 <div class="row dont-break">
                                     <div class="col-md-12">
                                         <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
-
-
 										<p>
                                             @(@Model.studentTransition.student.FirstName)&nbsp;@(Model.studentTransition.student.LastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
                                             The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school

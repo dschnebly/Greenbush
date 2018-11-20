@@ -1835,7 +1835,25 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        private IEP GetIEPPrint(int stid, int iepId)
+
+		[HttpGet]
+		[Authorize]
+		public ActionResult PrintStudentInfo(int stid, int iepId)
+		{
+			var theIEP = GetIEPPrint(stid, iepId);
+			ViewBag.IsStudentInfo = 1;
+			if (theIEP != null)
+			{
+				return View("PrintIEP", theIEP);
+			}
+
+			// Unknow error happened.
+			return RedirectToAction("Index", "Home", null);
+		}
+
+
+
+		private IEP GetIEPPrint(int stid, int iepId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
@@ -2508,17 +2526,20 @@ namespace GreenbushIep.Controllers
             string formName = collection["formName"];
 
             var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
-            if (mergedFile != null)
-                return File(mergedFile, "application/pdf", "IEP.pdf");
-            else
-                return null;
+			if (mergedFile != null)
+			{
+				string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
+				return File(mergedFile, "application/pdf", downloadFileName);
+			}
+			else
+				return null;
 
         }
 
         private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string studentName, string studentId,
         string isArchive, string iepIDStr, string isIEP, string formName)
         {
-            if (!string.IsNullOrEmpty(HTMLContent))
+            if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent))
             {
                 string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
@@ -2557,9 +2578,12 @@ namespace GreenbushIep.Controllers
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
                 var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
-
-                string result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
+				string result = "";
+				if (!string.IsNullOrEmpty(HTMLContent))
+				{
+					result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
+					result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
+				}
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
                 byte[] studentFile = null;
@@ -2571,17 +2595,21 @@ namespace GreenbushIep.Controllers
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
                 }
 
-                byte[] iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
-
-                //var printFile = AddPageNumber(iepFile, studentName, imgfoot);
+				byte[] iepFile = null;
+				if (!string.IsNullOrEmpty(result))
+					iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
+				                
                 List<byte[]> pdfByteContent = new List<byte[]>();
 
                 if (studentFile != null)
                     pdfByteContent.Add(studentFile);
 
-                pdfByteContent.Add(iepFile);
+				if (iepFile != null)
+					pdfByteContent.Add(iepFile);
+				else
+					formName = "Student Information";//this is just the student info page print
 
-                var mergedFile = concatAndAddContent(pdfByteContent);
+				var mergedFile = concatAndAddContent(pdfByteContent);
 
                 if (isArchive == "1")
                 {

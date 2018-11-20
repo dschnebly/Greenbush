@@ -845,6 +845,7 @@
     <Content Include="Views\Home\ActiveIEP\_GoalsSection.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_GoalsProgressRO.cshtml" />
     <Content Include="Views\Home\_GoalsProgress.cshtml" />
+    <Content Include="Views\Home\_PrintStudentInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
