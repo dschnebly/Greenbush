@@ -35,38 +35,68 @@
 					$("#alertMessage").slideUp(500);
 				});
 			}
-		});
+		});	
+
+
+
+		$(document).ready(function () {
+			
+			$('#files').fileupload({
+				dataType: 'json',
+				url: '/Home/UploadStudentFile',	
+				acceptFileTypes: /(\.|\/)(pdf)$/i,
+				formData: {
+					studentId: $("#stid").val(),				
+				},
+				done: function (e, data) {
+					
+						if (data.result.result) {							
+							_showAlert(data.result.message, true);
+							//update tblArchives
+							var json = data.result.archives;
+							var content = '';							
+							for (var i = 0; i < json.length; i++) {
+								content += '<tr>';								
+								content += '<td>' + json[i].fileName + '</td>';
+								content += '<td>' + json[i].fileDate + '</td>';
+								content += '<td class=\"date\"><button type=\"button\" onclick=\"window.open(\'/Home/DownloadArchive?id=' + json[i].id  + '\');\" class=\"btn btn-default btn-lg downloadForm\" id=\"' + json[i].id + '\"><i class=\"fa fa-print\"></i> <span>&nbsp;Download</span></button></td>';								
+								content += '</tr>';
+							}
+							$('#tblArchives tbody').html(content); 
+						
+						}
+						else {
+							_showAlert(data.result.message, false);
+						}
+				},
+				progressall: function (e, data) {
+					
+						var progress = parseInt(data.loaded / data.total * 100, 10);
+						$('#progress .progress-bar').css(
+							'width',
+							progress + '%'
+						);
+					
+				}
+					
+				});//end file upload
+
+		});//end document ready
+	
 
 	}
+		
 	init();
+	function _showAlert(message, positive) {
 
-	////SET UP 
-	//var params =	//All params are optional, you can just assign {} 
-	//{
-	//	"navB": "slide",	//Effect for navigation button, leave it empty to disable it
-	//	"but": false,		//Flag to enable transitions on button, false by default
-	//	"cBa": function () { init(); } //callback function
-	//};
-	//new ft(params);
+		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+			if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
+			else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+			$("#alertMessage .moreinfo").html(message);
+			$("#alertMessage").fadeTo(3000, 1000).slideUp(2000, function () {
+				$("#alertMessage").slideUp(5000);
+			});
+		}
+	}
+
 });
-
-//jQuery.fn.extend({
-//	listrap: function () {
-//		var listrap = this;
-//		listrap.getSelection = function () {
-//			var selection = new Array();
-//			listrap.children("li.active").each(function (ix, el) {
-//				selection.push($(el)[0]);
-//			});
-//			return selection;
-//		};
-//		var toggle = "li .listrap-toggle ";
-//		var selectionChanged = function () {
-//			$(this).parent().parent().toggleClass("active");
-//			listrap.trigger("selection-changed", [listrap.getSelection()]);
-//		};
-//		$(listrap).find(toggle + "img").on("click", selectionChanged);
-//		$(listrap).find(toggle + "span").on("click", selectionChanged);
-//		return listrap;
-//	}
-//});

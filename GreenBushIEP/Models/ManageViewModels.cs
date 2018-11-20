@@ -326,9 +326,11 @@ namespace GreenBushIEP.Models
     {
         public int studentId { get; set; }
         public int iepId { get; set; }
-        public string fileName { get; set; }
+		public int id { get; set; }
+		public string fileName { get; set; }
         public string fileDesc { get; set; }
-        public StudentLegalView fileModel { get; set; }
+		public string fileDate { get; set; }
+		public StudentLegalView fileModel { get; set; }
 		
 
 		public IEPFormFileViewModel()
