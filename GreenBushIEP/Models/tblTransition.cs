@@ -36,5 +36,6 @@ namespace GreenBushIEP.Models
         public string Planning_Occupation { get; set; }
         public bool Completed { get; set; }
         public string Planning_BenefitKRS_OtherAgencies { get; set; }
+        public Nullable<int> CareerPathID { get; set; }
     }
 }
