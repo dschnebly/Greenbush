@@ -343,9 +343,11 @@ namespace GreenBushIEP.Models
     {
         public int studentId { get; set; }
         public int iepId { get; set; }
-        public string fileName { get; set; }
+		public int id { get; set; }
+		public string fileName { get; set; }
         public string fileDesc { get; set; }
-        public StudentLegalView fileModel { get; set; }
+		public string fileDate { get; set; }
+		public StudentLegalView fileModel { get; set; }
 		
 
 		public IEPFormFileViewModel()
@@ -514,9 +516,11 @@ namespace GreenBushIEP.Models
         public List<tblTransitionAssessment> assessments { get; set; }
         public List<tblTransitionGoal> goals { get; set; }
         public List<tblTransitionService> services { get; set; }
+		public List<tblCareerPath> careers { get; set; }
 		public bool isRequired { get; set; }
 		public bool canComplete { get; set; }
 		public bool isGiftedOnly { get; set; }
+		public string gender { get; set; }
 
 		public StudentTransitionViewModel()
         {
@@ -529,7 +533,9 @@ namespace GreenBushIEP.Models
             assessments = new List<tblTransitionAssessment>();
             goals = new List<tblTransitionGoal>();
             services = new List<tblTransitionService>();
-        }
+			careers = new List<tblCareerPath>();
+
+		}
     }
 
 

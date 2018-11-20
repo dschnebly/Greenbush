@@ -1476,8 +1476,8 @@ namespace GreenBushIEP.Controllers
                     {
                         // Give me the list of all the buildings in the current district 
                         var listOfBuildings = from b in db.tblBuildings
-                                              where b.USD == usdId && b.Active == 1
-                                              orderby b.BuildingName
+											  where (b.USD == usdId && b.Active == 1) || (b.BuildingID == "0114")
+											  orderby b.BuildingName
                                               select b;
 
                         buildings.AddRange(listOfBuildings.ToList());

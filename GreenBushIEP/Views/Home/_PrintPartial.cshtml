@@ -7,6 +7,9 @@
 	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
+	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
+
+
 	//var draftImage = "";
 	//if (isDraft)
 	//{
@@ -1942,32 +1945,35 @@
                                 <div class="row dont-break">
                                     <div class="col-md-12">
                                         <h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
-                                        <p>
-                                            @(Model.studentFirstName)&nbsp;@(Model.studentLastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
-											He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-											district and will be meaningful to his post secondary goal of working as an <span class="underline">@(Model.studentTransition.transition.Planning_Occupation)</span>. The courses he/she is enrolled in for school year
 
-											and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
-                                        </p>
+
+										<p>
+                                            @(@Model.studentTransition.student.FirstName)&nbsp;@(Model.studentTransition.student.LastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
+                                            The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
+                                            district and will be meaningful to @(genderPronoun) post secondary goal of working as <span class="underline">@(Model.studentTransition.transition.Planning_Occupation)</span>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
+                                            The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                                            maintained in the counselor's office
+                                        </p>										
+										<fieldset class="form-group">
+											<p>The Student will participate in coursework to support the Career Path of @(Model.studentTransition.careers.Count > 0 ? Model.studentTransition.careers.FirstOrDefault().CareerPath : "").</p>
+										</fieldset>
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_Facilitate)
-															{
+											{
 
-												<p >The transition courses of study does focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+												<p>The transition courses of study does focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
 
 											}
                                             else
                                             {
-                                                <p >The transition courses of study do not focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
-														}
+                                                <p>The transition courses of study do not focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+											}
                                             
                                         </fieldset>
                                         <fieldset class="form-group">
                                          @if (Model.studentTransition.transition.Planning_Align)
-														{
-
+										 {
 												<p>The courses of study (and other education experiences) do align with the student's post goals</p>
-
 										 }
                                          else
                                          {
@@ -1975,11 +1981,8 @@
                                          }
                                            
                                         </fieldset>
-                                        <p>
-                                            The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-
-											maintained in the counselor's office
-                                        </p>
+                                        <p>To @(@Model.studentTransition.student.FirstName)&nbsp;@(Model.studentTransition.student.LastName):</p>
+									   <p>Beginning on the date you turn eighteen years of age, we will provide you and your parents with all notices required by special education laws and regulations.  All other rights accorded to parents under special education laws and regulations will be transferred to you or, if you have a legal guardian, to the legal guardian.</p>
                                     </div>
                                 </div>
 
@@ -1992,7 +1995,7 @@
                                     <div class="col-md-6">
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_Completion == "Graduate with a High School Diploma")
-													{
+											{
 
 												<span>Graduate with a High School Diploma</span>
 
@@ -2015,22 +2018,20 @@
                                         <label class="underline">Other Agency Collaboration</label>
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_BenefitKRS)
-													{
-
+											{
 												<p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
 												<p>Other Agencies: @(Model.studentTransition.transition.Planning_BenefitKRS_OtherAgencies)</p>
 
-											 }
-                                             else
-                                             {
+											}
+                                            else
+                                            {
                                                 <p>The IEP Team did not determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
-                                             }
+                                            }
                                             
                                         </fieldset>
                                         <fieldset class="form-group @(Model.studentTransition.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
                                             @if (Model.studentTransition.transition.Planning_ConsentPrior)
-													{
-
+											{
 												<p>Consent to release confidential information was obtained to prior to KRS notification</p>
 
 											}
@@ -2049,8 +2050,8 @@
                 <h3 class="text-center">OTHER CONSIDERATIONS</h3>
 
 				@if (Model.studentOtherConsiderations != null)
-													{
-														var showExtendYear = Model.studentOtherConsiderations.ExtendedSchoolYear_Necessary == "1" ? true : false;
+				{
+					var showExtendYear = Model.studentOtherConsiderations.ExtendedSchoolYear_Necessary == "1" ? true : false;
 
 					<div class="row voffset2">
                         <div class="col-md-12">
@@ -2061,7 +2062,7 @@
                         <div class="col-md-12">
                             <fieldset class="form-group">
                                 @if (Model.studentOtherConsiderations.AssistiveTechnology_Require.HasValue && Model.studentOtherConsiderations.AssistiveTechnology_Require.Value)
-													{
+								{
 
 									 <p>The student requires Assistive Technology aids and/or services in order to be involved and make progress in the general curriculum or in order to be educated in a less restrictive environment.</p>
 
@@ -2186,13 +2187,7 @@
                             <p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
                         </div>
                     </div>
-                    @*<div class="row voffset2">
-                        <div class="col-md-12">                           
-                            <div>
-                               
-                            </div>
-                        </div>
-                    </div>*@
+                   
                     if (@showExtendYear)
                     {
                         <hr />

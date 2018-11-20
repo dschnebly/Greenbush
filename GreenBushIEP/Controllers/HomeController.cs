@@ -1472,6 +1472,8 @@ namespace GreenbushIep.Controllers
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
 				model.isRequired = (studentAge > 12 || (model.isDOC && studentAge <= 21)) ? true : false;
+				model.gender = info.Gender;
+				model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
 
 				var hasEmploymentGoal = model.goals.Any(o => o.GoalType == "employment");
 				var hasEducationGoal = model.goals.Any(o => o.GoalType == "education");
@@ -1911,7 +1913,8 @@ namespace GreenbushIep.Controllers
                     stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
                     stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
-
+					if(stvw.transition != null)
+						stvw.careers = db.tblCareerPaths.Where(o => o.CareerPathID == stvw.transition.CareerPathID).ToList();
                     theIEP.studentTransition = stvw;
                     tblStudentInfo info = null;
                     if (student != null)
@@ -2049,7 +2052,67 @@ namespace GreenbushIep.Controllers
                 return null;
         }
 
-        public ActionResult SpedProReport()
+		[HttpPost]
+		public ActionResult UploadStudentFile(HttpPostedFileBase files, int studentId)
+		{
+			try
+			{
+				//string message = "";
+				//if (files != null)
+				//{
+
+				//	var allowedSize = Convert.ToInt32(ConfigurationManager.AppSettings["DocumentMaxUploadSize"]);
+				//	if (files.ContentLength > allowedSize)
+				//	{
+				//		var allowedSizeMb = (allowedSize / 1024f) / 1024f;
+				//		message = string.Format("The file is larger than maximum allowed size: {0}MB.", allowedSizeMb);
+				//	}
+				//}
+
+				using (var binaryReader = new BinaryReader(files.InputStream))
+				{
+					var fileName = Path.GetFileName(files.FileName);
+					string fileNameExt = Path.GetExtension(fileName);
+
+					if(fileNameExt.ToLower() != ".pdf")
+						return Json(new { result = false, message = "Please select a valid PDF" }, "text/plain");
+					
+					byte[] fileData = binaryReader.ReadBytes(files.ContentLength);
+					tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+					int iepId = db.tblIEPs.Where(i => i.UserID == studentId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid;
+
+					var archive = new tblFormArchive();
+					archive.Creator_UserID = teacher.UserID;
+					archive.Student_UserID = studentId;
+					archive.FormName = string.IsNullOrEmpty(fileName) ? "Upload" : fileName;
+					archive.FormFile = fileData;
+					archive.IEPid = iepId;
+					archive.ArchiveDate = DateTime.Now;
+
+					db.tblFormArchives.Add(archive);
+					db.SaveChanges();				
+
+				}
+
+				var archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
+
+				var archiveList =  new List<IEPFormFileViewModel>();
+				foreach (var archive in archives)
+				{
+					archiveList.Add(new IEPFormFileViewModel() { fileDate = string.Format("{0} {1}", archive.ArchiveDate.ToShortDateString(), archive.ArchiveDate.ToShortTimeString()), fileName = archive.FormName, id = archive.FormArchiveID });
+				}
+
+				return Json(new { result = true, message = "File uploaded successfully.", archives = archiveList }, JsonRequestBehavior.AllowGet);
+				
+
+			}
+			catch (Exception ex)
+			{
+				return Json(new { result = false, message = ex.Message }, "text/plain");
+			}
+		}
+
+	    public ActionResult SpedProReport()
         {
             return View("~/Reports/SpedPro/Index.cshtml");
         }
