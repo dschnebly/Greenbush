@@ -200,14 +200,14 @@
                 color: #fff;
             }
 
-            .filter, .filter > .well .options button {
-                border: 1px solid #45906D;
-                position: relative;
-            }
-
-        .filter > .well {
-            background-color: transparent;
+        .filter, .filter > .well .options button {
+            border: 1px solid #45906D;
+            position: relative;
         }
+
+            .filter > .well {
+                background-color: transparent;
+            }
 
         .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
             margin-bottom: 5px;
@@ -1068,7 +1068,7 @@
                     <ul class="navigation">
                         <li class="pull-right">
                             <button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
-							<button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
+                            <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
                             <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
                     </ul>
@@ -1096,11 +1096,11 @@
                                     }
                                 }
                             }
-                            @if((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)
+                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)
                             {
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            @if((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT)
+                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT)
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
@@ -1112,6 +1112,10 @@
                                 {
                                     <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
                                 }
+                            }
+                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.AMMENDMENT)
+                            {
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                         </ul>
                     </div>

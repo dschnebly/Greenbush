@@ -1049,6 +1049,9 @@ namespace GreenbushIep.Controllers
                 if(studentDraftIep == null)
                 {
                     studentIEP.IepStatus = IEPStatus.DRAFT;
+                    studentIEP.begin_date = null;
+                    studentIEP.MeetingDate = null;
+                    studentIEP.Update_Date = DateTime.Now;
                     db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "IEP is reverted." }, JsonRequestBehavior.AllowGet);
@@ -1094,7 +1097,7 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingGoals = GoalFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByGoal == 1 ? "Health " : string.Empty ;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByGoal == 1 ? "Motor " : string.Empty ;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByGoal == 1 ? "Communication " : string.Empty ;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByGoal == 1 ? "Social " : string.Empty ;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByGoal == 1 ? "Social-Emotional " : string.Empty ;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByGoal == 1 ? "Math " : string.Empty ;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByGoal == 1 ? "Reading " : string.Empty ;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal == 1 ? "Written " : string.Empty ;

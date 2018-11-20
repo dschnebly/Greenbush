@@ -341,7 +341,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/Portal';
+                        location.reload(true);
                     } else {
                         alert(data.Message);
                         location.reload(true);
