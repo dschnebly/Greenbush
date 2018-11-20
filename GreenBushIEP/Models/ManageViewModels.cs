@@ -500,9 +500,11 @@ namespace GreenBushIEP.Models
         public List<tblTransitionAssessment> assessments { get; set; }
         public List<tblTransitionGoal> goals { get; set; }
         public List<tblTransitionService> services { get; set; }
+		public List<tblCareerPath> careers { get; set; }
 		public bool isRequired { get; set; }
 		public bool canComplete { get; set; }
 		public bool isGiftedOnly { get; set; }
+		public string gender { get; set; }
 
 		public StudentTransitionViewModel()
         {
@@ -515,7 +517,9 @@ namespace GreenBushIEP.Models
             assessments = new List<tblTransitionAssessment>();
             goals = new List<tblTransitionGoal>();
             services = new List<tblTransitionService>();
-        }
+			careers = new List<tblCareerPath>();
+
+		}
     }
 
 
