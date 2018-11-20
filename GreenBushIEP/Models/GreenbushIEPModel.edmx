@@ -828,6 +828,7 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="nvarchar" MaxLength="500" />
           <Property Name="CareerPathID" Type="int" />
+          <Property Name="isReleaseBefore21" Type="bit" />
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
@@ -2347,6 +2348,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CareerPathID" Type="Int32" />
+          <Property Name="isReleaseBefore21" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
@@ -3520,6 +3522,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="isReleaseBefore21" ColumnName="isReleaseBefore21" />
                 <ScalarProperty Name="CareerPathID" ColumnName="CareerPathID" />
                 <ScalarProperty Name="Planning_BenefitKRS_OtherAgencies" ColumnName="Planning_BenefitKRS_OtherAgencies" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />

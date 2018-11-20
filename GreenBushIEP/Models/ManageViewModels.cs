@@ -298,7 +298,7 @@ namespace GreenBushIEP.Models
                 if (thisIEP.AmendingIEPid != null)
                     return IEPStatus.ANNUAL;
 
-                return thisIEP.IepStatus.ToUpper();
+                return thisIEP.IepStatus.ToString();
             }
 
             return string.Empty;
@@ -606,9 +606,9 @@ namespace GreenBushIEP.Models
 
 public class IEPStatus
 {
-    public const string ACTIVE = "Active";
+    public const string ACTIVE = "ACTIVE";
     public const string ARCHIVE = "ARCHIVED";
-    public const string DRAFT = "Draft";
+    public const string DRAFT = "DRAFT";
     public const string DELETED = "DELETED";
     public const string AMMENDMENT = "AMMENDMENT";
     public const string ANNUAL = "ANNUAL";

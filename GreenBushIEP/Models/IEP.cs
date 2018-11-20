@@ -28,6 +28,10 @@ namespace GreenBushIEP.Models
         public tblIEP current { get; set; }
         public List<tblIEP> listOfStudentsIEPs { get; set; }
         public bool anyStudentIEPActive { get; set; }
+        public bool anyStudentIEPAmendment { get; set; }
+        public bool anyStudentIEPDraft { get; set; }
+        public bool anyStudentIEPAnnual { get; set; }
+
         public string displayIEPStatus { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
@@ -80,6 +84,9 @@ namespace GreenBushIEP.Models
             listOfStudentsIEPs = new List<tblIEP>();
             current = new tblIEP();
             anyStudentIEPActive = false;
+            anyStudentIEPAmendment = false;
+            anyStudentIEPDraft = false;
+            anyStudentIEPAnnual = false;
             displayIEPStatus = IEPStatus.DRAFT;
 
             studentGoals = new List<tblGoal>();
@@ -100,11 +107,15 @@ namespace GreenBushIEP.Models
                 listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = current != null;
+                displayIEPStatus = (current.Amendment & current.IsActive) ? IEPStatus.AMMENDMENT : (!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus ;
 
                 // all our database information should be loaded by now. Just query our student lists.
                 if (current != null)
                 {
-                    anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE.ToUpper());
+                    anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.ACTIVE && i.IsActive);
+                    anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.DRAFT && i.Amendment && i.IsActive);
+                    anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.DRAFT && !i.Amendment && i.IsActive);
+                    anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.ANNUAL && i.IsActive);
 
                     studentHealth = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).FirstOrDefault();
                     studentMotor = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).FirstOrDefault();
@@ -129,7 +140,6 @@ namespace GreenBushIEP.Models
                     isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
                     isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : false;
                     isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
-                    displayIEPStatus = (current.Amendment) ? IEPStatus.AMMENDMENT : current.IepStatus.ToUpper();
 
                     bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
                     bool motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
