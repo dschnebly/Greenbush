@@ -1096,11 +1096,11 @@
                                     }
                                 }
                             }
-                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT.ToUpper() && !Model.studentIEP.anyStudentIEPActive)
+                            @if((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)
                             {
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT.ToUpper())
+                            @if((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT)
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
@@ -1108,6 +1108,10 @@
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
                                 <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                                if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && !Model.studentIEP.anyStudentIEPDraft)
+                                {
+                                    <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
+                                }
                             }
                         </ul>
                     </div>

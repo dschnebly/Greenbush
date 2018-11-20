@@ -1345,6 +1345,26 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult CreateIEPAnnual (int Stid, int Iepid)
+        {
+            try
+            {
+                // make sure the iep doesn't have another annual in play.
+
+                int AnnualId = db.uspCopyIEP(Iepid, Stid, false);
+
+                // retrieve the new iep and set the status equal to annual
+
+                return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception e)
+            {
+                return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened :" + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult CreateIEPAmendment(int Stid, int IepId, bool? amend = true)
         {
             try

@@ -1038,6 +1038,29 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "1,2")]
+        public ActionResult UpdateRevertIEPtoDraft(int Stid, int IepId)
+        {
+            tblIEP studentIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
+            if (studentIEP != null)
+            {
+                // make sure there isn't another draft iep in play.
+                tblIEP studentDraftIep = db.tblIEPs.Where(i => i.IepStatus == IEPStatus.DRAFT && i.IsActive && i.UserID == Stid && !i.Amendment).FirstOrDefault();
+                if(studentDraftIep == null)
+                {
+                    studentIEP.IepStatus = IEPStatus.DRAFT;
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = "IEP is reverted." }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Result = "error", Message = "There is already another Draft in play. Unable make to revert this IEP" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "Unknown Error. Unable make to revert this IEP" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         [Authorize]
         public ActionResult AgreementPrint(int id)
         {
