@@ -1,6 +1,8 @@
 ﻿@using GreenBushIEP.Models
 @model StudentTransitionViewModel
-
+@{
+	var genderPronoun = Model.gender == "Female" ? "her" : Model.gender == "Male" ? "his" : "his/her";
+}
 
 <style>
  
@@ -20,7 +22,42 @@
         <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
     </h4>
 </div>
+
+
+
 <div class="modal-body standard-font-size">
+
+
+	<div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
+        <div class="col-md-12 well">
+
+            If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
+            that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
+            the student's IEP or placement if it can demostrate a bona fide security or compelling penological interest that cannot otherwise
+            be accmomodated. The following laws and regulations are not required for the students in adult correctional factilites:
+            <ul>
+                <li>participation of students in state or local assemssmentsl and &lt;needs to be a statement on the IEP&gt;</li>
+                <li>
+                    transitions planning and services with respect to an disabled student whose eligibility for special education services will end,
+                    because of the student's age, before the student is eligible to be released from correctional facility based on consideration of the student's
+                    sentence and elibiglty for early release.
+                </li>
+            </ul>
+            @*<fieldset class="form-group">
+                <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
+                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
+                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox">
+                    <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
+                        <span class="onoffswitch2-inner"></span>
+                        <span class="onoffswitch2-switch"></span>
+                    </label>
+                </div>
+            </fieldset>*@
+
+        </div>
+    </div>
+
+
 	@if (Model != null && (ViewBag.studentAge > 12 || (Model.isDOC && ViewBag.studentAge > 20)))
 	{
 	<form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
@@ -326,12 +363,19 @@
 				<div class="row dont-break">
 					<div class="col-md-12">
 						<h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
+						
 						<p>
-							@(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName) will work his primary implementer and counselor annually to enroll in he courses he needs for his course of study for coming school year.
-							He/She and the IEP team have reviewd this course of study and transcript at this IEP meeting. These courses will meet the requirements of the school
-							district and will be meaningful to his post secondary goal of working as an <span class="underline">@(Model.transition.Planning_Occupation)</span>. The courses he/she is enrolled in for school year
-							and those which he has taken have allow him/her to explore areas of high interest and determine the type of skils he/she will need for different career fields.
-						</p>
+                            @(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
+                            The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
+                            district and will be meaningful to @(genderPronoun) post secondary goal of working as <span class="underline">@(Model.transition.Planning_Occupation)</span>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
+                            The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+                            maintained in the counselor's office
+                        </p>										
+						<fieldset class="form-group">
+							<p>The Student will participate in coursework to support the Career Path of @(Model.careers.Count > 0 ? Model.careers.FirstOrDefault().CareerPath : "").</p>
+						</fieldset>
+
+
 						<fieldset class="form-group">
 							@if (Model.transition.Planning_Facilitate)
 							{
@@ -354,10 +398,9 @@
 							}
 
 						</fieldset>
-						<p>
-							The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-							maintained in the counselor's office
-						</p>
+						 <p>To @(ViewBag.studentFirstName)&nbsp;@(ViewBag.studentLastName):</p>
+						 <p>Beginning on the date you turn eighteen years of age, we will provide you and your parents with all notices required by special education laws and regulations.  All other rights accorded to parents under special education laws and regulations will be transferred to you or, if you have a legal guardian, to the legal guardian.</p>
+                                    
 					</div>
 				</div>
 

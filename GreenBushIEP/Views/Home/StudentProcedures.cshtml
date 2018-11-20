@@ -1054,7 +1054,7 @@
                     <div class="student-identity edit-student">
                         <h3 style="margin-bottom:0;">@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())</h3>
                         <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("MM/dd/yyyy"))" />
-                        <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "Girad" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
+                        <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
                     </div>
                 </div>
             </div>
@@ -1068,6 +1068,7 @@
                     <ul class="navigation">
                         <li class="pull-right">
                             <button type="button" class="btn btn-primary btn-lg" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+							<button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
                             <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
                     </ul>
