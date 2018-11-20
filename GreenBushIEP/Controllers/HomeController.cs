@@ -1706,7 +1706,6 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult IEPFormModule(int studentId)
         {
-
             IEPFormViewModel viewModel = new IEPFormViewModel();
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
@@ -1780,8 +1779,6 @@ namespace GreenbushIep.Controllers
                 model.IEPForms = GetForms();
                 model.StudentId = stid;
                 model.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
-
-				
 			}
 
 		    return View(model);
