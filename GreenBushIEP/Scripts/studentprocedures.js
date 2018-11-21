@@ -262,8 +262,8 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Manage/CreateIEPAmendment',
-                data: { Stid: stId, IepId: iepId, amend: false },
+                url: '/Manage/CreateIEPAnnual',
+                data: { Stid: stId, IepId: iepId },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -304,7 +304,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/Portal';
+                        location.reload(true);
                     } else {
                         alert(data.Message);
                         location.reload(true);
@@ -320,6 +320,43 @@
             });
         }
     })
+
+    // Attach Event
+    // if the owner or mis reverts the draft back to active
+    $("#revertToDraft").on("click", function () {
+        if ($("#makeIEPInActive").hasClass("disabled")) { return false; } // the link is disabled
+
+        var answer = confirm("Are you sure you want to revert this IEP from ACTIVE to DRAFT?");
+        if (answer) {
+            $('.ajax-loader').css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
+
+            var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/UpdateRevertIEPtoDraft',
+                data: { Stid: stId, IepId: iepId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        location.reload(true);
+                    } else {
+                        alert(data.Message);
+                        location.reload(true);
+                    }
+                },
+                error: function (data) {
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                },
+                complete: function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+                }
+            });
+        }
+    });
 });
 
 function getParameterByName(name, url) {
