@@ -29,7 +29,9 @@
 
 
 	<div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
-        <div class="col-md-12 well">
+		@if (Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value)
+		{
+         <div class="col-md-12 well">
 
             If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
             that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
@@ -43,18 +45,19 @@
                     sentence and elibiglty for early release.
                 </li>
             </ul>
-            @*<fieldset class="form-group">
+            <fieldset class="form-group">
                 <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
                 <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox">
+                    <input disabled type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox" @(Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? "checked='checked'" : "" )>
                     <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
                         <span class="onoffswitch2-inner"></span>
                         <span class="onoffswitch2-switch"></span>
                     </label>
                 </div>
-            </fieldset>*@
+            </fieldset>
 
-        </div>
+         </div>
+		}
     </div>
 
 

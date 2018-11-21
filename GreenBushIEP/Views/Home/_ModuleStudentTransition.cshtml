@@ -337,6 +337,7 @@
 	<input type="hidden" id="isRequired" value="@(Model.isRequired ? "Y" : "N")" />	
 	
     <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
+		
         <div class="col-md-12 well">
 
             If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
@@ -354,7 +355,7 @@
             <fieldset class="form-group">
                 <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
                 <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox">
+                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox" @(Model.transition.isReleaseBefore21.HasValue &&  Model.transition.isReleaseBefore21.Value ? "checked='checked'" : "" )>
                     <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
                         <span class="onoffswitch2-inner"></span>
                         <span class="onoffswitch2-switch"></span>
@@ -1355,7 +1356,8 @@
                                 @Html.Hidden("studentId", Model.studentId)
                                 @Html.Hidden("IEPid", Model.iepId)
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+								@Html.Hidden("isReleaseBefore21", Model.transition.isReleaseBefore21)
+								@*<input type="hidden" id="isReleaseBefore21" name="isReleaseBefore21" value="@(Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? "Y" : "N")" />*@	
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -1498,10 +1500,14 @@
 <script>
     $(document).ready(function () {
 		var canComplete = '@Model.canComplete' == "True" ? true : false;
+		var isReleaseBefore21 = '@Model.transition.isReleaseBefore21' == "True" ? true : false;
         var navListItems = $('ul.setup-panel li a'),
             allWells = $('.setup-content');
 
-        allWells.hide();
+		allWells.hide();
+
+		if (isReleaseBefore21)
+			$("#studentBirthdayAgeOver21").removeClass("hidden");
 
         navListItems.click(function (e) {
             e.preventDefault();
@@ -1720,7 +1726,15 @@
     $("input[name='isStudentBirthdayAgeOver21']").on('click', function (event) {
         var isBirthdayAgeOver21 = $("input[name='isStudentBirthdayAgeOver21']");
 
-        $("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
+		$("input[name='isStudentBirthdayAgeOver21']").is(':checked', !isBirthdayAgeOver21.prop("checked"));
+		
+		if ($("input[name='isStudentBirthdayAgeOver21']").is(':checked')) {
+			$("#isReleaseBefore21").val(1);
+		}
+		else {
+			$("#isReleaseBefore21").val(0);
+		}
+
         $("#studentBirthdayAgeOver21").toggleClass("hidden");
     });
 

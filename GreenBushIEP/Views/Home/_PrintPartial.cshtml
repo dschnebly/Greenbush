@@ -1419,6 +1419,8 @@
                 <div>
                     <h3 class="text-center">TRANSITION PLAN</h3>
 						<div class="row DOC @(!Model.studentTransition.isDOC ? "hidden" : String.Empty )">
+							@if (Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value)
+							{
 							<div class="col-md-12">
 
 								If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
@@ -1433,7 +1435,11 @@
 										sentence and elibiglty for early release.
 									</li>
 								</ul>
+								<fieldset class="form-group">
+									<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;<span>Yes</span>
+								</fieldset>
 							</div>
+							}
 						</div>
                     <div class="row">                        
                             @if (Model.studentTransition.assessments.Count > 0)

@@ -1153,7 +1153,8 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
 					transition.CareerPathID = (collection["CareerPathID"] != null) ? Convert.ToInt32(collection["CareerPathID"]) : 0;					
 					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
-                    db.SaveChanges();
+					transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
+					db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
                 }

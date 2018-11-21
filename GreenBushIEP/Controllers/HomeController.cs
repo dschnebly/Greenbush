@@ -1474,7 +1474,7 @@ namespace GreenbushIep.Controllers
 				model.isRequired = (studentAge > 12 || (model.isDOC && studentAge <= 21)) ? true : false;
 				model.gender = info.Gender;
 				model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
-
+		
 				var hasEmploymentGoal = model.goals.Any(o => o.GoalType == "employment");
 				var hasEducationGoal = model.goals.Any(o => o.GoalType == "education");
 				if (hasEmploymentGoal && hasEducationGoal)
@@ -1483,8 +1483,10 @@ namespace GreenbushIep.Controllers
 				ViewBag.studentFirstName = studentFirstName;
                 ViewBag.studentLastName = studentLastName;
                 ViewBag.studentAge = studentAge;
-				
-                if (isReadOnly)
+
+				//isReadOnly = true;
+
+				if (isReadOnly)
                     return PartialView("ActiveIEP/_StudentTransition", model);
                 else
                     return PartialView("_ModuleStudentTransition", model);
@@ -1931,8 +1933,10 @@ namespace GreenbushIep.Controllers
                     stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
                     stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
-					if(stvw.transition != null)
+					if (stvw.transition != null)
+					{
 						stvw.careers = db.tblCareerPaths.Where(o => o.CareerPathID == stvw.transition.CareerPathID).ToList();
+					}
                     theIEP.studentTransition = stvw;
                     tblStudentInfo info = null;
                     if (student != null)

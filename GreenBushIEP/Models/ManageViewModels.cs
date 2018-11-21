@@ -521,6 +521,7 @@ namespace GreenBushIEP.Models
 		public bool canComplete { get; set; }
 		public bool isGiftedOnly { get; set; }
 		public string gender { get; set; }
+		
 
 		public StudentTransitionViewModel()
         {
