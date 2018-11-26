@@ -292,10 +292,10 @@ namespace GreenBushIEP.Models
 
                 if (studentInt != null)
                 {
-                    studentInt.Concerns = this.IntelligenceConcern;
+                    studentInt.Concerns = !this.IntelligenceConcern;
                     studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
                     studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
-                    studentInt.Completed = this.IntelligenceProgressTowardGenEd | this.IntelligenceAreaOfNeed;
+                    studentInt.Completed = this.IntelligenceConcern;
                 }
                 db.SaveChanges();
 

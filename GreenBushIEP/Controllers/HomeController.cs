@@ -927,7 +927,7 @@ namespace GreenbushIep.Controllers
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID) ;
                 if (theIEP.current != null)
                 {
-                    model.hasplan = true;
+                    model.hasplan = theIEP.hasPlan;
                     model.studentIEP = theIEP;
                     model.studentPlan = new StudentPlan(student.UserID);
                     model.hasAccommodations = theIEP.hasAccommodations;

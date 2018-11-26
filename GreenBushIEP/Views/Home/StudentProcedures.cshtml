@@ -745,6 +745,10 @@
             display: none;
         }
 
+        .isIntelligenceConcern.noConcerns {
+            display: none;
+        }
+
         .isAcademicPerformanceConcern.noConcerns {
             display: none;
         }
@@ -1197,7 +1201,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter iep @(Model.studentPlan.IntelligenceAreaOfNeed | Model.studentPlan.IntelligenceProgressTowardGenEd ? string.Empty : "widgetDisabled")" id="IntelligenceWidget">
+                <li class="ui-state-default filter iep @(Model.studentPlan.IntelligenceConcern ? string.Empty : "widgetDisabled" )" id="IntelligenceWidget">
                     <div class="hero-widget well @(Model.studentIEP.isIntelligenceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-education"></i>
@@ -1284,10 +1288,7 @@
                 </li>
                 <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)" id="BehaviorWidget">
                     <div class="hero-widget well @(Model.studentIEP.isBehaviorCompleted ? "module-completed" : string.Empty ) @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
-                        @if (Model.needsBehaviorPlan)
-                        {
-                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>
-                        }
+                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.needsBehaviorPlan ? string.Empty : "hidden" )" aria-hidden="true"></i>
                         <div class="icon">
                             <i class="glyphicon glyphicon-road" aria-hidden="true" style="top: 15px;"></i>
                         </div>
@@ -1528,10 +1529,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> General Intelligence/Cognitive Functioning</h5>
-                                <div class="checkbox">
+                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="IntelligenceConcern" class="truefalseswitch-checkbox" id="truefalseSwitchIntelligenceNoConcern" @(Model.studentPlan.IntelligenceConcern ? String.Empty : "checked" )>
+                                    <label class="truefalseswitch-label" for="truefalseSwitchIntelligenceNoConcern">
+                                        <span class="truefalseswitch-inner"></span>
+                                        <span class="truefalseswitch-switch"></span>
+                                    </label>
+                                </div>
+                                <div class="checkbox isIntelligenceConcern @(Model.studentPlan.IntelligenceConcern ? String.Empty : "noConcerns" )">
                                     <label><input type="checkbox" name="IntelligenceProgressTowardGenEd" @(Model.studentPlan.IntelligenceProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="checkbox isIntelligenceConcern @(Model.studentPlan.IntelligenceConcern ? String.Empty : "noConcerns" )">
                                     <label><input type="checkbox" name="IntelligenceAreaOfNeed" @(Model.studentPlan.IntelligenceAreaOfNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                                 </div>
                             </div>
