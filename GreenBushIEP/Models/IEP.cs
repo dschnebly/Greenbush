@@ -127,6 +127,9 @@ namespace GreenBushIEP.Models
             studentSocial = db.tblIEPSocials.Where(s => s.IEPSocialID == current.IEPSocialID).FirstOrDefault();
             studentIntelligence = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == current.IEPIntelligenceID).FirstOrDefault();
             studentAcademic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == current.IEPAcademicID).FirstOrDefault();
+            studentWritten = db.tblIEPWrittens.Where(w => w.IEPid == current.IEPWrittenID).FirstOrDefault();
+            studentReading = db.tblIEPReadings.Where(r => r.IEPid == current.IEPReadingID).FirstOrDefault();
+            studentMath = db.tblIEPMaths.Where(m => m.IEPid == current.IEPMathID).FirstOrDefault();
             studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == current.IEPid).FirstOrDefault();
             studentGoals = db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList();
             studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
@@ -140,7 +143,7 @@ namespace GreenBushIEP.Models
             isIntelligenceCompleted = studentIntelligence != null ? studentIntelligence.Completed : false;
             isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
             isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
-            isGoalCompleted = studentGoals != null ? studentGoals.All(g => g.Completed) : (studentHealth.NeedMetByGoal ?? false) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
+            isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : (!studentHealth.NeedMetByGoal ?? false) || (!studentMotor.NeedMetByGoal ?? false) || (!studentCommunication.NeedMetByGoal ?? false) || (!studentSocial.NeedMetByGoal ?? false) || (!studentAcademic.NeedMetByGoal ?? false) || (!studentWritten.NeedMetByGoal ?? false) || (!studentReading.NeedMetByGoal ?? false) || (!studentMath.NeedMetByGoal ?? false);
             isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) : false;
             isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
             isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : false;
