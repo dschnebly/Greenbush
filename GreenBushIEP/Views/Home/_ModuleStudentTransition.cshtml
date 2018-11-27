@@ -2,6 +2,7 @@
 @model StudentTransitionViewModel
 @{
 	var genderPronoun = Model.gender == "F" ? "her" : Model.gender == "M" ? "his" : "his/her";
+	var isReleaseBefore21 = Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? true : false;
 }
 
 <style>
@@ -1500,7 +1501,7 @@
 <script>
     $(document).ready(function () {
 		var canComplete = '@Model.canComplete' == "True" ? true : false;
-		var isReleaseBefore21 = '@Model.transition.isReleaseBefore21' == "True" ? true : false;
+		var isReleaseBefore21 = '@isReleaseBefore21' == "True" ? true : false;
         var navListItems = $('ul.setup-panel li a'),
             allWells = $('.setup-content');
 
