@@ -1151,7 +1151,7 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
-					transition.CareerPathID = (collection["CareerPathID"] != null) ? Convert.ToInt32(collection["CareerPathID"]) : 0;					
+					transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;					
 					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
 					transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
 					db.SaveChanges();
