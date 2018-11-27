@@ -55,17 +55,17 @@
 
         $('.ajax-loader').css("visibility", "visible");
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
-	});
+    });
 
-	$('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
-		var stid = getUrlParameter('stid');
-		var iepId = $("#studentIEPId").val();
+    $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
+        var stid = getUrlParameter('stid');
+        var iepId = $("#studentIEPId").val();
 
-		$('.ajax-loader').css("visibility", "visible");
-		window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
-	});
+        $('.ajax-loader').css("visibility", "visible");
+        window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
+    });
 
-	
+
 
     $('.navbar-toggle').click(function () {
         $('.navbar-nav').toggleClass('slide-in');
@@ -504,11 +504,12 @@ $('#saveplan').on('click', function () {
     !$("input[name='MotorNoConcern']").is(':checked') ? $("#MotorWidget").removeClass("widgetDisabled") : $("#MotorWidget").addClass("widgetDisabled");
     !$("input[name='CommunicationNoConcern']").is(':checked') ? $("#CommunicationWidget").removeClass("widgetDisabled") : $("#CommunicationWidget").addClass("widgetDisabled");
     !$("input[name='SocialNoConcern']").is(':checked') ? $("#SocialWidget").removeClass("widgetDisabled") : $("#SocialWidget").addClass("widgetDisabled");
-    !$("input[name='IntelligenceAreaOfNeed']").is(':checked') ? $("#IntelligenceWidget").addClass("widgetDisabled") : $("#IntelligenceWidget").removeClass("widgetDisabled");
+    !$("input[name='IntelligenceConcern']").is(':checked') ? $("#IntelligenceWidget").removeClass("widgetDisabled") : $("#IntelligenceWidget").addClass("widgetDisabled");
     !$("input[name='AcademicNoConcern']").is(':checked') ? $("#AcademicWidget").removeClass("widgetDisabled") : $("#AcademicWidget").addClass("widgetDisabled");
     !$("input[name='ReadingNoConcern']").is(':checked') ? $("#ReadingWidget").removeClass("widgetDisabled") : $("#ReadingWidget").addClass("widgetDisabled");
     !$("input[name='MathNoConcern']").is(':checked') ? $("#MathWidget").removeClass("widgetDisabled") : $("#MathWidget").addClass("widgetDisabled");
     !$("input[name='WrittenNoConcern']").is(':checked') ? $("#WrittenWidget").removeClass("widgetDisabled") : $("#WrittenWidget").addClass("widgetDisabled");
+    $("input[name='SocialInterventionPlan']:checked").val() == 1 ? $("#BehaviorWidget i.glyphicon-flag").removeClass("hidden") : $("#BehaviorWidget i.glyphicon-flag").addClass("hidden");
 });
 
 // Attach Event
@@ -543,6 +544,15 @@ $("input[name='SocialNoConcern']").on('click', function (event) {
         $("input[name='SocialBehaviorImpede']").prop('checked', false);
         $("input[name='SocialInterventionPlan']").prop('checked', false);
         $("input[name='SocialSkillsDeficit']").prop('checked', false);
+    }
+});
+
+// Attach Event
+// Intelligence Concerns
+$("input[name='IntelligenceConcern']").on('click', function (event) {
+    if (!$("input[name='IntelligenceConcern']").is(':checked')) {
+        $("input[name='IntelligenceProgressTowardGenEd']").prop('checked', false);
+        $("input[name='IntelligenceAreaOfNeed']").prop('checked', false);
     }
 });
 
@@ -996,6 +1006,13 @@ $("#truefalseSwitchAcademicConcerns").click(function (event) {
         $('.isAcademicPerformanceConcern').addClass("noConcerns").fadeOut();
     } else {
         $('.isAcademicPerformanceConcern').removeClass("noConcerns").fadeIn();
+    }
+});
+$("#truefalseSwitchIntelligenceNoConcern").click(function (event) {
+    if ($(event.target).is(':checked')) {
+        $('.isIntelligenceConcern').addClass("noConcerns").fadeOut();
+    } else {
+        $('.isIntelligenceConcern').removeClass("noConcerns").fadeIn();
     }
 });
 

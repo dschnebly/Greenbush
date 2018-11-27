@@ -304,10 +304,10 @@
                                                         <li data-value="3"><a href="#">Communication</a></li>
                                                         <li data-value="4"><a href="#">Social-Emotional</a></li>
                                                         <li data-value="5"><a href="#">General Intelligence</a></li>
-                                                        <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                        <li data-value="6"><a href="#">Academic&nbsp;Performance</a></li>
                                                         <li data-value="7"><a href="#">Reading</a></li>
                                                         <li data-value="8"><a href="#">Math</a></li>
-                                                        <li data-value="9"><a href="#">Written Language</a></li>
+                                                        <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
                                                     </ul>
 
                                                 </div>
@@ -504,10 +504,10 @@
                                                                 <li data-value="3"><a href="#">Communication</a></li>
                                                                 <li data-value="4"><a href="#">Social-Emotional</a></li>
                                                                 <li data-value="5"><a href="#">General Intelligence</a></li>
-                                                                <li data-value="6"><a href="#">Academic Performance</a></li>
+                                                                <li data-value="6"><a href="#">Academic&nbsp;Performance</a></li>
                                                                 <li data-value="7"><a href="#">Reading</a></li>
                                                                 <li data-value="8"><a href="#">Math</a></li>
-                                                                <li data-value="9"><a href="#">Written Language</a></li>
+                                                                <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
                                                             </ul>
                                                         </div>
                                                         <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
@@ -818,44 +818,47 @@
             $(this).find(".saveCompletedGoal").on('click', function (e) {
 
                 var modulesNeedingGoals = $("#modulesNeedingGoals").val();
-                $.each($(".StudentGoal").not("#defaultGoal"), function (index, value) {
+                var canSave = true;
+                $.each($(".StudentGoal").not("#defaultGoal"), function () {
 
-                    var goalFor = $(this).find("[data-bind='bs-drp-sel-label']").text();
+                    var goalFor = $(this).find("[data-bind='bs-drp-sel-label']").html();
                     modulesNeedingGoals = modulesNeedingGoals.replace(goalFor, "");
 
                     if ($(this).find('.StudentGoalTitle').val().length == 0) {
                         alert('The following field is required not to be empty: Student Goal Title');
-                        return false;
+                        return canSave = false;
                     }
 
                     if ($(this).find('.StudentGoalAnnualGoal').val().length == 0) {
                         alert('The following field is required not to be empty: Measurable Annual Goal');
-                        return false;
+                        return canSave = false;
                     }
 
                     if ($(this).find('.aStudentBaseLine').val().length == 0) {
                         alert('The following field is required not to be empty: Goal Baseline');
-                        return false;
+                        return canSave = false;
                     }
 
                     if ($(this).find('.studentGoalStateStandards').val().length == 0) {
                         alert('The following field is required not to be empty: State Standards');
-                        return false;
+                        return canSave = false;
                     }
 
                     if ($(".StudentGoalBenchmarkMethods option:selected").length == 0) {
                         alert('The following field is required not to be empty: Evaluation Procedure');
-                        return false;
+                        return canSave = false;
                     }
                 });
 
-                if (modulesNeedingGoals.trim(' ', "").length != 0) {
-                    alert('You need to make a Student Goal of type(s) : ' + modulesNeedingGoals.trim().replace(' ',', '));
-                    return false;
+                if (canSave && modulesNeedingGoals.trim(' ', "").length != 0) {
+                    alert('You need to make a Student Goal of type(s) : ' + modulesNeedingGoals.trim().replace(RegExp(' ', 'g'), ', ').replace(RegExp('&nbsp;', 'g'), ' '));
+                    return canSave = false;
                 }
 
-                $(this).closest("form").find("input[name='completed']").val(true);
-                $(this).prev().trigger(event.type);
+                if (canSave) {
+                    $(this).closest("form").find("input[name='completed']").val(true);
+                    $(this).prev().trigger(event.type);
+                }
             });
 
             //* Binding */
@@ -1043,8 +1046,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.Result) {
-                    if (data.Message.length != 0)
-                    {
+                    if (data.Message.length != 0) {
                         goalBaselineElement.val(data.Message);
                     }
                 }
