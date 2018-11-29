@@ -725,9 +725,9 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult LoadModuleSection(int studentId, string view)
+        public ActionResult LoadModuleSection(int studentId, int iepId, string view)
         {
-            var iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
             var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
@@ -948,10 +948,10 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult UpdateIEPDates(int stId, string IEPStartDate, string IEPMeetingDate)
+        public ActionResult UpdateIEPDates(int stId, int IepId, string IEPStartDate, string IEPMeetingDate)
         {
 
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IepId).FirstOrDefault();
 
             if (iep != null)
             {
@@ -1050,18 +1050,32 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = "1,2")]
         public ActionResult UpdateRevertIEPtoDraft(int Stid, int IepId)
         {
-            tblIEP studentIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
-            if (studentIEP != null)
+            List<tblIEP> studentIEPs = db.tblIEPs.Where(i => i.UserID == Stid && i.IsActive).ToList();
+            tblIEP studentActiveIEP = studentIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
+            if (studentActiveIEP != null)
             {
+                // if ammended is in play then they can't revert.
+                tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid == IepId).FirstOrDefault();
+                if (studentActiveIEP != null)
+                {
+                    return Json(new { Result = "error", Message = "You cannot revert an IEP that has an ammendment." }, JsonRequestBehavior.AllowGet);
+                }
+
+                // if annual is in play then they can't revert.
+                tblIEP studentAnnualIEP = studentIEPs.Where(i => i.IsActive && i.IepStatus == IEPStatus.ACTIVE && i.IEPid != IepId).FirstOrDefault();
+                if(studentAnnualIEP != null)
+                {
+                    return Json(new { Result = "error", Message = "You cannot revert an IEP that has an annual." }, JsonRequestBehavior.AllowGet);
+                }
+
                 // make sure there isn't another draft iep in play.
-                List<tblIEP> studentIEPs = db.tblIEPs.Where(i => i.UserID == Stid && i.IsActive).ToList(); 
                 tblIEP studentDraftIep = studentIEPs.Where(i => i.IepStatus == IEPStatus.DRAFT && i.IsActive && !i.Amendment).FirstOrDefault();
                 if (studentDraftIep == null)
                 {
-                    studentIEP.IepStatus = IEPStatus.DRAFT;
-                    studentIEP.begin_date = null;
-                    studentIEP.MeetingDate = null;
-                    studentIEP.Update_Date = DateTime.Now;
+                    studentActiveIEP.IepStatus = IEPStatus.DRAFT;
+                    studentActiveIEP.begin_date = null;
+                    studentActiveIEP.MeetingDate = null;
+                    studentActiveIEP.Update_Date = DateTime.Now;
                     db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "IEP is reverted." }, JsonRequestBehavior.AllowGet);

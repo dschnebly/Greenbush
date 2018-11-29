@@ -78,6 +78,7 @@
     // when the user clicks the Save Dates button
     $("#IEPDates").on("click", function () {
         var stId = $("#stid").val();
+        var iepId = $("#studentIEPId").val();
         var startDate = $("#IEPBeginDate").val().toString('MM/dd/yyyy');
         var meetingDate = $("#IEPMeetingDate").val().toString('MM/dd/yyyy');
         var birthDate = $("#studentBirthDate").val();
@@ -133,7 +134,7 @@
         $.ajax({
             type: 'GET',
             url: '/Home/UpdateIEPDates',
-            data: { Stid: stId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
+            data: { Stid: stId, IepId: iepId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
             dataType: 'json',
             success: function (data) {
                 if (data.Result == 'success') {
@@ -706,6 +707,7 @@ $("input[name='WrittenNeed']").on('click', function (event) {
 $(".module-section").on("click", function (e) {
     var tId = $("#tid").val();
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
     var ModuleView = $(e.currentTarget).data("view");
 
     $('.ajax-loader').css("visibility", "visible");
@@ -713,7 +715,7 @@ $(".module-section").on("click", function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/LoadModuleSection',
-        data: { studentId: stId, view: ModuleView },
+        data: { studentId: stId, iepId: iepId, view: ModuleView },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
