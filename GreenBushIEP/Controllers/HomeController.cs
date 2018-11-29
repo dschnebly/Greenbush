@@ -1723,6 +1723,7 @@ namespace GreenbushIep.Controllers
             thePlan.AcademicNoConcern = false;
             thePlan.CommunicationNoConcern = false;
             thePlan.HealthNoConcern = false;
+            thePlan.IntelligenceNoConcern = false;
             thePlan.MathNoConcern = false;
             thePlan.MotorNoConcern = false;
             thePlan.ReadingNoConcern = false;

@@ -38,7 +38,7 @@ namespace GreenBushIEP.Models
         public bool SocialInterventionPlan { get; set; }
         public bool SocialProgressTowardGenEd { get; set; }
         public bool SocialSkillsDeficit { get; set; }
-        public bool IntelligenceConcern { get; set; }
+        public bool IntelligenceNoConcern { get; set; }
         public bool IntelligenceProgressTowardGenEd { get; set; }
         public bool IntelligenceAreaOfNeed { get; set; }
         public bool AcademicNoConcern { get; set; }
@@ -88,7 +88,7 @@ namespace GreenBushIEP.Models
             this.SocialInterventionPlan = false;
             this.SocialProgressTowardGenEd = false;
             this.SocialSkillsDeficit = false;
-            this.IntelligenceConcern = false;
+            this.IntelligenceNoConcern = false;
             this.IntelligenceProgressTowardGenEd = false;
             this.IntelligenceAreaOfNeed = false;
             this.AcademicNoConcern = true;
@@ -164,7 +164,7 @@ namespace GreenBushIEP.Models
                 tblIEPIntelligence studentInt = db.tblIEPIntelligences.FirstOrDefault(i => i.IEPIntelligenceID == studentIEP.IEPIntelligenceID);
                 if (studentInt != null)
                 {
-                    this.IntelligenceConcern = studentInt.Concerns;
+                    this.IntelligenceNoConcern = !studentInt.Concerns;
                     this.IntelligenceProgressTowardGenEd = studentInt.ProgressTowardGenEd;
                     this.IntelligenceAreaOfNeed = studentInt.AreaOfNeed == true ? true : false;
                 }
@@ -292,10 +292,10 @@ namespace GreenBushIEP.Models
 
                 if (studentInt != null)
                 {
-                    studentInt.Concerns = !this.IntelligenceConcern;
+                    studentInt.Concerns = !this.IntelligenceNoConcern;
                     studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
                     studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
-                    studentInt.Completed = this.IntelligenceConcern;
+                    studentInt.Completed = this.IntelligenceNoConcern;
                 }
                 db.SaveChanges();
 

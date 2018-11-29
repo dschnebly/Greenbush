@@ -15,6 +15,10 @@
         @Html.HiddenFor(model => model.Completed)
 
         <div class="funkyradio">
+            <div class="funkyradio-success">
+                <input type="checkbox" id="ModuleIntelligenceNoConcerns" name="ModuleIntelligenceNoConcerns" @(Model.Concerns ?  string.Empty : "checked") />
+                <label for="ModuleIntelligenceNoConcerns" class="standard-font-size">No Concerns</label>
+            </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
                 <label for="ModuleIntelligenceProgressTowardGenEd" class="standard-font-size" >Progressing with General Education Support</label>
@@ -96,6 +100,31 @@
 	$('.tooltip-help').on('click', function () {
 		$('[data-toggle="tooltip"]').tooltip('toggle');
 	});
+
+    ///* Event */
+    ///* When a user clicks on no concers */
+	$("input[name='ModuleIntelligenceNoConcerns']").on("click", function (e) {
+	    if ($("input[name='ModuleIntelligenceNoConcerns']").is(':checked')) {
+	        $("input[name='ModuleIntelligenceProgressTowardGenEd']").prop('checked', false);
+	        $("input[name='ModuleIntelligenceAreaOfNeed']").prop('checked', false);
+	    }
+	})
+
+    ///* Event */
+    ///* When a user clicks on intelligence progress we need to remove no concerns */
+	$("input[name='ModuleIntelligenceProgressTowardGenEd']").on("click", function (e) {
+	    if ($("input[name='ModuleIntelligenceProgressTowardGenEd']").is(':checked')) {
+	        $("input[name='ModuleIntelligenceNoConcerns']").prop('checked', false);
+	    }
+	})
+
+	///* Event */
+	///* When a user clicks on Area of Need we need to remove no concerns */
+	$("input[name='ModuleIntelligenceAreaOfNeed']").on("click", function (e) {
+	    if ($("input[name='ModuleIntelligenceAreaOfNeed']").is(':checked')) {
+	        $("input[name='ModuleIntelligenceNoConcerns']").prop('checked', false);
+	    }
+	})
 
 	$("#saveIntelligenceCompleted").on("click", function (e) {
 	    if ($("input[name='ModuleIntelligenceAreaOfNeed']").is(':checked')) {

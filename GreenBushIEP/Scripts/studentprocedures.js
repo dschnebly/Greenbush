@@ -550,8 +550,8 @@ $("input[name='SocialNoConcern']").on('click', function (event) {
 
 // Attach Event
 // Intelligence Concerns
-$("input[name='IntelligenceConcern']").on('click', function (event) {
-    if (!$("input[name='IntelligenceConcern']").is(':checked')) {
+$("input[name='IntelligenceNoConcern']").on('click', function (event) {
+    if (!$("input[name='IntelligenceNoConcern']").is(':checked')) {
         $("input[name='IntelligenceProgressTowardGenEd']").prop('checked', false);
         $("input[name='IntelligenceAreaOfNeed']").prop('checked', false);
     }
