@@ -1313,24 +1313,20 @@
                         </div>
                     </div>
                 </li>
-
-                @if (ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
-                {
-                    <li class="ui-state-default filter legal ">
-                        <div class="hero-widget well">
-                            <div class="icon">
-                                <i class="fa fa-plus-square"></i>
-                            </div>
-                            <div class="text">
-                                <var>&nbsp;</var>
-                                <label class="text-muted">Medicaid Billing </label>
-                            </div>
-                            <div class="options">
-                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('https://serviceportal.compuclaim.com/login.aspx');"><i class="fa fa-external-link-square"></i> Launch</button>
-                            </div>
+                <li class="ui-state-default filter legal ">
+                    <div class="hero-widget well">
+                        <div class="icon">
+                            <i class="fa fa-plus-square"></i>
                         </div>
-                    </li>
-                }
+                        <div class="text">
+                            <var>&nbsp;</var>
+                            <label class="text-muted">Medicaid Billing </label>
+                        </div>
+                        <div class="options">
+                            <button type="button" class="btn btn-default btn-lg" onclick="window.open('https://serviceportal.compuclaim.com/login.aspx');"><i class="fa fa-external-link-square"></i> Launch</button>
+                        </div>
+                    </div>
+                </li>
 
             </ul>
             <div id="missingIEPDates" style="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visibility: visible;" : String.Empty)"></div>
@@ -1531,7 +1527,7 @@
                                 <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> General Intelligence/Cognitive Functioning</h5>
                                 <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                                 <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="IntelligenceNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchIntelligenceNoConcern" @(Model.studentPlan.IntelligenceNoConcern ? "checked" : string.Empty ) >
+                                    <input type="checkbox" name="IntelligenceNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchIntelligenceNoConcern" @(Model.studentPlan.IntelligenceNoConcern ? "checked" : string.Empty )>
                                     <label class="truefalseswitch-label" for="truefalseSwitchIntelligenceNoConcern">
                                         <span class="truefalseswitch-inner"></span>
                                         <span class="truefalseswitch-switch"></span>
