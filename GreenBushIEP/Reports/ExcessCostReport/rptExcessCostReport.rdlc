@@ -248,7 +248,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -318,7 +317,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox18</rd:DefaultName>
               <Top>0.09626in</Top>
-              <Left>4.0701in</Left>
+              <Left>3.3201in</Left>
               <Height>0.32292in</Height>
               <Width>2.3468in</Width>
               <Style>
@@ -415,7 +414,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox8</rd:DefaultName>
               <Top>0.66292in</Top>
-              <Left>4.26899in</Left>
+              <Left>3.14399in</Left>
               <Height>0.25in</Height>
               <Width>2.63541in</Width>
               <ZIndex>3</ZIndex>
@@ -445,7 +444,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox10</rd:DefaultName>
               <Top>0.90667in</Top>
-              <Left>4.26899in</Left>
+              <Left>3.14399in</Left>
               <Height>0.25in</Height>
               <Width>2.63541in</Width>
               <ZIndex>4</ZIndex>
@@ -466,7 +465,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!City.Value, "DataSet2") &amp; ", " &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
+                      <Value>=First(Fields!City.Value, "DataSet2") &amp; IIF(First(Fields!City.Value, "DataSet2") = "", " ",", ") &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -475,7 +474,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox12</rd:DefaultName>
               <Top>1.19834in</Top>
-              <Left>4.26899in</Left>
+              <Left>3.14399in</Left>
               <Height>0.25in</Height>
               <Width>2.64583in</Width>
               <ZIndex>5</ZIndex>
@@ -505,7 +504,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
               <Top>1.44417in</Top>
-              <Left>4.26899in</Left>
+              <Left>3.14399in</Left>
               <Height>0.25in</Height>
               <Width>2.63541in</Width>
               <ZIndex>6</ZIndex>
@@ -665,6 +664,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="Building">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -675,6 +680,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>PrintedBy</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Building</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

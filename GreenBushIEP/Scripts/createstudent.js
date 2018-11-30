@@ -118,8 +118,7 @@ function init() {
 		// current options html
 		var responsibleBuildingElement = $('.districtOnly');
 		var neighborhoodBuildingElement = $('.allActive');
-		
-		
+				
         $.ajax({
             type: 'GET',
             url: '/Manage/GetBuildingsByDistrictId',

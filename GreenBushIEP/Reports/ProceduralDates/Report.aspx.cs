@@ -46,6 +46,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			string teacherNames = "";
 			string buildingID = this.buildingDD.Value;
 			string teacher = "";
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
 			foreach (ListItem li in teacherDD.Items)
 			{
@@ -75,17 +76,37 @@ namespace GreenBushIEP.Reports.ProceduralDates
 				teacher = user.UserID.ToString();
 			}
 
+			if (buildingID == "-1")
+			{
+				buildingID = "";
+
+				foreach (ListItem buildingItem in buildingDD.Items)
+				{
+					buildingID += string.Format("{0},", buildingItem.Value);
+				}
+			}
+
+
 			DataTable dt = GetData(teacherIds, buildingID);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
-			ReportDataSource rds2 = new ReportDataSource("DataSet2", dt2);
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
 			ReportParameter p1 = new ReportParameter("TeacherNames", teacherNames.Trim().Trim(','));
 			ReportParameter p2 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
-
+			ReportParameter p3 = new ReportParameter("Building", buildingName);
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ProceduralDates/rptProceduralDates.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			MReportViewer.LocalReport.DataSources.Add(rds2);
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2 });
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3 });
 			MReportViewer.LocalReport.Refresh();
 		}
 

@@ -80,9 +80,49 @@
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
                 changeMonth: true
-            });
+			 });
 
-         });
+			 $('#ContentPlaceHolder1_districtDD').change(function (e) {
+				 var districtId = $(this).val();
+				 var args = { ids: districtId };
+				 $.ajax({
+						type: 'GET',
+						url: '/Manage/GetBuildingsByDistrictId',
+						data: args,
+						dataType: "json",
+						async: false,
+						success: function (data) {
+							if (data.Result === "success") {
+								var buildings = data.DistrictBuildings;
+								var buildingElement = $("#ContentPlaceHolder1_buildingDD");
+								buildingElement.find('option').remove().end();					
+					
+								var buildingHtml = buildingElement.html();
+								buildingHtml += "<option value='-1'>All</option>";
+
+								//district only
+								$.each(buildings, function (key, value) {
+									buildingHtml += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";									
+								});
+
+								buildingElement.html(buildingHtml);
+								
+								buildingElement.trigger("change");
+								buildingElement.trigger("chosen:updated");								
+							}
+						},
+						error: function (data) {
+							alert("There was an error retrieving the building information.");
+							console.log(data);
+						}	
+					});
+
+
+			 });
+
+		});
+
+		
 
     </script>
 	
