@@ -864,8 +864,9 @@
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
                                         <span class="control-label required">Neighborhood School</span>
                                     </div>
-                                    <div class="col-md-10">
-                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required>
+                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
+										
+                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building...">
                                             @if (Model.buildings != null)
                                             {
                                                 foreach (var building in Model.buildings)
@@ -881,8 +882,9 @@
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
                                         <span class="control-label required">Responsible Building</span>
                                     </div>
-                                    <div class="col-md-10">
-                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding" data-validate="true">
+                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
+										
+                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-validate="true" data-placeholder="Choose a building...">
                                             @if (Model.buildings != null)
                                             {
                                                 foreach (var building in Model.buildings)

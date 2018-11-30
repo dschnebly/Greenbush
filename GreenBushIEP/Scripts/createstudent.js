@@ -101,7 +101,7 @@ function init() {
         var districtIds = '';
         var districtNums = new Array();
         var districtArr = $("#misDistrict").val();
-
+		
         if (districtArr.length > 0) {
 
             for (i = 0; i < districtArr.length; i++) {
@@ -109,29 +109,63 @@ function init() {
                 districtNums.push(districtAdd);
             }
             districtIds = districtNums.join(',');
-        }
-
+		}
+		
+		var args = { ids: districtIds };
+		//$(".ajax-loader").show();
+		
+		$(".info").show();
+		// current options html
+		var responsibleBuildingElement = $('.districtOnly');
+		var neighborhoodBuildingElement = $('.allActive');
+		
+		
         $.ajax({
             type: 'GET',
             url: '/Manage/GetBuildingsByDistrictId',
-            data: { ids: districtIds },
+			data: args,
             dataType: "json",
             async: false,
             success: function (data) {
                 if (data.Result === "success") {
-                    var buildings = data.Message;
-                    $(".studentBuilding").find('option').remove().end().append($("<option></option>").attr("value", "").text("Select Building"));
-                    $.each(buildings, function (key, value) {
-                        // throw away the key. It's simply an index counter for the returned array.                                                
-                        $(".studentBuilding").append($("<option></option>").attr("value", value.BuildingID).text(value.BuildingName + " (" + value.BuildingID +")"));
-                    });
+					var buildings = data.DistrictBuildings;
+					var activeBuildings = data.ActiveBuildings;
+					$(".studentBuilding").find('option').remove().end();					
+					
+					var responsibleBuilding = responsibleBuildingElement.html();
+					var neighborhoodBuilding = neighborhoodBuildingElement.html();
 
+					//district only
+					$.each(buildings, function (key, value) {
+						responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
+						neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";						
+					});
+
+					//now add all active 
+					$.each(activeBuildings, function (key, value) {
+						neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";                                                                       
+                    });
+				
+					responsibleBuildingElement.html(responsibleBuilding);
+					neighborhoodBuildingElement.html(neighborhoodBuilding);
+
+					responsibleBuildingElement.trigger("change");
+					responsibleBuildingElement.trigger("chosen:updated");
+
+					neighborhoodBuildingElement.trigger("change");
+					neighborhoodBuildingElement.trigger("chosen:updated");
                 }
             },
             error: function (data) {
                 alert("There was an error retrieving the building information.");
                 console.log(data);
-            }
+			}			,
+			complete: function (data) {
+				//$(".ajax-loader").hide();
+				$(".info").hide();
+				
+				
+			}
         });
     });
 

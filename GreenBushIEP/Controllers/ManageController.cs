@@ -1482,29 +1482,32 @@ namespace GreenBushIEP.Controllers
             try
             {
                 List<tblBuilding> buildings = new List<tblBuilding>();
-
-                if (!string.IsNullOrEmpty(ids))
+				List<tblBuilding> allActiveBuildings = new List<tblBuilding>();
+				if (!string.IsNullOrEmpty(ids))
                 {
+						string[] usdIds = ids.Split(',');
 
+					var listOfBuildings = from b in db.tblBuildings
+										  where b.Active == 1 && ids.Contains(b.USD)
+										  orderby b.BuildingName
+										  select b;
 
-                    string[] usdIds = ids.Split(',');
-                    foreach (var usdId in usdIds)
-                    {
-                        // Give me the list of all the buildings in the current district 
-                        var listOfBuildings = from b in db.tblBuildings
-											  where (b.USD == usdId && b.Active == 1) || (b.BuildingID == "0114")
-											  orderby b.BuildingName
-                                              select b;
+					buildings.AddRange(listOfBuildings.ToList());
+					
 
-                        buildings.AddRange(listOfBuildings.ToList());
-                    }
+					var activeBuildings = from b in db.tblBuildings
+										  where b.Active == 1 && !ids.Contains(b.USD)
+										  orderby b.BuildingName
+										  select b;
 
-                }
+					allActiveBuildings.AddRange(activeBuildings.ToList());
+
+				}
 
 
                 if (buildings != null)
                 {
-                    return Json(new { Result = "success", Message = buildings }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", DistrictBuildings = buildings, ActiveBuildings = allActiveBuildings }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception e)
