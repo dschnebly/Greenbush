@@ -1349,11 +1349,7 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                // make sure the iep doesn't have another annual in play.
-
                 int AnnualId = db.uspCopyIEP(Iepid, Stid, false);
-
-                // retrieve the new iep and set the status equal to annual
 
                 return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }

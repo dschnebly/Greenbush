@@ -204,6 +204,7 @@ namespace GreenBushIEP.Controllers
                 {
                     try
                     {
+                        IntellgienceIEP.Concerns = !(collection["ModuleIntelligenceNoConcerns"] == "on" ? true : false);
                         IntellgienceIEP.ProgressTowardGenEd = collection["ModuleIntelligenceProgressTowardGenEd"] == "on" ? true : false;
                         IntellgienceIEP.AreaOfNeed = collection["ModuleIntelligenceAreaOfNeed"] == "on" ? true : false;
                         IntellgienceIEP.AreaOfNeedDescription = collection["ModuleIntelligenceAreaOfNeedDescription"].ToString();
