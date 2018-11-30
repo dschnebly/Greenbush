@@ -111,7 +111,7 @@ namespace GreenBushIEP.Models
         public StudentPlan(int stid)
         {
 
-            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid);
+            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
             if (studentIEP != null)
             {
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);

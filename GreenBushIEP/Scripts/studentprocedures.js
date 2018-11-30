@@ -65,8 +65,6 @@
         window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
     });
 
-
-
     $('.navbar-toggle').click(function () {
         $('.navbar-nav').toggleClass('slide-in');
         $('.side-body').toggleClass('body-slide-in');
@@ -187,11 +185,12 @@
             $(".ajax-loader img").css("visibility", "visible");
 
             var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
 
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateIEPStatusToActive',
-                data: { Stid: stId },
+                data: { Stid: stId, IEPid: iepId },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -321,6 +320,43 @@
             });
         }
     })
+
+    // Attach Event
+    // if the iep is an amendment and they make it active
+    $("#makeIEPAmendmentActive").on("click", function () {
+        if ($("#makeIEPAmendmentActive").hasClass("disabled")) { return false; } // the link is disabled
+
+        var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
+        if (answer) {
+            $('.ajax-loader').css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
+
+            var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/UpdateIEPAmendmentToActive',
+                data: { Stid: stId, IepId: iepId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        location.reload(true);
+                    } else {
+                        alert(data.Message);
+                        location.reload(true);
+                    }
+                },
+                error: function (data) {
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                },
+                complete: function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+                }
+            });
+        }
+    });
 
     // Attach Event
     // if the owner or mis reverts the draft back to active
@@ -484,6 +520,7 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
             return false; // breaks us out of the $.each loop.
         }
     });
+
     allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
 });
 
@@ -743,13 +780,14 @@ $(".module-section").on("click", function (e) {
 
 $(".goal-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/StudentGoals',
-        data: { studentId: stId },
+        data: { studentId: stId, IEPid: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -777,13 +815,14 @@ $(".goal-section").on('click', function (e) {
 
 $(".service-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/StudentServices',
-        data: { studentId: stId },
+        data: { studentId: stId, IEPid: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -811,13 +850,14 @@ $(".service-section").on('click', function (e) {
 
 $(".accom-mod-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/Accommodations',
-        data: { studentId: stId },
+        data: { studentId: stId, IEPid: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -845,13 +885,14 @@ $(".accom-mod-section").on('click', function (e) {
 
 $(".other-considerations-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/OtherConsiderations',
-        data: { studentId: stId },
+        data: { studentId: stId, IEPid: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -879,13 +920,14 @@ $(".other-considerations-section").on('click', function (e) {
 
 $(".behavior-plan-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/BehaviorPlan',
-        data: { studentId: stId },
+        data: { studentId: stId, iepID: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -913,13 +955,14 @@ $(".behavior-plan-section").on('click', function (e) {
 
 $(".transition-section").on('click', function (e) {
     var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
         url: '/Home/StudentTransition',
-        data: { studentId: stId },
+        data: { studentId: stId, IEPid: iepId },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
@@ -1003,6 +1046,7 @@ $("#truefalseSwitchSocialConcerns").click(function (event) {
         $('.isSocialConcern').removeClass("noConcerns").fadeIn();
     }
 });
+
 $("#truefalseSwitchAcademicConcerns").click(function (event) {
     if ($(event.target).is(':checked')) {
         $('.isAcademicPerformanceConcern').addClass("noConcerns").fadeOut();
@@ -1010,6 +1054,7 @@ $("#truefalseSwitchAcademicConcerns").click(function (event) {
         $('.isAcademicPerformanceConcern').removeClass("noConcerns").fadeIn();
     }
 });
+
 $("#truefalseSwitchIntelligenceNoConcern").click(function (event) {
     if ($(event.target).is(':checked')) {
         $('.isIntelligenceConcern').addClass("noConcerns").fadeOut();

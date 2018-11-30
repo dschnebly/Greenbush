@@ -46,7 +46,7 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID, iepID = HealthIEP.IEPid });
                     }
 
                     return RedirectToAction("Portal", "Home");
@@ -89,7 +89,7 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID, iepID = MotorIEP.IEPid });
                     }
 
                     return RedirectToAction("Portal", "Home");
@@ -107,16 +107,17 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditCommunication(FormCollection collection)
         {
-            var CommunicationId = Convert.ToInt32(collection["IEPCommunicationID"]);
-
-            tblIEPCommunication CommunicationIEP = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == CommunicationId).SingleOrDefault();
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPCommunicationID == CommunicationIEP.IEPCommunicationID).FirstOrDefault();
-            if (CommunicationIEP != null)
+            if (ValidateRequest)
             {
-                if (ValidateRequest)
+                try
                 {
-                    try
+                    var CommunicationId = Convert.ToInt32(collection["IEPCommunicationID"]);
+
+                    tblIEPCommunication CommunicationIEP = db.tblIEPCommunications.Where(c => c.IEPCommunicationID == CommunicationId).SingleOrDefault();
+                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPCommunicationID == CommunicationIEP.IEPCommunicationID).FirstOrDefault();
+                    if (CommunicationIEP != null)
                     {
+
                         CommunicationIEP.NoConcerns = collection["ModuleCommunicationNoConcerns"] == "on" ? true : false;
                         CommunicationIEP.ProgressTowardGenEd = collection["ModuleCommunicationProgressTowardGenEd"] == "on" ? true : false;
                         CommunicationIEP.AreaOfNeed = (!String.IsNullOrEmpty(collection["ModuleCommunicationAreaOfNeed"])) ? true : false;
@@ -133,12 +134,14 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID, iepID = CommunicationIEP.IEPid });
                     }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Unable to save changes to Communication Module: " + e.InnerException);
-                    }
+
+                    return RedirectToAction("Portal", "Home");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to the Motor Module: " + e.InnerException);
                 }
             }
 
@@ -149,15 +152,15 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditSocial(FormCollection collection)
         {
-            var socialId = Convert.ToInt32(collection["IEPSocialID"]);
-
-            tblIEPSocial SocialIEP = db.tblIEPSocials.Where(s => s.IEPSocialID == socialId).SingleOrDefault();
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPSocialID == socialId).FirstOrDefault();
-            if (SocialIEP != null)
+            if (ValidateRequest)
             {
-                if (ValidateRequest)
+                try
                 {
-                    try
+                    var socialId = Convert.ToInt32(collection["IEPSocialID"]);
+
+                    tblIEPSocial SocialIEP = db.tblIEPSocials.Where(s => s.IEPSocialID == socialId).SingleOrDefault();
+                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPSocialID == socialId).FirstOrDefault();
+                    if (SocialIEP != null)
                     {
                         SocialIEP.NoConcerns = collection["ModuleSocialNoConcern"] == "on" ? true : false;
                         SocialIEP.ProgressTowardGenEd = collection["ModuleSocialProgressTowardGenEd"] == "on" ? true : false;
@@ -178,12 +181,14 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID, iepID = SocialIEP.IEPid });
                     }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Unable to save changes to Social-Emotion Module: " + e.InnerException);
-                    }
+
+                    return RedirectToAction("Portal", "Home");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to the Social Module: " + e.InnerException);
                 }
             }
 
@@ -194,15 +199,15 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditIntelligence(FormCollection collection)
         {
-            var intelligenceId = Convert.ToInt32(collection["IEPIntelligenceID"]);
-
-            tblIEPIntelligence IntellgienceIEP = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == intelligenceId).SingleOrDefault();
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPIntelligenceID == intelligenceId).FirstOrDefault();
-            if (IntellgienceIEP != null)
+            if (ValidateRequest)
             {
-                if (ValidateRequest)
+                try
                 {
-                    try
+                    var intelligenceId = Convert.ToInt32(collection["IEPIntelligenceID"]);
+
+                    tblIEPIntelligence IntellgienceIEP = db.tblIEPIntelligences.Where(i => i.IEPIntelligenceID == intelligenceId).SingleOrDefault();
+                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPIntelligenceID == intelligenceId).FirstOrDefault();
+                    if (IntellgienceIEP != null)
                     {
                         IntellgienceIEP.Concerns = !(collection["ModuleIntelligenceNoConcerns"] == "on" ? true : false);
                         IntellgienceIEP.ProgressTowardGenEd = collection["ModuleIntelligenceProgressTowardGenEd"] == "on" ? true : false;
@@ -214,12 +219,14 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 
-                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID });
+                        return RedirectToAction("StudentProcedures", "Home", new { stid = IEP.UserID, iepID = IntellgienceIEP.IEPid });
                     }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Unable to save changes to Communication Module: " + e.InnerException);
-                    }
+
+                    return RedirectToAction("Portal", "Home");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to the Intelligence Module: " + e.InnerException);
                 }
             }
 
@@ -230,24 +237,24 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditAcademic(FormCollection collection)
         {
-            var academicID = Convert.ToInt32(collection["Academic.IEPAcademicID"]);
-            var readingID = Convert.ToInt32(collection["Reading.IEPReadingID"]);
-            var mathID = Convert.ToInt32(collection["Math.IEPMathID"]);
-            var writtenID = Convert.ToInt32(collection["Written.IEPWrittenID"]);
-
-            ModuleAcademicViewModel viewModel = new ModuleAcademicViewModel();
-
-            viewModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == academicID).SingleOrDefault();
-            viewModel.Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == readingID).SingleOrDefault();
-            viewModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == mathID).SingleOrDefault();
-            viewModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == writtenID).SingleOrDefault();
-
-            tblIEP IEP = db.tblIEPs.Where(i => i.IEPAcademicID == academicID).FirstOrDefault();
-            if (IEP != null)
+            if (ValidateRequest)
             {
-                if (ValidateRequest)
+                try
                 {
-                    try
+                    var academicID = Convert.ToInt32(collection["Academic.IEPAcademicID"]);
+                    var readingID = Convert.ToInt32(collection["Reading.IEPReadingID"]);
+                    var mathID = Convert.ToInt32(collection["Math.IEPMathID"]);
+                    var writtenID = Convert.ToInt32(collection["Written.IEPWrittenID"]);
+
+                    ModuleAcademicViewModel viewModel = new ModuleAcademicViewModel();
+
+                    viewModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == academicID).SingleOrDefault();
+                    viewModel.Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == readingID).SingleOrDefault();
+                    viewModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == mathID).SingleOrDefault();
+                    viewModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == writtenID).SingleOrDefault();
+
+                    tblIEP IEP = db.tblIEPs.Where(i => i.IEPAcademicID == academicID).FirstOrDefault();
+                    if (IEP != null)
                     {
                         viewModel.Academic.NoConcerns = collection["ModuleAcademicNoConcern"] == "on" ? true : false;
                         viewModel.Academic.ProgressTowardGenEd = collection["ModuleAcademicProgressTowardGenEd"] == "on" ? true : false;
@@ -298,14 +305,16 @@ namespace GreenBushIEP.Controllers
 
                         return Json(new { Result = "success", Message = "Academic Module Saved.", Completed = viewModel.Academic.Completed }, JsonRequestBehavior.AllowGet);
                     }
-                    catch (Exception e)
-                    {
-                        return Json(new { Result = "error", Message = "Unknown Error. " + e.Message, Completed = false }, JsonRequestBehavior.AllowGet);
-                    }
+
+                    return RedirectToAction("Portal", "Home");
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Unknown Error. " + e.Message, Completed = false }, JsonRequestBehavior.AllowGet);
                 }
             }
 
-            return Json(new { Result = "error", Message = "Unknown Error. Unable update the Academic module.", Completed = false }, JsonRequestBehavior.AllowGet);
+            throw new Exception("Unable to log you in.");
         }
 
         [HttpPost]
@@ -475,7 +484,7 @@ namespace GreenBushIEP.Controllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
+                return RedirectToAction("StudentProcedures", "Home", new { stid = studentId, iepID = BehaviorIEP.IEPid });
             }
 
             return RedirectToAction("StudentProcedures", "Home", new { stid = model.StudentId });
@@ -614,7 +623,7 @@ namespace GreenBushIEP.Controllers
                     OC.Create_Date = DateTime.Now;
 
                     db.SaveChanges();
-                    return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
+                    return RedirectToAction("StudentProcedures", "Home", new { stid = studentId, iepID = OC.IEPid });
                 }
             }
             catch (Exception ex)
@@ -1069,7 +1078,7 @@ namespace GreenBushIEP.Controllers
                         transitionService.Frequency = collection[i++].ToString();
                         transitionService.Duration = collection[i++].ToString();
                         transitionService.Location = collection[i++].ToString();
-				
+
                         string startDateStr = collection[i++].ToString();
                         string endDateStr = collection[i++].ToString();
                         if (!string.IsNullOrEmpty(startDateStr))
@@ -1081,9 +1090,7 @@ namespace GreenBushIEP.Controllers
                             transitionService.EndDate = Convert.ToDateTime(endDateStr);
                         }
 
-
                         transitionService.Update_Date = DateTime.Now;
-
                         if (transitionServiceID == 0)
                         {
                             transitionService.Create_Date = DateTime.Now;
@@ -1152,10 +1159,10 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
-					transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;					
-					transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
-					transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
-					db.SaveChanges();
+                    transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;
+                    transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
+                    transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
+                    db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
                 }

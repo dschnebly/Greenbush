@@ -973,13 +973,40 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "1,2")]
+        public ActionResult UpdateIEPAmendmentToActive(int stId, int IEPid)
+        {
+            // get the iep and make sure it's an amendment.
+            tblIEP studentAmmendIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IEPid && i.Amendment).FirstOrDefault();
+            tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.IEPid == studentAmmendIEP.AmendingIEPid).FirstOrDefault();
+            if (studentAmmendIEP != null && studentActiveIEP != null)
+            {
+                // find the current active iep and make it inactive and change its status to DELETED
+                studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
+                studentAmmendIEP.IepStatus = IEPStatus.ACTIVE;
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Result = "error", Message = "Unknown Error. Unable to change the IEP status." }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Manage/UpdateIEPStatus/5
         [HttpGet]
         [Authorize(Roles = mis)]
-        public ActionResult UpdateIEPStatusToActive(int stId)
+        public ActionResult UpdateIEPStatusToActive(int stId, int IEPid)
         {
             // switch the flag
-            tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && !i.Amendment && i.IsActive).FirstOrDefault();
+            tblIEP iepDraft = db.tblIEPs.Where(i => i.UserID == stId && !i.Amendment && i.IsActive && i.IEPid == IEPid).FirstOrDefault();
             if (iepDraft != null)
             {
                 if (iepDraft.IepStatus != IEPStatus.ACTIVE)
@@ -1009,7 +1036,7 @@ namespace GreenbushIep.Controllers
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
                     iepDraft.begin_date = DateTime.Now;
-                    iepDraft.end_Date = iepDraft.begin_date.Value.AddYears(1);
+                    iepDraft.end_Date = (!iepDraft.Amendment) ? iepDraft.begin_date.Value.AddYears(1) : iepDraft.end_Date ;
 
                     try
                     {
@@ -1104,9 +1131,9 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentGoals(int studentId)
+        public ActionResult StudentGoals(int studentId, int IEPid)
         {
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             if (iep != null)
             {
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1114,7 +1141,7 @@ namespace GreenbushIep.Controllers
                 StudentGoalsViewModel model = new StudentGoalsViewModel();
                 model.studentId = studentId;
                 model.iepId = iep.IEPid;
-                model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                model.isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
                 model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
 
                 List<vw_ModuleGoalFlags> GoalFlag = db.vw_ModuleGoalFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
@@ -1211,7 +1238,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentServices(int studentId)
+        public ActionResult StudentServices(int studentId, int IEPid)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
@@ -1223,11 +1250,11 @@ namespace GreenbushIep.Controllers
                              where d.USD != null && d.USD == studentInfo.AssignedUSD
                              select p).ToList();
 
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
             if (iep != null)
             {
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 StudentServiceViewModel model = new StudentServiceViewModel();
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
@@ -1494,9 +1521,9 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentTransition(int studentId)
+        public ActionResult StudentTransition(int studentId, int IEPid)
         {
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
             if (iep != null)
             {
@@ -1507,7 +1534,7 @@ namespace GreenbushIep.Controllers
                 string studentFirstName = string.Format("{0}", student.FirstName);
                 string studentLastName = string.Format("{0}", student.LastName);
                 int studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
@@ -1546,9 +1573,9 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult BehaviorPlan(int studentId)
+        public ActionResult BehaviorPlan(int studentId, int iepID)
         {
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepID).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
             bool isReadOnly = false;
 
@@ -1556,7 +1583,7 @@ namespace GreenbushIep.Controllers
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
                 var model = GetBehaviorModel(studentId, iep.IEPid);
 
@@ -1570,17 +1597,17 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult Accommodations(int studentId)
+        public ActionResult Accommodations(int studentId, int IEPid)
         {
             var model = new AccomodationViewModel();
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             List<SelectListItem> locationList = new List<SelectListItem>();
             tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             bool isReadOnly = false;
 
             if (iep != null)
             {
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
@@ -1613,10 +1640,10 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult OtherConsiderations(int studentId)
+        public ActionResult OtherConsiderations(int studentId, int IEPid)
         {
             var model = new tblOtherConsideration();
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
             ViewBag.vehicleType = 0;
             ViewBag.minutes = "25";
@@ -1626,7 +1653,7 @@ namespace GreenbushIep.Controllers
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.AmendingIEPid == null) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
                 model.IEPid = iep.IEPid;
                 var oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
