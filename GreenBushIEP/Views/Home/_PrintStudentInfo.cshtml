@@ -158,66 +158,7 @@
 			<td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
 		</tr>
 	</table>
-	<h3 class="text-center">Participants</h3>
-	<p style="margin-bottom:8px">Participants in the IEP Team Meeting to develop this IEP.</p>
-	<table style="width:100%" cellspacing="3">
-
-		<tr>
-			<th>Name</th>
-			<th>Position</th>
-			<th>Date</th>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-		<tr>
-			<td>________________________________</td>
-			<td>________________________________</td>
-			<td>________________________________</td>
-		</tr>
-	</table>
+	
 
 	<div>
 		<h3 class="text-center">SERVICES</h3>
@@ -326,15 +267,15 @@
 					serviceCount++;
 				}
 			</table>
+			<div>
+			<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
+			</div>
 		}
 		else
 		{
 			<p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>
 		}
-		<div>
-			<h3 class="text-center">SUBSTITUTE PERSONNEL</h3>
-			<textarea  cols="100" rows="4" class="enabled" id="subInfo" placeholder="Describe"></textarea>
-		</div>
+		
 	</div>		
 	</div>
 <!--end student page-->
