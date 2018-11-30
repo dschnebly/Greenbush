@@ -688,6 +688,9 @@
         </div>
     </div>
     <div class="row">
+		<div class="ajax-loader" style="visibility: hidden;">
+			<img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+		</div>
         <section>
             <div class="wizard">
                 <div class="wizard-inner">
@@ -862,16 +865,18 @@
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
                                         <span class="control-label required">Neighborhood School</span>
                                     </div>
-                                    <div class="col-md-10">
-                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding" data-validate="true" required></select>
+                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
+										
+                                        <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building..."></select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
                                         <span class="control-label required">Responsible Building</span>
                                     </div>
-                                    <div class="col-md-10">
-                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding" data-validate="true"></select>
+                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
+									
+                                        <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-validate="true" data-placeholder="Choose a building..."></select>
                                     </div>
                                 </div>
                             </div>

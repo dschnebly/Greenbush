@@ -46,7 +46,8 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 			string serviceIds = "";			
 			string buildingID = this.buildingDD.Value;
-			
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+
 			foreach (ListItem li in ServiceType.Items)
 			{
 				if (li.Selected)
@@ -55,23 +56,44 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 				}
 			}
 
+			if (buildingID == "-1")
+			{
+				buildingID = "";
+				
+				foreach (ListItem buildingItem in buildingDD.Items)
+				{
+					buildingID += string.Format("{0},", buildingItem.Value);				
+				}				
+			}
+
 			DateTime startDate = DateTime.Parse(this.startDate.Value);
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
 			DataTable dt = GetData(serviceIds, buildingID, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
-			ReportDataSource rds2 = new ReportDataSource("DataSet2", dt2);
+
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			
 			ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
 			ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
 			ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
 			ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
-
+			ReportParameter p5 = new ReportParameter("Building", buildingName);
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ExceptionalityReport/rptExceptionalityReport.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			MReportViewer.LocalReport.DataSources.Add(rds2);
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4 });
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5 });
 			MReportViewer.LocalReport.Refresh();
 		}
 

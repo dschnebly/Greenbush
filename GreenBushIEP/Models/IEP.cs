@@ -143,7 +143,7 @@ namespace GreenBushIEP.Models
             isIntelligenceCompleted = studentIntelligence != null ? studentIntelligence.Completed : false;
             isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
             isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
-            bool studentHasGoals = (studentHealth.NeedMetByGoal ?? false) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
+            bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
             isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : !studentHasGoals;
             isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) : false;
             isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;

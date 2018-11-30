@@ -422,7 +422,7 @@
             </TablixRowHierarchy>
             <NoRowsMessage>There was no data found that matched the selected criteria.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>1.00917in</Top>
+            <Top>1.50917in</Top>
             <Left>0.01042in</Left>
             <Height>0.67708in</Height>
             <Width>7.5925in</Width>
@@ -449,7 +449,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox55</rd:DefaultName>
-                <Top>0.47708in</Top>
+                <Top>0.85208in</Top>
                 <Left>0.1in</Left>
                 <Height>0.25in</Height>
                 <Width>1in</Width>
@@ -478,7 +478,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox4</rd:DefaultName>
-                <Top>0.47708in</Top>
+                <Top>0.85208in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
                 <Width>6.25in</Width>
@@ -529,6 +529,66 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
+              <Textbox Name="Textbox56">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Building:</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox55</rd:DefaultName>
+                <Top>0.57465in</Top>
+                <Left>0.1in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox17">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Parameters!Building.Value</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox4</rd:DefaultName>
+                <Top>0.57465in</Top>
+                <Left>1.12499in</Left>
+                <Height>0.25in</Height>
+                <Width>6.15625in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
             </ReportItems>
             <PageBreak>
               <BreakLocation>End</BreakLocation>
@@ -536,7 +596,7 @@
             <KeepTogether>true</KeepTogether>
             <Top>0.0675in</Top>
             <Left>0.04459in</Left>
-            <Height>0.86459in</Height>
+            <Height>1.37223in</Height>
             <Width>7.55833in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -546,7 +606,7 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>1.88542in</Height>
+        <Height>2.32292in</Height>
         <Style />
       </Body>
       <Width>7.68834in</Width>
@@ -726,7 +786,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!City.Value, "DataSet2") &amp; ", " &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
+                      <Value>=First(Fields!City.Value, "DataSet2") &amp; IIF(First(Fields!City.Value, "DataSet2") = "", " ",", ") &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -931,6 +991,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="Building">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -946,6 +1012,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>PrintedBy</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Building</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

@@ -23,6 +23,13 @@ namespace GreenBushIEP.Reports.ServiceReport
 				this.ServiceType.DataValueField = "ServiceCode";
 				this.ServiceType.DataBind();
 
+				var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(User.Identity.Name);
+				this.districtDD.DataSource = districts;
+				this.districtDD.DataTextField = "DistrictName";
+				this.districtDD.DataValueField = "USD";
+				this.districtDD.DataBind();
+
+
 				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
 				this.buildingDD.DataSource = buildingList;
 				this.buildingDD.DataTextField = "BuildingName";
@@ -44,9 +51,12 @@ namespace GreenBushIEP.Reports.ServiceReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string serviceIds = "";			
+			string serviceIds = "";
 			string buildingID = this.buildingDD.Value;
-			
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+
 			foreach (ListItem li in ServiceType.Items)
 			{
 				if (li.Selected)
@@ -54,6 +64,34 @@ namespace GreenBushIEP.Reports.ServiceReport
 					serviceIds += string.Format("{0},", li.Value);
 				}
 			}
+						
+
+			if (buildingID == "-1")
+			{
+				buildingID = "";
+
+				if (districtID == "-1")
+				{
+					foreach (ListItem districtItem in districtDD.Items)
+					{
+						var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtItem.Value);
+						foreach (var b in selectedBuildings)
+						{
+							buildingID += string.Format("{0},", b.BuildingID);
+						}
+					}
+
+				}
+				else
+				{
+					var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtID);
+					foreach (var b in selectedBuildings)
+					{
+						buildingID += string.Format("{0},", b.BuildingID);
+					}
+				}
+			}
+
 
 			DateTime startDate = DateTime.Parse(this.startDate.Value);
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
@@ -61,17 +99,29 @@ namespace GreenBushIEP.Reports.ServiceReport
 			serviceIds = serviceIds.Trim().Trim(',');
 			DataTable dt = GetData(serviceIds, buildingID, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
-			ReportDataSource rds2 = new ReportDataSource("DataSet2", dt2);
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
 			ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
 			ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
 			ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
 			ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
-
+			ReportParameter p5 = new ReportParameter("Building", buildingName);
+			ReportParameter p6 = new ReportParameter("District", districtName);
+			
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ServiceReport/rptServices.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			MReportViewer.LocalReport.DataSources.Add(rds2);
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4 });
+			
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5, p6 });
 			MReportViewer.LocalReport.Refresh();
 		}
 

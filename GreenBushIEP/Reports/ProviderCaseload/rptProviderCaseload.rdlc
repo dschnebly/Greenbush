@@ -721,7 +721,7 @@
             </TablixRowHierarchy>
             <NoRowsMessage>No data found for the selected filters.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>1.30917in</Top>
+            <Top>1.43417in</Top>
             <Left>0.01042in</Left>
             <Height>0.92708in</Height>
             <Width>7.58625in</Width>
@@ -748,7 +748,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox55</rd:DefaultName>
-                <Top>0.47708in</Top>
+                <Top>0.72708in</Top>
                 <Left>0.11874in</Left>
                 <Height>0.25in</Height>
                 <Width>1in</Width>
@@ -777,7 +777,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox55</rd:DefaultName>
-                <Top>0.75in</Top>
+                <Top>1in</Top>
                 <Left>0.11874in</Left>
                 <Height>0.25in</Height>
                 <Width>1in</Width>
@@ -807,7 +807,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox4</rd:DefaultName>
-                <Top>0.475in</Top>
+                <Top>0.725in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
                 <Width>6.15625in</Width>
@@ -837,7 +837,7 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox6</rd:DefaultName>
-                <Top>0.74792in</Top>
+                <Top>0.99792in</Top>
                 <Left>1.14097in</Left>
                 <Height>0.25in</Height>
                 <Width>6.14028in</Width>
@@ -888,6 +888,66 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
+              <Textbox Name="Textbox56">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Building:</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox55</rd:DefaultName>
+                <Top>0.47465in</Top>
+                <Left>0.11874in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox16">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>= Parameters!Building.Value</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Textbox4</rd:DefaultName>
+                <Top>0.47257in</Top>
+                <Left>1.13229in</Left>
+                <Height>0.25in</Height>
+                <Width>6.15625in</Width>
+                <ZIndex>6</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
             </ReportItems>
             <PageBreak>
               <BreakLocation>End</BreakLocation>
@@ -895,7 +955,7 @@
             <KeepTogether>true</KeepTogether>
             <Top>0.0675in</Top>
             <Left>0.05709in</Left>
-            <Height>1.13542in</Height>
+            <Height>1.29723in</Height>
             <Width>7.46458in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -905,7 +965,7 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>2.36459in</Height>
+        <Height>2.56251in</Height>
         <Style />
       </Body>
       <Width>7.68834in</Width>
@@ -1085,7 +1145,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!City.Value, "DataSet2") &amp; ", " &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
+                      <Value>=First(Fields!City.Value, "DataSet2") &amp; IIF(First(Fields!City.Value, "DataSet2") = "", " ",", ") &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1146,7 +1206,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.61333in</Height>
+          <Height>0.98833in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1296,6 +1356,10 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="Building">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1316,6 +1380,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>PrintedBy</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Building</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

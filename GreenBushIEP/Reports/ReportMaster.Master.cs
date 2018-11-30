@@ -47,13 +47,6 @@ namespace GreenBushIEP.Report
 			}
 			else
 			{
-
-				//teachers = (from org in db.tblOrganizationMappings
-				//			join user in db.tblUsers
-				//				on org.UserID equals user.UserID
-				//			where (org.AdminID == usr.UserID) && !(user.Archive ?? false)
-				//			select user).Distinct().AsEnumerable();
-
 				teachers = GetTeacherRecursive(null, usr.UserID);
 			}
 
@@ -122,7 +115,13 @@ namespace GreenBushIEP.Report
 
 		public static List<tblServiceType> GetServices()
 		{
-			return db.tblServiceTypes.ToList();
+			List<tblServiceType> services = new List<tblServiceType>();
+
+			services.Add(new tblServiceType {  Name = "All", ServiceCode = "-1"});
+
+			services.AddRange(db.tblServiceTypes.ToList());
+
+			return services;
 		}
 
 		public static string CurrentUser(string userName)
@@ -137,25 +136,56 @@ namespace GreenBushIEP.Report
 			
 		}
 
+
+
+		public static List<tblDistrict> GetDistricts(string userName)
+		{
+			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
+
+			var districtList = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
+
+			List<tblDistrict> districts = new List<tblDistrict>();
+
+			districts.Add(new tblDistrict {  DistrictName = "All",  USD = "-1" });
+
+			districts.AddRange(districtList);
+
+			return districts;
+		}
+
 		public static List<BuildingsViewModel> GetBuildings(string userName)
 		{
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
+			var buildings = new List<BuildingsViewModel>();
+
+			var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
+			buildings.Add(allOption);
 
 			var buildingList = (from bm in db.tblBuildingMappings
-							   join b in db.tblBuildings on bm.USD equals b.USD
-							   where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
-							   select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+								join b in db.tblBuildings on bm.USD equals b.USD
+								where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
+								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
+			buildings.AddRange(buildingList);
+			
+			return buildings;
+		}
 
+		public static List<BuildingsViewModel> GetBuildingsByDistrict(string userName, string usd)
+		{
+			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
-			//var buildingList = (from buildingMaps in db.tblBuildingMappings
-			//					join buildings in db.tblBuildings
-			//					   on buildingMaps.BuildingID equals buildings.BuildingID
-			//					where buildingMaps.UserID == user.UserID
-			//					select new BuildingView { BuildingID = buildings.BuildingID, BuildingName = buildings.BuildingName }).Distinct().OrderBy(b => b.BuildingID).ToList();
+			var buildings = new List<BuildingsViewModel>();
 
-			return buildingList;
+			var buildingList = (from bm in db.tblBuildingMappings
+								join b in db.tblBuildings on bm.USD equals b.USD
+								where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID && b.USD == usd
+								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+
+			buildings.AddRange(buildingList);
+
+			return buildings;
 		}
 
 		public static DataTable GetBuildingData(string id)

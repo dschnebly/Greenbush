@@ -47,6 +47,7 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			string fiscalYears = "";
 			string fiscalYearsNames = "";
 			string buildingID = this.buildingDD.Value;
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 			string teacher = "";
 
 			foreach (ListItem li in providerDD.Items)
@@ -94,18 +95,37 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 				teacher = user.UserID.ToString();
 			}
 
+			if (buildingID == "-1")
+			{
+				buildingID = "";
+
+				foreach (ListItem buildingItem in buildingDD.Items)
+				{
+					buildingID += string.Format("{0},", buildingItem.Value);
+				}
+			}
+
 			DataTable dt = GetData(providerIds, fiscalYears, teacher, buildingID);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
-			ReportDataSource rds2 = new ReportDataSource("DataSet2", dt2);
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
 			ReportParameter p1 = new ReportParameter("ProviderNames", providerNames.Trim().Trim(','));
 			ReportParameter p2 = new ReportParameter("FiscalYears", fiscalYearsNames.Trim().Trim(','));
 			ReportParameter p3 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
-
+			ReportParameter p4 = new ReportParameter("Building", buildingName);
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ProviderCaseload/rptProviderCaseload.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			MReportViewer.LocalReport.DataSources.Add(rds2);
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3 });
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4 });
 			MReportViewer.LocalReport.Refresh();
 		}
 
