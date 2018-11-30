@@ -137,25 +137,48 @@ namespace GreenBushIEP.Report
 			
 		}
 
-		public static List<BuildingsViewModel> GetBuildings(string userName)
+
+
+		public static List<tblDistrict> GetDistricts(string userName)
 		{
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
+			var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
 
-			var buildingList = (from bm in db.tblBuildingMappings
-							   join b in db.tblBuildings on bm.USD equals b.USD
-							   where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
-							   select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+			//var buildingList = (from bm in db.tblBuildingMappings
+			//					join b in db.tblBuildings on bm.USD equals b.USD
+			//					where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
+			//					select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
 
-
+			//var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
+			//var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
 			//var buildingList = (from buildingMaps in db.tblBuildingMappings
 			//					join buildings in db.tblBuildings
 			//					   on buildingMaps.BuildingID equals buildings.BuildingID
 			//					where buildingMaps.UserID == user.UserID
 			//					select new BuildingView { BuildingID = buildings.BuildingID, BuildingName = buildings.BuildingName }).Distinct().OrderBy(b => b.BuildingID).ToList();
 
-			return buildingList;
+			return districts;
+		}
+
+		public static List<BuildingsViewModel> GetBuildings(string userName)
+		{
+			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
+
+			var buildings = new List<BuildingsViewModel>();
+
+			var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
+			buildings.Add(allOption);
+
+			var buildingList = (from bm in db.tblBuildingMappings
+								join b in db.tblBuildings on bm.USD equals b.USD
+								where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID
+								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+
+			buildings.AddRange(buildingList);
+			
+			return buildings;
 		}
 
 		public static DataTable GetBuildingData(string id)

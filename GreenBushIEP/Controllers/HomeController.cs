@@ -1328,7 +1328,23 @@ namespace GreenbushIep.Controllers
                 var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();
                 var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
-                if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
+				//keep looking for first day
+
+				if (firstDaySchoolYear == null)
+				{
+					for (int i = 1; i < 3; i++)
+					{
+						startMonth++;
+						firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();
+						if (firstDaySchoolYear != null)
+							break;
+					}
+				}
+
+
+
+
+				if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
                 {
                     isService = false;
                 }
