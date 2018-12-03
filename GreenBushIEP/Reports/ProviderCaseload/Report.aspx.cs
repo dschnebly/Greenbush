@@ -141,6 +141,8 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			dt.Columns.Add("DaysPerWeek", typeof(string));
 			dt.Columns.Add("Frequency", typeof(string));
 			dt.Columns.Add("ServiceType", typeof(string));
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
 
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
@@ -148,7 +150,9 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 				var list = ctx.up_ReportProviderCaseload(providerId, fiscalYear, teacher, buildingID);
 
 				foreach (var cs in list)
-					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle, cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType);
+					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle
+						,cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType
+						,cs.USD, cs.BuildingName);
 			}
 
 			return dt;

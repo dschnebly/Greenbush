@@ -28,5 +28,7 @@ namespace GreenBushIEP.Models
         public string Location { get; set; }
         public byte DaysPerWeek { get; set; }
         public short Minutes { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
     }
 }

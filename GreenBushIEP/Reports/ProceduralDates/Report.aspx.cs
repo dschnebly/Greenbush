@@ -120,7 +120,9 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			dt.Columns.Add("TeacherFirstName", typeof(string));
 			dt.Columns.Add("TeacherLastName", typeof(string));
 			dt.Columns.Add("TeacherID", typeof(string));
-			
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
+
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
@@ -128,7 +130,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.DateType, cs.EvalDate, cs.StudentFirstName, cs.StudentLastName, cs.TeacherFirstName, cs.TeacherLastName
-						, cs.TeacherID);
+						, cs.TeacherID, cs.USD, cs.BuildingName);
 			}
 
 			return dt;

@@ -81,6 +81,8 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 			dt.Columns.Add("StudentLastName", typeof(string));
 			dt.Columns.Add("DateOfBirth", typeof(DateTime));
 			dt.Columns.Add("KIDSID", typeof(string));
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
 
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
@@ -88,7 +90,7 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 				var list = ctx.up_ReportExcessCost(buildingID);
 
 				foreach (var cs in list)
-					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.DateOfBirth, cs.KIDSID);
+					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.DateOfBirth, cs.KIDSID, cs.USD, cs.BuildingName);
 			}
 
 			return dt;

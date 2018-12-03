@@ -18,5 +18,7 @@ namespace GreenBushIEP.Models
         public long KIDSID { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string BuildingID { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
     }
 }
