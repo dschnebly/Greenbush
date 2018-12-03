@@ -33,6 +33,15 @@
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
           <Property Name="Completed" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblArchiveEvaluationDate">
+          <Key>
+            <PropertyRef Name="archiveEvaluationDateID" />
+          </Key>
+          <Property Name="archiveEvaluationDateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="evalutationDate" Type="datetime" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
             <PropertyRef Name="AuditLogID" />
@@ -1161,6 +1170,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblArchiveEvaluationDate" EntityType="Self.tblArchiveEvaluationDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAuditLog" EntityType="Self.tblAuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
@@ -1476,6 +1486,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" />
           <EntitySet Name="tblIEPs" EntityType="IndividualizedEducationProgramModel.tblIEP" />
           <EntitySet Name="tblCareerPaths" EntityType="IndividualizedEducationProgramModel.tblCareerPath" />
+          <EntitySet Name="tblArchiveEvaluationDates" EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2661,6 +2672,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="CareerPath" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblArchiveEvaluationDate">
+          <Key>
+            <PropertyRef Name="archiveEvaluationDateID" />
+          </Key>
+          <Property Name="archiveEvaluationDateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="evalutationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3800,6 +3820,16 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="CareerPath" ColumnName="CareerPath" />
                 <ScalarProperty Name="CareerPathID" ColumnName="CareerPathID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblArchiveEvaluationDates">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveEvaluationDate">
+              <MappingFragment StoreEntitySet="tblArchiveEvaluationDate">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="evalutationDate" ColumnName="evalutationDate" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="archiveEvaluationDateID" ColumnName="archiveEvaluationDateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -72,6 +72,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" Width="1.5" PointX="15.375" PointY="23.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblIEP" Width="1.5" PointX="16.75" PointY="17.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCareerPath" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" Width="1.5" PointX="25.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

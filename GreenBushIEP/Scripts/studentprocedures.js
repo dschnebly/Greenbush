@@ -333,6 +333,7 @@
 
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
+            alert('here');
 
             $.ajax({
                 type: 'GET',
