@@ -132,6 +132,10 @@
           <DataField>USD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="FrequencyDesc">
+          <DataField>FrequencyDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -838,14 +842,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Frequency">
+                        <Textbox Name="FrequencyDesc">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Frequency.Value</Value>
+                                  <Value>=Fields!FrequencyDesc.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -854,7 +858,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Frequency</rd:DefaultName>
+                          <rd:DefaultName>FrequencyDesc</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -866,6 +870,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

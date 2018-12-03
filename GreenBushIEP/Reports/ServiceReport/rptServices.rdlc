@@ -132,6 +132,10 @@
           <DataField>USD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="FrequencyDesc">
+          <DataField>FrequencyDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -151,31 +155,31 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.60673in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.84375in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.94399in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.91387in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.86411in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.91387in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.1919in</Width>
+                  <Width>0.5044in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.225in</Width>
+                  <Width>0.63429in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -512,7 +516,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -637,14 +640,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Frequency">
+                        <Textbox Name="FrequencyDesc">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Frequency.Value</Value>
+                                  <Value>=Fields!FrequencyDesc.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -653,7 +656,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Frequency</rd:DefaultName>
+                          <rd:DefaultName>FrequencyDesc</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -793,7 +796,7 @@
             <Top>2.23194in</Top>
             <Left>0.04767in</Left>
             <Height>0.5in</Height>
-            <Width>9.4169in</Width>
+            <Width>7.22501in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -879,7 +882,7 @@
                 <Top>0.975in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>6.15625in</Width>
+                <Width>5.6155in</Width>
                 <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
@@ -909,7 +912,7 @@
                 <Top>1.24792in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>6.14028in</Width>
+                <Width>5.59953in</Width>
                 <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
@@ -1005,7 +1008,7 @@
                 <Top>1.51875in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>6.14028in</Width>
+                <Width>5.59953in</Width>
                 <ZIndex>6</ZIndex>
                 <Style>
                   <Border>
@@ -1065,7 +1068,7 @@
                 <Top>0.69688in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>6.15625in</Width>
+                <Width>5.6155in</Width>
                 <ZIndex>8</ZIndex>
                 <Style>
                   <Border>
@@ -1125,7 +1128,7 @@
                 <Top>0.42188in</Top>
                 <Left>1.12499in</Left>
                 <Height>0.25in</Height>
-                <Width>6.15625in</Width>
+                <Width>5.6155in</Width>
                 <ZIndex>10</ZIndex>
                 <Style>
                   <Border>
@@ -1145,7 +1148,7 @@
             <DataElementOutput>NoOutput</DataElementOutput>
             <Top>0.07854in</Top>
             <Height>2.02084in</Height>
-            <Width>7.46458in</Width>
+            <Width>6.92244in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
               <Hidden>= (Globals!RenderFormat.IsInteractive = False)</Hidden>
@@ -1160,7 +1163,7 @@
         <Height>2.8425in</Height>
         <Style />
       </Body>
-      <Width>9.46457in</Width>
+      <Width>7.2875in</Width>
       <Page>
         <PageHeader>
           <Height>1.75in</Height>
