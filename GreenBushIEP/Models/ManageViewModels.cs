@@ -550,13 +550,16 @@ namespace GreenBushIEP.Models
             building = new tblBuilding();
             teacherBuilding = new tblBuilding();
             neighborhoodBuilding = new tblBuilding();
+			reevalDates = new List<tblArchiveEvaluationDate>();
 			
 		}
 
         public tblUser teacher { get; set; }
 		public tblStudentInfo student { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
-        public string ethnicity { get; set; }
+		public List<tblArchiveEvaluationDate> reevalDates { get; set; }
+
+		public string ethnicity { get; set; }
         public string gender { get; set; }
         public string parentLang { get; set; }
         public string studentLang { get; set; }

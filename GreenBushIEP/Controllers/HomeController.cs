@@ -2073,7 +2073,7 @@ namespace GreenbushIep.Controllers
                         studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
                         studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                         studentDetails.edStatusCodeDesc = info != null ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
-
+						studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
                     }
 
                     theIEP.studentDetails = studentDetails;
@@ -2662,16 +2662,15 @@ namespace GreenbushIep.Controllers
 
 
                 bool isDraft = false;
-                //if (isArchive == "1")
-                //{
-                //    var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-                //    if (iepObj != null)
-                //    {
-                //        isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
-                //    }
-                //}				
 
-                tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+				var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+				if (iepObj != null)
+				{
+					isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+				}
+
+
+				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
                 var cssText = @"<style>hr{color:whitesmoke}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;}table {width:600px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0}</style>";
                 string result = "";
@@ -2836,7 +2835,7 @@ namespace GreenbushIep.Controllers
             byte[] bytes = fileIn;
             byte[] fileOut = null;
             Font blackFont = FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK);
-            Font grayFont = FontFactory.GetFont("Arial", 75, Font.NORMAL, new BaseColor(245, 245, 245));
+            Font grayFont = FontFactory.GetFont("Arial", 75, Font.NORMAL, new BaseColor(218, 218, 218));
             using (MemoryStream stream = new MemoryStream())
             {
                 PdfReader reader = new PdfReader(bytes);

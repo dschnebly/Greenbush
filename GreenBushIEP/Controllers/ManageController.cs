@@ -2,6 +2,7 @@
 using GreenBushIEP.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
@@ -330,11 +331,17 @@ namespace GreenBushIEP.Controllers
                         if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+
+							
                         }
                     }
                     db.SaveChanges();
 
-                    return Json(new { Result = "success", Message = studentId });
+					if (info != null && info.ReEvalConsentSigned.HasValue)
+						CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
+
+
+					return Json(new { Result = "success", Message = studentId });
                 }
                 catch (Exception e)
                 {
@@ -715,7 +722,11 @@ namespace GreenBushIEP.Controllers
                     }
 
                     db.SaveChanges();
-                }
+
+					if (info != null && info.ReEvalConsentSigned.HasValue)
+						CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
+
+				}
                 catch (Exception e)
                 {
                     return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.InnerException.ToString() });
@@ -1546,6 +1557,20 @@ namespace GreenBushIEP.Controllers
             filterContext.Result = RedirectToAction("Index", "Home");
         }
 
+		protected void CreateReevalArchive(int studentId, DateTime reEvaldate)
+		{
+			if (reEvaldate != null)
+			{
+				var archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reEvaldate.Date).AsQueryable(); 
+				if (archives.Count() == 0)
+				{
+					db.tblArchiveEvaluationDates.Add(new tblArchiveEvaluationDate { evalutationDate = reEvaldate.Date, Create_Date = DateTime.Now, userID = studentId });
+					db.SaveChanges();
+				}
+
+			
+			}
+		}
         #region helpers
 
         [NonAction]
