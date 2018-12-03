@@ -292,7 +292,7 @@ namespace GreenBushIEP.Models
             if(thisIEP != null)
             {
                 if (thisIEP.Amendment && thisIEP.IsActive && thisIEP.IepStatus == IEPStatus.DRAFT)
-                    return IEPStatus.AMMENDMENT;
+                    return IEPStatus.AMENDMENT;
                 if (!thisIEP.IsActive)
                     return IEPStatus.ARCHIVE;
                 if (thisIEP.AmendingIEPid != null && thisIEP.IsActive && thisIEP.IepStatus == IEPStatus.ANNUAL)
@@ -614,6 +614,6 @@ public class IEPStatus
     public const string ARCHIVE = "ARCHIVE";
     public const string DRAFT = "DRAFT";
     public const string DELETED = "DELETED";
-    public const string AMMENDMENT = "AMMENDMENT";
+    public const string AMENDMENT = "AMENDMENT";
     public const string ANNUAL = "ANNUAL";
 }

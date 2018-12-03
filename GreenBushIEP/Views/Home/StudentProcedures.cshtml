@@ -1117,7 +1117,7 @@
                                     <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
                                 }
                             }
-                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.AMMENDMENT)
+                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.AMENDMENT)
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }

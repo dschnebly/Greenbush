@@ -106,7 +106,7 @@ namespace GreenBushIEP.Models
 
             if (listOfStudentsIEPs.Count > 0)
             {
-                current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).First() : listOfStudentsIEPs.First();
+                current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).First() : listOfStudentsIEPs.FirstOrDefault();
                 hasPlan = true;
             }
             else
@@ -160,7 +160,7 @@ namespace GreenBushIEP.Models
             bool writtensNeeds = (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value));
             bool mathNeeds = (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value));
 
-            displayIEPStatus = (current.Amendment & current.IsActive & current.IepStatus == IEPStatus.DRAFT) ? IEPStatus.AMMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus);
+            displayIEPStatus = (current.Amendment & current.IsActive & current.IepStatus == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
             hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
             hasBehavior = (studentSocial != null && (studentSocial.BehaviorInterventionPlan)) || db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null;
         }

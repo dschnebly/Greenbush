@@ -1015,7 +1015,7 @@ namespace GreenbushIep.Controllers
                     //create archive
                     try
                     {
-                        var theIEP = GetIEPPrint(stId, 0);
+                        var theIEP = GetIEPPrint(stId, IEPid);
                         var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
 
                         string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
@@ -1083,21 +1083,21 @@ namespace GreenbushIep.Controllers
             if (studentActiveIEP != null)
             {
                 // if ammended is in play then they can't revert.
-                tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid == IepId).FirstOrDefault();
+                tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid ==IepId && i.IsActive).FirstOrDefault();
                 if (studentActiveIEP != null)
                 {
                     return Json(new { Result = "error", Message = "You cannot revert an IEP that has an ammendment." }, JsonRequestBehavior.AllowGet);
                 }
 
                 // if annual is in play then they can't revert.
-                tblIEP studentAnnualIEP = studentIEPs.Where(i => i.IsActive && i.IepStatus == IEPStatus.ACTIVE && i.IEPid != IepId).FirstOrDefault();
+                tblIEP studentAnnualIEP = studentIEPs.Where(i => i.IsActive && i.IepStatus == IEPStatus.ACTIVE && i.IEPid != IepId && i.IsActive).FirstOrDefault();
                 if(studentAnnualIEP != null)
                 {
                     return Json(new { Result = "error", Message = "You cannot revert an IEP that has an annual." }, JsonRequestBehavior.AllowGet);
                 }
 
                 // make sure there isn't another draft iep in play.
-                tblIEP studentDraftIep = studentIEPs.Where(i => i.IepStatus == IEPStatus.DRAFT && i.IsActive && !i.Amendment).FirstOrDefault();
+                tblIEP studentDraftIep = studentIEPs.Where(i => i.IepStatus == IEPStatus.DRAFT && i.IsActive && !i.Amendment && i.IsActive).FirstOrDefault();
                 if (studentDraftIep == null)
                 {
                     studentActiveIEP.IepStatus = IEPStatus.DRAFT;

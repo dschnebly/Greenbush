@@ -491,7 +491,7 @@
                             @if (user.RoleID == "2")
                             {
                                 <i class="fa fa-cog" aria-hidden="true"></i>
-                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <text>@user.FirstName  @user.LastName</text>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                                 </button>
@@ -503,7 +503,7 @@
                             else if (user.RoleID == "3")
                             {
                                 <i class="fa fa-user-o" aria-hidden="true"></i>
-                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <text>@user.FirstName  @user.LastName</text>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                                 </button>
@@ -516,7 +516,7 @@
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                    <text>@user.FirstName  @user.LastName</text>
                                 </a>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
@@ -530,7 +530,7 @@
                             {
                                 <i class="fa fa-magnet" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                    <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                    <text>@user.FirstName  @user.LastName</text>
                                 </a>
                                 <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                     <span class="glyphicon glyphicon glyphicon-trash"></span>
@@ -543,7 +543,7 @@
                             else
                             {
                                 <i class="fa fa-child" aria-hidden="true"></i>
-                                <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
+                                <text>@user.FirstName  @user.LastName</text>
                                 <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                     <span class="glyphicon glyphicon-log-out"></span>
                                 </a>
