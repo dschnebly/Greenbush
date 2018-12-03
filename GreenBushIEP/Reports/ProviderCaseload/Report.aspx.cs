@@ -141,14 +141,18 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			dt.Columns.Add("DaysPerWeek", typeof(string));
 			dt.Columns.Add("Frequency", typeof(string));
 			dt.Columns.Add("ServiceType", typeof(string));
-
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
+			dt.Columns.Add("FrequencyDesc", typeof(string));
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
 				var list = ctx.up_ReportProviderCaseload(providerId, fiscalYear, teacher, buildingID);
 
 				foreach (var cs in list)
-					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle, cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType);
+					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle
+						,cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType
+						,cs.USD, cs.BuildingName, cs.FrequencyDesc);
 			}
 
 			return dt;

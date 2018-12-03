@@ -111,7 +111,9 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			dt.Columns.Add("DateOfBirth", typeof(DateTime));
 			dt.Columns.Add("PrimaryExceptionality", typeof(string));
 			dt.Columns.Add("SecondaryExceptionality", typeof(string));
-
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
+			dt.Columns.Add("FrequencyDesc", typeof(string));
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
@@ -120,7 +122,8 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,
 						cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes,
-						cs.DateOfBirth, cs.PrimaryExceptionality, cs.SecondaryExceptionality);
+						cs.DateOfBirth, cs.PrimaryExceptionality, cs.SecondaryExceptionality
+						, cs.USD, cs.BuildingName, cs.FrequencyDesc);
 			}
 
 			return dt;

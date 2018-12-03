@@ -20,5 +20,11 @@ namespace GreenBushIEP.Models
         public string TeacherFirstName { get; set; }
         public string TeacherLastName { get; set; }
         public int TeacherID { get; set; }
+        public Nullable<System.DateTime> AnnualDate { get; set; }
+        public Nullable<System.DateTime> ReEvalDate { get; set; }
+        public string BuildingID { get; set; }
+        public int UserID { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
     }
 }

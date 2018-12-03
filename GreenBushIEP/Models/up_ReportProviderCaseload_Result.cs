@@ -27,5 +27,10 @@ namespace GreenBushIEP.Models
         public string ProviderName { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
+        public string BuildingID { get; set; }
+        public Nullable<int> ProviderID { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
+        public string FrequencyDesc { get; set; }
     }
 }

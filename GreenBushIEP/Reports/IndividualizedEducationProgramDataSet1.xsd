@@ -239,6 +239,8 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="BuildingName" msprop:Generator_ColumnVarNameInTable="columnBuildingName" msprop:Generator_ColumnPropNameInRow="BuildingName" msprop:Generator_ColumnPropNameInTable="BuildingNameColumn" msprop:Generator_UserColumnName="BuildingName" type="xs:string" minOccurs="0" />
+              <xs:element name="USD" msprop:Generator_ColumnVarNameInTable="columnUSD" msprop:Generator_ColumnPropNameInRow="USD" msprop:Generator_ColumnPropNameInTable="USDColumn" msprop:Generator_UserColumnName="USD" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -292,6 +294,8 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="UserID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnUserID" msprop:Generator_ColumnPropNameInRow="UserID" msprop:Generator_ColumnPropNameInTable="UserIDColumn" msprop:Generator_UserColumnName="UserID" type="xs:int" />
+              <xs:element name="BuildingName" msprop:Generator_ColumnVarNameInTable="columnBuildingName" msprop:Generator_ColumnPropNameInRow="BuildingName" msprop:Generator_ColumnPropNameInTable="BuildingNameColumn" msprop:Generator_UserColumnName="BuildingName" type="xs:string" minOccurs="0" />
+              <xs:element name="USD" msprop:Generator_ColumnVarNameInTable="columnUSD" msprop:Generator_ColumnPropNameInRow="USD" msprop:Generator_ColumnPropNameInTable="USDColumn" msprop:Generator_UserColumnName="USD" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -356,6 +360,9 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="ProviderID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnProviderID" msprop:Generator_ColumnPropNameInRow="ProviderID" msprop:Generator_ColumnPropNameInTable="ProviderIDColumn" msprop:Generator_UserColumnName="ProviderID" type="xs:int" minOccurs="0" />
+              <xs:element name="BuildingName" msprop:Generator_ColumnVarNameInTable="columnBuildingName" msprop:Generator_ColumnPropNameInRow="BuildingName" msprop:Generator_ColumnPropNameInTable="BuildingNameColumn" msprop:Generator_UserColumnName="BuildingName" type="xs:string" minOccurs="0" />
+              <xs:element name="USD" msprop:Generator_ColumnVarNameInTable="columnUSD" msprop:Generator_ColumnPropNameInRow="USD" msprop:Generator_ColumnPropNameInTable="USDColumn" msprop:Generator_UserColumnName="USD" type="xs:string" minOccurs="0" />
+              <xs:element name="FrequencyDesc" msprop:Generator_ColumnVarNameInTable="columnFrequencyDesc" msprop:Generator_ColumnPropNameInRow="FrequencyDesc" msprop:Generator_ColumnPropNameInTable="FrequencyDescColumn" msprop:Generator_UserColumnName="FrequencyDesc" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -437,6 +444,9 @@
               </xs:element>
               <xs:element name="DaysPerWeek" msprop:Generator_ColumnVarNameInTable="columnDaysPerWeek" msprop:Generator_ColumnPropNameInRow="DaysPerWeek" msprop:Generator_ColumnPropNameInTable="DaysPerWeekColumn" msprop:Generator_UserColumnName="DaysPerWeek" type="xs:unsignedByte" />
               <xs:element name="Minutes" msprop:Generator_ColumnVarNameInTable="columnMinutes" msprop:Generator_ColumnPropNameInRow="Minutes" msprop:Generator_ColumnPropNameInTable="MinutesColumn" msprop:Generator_UserColumnName="Minutes" type="xs:short" />
+              <xs:element name="BuildingName" msprop:Generator_ColumnVarNameInTable="columnBuildingName" msprop:Generator_ColumnPropNameInRow="BuildingName" msprop:Generator_ColumnPropNameInTable="BuildingNameColumn" msprop:Generator_UserColumnName="BuildingName" type="xs:string" minOccurs="0" />
+              <xs:element name="USD" msprop:Generator_ColumnVarNameInTable="columnUSD" msprop:Generator_ColumnPropNameInRow="USD" msprop:Generator_ColumnPropNameInTable="USDColumn" msprop:Generator_UserColumnName="USD" type="xs:string" minOccurs="0" />
+              <xs:element name="FrequencyDesc" msprop:Generator_ColumnVarNameInTable="columnFrequencyDesc" msprop:Generator_ColumnPropNameInRow="FrequencyDesc" msprop:Generator_ColumnPropNameInTable="FrequencyDescColumn" msprop:Generator_UserColumnName="FrequencyDesc" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
