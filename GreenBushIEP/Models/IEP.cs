@@ -215,8 +215,8 @@ namespace GreenBushIEP.Models
             studentHealth.HearingResult = -1;
             studentHealth.VisionDate = DateTime.Now;
             studentHealth.VisionResult = -1;
-            studentHealth.VisionImparied = false;
-            studentHealth.HearingImparied = false;
+            studentHealth.VisionImpaired = false;
+            studentHealth.HearingImpaired = false;
             studentHealth.HealthCarePlan = false;
             studentHealth.Completed = true;
 

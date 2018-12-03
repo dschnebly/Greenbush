@@ -36,8 +36,8 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> FiledOn { get; set; }
         public bool Completed { get; set; }
     
+        public virtual tblProvider tblProvider { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGoal> tblGoals { get; set; }
-        public virtual tblProvider tblProvider { get; set; }
     }
 }

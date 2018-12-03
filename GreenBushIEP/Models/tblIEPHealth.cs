@@ -24,8 +24,8 @@ namespace GreenBushIEP.Models
         public int HearingResult { get; set; }
         public System.DateTime VisionDate { get; set; }
         public int VisionResult { get; set; }
-        public bool VisionImparied { get; set; }
-        public Nullable<bool> HearingImparied { get; set; }
+        public bool VisionImpaired { get; set; }
+        public Nullable<bool> HearingImpaired { get; set; }
         public string MedicationDescription { get; set; }
         public Nullable<bool> MedicaidEligible { get; set; }
         public string MedicaidID { get; set; }

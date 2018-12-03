@@ -30,7 +30,7 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImparied != null ? "checked" : String.Empty ) />
+                <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImpaired != null ? "checked" : String.Empty ) />
                 <label class="onoffswitch2-label" for="HearingImpaired">
                     <span class="onoffswitch2-inner"></span>
                     <span class="onoffswitch2-switch"></span>
@@ -49,8 +49,8 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a visual impairment?</label>&nbsp;&nbsp;
             <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="VisionImparied" id="VisionImparied" class="onoffswitch2-checkbox" @(Model.VisionImparied ? "checked" : String.Empty ) />
-                <label class="onoffswitch2-label" for="VisionImparied">
+                <input type="checkbox" name="VisionImpaired" id="VisionImpaired" class="onoffswitch2-checkbox" @(Model.VisionImpaired ? "checked" : String.Empty ) />
+                <label class="onoffswitch2-label" for="VisionImpaired">
                     <span class="onoffswitch2-inner"></span>
                     <span class="onoffswitch2-switch"></span>
                 </label>
@@ -151,7 +151,7 @@
             $("input[name='HealthVisionDate']")[0].value = new Date().toJSON().slice(0, 10);
             $("input[name='HealthHearingResult']").prop('checked', false);
             $("input[name='HealthVisionResult']").prop('checked', false);
-            $("input[name='VisionImparied']").prop('checked', false);
+            $("input[name='VisionImpaired']").prop('checked', false);
             $("input[name='HearingImpaired']").prop('checked', false);
             $("input[name='HealthCarePlan']").prop('checked', false);
             $("#MeetNeedByOtherDescription").val('');

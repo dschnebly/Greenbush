@@ -1951,7 +1951,7 @@ namespace GreenbushIep.Controllers
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
-            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid : iepId;
+            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid && i.IEPid == iepId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid : iepId;
             var studentDetails = new StudentDetailsPrintViewModel();
 
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();

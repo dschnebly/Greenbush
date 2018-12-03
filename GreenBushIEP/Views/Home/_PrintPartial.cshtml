@@ -317,7 +317,7 @@
                     <p>The Team has concerns about @Model.studentFirstName in the area of Health that impact the ability to learn or access the general curriculum.</p>
                 }
 
-                if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
+                if (Model.studentHealth.HearingImpaired.HasValue && Model.studentHealth.HearingImpaired.Value)
                 {
                     <p>
                         @Model.studentFirstName has a hearing impairment.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
@@ -340,7 +340,7 @@
 
                 </p>
 
-                if (Model.studentHealth.HearingImparied.HasValue && Model.studentHealth.HearingImparied.Value)
+                if (Model.studentHealth.HearingImpaired.HasValue && Model.studentHealth.HearingImpaired.Value)
                 {
                     <p>
                         @Model.studentFirstName has a visual impairment.  The IEP team will provide instruction in Braille and the use of Braille unless determined, through an evaluation, to be inappropriate.

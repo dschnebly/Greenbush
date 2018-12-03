@@ -293,7 +293,22 @@
     <Compile Include="Models\tblContact.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_GoalExport.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ModuleGoalFlags.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_PrimaryDisabilities.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_SecondaryDisabilities.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_ServiceExport.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_StudentExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
@@ -308,9 +323,6 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportServices_Result1.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Reports\ExcessCostReport\Report.aspx.cs">
@@ -368,9 +380,6 @@
     <Compile Include="Models\IEP.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StudentPlan.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tblAccommodation.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -546,18 +555,6 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportProviderCaseload_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_PrimaryDisabilities.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_SecondaryDisabilities.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_ServiceExport.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_StudentExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
