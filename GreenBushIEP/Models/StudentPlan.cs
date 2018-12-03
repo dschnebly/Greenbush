@@ -17,7 +17,7 @@ namespace GreenBushIEP.Models
         public bool HealthMedications { get; set; }
         public int HealthHearingResult { get; set; }
         public int HealthVisionResult { get; set; }
-        public bool HealthVisionImparied { get; set; }
+        public bool HealthVisionImpaired { get; set; }
         public bool HealthProgressTowardGenEd { get; set; }
         public bool HealthCarePlan { get; set; }
         public bool MotorNoConcern { get; set; }
@@ -67,7 +67,7 @@ namespace GreenBushIEP.Models
             this.HealthMedications = false;
             this.HealthHearingResult = -1;
             this.HealthVisionResult = -1;
-            this.HealthVisionImparied = false;
+            this.HealthVisionImpaired = false;
             this.HealthProgressTowardGenEd = false;
             this.HealthCarePlan = false;
             this.MotorNoConcern = true;
@@ -123,7 +123,7 @@ namespace GreenBushIEP.Models
                     this.HealthMedications = studentHealth.Medications;
                     this.HealthNoConcern = studentHealth.NoConcerns;
                     this.HealthVisionDate = studentHealth.VisionDate;
-                    this.HealthVisionImparied = studentHealth.VisionImparied;
+                    this.HealthVisionImpaired = studentHealth.VisionImpaired;
                     this.HealthVisionResult = studentHealth.VisionResult;
                     this.HealthProgressTowardGenEd = studentHealth.ProgressTowardGenEd;
                     this.HealthCarePlan = studentHealth.HealthCarePlan ?? false;
@@ -239,7 +239,7 @@ namespace GreenBushIEP.Models
                     studentHealth.Medications = this.HealthMedications;
                     studentHealth.NoConcerns = this.HealthNoConcern;
                     studentHealth.VisionDate = this.HealthVisionDate;
-                    studentHealth.VisionImparied = this.HealthVisionImparied;
+                    studentHealth.VisionImpaired = this.HealthVisionImpaired;
                     studentHealth.VisionResult = this.HealthVisionResult;
                     studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
                     studentHealth.HealthCarePlan = this.HealthCarePlan;

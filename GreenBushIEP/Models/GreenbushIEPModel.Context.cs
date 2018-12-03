@@ -27,8 +27,8 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
+        public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
         public virtual DbSet<tblAuditLog> tblAuditLogs { get; set; }
         public virtual DbSet<tblBehaviorBaseline> tblBehaviorBaselines { get; set; }
         public virtual DbSet<tblBehaviorHypothesi> tblBehaviorHypothesis { get; set; }
@@ -43,8 +43,11 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
+        public virtual DbSet<tblCareerPath> tblCareerPaths { get; set; }
+        public virtual DbSet<tblContact> tblContacts { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
+        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
@@ -57,6 +60,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblIEPMath> tblIEPMaths { get; set; }
         public virtual DbSet<tblIEPMotor> tblIEPMotors { get; set; }
         public virtual DbSet<tblIEPReading> tblIEPReadings { get; set; }
+        public virtual DbSet<tblIEP> tblIEPs { get; set; }
         public virtual DbSet<tblIEPSocial> tblIEPSocials { get; set; }
         public virtual DbSet<tblIEPWritten> tblIEPWrittens { get; set; }
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
@@ -65,6 +69,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
         public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
         public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
+        public virtual DbSet<tblProvider> tblProviders { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
@@ -79,17 +84,11 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
+        public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
         public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
-        public virtual DbSet<tblProvider> tblProviders { get; set; }
-        public virtual DbSet<tblContact> tblContacts { get; set; }
-        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
-        public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
-        public virtual DbSet<tblIEP> tblIEPs { get; set; }
-        public virtual DbSet<tblCareerPath> tblCareerPaths { get; set; }
-        public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

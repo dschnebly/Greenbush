@@ -18,9 +18,9 @@ namespace GreenBushIEP.Models
         public string TableName { get; set; }
         public string ColumnName { get; set; }
         public Nullable<int> UserID { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> IEPid { get; set; }
         public string Value { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
     }

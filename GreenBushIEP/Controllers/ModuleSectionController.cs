@@ -27,10 +27,10 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.Concerns = !HealthIEP.NoConcerns;
                         HealthIEP.ProgressTowardGenEd = collection["HealthProgressTowardGenEd"] == "on" ? true : false;
                         HealthIEP.Diagnosis = collection["HealthDiagnosis"] == "on" ? true : false;
-                        HealthIEP.HearingImparied = (!String.IsNullOrEmpty(collection["HearingImpaired"])) ? true : false;
+                        HealthIEP.HearingImpaired = (!String.IsNullOrEmpty(collection["HearingImpaired"])) ? true : false;
                         HealthIEP.HearingDate = Convert.ToDateTime(collection["HearingDate"]);
                         HealthIEP.HearingResult = Convert.ToInt32(collection["HearingResult"]);
-                        HealthIEP.VisionImparied = collection["VisionImparied"] == "on" ? true : false;
+                        HealthIEP.VisionImpaired = collection["VisionImpaired"] == "on" ? true : false;
                         HealthIEP.HealthCarePlan = collection["ModuleHealthCarePlan"] == "on" ? true : false;
                         HealthIEP.AdditionalHealthInfo = collection["AdditionalHealthInfo"].ToString();
                         HealthIEP.VisionDate = Convert.ToDateTime(collection["VisionDate"]);
