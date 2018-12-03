@@ -1137,6 +1137,9 @@
             <Height>1.61459in</Height>
             <Width>9.8081in</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>= (Globals!RenderFormat.IsInteractive = False)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>

@@ -762,7 +762,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>Report Filters</Value>
+                        <Value EvaluationMode="Constant">Report Filters</Value>
                         <Style>
                           <FontStyle>Normal</FontStyle>
                           <FontSize>11pt</FontSize>
@@ -976,10 +976,14 @@
               <BreakLocation>End</BreakLocation>
             </PageBreak>
             <KeepTogether>true</KeepTogether>
+            <DataElementOutput>NoOutput</DataElementOutput>
             <Top>0.07854in</Top>
             <Height>2.02084in</Height>
             <Width>7.46458in</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>= (Globals!RenderFormat.IsInteractive = False)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>

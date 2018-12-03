@@ -122,13 +122,18 @@
 		</tr>
 		<tr>
 			<td><label>Re-Eval Signed:</label></td>
-			<td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.ToShortDateString() : "")</td>
+			<td>
+				@foreach(var reevalDate in Model.studentDetails.reevalDates)
+				{
+					<span>@reevalDate.evalutationDate.ToShortDateString()</span><br/>
+				}
+			</td>
 			<td><label>3 Year Re-Eval:</label></td>
 			<td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.AddYears(3).ToShortDateString() : "")</td>
 		</tr>
 		<tr>
 			<td><label>Re-Eval Completion:</label></td>
-			<td>**</td>
+			<td></td>
 			<td><label>Initiation:</label></td>
 			<td>@Model.studentDetails.inititationDate</td>
 		</tr>
