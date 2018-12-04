@@ -113,7 +113,6 @@
             }
         }
 
-
         var dayStart = a.getUTCDay(); //start date
         var dayEnd = b.getUTCDay(); //end date
         // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday

@@ -166,12 +166,10 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => Model.user.UserID)
-
             <ul class="breadcrumb">
                 <li>@Html.ActionLink((string)(ViewBag.RoleName + " Portal").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                 <li class="active" style="font-size: 20px;">@ViewBag.Title</li>
             </ul>
-
             <div class="col-md-10">
                 <div class="input-group">
                     <img src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.user.ImageURL.ToString())" alt="" title="" class="img-circle pull-left" height="100" width="100" id="avatarImage" />
@@ -183,7 +181,6 @@
                 </div>
             </div>
         </div>
-
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
@@ -269,12 +266,11 @@
         </div>
         <div class="form-group" style="padding: 0 20px 20px;">
             <button type="submit" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
-                <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Update</span>
+                <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Save</span>
             </button>
         </div>
     </div>
     <br />
-
     <div class="ajax-loader" style="visibility: hidden;">
         <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
     </div>

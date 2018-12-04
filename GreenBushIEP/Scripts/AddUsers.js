@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
 
-    //// attach event
-    //// fires when the document is loaded, adds the districts to the drop down.
+    // attach event
+    // fires when the document is loaded, adds the districts to the drop down.
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
         width: "100%"
     });
 
-    //// attach event
-    //// fires when an avatar is uploaded
+    // attach event
+    // fires when an avatar is uploaded
     $("#adminpersona").on('change', function (e) {
         var oFReader = new FileReader();
         oFReader.readAsDataURL(document.getElementById('adminpersona').files[0]);
@@ -32,10 +32,11 @@
                 $("#alertMessage").slideUp(500);
             });
 
-            return false;;
+            return false;
         }
 
         if ($("input.input-validation-error").length > 0) {
+
             return false;
         }
 
