@@ -507,6 +507,8 @@
         $('.ajax-loader').css("visibility", "visible");
         $(".ajax-loader img").css("visibility", "visible");
         
+        var stid = getUrlParameter('stid');
+
         var form = $(this).closest("form");
         $.ajax({
             type: 'POST',
@@ -515,6 +517,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.Result == "success") {
+
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
                         $('.ajax-loader').css("visibility", "hidden");
@@ -526,6 +529,7 @@
                     }
 
                     $(window).trigger("saving.bs.modal");
+                    window.location.href = '/Home/StudentProcedures?stid=' + stid;
                 } else {
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
