@@ -59,7 +59,14 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-    @*@Scripts.Render("~/Scripts/jsonpath.js")*@
+    <script src="https://wchat.freshchat.com/js/widget.js"></script>
     @RenderSection("scripts", false)
+    <script>
+      window.fcWidget.init({
+        token: "WEB_CHAT_TOKEN",
+        host: "https://wchat.freshchat.com",
+        siteId: "WEB_CHAT_TOKEN"
+      });
+    </script>
 </body>
 </html>
