@@ -29,11 +29,11 @@
         </div>
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a hearing impairment?</label>&nbsp;&nbsp;
-            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="onoffswitch2-checkbox" @(Model.HearingImpaired != null ? "checked" : String.Empty ) />
-                <label class="onoffswitch2-label" for="HearingImpaired">
-                    <span class="onoffswitch2-inner"></span>
-                    <span class="onoffswitch2-switch"></span>
+            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="HearingImpaired" id="HearingImpaired" class="falsetrueswitch-checkbox" @(Model.HearingImpaired != false ? "checked" : String.Empty ) />
+                <label class="falsetrueswitch-label" for="HearingImpaired">
+                    <span class="falsetrueswitch-inner"></span>
+                    <span class="falsetrueswitch-switch"></span>
                 </label>
             </div>
         </fieldset>
@@ -48,11 +48,11 @@
         </fieldset>
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Does the student have a visual impairment?</label>&nbsp;&nbsp;
-            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="VisionImpaired" id="VisionImpaired" class="onoffswitch2-checkbox" @(Model.VisionImpaired ? "checked" : String.Empty ) />
-                <label class="onoffswitch2-label" for="VisionImpaired">
-                    <span class="onoffswitch2-inner"></span>
-                    <span class="onoffswitch2-switch"></span>
+            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="VisionImpaired" id="VisionImpaired" class="falsetrueswitch-checkbox" @(Model.VisionImpaired ? "checked" : String.Empty ) />
+                <label class="falsetrueswitch-label" for="VisionImpaired">
+                    <span class="falsetrueswitch-inner"></span>
+                    <span class="falsetrueswitch-switch"></span>
                 </label>
             </div>
         </fieldset>
@@ -67,11 +67,11 @@
         </fieldset>
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a health care plan?</label>&nbsp;&nbsp;
-            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                <input type="checkbox" name="ModuleHealthCarePlan" id="ModuleHealthCarePlan" class="onoffswitch2-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
-                <label class="onoffswitch2-label" for="ModuleHealthCarePlan">
-                    <span class="onoffswitch2-inner"></span>
-                    <span class="onoffswitch2-switch"></span>
+            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                <input type="checkbox" name="ModuleHealthCarePlan" id="ModuleHealthCarePlan" class="falsetrueswitch-checkbox" @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "checked" : String.Empty ) />
+                <label class="falsetrueswitch-label" for="ModuleHealthCarePlan">
+                    <span class="falsetrueswitch-inner"></span>
+                    <span class="falsetrueswitch-switch"></span>
                 </label>
             </div>
             <div class="form-check" id="AdditionalHealthInfoTextArea">

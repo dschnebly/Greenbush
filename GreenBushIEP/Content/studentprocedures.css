@@ -308,7 +308,7 @@
 
 
 
-    .onoffswitch2 {
+    .falsetrueswitch {
         position: relative;
         width: 90px;
         -webkit-user-select: none;
@@ -316,11 +316,11 @@
         -ms-user-select: none;
     }
 
-    .onoffswitch2-checkbox {
+    .falsetrueswitch-checkbox {
         display: none;
     }
 
-    .onoffswitch2-label {
+    .falsetrueswitch-label {
         display: block;
         overflow: hidden;
         cursor: pointer;
@@ -328,7 +328,7 @@
         border-radius: 5px;
     }
 
-    .onoffswitch2-inner {
+    .falsetrueswitch-inner {
         display: block;
         width: 200%;
         margin-left: -100%;
@@ -338,7 +338,7 @@
         transition: margin 0.3s ease-in 0s;
     }
 
-        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
+        .falsetrueswitch-inner:before, .falsetrueswitch-inner:after {
             display: block;
             float: left;
             width: 50%;
@@ -354,14 +354,14 @@
             box-sizing: border-box;
         }
 
-        .onoffswitch2-inner:before {
+        .falsetrueswitch-inner:before {
             content: "YES";
             padding-left: 10px;
             background-color: #2FCCFF;
             color: #FFFFFF;
         }
 
-        .onoffswitch2-inner:after {
+        .falsetrueswitch-inner:after {
             content: "NO";
             padding-right: 10px;
             background-color: #EEEEEE;
@@ -369,7 +369,7 @@
             text-align: right;
         }
 
-    .onoffswitch2-switch {
+    .falsetrueswitch-switch {
         display: block;
         width: 18px;
         margin: 0px;
@@ -390,11 +390,11 @@
         background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
     }
 
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+    .falsetrueswitch-checkbox:checked + .falsetrueswitch-label .falsetrueswitch-inner {
         margin-left: 0;
     }
 
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+    .falsetrueswitch-checkbox:checked + .falsetrueswitch-label .falsetrueswitch-switch {
         right: 0px;
     }
 

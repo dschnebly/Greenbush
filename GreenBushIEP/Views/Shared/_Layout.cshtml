@@ -44,7 +44,7 @@
                 @{
                     if (User.Identity.IsAuthenticated)
                     {
-                        <a class="nav-link pull-right" href="@(Url.Action("Updates", "Home"))">
+                        <a class="nav-link pull-left" href="@(Url.Action("Updates", "Home"))">
                             <i class="fa fa-file-code-o updates">
                                 <span class="badge badge-danger">@ViewBag.UpdateCount</span>
                             </i>
@@ -62,11 +62,10 @@
     <script src="https://wchat.freshchat.com/js/widget.js"></script>
     @RenderSection("scripts", false)
     <script>
-      window.fcWidget.init({
-        token: "WEB_CHAT_TOKEN",
-        host: "https://wchat.freshchat.com",
-        siteId: "WEB_CHAT_TOKEN"
-      });
+        window.fcWidget.init({
+            token: "84e83875-fea7-4bb1-8051-07bd60a576ae",
+            host: "https://wchat.freshchat.com",
+        });
     </script>
 </body>
 </html>

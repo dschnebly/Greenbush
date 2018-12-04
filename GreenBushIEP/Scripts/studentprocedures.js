@@ -550,6 +550,15 @@ $('#saveplan').on('click', function () {
 });
 
 // Attach Event
+// Health
+$("input[name='HealthNoConcern']").on("click", function () {
+    if ($("input[name='HealthNoConcern']").is(':checked')) {
+        $("input[name='HealthProgressTowardGenEd']").prop('checked', false);
+        $("input[name='HealthDiagnosis']").prop('checked', false);
+    }
+});
+
+// Attach Event
 // Motor
 $("input[name='MotorNoConcern']").on('click', function (event) {
     if ($("input[name='MotorNoConcern']").is(':checked')) {
