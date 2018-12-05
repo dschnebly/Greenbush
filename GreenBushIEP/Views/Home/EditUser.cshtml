@@ -242,7 +242,7 @@
                         </span>
                         @if (Model.submitter.UserID == Model.user.UserID)
                         {
-                            @Html.EditorFor(model => model.user.Password, new { htmlAttributes = new { @class = "form-control", id = "password", Name = "password", placeholder = "User password", required = "required", type = "password", disabled = "disabled" } })
+                            @Html.EditorFor(model => model.user.Password, new { htmlAttributes = new { @class = "form-control", id = "password", Name = "password", placeholder = "User password", required = "required", type = "text" } })
                             @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
                         }
                         else
@@ -253,7 +253,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="input-group">
-                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" style="font-size:18px" data-toggle="modal" data-target="#confirmPassword">Reset Password</a>
+                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" style="font-size:18px" data-toggle="modal" data-target="@(Model.submitter.UserID == Model.user.UserID ? "#myPassword" : "#confirmPassword" )">Reset Password</a>
                     </div>
                 </div>
             </div>
@@ -307,6 +307,58 @@
     <div class="ajax-loader" style="visibility: hidden;">
         <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
     </div>
+
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="invalidPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Changing my password?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Password should contain:</p>
+                    <ul>
+                        <li>At least one uppercase letter</li>
+                        <li>At least one lowercase letter</li>
+                        <li>At least one digit</li>
+                        <li>At least one special symbol</li>
+                        <li>Should be more than 4 character</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Okay</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
+
+    <!-- Modal -->
+    <div class="modal fadeInUp" id="myPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Changing my password?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Do you really want to change your password? This action cannot be undone.<br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
 
     <!-- Modal -->
     <div class="modal fadeInUp" id="confirmPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

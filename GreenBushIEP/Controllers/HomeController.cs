@@ -770,6 +770,7 @@ namespace GreenbushIep.Controllers
                         {
                             motorModel = new tblIEPMotor();
                         }
+
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_MotorSection", motorModel);
                         else
@@ -781,6 +782,7 @@ namespace GreenbushIep.Controllers
                         {
                             communicationModel = new tblIEPCommunication();
                         }
+
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
                         else
@@ -792,6 +794,7 @@ namespace GreenbushIep.Controllers
                         {
                             socialModel = new tblIEPSocial();
                         }
+
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_SocialSection", socialModel);
                         else

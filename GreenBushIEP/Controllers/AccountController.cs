@@ -90,6 +90,28 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "Success", Message = "Wooty Woot" }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult ResetMyPassword(int id, string password)
+        {
+            tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            if (user != null)
+            {
+                try
+                {
+                    EmailPassword.Send(user, password);
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "Error", Message = "Unable to email the password. Error: " + e.InnerException.Message.ToString() });
+                }
+
+                user.Password = password;
+                db.SaveChanges();
+            }
+
+            return Json(new { Result = "Success", Message = "Wooty Woot" }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();

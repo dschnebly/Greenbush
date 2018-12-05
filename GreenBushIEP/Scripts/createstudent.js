@@ -38,8 +38,6 @@
 			$("#misDistrict").trigger("chosen:updated");
 			
 		}
-
-		
 	});
 });
 
@@ -66,8 +64,7 @@ function init() {
     link.href = "/Scripts/bootstrap-mutliselect.js";
 
     // loads the building script
-    $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () {
-    });
+    $.getScript(link.protocol + "//" + link.host + link.pathname + link.search + link.hash, function () { });
 
     //Initialize tooltips
     $('.nav-tabs > li a[title]').tooltip();
