@@ -54,6 +54,8 @@
                     $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                         $("#alertMessage").slideUp(500);
                     });
+                } else {
+                    window.location.href = "/Home/Portal";
                 }
             },
             error: function (data) {

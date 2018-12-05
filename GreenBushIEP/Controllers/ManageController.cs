@@ -115,6 +115,8 @@ namespace GreenBushIEP.Controllers
 
                 // Email the new password to the user.
                 EmailPassword.Send(user, user.Password);
+
+                return Json(new { Result = "success", Message = "Successfully created a new user." });
             }
             catch (Exception e)
             {
@@ -122,7 +124,7 @@ namespace GreenBushIEP.Controllers
                 return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help" });
             }
 
-            return RedirectToAction("Portal", "Home");
+            return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
         }
 
         // GET: Manage/CreateStudent
