@@ -765,7 +765,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label class="control-label required" for="assignChildCount">Assign Child Count</label>
-                                        <select name="assignChildCount" id="assignChildCount" class="form-control">
+                                        <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a district...">
                                             @if (Model.allDistricts != null)
                                             {
                                                 foreach (var district in Model.allDistricts)
@@ -865,13 +865,12 @@
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
                                         <span class="control-label required">Neighborhood School</span>
                                     </div>
-                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
-										
+                                    <div class="col-md-10" style="display: flex; align-items: center; height: 49px; margin: 5px 0 15px 0;">
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building..."></select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
+                                    <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px; margin: 5px 0 15px 0;">
                                         <span class="control-label required">Responsible Building</span>
                                     </div>
                                     <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
