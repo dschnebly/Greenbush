@@ -123,8 +123,6 @@ namespace GreenBushIEP.Controllers
                 Console.Write(e.Message);
                 return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help" });
             }
-
-            return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
         }
 
         // GET: Manage/CreateStudent

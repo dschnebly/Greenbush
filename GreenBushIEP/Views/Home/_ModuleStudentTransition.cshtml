@@ -224,97 +224,6 @@
     }
     /* ---- End editable textbox ---- */
 
-
-    .onoffswitch2 {
-        position: relative;
-        width: 90px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-    }
-
-    .onoffswitch2-checkbox {
-        display: none;
-    }
-
-    .onoffswitch2-label {
-        display: block;
-        overflow: hidden;
-        cursor: pointer;
-        border: 2px solid #999999;
-        border-radius: 5px;
-    }
-
-    .onoffswitch2-inner {
-        display: block;
-        width: 200%;
-        margin-left: -100%;
-        -moz-transition: margin 0.3s ease-in 0s;
-        -webkit-transition: margin 0.3s ease-in 0s;
-        -o-transition: margin 0.3s ease-in 0s;
-        transition: margin 0.3s ease-in 0s;
-    }
-
-        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
-            display: block;
-            float: left;
-            width: 50%;
-            height: 30px;
-            padding: 0;
-            line-height: 30px;
-            font-size: 14px;
-            color: white;
-            font-family: Trebuchet, Arial, sans-serif;
-            font-weight: bold;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        .onoffswitch2-inner:before {
-            content: "YES";
-            padding-left: 10px;
-            background-color: #2FCCFF;
-            color: #FFFFFF;
-        }
-
-        .onoffswitch2-inner:after {
-            content: "NO";
-            padding-right: 10px;
-            background-color: #EEEEEE;
-            color: #999999;
-            text-align: right;
-        }
-
-    .onoffswitch2-switch {
-        display: block;
-        width: 18px;
-        margin: 0px;
-        background: #FFFFFF;
-        border: 2px solid #999999;
-        border-radius: 5px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 68px;
-        -moz-transition: all 0.3s ease-in 0s;
-        -webkit-transition: all 0.3s ease-in 0s;
-        -o-transition: all 0.3s ease-in 0s;
-        transition: all 0.3s ease-in 0s;
-        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-    }
-
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
-        margin-left: 0;
-    }
-
-    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
-        right: 0px;
-    }
-
     #transitionEducationGoalContainer, #transitionEmploymentGoalContainer, #transitionIndependentGoalContainer,
     #transitionInstructionServiceContainer, #transitionRelatedServiceContainer, #transitionDailyServiceContainer, #transitionFunctionalServiceContainer, #transitionLeisureServiceContainer {
         padding: 10px;
@@ -339,30 +248,20 @@
 	
     <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
 		
-        <div class="col-md-12 well">
+        <div class="col-md-12 well" style="font-size: 16pt;">
 
-            If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
-            that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
-            the student's IEP or placement if it can demostrate a bona fide security or compelling penological interest that cannot otherwise
-            be accmomodated. The following laws and regulations are not required for the students in adult correctional factilites:
-            <ul>
-                <li>participation of students in state or local assemssmentsl and &lt;needs to be a statement on the IEP&gt;</li>
-                <li>
-                    transitions planning and services with respect to an disabled student whose eligibility for special education services will end,
-                    because of the student's age, before the student is eligible to be released from correctional facility based on consideration of the student's
-                    sentence and elibiglty for early release.
-                </li>
-            </ul>
             <fieldset class="form-group">
                 <label style="padding: 25px 0 15px;">Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;
-                <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="onoffswitch2-checkbox" @(Model.transition.isReleaseBefore21.HasValue &&  Model.transition.isReleaseBefore21.Value ? "checked='checked'" : "" )>
-                    <label class="onoffswitch2-label" for="isStudentBirthdayAgeOver21">
-                        <span class="onoffswitch2-inner"></span>
-                        <span class="onoffswitch2-switch"></span>
+                <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                    <input type="checkbox" name="isStudentBirthdayAgeOver21" id="isStudentBirthdayAgeOver21" class="falsetrueswitch-checkbox" @(Model.transition.isReleaseBefore21.HasValue &&  Model.transition.isReleaseBefore21.Value ? "checked='checked'" : "" )>
+                    <label class="falsetrueswitch-label" for="isStudentBirthdayAgeOver21">
+                        <span class="falsetrueswitch-inner"></span>
+                        <span class="falsetrueswitch-switch"></span>
                     </label>
                 </div>
             </fieldset>
+
+            For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).
 
         </div>
     </div>
@@ -1327,11 +1226,11 @@
                                         <h4><b>Community Participation</b></h4>
                                         <fieldset class="form-group">
                                             <label style="padding: 5px 0 10px; font-weight: normal;">Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.  These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g. Girl Scouts or 4-H activities), community work experiences, and counseling services.</label>&nbsp;&nbsp;
-                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                                <input type="checkbox" name="isCommunityParticipation" id="isCommunityParticipation" class="onoffswitch2-checkbox" @(Model.transition.CommunityParticipation ? "checked='checked'" : "" )>
-                                                <label class="onoffswitch2-label" for="isCommunityParticipation">
-                                                    <span class="onoffswitch2-inner"></span>
-                                                    <span class="onoffswitch2-switch"></span>
+                                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isCommunityParticipation" id="isCommunityParticipation" class="falsetrueswitch-checkbox" @(Model.transition.CommunityParticipation ? "checked='checked'" : "" )>
+                                                <label class="falsetrueswitch-label" for="isCommunityParticipation">
+                                                    <span class="falsetrueswitch-inner"></span>
+                                                    <span class="falsetrueswitch-switch"></span>
                                                 </label>
                                             </div>
                                             <textarea class="form-control @(Model.transition.CommunityParticipation ?  String.Empty : "hidden")" style="width: 100%; margin: 25px 0 0 0;" name="communityParticipationDesc" id="communityParticipationDesc" maxlength="2000" rows="5">@(Model.transition.CommunityParticipation_Description)</textarea>
@@ -1391,21 +1290,21 @@
 										
                                         <fieldset class="form-group">
                                             <label style="padding: 5px 0 10px;">Do the transition courses of study focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school?</label>&nbsp;&nbsp;
-                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                                <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="onoffswitch2-checkbox" @(Model.transition.Planning_Facilitate ? "checked='checked'" : "" )>
-                                                <label class="onoffswitch2-label" for="isFocusFunctionalAchievement">
-                                                    <span class="onoffswitch2-inner"></span>
-                                                    <span class="onoffswitch2-switch"></span>
+                                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isFocusFunctionalAchievement" id="isFocusFunctionalAchievement" class="falsetrueswitch-checkbox" @(Model.transition.Planning_Facilitate ? "checked='checked'" : "" )>
+                                                <label class="falsetrueswitch-label" for="isFocusFunctionalAchievement">
+                                                    <span class="falsetrueswitch-inner"></span>
+                                                    <span class="falsetrueswitch-switch"></span>
                                                 </label>
                                             </div>
                                         </fieldset>
                                         <fieldset class="form-group">
                                             <label style="padding: 5px 0 10px;">Do the courses of study (and other education experiences) align with the student's post goals?</label>&nbsp;&nbsp;
-                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                                <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="onoffswitch2-checkbox" @(Model.transition.Planning_Align ? "checked='checked'" : "" )>
-                                                <label class="onoffswitch2-label" for="isAlignStudentPostGoals">
-                                                    <span class="onoffswitch2-inner"></span>
-                                                    <span class="onoffswitch2-switch"></span>
+                                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isAlignStudentPostGoals" id="isAlignStudentPostGoals" class="falsetrueswitch-checkbox" @(Model.transition.Planning_Align ? "checked='checked'" : "" )>
+                                                <label class="falsetrueswitch-label" for="isAlignStudentPostGoals">
+                                                    <span class="falsetrueswitch-inner"></span>
+                                                    <span class="falsetrueswitch-switch"></span>
                                                 </label>
                                             </div>
                                         </fieldset>
@@ -1445,39 +1344,27 @@
                                         <h4><b>Other Agency Collaboration</b></h4>
                                         <fieldset class="form-group">
                                             <label style="padding: 5px 0 10px;">Did the IEP Team determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service (KRS) assistance?</label>&nbsp;&nbsp;
-                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                                <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="onoffswitch2-checkbox" @(Model.transition.Planning_BenefitKRS ? "checked='checked'" : "" )>
-                                                <label class="onoffswitch2-label" for="isVocationalRehabiltiation">
-                                                    <span class="onoffswitch2-inner"></span>
-                                                    <span class="onoffswitch2-switch"></span>
+                                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isVocationalRehabiltiation" id="isVocationalRehabiltiation" class="falsetrueswitch-checkbox" @(Model.transition.Planning_BenefitKRS ? "checked='checked'" : "" )>
+                                                <label class="falsetrueswitch-label" for="isVocationalRehabiltiation">
+                                                    <span class="falsetrueswitch-inner"></span>
+                                                    <span class="falsetrueswitch-switch"></span>
                                                 </label>
                                             </div>
 											<input type="text" name="otherAgencies" id="otherAgencies" class="form-control" placeholder="List other agencies" value="@(Model.transition.Planning_BenefitKRS_OtherAgencies)" />
                                         </fieldset>
                                         <fieldset class="form-group @(Model.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
                                             <label style="padding: 5px 0 10px;">Was consent to release confidential information obtained to prior to KRS notification?</label>&nbsp;&nbsp;
-                                            <div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-                                                <input type="checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="onoffswitch2-checkbox" @(Model.transition.Planning_ConsentPrior ? "checked='checked'" : "" )>
-                                                <label class="onoffswitch2-label" for="isConfidentailReleaseObtained">
-                                                    <span class="onoffswitch2-inner"></span>
-                                                    <span class="onoffswitch2-switch"></span>
+                                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                                <input type="checkbox" name="isConfidentailReleaseObtained" id="isConfidentailReleaseObtained" class="falsetrueswitch-checkbox" @(Model.transition.Planning_ConsentPrior ? "checked='checked'" : "" )>
+                                                <label class="falsetrueswitch-label" for="isConfidentailReleaseObtained">
+                                                    <span class="falsetrueswitch-inner"></span>
+                                                    <span class="falsetrueswitch-switch"></span>
                                                 </label>
                                             </div>
                                         </fieldset>
                                     </div>
                                 </div>
-								@*<div class="row" style="margin-top:15px;">
-									  <div class="col-md-12">
-										<h4><b>Transition Plan Complete</b></h4>&nbsp;&nbsp;
-										<div class="onoffswitch2" style="display: inline-block; vertical-align: middle;">
-													<input type="checkbox" name="isComplete" id="isComplete" class="onoffswitch2-checkbox" @(Model.transition.Completed ? "checked='checked'" : "" )>
-													<label class="onoffswitch2-label" for="isComplete">
-														<span class="onoffswitch2-inner"></span>
-														<span class="onoffswitch2-switch"></span>
-													</label>
-										</div>
-									 </div>
-								</div>*@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>

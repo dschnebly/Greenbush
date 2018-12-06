@@ -59,6 +59,7 @@
     });
 
     $("#ActionButton").on('click', function (e) {
+
         e.preventDefault();
         var action = $(this).closest("form").attr("action");
 
