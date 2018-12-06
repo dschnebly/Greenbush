@@ -905,6 +905,30 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = mis + "," + owner)]
+        public ActionResult UnlockStudentIEP(int stid)
+        {
+            tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
+            if(student != null)
+            {
+                bool studentHasIEP = db.tblIEPs.Where(i => i.UserID == stid).Any();
+                if(studentHasIEP)
+                {
+                    return RedirectToAction("StudentProcedures", new { stid });
+                }
+                else
+                {
+                    new  IEP(student.UserID);
+                }
+
+                return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
+
+            }
+
+            return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         [Authorize]
         public ActionResult StudentProcedures(int stid, int? iepID = null)
         {
@@ -1756,6 +1780,22 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult dismissPlanning(int studentId, int iepId)
+        {
+            tblIEP studentIEP = db.tblIEPs.Where(i => i.IEPid == iepId && i.UserID == studentId).FirstOrDefault();
+            if(studentIEP != null)
+            {
+                studentIEP.IepStatus = (studentIEP.IepStatus == IEPStatus.PLAN) ? IEPStatus.DRAFT : studentIEP.IepStatus;
+                db.SaveChanges();
+
+                return Json(new { result = "success", message = "Successfully modify the IEP status from plan to draft" });
+            }    
+
+            return Json(new { result = "error", message = "Unable to change the IEP status from plan to draft." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

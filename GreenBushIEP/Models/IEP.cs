@@ -107,13 +107,13 @@ namespace GreenBushIEP.Models
             if (listOfStudentsIEPs.Count > 0)
             {
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).First() : listOfStudentsIEPs.FirstOrDefault();
-                hasPlan = true;
+                hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
             else
             {
                 IEP studentIEP = CreateNewIEP(stid);
                 current = studentIEP.current;
-                hasPlan = false;
+                hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
 
             anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.ACTIVE && i.IsActive);
@@ -186,7 +186,7 @@ namespace GreenBushIEP.Models
 
             current = new tblIEP();
             current.UserID = stid;
-            current.IepStatus = IEPStatus.DRAFT;
+            current.IepStatus = IEPStatus.PLAN;
             current.Create_Date = DateTime.Now;
             current.end_Date = null;
             current.Update_Date = DateTime.Now;
@@ -424,7 +424,8 @@ namespace GreenBushIEP.Models
 
             db.SaveChanges();
 
-            hasPlan = true;
+            hasPlan = false;
+            current.IepStatus = IEPStatus.PLAN;
 
             return this;
         }

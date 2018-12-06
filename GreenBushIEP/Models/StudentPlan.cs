@@ -229,6 +229,7 @@ namespace GreenBushIEP.Models
 
             if (studentIEP != null)
             {
+                if (studentIEP.IepStatus == IEPStatus.PLAN) { studentIEP.IepStatus = IEPStatus.DRAFT; }
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);
 
                 if (studentHealth != null)

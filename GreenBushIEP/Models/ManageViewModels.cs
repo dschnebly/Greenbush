@@ -535,7 +535,6 @@ namespace GreenBushIEP.Models
             goals = new List<tblTransitionGoal>();
             services = new List<tblTransitionService>();
 			careers = new List<tblCareerPath>();
-
 		}
     }
 
@@ -551,7 +550,6 @@ namespace GreenBushIEP.Models
             teacherBuilding = new tblBuilding();
             neighborhoodBuilding = new tblBuilding();
 			reevalDates = new List<tblArchiveEvaluationDate>();
-			
 		}
 
         public tblUser teacher { get; set; }
@@ -610,6 +608,7 @@ namespace GreenBushIEP.Models
 
 public class IEPStatus
 {
+    public const string PLAN = "PLAN";
     public const string ACTIVE = "ACTIVE";
     public const string ARCHIVE = "ARCHIVE";
     public const string DRAFT = "DRAFT";

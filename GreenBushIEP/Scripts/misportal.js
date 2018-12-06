@@ -53,7 +53,29 @@
             if ($('#confirmStart').val() === 'START') {
                 var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
 
-                window.location = '/Home/StudentProcedures?stid=' + userId ;
+                //window.location = '/Home/StudentProcedures?stid=' + userId ;
+                $(".ajax-loader").show();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/UnlockStudentIEP',
+                    data: { stid: userId },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.Result === "success") {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (data) {
+                        alert("Unable to connect to the server!");
+                        console.log(data);
+                    },
+                    complete: function (data) {
+                        $(".ajax-loader").hide();
+                        //A function to be called when the request finishes 
+                        // (after success and error callbacks are executed). 
+                    }
+                });
             }
         });
 

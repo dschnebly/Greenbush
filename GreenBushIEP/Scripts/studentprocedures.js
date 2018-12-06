@@ -550,6 +550,40 @@ $('#saveplan').on('click', function () {
 });
 
 // Attach Event
+// Dismissing a Student Plan
+$("#dismissIEPPlan").on("click", function () {
+    var stId = $("#stid").val();
+    var iepId = $("#studentIEPId").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/Home/dismissPlanning',
+        data: { studentId: stId, iepId: iepId },
+        dataType: 'html',
+        success: function (data) {
+            if (data.Message == "success") {
+                window.location.href = "/Home/StudentProcedures?stid=" + stId;
+            }
+            else {
+                $("#alertMessage .moreinfo").html('Server Error');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            }
+        },
+        error: function (data) {
+            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        },
+        complete: function () {
+            $('.ajax-loader').css("visibility", "hidden");
+        }
+    });
+});
+
+// Attach Event
 // Health
 $("input[name='HealthNoConcern']").on("click", function () {
     if ($("input[name='HealthNoConcern']").is(':checked')) {
