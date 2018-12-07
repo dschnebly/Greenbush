@@ -9,7 +9,7 @@ namespace GreenBushIEP.Helper
 
         public static tblUser GetByRole(string roleId, tblUser user)
         {
-            if (user.RoleID == roleId)
+            if (user.RoleID == roleId || user.RoleID == "1")
             {
                 return user;
             }
