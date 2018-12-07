@@ -2087,7 +2087,7 @@ namespace GreenbushIep.Controllers
                         theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                         stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
                         stvw.isDOC = district.DOC;
-
+						studentDetails.isDOC = district.DOC;
 
                     }
 

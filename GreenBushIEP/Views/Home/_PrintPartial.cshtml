@@ -2136,78 +2136,93 @@
                     </div>
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
-                            <label >Participation in District-Wide Assessments</label>                           
-                            <div class="form-check" style="padding-top:5px;padding-right:5px">
-                                 @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
-                                 {
-                                    <p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")" >Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
-                                 }
-                                 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-                                 {
-                                   <p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-                                 }
-                                 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-                                 {
-                                  <p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")" >Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
-                                 }
-                                 @if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
-                                 {
-                                   <p class ="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
-                                 }
-                            </div>
-                            <div class="form-check voffset2" id="StateAssessment_TextArea">
-                                @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
-                                {                                 
-                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>                                 
-                                    
-                                }
-                                @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-                                {                                 
-                                    <p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>                                 
-                                }
-                                @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-                                {                                 
-                                    <p >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>                                 
-                                }
-                           </div>
+                            <label>Participation in District-Wide Assessments</label>                           
+
+							@if (Model.studentDetails != null && Model.studentDetails.isDOC)
+							{
+								<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
+							}
+							else
+							{
+								<div class="form-check" style="padding-top:5px;padding-right:5px">
+									 @if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
+									 {
+										<p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")" >Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
+									 }
+									 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+									 {
+									   <p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+									 }
+									 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+									 {
+									  <p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")" >Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
+									 }
+									 @if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
+									 {
+									   <p class ="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
+									 }
+								</div>
+								<div class="form-check voffset2" id="StateAssessment_TextArea">
+									@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
+									{
+										<p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>                                 
+
+									}
+									@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+									{
+										<p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>                                 
+									}
+									@if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+									{
+										<p >@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>                                 
+									}
+							   </div>
+							}
                         </div>
                     </div>
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
                             <label >Participation in State Assessments</label>
+							@if (Model.studentDetails != null && Model.studentDetails.isDOC)
+							{
+								<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
+							}
+							else
+							{
+
                             <div class="form-check"  style="padding-top:5px;padding-right:5px">
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
-                                {
+								{
                                     <p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
-                                }
+								}
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-                                {
+								{
                                     <p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-                                }
+								}
 								@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-                                {                                    
+								{
                                     <p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>                                    
-                                }
+								}
                                  @if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
-                                 {
+								 {
                                     <p>Student has completed all required State Assessments.</p>
-                                 }
+								 }
                             </div>
                             <div  class="form-check voffset2" id="StateAssessment_TextArea">
                                 @if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
-                                {                                    
+								{
                                     <p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>                                    
-                                }
+								}
                                 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-                                {                                 
+								{
                                     <p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>                                 
-                                }
+								}
 								@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-                                {                                    
+								{
                                     <p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>                                    
-                                }
+								}
                             </div>
-
+							}
                         </div>
                     </div>
                     <hr />                   
