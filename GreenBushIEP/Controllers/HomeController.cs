@@ -1366,8 +1366,9 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
             tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-            int startMonth = 8; //august
-            int endMonth = 5; //may
+						
+			int startMonth = 7; //july
+            int endMonth = 6; //june
 
             DateTime searchDate = Convert.ToDateTime(calendarDay);
             isValid = false;
@@ -1375,7 +1376,7 @@ namespace GreenbushIep.Controllers
             validDates = "";
 
             //start date must be within the school year
-            var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == fiscalYear);
+            var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
 
             if (availableCalendarDays != null)
             {
@@ -1384,7 +1385,6 @@ namespace GreenbushIep.Controllers
                 var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
 				//keep looking for first day
-
 				if (firstDaySchoolYear == null)
 				{
 					for (int i = 1; i < 3; i++)
@@ -1392,6 +1392,18 @@ namespace GreenbushIep.Controllers
 						startMonth++;
 						firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();
 						if (firstDaySchoolYear != null)
+							break;
+					}
+				}
+
+				//keep looking for last day
+				if (lastDaySchoolYear == null)
+				{
+					for (int i = 1; i < 3; i++)
+					{
+						endMonth--;
+						lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth && o.Year == fiscalYear).OrderByDescending(o => o.Day).FirstOrDefault();
+						if (lastDaySchoolYear != null)
 							break;
 					}
 				}
