@@ -109,7 +109,6 @@ function init() {
 		}
 		
 		var args = { ids: districtIds };
-		//$(".ajax-loader").show();
 		
 		$(".info").show();
 		// current options html
@@ -157,7 +156,6 @@ function init() {
                 console.log(data);
 			}			,
 			complete: function (data) {
-				//$(".ajax-loader").hide();
 				$(".info").hide();
 				
 				

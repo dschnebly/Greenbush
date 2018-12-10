@@ -36,7 +36,7 @@
         var userId = $("#hidden-userid").val();
         var myPassword = $("#password").val();
 
-        if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{7,}$/.test(myPassword)) {
+        if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{10,}$/.test(myPassword)) {
             // valid password
             $.ajax({
                 type: 'POST',
