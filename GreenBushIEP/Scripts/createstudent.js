@@ -20,35 +20,35 @@
     }).datepicker("setDate", "0");
     $("#IEPEndDate").datepicker({
         dateFormat: "mm/dd/yy"
-	}).datepicker("setDate", "0");
+    }).datepicker("setDate", "0");
 
 
-	
-	$("#assignChildCount").on('change', function (e) {
-		var optionSelected = $("option:selected", this);
-		var valueSelected = this.value;
-		
 
-		var optionExists = ($("#misDistrict option[value=" + valueSelected + "]").length > 0);
-		if (optionExists) {
-			var currentValues = $("#misDistrict").val();
-			currentValues.push(valueSelected);
-			$("#misDistrict").val(currentValues);
-			$("#misDistrict").trigger("change");
-			$("#misDistrict").trigger("chosen:updated");
-			
-		}
-	});
+    $("#assignChildCount").on('change', function (e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+
+
+        var optionExists = ($("#misDistrict option[value=" + valueSelected + "]").length > 0);
+        if (optionExists) {
+            var currentValues = $("#misDistrict").val();
+            currentValues.push(valueSelected);
+            $("#misDistrict").val(currentValues);
+            $("#misDistrict").trigger("change");
+            $("#misDistrict").trigger("chosen:updated");
+
+        }
+    });
 });
 
 function init() {
-      
+
     $(".studentDOB").datepicker({
         dateFormat: "mm/dd/yy",
         changeMonth: true,
         changeYear: true
     });
-        
+
     $(".chosen-select").chosen({
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
@@ -98,7 +98,7 @@ function init() {
         var districtIds = '';
         var districtNums = new Array();
         var districtArr = $("#misDistrict").val();
-		
+
         if (districtArr.length > 0) {
 
             for (i = 0; i < districtArr.length; i++) {
@@ -106,61 +106,70 @@ function init() {
                 districtNums.push(districtAdd);
             }
             districtIds = districtNums.join(',');
-		}
-		
-		var args = { ids: districtIds };
-		
-		$(".info").show();
-		// current options html
-		var responsibleBuildingElement = $('.districtOnly');
-		var neighborhoodBuildingElement = $('.allActive');
-				
+        }
+
+        var args = { ids: districtIds };
+
+        $(".info").show();
+        // current options html
+        var responsibleBuildingElement = $('.districtOnly');
+        var neighborhoodBuildingElement = $('.allActive');
+
         $.ajax({
             type: 'GET',
             url: '/Manage/GetBuildingsByDistrictId',
-			data: args,
+            data: args,
             dataType: "json",
             async: false,
             success: function (data) {
                 if (data.Result === "success") {
-					var buildings = data.DistrictBuildings;
-					var activeBuildings = data.ActiveBuildings;
-					$(".studentBuilding").find('option').remove().end();					
-					
-					var responsibleBuilding = responsibleBuildingElement.html();
-					var neighborhoodBuilding = neighborhoodBuildingElement.html();
+                    var buildings = data.DistrictBuildings;
+                    var activeBuildings = data.ActiveBuildings;
+                    $(".studentBuilding").find('option').remove().end();
 
-					//district only
-					$.each(buildings, function (key, value) {
-						responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-						neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";						
-					});
+                    var responsibleBuilding = responsibleBuildingElement.html();
+                    var neighborhoodBuilding = neighborhoodBuildingElement.html();
 
-					//now add all active 
-					$.each(activeBuildings, function (key, value) {
-						neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";                                                                       
+                    //district only
+                    $.each(buildings, function (key, value) {
+                        responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
+                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
                     });
-				
-					responsibleBuildingElement.html(responsibleBuilding);
-					neighborhoodBuildingElement.html(neighborhoodBuilding);
 
-					responsibleBuildingElement.trigger("change");
-					responsibleBuildingElement.trigger("chosen:updated");
+                    //now add all active 
+                    $.each(activeBuildings, function (key, value) {
+                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
+                    });
 
-					neighborhoodBuildingElement.trigger("change");
-					neighborhoodBuildingElement.trigger("chosen:updated");
+                    responsibleBuildingElement.html(responsibleBuilding);
+                    neighborhoodBuildingElement.html(neighborhoodBuilding);
+
+                    responsibleBuildingElement.trigger("change");
+                    responsibleBuildingElement.trigger("chosen:updated");
+
+                    neighborhoodBuildingElement.trigger("change");
+                    neighborhoodBuildingElement.trigger("chosen:updated");
                 }
             },
             error: function (data) {
                 alert("There was an error retrieving the building information.");
                 console.log(data);
-			}			,
-			complete: function (data) {
-				$(".info").hide();
-				
-				
-			}
+            },
+            complete: function (data) {
+                $(".info").hide();
+
+
+            }
         });
+    });
+
+    $('#Is_Gifted').click(function () {
+        if ($(this).is(':checked')) {
+            $('#claimingCode').prop('checked', false);
+        }
+        else {
+            $('#claimingCode').prop('checked', true);
+        }
     });
 
     function nextTab(elem) {
