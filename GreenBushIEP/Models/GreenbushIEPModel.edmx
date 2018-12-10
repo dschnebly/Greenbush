@@ -271,6 +271,7 @@
           <Property Name="ArchiveDate" Type="datetime" Nullable="false" />
           <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
+          <Property Name="isUpload" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmarks">
           <Key>
@@ -1894,6 +1895,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="isUpload" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmark">
           <Key>
@@ -3084,6 +3086,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblFormArchives">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
               <MappingFragment StoreEntitySet="tblFormArchive">
+                <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="FormFile" ColumnName="FormFile" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
                 <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />

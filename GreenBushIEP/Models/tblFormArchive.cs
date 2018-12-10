@@ -21,5 +21,6 @@ namespace GreenBushIEP.Models
         public System.DateTime ArchiveDate { get; set; }
         public string FormName { get; set; }
         public byte[] FormFile { get; set; }
+        public bool isUpload { get; set; }
     }
 }

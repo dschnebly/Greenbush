@@ -1846,8 +1846,6 @@ namespace GreenbushIep.Controllers
                 viewModel.IEPForms = GetForms();
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
-
-
                 viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
             }
 
@@ -2209,18 +2207,6 @@ namespace GreenbushIep.Controllers
         {
             try
             {
-                //string message = "";
-                //if (files != null)
-                //{
-
-                //	var allowedSize = Convert.ToInt32(ConfigurationManager.AppSettings["DocumentMaxUploadSize"]);
-                //	if (files.ContentLength > allowedSize)
-                //	{
-                //		var allowedSizeMb = (allowedSize / 1024f) / 1024f;
-                //		message = string.Format("The file is larger than maximum allowed size: {0}MB.", allowedSizeMb);
-                //	}
-                //}
-
                 using (var binaryReader = new BinaryReader(files.InputStream))
                 {
                     var fileName = Path.GetFileName(files.FileName);
@@ -2240,10 +2226,10 @@ namespace GreenbushIep.Controllers
                     archive.FormFile = fileData;
                     archive.IEPid = iepId;
                     archive.ArchiveDate = DateTime.Now;
+                    archive.isUpload = true;
 
                     db.tblFormArchives.Add(archive);
                     db.SaveChanges();
-
                 }
 
                 var archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
@@ -2255,8 +2241,6 @@ namespace GreenbushIep.Controllers
                 }
 
                 return Json(new { result = true, message = "File uploaded successfully.", archives = archiveList }, JsonRequestBehavior.AllowGet);
-
-
             }
             catch (Exception ex)
             {
