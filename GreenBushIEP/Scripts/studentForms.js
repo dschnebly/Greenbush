@@ -46,7 +46,6 @@
                     alert("Unable to connect to the server or other related network problem. Please contact your admin.");
                 },
                 complete: function () {
-                    alert('WHAT THE HELL?');
                     $('.ajax-loader').css("visibility", "hidden");
                 }
             });
