@@ -253,6 +253,7 @@ $("#next2").on("click", function () {
                 if (data.Result === "success") {
 
                     var $active = $('.wizard .nav-tabs li.active');
+                    $active.addClass('disabled');
                     $active.next().removeClass('disabled');
                     $($active).next().find('a[data-toggle="tab"]').click();
 
