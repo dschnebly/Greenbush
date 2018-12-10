@@ -1106,12 +1106,12 @@ namespace GreenbushIep.Controllers
         public ActionResult UpdateRevertIEPtoDraft(int Stid, int IepId)
         {
             List<tblIEP> studentIEPs = db.tblIEPs.Where(i => i.UserID == Stid && i.IsActive).ToList();
-            tblIEP studentActiveIEP = studentIEPs.Where(i => i.UserID == Stid && i.IEPid != IepId).FirstOrDefault();
+            tblIEP studentActiveIEP = studentIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
             if (studentActiveIEP != null)
             {
                 // if ammended is in play then they can't revert.
-                tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid ==IepId && i.IsActive).FirstOrDefault();
-                if (studentActiveIEP != null)
+                tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid == IepId && i.IsActive).FirstOrDefault();
+                if (studentAmmendedIEP != null)
                 {
                     return Json(new { Result = "error", Message = "You cannot revert an IEP that has an amendment." }, JsonRequestBehavior.AllowGet);
                 }
