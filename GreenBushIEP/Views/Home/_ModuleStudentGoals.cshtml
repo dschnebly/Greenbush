@@ -854,8 +854,10 @@
                 }
 
                 if (canSave) {
-                    $(this).closest("form").find("input[name='completed']").val(true);
-                    $(this).prev().trigger(event.type);
+                    $.each($(".StudentGoal").not("#defaultGoal"), function () {
+                        $(this).find("form").find("input[name='completed']").val(true);
+                        $(this).find(".SaveForm").trigger(event.type);
+                    });
                 }
             });
 
