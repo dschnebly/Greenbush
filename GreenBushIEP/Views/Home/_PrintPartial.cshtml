@@ -1152,6 +1152,10 @@
                             {
                                 shortDesc = "Support for School Personnel ";
                             }
+							else if (@accom.AccomType == 5)
+                            {
+                                shortDesc = "Transportation ";
+                            }
                             <tr>
                                 <td>
                                     @(shortDesc)
@@ -1470,6 +1474,10 @@
 									<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;<span>Yes</span>
 								</fieldset>
 							</div>
+							}
+							else
+							{
+								<p>For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).</p>
 							}
 						</div>
                     <div class="row">                        
@@ -2225,7 +2233,7 @@
 							}
                         </div>
                     </div>
-                    <hr />                   
+                    @*<hr />                   
                     <div class="row voffset2">
                         <div class="col-md-12">
 							<label>Transportation Plan</label>
@@ -2243,7 +2251,7 @@
                                  <p>@(Model.studentOtherConsiderations.Transporation_Other_desc)</p>                            
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <hr />
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
@@ -2754,12 +2762,31 @@
                             </tr>
                             serviceCount++;
                         }
-                    </table>                
+                    </table>    
+					<div class="voffset3">
+						<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
+					</div>
                  }
                 else
                 {                    
                    <p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>                 
                 }
 
-        </div>        
+        </div>   
+	    <div>   
+			
+			<label>NOTICE OF DESTRUCTION OF SPECIAL EDUCATION RECORDS: </label>
+			<p>Special education records for each child with an exceptionality are maintained by the school district until no longer needed to provide educational services to the child. This notice is to inform you that the special education records for this student will be destroyed after five (5) years following program completion or graduation from high school, unless the student (or the student’s legal guardian) has taken possession of the records prior to that time.</p>
+		</div>   
+		<div>   
+		
+			<label>Notification of Transfer of Rights:</label>
+				<p>K.S.A. 72-3431. Rights of child with disability upon reaching 18 years of age. 
+			When a person who has been determined to be a child with a disability reaches the age of 18, except for such a person who has been determined to be incompetent under state law: (a) An agency shall provide to both the person and to the person's parents any notice required by this act; 			
+			(b) all other rights accorded to parents under this act transfer to the person; 
+			(c) the agency shall notify the person and the parents of the transfer of rights; and 
+			(d) all rights accorded to parents under this act transfer to the person if incarcerated in an adult or juvenile federal, state or local correctional institution.
+			
+				</p>
+		</div>   
       </div>   <!--end module page-->
