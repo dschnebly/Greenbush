@@ -291,14 +291,14 @@ namespace GreenBushIEP.Models
         {
             if(thisIEP != null)
             {
-                if (thisIEP.Amendment && thisIEP.IsActive && thisIEP.IepStatus == IEPStatus.DRAFT)
+                if (thisIEP.Amendment && thisIEP.IsActive && thisIEP.IepStatus.ToUpper() == IEPStatus.DRAFT)
                     return IEPStatus.AMENDMENT;
                 if (!thisIEP.IsActive)
                     return IEPStatus.ARCHIVE;
-                if (thisIEP.AmendingIEPid != null && thisIEP.IsActive && thisIEP.IepStatus == IEPStatus.ANNUAL)
+                if (thisIEP.AmendingIEPid != null && thisIEP.IsActive && thisIEP.IepStatus.ToUpper() == IEPStatus.ANNUAL)
                     return IEPStatus.ANNUAL;
 
-                return thisIEP.IepStatus.ToString();
+                return thisIEP.IepStatus.ToUpper();
             }
 
             return string.Empty;
