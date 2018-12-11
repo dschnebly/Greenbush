@@ -1227,9 +1227,9 @@ namespace GreenbushIep.Controllers
 					int endMonth = 6; //june
 
 					 //start date must be within the school year
-					var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear + 1);
+					var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear);
 
-					var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.Year == maxYear).FirstOrDefault();
+					var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.SchoolYear == maxYear).FirstOrDefault();
 					var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
 					//keep looking for first day
@@ -1268,9 +1268,20 @@ namespace GreenbushIep.Controllers
                     {
 
                         var item = new StudentServiceObject();
+						var meetingDate = 
                         item.DaysPerWeek = service.DaysPerWeek;
                         item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
-                        item.EndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue ? lastDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+
+						if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
+						{
+							item.EndDate = iep.MeetingDate.Value.ToShortDateString();
+						}
+						else
+						{
+							item.EndDate = lastDaySchoolYear.calendarDate.Value.ToShortDateString();
+						}
+
+                        //item.EndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue ? lastDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
                         item.LocationCode = service.LocationCode;
                         item.Minutes = service.Minutes;
                         item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
@@ -1406,7 +1417,7 @@ namespace GreenbushIep.Controllers
             if (availableCalendarDays != null)
             {
 
-                var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();
+                var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth).FirstOrDefault();
                 var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
 				//keep looking for first day
