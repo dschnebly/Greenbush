@@ -2277,7 +2277,7 @@ namespace GreenbushIep.Controllers
                     db.SaveChanges();
                 }
 
-                var archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
+                var archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId && u.isUpload).OrderByDescending(o => o.ArchiveDate).ToList();
 
                 var archiveList = new List<IEPFormFileViewModel>();
                 foreach (var archive in archives)
