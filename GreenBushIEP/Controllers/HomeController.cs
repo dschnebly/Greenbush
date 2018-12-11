@@ -1206,29 +1206,62 @@ namespace GreenbushIep.Controllers
             {
                 //get latest year
                 int maxYear = DateTime.Now.AddYears(1).Year;
-                if (serviceId.HasValue)
-                    db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
-                else
-                    db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+				int currentYear = DateTime.Now.Year;
+				if (serviceId.HasValue)
+				{
+					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
+					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear) + 1;
+				}
+				else
+				{
+					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear) + 1;
+				}
 
                 if (maxYear > 0)
                 {
 
                     tblUser mis = FindSupervisor.GetByRole("2", teacher);
                     tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-                    int startMonth = 8; //august
-                    int endMonth = 5;
-                    //start date must be within the school year
-                    var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear + 1);
+					int startMonth = 7; //july
+					int endMonth = 6; //june
 
-                    var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.Year == maxYear).FirstOrDefault();
-                    var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();//searchLastDay(fiscalYear, 5);
+					 //start date must be within the school year
+					var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear + 1);
 
-                    List<tblService> services = null;
+					var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.Year == maxYear).FirstOrDefault();
+					var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
+
+					//keep looking for first day
+					if (firstDaySchoolYear == null)
+					{
+						for (int i = 1; i < 3; i++)
+						{
+							startMonth++;
+							firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == maxYear && o.Month == startMonth && o.Year == maxYear - 1).FirstOrDefault();
+							if (firstDaySchoolYear != null)
+								break;
+						}
+					}
+
+					//keep looking for last day
+					if (lastDaySchoolYear == null)
+					{
+						for (int i = 1; i < 3; i++)
+						{
+							endMonth--;
+							lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == maxYear && o.Month == endMonth && o.Year == maxYear).OrderByDescending(o => o.Day).FirstOrDefault();
+							if (lastDaySchoolYear != null)
+								break;
+						}
+					}
+
+
+					List<tblService> services = null;
                     if (serviceId.HasValue)
-                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear && s.ServiceID == serviceId).ToList();
+                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear && s.ServiceID == serviceId).ToList();
                     else
-                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == maxYear).ToList();
+                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear).ToList();
 
                     List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
                     foreach (var service in services)
