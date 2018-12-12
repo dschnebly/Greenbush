@@ -303,7 +303,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        location.reload(true);
+                        location.href = "/Home/Portal";
                     } else {
                         alert(data.Message);
                         location.reload(true);

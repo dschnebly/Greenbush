@@ -355,12 +355,6 @@ namespace GreenBushIEP.Models
 
         }
 
-        // Delete the student's plan
-        public void Delete(int stid)
-        {
-
-        }
-
         public object this[string propertyName]
         {
             set

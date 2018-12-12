@@ -1837,7 +1837,7 @@ namespace GreenbushIep.Controllers
             tblIEP studentIEP = db.tblIEPs.Where(i => i.IEPid == iepId && i.UserID == studentId).FirstOrDefault();
             if(studentIEP != null)
             {
-                studentIEP.IepStatus = (studentIEP.IepStatus == IEPStatus.PLAN) ? IEPStatus.DRAFT : studentIEP.IepStatus;
+                studentIEP.IepStatus = (studentIEP.IepStatus.ToUpper() == IEPStatus.PLAN) ? IEPStatus.DRAFT : studentIEP.IepStatus.ToUpper();
                 db.SaveChanges();
 
                 return Json(new { result = "success", message = "Successfully modify the IEP status from plan to draft" });
