@@ -651,6 +651,7 @@
     <Content Include="Content\Images\yes_radio.png" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\material-toggle-button.css" />
+    <Content Include="Content\misportal.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\studentprocedures.css" />
     <Content Include="Content\switchbutton.css" />
