@@ -532,6 +532,8 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 // Attach Event
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
+    $('.ajax-loader').css("visibility", "visible");
+
     var data = $('#thePlan').serialize();
     $.post('/Home/StudentPlanning', data);
 
