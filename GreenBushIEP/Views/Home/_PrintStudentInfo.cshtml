@@ -1,6 +1,5 @@
 ﻿@using GreenBushIEP.Models
 @model GreenBushIEP.Models.IEP
-
 @{
 
 	Layout = "";
@@ -9,10 +8,9 @@
 	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 
-}
-	
+}	
 <div class="studentInformationPage">
-	<table style="width:100%;">
+	<table class="full">
 		<tr>
 			<td style="width:200px">&nbsp;</td>
 			<td style="text-align:center">
@@ -32,7 +30,7 @@
 		</tr>
 	</table>
 	<hr />
-	<table style="width:100%">
+	<table class="full">
 		<tr>
 			<td style="width:150px;"><label>Student Legal Name:</label></td>
 			<td style="width:100px;">@(studentFullName)</td>
@@ -62,7 +60,7 @@
 	@if (primeContact != null)
 	{
 		<hr />
-		<table style="width:100%">
+		<table class="full">
 			<tr>
 				<td style="width:75px;"><label>Contact 1:</label></td>
 				<td>@primeContact.FirstName @primeContact.LastName</td>
@@ -80,7 +78,7 @@
 		</table>
 	}
 	<hr />
-	<table style="width:100%">
+	<table class="full">
 		<tr>
 			<td><label>Neighborhood School:</label></td>
 			<td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
@@ -113,7 +111,7 @@
 		</tr>
 	</table>
 	<hr />
-	<table style="width:100%">
+	<table class="full">
 		<tr>
 			<td><label>Init Eval Consent Signed:</label></td>
 			<td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>

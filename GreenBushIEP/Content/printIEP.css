@@ -1,0 +1,234 @@
+﻿
+table.full {
+	width:100%;
+}
+
+table.printTable td {
+	padding: 1px;
+	text-align: left;
+}
+
+body {
+	background-color: #525659;
+}
+
+p, textarea {
+	overflow-y: auto;
+	font-size: 14px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.fadeInToBackground {
+	background: #525659;
+	transition: background .25s ease-in-out;
+	-moz-transition: background .25s ease-in-out;
+	-webkit-transition: background .25s ease-in-out;
+}
+
+.glyphicon-remove-circle:hover {
+	cursor: pointer;
+}
+
+.transition-page {
+	display: block;
+	position: relative;
+}
+
+
+	/* implements an image with opacity of 50% */
+	.transition-page::after {
+		content: "";
+		background: url(@(draftImage));
+		background-size: 38px;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		position: absolute;
+		z-index: -1;
+	}
+
+.transition-page-scaleUpCenter {
+	-webkit-animation: scaleUpCenter .4s ease-out both;
+	animation: scaleUpCenter .4s ease-out both;
+	width: 900px;
+	display: block;
+}
+
+.transition-page-scaleDownCenter {
+	-webkit-animation: scaleDownCenter .4s ease-in both;
+	animation: scaleDownCenter .4s ease-in both;
+}
+
+.section-break {
+	border-top: 1px solid black !important;
+}
+
+.module-page {
+	margin-top: -1cm;
+}
+
+legend {
+	white-space: nowrap;
+}
+
+.imgCheck {
+	display: none;
+}
+
+@@-webkit-keyframes scaleUpCenter {
+	from {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+	}
+}
+
+@@keyframes scaleUpCenter {
+	from {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+		transform: scale(.7);
+	}
+}
+
+@@-webkit-keyframes scaleDownCenter {
+	from {
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+	}
+}
+
+@@keyframes scaleDownCenter {
+	from {
+	}
+
+	to {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+		transform: scale(.7);
+	}
+}
+
+@@media only print {
+
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact; /* Non-Webkit Browsers */
+		z-index: 2 !important;
+	}
+
+	.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+		float: left;
+	}
+
+	.col-sm-12 {
+		width: 100%;
+	}
+
+	.col-sm-11 {
+		width: 91.66666666666666%;
+	}
+
+	.col-sm-10 {
+		width: 83.33333333333334%;
+	}
+
+	.col-sm-9 {
+		width: 75%;
+	}
+
+	.col-sm-8 {
+		width: 66.66666666666666%;
+	}
+
+	.col-sm-7 {
+		width: 58.333333333333336%;
+	}
+
+	.col-sm-6 {
+		width: 50%;
+	}
+
+	.col-sm-5 {
+		width: 41.66666666666667%;
+	}
+
+	.col-sm-4 {
+		width: 33.33333333333333%;
+	}
+
+	.col-sm-3 {
+		width: 25%;
+	}
+
+	.col-sm-2 {
+		width: 16.666666666666664%;
+	}
+
+	.col-sm-1 {
+		width: 8.333333333333332%;
+	}
+
+
+	@@page {
+		/*size: 8.5in 11in;*/
+		margin: .1in;
+	}
+
+	@@page:left {
+		@@bottom-left {
+			margin: 1in;
+			border-top: .25pt solid #666;
+			content: "";
+			font-size: 9pt;
+			color: #333;
+			background-color: green;
+		}
+	}
+
+
+	legend, textarea, input {
+		page-break-inside: avoid;
+	}
+
+	body {
+		/* this affects the margin on the content before sending to printer  */
+		/*margin: 1.6cm;*/
+	}
+
+		body::before {
+			content: "";
+			background: url(/Content/Images/draft-watermark-printing.png) !important;
+			background-size: 38px !important;
+			opacity: 0.5 !important;
+			top: 0px !important;
+			left: 0px !important;
+			bottom: 0 !important;
+			right: 0 !important;
+			position: fixed !important;
+		}
+
+	.transition-page::after {
+		background-color: #fff !important;
+		top: -55px !important;
+		left: 55px !important;
+		bottom: -10000px !important;
+		right: 55px !important;
+		position: fixed !important;
+	}
+
+	.glyphicon-remove, #printbutton, footer {
+		display: none;
+	}
+
+	.body-content {
+		border-left: 0 !important;
+		border-right: 0 !important;
+		box-shadow: none !important;
+	}
+}
+
+

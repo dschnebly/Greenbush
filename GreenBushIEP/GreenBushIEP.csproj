@@ -602,9 +602,11 @@
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\font-awesome-min.css" />
+    <Content Include="Content\formupload.css" />
     <Content Include="Content\GBlogo1A.jpg" />
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
+    <Content Include="Content\iepforms.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
     <Content Include="Content\Images\copying-icon.gif" />
@@ -652,6 +654,9 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\material-toggle-button.css" />
     <Content Include="Content\misportal.css" />
+    <Content Include="Content\ownerportal.css" />
+    <Content Include="Content\printIEP.css" />
+    <Content Include="Content\reports.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\studentprocedures.css" />
     <Content Include="Content\switchbutton.css" />
@@ -713,6 +718,7 @@
     <Content Include="Reports\SpedPro\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\EditUsers.js" />
+    <Content Include="Scripts\iepforms.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -737,6 +743,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\nurse.js" />
+    <Content Include="Scripts\printIEP.js" />
     <Content Include="Scripts\studentForms.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

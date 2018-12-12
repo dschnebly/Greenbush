@@ -1,6 +1,5 @@
 ﻿@using GreenBushIEP.Models
 @model GreenBushIEP.Models.IEP
-
 @{
 
 	Layout = "";	
@@ -9,16 +8,9 @@
 	var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 
-
-	//var draftImage = "";
-	//if (isDraft)
-	//{
-	//	draftImage = "/Content/Images/draft-watermark-printing.png";
-	//}
 }
-
  <div class="studentInformationPage">
-            <table style="width:100%;">
+            <table class="full">
                 <tr>
                     <td style="width:200px">&nbsp;</td>
                     <td style="text-align:center">
@@ -116,7 +108,7 @@
                 </tr>
             </table>
             <hr />
-            <table style="width:100%">
+            <table class="full">
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
                     <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>                
@@ -170,7 +162,7 @@
         </div> <!--end student page-->
         <br/><br/>
         <div class="module-page voffset2">
-            <table style="width:100%;">
+            <table class="full">
                 <tr>
                     <td style="width:200px">&nbsp;</td>
                     <td style="text-align:center">
@@ -186,7 +178,7 @@
                     </td>
                 </tr>
             </table>
-            <table style="width:100%;">
+            <table class="full">
                 <tr>
                     <td><label>Legal Name:</label></td>
                     <td>@(studentFullName)</td>
@@ -240,7 +232,7 @@
             <hr />
             <h3 class="text-center">Participants</h3>
             <p style="margin-bottom:8px">Participants in the IEP Team Meeting to develop this IEP.</p>
-            <table style="width:100%" cellspacing="3">
+            <table class="full" cellspacing="3">
 
                 <tr>
                     <th>Name</th>
@@ -1454,9 +1446,17 @@
                 <div>
                     <h3 class="text-center">TRANSITION PLAN</h3>
 						<div class="row DOC @(!Model.studentTransition.isDOC ? "hidden" : String.Empty )">
+							
+						
 							@if (Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value)
 							{
-							<div class="col-md-12">
+								<fieldset class="form-group">
+									<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;<span>@(Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value ? "Yes" : "No")</span>
+								</fieldset>	
+								
+								<p>For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).</p>							
+
+								@*<div class="col-md-12">								
 
 								If a student is in a State adult correctional facility, the Secretary of the Department of Corrections (DOC) is obligated to make FAPE available according to an IEP
 								that meets the requirements of federal and state laws and regulations for each student with a disability. However, the correctional institution or facility may modify
@@ -1470,14 +1470,9 @@
 										sentence and elibiglty for early release.
 									</li>
 								</ul>
-								<fieldset class="form-group">
-									<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;<span>Yes</span>
-								</fieldset>
-							</div>
-							}
-							else
-							{
-								<p>For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).</p>
+								
+							</div>*@
+								
 							}
 						</div>
                     <div class="row">                        
