@@ -4,28 +4,10 @@
     ViewBag.Title = "Student Forms";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    label.file-upload {
-        position: relative;
-        overflow: hidden;
-    }
+@section stylesheets {
+    @Styles.Render("~/Content/formupload.css")
+}
 
-        label.file-upload input[type=file] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            min-width: 100%;
-            min-height: 100%;
-            font-size: 100px;
-            text-align: right;
-            filter: alpha(opacity=0);
-            opacity: 0;
-            outline: 0;
-            background: #fff;
-            cursor: inherit;
-            display: block;
-        }
-</style>
 <div class="modal-header">
     <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-folder-open" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Forms</h4>
