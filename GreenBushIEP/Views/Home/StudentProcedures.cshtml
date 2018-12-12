@@ -1436,11 +1436,11 @@
                             <div class="col-md-12">
                                 <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-phone"></i> Assistive Technology</h5>
                                 <label style="font-size: 16px; font-weight: normal;">Concerns</label>
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="RequireAssistiveTechnology" class="truefalseswitch-checkbox" id="RequireAssistiveTechnology" @(Model.studentPlan.RequireAssistiveTechnology ? String.Empty : "checked" )>
-                                    <label class="truefalseswitch-label" for="RequireAssistiveTechnology">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
+                                <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                                    <input type="checkbox" name="RequireAssistiveTechnology" class="falsetrueswitch-checkbox" id="RequireAssistiveTechnology" @(Model.studentPlan.RequireAssistiveTechnology ? "checked" : String.Empty )>
+                                    <label class="falsetrueswitch-label" for="RequireAssistiveTechnology">
+                                        <span class="falsetrueswitch-inner"></span>
+                                        <span class="falsetrueswitch-switch"></span>
                                     </label>
                                 </div>
                                 <div style="margin: 20px 0 0 0;">

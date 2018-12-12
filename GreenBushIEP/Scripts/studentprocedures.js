@@ -532,21 +532,27 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 // Attach Event
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
+    $('.ajax-loader').css("visibility", "visible");
+
     var data = $('#thePlan').serialize();
     $.post('/Home/StudentPlanning', data);
 
-    // remove or add classes to disable or enable widgets. 
-    // is otherwords, turn on or off the iep sections.
-    !$("input[name='HealthNoConcern']").is(':checked') ? $("#HealthWidget").removeClass("widgetDisabled") : $("#HealthWidget").addClass("widgetDisabled");
-    !$("input[name='MotorNoConcern']").is(':checked') ? $("#MotorWidget").removeClass("widgetDisabled") : $("#MotorWidget").addClass("widgetDisabled");
-    !$("input[name='CommunicationNoConcern']").is(':checked') ? $("#CommunicationWidget").removeClass("widgetDisabled") : $("#CommunicationWidget").addClass("widgetDisabled");
-    !$("input[name='SocialNoConcern']").is(':checked') ? $("#SocialWidget").removeClass("widgetDisabled") : $("#SocialWidget").addClass("widgetDisabled");
-    !$("input[name='IntelligenceConcern']").is(':checked') ? $("#IntelligenceWidget").removeClass("widgetDisabled") : $("#IntelligenceWidget").addClass("widgetDisabled");
-    !$("input[name='AcademicNoConcern']").is(':checked') ? $("#AcademicWidget").removeClass("widgetDisabled") : $("#AcademicWidget").addClass("widgetDisabled");
-    !$("input[name='ReadingNoConcern']").is(':checked') ? $("#ReadingWidget").removeClass("widgetDisabled") : $("#ReadingWidget").addClass("widgetDisabled");
-    !$("input[name='MathNoConcern']").is(':checked') ? $("#MathWidget").removeClass("widgetDisabled") : $("#MathWidget").addClass("widgetDisabled");
-    !$("input[name='WrittenNoConcern']").is(':checked') ? $("#WrittenWidget").removeClass("widgetDisabled") : $("#WrittenWidget").addClass("widgetDisabled");
-    $("input[name='SocialInterventionPlan']:checked").val() == 1 ? $("#BehaviorWidget i.glyphicon-flag").removeClass("hidden") : $("#BehaviorWidget i.glyphicon-flag").addClass("hidden");
+    location.reload();
+
+    //// remove or add classes to disable or enable widgets. 
+    //// is otherwords, turn on or off the iep sections.
+    //!$("input[name='HealthNoConcern']").is(':checked') ? $("#HealthWidget").removeClass("widgetDisabled") : $("#HealthWidget").addClass("widgetDisabled");
+
+    //!$("input[name='MotorNoConcern']").is(':checked') ? $("#MotorWidget").removeClass("widgetDisabled") : $("#MotorWidget").addClass("widgetDisabled");
+    //!$("input[name='CommunicationNoConcern']").is(':checked') ? $("#CommunicationWidget").removeClass("widgetDisabled") : $("#CommunicationWidget").addClass("widgetDisabled");
+    //!$("input[name='SocialNoConcern']").is(':checked') ? $("#SocialWidget").removeClass("widgetDisabled") : $("#SocialWidget").addClass("widgetDisabled");
+    //!$("input[name='IntelligenceConcern']").is(':checked') ? $("#IntelligenceWidget").removeClass("widgetDisabled") : $("#IntelligenceWidget").addClass("widgetDisabled");
+    //!$("input[name='AcademicNoConcern']").is(':checked') ? $("#AcademicWidget").removeClass("widgetDisabled") : $("#AcademicWidget").addClass("widgetDisabled");
+    //!$("input[name='ReadingNoConcern']").is(':checked') ? $("#ReadingWidget").removeClass("widgetDisabled") : $("#ReadingWidget").addClass("widgetDisabled");
+    //!$("input[name='MathNoConcern']").is(':checked') ? $("#MathWidget").removeClass("widgetDisabled") : $("#MathWidget").addClass("widgetDisabled");
+    //!$("input[name='WrittenNoConcern']").is(':checked') ? $("#WrittenWidget").removeClass("widgetDisabled") : $("#WrittenWidget").addClass("widgetDisabled");
+    //$("input[name='SocialInterventionPlan']:checked").val() == 1 ? $("#BehaviorWidget i.glyphicon-flag").removeClass("hidden") : $("#BehaviorWidget i.glyphicon-flag").addClass("hidden");
+
 });
 
 // Attach Event
