@@ -606,6 +606,7 @@
     <Content Include="Content\GBlogo1A.jpg" />
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
+    <Content Include="Content\iepforms.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
     <Content Include="Content\Images\copying-icon.gif" />
@@ -652,6 +653,7 @@
     <Content Include="Content\Images\yes_radio.png" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\material-toggle-button.css" />
+    <Content Include="Content\misportal.css" />
     <Content Include="Content\printIEP.css" />
     <Content Include="Content\reports.css" />
     <Content Include="Content\site.css" />
@@ -715,6 +717,7 @@
     <Content Include="Reports\SpedPro\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\EditUsers.js" />
+    <Content Include="Scripts\iepforms.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
