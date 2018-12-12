@@ -152,6 +152,9 @@ hr {
 .filteredby {
     display: none;
 }
+.user-head img {
+    height: 62px;
+}
 
 /*//////////////////////////////////////
     ///  User Toggle Buttons Starts Here
