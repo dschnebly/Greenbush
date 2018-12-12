@@ -654,6 +654,7 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\material-toggle-button.css" />
     <Content Include="Content\misportal.css" />
+    <Content Include="Content\ownerportal.css" />
     <Content Include="Content\printIEP.css" />
     <Content Include="Content\reports.css" />
     <Content Include="Content\site.css" />
