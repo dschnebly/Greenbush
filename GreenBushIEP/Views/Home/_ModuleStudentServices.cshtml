@@ -74,6 +74,9 @@
         <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
         <input type="hidden" id="sid" value="@Model.studentId" />
 
+        <div class="alert alert-warning" role="alert">
+            <strong class="moreinfo">Please check your calendar and make sure it is set up for this year and this building before adding services.</strong>
+        </div>
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
