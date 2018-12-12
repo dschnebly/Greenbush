@@ -120,7 +120,7 @@
                     {
                         <div class="list-group-item" data-id="@(user.UserID)">
 
-                            @if (user.RoleID == "4") //MIS
+                            @if (user.RoleID == "2") //MIS
                             {
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                                 <text>@user.FirstName  @user.LastName</text>
@@ -144,7 +144,7 @@
                                 </button>
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
-                            else if (user.RoleID == "2") //Teacher
+                            else if (user.RoleID == "4") //Teacher
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">

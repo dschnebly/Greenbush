@@ -608,7 +608,6 @@
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\iepforms.css" />
-    <Content Include="Content\Images\admin.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
     <Content Include="Content\Images\copying-icon.gif" />

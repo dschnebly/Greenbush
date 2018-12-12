@@ -113,14 +113,14 @@
                     {
                         <div class="list-group-item" data-id="@(user.UserID)">
 
-                            @if (user.RoleID == "4")
+                            @if (user.RoleID == "4") //Teacher
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                     <text>@user.FirstName.ToTitleCase()  @user.LastName.ToTitleCase()</text>
                                 </a>
                             }
-                            else if (user.RoleID == "6")
+                            else if (user.RoleID == "6") //Nurse
                             {
                                 <i class="fa fa-magnet" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
