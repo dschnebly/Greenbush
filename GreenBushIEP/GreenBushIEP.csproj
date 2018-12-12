@@ -594,6 +594,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -607,6 +608,7 @@
     <Content Include="Content\greenbush_logo.png" />
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\iepforms.css" />
+    <Content Include="Content\Images\admin.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
     <Content Include="Content\Images\copying-icon.gif" />

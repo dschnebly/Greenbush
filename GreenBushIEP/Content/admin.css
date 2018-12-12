@@ -1,4 +1,4 @@
-.ajax-loader {
+﻿.ajax-loader {
     display: none;
     background-color: rgba(255,255,255,0.7);
     position: absolute;
@@ -153,17 +153,9 @@ hr {
     display: none;
 }
 
-#selectedDistrict {
-    min-width: 70%;
-}
-
-.assignBuilding-modal-footer {
-    border: 0 !important;
-}
-
 /*//////////////////////////////////////
-        ///  User Toggle Buttons Starts Here
-        //////////////////////////////////////*/
+    ///  User Toggle Buttons Starts Here
+    //////////////////////////////////////*/
 
 .btn-circle {
     width: 30px;

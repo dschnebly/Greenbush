@@ -120,7 +120,7 @@
                     {
                         <div class="list-group-item" data-id="@(user.UserID)">
 
-                            @if (user.RoleID == "2")
+                            @if (user.RoleID == "4") //MIS
                             {
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                                 <text>@user.FirstName  @user.LastName</text>
@@ -132,7 +132,7 @@
                                 </button>
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
-                            else if (user.RoleID == "3")
+                            else if (user.RoleID == "3") //ADMIN
                             {
                                 <i class="fa fa-user-o" aria-hidden="true"></i>
                                 <text>@user.FirstName  @user.LastName</text>
@@ -144,7 +144,7 @@
                                 </button>
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
-                            else if (user.RoleID == "4")
+                            else if (user.RoleID == "2") //Teacher
                             {
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
@@ -158,7 +158,7 @@
                                 </button>
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
-                            else if (user.RoleID == "6")
+                            else if (user.RoleID == "6") //Nurse
                             {
                                 <i class="fa fa-magnet" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
@@ -173,7 +173,7 @@
                                 <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                             }
                             else
-                            {
+                            { //KIDS
                                 <i class="fa fa-child" aria-hidden="true"></i>
                                 <text>@user.FirstName  @user.LastName</text>
 
