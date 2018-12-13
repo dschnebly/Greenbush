@@ -534,10 +534,32 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 $('#saveplan').on('click', function () {
     $('.ajax-loader').css("visibility", "visible");
 
-    var data = $('#thePlan').serialize();
-    $.post('/Home/StudentPlanning', data);
-
-    location.reload();
+    $.ajax({
+        type: 'POST',
+        url: '/Home/StudentPlanning',
+        data: { collection: data },
+        dataType: 'html',
+        success: function (data) {
+            if (data.Message == "success") {
+                location.reload();
+            }
+            else {
+                $("#alertMessage .moreinfo").html('Server Error');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            }
+        },
+        error: function (data) {
+            $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+        },
+        complete: function () {
+            $('.ajax-loader').css("visibility", "hidden");
+        }
+    });
 
     //// remove or add classes to disable or enable widgets. 
     //// is otherwords, turn on or off the iep sections.
@@ -568,7 +590,7 @@ $("#dismissIEPPlan").on("click", function () {
         dataType: 'html',
         success: function (data) {
             if (data.Message == "success") {
-                window.location.href = "/Home/StudentProcedures?stid=" + stId;
+                location.reload();
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
