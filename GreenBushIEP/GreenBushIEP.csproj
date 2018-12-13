@@ -594,6 +594,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -612,7 +613,6 @@
     <Content Include="Content\Images\copying-icon.gif" />
     <Content Include="Content\Images\districtmanager.jpg" />
     <Content Include="Content\Images\draft-watermark-printing.png" />
-    <Content Include="Content\Images\foundMeobyteClosed.gif" />
     <Content Include="Content\Images\green-crop2.jpg" />
     <Content Include="Content\Images\greenbush-logo-2f3945.png" />
     <Content Include="Content\Images\IEPBackpackBackgroundImage.jpg" />
