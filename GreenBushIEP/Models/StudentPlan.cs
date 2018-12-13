@@ -114,6 +114,7 @@ namespace GreenBushIEP.Models
             tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
             if (studentIEP != null)
             {
+
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);
                 if (studentHealth != null)
                 {
@@ -229,7 +230,10 @@ namespace GreenBushIEP.Models
 
             if (studentIEP != null)
             {
-                if (studentIEP.IepStatus == IEPStatus.PLAN) { studentIEP.IepStatus = IEPStatus.DRAFT; }
+                if (studentIEP.IepStatus == IEPStatus.PLAN) {
+                    studentIEP.IepStatus = IEPStatus.DRAFT;
+                }
+
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);
 
                 if (studentHealth != null)
