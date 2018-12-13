@@ -332,16 +332,16 @@ namespace GreenBushIEP.Controllers
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
 
-							
+
                         }
                     }
                     db.SaveChanges();
 
-					if (info != null && info.ReEvalConsentSigned.HasValue)
-						CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
+                    if (info != null && info.ReEvalConsentSigned.HasValue)
+                        CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
 
 
-					return Json(new { Result = "success", Message = studentId });
+                    return Json(new { Result = "success", Message = studentId });
                 }
                 catch (Exception e)
                 {
@@ -566,9 +566,6 @@ namespace GreenBushIEP.Controllers
             tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
             if (info != null)
             {
-                // remove all districts. Blow it all away.
-                db.tblOrganizationMappings.RemoveRange(db.tblOrganizationMappings.Where(o => o.UserID == studentId));
-
                 // remove all the buildingId. Blow it all away.
                 db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == studentId));
 
@@ -581,25 +578,26 @@ namespace GreenBushIEP.Controllers
 
                 if (!string.IsNullOrEmpty(districtValues))
                 {
-                    string[] districtArray = districtValues.Split(','); ;
+                    string[] districtArray = districtValues.Split(',');
 
-                    foreach (string usd in districtArray)
+                    List<tblOrganizationMapping> fullList = db.tblOrganizationMappings.Where(o => o.UserID == studentId).ToList();
+                    List<tblOrganizationMapping> removeList = fullList.Where(o => !districtArray.Contains(o.USD)).ToList();
+                    db.tblOrganizationMappings.RemoveRange(removeList);
+                    db.SaveChanges();
+
+                    foreach(string usd in districtArray)
                     {
-                        db.tblOrganizationMappings.Add(new tblOrganizationMapping()
+                        if (fullList.Any(l => !l.USD.Contains(usd)))
                         {
-                            AdminID = submitter.UserID,
-                            UserID = student.UserID,
-                            USD = usd
-                        });
+                            db.tblOrganizationMappings.Add(new tblOrganizationMapping()
+                            {
+                                AdminID = submitter.UserID,
+                                UserID = student.UserID,
+                                USD = usd
+                            });
 
-                        //db.tblBuildingMappings.Add(new tblBuildingMapping()
-                        //{
-                        //    BuildingID = "0",
-                        //    UserID = student.UserID,
-                        //    USD = usd,
-                        //});
-
-                        db.SaveChanges();
+                            db.SaveChanges();
+                        }
                     }
                 }
 
@@ -634,7 +632,7 @@ namespace GreenBushIEP.Controllers
                 info.Grade = Convert.ToInt32(collection["studentGrade"]);
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
-				info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
+                info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
                 info.PlacementCode = collection["studentPlacement"];
                 info.USD = collection["misDistrict"];
                 info.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
@@ -723,10 +721,10 @@ namespace GreenBushIEP.Controllers
 
                     db.SaveChanges();
 
-					if (info != null && info.ReEvalConsentSigned.HasValue)
-						CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
+                    if (info != null && info.ReEvalConsentSigned.HasValue)
+                        CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
 
-				}
+                }
                 catch (Exception e)
                 {
                     return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.InnerException.ToString() });
@@ -910,9 +908,9 @@ namespace GreenBushIEP.Controllers
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
 
                 List<string> districts = new List<string>(collection["misDistrict"].ToString().Split(','));
-                List<string> buildings = new List<string>(); 
+                List<string> buildings = new List<string>();
 
-                if(collection["buildingIds"]!= null)
+                if (collection["buildingIds"] != null)
                 {
                     buildings = new List<string>(collection["buildingIds"].ToString().Split(','));
                 }
@@ -1305,7 +1303,7 @@ namespace GreenBushIEP.Controllers
             if (MIS != null)
             {
                 tblContact districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == USD select contact).FirstOrDefault();
-                if(districtContact != null)
+                if (districtContact != null)
                 {
                     return Json(new { Result = "success", Message = new { ContactID = districtContact.ContactID, USD = districtContact.USD, ContactName = districtContact.ContactName, Email = districtContact.Email, Phone = districtContact.Phone, Address1 = districtContact.Address1, Address2 = districtContact.Address2, City = districtContact.City, State = districtContact.State, Zip = districtContact.Zip } }, JsonRequestBehavior.AllowGet);
                 }
@@ -1356,7 +1354,7 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult CreateIEPAnnual (int Stid, int Iepid)
+        public ActionResult CreateIEPAnnual(int Stid, int Iepid)
         {
             try
             {
@@ -1364,7 +1362,7 @@ namespace GreenBushIEP.Controllers
 
                 return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened :" + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
@@ -1378,9 +1376,9 @@ namespace GreenBushIEP.Controllers
             {
                 var AmendmentId = db.uspCopyIEP(IepId, Stid, amend);
 
-                return Json(new { Result = "success", Message = AmendmentId}, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened :" + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
@@ -1401,27 +1399,27 @@ namespace GreenBushIEP.Controllers
                 // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
                 //var students = db.tblUsers.Where(u => u.Archive != true && studentsInTheBuildings.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
-				var students = (from u in db.tblUsers 
-								   join su in db.tblStudentInfoes on u.UserID equals su.UserID
-								   join cty in db.tblCounties on su.County equals cty.CountyCode
-								   join b in db.tblBuildings on su.BuildingID equals b.BuildingID
-								   where 
-								   u.RoleID == "5" 
-								   && !(u.Archive ?? false)
-								   && studentsInTheBuildings.Contains(u.UserID) 
-								   && !alreadyAssignedStudents.Contains(u.UserID)
-								   && teacherBuildings.Contains(b.BuildingID)
-								   select new Student
-								   {
-									   UserID = u.UserID,
-									   FirstName = u.FirstName,
-									   LastName = u.LastName,
-									   ImageURL = u.ImageURL,
-									   BuildingName = b.BuildingName,
-									   County = cty.CountyName
-								   }).Distinct().ToList();
+                var students = (from u in db.tblUsers
+                                join su in db.tblStudentInfoes on u.UserID equals su.UserID
+                                join cty in db.tblCounties on su.County equals cty.CountyCode
+                                join b in db.tblBuildings on su.BuildingID equals b.BuildingID
+                                where
+                                u.RoleID == "5"
+                                && !(u.Archive ?? false)
+                                && studentsInTheBuildings.Contains(u.UserID)
+                                && !alreadyAssignedStudents.Contains(u.UserID)
+                                && teacherBuildings.Contains(b.BuildingID)
+                                select new Student
+                                {
+                                    UserID = u.UserID,
+                                    FirstName = u.FirstName,
+                                    LastName = u.LastName,
+                                    ImageURL = u.ImageURL,
+                                    BuildingName = b.BuildingName,
+                                    County = cty.CountyName
+                                }).Distinct().ToList();
 
-				return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -1493,27 +1491,27 @@ namespace GreenBushIEP.Controllers
             try
             {
                 List<tblBuilding> buildings = new List<tblBuilding>();
-				List<tblBuilding> allActiveBuildings = new List<tblBuilding>();
-				if (!string.IsNullOrEmpty(ids))
+                List<tblBuilding> allActiveBuildings = new List<tblBuilding>();
+                if (!string.IsNullOrEmpty(ids))
                 {
-						string[] usdIds = ids.Split(',');
+                    string[] usdIds = ids.Split(',');
 
-					var listOfBuildings = from b in db.tblBuildings
-										  where b.Active == 1 && ids.Contains(b.USD)
-										  orderby b.BuildingName
-										  select b;
+                    var listOfBuildings = from b in db.tblBuildings
+                                          where b.Active == 1 && ids.Contains(b.USD)
+                                          orderby b.BuildingName
+                                          select b;
 
-					buildings.AddRange(listOfBuildings.ToList());
-					
+                    buildings.AddRange(listOfBuildings.ToList());
 
-					var activeBuildings = from b in db.tblBuildings
-										  where b.Active == 1 && !ids.Contains(b.USD)
-										  orderby b.BuildingName
-										  select b;
 
-					allActiveBuildings.AddRange(activeBuildings.ToList());
+                    var activeBuildings = from b in db.tblBuildings
+                                          where b.Active == 1 && !ids.Contains(b.USD)
+                                          orderby b.BuildingName
+                                          select b;
 
-				}
+                    allActiveBuildings.AddRange(activeBuildings.ToList());
+
+                }
 
 
                 if (buildings != null)
@@ -1534,7 +1532,7 @@ namespace GreenBushIEP.Controllers
         public ActionResult deleteUploadForm(int studentId, int formId)
         {
             tblFormArchive form = db.tblFormArchives.Where(f => f.Student_UserID == studentId && f.FormArchiveID == formId).FirstOrDefault();
-            if(form != null)
+            if (form != null)
             {
                 //delete the form in the database
                 db.tblFormArchives.Remove(form);
@@ -1543,9 +1541,9 @@ namespace GreenBushIEP.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the file from the database: " + e.InnerException.ToString()  }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the file from the database: " + e.InnerException.ToString() }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { Result = "success", Message = "The uploaded file was removed from the database." }, JsonRequestBehavior.AllowGet);
@@ -1583,20 +1581,20 @@ namespace GreenBushIEP.Controllers
             filterContext.Result = RedirectToAction("Index", "Home");
         }
 
-		protected void CreateReevalArchive(int studentId, DateTime reEvaldate)
-		{
-			if (reEvaldate != null)
-			{
-				var archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reEvaldate.Date).AsQueryable(); 
-				if (archives.Count() == 0)
-				{
-					db.tblArchiveEvaluationDates.Add(new tblArchiveEvaluationDate { evalutationDate = reEvaldate.Date, Create_Date = DateTime.Now, userID = studentId });
-					db.SaveChanges();
-				}
+        protected void CreateReevalArchive(int studentId, DateTime reEvaldate)
+        {
+            if (reEvaldate != null)
+            {
+                var archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reEvaldate.Date).AsQueryable();
+                if (archives.Count() == 0)
+                {
+                    db.tblArchiveEvaluationDates.Add(new tblArchiveEvaluationDate { evalutationDate = reEvaldate.Date, Create_Date = DateTime.Now, userID = studentId });
+                    db.SaveChanges();
+                }
 
-			
-			}
-		}
+
+            }
+        }
         #region helpers
 
         [NonAction]
