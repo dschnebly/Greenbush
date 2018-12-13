@@ -152,6 +152,14 @@ hr {
 	display: none;
 }
 
+#selectedDistrict {
+    min-width: 70%;
+}
+
+.owner-modal-footer {
+    border: 0 !important;
+}
+
 /*//////////////////////////////////////
         ///  User Toggle Buttons Starts Here
         //////////////////////////////////////*/

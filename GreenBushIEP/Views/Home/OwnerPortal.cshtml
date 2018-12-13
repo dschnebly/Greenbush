@@ -34,9 +34,6 @@
                 <div class="user-toggle-item">
                     <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
                 </div>
-                @*<div class="user-toggle-item">
-                    <a id="mySettings" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/MySettings"><i class="fa fa-cogs" title="Adjust My Settings" data-toggle="tooltip"></i></a>
-                </div>*@
                 <div class="user-toggle-item">
                     <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
                 </div>
@@ -107,7 +104,7 @@
         </div>
     </div>
 
-    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+    <div class="alert alert-info hidden" role="alert" id="alertMessage">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
     </div>
@@ -209,7 +206,7 @@
             <div class="modal-body">
                 <div class="col-md-12 district-selection">
                     <label for="selectedDistrict">Your District:&nbsp;</label>
-                    <select id="selectedDistrict" style="min-width: 70%;"></select>
+                    <select id="selectedDistrict"></select>
                 </div>
                 <div class="dual-list list-right col-md-12">
                     <div class="well">
@@ -229,7 +226,7 @@
                         <ul id="selectBuildings" class="list-group"></ul>
                     </div>
                 </div>
-                <div class="modal-footer" style="border: 0 !important;">
+                <div class="modal-footer owner-modal-footer">
                     <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="savetheseBuildingsToThisUser">Save</button>
                     <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancel</button>
                 </div>
