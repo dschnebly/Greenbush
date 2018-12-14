@@ -2,6 +2,7 @@
 using GreenBushIEP.Models;
 using System;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -19,6 +20,7 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -41,18 +43,24 @@ namespace GreenbushIep.Controllers
                     // since the password is in plain text lets just authenticate directly
                     try
                     {
-                        tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == email && u.Password == password);
+                        tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == email);
 
-                        // User found in the database
-                        if (user != null)
+                        byte[] saltBytes = Encoding.Default.GetBytes(user.Salt);
+                        byte[] hashBytes = Encoding.Default.GetBytes(user.Password);
+                        PasswordHash hash = new PasswordHash(saltBytes, hashBytes);
+
+                        if (hash.Verify(password))
                         {
-                            FormsAuthentication.SetAuthCookie(email, false);
+                            //User found in the database
+                            if (user != null)
+                            {
+                                FormsAuthentication.SetAuthCookie(email, false);
 
-                            string ReturnUrl = "/Home/Portal";
+                                string ReturnUrl = "/Home/Portal";
 
-                            return Json(new { portal = ReturnUrl, success = true });
+                                return Json(new { portal = ReturnUrl, success = true });
+                            }
                         }
-
                     }
                     catch (Exception e)
                     {

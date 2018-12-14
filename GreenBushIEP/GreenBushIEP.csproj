@@ -284,6 +284,7 @@
     <Compile Include="Helper\RandomPassword.cs" />
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Helper\VersionCompare.cs" />
+    <Compile Include="Models\PasswordHash.cs" />
     <Compile Include="Models\tblArchiveEvaluationDate.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

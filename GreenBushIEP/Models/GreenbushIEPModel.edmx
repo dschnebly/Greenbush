@@ -870,6 +870,7 @@
           <Property Name="Address2" Type="nvarchar" MaxLength="255" />
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="LastVersionNumberSeen" Type="nvarchar" MaxLength="50" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -2493,6 +2494,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -3695,6 +3697,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
               <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
                 <ScalarProperty Name="LastVersionNumberSeen" ColumnName="LastVersionNumberSeen" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="Address2" ColumnName="Address2" />

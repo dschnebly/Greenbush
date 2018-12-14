@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -61,6 +62,8 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                var emailPassword = RandomPassword.Generate(8);
+                PasswordHash hash = new PasswordHash(emailPassword);
 
                 // CREATE new user
                 tblUser user = new tblUser
@@ -72,7 +75,8 @@ namespace GreenBushIEP.Controllers
                     Email = collection["email"],
                     Create_Date = DateTime.Now,
                     Update_Date = DateTime.Now,
-                    Password = RandomPassword.Generate(8),
+                    Password = System.Text.Encoding.Default.GetString(hash.Hash),
+                    Salt = System.Text.Encoding.Default.GetString(hash.Salt)
                 };
 
                 // UPLOAD the image
@@ -114,7 +118,7 @@ namespace GreenBushIEP.Controllers
                 }
 
                 // Email the new password to the user.
-                EmailPassword.Send(user, user.Password);
+                EmailPassword.Send(user, emailPassword);
 
                 return Json(new { Result = "success", Message = "Successfully created a new user." });
             }
