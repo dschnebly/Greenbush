@@ -21,7 +21,6 @@ namespace GreenBushIEP.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
         public string RoleID { get; set; }
         public string ImageURL { get; set; }
         public Nullable<bool> Agreement { get; set; }
@@ -33,6 +32,7 @@ namespace GreenBushIEP.Models
         public string Address2 { get; set; }
         public string Zip { get; set; }
         public string LastVersionNumberSeen { get; set; }
-        public string Salt { get; set; }
+        public byte[] Password { get; set; }
+        public byte[] Salt { get; set; }
     }
 }

@@ -81,7 +81,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
-        public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
@@ -89,6 +88,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

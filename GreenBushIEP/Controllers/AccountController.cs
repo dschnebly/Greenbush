@@ -45,8 +45,8 @@ namespace GreenbushIep.Controllers
                     {
                         tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == email);
 
-                        byte[] saltBytes = Encoding.Default.GetBytes(user.Salt);
-                        byte[] hashBytes = Encoding.Default.GetBytes(user.Password);
+                        byte[] saltBytes = user.Salt;
+                        byte[] hashBytes = user.Password;
                         PasswordHash hash = new PasswordHash(saltBytes, hashBytes);
 
                         if (hash.Verify(password))
@@ -91,7 +91,7 @@ namespace GreenbushIep.Controllers
                     return Json(new { Result = "Error", Message = "Unable to email the password. Error: " + e.InnerException.Message.ToString() });
                 }
 
-                user.Password = password;
+                //user.Password = password;
                 db.SaveChanges();
             }
 
@@ -113,7 +113,7 @@ namespace GreenbushIep.Controllers
                     return Json(new { Result = "Error", Message = "Unable to email the password. Error: " + e.InnerException.Message.ToString() });
                 }
 
-                user.Password = password;
+                //user.Password = password;
                 db.SaveChanges();
             }
 

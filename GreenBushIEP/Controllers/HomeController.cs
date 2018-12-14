@@ -178,7 +178,7 @@ namespace GreenbushIep.Controllers
                                  City = u.City,
                                  State = u.State,
                                  Email = u.Email,
-                                 Password = u.Password,
+                                 Password = null,
                                  ImageURL = u.ImageURL,
                                  Archive = u.Archive,
                              }).Distinct().ToList();
@@ -252,7 +252,7 @@ namespace GreenbushIep.Controllers
                                  City = u.City,
                                  State = u.State,
                                  Email = u.Email,
-                                 Password = u.Password,
+                                 Password = null,
                                  ImageURL = u.ImageURL,
                                  Archive = u.Archive,
                              }).Distinct().ToList();

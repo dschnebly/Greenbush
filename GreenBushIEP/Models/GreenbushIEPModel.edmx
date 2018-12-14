@@ -858,7 +858,6 @@
           <Property Name="City" Type="nvarchar" MaxLength="255" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="255" />
-          <Property Name="Password" Type="nvarchar" MaxLength="100" />
           <Property Name="RoleID" Type="nvarchar" MaxLength="50" />
           <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
           <Property Name="Agreement" Type="bit" />
@@ -870,7 +869,8 @@
           <Property Name="Address2" Type="nvarchar" MaxLength="255" />
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="LastVersionNumberSeen" Type="nvarchar" MaxLength="50" />
-          <Property Name="Salt" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="varbinary" MaxLength="50" />
+          <Property Name="Salt" Type="varbinary" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -1449,7 +1449,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
           <EntitySet Name="tblTransitions" EntityType="IndividualizedEducationProgramModel.tblTransition" />
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
-          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <EntitySet Name="tblVersionLogs" EntityType="IndividualizedEducationProgramModel.tblVersionLog" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
             <End Role="tblLocation" EntitySet="tblLocations" />
@@ -1477,6 +1476,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="vw_SecondaryDisabilities" EntityType="IndividualizedEducationProgramModel.vw_SecondaryDisabilities" />
           <EntitySet Name="vw_ServiceExport" EntityType="IndividualizedEducationProgramModel.vw_ServiceExport" />
           <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
+          <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2471,31 +2471,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="tblUser">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Agreement" Type="Boolean" />
-          <Property Name="Archive" Type="Boolean" />
-          <Property Name="TeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
             <PropertyRef Name="VersionLogID" />
@@ -2678,6 +2653,31 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="IEPStartDate" Type="DateTime" Precision="3" />
           <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Agreement" Type="Boolean" />
+          <Property Name="Archive" Type="Boolean" />
+          <Property Name="TeacherID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="Salt" Type="Binary" MaxLength="50" FixedLength="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3694,32 +3694,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblUsers">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
-              <MappingFragment StoreEntitySet="tblUsers">
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
-                <ScalarProperty Name="LastVersionNumberSeen" ColumnName="LastVersionNumberSeen" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
-                <ScalarProperty Name="Archive" ColumnName="Archive" />
-                <ScalarProperty Name="Agreement" ColumnName="Agreement" />
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblVersionLogs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblVersionLog">
               <MappingFragment StoreEntitySet="tblVersionLog">
@@ -3835,6 +3809,32 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastVersionNumberSeen" ColumnName="LastVersionNumberSeen" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="Archive" ColumnName="Archive" />
+                <ScalarProperty Name="Agreement" ColumnName="Agreement" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

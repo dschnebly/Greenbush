@@ -75,8 +75,8 @@ namespace GreenBushIEP.Controllers
                     Email = collection["email"],
                     Create_Date = DateTime.Now,
                     Update_Date = DateTime.Now,
-                    Password = System.Text.Encoding.Default.GetString(hash.Hash),
-                    Salt = System.Text.Encoding.Default.GetString(hash.Salt)
+                    Password = hash.Hash,
+                    Salt = hash.Salt
                 };
 
                 // UPLOAD the image
