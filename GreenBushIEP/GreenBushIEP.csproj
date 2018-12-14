@@ -659,6 +659,7 @@
     <Content Include="Content\reports.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\studentprocedures.css" />
+    <Content Include="Content\createUser.css" />
     <Content Include="Content\switchbutton.css" />
     <Content Include="Content\transition.css" />
     <Content Include="Content\transition.min.css" />

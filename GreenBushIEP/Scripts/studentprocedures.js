@@ -533,15 +533,18 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
     $('.ajax-loader').css("visibility", "visible");
+    var stId = $("#stid").val();
+    var form = $('#thePlan').serialize();
 
     $.ajax({
         type: 'POST',
         url: '/Home/StudentPlanning',
-        data: { collection: data },
-        dataType: 'html',
+        data: form,
+        dataType: 'json',
+        async: false,
         success: function (data) {
-            if (data.Message == "success") {
-                location.reload();
+            if (data.result == "success") {
+                window.location.href = "/Home/StudentProcedures?stid=" + stId;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
@@ -560,21 +563,6 @@ $('#saveplan').on('click', function () {
             $('.ajax-loader').css("visibility", "hidden");
         }
     });
-
-    //// remove or add classes to disable or enable widgets. 
-    //// is otherwords, turn on or off the iep sections.
-    //!$("input[name='HealthNoConcern']").is(':checked') ? $("#HealthWidget").removeClass("widgetDisabled") : $("#HealthWidget").addClass("widgetDisabled");
-
-    //!$("input[name='MotorNoConcern']").is(':checked') ? $("#MotorWidget").removeClass("widgetDisabled") : $("#MotorWidget").addClass("widgetDisabled");
-    //!$("input[name='CommunicationNoConcern']").is(':checked') ? $("#CommunicationWidget").removeClass("widgetDisabled") : $("#CommunicationWidget").addClass("widgetDisabled");
-    //!$("input[name='SocialNoConcern']").is(':checked') ? $("#SocialWidget").removeClass("widgetDisabled") : $("#SocialWidget").addClass("widgetDisabled");
-    //!$("input[name='IntelligenceConcern']").is(':checked') ? $("#IntelligenceWidget").removeClass("widgetDisabled") : $("#IntelligenceWidget").addClass("widgetDisabled");
-    //!$("input[name='AcademicNoConcern']").is(':checked') ? $("#AcademicWidget").removeClass("widgetDisabled") : $("#AcademicWidget").addClass("widgetDisabled");
-    //!$("input[name='ReadingNoConcern']").is(':checked') ? $("#ReadingWidget").removeClass("widgetDisabled") : $("#ReadingWidget").addClass("widgetDisabled");
-    //!$("input[name='MathNoConcern']").is(':checked') ? $("#MathWidget").removeClass("widgetDisabled") : $("#MathWidget").addClass("widgetDisabled");
-    //!$("input[name='WrittenNoConcern']").is(':checked') ? $("#WrittenWidget").removeClass("widgetDisabled") : $("#WrittenWidget").addClass("widgetDisabled");
-    //$("input[name='SocialInterventionPlan']:checked").val() == 1 ? $("#BehaviorWidget i.glyphicon-flag").removeClass("hidden") : $("#BehaviorWidget i.glyphicon-flag").addClass("hidden");
-
 });
 
 // Attach Event
@@ -587,10 +575,11 @@ $("#dismissIEPPlan").on("click", function () {
         type: 'GET',
         url: '/Home/dismissPlanning',
         data: { studentId: stId, iepId: iepId },
-        dataType: 'html',
+        dataType: 'json',
+        async: false,
         success: function (data) {
-            if (data.Message == "success") {
-                location.reload();
+            if (data.result == "success") {
+                window.location.href = "/Home/StudentProcedures?stid=" + data.message;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
@@ -600,6 +589,8 @@ $("#dismissIEPPlan").on("click", function () {
             }
         },
         error: function (data) {
+            alert('errors?');
+            console.log(data);
             $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);

@@ -1840,7 +1840,7 @@ namespace GreenbushIep.Controllers
                 studentIEP.IepStatus = (studentIEP.IepStatus.ToUpper() == IEPStatus.PLAN) ? IEPStatus.DRAFT : studentIEP.IepStatus.ToUpper();
                 db.SaveChanges();
 
-                return Json(new { result = "success", message = "Successfully modify the IEP status from plan to draft" });
+                return Json(new { result = "success", message = studentId }, JsonRequestBehavior.AllowGet);
             }    
 
             return Json(new { result = "error", message = "Unable to change the IEP status from plan to draft." }, JsonRequestBehavior.AllowGet);
@@ -1887,7 +1887,7 @@ namespace GreenbushIep.Controllers
                 thePlan.Update(studentId);
             }
 
-            return RedirectToAction("StudentProcedures", new { stid = studentId });
+            return Json(new { result = "success", message = studentId }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
