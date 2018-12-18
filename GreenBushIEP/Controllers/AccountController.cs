@@ -78,20 +78,23 @@ namespace GreenbushIep.Controllers
         {
             tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             if (user != null)
-            {
-                // generate ourselves a new random password of 8 characters in length.
-                string password = RandomPassword.Generate(8);
-
+            {                
                 try
                 {
-                    EmailPassword.Send(user, password);
+                    // generate ourselves a new random password of 8 characters in length.
+                    var emailPassword = RandomPassword.Generate(10);
+                    PasswordHash hash = new PasswordHash(emailPassword);
+
+                    user.Password = hash.Hash;
+                    user.Salt = hash.Salt;
+
+                    EmailPassword.Send(user, emailPassword);
                 }
                 catch (Exception e)
                 {
                     return Json(new { Result = "Error", Message = "Unable to email the password. Error: " + e.InnerException.Message.ToString() });
                 }
 
-                //user.Password = password;
                 db.SaveChanges();
             }
 
@@ -106,6 +109,13 @@ namespace GreenbushIep.Controllers
             {
                 try
                 {
+                    PasswordHash hash = new PasswordHash(password);
+
+                    user.Password = hash.Hash;
+                    user.Salt = hash.Salt;
+
+                    db.SaveChanges();
+
                     EmailPassword.Send(user, password);
                 }
                 catch (Exception e)
@@ -113,7 +123,6 @@ namespace GreenbushIep.Controllers
                     return Json(new { Result = "Error", Message = "Unable to email the password. Error: " + e.InnerException.Message.ToString() });
                 }
 
-                //user.Password = password;
                 db.SaveChanges();
             }
 

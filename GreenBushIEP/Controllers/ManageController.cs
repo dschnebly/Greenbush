@@ -62,7 +62,7 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-                var emailPassword = RandomPassword.Generate(8);
+                var emailPassword = RandomPassword.Generate(10);
                 PasswordHash hash = new PasswordHash(emailPassword);
 
                 // CREATE new user

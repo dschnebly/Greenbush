@@ -18,7 +18,7 @@ namespace GreenBushIEP.Helper
     public class RandomPassword
     {
         // Define default min and max password lengths.
-        private static int DEFAULT_MIN_PASSWORD_LENGTH = 8;
+        private static int DEFAULT_MIN_PASSWORD_LENGTH = 10;
         private static int DEFAULT_MAX_PASSWORD_LENGTH = 10;
 
         // Define supported password characters divided into groups.
@@ -26,7 +26,7 @@ namespace GreenBushIEP.Helper
         private static string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
         private static string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
         private static string PASSWORD_CHARS_NUMERIC = "23456789";
-        //private static string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
+        private static string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
 
         /// <summary>
         /// Generates a random password.
@@ -91,7 +91,7 @@ namespace GreenBushIEP.Helper
             PASSWORD_CHARS_LCASE.ToCharArray(),
             PASSWORD_CHARS_UCASE.ToCharArray(),
             PASSWORD_CHARS_NUMERIC.ToCharArray(),
-            //PASSWORD_CHARS_SPECIAL.ToCharArray()
+            PASSWORD_CHARS_SPECIAL.ToCharArray()
             };
 
             // Use this array to track the number of unused characters in each
@@ -244,7 +244,7 @@ namespace GreenBushIEP.Helper
                 mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
                 mailMessage.To.Add(user.Email);
                 mailMessage.Subject = "Your new Greenbush IEP password ";
-                mailMessage.Body = "Your new password is '" + password + "'";
+                mailMessage.Body = "Your new password is '" + password + "'. You can log in at https://www.greenbushbackback.org.";
 
                 smtpClient.Send(mailMessage);
             }
