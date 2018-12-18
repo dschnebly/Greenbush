@@ -20,12 +20,6 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(string Email, string Password)
