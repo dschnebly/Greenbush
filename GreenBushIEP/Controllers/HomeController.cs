@@ -1502,12 +1502,22 @@ namespace GreenbushIep.Controllers
 
                     // nullable serviceId
                     service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
-
-                    for (int i = 12; i < collection.Count; i++)
+                    string selectedGoals = collection["studentGoalsSelect"];
+                    if (!string.IsNullOrEmpty(selectedGoals))
                     {
-                        int goalId = Convert.ToInt32(collection[i]);
-                        tblGoal goal = db.tblGoals.Where(g => g.goalID == goalId).First();
-                        service.tblGoals.Add(goal);
+                        string[] goalsArr = selectedGoals.Split(',');
+
+                        for (int i = 0; i < goalsArr.Count(); i++)
+                        {
+                            int goalId = 0;
+                            Int32.TryParse(goalsArr[i], out goalId);
+
+                            if (goalId > 0)
+                            {
+                                tblGoal goal = db.tblGoals.Where(g => g.goalID == goalId).First();
+                                service.tblGoals.Add(goal);
+                            }
+                        }
                     }
 
                     db.tblServices.Add(service);
