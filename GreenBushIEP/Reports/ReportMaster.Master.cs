@@ -19,6 +19,7 @@ namespace GreenBushIEP.Report
 		public const string admin = "3";
 		public const string teacher = "4";
 		public const string student = "5";
+		public const string nurse = "6";
 		public static IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -50,6 +51,8 @@ namespace GreenBushIEP.Report
 				teachers = GetTeacherRecursive(null, usr.UserID);
 			}
 
+
+
 			foreach (var item in teachers)
 			{
 				TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", item.LastName, item.FirstName), UserID = item.UserID };
@@ -62,18 +65,25 @@ namespace GreenBushIEP.Report
 		private static List<tblUser> GetTeacherRecursive(List<tblUser> children, int userId)
 		{
 			List<tblUser> list = new List<tblUser>();
-			var teachers = (from org in db.tblOrganizationMappings
-							join user in db.tblUsers
-								on org.UserID equals user.UserID
-							where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == teacher || user.RoleID == admin)
-							select user).Distinct().ToList();
 
-			list.AddRange(teachers.Where(i => i.RoleID == teacher));
-			foreach (tblUser teach in teachers)
+			try
 			{
-				var childList = GetTeacherRecursive(teachers, teach.UserID);
-				list.AddRange(childList);
-				
+				var teachers = (from org in db.tblOrganizationMappings
+								join user in db.tblUsers
+									on org.UserID equals user.UserID
+								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == teacher || user.RoleID == admin || user.RoleID == nurse) && (user.UserID != userId)
+								select user).Distinct().ToList();
+
+				list.AddRange(teachers.Where(i => i.RoleID == teacher));
+				foreach (tblUser teach in teachers)
+				{
+					var childList = GetTeacherRecursive(teachers, teach.UserID);
+					list.AddRange(childList);
+
+				}
+			}
+			catch (Exception)
+			{
 			}
 
 			return list;
