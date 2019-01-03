@@ -284,6 +284,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
                                             <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
                                             <i class="glyphicon glyphicon-ok isServiceCompleted @( service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
+></i>
                                             <span class="pull-right">
                                                 <i class="glyphicon glyphicon-trash deleteService"></i>
                                             </span>
@@ -518,8 +519,8 @@
                             var dupServiceType = serviceObj.ServiceCode;
                             var dupServiceProvider = serviceObj.ProviderID;
                             var dupStartDate = serviceObj.StartDate;
-							var dupEndDate = serviceObj.EndDate;
-							var dupGoals = serviceObj.Goals;
+                            var dupEndDate = serviceObj.EndDate;
+                            var dupGoals = serviceObj.Goals;
 
                             duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
                         });
@@ -544,43 +545,43 @@
         $(".duplication-loader").css('visibility', 'visible');
         var parent = $('div:visible.collapse.in');
 
-        if (parent != null){
-			var studentId = $("#sid").val();
-			var serviceId = parent.data("val");
-			if (studentId != undefined && serviceId != undefined) {
-				$.ajax({
-					type: 'GET',
-					url: '/Home/DuplicateStudentServicesNextYear',
-					data: { studentId: studentId, serviceId: serviceId },
-					dataType: "json",
-					success: function (data) {
-						if (data.Result == "success") {
-							$.each(data.Data, function (index, serviceObj) {
+        if (parent != null) {
+            var studentId = $("#sid").val();
+            var serviceId = parent.data("val");
+            if (studentId != undefined && serviceId != undefined) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/DuplicateStudentServicesNextYear',
+                    data: { studentId: studentId, serviceId: serviceId },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Result == "success") {
+                            $.each(data.Data, function (index, serviceObj) {
 
-								var dupFiscalYear = serviceObj.SchoolYear;
-								var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
-								var dupserviceMinutesPerDay = serviceObj.Minutes;
-								var dupFrequency = serviceObj.Frequency;
-								var dupLocation = serviceObj.LocationCode;
-								var dupServiceType = serviceObj.ServiceCode;
-								var dupServiceProvider = serviceObj.ProviderID;
-								var dupStartDate = serviceObj.StartDate;
-								var dupEndDate = serviceObj.EndDate;
-								var dupGoals = serviceObj.Goals;
+                                var dupFiscalYear = serviceObj.SchoolYear;
+                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+                                var dupserviceMinutesPerDay = serviceObj.Minutes;
+                                var dupFrequency = serviceObj.Frequency;
+                                var dupLocation = serviceObj.LocationCode;
+                                var dupServiceType = serviceObj.ServiceCode;
+                                var dupServiceProvider = serviceObj.ProviderID;
+                                var dupStartDate = serviceObj.StartDate;
+                                var dupEndDate = serviceObj.EndDate;
+                                var dupGoals = serviceObj.Goals;
 
-								duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
-							});
-						}
-						else {
-							_showAlert('There was a problem duplicating the Student Services.', false);
-						}
-					},
-					error: function (data) {
-						console.log("Unable to duplicate the student services.");
-					}
-				});
-			}
-            
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
+                            });
+                        }
+                        else {
+                            _showAlert('There was a problem duplicating the Student Services.', false);
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Unable to duplicate the student services.");
+                    }
+                });
+            }
+
 
         }
         else {
@@ -638,11 +639,9 @@
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
                 var year = $(this).val();
-				var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
-				var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
-				_checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
-
-
+                var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
+                var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
+                _checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
             });
 
             $(this).find(".dtField").on('change', function (e) {
@@ -660,7 +659,7 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
                 _onDateChange(fiscalYear, day, selectedDate, e);
-				
+
 
             });
 
@@ -778,7 +777,7 @@
                 if (serviceType != undefined && serviceType != "")
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
-				 //check dates before saving
+                //check dates before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //don't allow user to save
@@ -812,9 +811,9 @@
                             $(window).trigger("saving.bs.modal");
                             return false;
                         }
-						else {
+                        else {
 
-							_showAlert(data.Message, false);
+                            _showAlert(data.Message, false);
 
                         }
                     },
@@ -823,7 +822,6 @@
                     }
                 });
             });
-
 
             $(this).find(".saveCompletedService").on('click', function (e) {
 
@@ -933,10 +931,10 @@
             $(this).find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
             $(this).find("select[name='Location']").val(dupLocation).prop('selected', true);
             $(this).find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
-			$(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
-			$(this).find("input[name='serviceStartDate']").val(dupStartDate);
-			$(this).find("input[name='serviceEndDate']").val(dupEndDate);
-			$(this).find("select[id='studentGoalsSelect']").val(dupGoals);
+            $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+            $(this).find("input[name='serviceStartDate']").val(dupStartDate);
+            $(this).find("input[name='serviceEndDate']").val(dupEndDate);
+            $(this).find("select[id='studentGoalsSelect']").val(dupGoals);
 
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
@@ -952,10 +950,10 @@
             });
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
-				var year = $(this).val();
-				var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
-				var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
-				_checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);                
+                var year = $(this).val();
+                var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
+                var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
+                _checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
 
             });
 
@@ -1100,7 +1098,7 @@
             });
 
 
-			 $(this).find(".saveCompletedService").on('click', function (e) {
+            $(this).find(".saveCompletedService").on('click', function (e) {
 
                 $(this).closest("form").find("input[name='completed']").val(true);
                 $(this).prev().trigger(event.type);
@@ -1113,15 +1111,15 @@
 
                 var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
                 if (serviceType != undefined && serviceType != "")
-					$(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
-				
-				//check dates before saving
+                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+
+                //check dates before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //don't allow user to save
                 if (!isValid)
                     return false;
-							   
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/SaveStudentService',
@@ -1220,95 +1218,95 @@
         }
     }
 
-	function _checkCalendarReporting(fiscalYear, minutesElement, daysPerWeekElement) {
-		
-		var studentId = $("#sid").val();
-		var args = { fiscalYear: fiscalYear, studentId: studentId };
-		var maxDaysPerWeek = daysPerWeekElement;
-		var maxMinutesPerDay =minutesElement;
+    function _checkCalendarReporting(fiscalYear, minutesElement, daysPerWeekElement) {
 
-		$.ajax({
+        var studentId = $("#sid").val();
+        var args = { fiscalYear: fiscalYear, studentId: studentId };
+        var maxDaysPerWeek = daysPerWeekElement;
+        var maxMinutesPerDay = minutesElement;
+
+        $.ajax({
             type: 'POST',
             url: '/Home/ValidateCalendarReporting',
             data: args,
-			dataType: 'json',			
-			success: function (data) {				
-				maxDaysPerWeek.prop("max", data.DaysPerWeek);
-				maxMinutesPerDay.prop("max", data.MinutesPerDay);
+            dataType: 'json',
+            success: function (data) {
+                maxDaysPerWeek.prop("max", data.DaysPerWeek);
+                maxMinutesPerDay.prop("max", data.MinutesPerDay);
 
-				if (maxDaysPerWeek.val() >  data.DaysPerWeek) {
-					maxDaysPerWeek.prop("value",  data.DaysPerWeek);
-				}
-                
-				if (maxMinutesPerDay.val() > data.MinutesPerDay) {
-					maxMinutesPerDay.prop("value", data.MinutesPerDay);
-				}
+                if (maxDaysPerWeek.val() > data.DaysPerWeek) {
+                    maxDaysPerWeek.prop("value", data.DaysPerWeek);
+                }
+
+                if (maxMinutesPerDay.val() > data.MinutesPerDay) {
+                    maxMinutesPerDay.prop("value", data.MinutesPerDay);
+                }
             }
-		});   
-		
-	}
-	
+        });
+
+    }
 
 
-	function _validateDate(fiscalYear, calendarDay, e) {
-		
-		var studentId = $("#sid").val();
-		var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, studentId: studentId };
 
-		$.ajax({
+    function _validateDate(fiscalYear, calendarDay, e) {
+
+        var studentId = $("#sid").val();
+        var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, studentId: studentId };
+
+        $.ajax({
             type: 'POST',
             url: '/Home/ValidateServiceDate',
             data: args,
-			dataType: 'json',			
-			success: function (data) {				
-				var errorMessage = "";			
+            dataType: 'json',
+            success: function (data) {
+                var errorMessage = "";
 
-				if (!data.IsValid) {
-					errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;				
-				}
+                if (!data.IsValid) {
+                    errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
+                }
 
-				if (!data.IsService) {
-					//if the accidentally select the wrong fiscal year, but think are picking something within that fy
-					if (!data.IsValid) {
-						errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;				
-					}
-					else {
-						errorMessage = 'OH NOES! That day is not is session. ';
-					}
-				}
+                if (!data.IsService) {
+                    //if the accidentally select the wrong fiscal year, but think are picking something within that fy
+                    if (!data.IsValid) {
+                        errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
+                    }
+                    else {
+                        errorMessage = 'OH NOES! That day is not is session. ';
+                    }
+                }
 
-				if (errorMessage != "") {
-					e.target.setCustomValidity(errorMessage);
-					e.target.title = errorMessage;
-					e.target.parentNode.classList.add('has-error');
-					var error = e.target.title;
-					_showAlert(error, false);					
-				}	
-				else {
-					e.target.setCustomValidity('');
-					e.target.title = '';
-					e.target.parentNode.classList.remove('has-error');
-				}
-							
-				},
-				error: function (data) {
-					_showAlert('Unable to connect to the database.', false);
+                if (errorMessage != "") {
+                    e.target.setCustomValidity(errorMessage);
+                    e.target.title = errorMessage;
+                    e.target.parentNode.classList.add('has-error');
+                    var error = e.target.title;
+                    _showAlert(error, false);
+                }
+                else {
+                    e.target.setCustomValidity('');
+                    e.target.title = '';
+                    e.target.parentNode.classList.remove('has-error');
+                }
 
-				}
-		});
-		
-	}
-	
+            },
+            error: function (data) {
+                _showAlert('Unable to connect to the database.', false);
 
-	function _dateCheck(startDateElement, endDateElement) {
+            }
+        });
 
-       //check dates before saving   
-	   var isValid = true;
-       var eDate = endDateElement.val();
-       var endDateObj = new Date(eDate);
-       var sDate = startDateElement.val();
-       var startDateObj = new Date(sDate);
-               
+    }
+
+
+    function _dateCheck(startDateElement, endDateElement) {
+
+        //check dates before saving
+        var isValid = true;
+        var eDate = endDateElement.val();
+        var endDateObj = new Date(eDate);
+        var sDate = startDateElement.val();
+        var startDateObj = new Date(sDate);
+
         //start date must be after IEP start date
         var isAfterIEP = _validateStartDate(startDateObj);
         if (!isAfterIEP) {
@@ -1321,9 +1319,9 @@
             _showAlert("The End date must be after the Initiation date.", false);
             isValid = false;
             return false;
-		}
+        }
 
-		return isValid;
+        return isValid;
     }
 
     function _onDateChange(fiscalYear, day, calendaryDay, e) {
@@ -1340,10 +1338,10 @@
             e.target.parentNode.classList.add('has-error');
             var error = e.target.title;
             _showAlert(error, false);
-		} else {
-			_validateDate(fiscalYear, calendaryDay, e);			
-		}
-		
+        } else {
+            _validateDate(fiscalYear, calendaryDay, e);
+        }
+
     }
 
     $("#isCompletedModule").on("click", function () {

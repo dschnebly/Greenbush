@@ -1470,6 +1470,7 @@ namespace GreenbushIep.Controllers
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
+
             //check dates
             bool isValidStartDate = false;
             bool isValidServiceStartDate = true;
