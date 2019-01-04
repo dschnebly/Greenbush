@@ -67,7 +67,7 @@ namespace GreenBushIEP
 
                 if (userProfile != null)
                 {
-                    filterContext.Controller.ViewBag.DisplayName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userProfile.FirstName) + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userProfile.LastName);
+                    filterContext.Controller.ViewBag.DisplayName = (userProfile.FirstName) + " " + (userProfile.LastName);
                 }
             }
         }

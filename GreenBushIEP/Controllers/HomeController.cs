@@ -1416,7 +1416,6 @@ namespace GreenbushIep.Controllers
 
             if (availableCalendarDays != null)
             {
-
                 var firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth).FirstOrDefault();
                 var lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
@@ -1444,13 +1443,11 @@ namespace GreenbushIep.Controllers
 					}
 				}
 
-
-
-
 				if (availableCalendarDays.Where(o => o.calendarDate == searchDate).Count() == 0)
                 {
                     isService = false;
                 }
+
                 if (firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue && lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue)
                 {
                     validDates = string.Format("Start Date: {0} End Date: {1}.", firstDaySchoolYear.calendarDate.Value.ToShortDateString(), lastDaySchoolYear.calendarDate.Value.ToShortDateString());
@@ -1458,7 +1455,6 @@ namespace GreenbushIep.Controllers
                     {
                         isValid = true;
                     }
-
                 }
             }
         }

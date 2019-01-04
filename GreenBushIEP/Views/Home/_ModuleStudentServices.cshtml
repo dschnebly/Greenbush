@@ -62,7 +62,6 @@
     </h4>
 </div>
 <div class="modal-body">
-
     <div class="container serviceContainer">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
@@ -82,7 +81,6 @@
         </div>
 
         <div class="row oneStudentService hidden" id="defaultStudentService">
-
             <div class="col-md-12">
                 <div class="panel-group" id="accordion[0]">
 
@@ -90,7 +88,6 @@
                         <input type="hidden" name="StudentId" value="@Model.studentId" />
                         <input type="hidden" name="StudentSerivceId" value="0" />
                         <input type="hidden" name="completed" value="false" />
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -128,7 +125,7 @@
                                             <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; ">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -284,7 +281,6 @@
                                         <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
                                             <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
                                             <i class="glyphicon glyphicon-ok isServiceCompleted @( service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
-></i>
                                             <span class="pull-right">
                                                 <i class="glyphicon glyphicon-trash deleteService"></i>
                                             </span>
@@ -330,7 +326,7 @@
                                                             {
                                                                 foreach (var serviceLocation in Model.serviceLocations)
                                                                 {
-                                                                    <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                            <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
                                                                 }
                                                             }
                                                         </select>
@@ -390,7 +386,7 @@
                                                         {
                                                             foreach (var serviceType in Model.serviceTypes)
                                                             {
-                                                                <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                        <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -405,7 +401,7 @@
                                                         {
                                                             foreach (var serviceProvider in Model.serviceProviders)
                                                             {
-                                                                <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                                        <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                             }
                                                         }
                                                     </select>
@@ -425,7 +421,7 @@
                                                                 string selectString = String.Empty;
                                                                 selectString = service.tblGoals.Contains(goal) ? "selected" : String.Empty;
 
-                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()" @selectString>@goal.Title.ToString()</option>
+                                                        <option value="@goal.goalID" data-title="@goal.Title.ToString()" @selectString>@goal.Title.ToString()</option>
                                                             }
                                                         }
                                                     </select>
@@ -469,16 +465,14 @@
 <script>
 
     $(document).ready(function () {
-
         $(this).find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $(this).removeAttr('id').removeClass('hasDatepicker');
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
                 changeMonth: true
             });
         });
-
     });
 
     var model = '@Html.Raw(Json.Encode(Model.calendar))';
@@ -537,7 +531,6 @@
         else {
             _showAlert('There was a problem duplicating the Student Services.', false);
         }
-
     });
 
     //duplicate service for next school year
@@ -581,8 +574,6 @@
                     }
                 });
             }
-
-
         }
         else {
             _showAlert("Please select a service to duplicate", false);
@@ -621,7 +612,7 @@
 
         //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneService.find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $(this).removeAttr('id').removeClass('hasDatepicker');
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
@@ -658,9 +649,8 @@
                 var selectedDate = e.target.value;
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
+
                 _onDateChange(fiscalYear, day, selectedDate, e);
-
-
             });
 
             $(this).find("a i.deleteService").on("click", function (e) {
@@ -777,10 +767,10 @@
                 if (serviceType != undefined && serviceType != "")
                     $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
-                //check dates before saving
+                //check dates are valid before saving
                 var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
-                //don't allow user to save
+                //if isvalid, don't allow user to save
                 if (!isValid)
                     return false;
 
@@ -830,15 +820,14 @@
                 $(this).prev().trigger(event.type);
             });
 
-            /* Closes all the other panel groups except the one you clicked on */
             $(this).find(".panel-title a").on("click", function () {
+                /* Closes all the other panel groups except the one you clicked on */
                 $(".collapse").each(function () {
                     $(this).collapse('hide');
                 });
             });
 
             $(this).find('.chosen-select').chosen({ width: "100%" });
-
         });
     }
     initService();
@@ -864,24 +853,6 @@
         });
     }
     initGoalEvents();
-
-    function createDate2(newDate) {
-
-        var dateArr = newDate.split('/');
-        var month = 0;
-        var day = 0;
-        var year = 0;
-
-        if (dateArr.length > 0 && dateArr.length == 3) {
-            month = dateArr[0];
-            day = dateArr[1];
-            year = dateArr[2];
-        }
-
-        var returnDate = new Date(year, month - 1, day);
-
-        return returnDate;
-    }
 
     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
         $.each($("div.collapse"), function (index) {
@@ -1140,56 +1111,6 @@
                 });
             })
 
-            ////setup end date
-            //var endDateElement = $(this).closest(".row").find("input[name='serviceEndDate']");
-            //var lastDaySchoolYear = searchLastDay(nextYear, 5);
-
-
-            //if (lastDaySchoolYear == undefined) {
-            //    var origStartDateVal = new Date(dupEndDate);
-            //    var newEndDate = new Date(origStartDateVal.setFullYear(nextYear));
-
-            //    var Month = newEndDate.getMonth() + 1;
-            //    var Day = newEndDate.getDate();
-            //    var Year = newEndDate.getFullYear();
-            //    var formattedDate = Month + "/" + Day + "/" + Year;
-            //    endDateElement.val(formattedDate);
-            //}
-            //else {
-            //    var Month = lastDaySchoolYear.Month;
-            //    var Day = lastDaySchoolYear.Day;
-            //    var Year = lastDaySchoolYear.Year;
-            //    var formattedDate = Month + "/" + Day + "/" + Year;
-            //    endDateElement.val(formattedDate);
-            //}
-
-
-
-            ////setup start date - find by first year of selected fiscal year
-            //var firstDayNextYear = searchFirstDay(nextYear, nextYear - 1, 8);
-            //var startDateElement = $(this).closest(".row").find("input[name='serviceStartDate']");
-
-            //if (firstDayNextYear == undefined) {
-            //    var origStartDateVal = new Date(dupStartDate);
-            //    var newStartDate = new Date(origStartDateVal.setFullYear(nextYear - 1));
-
-            //    var Month = newStartDate.getMonth() + 1;
-            //    var Day = newStartDate.getDate();
-            //    var Year = newStartDate.getFullYear();
-            //    var formattedDate = Month + "/" + Day + "/" + Year;
-            //    startDateElement.val(formattedDate);
-            //}
-            //else {
-
-            //    if (firstDayNextYear != undefined) {
-            //        var Month = firstDayNextYear.Month;
-            //        var Day = firstDayNextYear.Day;
-            //        var Year = firstDayNextYear.Year;
-            //        var formattedDate = Month + "/" + Day + "/" + Year;
-            //        startDateElement.val(formattedDate);
-            //    }
-            //}
-
             $(".duplication-loader").css('visibility', 'hidden');
         });
     }
@@ -1246,8 +1167,6 @@
 
     }
 
-
-
     function _validateDate(fiscalYear, calendarDay, e) {
 
         var studentId = $("#sid").val();
@@ -1297,7 +1216,6 @@
 
     }
 
-
     function _dateCheck(startDateElement, endDateElement) {
 
         //check dates before saving
@@ -1306,6 +1224,18 @@
         var endDateObj = new Date(eDate);
         var sDate = startDateElement.val();
         var startDateObj = new Date(sDate);
+
+        if (!isDate(sDate)) {
+            _showAlert("The Student Service Initiation date must be a valid date.", false);
+            isValid = false;
+            return false;
+        }
+
+        if (!isDate(eDate)) {
+            _showAlert("The Student Service End date must be a valid date.", false);
+            isValid = false;
+            return false;
+        }
 
         //start date must be after IEP start date
         var isAfterIEP = _validateStartDate(startDateObj);
@@ -1341,7 +1271,12 @@
         } else {
             _validateDate(fiscalYear, calendaryDay, e);
         }
+    }
 
+    function isDate(sDate) {
+        if (sDate.toString() == parseInt(sDate).toString()) return false;
+        var tryDate = new Date(sDate);
+        return (tryDate && tryDate.toString() != "NaN" && tryDate != "Invalid Date");
     }
 
     $("#isCompletedModule").on("click", function () {
