@@ -294,6 +294,9 @@
     <Compile Include="Models\tblContact.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblGrade.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

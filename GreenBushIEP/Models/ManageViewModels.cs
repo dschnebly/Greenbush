@@ -230,6 +230,7 @@ namespace GreenBushIEP.Models
             submitter = new tblUser();
             student = new Student();
             info = new tblStudentInfo();
+            grades = new List<tblGrade>();
             contacts = new List<tblStudentRelationship>();
             districts = new List<tblDistrict>();
             allDistricts = new List<tblDistrict>();
@@ -246,6 +247,7 @@ namespace GreenBushIEP.Models
         public tblUser submitter { get; set; }
         public Student student { get; set; }
         public tblStudentInfo info { get; set; }
+        public List<tblGrade> grades { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public List<tblDistrict> districts { get; set; }
         public List<tblDistrict> allDistricts { get; set; }

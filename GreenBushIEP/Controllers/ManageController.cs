@@ -144,6 +144,7 @@ namespace GreenBushIEP.Controllers
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.contacts.Add(new tblStudentRelationship() { Realtionship = "parent", State = "KS" });
             model.statusCode = db.tblStatusCodes.ToList();
+            model.grades = db.tblGrades.ToList();
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
@@ -335,8 +336,6 @@ namespace GreenBushIEP.Controllers
                         if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
-
-
                         }
                     }
                     db.SaveChanges();
@@ -531,6 +530,7 @@ namespace GreenBushIEP.Controllers
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();
+            model.grades = db.tblGrades.ToList();
             model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
 
             foreach (var d in model.selectedDistrict)

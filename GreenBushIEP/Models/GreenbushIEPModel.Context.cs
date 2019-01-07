@@ -89,6 +89,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblGrade> tblGrades { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

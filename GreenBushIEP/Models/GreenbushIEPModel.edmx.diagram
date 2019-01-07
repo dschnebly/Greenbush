@@ -72,6 +72,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ServiceExport" Width="1.5" PointX="23.375" PointY="23.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="24.375" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUser" Width="1.5" PointX="3.375" PointY="22.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGrade" Width="1.5" PointX="24.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
