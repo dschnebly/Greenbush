@@ -368,14 +368,14 @@ namespace GreenBushIEP.Controllers
                     tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
 
                     int j = 0;
-                    int loopCounter = 0;
-                    while (j < collection.Count - 1)
+                    int loopCounter = 1;
+                    while (++j < collection.Count - 1)
                     {
                         tblStudentRelationship contact = new tblStudentRelationship()
                         {
                             RealtionshipID = 0,
                             UserID = studentId,
-                            FirstName = collection[++j].ToString(),
+                            FirstName = collection[j].ToString(),
                             LastName = collection[++j].ToString(),
                             Realtionship = collection[++j].ToString(),
                             Address1 = collection[++j].ToString(),
