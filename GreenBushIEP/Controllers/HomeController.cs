@@ -353,15 +353,21 @@ namespace GreenbushIep.Controllers
             if (view == "ServiceProviderModule" && MIS != null)
             {
                 MISProviderViewModel model = new MISProviderViewModel();
-                List<tblProvider> listOfProviders = new List<tblProvider>();
-
-                listOfProviders = db.tblProviders.Where(p => p.UserID == MIS.UserID).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
                 var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
                                        join districts in db.tblDistricts
                                             on buildingMaps.USD equals districts.USD
                                        where buildingMaps.UserID == MIS.UserID
                                        select districts).Distinct().ToList();
+
+                List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
+
+                List<tblProvider> listOfProviders = new List<tblProvider>();
+                listOfProviders = (from providers in db.tblProviders
+                                   join districts in db.tblProviderDistricts
+                                        on providers.ProviderID equals districts.ProviderID
+                                   where listOfUSD.Contains(districts.USD)
+                                   select providers).Distinct().ToList();
 
                 model.listOfProviders = listOfProviders;
                 model.districts = MISDistrictList;
