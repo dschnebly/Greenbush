@@ -607,7 +607,8 @@ namespace GreenbushIep.Controllers
                         {
                             querySaveStuff.Connection = SQLConn;
                             querySaveStuff.Parameters.Clear();
-                            querySaveStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
+							querySaveStuff.CommandTimeout = 180; 
+							querySaveStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
                             querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
                             querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                             querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
@@ -620,7 +621,8 @@ namespace GreenbushIep.Controllers
                         {
                             querySaveMoreStuff.Connection = SQLConn;
                             querySaveMoreStuff.Parameters.Clear();
-                            querySaveMoreStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
+							querySaveMoreStuff.CommandTimeout = 180;
+							querySaveMoreStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
                             querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
                             querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                             querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
