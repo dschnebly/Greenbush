@@ -7,7 +7,21 @@
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
+	var studentGrade = "";
 
+	if (Model.studentDetails.student.Grade != null)
+	{
+		switch (Model.studentDetails.student.Grade.Value)
+		{
+			case -4: { studentGrade = "P3"; break; }
+			case -3: { studentGrade = "P4"; break; }
+			case -2: { studentGrade = "P5"; break; }
+			case -1: { studentGrade = "P6"; break; }
+			case 0: { studentGrade = "K"; break; }
+			default: { studentGrade = Model.studentDetails.student.Grade.Value.ToString(); break; }
+
+		}
+	}
 }
  <div class="studentInformationPage">
             <table class="full">
@@ -90,7 +104,7 @@
                 </tr>
                 <tr>
 					<td><label>Grade:</label></td>
-                    <td>@(Model.studentDetails.student.Grade == null  ? "" : Model.studentDetails.student.Grade == 0 ? "K" : Model.studentDetails.student.Grade.ToString())</td>                   
+                    <td>@(studentGrade)</td>                   
                     <td><label>Fund Source:</label></td>
                     <td>@Model.studentDetails.placementCodeDesc</td>
 				</tr>                
@@ -203,7 +217,7 @@
                     <td></td>
                     <td></td>
                     <td><label>Grade:</label></td>
-                    <td>@(Model.studentDetails.student.Grade == null  ? "" : Model.studentDetails.student.Grade == 0 ? "K" : Model.studentDetails.student.Grade.ToString())</td>                   
+                    <td>@(studentGrade)</td>                   
                 </tr>
                 <tr>
                     <td><label>Phones:</label></td>

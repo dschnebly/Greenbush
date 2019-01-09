@@ -15,10 +15,14 @@
     var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
     var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
     var draftImage = "";
+	
+
     if (isDraft)
     {
         draftImage = "/Content/Images/draft-watermark-printing.png";
     }
+	
+	
 }
 
 @section stylesheets {
