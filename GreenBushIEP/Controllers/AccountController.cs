@@ -20,6 +20,34 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Register(FormCollection collection)
+        { 
+            // Lets first check if the Model is valid or not
+            if (ModelState.IsValid)
+            {
+                string email = collection["Email"];
+
+                tblUser user = db.tblUsers.Where(u => u.Email == email).FirstOrDefault();
+
+                // we silently fail if the email entered doesn't match a system user.
+                if(user != null)
+                {
+                    ResetPassword(user.UserID);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(string Email, string Password)
@@ -72,7 +100,7 @@ namespace GreenbushIep.Controllers
         {
             tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             if (user != null)
-            {                
+            {
                 try
                 {
                     // generate ourselves a new random password of 8 characters in length.
