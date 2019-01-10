@@ -95,13 +95,17 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
+                        var results = data.Message;
 
                         // blow away the building list 
                         $('#userBuildings').empty();
-                        // blow away the user list
-                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
 
-                        var results = data.Message;
+                        // hide all the users in the list.
+                        var filterCollection = $('.list-group-root').find('.list-group-item');
+                        $.each(filterCollection, function (index, value) {
+                            $(value).addClass('hidden');
+                        });
+
                         $('#userBuildings').append('<option value="-1">All Buildings</option>');
                         if (results.buildings.length > 0) {
                             $.each(results.buildings, function (index, value) {
@@ -111,22 +115,13 @@
                         }
 
                         if (results.members.length > 0) {
-                            $.each(results.members, function (index, value) {
-                                switch(value.RoleID)
-                                {
-                                    case "3":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "4":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "5":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "6":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i>&nbsp;<a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"><text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                }
+                            $.each(filterCollection, function (filterIndex, filterValue) {
+                                $.each(results.members, function (index, value) {
+                                    if ($(filterValue).data('id') == value.UserID) {
+                                        $(filterValue).removeClass('hidden');
+                                        return false;
+                                    }
+                                });
                             });
                         }
 
@@ -166,26 +161,22 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // blow away the user list
-                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
+                        // hide all the users in the list.
+                        var filterCollection = $('.list-group-root').find('.list-group-item');
+                        $.each(filterCollection, function (index, value) {
+                            $(value).addClass('hidden');
+                        });
 
                         var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(results.members, function (index, value) {
-                                switch (value.RoleID) {
-                                    case "3":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "4":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "5":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "6":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i>&nbsp;<a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"><text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                }
+
+                            $.each(filterCollection, function (filterIndex, filterValue) {
+                                $.each(results.members, function (index, value) {
+                                    if ($(filterValue).data('id') == value.UserID) {
+                                        $(filterValue).removeClass('hidden');
+                                        return false;
+                                    }
+                                });
                             });
                         }
 
@@ -225,26 +216,22 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // blow away the user list
-                        document.getElementsByClassName('list-group-root')[0].innerHTML = "";
+                        // hide all the users in the list.
+                        var filterCollection = $('.list-group-root').find('.list-group-item');
+                        $.each(filterCollection, function (index, value) {
+                            $(value).addClass('hidden');
+                        });
 
                         var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(results.members, function (index, value) {
-                                switch (value.RoleID) {
-                                    case "3":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-user-o" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "4":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"> <text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "5":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-child" aria-hidden="true"></i> <text>' + value.FirstName + ' ' + value.LastName + '</text><a href="/Home/StudentProcedures?stid=' + value.UserID + '" title="Lauch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP"><span class="glyphicon glyphicon-log-out"></span></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><a href="/Manage/EditStudent/' + value.UserID + '" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                    case "6":
-                                        $('.list-group-root').append('<div class="list-group-item" data-id="' + value.UserID + '"><i class="fa fa-magnet" aria-hidden="true"></i>&nbsp;<a href="/Home/TeacherStudentsRole/' + value.UserID + '" class="launchListOfStudents" data-ftrans="slide"><text>' + value.FirstName + ' ' + value.LastName + '</text></a><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-info btn-action pull-right" data-id="' + value.UserID + '" data-toggle="modal" data-target="#assignBuilding"><span class="fa fa-building-o" aria-hidden="true"></span></button><a href="/Manage/Edit/' + value.UserID + '" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a></div>');
-                                        break;
-                                }
+
+                            $.each(filterCollection, function (filterIndex, filterValue) {
+                                $.each(results.members, function (index, value) {
+                                    if ($(filterValue).data('id') == value.UserID) {
+                                        $(filterValue).removeClass('hidden');
+                                        return false;
+                                    }
+                                });
                             });
                         }
 
