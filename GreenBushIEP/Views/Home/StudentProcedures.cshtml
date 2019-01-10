@@ -1095,7 +1095,7 @@
                     </div>
                 </li>
                 <li class="ui-state-default filter planning @(Model.hasAccommodations ? "needsAttention" : string.Empty)" id="AccommodationWidget">
-                    <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
+                    <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted && !Model.hasAccommodations ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
                             <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon" aria-hidden="true"></i>

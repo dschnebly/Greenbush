@@ -101,40 +101,6 @@
                 </div>
             </div>
         </div>
-        @*<div class="row voffset2">
-                <div class="col-md-12">
-                    <label class="standard-font-size">Transportation Plan</label>
-                </div>
-            </div>
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <div class="form-check transportationCheck">
-                        <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.Transporation_NotEligible.HasValue && Model.Transporation_NotEligible.Value ? "checked" : String.Empty)>The student is not eligible for transportation.</label><br />
-                        <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
-                        <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
-                        <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
-                    </div>
-                    @{var showOther = false;
-                        if ((Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value) ||
-                            (Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value) ||
-                            (Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value))
-                        {
-                            showOther = true;
-                        }
-                    }
-                    <div class="form-check voffset2" id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
-                        <p>
-                            The student will receive transportation each day that school is in session, on a <a href="#" id="inline-vehicle" name="inline-vehicle" data-type="select" data-title="Enter vehicle type" data-pk="1" placeholder="Select Vehicle Type" class="editable editable-click" style="display: inline;"></a>
-                            vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. (<a href="#" id="inline-minutes" name="inline-minutes" data-type="text" data-title="Enter minutes" placeholder="Enter Minutes" class="editable editable-click" style="display: inline;"></a> minutes estimated normal commute) beginning on
-                            <a href="#" id="inline-begin" name="inline-begin" data-type="text" data-title="Enter begin date" class="editable editable-click" style="display: inline;"></a> and ending on <a href="#" id="inline-end" name="inline-end" data-type="text" data-title="Enter end date" class="editable editable-click" style="display: inline;"></a> following the school calendar.
-                        </p>
-                        <input type="hidden" name="inputVehicleType" id="inputVehicleType" value="@ViewBag.vehicleType" />
-                        <input type="hidden" name="inputBegin" id="inputBegin" value="@ViewBag.begin" />
-                        <input type="hidden" name="inputEnd" id="inputEnd" value="@ViewBag.end" />
-                        <input type="hidden" name="inputMinutes" id="inputMinutes" value="@ViewBag.minutes" />
-                    </div>
-                </div>
-            </div>*@
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
