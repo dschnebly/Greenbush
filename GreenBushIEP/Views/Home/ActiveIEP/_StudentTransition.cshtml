@@ -61,7 +61,7 @@
     </div>
 
 
-	@if (Model != null && (ViewBag.studentAge > 12 || (Model.isDOC && ViewBag.studentAge > 20)))
+	@if (Model != null && (ViewBag.studentAge > 13 || (Model.isDOC && ViewBag.studentAge > 20)))
 	{
 	<form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
 		<input type="hidden" id="printText" name="printText" />

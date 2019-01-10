@@ -1655,7 +1655,7 @@ namespace GreenbushIep.Controllers
                 model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).ToList();
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
-                model.isRequired = (studentAge > 12 || (model.isDOC && studentAge <= 21)) ? true : false;
+                model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
                 model.gender = info.Gender;
                 model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
 
