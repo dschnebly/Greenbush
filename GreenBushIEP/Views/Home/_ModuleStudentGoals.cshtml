@@ -858,6 +858,11 @@
                         $(this).find("form").find("input[name='completed']").val(true);
                         $(this).find(".SaveForm").trigger(event.type);
                     });
+
+                    $(window).trigger("saving.bs.modal");
+                    setTimeout(function () {
+                        $('#moduleSection').modal('hide');
+                    }, 1200);
                 }
             });
 
