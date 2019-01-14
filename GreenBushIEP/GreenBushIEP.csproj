@@ -285,106 +285,16 @@
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Helper\VersionCompare.cs" />
     <Compile Include="Models\PasswordHash.cs" />
-    <Compile Include="Models\tblArchiveEvaluationDate.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblCareerPath.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblContact.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblGrade.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_GoalExport.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_ModuleGoalFlags.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_PrimaryDisabilities.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_SecondaryDisabilities.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_ServiceExport.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_StudentExport.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportExcessCost_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportServices1_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportServices_Result1.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\ExcessCostReport\Report.aspx.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\ExcessCostReport\Report.aspx.designer.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\ExceptionalityReport\Report.aspx.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\ExceptionalityReport\Report.aspx.designer.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\uf_Split_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportBuildings_Result2.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportServices_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\GreenbushIEPModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GreenbushIEPModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GreenbushIEPModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GreenbushIEPModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GreenbushIEPModel1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudentGoal.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IEP.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\StudentPlan.cs" />
     <Compile Include="Models\tblAccommodation.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblArchiveEvaluationDate.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAuditLog.cs">
@@ -429,6 +339,12 @@
     <Compile Include="Models\tblCalendarTemplate.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblCareerPath.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblContact.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblCounty.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -451,6 +367,9 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGoalEvaluationProcedure.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblGrade.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblIEP.cs">
@@ -543,6 +462,9 @@
     <Compile Include="Models\tblVersionLog.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\uf_Split_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportBuildings1_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -550,6 +472,12 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportBuildings_Result1.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportBuildings_Result2.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportExcessCost_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportProceduralDates_Result.cs">
@@ -561,6 +489,78 @@
     <Compile Include="Models\up_ReportProviderCaseload_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportServices1_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportServices_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportServices_Result1.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_GoalExport.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_ModuleGoalFlags.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_PrimaryDisabilities.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_SecondaryDisabilities.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_ServiceExport.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_StudentExport.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ExcessCostReport\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ExcessCostReport\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ExceptionalityReport\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ExceptionalityReport\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\GreenbushIEPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GreenbushIEPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GreenbushIEPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GreenbushIEPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GreenbushIEPModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentGoal.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IEP.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\StudentPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

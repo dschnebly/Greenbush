@@ -15,7 +15,6 @@ namespace GreenBushIEP.Models
     public partial class tblCalendar
     {
         public int calendarID { get; set; }
-        public int UserID { get; set; }
         public string USD { get; set; }
         public string BuildingID { get; set; }
         public int Year { get; set; }

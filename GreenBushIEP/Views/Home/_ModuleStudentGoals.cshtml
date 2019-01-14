@@ -815,8 +815,8 @@
 
             $(this).find(".saveCompletedGoal").on('click', function (e) {
 
-                var modulesNeedingGoals = $("#modulesNeedingGoals").val();
                 var canSave = true;
+                var modulesNeedingGoals = $("#modulesNeedingGoals").val();
                 $.each($(".StudentGoal").not("#defaultGoal"), function () {
 
                     var goalFor = $(this).find("[data-bind='bs-drp-sel-label']").html();

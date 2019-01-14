@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="67">
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="8" PointY="1" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAuditLog" Width="1.5" PointX="10.75" PointY="3.75" />
@@ -18,8 +18,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" Width="1.5" PointX="12.75" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="12.75" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="4.75" PointY="13.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendar" Width="1.5" PointX="6.75" PointY="13.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="13.75" PointY="9.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" Width="1.5" PointX="11.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCareerPath" Width="1.5" PointX="13.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContact" Width="1.5" PointX="8" PointY="6" />
@@ -73,6 +71,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="24.375" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUser" Width="1.5" PointX="3.375" PointY="22.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGrade" Width="1.5" PointX="24.375" PointY="9.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendar" Width="1.5" PointX="24.75" PointY="12.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="25.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

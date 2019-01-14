@@ -160,7 +160,6 @@
             <PropertyRef Name="calendarID" />
           </Key>
           <Property Name="calendarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Year" Type="int" Nullable="false" />
@@ -176,7 +175,6 @@
             <PropertyRef Name="calendarReportingID" />
           </Key>
           <Property Name="calendarReportingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SchoolYear" Type="int" Nullable="false" />
@@ -1417,8 +1415,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblBehaviorTriggerTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" />
           <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
           <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
-          <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
-          <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCareerPaths" EntityType="IndividualizedEducationProgramModel.tblCareerPath" />
           <EntitySet Name="tblContacts" EntityType="IndividualizedEducationProgramModel.tblContact" />
@@ -1487,6 +1483,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
           <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <EntitySet Name="tblGrades" EntityType="IndividualizedEducationProgramModel.tblGrade" />
+          <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
+          <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1787,36 +1785,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Address_Mailing" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Address_Physical" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblCalendar">
-          <Key>
-            <PropertyRef Name="calendarID" />
-          </Key>
-          <Property Name="calendarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Month" Type="Int32" Nullable="false" />
-          <Property Name="Day" Type="Int32" Nullable="false" />
-          <Property Name="NoService" Type="Boolean" Nullable="false" />
-          <Property Name="canHaveClass" Type="Boolean" Nullable="false" />
-          <Property Name="calendarDate" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="0" />
-          <Property Name="SchoolYear" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="tblCalendarReporting">
-          <Key>
-            <PropertyRef Name="calendarReportingID" />
-          </Key>
-          <Property Name="calendarReportingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
-          <Property Name="DaysPerWeek" Type="Int32" Nullable="false" />
-          <Property Name="TotalDays" Type="Int32" Nullable="false" />
-          <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
-          <Property Name="MinutesPerDay" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -2697,6 +2665,34 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblCalendar">
+          <Key>
+            <PropertyRef Name="calendarID" />
+          </Key>
+          <Property Name="calendarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <Property Name="NoService" Type="Boolean" Nullable="false" />
+          <Property Name="canHaveClass" Type="Boolean" Nullable="false" />
+          <Property Name="calendarDate" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="0" />
+          <Property Name="SchoolYear" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblCalendarReporting">
+          <Key>
+            <PropertyRef Name="calendarReportingID" />
+          </Key>
+          <Property Name="calendarReportingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolYear" Type="Int32" Nullable="false" />
+          <Property Name="DaysPerWeek" Type="Int32" Nullable="false" />
+          <Property Name="TotalDays" Type="Int32" Nullable="false" />
+          <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
+          <Property Name="MinutesPerDay" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2986,38 +2982,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCalendars">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendar">
-              <MappingFragment StoreEntitySet="tblCalendar">
-                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
-                <ScalarProperty Name="calendarDate" ColumnName="calendarDate" />
-                <ScalarProperty Name="canHaveClass" ColumnName="canHaveClass" />
-                <ScalarProperty Name="NoService" ColumnName="NoService" />
-                <ScalarProperty Name="Day" ColumnName="Day" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="calendarID" ColumnName="calendarID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCalendarReportings">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendarReporting">
-              <MappingFragment StoreEntitySet="tblCalendarReporting">
-                <ScalarProperty Name="MinutesPerDay" ColumnName="MinutesPerDay" />
-                <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
-                <ScalarProperty Name="TotalDays" ColumnName="TotalDays" />
-                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
-                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="calendarReportingID" ColumnName="calendarReportingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3862,6 +3826,36 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="gradeID" ColumnName="gradeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCalendars">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendar">
+              <MappingFragment StoreEntitySet="tblCalendar">
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="calendarDate" ColumnName="calendarDate" />
+                <ScalarProperty Name="canHaveClass" ColumnName="canHaveClass" />
+                <ScalarProperty Name="NoService" ColumnName="NoService" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="calendarID" ColumnName="calendarID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCalendarReportings">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendarReporting">
+              <MappingFragment StoreEntitySet="tblCalendarReporting">
+                <ScalarProperty Name="MinutesPerDay" ColumnName="MinutesPerDay" />
+                <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
+                <ScalarProperty Name="TotalDays" ColumnName="TotalDays" />
+                <ScalarProperty Name="DaysPerWeek" ColumnName="DaysPerWeek" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="calendarReportingID" ColumnName="calendarReportingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

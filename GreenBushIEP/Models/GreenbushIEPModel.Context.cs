@@ -40,8 +40,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
         public virtual DbSet<tblBuilding> tblBuildings { get; set; }
-        public virtual DbSet<tblCalendar> tblCalendars { get; set; }
-        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCareerPath> tblCareerPaths { get; set; }
         public virtual DbSet<tblContact> tblContacts { get; set; }
@@ -90,6 +88,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblGrade> tblGrades { get; set; }
+        public virtual DbSet<tblCalendar> tblCalendars { get; set; }
+        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

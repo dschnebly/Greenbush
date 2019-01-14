@@ -510,13 +510,14 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                tblCalendar calendar = db.tblCalendars.Where(c => c.UserID == MIS.UserID && c.Year == year && c.Month == month && c.Day == day && c.USD == usd && c.BuildingID == bId).FirstOrDefault();
+                
+                tblCalendar calendar = db.tblCalendars.Where(c => c.Year == year && c.Month == month && c.Day == day && c.USD == usd && c.BuildingID == bId).FirstOrDefault();
 
                 if (calendar == null)
                 {
                     CopyCalendar(usd, bId, MIS);
 
-                    calendar = db.tblCalendars.Where(c => c.UserID == MIS.UserID && c.Year == year && c.Month == month && c.Day == day && c.USD == usd && c.BuildingID == bId).FirstOrDefault();
+                    calendar = db.tblCalendars.Where(c => c.Year == year && c.Month == month && c.Day == day && c.USD == usd && c.BuildingID == bId).FirstOrDefault();
                 }
 
                 if (!calendar.NoService)
@@ -540,23 +541,21 @@ namespace GreenbushIep.Controllers
             {
                 if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
 
-                String saveStuff = "INSERT INTO [tblCalendar] ([UserID], [USD], [BuildingID], [Year], [Month], [Day], [NoService], [canHaveClass]) SELECT @userID, @USD, @BuildingID, [Year], [Month], [Day], [NoService], [canHaveClass] FROM [dbo].[tblCalendarTemplate]";
+                String saveStuff = "INSERT INTO [tblCalendar] ([USD], [BuildingID], [Year], [Month], [Day], [NoService], [canHaveClass]) SELECT @USD, @BuildingID, [Year], [Month], [Day], [NoService], [canHaveClass] FROM [dbo].[tblCalendarTemplate]";
                 using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
                 {
                     querySaveStuff.Connection = SQLConn;
                     querySaveStuff.Parameters.Clear();
-                    querySaveStuff.Parameters.AddWithValue("@userID", MIS.UserID);
                     querySaveStuff.Parameters.AddWithValue("@USD", usd);
                     querySaveStuff.Parameters.AddWithValue("@BuildingID", bId);
                     querySaveStuff.ExecuteNonQuery();
                 }
 
-                String saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([UserID], [USD], [BuildingID], [SchoolYear]) SELECT DISTINCT @userID, @USD, @BuildingID, SchoolYear FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
+                String saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([USD], [BuildingID], [SchoolYear]) SELECT DISTINCT @USD, @BuildingID, SchoolYear FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
                 using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
                 {
                     querySaveMoreStuff.Connection = SQLConn;
                     querySaveMoreStuff.Parameters.Clear();
-                    querySaveMoreStuff.Parameters.AddWithValue("@userID", MIS.UserID);
                     querySaveMoreStuff.Parameters.AddWithValue("@USD", usd);
                     querySaveMoreStuff.Parameters.AddWithValue("@BuildingID", bId);
                     querySaveMoreStuff.ExecuteNonQuery();
@@ -571,16 +570,16 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && c.SchoolYear == SchoolYear && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).OrderBy(o => o.Month).ToList();
+                List<tblCalendar> CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.SchoolYear == SchoolYear && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).OrderBy(o => o.Month).ToList();
 
                 if (CalendarView != null && CalendarView.Count > 0)
                 {
-                    List<tblCalendarReporting> reports = db.tblCalendarReportings.Where(r => r.UserID == MIS.UserID && r.USD == usd && r.BuildingID == bId).ToList();
+                    List<tblCalendarReporting> reports = db.tblCalendarReportings.Where(r => r.USD == usd && r.BuildingID == bId).ToList();
                     return Json(new { Result = "success", calendarEvents = CalendarView, calendarReports = reports, Message = "calendar exisit!" }, JsonRequestBehavior.AllowGet);
                 }
 
                 CopyCalendar(usd, bId, MIS);
-                CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && c.UserID == MIS.UserID && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).ToList();
+                CalendarView = db.tblCalendars.Where(c => c.USD == usd && c.BuildingID == bId && (c.NoService == true || (c.NoService == false && c.canHaveClass == false))).ToList();
 
                 return Json(new { Result = "success", calendarEvents = CalendarView, Message = "Calendar Created" }, JsonRequestBehavior.AllowGet);
             }
@@ -614,7 +613,6 @@ namespace GreenbushIep.Controllers
                             querySaveStuff.Connection = SQLConn;
                             querySaveStuff.Parameters.Clear();
 							querySaveStuff.CommandTimeout = 180; 
-							querySaveStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
                             querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
                             querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                             querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
@@ -628,7 +626,6 @@ namespace GreenbushIep.Controllers
                             querySaveMoreStuff.Connection = SQLConn;
                             querySaveMoreStuff.Parameters.Clear();
 							querySaveMoreStuff.CommandTimeout = 180;
-							querySaveMoreStuff.Parameters.AddWithValue("@UserID_Orig", MIS.UserID);
                             querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
                             querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                             querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
@@ -653,7 +650,7 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                tblCalendarReporting reports = db.tblCalendarReportings.Where(r => r.UserID == MIS.UserID && r.SchoolYear == schoolYear && r.USD == usd && r.BuildingID == building).FirstOrDefault();
+                tblCalendarReporting reports = db.tblCalendarReportings.Where(r => r.SchoolYear == schoolYear && r.USD == usd && r.BuildingID == building).FirstOrDefault();
                 if (reports != null)
                 {
                     reports.DaysPerWeek = daysPerWeek;
@@ -665,7 +662,6 @@ namespace GreenbushIep.Controllers
                 {
                     reports = new tblCalendarReporting();
 
-                    reports.UserID = MIS.UserID;
                     reports.USD = usd;
                     reports.BuildingID = building;
                     reports.SchoolYear = schoolYear;
@@ -1235,7 +1231,7 @@ namespace GreenbushIep.Controllers
 					int endMonth = 6; //june
 
 					 //start date must be within the school year
-					var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear);
+					var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear);
 
 					var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.SchoolYear == maxYear).FirstOrDefault();
 					var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
@@ -1392,7 +1388,7 @@ namespace GreenbushIep.Controllers
             int minutesPerDay = 60;
             int daysPerWeek = 5;
 
-            var reporting = db.tblCalendarReportings.Where(r => r.UserID == mis.UserID && r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear == fiscalYear).FirstOrDefault();
+            var reporting = db.tblCalendarReportings.Where(r => r.BuildingID == studentInfo.BuildingID && r.USD == studentInfo.AssignedUSD && r.SchoolYear == fiscalYear).FirstOrDefault();
 
             if (reporting != null)
             {
@@ -1420,7 +1416,7 @@ namespace GreenbushIep.Controllers
             validDates = "";
 
             //start date must be within the school year
-            var availableCalendarDays = db.tblCalendars.Where(c => c.UserID == mis.UserID && c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
+            var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
 
             if (availableCalendarDays != null)
             {

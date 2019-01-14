@@ -244,7 +244,7 @@ namespace GreenBushIEP.Helper
                 mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
                 mailMessage.To.Add(user.Email);
                 mailMessage.Subject = "Your new Greenbush IEP password ";
-                mailMessage.Body = "Your new password is '" + password + "'. You can log in at https://greenbushbackpack.org.";
+                mailMessage.Body = "Your new password is " + password + ". You can log in at https://greenbushbackpack.org.";
 
                 smtpClient.Send(mailMessage);
             }
