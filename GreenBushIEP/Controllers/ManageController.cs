@@ -887,7 +887,7 @@ namespace GreenBushIEP.Controllers
                     if (!string.IsNullOrEmpty(collection["role"])) { user.RoleID = collection["role"]; }
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
-                    user.Email = collection["Email"];
+                    user.Email = collection["userEmail"];
                 }
 
                 // EDIT their avatar
