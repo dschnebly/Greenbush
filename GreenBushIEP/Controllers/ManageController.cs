@@ -589,7 +589,7 @@ namespace GreenBushIEP.Controllers
                     db.tblOrganizationMappings.RemoveRange(removeList);
                     db.SaveChanges();
 
-                    foreach(string usd in districtArray)
+                    foreach (string usd in districtArray)
                     {
                         if (fullList.Any(l => !l.USD.Contains(usd)))
                         {
@@ -868,6 +868,12 @@ namespace GreenBushIEP.Controllers
                                select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+
+            if (model.user.UserID == model.submitter.UserID)
+            {
+                return View("~/Views/Home/EditMe.cshtml", model);
+            }
+
             return View("~/Views/Home/EditUser.cshtml", model);
         }
 
@@ -888,6 +894,17 @@ namespace GreenBushIEP.Controllers
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
+                    if (collection.AllKeys.Contains("password"))
+                    {
+                        string password = collection["password"].ToString();
+
+                        PasswordHash hash = new PasswordHash(password);
+               
+                        user.Password = hash.Hash;
+                        user.Salt = hash.Salt;
+
+                        db.SaveChanges();
+                    }
                 }
 
                 // EDIT their avatar

@@ -1,7 +1,7 @@
 ﻿@model GreenBushIEP.Models.UserDetailsViewModel
 
 @{
-    ViewBag.Title = "Edit this User";
+    ViewBag.Title = "Edit your profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,6 @@
     @Styles.Render("~/Content/chosen.css")
     @Styles.Render("~/Content/editUser.css")
 }
-
 
 @using (Html.BeginForm("Edit", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
 {
@@ -44,28 +43,6 @@
         <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-id-card-o" title="User Role" aria-hidden="true"></i>
-                    </span>
-                    <select class="form-control" id="role" Name="role" required="required">
-                        @if (Int32.Parse(Model.submitter.RoleID) < 2)
-                        {
-                            <option value="2" @(Model.user.RoleID == "2" ? "selected='selected'" : "" )>Level 4</option>
-                        }
-                        @if (Int32.Parse(Model.submitter.RoleID) < 3)
-                        {
-                            <option value="3" @(Model.user.RoleID == "3" ? "selected='selected'" : "" )>Level 3</option>
-                        }
-                        <option value="4" @(Model.user.RoleID == "4" ? "selected='selected'" : "" )>Level 2</option>
-                        <option value="6" @(Model.user.RoleID == "6" ? "selected='selected'" : "")>Level 1</option>
-                    </select>
-                </div>
-            </div>
         </div>
         <div class="form-group">
             <div class="col-md-12">
@@ -115,17 +92,12 @@
         @if (Model.user.RoleID != "5")
         {
             <div class="form-group">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-user-secret" title="User Password" aria-hidden="true"></i>
                         </span>
-                        <input type="password" name="password" class="form-control text-box single-line" disabled="disabled" required="required" value="@( new string('*', Model.user.Password.Length))">
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="input-group">
-                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" style="font-size:18px" data-toggle="modal" data-target="#confirmPassword">Reset Password</a>
+                            <input type="text" id="password" Name="password" placeholder="User password", required="required" class="form-control text-box single-line" value="@( new string('*', Model.user.Password.Length))">
                     </div>
                 </div>
             </div>
@@ -169,7 +141,7 @@
             </div>
         </div>
         <div class="form-group" style="padding: 0 20px 20px;">
-            <button type="submit" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
+            <button type="button" id="updateMe" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
                 <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Update</span>
             </button>
         </div>
@@ -200,29 +172,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Okay</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- end modal -->
-    <!-- Modal -->
-    <div class="modal fadeInUp" id="confirmPassword" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                    <h4 class="modal-title custom_align" id="Heading">Change this user's password?</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-warning" role="alert">
-                        <span class="glyphicon glyphicon-warning-sign"></span> Do you really want to change this user's password? This action cannot be undone.<br />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
                 </div>
             </div>
             <!-- /.modal-content -->

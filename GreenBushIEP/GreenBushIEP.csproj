@@ -606,6 +606,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\chosen.css" />
+    <Content Include="Content\editUser.css" />
     <Content Include="Content\font-awesome-min.css" />
     <Content Include="Content\formupload.css" />
     <Content Include="Content\GBlogo1A.jpg" />
@@ -859,6 +860,7 @@
     <Content Include="Views\Home\_GoalsProgress.cshtml" />
     <Content Include="Views\Home\_PrintStudentInfo.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\EditMe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

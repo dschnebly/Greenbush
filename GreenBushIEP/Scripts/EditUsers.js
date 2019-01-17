@@ -31,38 +31,15 @@
     });
 
     //// attach event
-    //// fires off a new password when the reset password button is clicked
-    $('#myPassword button[type=submit]').on('click', function (e) {
+    //// fires when the a user is editing themselves and the click update
+    $('#updateMe').on('click', function (e) {
         var userId = $("#hidden-userid").val();
         var myPassword = $("#password").val();
 
-        if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{10,}$/.test(myPassword)) {
-            // valid password
-            $.ajax({
-                type: 'POST',
-                url: '/Account/ResetMyPassword',
-                dataType: 'json',
-                data: { id: userId, password: myPassword },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "Success") {
-                        window.location.href = "/Home/Portal";
-                    } else {
-                        $("#alertMessage .moreinfo").html(data.Message);
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
-                        });
-                    }
-                },
-                error: function (data) {
-                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
-            });
-        } else {
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{10,}$/.test(myPassword)) {
             $("#invalidPassword").modal();
+        } else {
+            $('#UserForm').submit();
         }
     });
 
