@@ -883,7 +883,7 @@ namespace GreenBushIEP.Controllers
                 // EDIT the user
                 if (user != null)
                 {
-                    if (!string.IsNullOrEmpty(collection["teacherid"])) { user.TeacherID = collection["teacherId"]; }
+                    if (!string.IsNullOrEmpty(collection["teacherID"])) { user.TeacherID = collection["teacherID"]; }
                     if (!string.IsNullOrEmpty(collection["role"])) { user.RoleID = collection["role"]; }
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
