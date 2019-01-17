@@ -201,7 +201,6 @@
 </div>
 <div class="modal-body">
     <div class="container-fluid">
-
         <div class="row">
             <a class="btn btn-default pull-right" href="#" role="button" id="addProvider"><i class="glyphicon glyphicon-plus"></i> Add New Provider</a>
         </div>
@@ -322,7 +321,6 @@
                                 $("#alertMessage").slideUp(500);
                             });
                     }
-
                 }
             });
         }
@@ -393,6 +391,7 @@
         var district = selectedDistricts;
         var code = $("#providerCode").val();
         var id = $("#providerId").val();
+
         var errors = "";
         if (fname == "" || fname == undefined) {
             errors += "First Name is required. ";

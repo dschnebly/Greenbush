@@ -1373,7 +1373,8 @@ namespace GreenbushIep.Controllers
             bool isValid = false;
             bool isService = true;
             string validDates = "";
-            IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService, out validDates);
+            string calendarErrorMessage = "";
+            IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService, out validDates, out calendarErrorMessage);
 
             return Json(new { IsValid = isValid, IsService = isService, ValidDates = validDates }, JsonRequestBehavior.AllowGet);
 
@@ -1401,7 +1402,7 @@ namespace GreenbushIep.Controllers
         }
 
 
-        private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService, out string validDates)
+        private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService, out string validDates, out string calendarErrorMessage)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
@@ -1414,6 +1415,7 @@ namespace GreenbushIep.Controllers
             isValid = false;
             isService = true;
             validDates = "";
+            calendarErrorMessage = "";
 
             //start date must be within the school year
             var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
@@ -1461,6 +1463,10 @@ namespace GreenbushIep.Controllers
                     }
                 }
             }
+            else
+            {
+                calendarErrorMessage = "The calendar has not yet been created.";
+            }
         }
 
         [HttpPost]
@@ -1478,6 +1484,7 @@ namespace GreenbushIep.Controllers
             bool isValidServiceEndDate = true;
             bool isSuccess = false;
             string validDates = "";
+            string calendarErrorMessage = "";
             string errorMessage = "There was a problem saving the service";
 
             DateTime temp;
@@ -1525,8 +1532,8 @@ namespace GreenbushIep.Controllers
 
                     //check dates
 
-                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates, out calendarErrorMessage);
+                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates, out calendarErrorMessage);
                 }
                 else // exsisting service
                 {
@@ -1568,8 +1575,8 @@ namespace GreenbushIep.Controllers
                     }
 
                     //check dates
-                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates, out calendarErrorMessage);
+                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates, out calendarErrorMessage);
                 }
 
 

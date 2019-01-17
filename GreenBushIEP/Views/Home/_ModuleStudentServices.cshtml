@@ -1184,6 +1184,10 @@
                     errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
                 }
 
+                if (data.errorCalendarMessage != "") {
+                    errorMessage = data.errorCalendarMessage;
+                }
+
                 if (!data.IsService) {
                     //if the accidentally select the wrong fiscal year, but think are picking something within that fy
                     if (!data.IsValid) {
