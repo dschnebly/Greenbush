@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+}
+
 <style>
     .ajax-loader {
         display: none;
@@ -369,8 +373,11 @@
                             <td>
                                 @if (student.hasIEP)
                                 {
-                                    <a href="/Home/StudentProcedures?stid=@student.UserID.ToString()" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right launchIEP">
+                                    <a href="/Home/StudentProcedures?stid=@(student.UserID.ToString())" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right launchIEP">
                                         <span class="glyphicon glyphicon-log-out"></span>
+                                    </a>
+                                    <a href="/Home/IEPFormModule?studentId=@(student.UserID.ToString())" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
+                                        <span class="glyphicon glyphicon-folder-open"></span>
                                     </a>
                                 }
                             </td>
