@@ -983,7 +983,6 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult UpdateIEPDates(int stId, int IepId, string IEPStartDate, string IEPMeetingDate)
         {
-
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IepId).FirstOrDefault();
 
             if (iep != null)
@@ -1170,6 +1169,9 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             if (iep != null)
             {
+                tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+                ViewBag.studentName = student.FirstName + " " + student.LastName;
+
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
                 StudentGoalsViewModel model = new StudentGoalsViewModel();
@@ -1332,6 +1334,9 @@ namespace GreenbushIep.Controllers
             bool isReadOnly = false;
             if (iep != null)
             {
+                tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+                ViewBag.studentName = student.FirstName + " " + student.LastName;
+
                 isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) ||  (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 StudentServiceViewModel model = new StudentServiceViewModel();
@@ -2338,10 +2343,6 @@ namespace GreenbushIep.Controllers
 
             string iepStatus = IEPStatus.ACTIVE;
             var exportErrors = new List<ExportErrorView>();
-            //string selectedDateStr = collection["startDate"];
-            //DateTime selectedDate = Convert.ToDateTime(selectedDateStr);
-            //DateTime startDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);  
-            //DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
             var query = (from iep in db.tblIEPs
                          join student in db.tblUsers

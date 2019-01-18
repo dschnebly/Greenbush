@@ -476,6 +476,14 @@ tbody > tr {
     top: -60px;
 }
 
+.module-user-name {
+    opacity: 0.50;
+    margin-top: 15px;
+    margin-left: 30px;
+    display: inline-block;
+}
+
+
 /*********************************/
 /*********************************/
 /***         Contact PAGE      ***/
