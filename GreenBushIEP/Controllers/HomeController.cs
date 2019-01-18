@@ -731,9 +731,11 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult LoadModuleSection(int studentId, int iepId, string view)
         {
-            var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
-            tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser student = db.tblUsers.SingleOrDefault(s => s.UserID == studentId);
 
+            ViewBag.studentName = student.FirstName + " " + student.LastName;
+            var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
             try

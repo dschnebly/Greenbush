@@ -177,6 +177,7 @@ namespace GreenBushIEP.Models
             int ReadingID;
             int MathID;
             int WrittenID;
+            int OtherID;
 
             // Check that we don't already have a draft copy being used by this user. 
             // If we do we need to return an error.
@@ -233,6 +234,26 @@ namespace GreenBushIEP.Models
                 current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Health table");
             }
+
+            // Adding Other Considerations Table
+            studentOtherConsiderations = new tblOtherConsideration();
+            studentOtherConsiderations.IEPid = current.IEPid;
+            studentOtherConsiderations.Completed = true;
+            studentOtherConsiderations.Create_Date = DateTime.Now;
+
+            try
+            {
+                db.tblOtherConsiderations.Add(studentOtherConsiderations);
+                db.SaveChanges();
+
+                OtherID = studentOtherConsiderations.OtherConsiderationID;
+            }
+            catch(Exception e)
+            {
+                current.IepStatus = IEPStatus.DELETED;
+                throw new System.ArgumentException("Failed to create the Other Considerations");
+            }
+
 
             // Adding Motor Table
             studentMotor = new tblIEPMotor();
@@ -427,6 +448,7 @@ namespace GreenBushIEP.Models
 
             hasPlan = false;
             current.IepStatus = IEPStatus.PLAN;
+
 
             return this;
         }
