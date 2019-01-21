@@ -22,12 +22,9 @@
         dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
 
-
-
     $("#assignChildCount").on('change', function (e) {
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
-
 
         var optionExists = ($("#misDistrict option[value=" + valueSelected + "]").length > 0);
         if (optionExists) {
@@ -36,7 +33,6 @@
             $("#misDistrict").val(currentValues);
             $("#misDistrict").trigger("change");
             $("#misDistrict").trigger("chosen:updated");
-
         }
     });
 });
@@ -100,7 +96,6 @@ function init() {
         var districtArr = $("#misDistrict").val();
 
         if (districtArr.length > 0) {
-
             for (i = 0; i < districtArr.length; i++) {
                 var districtAdd = districtArr[i];
                 districtNums.push(districtAdd);
@@ -157,8 +152,6 @@ function init() {
             },
             complete: function (data) {
                 $(".info").hide();
-
-
             }
         });
     });

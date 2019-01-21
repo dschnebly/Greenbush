@@ -251,7 +251,7 @@ namespace GreenBushIEP.Models
             catch(Exception e)
             {
                 current.IepStatus = IEPStatus.DELETED;
-                throw new System.ArgumentException("Failed to create the Other Considerations");
+                throw new System.ArgumentException("Failed to create the Other Considerations " + e.InnerException.Message);
             }
 
 

@@ -337,6 +337,7 @@
         #moduleSection .checkbox label {
             font-size: 16px;
             margin-left: -20px;
+            padding-bottom: 10px;
         }
 
             #moduleSection .checkbox label:after,
@@ -1412,6 +1413,7 @@
                             <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
                                 <h5 style="font-size:17px;font-weight:bold;">Academic/Functional </h5>
                                 <div>
+                                    <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty ) />No Concerns</label>
                                     <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
                                     <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                                 </div>
