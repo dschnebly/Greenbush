@@ -2726,11 +2726,11 @@ namespace GreenbushIep.Controllers
 
                 bool isDraft = false;
 
-				//var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-				//if (iepObj != null)
-				//{
-				//	isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
-				//}
+				var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+				if (iepObj != null)
+				{
+					isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+				}
 
 
 				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -2750,12 +2750,12 @@ namespace GreenbushIep.Controllers
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
                     result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
-                    studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft);
+                    studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
                 byte[] iepFile = null;
                 if (!string.IsNullOrEmpty(result))
-                    iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft);
+                    iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft, true);
 
                 List<byte[]> pdfByteContent = new List<byte[]>();
 
@@ -2820,7 +2820,7 @@ namespace GreenbushIep.Controllers
             return null;
         }
 
-        private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft)
+        private byte[] CreatePDFBytes(string cssTextResult, string result2, string className, iTextSharp.text.Image imgfoot, string studentName, bool isDraft, bool skipSignatureDraft)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.OptionWriteEmptyNodes = true;
@@ -2850,7 +2850,7 @@ namespace GreenbushIep.Controllers
 
                             fileIn = stream.ToArray();
 
-                            printFile = AddPageNumber(fileIn, studentName, imgfoot, isDraft);
+                            printFile = AddPageNumber(fileIn, studentName, imgfoot, isDraft, skipSignatureDraft);
 
                         }
                     }
@@ -2893,7 +2893,7 @@ namespace GreenbushIep.Controllers
             }
         }
 
-        byte[] AddPageNumber(byte[] fileIn, string studentName, iTextSharp.text.Image imgfoot, bool isDraft)
+        byte[] AddPageNumber(byte[] fileIn, string studentName, iTextSharp.text.Image imgfoot, bool isDraft, bool skipSignatureDraft)
         {
             byte[] bytes = fileIn;
             byte[] fileOut = null;
@@ -2909,8 +2909,17 @@ namespace GreenbushIep.Controllers
                     for (int i = 1; i <= pages; i++)
                     {
 
-                        if (isDraft)
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
+						if (isDraft)
+						{
+							if (skipSignatureDraft && i == 1)
+							{
+								//continue;
+							}
+							else
+							{
+								ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_CENTER, new Phrase("DRAFT", grayFont), 300f, 400f, 0);
+							}
+						}
 
                         if (studentName != string.Empty)
                             ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
