@@ -2756,11 +2756,11 @@ namespace GreenbushIep.Controllers
 
                 bool isDraft = false;
 
-				var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
-				if (iepObj != null)
-				{
-					isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
-				}
+				//var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
+				//if (iepObj != null)
+				//{
+				//	isDraft = iepObj.IepStatus != null && iepObj.IepStatus.ToUpper() == "DRAFT" ? true : false;
+				//}
 
 
 				tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -2770,7 +2770,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                    result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"textarea", "p");
+                    result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"</?textarea>", "");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");

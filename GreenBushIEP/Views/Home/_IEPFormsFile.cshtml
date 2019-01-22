@@ -7,6 +7,8 @@
     var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 
+
+	
 }
 
 @section stylesheets {
@@ -362,19 +364,26 @@
 
         //setup up hidden checkbox images for printing to pdf
         $('input:checkbox').change(function () {
-            if ($(this).is(":checked")) {
+			if ($(this).is(":checked")) {				
                 $(this).addClass("menuitemshow");
                 $(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
             } else {
-                $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');                
+                $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');                				
             }
         });
 
+
+		$("textarea").keyup(function () {
+			var nextParagraph = $(this).next(".input-value");
+			var currentVal = $(this).val();
+			nextParagraph.text(currentVal);
+		});
     });
 
     function PrintText() {
         var x = document.getElementsByClassName("form-print");
         var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+		var markup = $(".module-page").html();
         $("#printText").val(markup);
         $("#isArchive").val(0);
         x[0].submit();

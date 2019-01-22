@@ -1,6 +1,7 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	
 }
 
 
@@ -45,7 +46,8 @@
                 Description of proposed IEP Change(s)<b style=''></b>and effective date(s):
             </span>
         </p>
-        <textarea class="form-control" style='font-size:11.0pt; font-family:"Calibri",sans-serif'></textarea>
+        <textarea class="form-control"></textarea>
+		<p style="display:none" class="input-value"></p>
         
             
 

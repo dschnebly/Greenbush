@@ -281,7 +281,7 @@
             </tr>
         </table>
         <p style="padding-top:15px">
-			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea></u>&nbsp; immediately.</span>
+			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
 		</p>
         <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
 					   
@@ -512,7 +512,7 @@
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:33pt'>
                         <p class=MsoNormal><b>Other Specify:</b></p>
-                        <textarea class="form-control" cols="100" rows="4"></textarea>
+                        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
                     </td>
                 </tr>
             </table>
@@ -525,7 +525,7 @@
 
         <p class="MsoNormal" style="text-align:left;"><b>B.  EXPLANATION OF WHY THE ACTION IS PROPOSED OR REFUSED:</b></p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea>
+        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
 
 
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
@@ -534,7 +534,7 @@
         <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
 
         <p class="MsoNormal page-break" style="text-align:left;"><b>C.  OPTIONS CONSIDERED AND WHY THE OPTIONS WERE REJECTED:</b></p>
-        <textarea class="form-control" cols="100" rows="4"></textarea>
+        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
         <p class="MsoNormal" style="text-align:left;">
             <b>
@@ -549,7 +549,7 @@
             proposed or refused action<b>)</b>
         </p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea>
+        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
         <p class="MsoNormal" style="text-align:left;">
             <b>
@@ -558,7 +558,7 @@
             </b>
         </p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea>
+        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
         <br clear='all' style='overflow:hidden;page-break-before:always;'>
         <div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 0in 14.0pt;
 margin-left:9.0pt;margin-right:0in'>
@@ -629,7 +629,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
                 <span style='mso-bookmark:
     OLE_LINK2'>
                     <span style='mso-bookmark:OLE_LINK1'>
-                        I, <textarea style="width:100px;height:20px"></textarea>,<span style='mso-spacerun:yes'></span>
+                        I, <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>,<span style='mso-spacerun:yes'></span>
                     </span>
                 </span><span style='mso-bookmark:OLE_LINK2'>
                     <span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
@@ -656,7 +656,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
                 </span><span style='mso-bookmark:
     OLE_LINK2'>
                     <span style='mso-bookmark:OLE_LINK1'>
-                        <input type='checkbox' /> other <textarea style="width:100px;height:20px"></textarea>
+                        <input type='checkbox' /> other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
                     </span>
                 </span>
             </p>
@@ -674,7 +674,8 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
                 <span style='mso-bookmark:OLE_LINK2'>
                     <span style='mso-bookmark:OLE_LINK1'>
                         this notice
-                        to <textarea style="width:100px;height:20px"></textarea> on <textarea style="width:100px;height:20px"></textarea>.
+                        to <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span> 
+						<span>&nbsp;on&nbsp;</span> <textarea style="width:100px;height:20px"></textarea>&nbsp;<span style="display:none" class="input-value"></span>.
                     </span>
                 </span>
             </p>
@@ -717,7 +718,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
         <p class=MsoNormal>&nbsp;</p>
 
        <p style="padding-top:15px">
-			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea></u>&nbsp; immediately.</span>
+			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
 		</p>
         <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
 		<br/><br/>

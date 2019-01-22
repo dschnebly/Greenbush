@@ -6,11 +6,11 @@
 <div class="module-page">
     <div class=WordSection1>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
+        <div class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
 0in;margin-left:0in;margin-bottom:.0001pt'>
-            Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))                           IEP
-            Meeting Date:  <textarea maxlength="20" style="width:100px;height:20px"></textarea>
-        </p>
+            Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))  <br/>
+			IEP Meeting Date:  <textarea maxlength="20" style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
+        </div>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;
 margin-left:22.55pt'>
@@ -50,7 +50,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         the strengths of the child?
 
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:67.7pt;'>
@@ -62,7 +62,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         How have
                         the child’s strengths been utilized to address the child’s needs on the IEP?
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:66.5pt'>
@@ -73,7 +73,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         What are
                         the parents’ concerns, if any, for enhancing the education of their child?
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:67.55pt'>
@@ -84,7 +84,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         How are
                         the parents’ concerns for the education of their child addressed on the IEP?
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:81.15pt'>
@@ -97,7 +97,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         the student and/or the quality of services for the student?  (Do the positive
                         effects of the placement outweigh the potential harmful effects?)
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:81.0pt'>
@@ -110,7 +110,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         child require specially designed adapted physical education? (Children with
                         disabilities only.)
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
             <tr style='height:95.55pt'>
@@ -122,7 +122,7 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                         the regular school term will be significantly jeopardized as a result of a
                         break in educational programming? (Children with disabilities only.)
                     </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><br />
+                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
                 </td>
             </tr>
         </table>
@@ -181,9 +181,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td >
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:72.65pt'>
@@ -202,9 +202,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td >
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:100.45pt'>
@@ -228,9 +228,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td >
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:72.5pt'>
@@ -248,9 +248,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:72.5pt'>
@@ -268,9 +268,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:100.6pt'>
@@ -292,9 +292,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td >
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
             <tr style='height:73.1pt'>
@@ -314,9 +314,9 @@ margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
                     </p>
                 </td>
                 <td >
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><br />
-                    </p>
+                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
+                    </div>
                 </td>
             </tr>
         </table>
