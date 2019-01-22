@@ -3,6 +3,7 @@
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 }
 
 
@@ -45,11 +46,11 @@
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            I, <u>@(String.Format(contactFormattedName).PadRight(25 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
+            I, <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(districtContactName)</textarea><span style="display:none" class="input-value">@(districtContactName)</span></span>,
             having authority under the laws of the state of Kansas to make
         </p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>               (Name)</span></p>
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>        (Name)</span></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             educational decisions:  
@@ -79,10 +80,9 @@
             <u><textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u>
         </p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;'>
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-left:2.15in'>
             <sup>
-                <span style='font-size:10.0pt;
-line-height:115%'><span style=''>                                                                                                                      </span>(Date)<o:p></o:p></span>
+                <span style='font-size:8.0pt;line-height:115%'>(Date)<o:p></o:p></span>
             </sup>
         </p>
 

@@ -376,6 +376,15 @@
 		$("textarea").keyup(function () {
 			var nextParagraph = $(this).next(".input-value");
 			var currentVal = $(this).val();
+			var padVal = $(this).attr('data-val');
+			if (padVal != undefined && padVal != "") {
+				var currLength = currentVal.length;
+				var spacesToAdd = parseInt(padVal) - currLength;
+				for (var i = 0; i < spacesToAdd; i++){
+					currentVal = currentVal + '\u00A0';
+				}
+
+			}
 			nextParagraph.text(currentVal);
 		});
     });

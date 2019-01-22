@@ -36,21 +36,21 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            Effective <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(20, ' ').Replace(" ", "\u00A0"))</u>,
-            I, <u>@(String.Format(contactFormattedName).PadRight(45 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>,
-            having authority under
+            Effective <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span></span>,
+            I, <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(districtContactName)</textarea><span style="display:none" class="input-value">@(districtContactName)</span></span>,
+            having authority under the laws of the state of Kansas to make educational decisions:  
         </p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>                              (Date)                                                   (Name)</span></p>
+        @*<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>                (Date)                 (Name)</span></p>*@
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        @*<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             the laws of
             the state of Kansas to make educational decisions:  
-        </p>
+        </p>*@
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        @*<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span style='font-size:4.0pt;line-height:115%'>&nbsp;</span>
-        </p>
+        </p>*@
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on behalf of the above named student  
@@ -145,15 +145,13 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+       
+
+        @*<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>                                                                                                                            (Name)</span></p>*@
+		 <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             As the
             school representative on this student’s IEP team, I, <u>@(String.Format(districtContactName).PadRight(40 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0")) </u>,
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-6.0pt'><span style='font-size:8.0pt'>                                                                                                                            (Name)</span></p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+      
             certify, on
             behalf of the IEP team, that this student’s IEP team considered the revocation
             of consent described above and that the team determined that the student  <b>
