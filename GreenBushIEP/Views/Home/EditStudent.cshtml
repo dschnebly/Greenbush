@@ -869,7 +869,7 @@
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building...">
                                             @if (Model.buildings != null)
                                             {
-                                                foreach (var building in Model.buildings)
+                                                foreach (var building in ViewBag.AllBuildings)
                                                 {
                                                     string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
                                                     <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>

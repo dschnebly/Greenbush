@@ -543,6 +543,7 @@ namespace GreenBushIEP.Controllers
             }
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+            ViewBag.AllBuildings = (from b in db.tblBuildings where b.Active == 1 select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
 
             return View("~/Views/Home/EditStudent.cshtml", model);
         }
