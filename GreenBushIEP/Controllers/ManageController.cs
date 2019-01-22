@@ -533,11 +533,11 @@ namespace GreenBushIEP.Controllers
             model.grades = db.tblGrades.ToList();
             model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
 
-            foreach (var d in model.selectedDistrict)
+            foreach (var d in model.districts)
             {
                 var districtBuildings = (from b in db.tblBuildings
-                                         where b.USD == d.USD && b.Active == 1
-                                         select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+                                         where b.Active == 1 && b.USD == d.USD
+                                         select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
 
                 model.buildings.AddRange(districtBuildings);
             }

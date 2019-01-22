@@ -53,9 +53,9 @@ namespace GreenBushIEP.Models
         public bool WrittenNoConcern { get; set; }
         public bool WrittenProgress { get; set; }
         public bool WrittenNeed { get; set; }
-        public bool isDOC { get; set; }
-        public int ExtendYear { get; set; }
         public bool RequireAssistiveTechnology { get; set; }
+        public int ExtendYear { get; set; }
+        public bool isDOC { get; set; }
 
         // Create the student's plan
         public StudentPlan()
@@ -103,8 +103,9 @@ namespace GreenBushIEP.Models
             this.WrittenNoConcern = true;
             this.WrittenProgress = false;
             this.WrittenNeed = false;
-            this.isDOC = false;
             this.RequireAssistiveTechnology = false;
+            this.ExtendYear = 0;
+            this.isDOC = false;
         }
 
         // Read the student's plan
@@ -359,7 +360,7 @@ namespace GreenBushIEP.Models
                 {
                     otherConsideration.ExtendedSchoolYear_Necessary = this.ExtendYear.ToString();
                     otherConsideration.AssistiveTechnology_Require = this.RequireAssistiveTechnology;
-                    otherConsideration.Completed = this.CommunicationNoConcern;
+                    otherConsideration.Completed = !(this.RequireAssistiveTechnology | this.ExtendYear > 0);
                     
                 }
                 db.SaveChanges();

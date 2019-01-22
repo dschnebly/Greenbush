@@ -731,9 +731,11 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult LoadModuleSection(int studentId, int iepId, string view)
         {
-            var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
-            tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser student = db.tblUsers.SingleOrDefault(s => s.UserID == studentId);
 
+            ViewBag.studentName = student.FirstName + " " + student.LastName;
+            var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
             try
@@ -981,7 +983,6 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult UpdateIEPDates(int stId, int IepId, string IEPStartDate, string IEPMeetingDate)
         {
-
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IepId).FirstOrDefault();
 
             if (iep != null)
@@ -1168,6 +1169,9 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             if (iep != null)
             {
+                tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+                ViewBag.studentName = student.FirstName + " " + student.LastName;
+
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
                 StudentGoalsViewModel model = new StudentGoalsViewModel();
@@ -1330,6 +1334,9 @@ namespace GreenbushIep.Controllers
             bool isReadOnly = false;
             if (iep != null)
             {
+                tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+                ViewBag.studentName = student.FirstName + " " + student.LastName;
+
                 isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) ||  (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 StudentServiceViewModel model = new StudentServiceViewModel();
@@ -1776,41 +1783,7 @@ namespace GreenbushIep.Controllers
                     //default value
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
-                    //model.Transporation_Other_flag = true;
-                    //model.Transporation_Disability_flag = false;
                 }
-
-                //if (!string.IsNullOrEmpty(model.Transporation_Other_desc))
-                //{
-                //    var length = model.Transporation_Other_desc.Length;
-                //    var start = model.Transporation_Other_desc.IndexOf("session, on a");
-                //    var end = model.Transporation_Other_desc.IndexOf("vehicle,");
-                //    var val = model.Transporation_Other_desc.Substring(start + 13, (end - 13) - start).Trim();
-                //    var vehicleType = 0;
-                //    if (val == "special education")
-                //        vehicleType = 1;
-                //    else if (val == "general education")
-                //        vehicleType = 2;
-
-                //    ViewBag.vehicleType = vehicleType;
-
-                //    start = model.Transporation_Other_desc.IndexOf("returning destination. (");
-                //    end = model.Transporation_Other_desc.IndexOf("minutes estimated");
-                //    val = model.Transporation_Other_desc.Substring(start + 24, (end - start - 24)).Trim();
-                //    ViewBag.minutes = val;
-
-
-                //    start = model.Transporation_Other_desc.IndexOf("beginning on");
-                //    end = model.Transporation_Other_desc.IndexOf("and ending on");
-                //    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
-                //    ViewBag.begin = val;
-
-
-                //    start = model.Transporation_Other_desc.IndexOf("and ending on");
-                //    end = model.Transporation_Other_desc.IndexOf("following the");
-                //    val = model.Transporation_Other_desc.Substring(start + 13, (end - start - 13)).Trim();
-                //    ViewBag.end = val;
-                //}
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
@@ -1820,6 +1793,7 @@ namespace GreenbushIep.Controllers
 
             ViewBag.StudentName = studentName;
             ViewBag.StudentId = studentId;
+            ViewBag.FullName = string.Format("{0} {1}", student.FirstName, student.LastName);
 
             if (isReadOnly)
                 return PartialView("ActiveIEP/_OtherConsiderations", model);
@@ -2011,7 +1985,7 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
-            forms.Add(new SelectListItem { Text = "Physcian Script", Value = "PhysicianScript" });
+            forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
 
             return forms.OrderBy(x => x.Text).ToList();
         }
@@ -2336,10 +2310,6 @@ namespace GreenbushIep.Controllers
 
             string iepStatus = IEPStatus.ACTIVE;
             var exportErrors = new List<ExportErrorView>();
-            //string selectedDateStr = collection["startDate"];
-            //DateTime selectedDate = Convert.ToDateTime(selectedDateStr);
-            //DateTime startDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);  
-            //DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
             var query = (from iep in db.tblIEPs
                          join student in db.tblUsers

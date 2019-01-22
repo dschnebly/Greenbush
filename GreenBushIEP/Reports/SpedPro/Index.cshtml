@@ -67,20 +67,6 @@
 							</select>
 						</div>
 					</div>
-					@*<div class="col-md-3">
-						<label for="Frequency">Start Date</label>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-							<input id="startDate" name="startDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; " required>
-						</div>
-					</div>*@
-					@*<div class="col-md-3">
-						<label for="Frequency">End Date</label>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-							<input id="endDate" name="endDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999; " required>
-						</div>
-					</div>*@
 				</div>
 			</div>
 
@@ -95,7 +81,6 @@
 			<div class="row voffset4">
 				@if (ViewBag.errors != null)
 				{
-					@*<label id="errorLabel" class="alert-danger-iep">Please correct the following errors and re-submit:</label>*@
 					<ul class="errorList">
 					
 						@foreach (var error in ViewBag.errors)
@@ -105,9 +90,6 @@
 					</ul>
 				}
 			</div>
-			@*<div class="ajax-loader">
-				<img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-			</div>*@
 		</div>
 
 	</div>
@@ -120,9 +102,7 @@
 	$(document).ready(function () {
 
 		$("#exportButton").click(function () {
-			$("ul.errorList").empty();
-			//$("#errorLabel").hide();
-			//$("#ajax-loader").show();			
+			$("ul.errorList").empty();		
 			$( ".form-inline" ).submit();
 		});
 

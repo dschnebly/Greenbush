@@ -337,6 +337,7 @@
         #moduleSection .checkbox label {
             font-size: 16px;
             margin-left: -20px;
+            padding-bottom: 10px;
         }
 
             #moduleSection .checkbox label:after,
@@ -1378,14 +1379,8 @@
                                         <span class="truefalseswitch-switch"></span>
                                     </label>
                                 </div>
-                                <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
-                                </div>
-                                <div class="checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
-                                </div>
                             </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
+                            <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
                                 <h5 style="font-size:17px;font-weight:bold;">Reading </h5>
                                 <div>
                                     <label><input type="checkbox" name="ReadingNoConcern" @(Model.studentPlan.ReadingNoConcern ? "checked" : String.Empty ) />No Concerns</label>
@@ -1395,7 +1390,7 @@
                                     <label><input type="checkbox" name="ReadingNeed" @(Model.studentPlan.ReadingNeed ? "checked" : String.Empty ) />Area of need which Impacts Performance in General Education</label>
                                 </div>
                             </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                            <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
                                 <h5 style="font-size:17px;font-weight:bold;">Math </h5>
                                 <div>
                                     <label><input type="checkbox" name="MathNoConcern" @(Model.studentPlan.MathNoConcern ? "checked" : String.Empty ) />No Concerns</label>
@@ -1405,7 +1400,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
+                            <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )">
                                 <h5 style="font-size:17px;font-weight:bold;">Written Language </h5>
                                 <div>
                                     <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.WrittenNoConcern ? "checked" : String.Empty ) />No Concerns</label>
@@ -1413,6 +1408,14 @@
                                 </div>
                                 <div class="checkbox isAcademicPerformanceConcern">
                                     <label><input type="checkbox" name="WrittenNeed" @(Model.studentPlan.WrittenNeed ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
+                                <h5 style="font-size:17px;font-weight:bold;">Academic/Functional </h5>
+                                <div>
+                                    <label><input type="checkbox" name="WrittenNoConcern" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty ) />No Concerns</label>
+                                    <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
+                                    <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                                 </div>
                             </div>
                         </div>
