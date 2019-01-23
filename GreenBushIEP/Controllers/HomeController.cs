@@ -597,42 +597,63 @@ namespace GreenbushIep.Controllers
             {
                 string district = collection["district"];
                 string building = collection["building"];
-
-                var selectedDistricts = collection["selectedDistrict[]"].Split(',');
+								
+				var selectedDistricts = collection["selectedDistrict[]"].Split(',');
                 var selectedBuildings = collection["selectedBuilding[]"].Split(',');
-
-                for (int i = 0; i < selectedDistricts.Length; i++)
+				
+				for (int i = 0; i < selectedDistricts.Length; i++)
                 {
                     using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
                     {
                         if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
 
-                        String saveStuff = "UPDATE Cal_Upd SET Cal_Upd.[NoService] = Cal_Orig.[NoService], Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] FROM tblCalendar Cal_Upd JOIN tblCalendar Cal_Orig ON Cal_Orig.UserID = Cal_Upd.UserID AND Cal_Orig.calendarDate = Cal_Upd.calendarDate WHERE Cal_Orig.UserID = @UserID_Orig AND Cal_Orig.USD = @USD_Orig AND Cal_Orig.BuildingID = @BuildingID_Orig AND Cal_Upd.USD = @USD_Upd AND Cal_Upd.BuildingID = @BuildingID_Upd AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
-                        using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
-                        {
-                            querySaveStuff.Connection = SQLConn;
-                            querySaveStuff.Parameters.Clear();
-							querySaveStuff.CommandTimeout = 180; 
-                            querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
-                            querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-                            querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-                            querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
-                            querySaveStuff.ExecuteNonQuery();
-                        }
+						String saveStuff = @"UPDATE Cal_Upd 
+											SET 
+											  Cal_Upd.[NoService] = Cal_Orig.[NoService]
+											, Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] 
+											FROM tblCalendar Cal_Upd
+											CROSS JOIN tblCalendar Cal_Orig
+											WHERE Cal_Orig.calendarDate = Cal_Upd.calendarDate 
+											AND Cal_Orig.USD = @USD_Orig 
+											AND Cal_Orig.BuildingID = @BuildingID_Orig 
+											AND Cal_Upd.USD = @USD_Upd 
+											AND Cal_Upd.BuildingID = @BuildingID_Upd 
+											AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
+						using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
+						{
+							querySaveStuff.Connection = SQLConn;
+							querySaveStuff.Parameters.Clear();
+							querySaveStuff.CommandTimeout = 180;
+							querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
+							querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+							querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+							querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
+							querySaveStuff.ExecuteNonQuery();
+						}
 
-                        String saveMoreStuff = "UPDATE CalR_Upd SET CalR_Upd.DaysPerWeek = CalR_Orig.DaysPerWeek, CalR_Upd.TotalDays = CalR_Orig.TotalDays, CalR_Upd.TotalWeeks = CalR_Orig.TotalWeeks FROM tblCalendarReporting CalR_Upd JOIN tblCalendarReporting CalR_Orig ON CalR_Orig.UserID = CalR_Upd.UserID AND CalR_Orig.SchoolYear = CalR_Upd.SchoolYear WHERE CalR_Orig.UserID = @UserID_Orig AND CalR_Orig.USD = @USD_Orig AND CalR_Orig.BuildingID = @BuildingID_Orig AND CalR_Upd.USD = @USD_Upd AND CalR_Upd.BuildingID = @BuildingID_Upd";
-                        using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
-                        {
-                            querySaveMoreStuff.Connection = SQLConn;
-                            querySaveMoreStuff.Parameters.Clear();
+						String saveMoreStuff = @"UPDATE CalR_Upd 
+											SET CalR_Upd.DaysPerWeek = CalR_Orig.DaysPerWeek
+											, CalR_Upd.TotalDays = CalR_Orig.TotalDays
+											, CalR_Upd.TotalWeeks = CalR_Orig.TotalWeeks
+											FROM tblCalendarReporting CalR_Upd
+											CROSS JOIN tblCalendarReporting CalR_Orig
+											WHERE
+											CalR_Orig.SchoolYear = CalR_Upd.SchoolYear
+											AND CalR_Orig.USD = @USD_Orig
+											AND CalR_Orig.BuildingID = @BuildingID_Orig
+											AND CalR_Upd.USD = @USD_Upd AND CalR_Upd.BuildingID = @BuildingID_Upd";
+						using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
+						{
+							querySaveMoreStuff.Connection = SQLConn;
+							querySaveMoreStuff.Parameters.Clear();
 							querySaveMoreStuff.CommandTimeout = 180;
-                            querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
-                            querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-                            querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-                            querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
-                            querySaveMoreStuff.ExecuteNonQuery();
-                        }
-                    }
+							querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
+							querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+							querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+							querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
+							querySaveMoreStuff.ExecuteNonQuery();
+						}
+					}
                 }
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);
@@ -2703,7 +2724,7 @@ namespace GreenbushIep.Controllers
         {
             if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent))
             {
-                string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
+                string logoImage = Server.MapPath("../Content/IEPBackpacklogo_black.png");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
 
 
