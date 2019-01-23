@@ -26,8 +26,8 @@
  <div class="studentInformationPage">
             <table class="full">
                 <tr>
-                    <td style="width:200px">&nbsp;</td>
-                    <td style="text-align:center">
+                    
+                    <td style="text-align:center;width:600px">
                         <h4><b>Student Information Page</b></h4>
                         @if (@Model.studentDetails.building != null)
                         {
@@ -37,21 +37,21 @@
                         <h5>@Model.studentDetails.building.Phone</h5>
                         }
                     </td>
-                    <td style="text-align:right;vertical-align:top">
+                    @*<td style="text-align:right;vertical-align:top">
                         Printed:<br />@(DateTime.Now.ToShortDateString())<br />
                         Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
-                    </td>
+                    </td>*@
                 </tr>
             </table>
             <hr />
-            <table  style="width:100%">
+            <table class="full">
                 <tr>
                     <td style="width:150px;"><label>Student Legal Name:</label></td>
                     <td style="width:100px;">@(studentFullName)</td>
                     <td style="width:75px;"><label>KIDS ID:</label></td>
                     <td style="width:75px;">@(Model.studentDetails.student.KIDSID)</td>
 				</tr><tr>
-					<td style="width:80px;"><label>Birth Date:</label></td>
+					<td style="width:80px;"><label>Birthdate:</label></td>
                     <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>                          
                 
                     <td><label>Gender:</label></td>
@@ -89,36 +89,36 @@
                 </table>
             }
             <hr />
-            <table  style="width:100%">
+            <table class="full">
                 <tr>
-                    <td ><label>Neighborhood School:</label></td>
-                    <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
-					<td ><label>Responsible School:</label></td>
-                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
+                    <td style="width:150px;" ><label>Neighborhood School:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
+					<td style="width:150px;"><label>Responsible School:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
                 </tr>                
                 <tr>
-                    <td><label>Assign Child Count:</label></td>
-                    <td>@Model.studentDetails.assignChildCount</td>                    
-                    <td><label>County of Residence:</label></td>
-                    <td>@Model.studentDetails.studentCounty</td>					
+                    <td style="width:150px;"><label>Assign Child Count:</label></td>
+                    <td style="width:150px">@Model.studentDetails.assignChildCount</td>                    
+                    <td style="width:150px;"><label>County of Residence:</label></td>
+                    <td style="width:150px">@Model.studentDetails.studentCounty</td>					
                 </tr>
                 <tr>
-					<td><label>Grade:</label></td>
-                    <td>@(studentGrade)</td>                   
-                    <td><label>Fund Source:</label></td>
-                    <td>@Model.studentDetails.placementCodeDesc</td>
+					<td style="width:150px;"><label>Grade:</label></td>
+                    <td style="width:150px">@(studentGrade)</td>                   
+                    <td style="width:150px;"><label>Fund Source:</label></td>
+                    <td style="width:150px">@Model.studentDetails.placementCodeDesc</td>
 				</tr>                
 				 <tr>
-					<td><label>Primary Disability:</label></td>
-                    <td>@(Model.studentDetails.primaryDisability)</td>                   
-                    <td><label>Seconary Disability:</label></td>
-                    <td>@(Model.studentDetails.secondaryDisability)</td>
+					<td style="width:150px;"><label>Primary Disability:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.primaryDisability)</td>                   
+                    <td style="width:150px;"><label>Secondary Disability:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.secondaryDisability)</td>
 				</tr>                
 				 <tr>
-                    <td><label>Gifted:</label></td>
-                    <td style="width:50px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
-					     <td><label>KG Full Day:</label></td>
-                    <td style="width:50px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
+                    <td style="width:150px;"><label>Gifted:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
+					<td style="width:150px;"><label>KG Full Day:</label></td>
+                    <td style="width:150px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
                 </tr>
             </table>
             <hr />
@@ -178,22 +178,21 @@
         <br/><br/>
         <div class="module-page voffset2">
             <table class="full">
-                <tr>
-                    <td style="width:200px">&nbsp;</td>
-                    <td style="text-align:center">
+                <tr>                    
+                    <td style="width:600px;text-align:center">
                         <h4><b>Individualized Education Plan</b></h4>
                         <h5>@Model.studentDetails.building.BuildingName</h5>
                         <h5>@Model.studentDetails.building.Address_Physical</h5>
                         <h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
                         <h5>@Model.studentDetails.building.Phone</h5>
                     </td>
-                    <td style="text-align:right;vertical-align:top">
+                    @*<td style="text-align:right;vertical-align:top">
                         Printed:<br />@(DateTime.Now.ToShortDateString())<br />
                         Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
-                    </td>
+                    </td>*@
                 </tr>
             </table>
-            <table class="full">
+            <table class="full voffset2">
                 <tr>
                     <td><label>Legal Name:</label></td>
                     <td>@(studentFullName)</td>
@@ -203,7 +202,7 @@
                 <tr>
                     <td><label>Contact 1:</label></td>
                     <td>@( primeContact != null ? string.Format("{0} {1}", primeContact.FirstName, @primeContact.LastName) : "")</td>
-                    <td><label>Birth Date:</label></td>
+                    <td><label>Birthdate:</label></td>
                     <td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
                 </tr>
                 <tr>
@@ -695,7 +694,7 @@
 					if (Model.studentSocial.SignificantBehaviors)
 					{
 
-						<p>@Model.studentFirstName significant behavior concerns.</p>
+						<p>@Model.studentFirstName has significant behavior concerns.</p>
 
 					}
 
@@ -1190,7 +1189,7 @@
 						<tr>
 							<td><b>Type</b></td>
 							<td><b>Description</b></td>
-							<td><b>Freq</b></td>
+							<td><b>Frequency</b></td>
 							<td><b>Location</b></td>
 							<td><b>Duration</b></td>
 							<td><b>Anticipated <br />Start Date</b></td>
@@ -2693,11 +2692,11 @@
             @if (Model.studentServices != null && Model.studentServices.Count() > 0)
                 {
                     var serviceCount = 1;
-                    <table style="font-size:8pt;text-align:left">
+                    <table style="text-align:left">
                         <tr>
                             <td><b>Ln#</b></td>
-                            <td><b>FY</b></td>
-                            <td><b>Service<br />Setting</b></td>
+                            <td><b>Service</b></td>
+                            <td><b>Setting</b></td>
                             <td><b>Provider</b></td>
                             <td><b>LEA</b></td>
                             <td><b>AttendBlg</b></td>
@@ -2705,7 +2704,7 @@
                             <td><b>Days</b></td>
                             <td><b>Start<br />Date</b></td>
                             <td><b>End<br />Date</b></td>
-                            <td><b>Freq</b></td>
+                            <td><b>Frequency</b></td>
                         </tr>
 
                         @foreach (var service in Model.studentServices)
@@ -2715,26 +2714,19 @@
                                     @serviceCount
                                 </td>
                                 <td>
-                                    @switch (@service.SchoolYear)
-                                    {
-                                        case 2018: <text>2017 - 2018</text>; break;
-                                        case 2019: <text>2018 - 2019</text>; break;
-                                        case 2020: <text>2019 - 2020</text>; break;
-                                        case 2021: <text>2020 - 2021</text>; break;
-                                        case 2022: <text>2021 - 2022</text>; break;
-                                    }
-                                </td>
-                                <td>
                                     @if (Model.serviceTypes.Count > 0)
                                     {
                                         foreach (var serviceType in Model.serviceTypes)
                                         {
                                             if (serviceType.ServiceCode == service.ServiceCode)
                                             {
-                                                <text>(@serviceType.ServiceCode) @serviceType.Name</text>
+                                                <text>@serviceType.ServiceCode</text>
                                             }
                                         }
                                     }
+                                </td>
+                                <td>
+                                    @service.LocationCode
                                 </td>
                                 <td>
                                     @if (Model.serviceProviders.Count > 0)
@@ -2753,19 +2745,10 @@
                                     }
                                 </td>
                                 <td>
-									@Model.studentDetails.student.PlacementCode
+									@Model.studentDetails.assignChildCount
 								</td>
                                 <td>
-                                    @if (Model.locations.Count > 0)
-                                    {
-                                        foreach (var serviceLocation in Model.locations)
-                                        {
-                                            if (service.LocationCode == serviceLocation.LocationCode)
-                                            {
-                                                <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
-                                            }
-                                        }
-                                    }
+                                    @(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
                                 </td>
                                 <td>
                                     @service.Minutes
@@ -2778,16 +2761,16 @@
                                 <td>
                                     @switch (@service.Frequency)
                                     {
-                                        case 1: <text>Every week(1)</text>; break;
-                                        case 2: <text>Every 2 weeks(2)</text>; break;
-                                        case 3: <text>Every 3 weeks(3)</text>; break;
-                                        case 4: <text>Every 4 weeks(4)</text>; break;
-                                        case 8: <text>Every 8 weeks(8)</text>; break;
-                                        case 9: <text>Every 9 weeks(9)</text>; break;
-                                        case 12: <text>Every 12 weeks(12)</text>; break;
-                                        case 18: <text>Every 18 weeks(18)</text>; break;
-                                        case 19: <text>3 out of 4 weeks(19)</text>; break;
-                                        case 99: <text>1 day per year(99)</text>; break;
+                                        case 1: <text>Every week</text>; break;
+                                        case 2: <text>Every 2 weeks</text>; break;
+                                        case 3: <text>Every 3 weeks</text>; break;
+                                        case 4: <text>Every 4 weeks</text>; break;
+                                        case 8: <text>Every 8 weeks</text>; break;
+                                        case 9: <text>Every 9 weeks</text>; break;
+                                        case 12: <text>Every 12 weeks</text>; break;
+                                        case 18: <text>Every 18 weeks</text>; break;
+                                        case 19: <text>3 out of 4 weeks</text>; break;
+                                        case 99: <text>1 day per year</text>; break;
                                     }
                                 </td>
                             </tr>

@@ -2724,7 +2724,7 @@ namespace GreenbushIep.Controllers
         {
             if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent))
             {
-                string logoImage = Server.MapPath("../Content/GBlogo1A.jpg");
+                string logoImage = Server.MapPath("../Content/IEPBackpacklogo_black.png");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
 
 
