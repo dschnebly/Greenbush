@@ -1506,7 +1506,7 @@
 			}
             </div><!--end behavior plan-->
 
-            @if (Model.studentTransition != null && (Model.studentAge > 13 && !Model.studentTransition.isGiftedOnly || (Model.studentTransition.isDOC && Model.studentAge > 20 && !Model.studentTransition.isGiftedOnly)))
+            @if (Model.studentTransition != null && Model.studentTransition.transition != null && Model.studentTransition.transition.TransitionID > 0 && (Model.studentAge > 13 && !Model.studentTransition.isGiftedOnly || (Model.studentTransition.isDOC && Model.studentAge > 20 && !Model.studentTransition.isGiftedOnly)))
             {
                 <hr/>
                 <div>
