@@ -1738,10 +1738,11 @@ namespace GreenbushIep.Controllers
         public ActionResult Accommodations(int studentId, int IEPid)
         {
             var model = new AccomodationViewModel();
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
-            List<SelectListItem> locationList = new List<SelectListItem>();
-            tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             bool isReadOnly = false;
+
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            List<SelectListItem> locationList = new List<SelectListItem>();
 
             if (iep != null)
             {
@@ -1749,12 +1750,14 @@ namespace GreenbushIep.Controllers
 
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
+
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
                 if (accommodations.Any())
+                {
                     model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
+                }
 
                 var locations = db.tblLocations.Where(o => o.Active == true);
-
                 if (locations.Any())
                 {
                     foreach (var loc in locations)

@@ -252,6 +252,7 @@
                     });
 
                     $("#AccommodationWidget .hero-widget").removeClass("module-completed");
+                    $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                 } else {
                     console.log("Error when updating the module.")
                 }
@@ -265,7 +266,6 @@
     function initGoal(element) {
 
         element.not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
-
             $(this).find("input[type=date]").on('input', function (e) {
 
                 var day = new Date(e.target.value).getUTCDay();
@@ -342,12 +342,12 @@
                 $(this).closest("form").find("input[name='Completed']").val(true);
                 $(this).prev().trigger(event.type);
             });
-
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
                 $(".ajax-loader img").css("visibility", "visible");
 
                 var studentGoal = $(this).closest('.oneStudentGoal');
+
                 var studentGoalId = studentGoal.find("input[name='AccommodationID']").val();
                 var completedGoal = studentGoal.find("a i.isGoalCompleted");
                 var accomType = studentGoal.find("input[name='AccomType']:checked").val();
@@ -378,6 +378,10 @@
 
                                 if (allCompleted) {
                                     $("#AccommodationWidget .hero-widget").addClass("module-completed");
+                                    $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
+                                } else {
+                                    $("#AccommodationWidget .hero-widget").removeClass("module-completed");
+                                    $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                                 }
                             }
 
