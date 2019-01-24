@@ -657,11 +657,11 @@ $("input[name='IntelligenceNoConcern']").on('click', function (event) {
 
 // Attach Event
 // Academic Performance
-$("input[name='AcademicNoConcern']").on('click', function (event) {
+$("input[name='AcademicModuleNoConcern']").on('click', function (event) {
     if ($("input[name='AcademicNoConcern']").is(':checked')) {
         $("input[name='AcademicProgressTowardGenEd']").prop('checked', false);
         $("input[name='AcademicNeeds']").prop('checked', false);
-        $("input[name='AcademicFunctionalNoConcern']").prop('checked', true);
+        $("input[name='AcademicNoConcern']").prop('checked', true);
 
         $("input[name='ReadingNoConcern']").prop('checked', false);
         $("input[name='ReadingNoConcern']").trigger('click');
@@ -805,8 +805,8 @@ $("input[name='WrittenNeed']").on('click', function (event) {
 
 //Attach Event
 // Functional Academic
-$("input[name='AcademicFunctionalNoConcern']").on('click', function (event) {
-    if($("input[name='AcademicFunctionalNoConcern']").is(':checked')) {
+$("input[name='AcademicNoConcern']").on('click', function (event) {
+    if ($("input[name='AcademicNoConcern']").is(':checked')) {
         $("input[name='AcademicProgressTowardGenEd']").prop('checked', false);
         $("input[name='AcademicNeeds']").prop('checked', false);
     }
@@ -814,13 +814,13 @@ $("input[name='AcademicFunctionalNoConcern']").on('click', function (event) {
 
 $("input[name='AcademicProgressTowardGenEd']").on('click', function (event) {
     if ($("input[name='AcademicProgressTowardGenEd']").is(':checked')) {
-        $("input[name='AcademicFunctionalNoConcern']").prop('checked', false);
+        $("input[name='AcademicNoConcern']").prop('checked', false);
     }
 });
 
 $("input[name='AcademicNeeds']").on('click', function (event) {
     if ($("input[name='AcademicNeeds']").is(':checked')) {
-        $("input[name='AcademicFunctionalNoConcern']").prop('checked', false);
+        $("input[name='AcademicNoConcern']").prop('checked', false);
     }
 });
 

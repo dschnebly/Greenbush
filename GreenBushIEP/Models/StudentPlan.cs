@@ -41,6 +41,7 @@ namespace GreenBushIEP.Models
         public bool IntelligenceNoConcern { get; set; }
         public bool IntelligenceProgressTowardGenEd { get; set; }
         public bool IntelligenceAreaOfNeed { get; set; }
+        public bool AcademicModuleNoConcern { get; set; }
         public bool AcademicNoConcern { get; set; }
         public bool AcademicNeeds { get; set; }
         public bool AcademicProgressTowardGenEd { get; set; }
@@ -91,6 +92,7 @@ namespace GreenBushIEP.Models
             this.IntelligenceNoConcern = false;
             this.IntelligenceProgressTowardGenEd = false;
             this.IntelligenceAreaOfNeed = false;
+            this.AcademicModuleNoConcern = true;
             this.AcademicNoConcern = true;
             this.AcademicNeeds = false;
             this.AcademicProgressTowardGenEd = false;
@@ -208,6 +210,8 @@ namespace GreenBushIEP.Models
                     this.WrittenNoConcern = studentWritten.NoConcerns;
                     this.WrittenProgress = studentWritten.ProgressTowardGenEd;
                 }
+
+                this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
 
                 tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();
                 if(info != null)
@@ -353,6 +357,8 @@ namespace GreenBushIEP.Models
                     studentWritten.ProgressTowardGenEd = this.WrittenProgress;
                 }
                 db.SaveChanges();
+
+                this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
 
