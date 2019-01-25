@@ -1318,7 +1318,7 @@
                                         <fieldset class="form-group">
                                             <label for="Duration">Anticipated Graduation Month/Year</label>
                                             <div class="input-group">
-                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear.HasValue ? Model.transition.Planning_GraduationYear.Value : 0)-@((Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0) < 10 ? string.Format("0{0}",(Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0)): (Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value.ToString() : ""))" style="width: 24rem;">
+                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear.HasValue ? Model.transition.Planning_GraduationYear.Value : 0)-@((Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0) < 10 ? string.Format("0{0}",(Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0)): (Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value.ToString() : ""))">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -1365,6 +1365,7 @@
                                         </fieldset>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>
