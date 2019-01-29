@@ -49,6 +49,11 @@ namespace GreenBushIEP.Report
 			else
 			{
 				teachers = GetTeacherRecursive(null, usr.UserID);
+				//add person running report, if admin?
+				if(!teachers.Contains(usr))
+					teachers.Add(usr);
+				
+
 			}
 
 
@@ -71,7 +76,7 @@ namespace GreenBushIEP.Report
 				var teachers = (from org in db.tblOrganizationMappings
 								join user in db.tblUsers
 									on org.UserID equals user.UserID
-								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == teacher || user.RoleID == admin || user.RoleID == nurse) && (user.UserID != userId)
+								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == teacher || user.RoleID == admin) && (user.UserID != userId)
 								select user).Distinct().ToList();
 
 				list.AddRange(teachers.Where(i => i.RoleID == teacher));

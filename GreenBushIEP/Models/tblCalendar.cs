@@ -24,5 +24,7 @@ namespace GreenBushIEP.Models
         public bool canHaveClass { get; set; }
         public Nullable<System.DateTime> calendarDate { get; set; }
         public short SchoolYear { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }

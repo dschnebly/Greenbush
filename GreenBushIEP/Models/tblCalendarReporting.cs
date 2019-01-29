@@ -22,5 +22,7 @@ namespace GreenBushIEP.Models
         public int TotalDays { get; set; }
         public int TotalWeeks { get; set; }
         public int MinutesPerDay { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }
