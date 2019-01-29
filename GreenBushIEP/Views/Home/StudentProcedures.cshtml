@@ -1373,7 +1373,7 @@
                             <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-university" aria-hidden="true"></i> Academic Performance</h5>
                             <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                             <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                <input type="checkbox" name="AcademicNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty  )>
+                                <input type="checkbox" name="AcademicNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicModuleNoConcern ? "checked" : String.Empty  )>
                                 <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
                                     <span class="truefalseswitch-inner"></span>
                                     <span class="truefalseswitch-switch"></span>
@@ -1413,7 +1413,7 @@
                         <div class="col-md-3 checkbox isAcademicPerformanceConcern @(Model.studentPlan.AcademicNoConcern ? "noConcerns" : String.Empty )" style="margin-top: 0;">
                             <h5 style="font-size:17px;font-weight:bold;">Academic/Functional </h5>
                             <div>
-                                <label><input type="checkbox" name="AcademicFunctionalNoConcern" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty ) />No Concerns</label>
+                                <label><input type="checkbox" name="AcademicNoConcern" @(Model.studentPlan.AcademicNoConcern ? "checked" : String.Empty ) />No Concerns</label>
                                 <label><input type="checkbox" name="AcademicProgressTowardGenEd" @(Model.studentPlan.AcademicProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Support</label>
                                 <label><input type="checkbox" name="AcademicNeeds" @(Model.studentPlan.AcademicNeeds ? "checked" : String.Empty ) />Area of Need which Impacts Performance in General Education</label>
                             </div>

@@ -87,6 +87,7 @@ function ft(params) {
         setTimeout(function () { d2.className = e + " in"; d2.style.display = "block"; }, 1); // so we don't see a flash of the other page upon button click.
         setTimeout(function () {
             document.body.innerHTML = d2.innerHTML;
+            window.scrollTo(0, 0);
 
             cBa();
             Reload();

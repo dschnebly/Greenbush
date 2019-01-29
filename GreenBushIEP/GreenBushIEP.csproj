@@ -620,7 +620,6 @@
     <Content Include="Content\Images\draft-watermark-printing.png" />
     <Content Include="Content\Images\green-crop2.jpg" />
     <Content Include="Content\Images\greenbush-logo-2f3945.png" />
-    <Content Include="Content\IEPBackpacklogo_black.png" />
     <Content Include="Content\Images\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\Images\IEPBackpackHeaderImage.png" />
     <Content Include="Content\Images\legal_image.jpg" />
