@@ -297,5 +297,18 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
+    
+        public virtual ObjectResult<up_ReportDraftIEPS_Result> up_ReportDraftIEPS(string teacherId, string buildingId)
+        {
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportDraftIEPS_Result>("up_ReportDraftIEPS", teacherIdParameter, buildingIdParameter);
+        }
     }
 }

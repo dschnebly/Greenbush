@@ -477,6 +477,9 @@
     <Compile Include="Models\up_ReportBuildings_Result2.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportDraftIEPS_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportExcessCost_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -515,6 +518,13 @@
     </Compile>
     <Compile Include="Models\vw_StudentExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DraftIEP\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DraftIEP\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -682,6 +692,7 @@
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Reports\DraftIEP\Report.aspx" />
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
@@ -883,6 +894,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />

@@ -169,6 +169,8 @@
           <Property Name="canHaveClass" Type="bit" Nullable="false" />
           <Property Name="calendarDate" Type="date" StoreGeneratedPattern="Computed" />
           <Property Name="SchoolYear" Type="smallint" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendarReporting">
           <Key>
@@ -182,6 +184,8 @@
           <Property Name="TotalDays" Type="int" Nullable="false" />
           <Property Name="TotalWeeks" Type="int" Nullable="false" />
           <Property Name="MinutesPerDay" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -1141,6 +1145,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
+        <Function Name="up_ReportDraftIEPS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="up_ReportExcessCost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
@@ -1485,6 +1493,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblGrades" EntityType="IndividualizedEducationProgramModel.tblGrade" />
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
+          <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2679,6 +2691,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="canHaveClass" Type="Boolean" Nullable="false" />
           <Property Name="calendarDate" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="0" />
           <Property Name="SchoolYear" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblCalendarReporting">
           <Key>
@@ -2692,7 +2706,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="TotalDays" Type="Int32" Nullable="false" />
           <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="MinutesPerDay" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <ComplexType Name="up_ReportDraftIEPS_Result">
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ProviderName" Nullable="false" MaxLength="101" />
+          <Property Type="DateTime" Name="begin_date" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="end_Date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="DraftDays" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3832,6 +3856,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblCalendars">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendar">
               <MappingFragment StoreEntitySet="tblCalendar">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
                 <ScalarProperty Name="calendarDate" ColumnName="calendarDate" />
                 <ScalarProperty Name="canHaveClass" ColumnName="canHaveClass" />
@@ -3848,6 +3874,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblCalendarReportings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendarReporting">
               <MappingFragment StoreEntitySet="tblCalendarReporting">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="MinutesPerDay" ColumnName="MinutesPerDay" />
                 <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
                 <ScalarProperty Name="TotalDays" ColumnName="TotalDays" />
@@ -3859,6 +3887,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportDraftIEPS" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportDraftIEPS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result">
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="begin_date" ColumnName="begin_date" />
+                <ScalarProperty Name="end_Date" ColumnName="end_Date" />
+                <ScalarProperty Name="DraftDays" ColumnName="DraftDays" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
