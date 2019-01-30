@@ -486,7 +486,7 @@ namespace GreenBushIEP.Models
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblLocation> serviceLocations { get; set; }
         public List<tblGoal> studentGoals { get; set; }
-        public List<tblCalendar> calendar { get; set; }
+        public System.Web.Mvc.JsonResult calendar { get; set; }
         public List<tblCalendar> availableCalendarDays { get; set; }
         public List<tblCalendarReporting> calendarReportings { get; set; }
         public DateTime IEPStartDate { get; set; }
@@ -500,7 +500,7 @@ namespace GreenBushIEP.Models
             serviceProviders = new List<tblProvider>();
             serviceLocations = new List<tblLocation>();
             studentGoals = new List<tblGoal>();
-            calendar = new List<tblCalendar>();
+            calendar = new System.Web.Mvc.JsonResult();
             availableCalendarDays = new List<tblCalendar>();
             calendarReportings = new List<tblCalendarReporting>();
             IEPStartDate = new DateTime();

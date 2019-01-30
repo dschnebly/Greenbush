@@ -42,14 +42,13 @@
     }
 
     .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
-            height: 100% !important;
-            padding-top: 15px !important;
+        height: 100% !important;
+        padding-top: 15px !important;
     }
 
     .thisServiceNotCompleted {
         visibility: hidden;
     }
-
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -66,17 +65,30 @@
     <div class="container serviceContainer">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 12px;">
-                <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                <button id="duplicateService" class="btn btn-default">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                <button id="duplicateAllService" class="btn btn-default">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="newService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="duplicateService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                <button id="duplicateAllService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
         <input type="hidden" id="sid" value="@Model.studentId" />
 
-        <div class="alert alert-warning" role="alert">
-            <strong class="moreinfo">Please check your calendar and make sure it is set up for this year and this building before adding services.</strong>
-        </div>
+        @if (Model.calendar.MaxJsonLength == 0)
+        {
+            if (ViewBag.isMIS)
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong class="moreinfo">Please check your calendar and make sure it is set up for this fiscal year, building and district before adding services.</strong>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong class="moreinfo">Please contact your level 4 to set their calendar for this fiscal year, district and building before adding services.</strong>
+                </div>
+            }
+        }
+
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
         </div>
@@ -111,7 +123,6 @@
                                                     <option value="2019">2018 - 2019</option>
                                                     <option value="2020">2019 - 2020</option>
                                                     <option value="2021">2020 - 2021</option>
-                                                    <option value="2022">2021 - 2022</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -126,7 +137,7 @@
                                             <label for="Frequency">End Date</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(ViewBag.LastFiscalDayofYear.calendarDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -196,7 +207,7 @@
                                                     {
                                                         foreach (var serviceType in Model.serviceTypes)
                                                         {
-                                                            <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                    <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
                                                         }
                                                     }
                                                 </select>
@@ -211,7 +222,7 @@
                                                     {
                                                         foreach (var serviceProvider in Model.serviceProviders)
                                                         {
-                                                            <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                                    <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                         }
                                                     }
                                                 </select>
@@ -228,7 +239,7 @@
                                                     {
                                                         foreach (var goal in Model.studentGoals)
                                                         {
-                                                            <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
                                                         }
                                                     }
                                                 </select>
@@ -299,7 +310,6 @@
                                                         <option value="2019" @(service.SchoolYear == 2019 ? "selected" : "")>2018 - 2019</option>
                                                         <option value="2020" @(service.SchoolYear == 2020 ? "selected" : "")>2019 - 2020</option>
                                                         <option value="2021" @(service.SchoolYear == 2021 ? "selected" : "")>2020 - 2021</option>
-                                                        <option value="2022" @(service.SchoolYear == 2022 ? "selected" : "")>2021 - 2022</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -327,7 +337,7 @@
                                                             {
                                                                 foreach (var serviceLocation in Model.serviceLocations)
                                                                 {
-                                                            <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                                    <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
                                                                 }
                                                             }
                                                         </select>
@@ -387,7 +397,7 @@
                                                         {
                                                             foreach (var serviceType in Model.serviceTypes)
                                                             {
-                                                        <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                                <option value="@serviceType.ServiceCode" @(service.ServiceCode == serviceType.ServiceCode ? "selected" : "")>(@serviceType.ServiceCode) @serviceType.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -402,7 +412,7 @@
                                                         {
                                                             foreach (var serviceProvider in Model.serviceProviders)
                                                             {
-                                                        <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                                                <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                             }
                                                         }
                                                     </select>
@@ -422,7 +432,7 @@
                                                                 string selectString = String.Empty;
                                                                 selectString = service.tblGoals.Contains(goal) ? "selected" : String.Empty;
 
-                                                        <option value="@goal.goalID" data-title="@goal.Title.ToString()" @selectString>@goal.Title.ToString()</option>
+                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()" @selectString>@goal.Title.ToString()</option>
                                                             }
                                                         }
                                                     </select>
@@ -465,30 +475,133 @@
 
 <script>
 
+    var holidays = '@Html.Raw(Json.Encode(@Model.calendar))';
+    var disabledDays = JSON.parse(holidays).Data;
+
     $(document).ready(function () {
         $(this).find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker');
-            $('.dtField').datepicker({
+            $(".dtField").datepicker({
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
-                changeMonth: true
-            });
+                changeMonth: true,
+                yearRange: "-1:+2",
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    var isDisabled = ($.inArray(string, disabledDays) != -1);
+                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
+                }
+            })
         });
     });
-
-    var model = '@Html.Raw(Json.Encode(Model.calendar))';
-    var calendarArrayOfDates = JSON.parse(model);
-
-    var availableCalendarDays = '@Html.Raw(Json.Encode(Model.availableCalendarDays))';
-    var availableCalendarDaysArray = JSON.parse(availableCalendarDays);
-
-    var Reports = '@Html.Raw(Json.Encode(Model.calendarReportings))';
-    var calendarReportsArray = JSON.parse(Reports);
 
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
+    });
+
+    /* Event */
+    /* When a user clicks on the question mark icon we turn on tooltips */
+    $('.tooltip-help').on('click', function () {
+        $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
+
+    /* Event */
+    /* when clicking on the New Student Goal button */
+    $('#newService').on('click', function () {
+
+        $.each($("div.collapse"), function (index) {
+            $(this).collapse('hide');
+        });
+
+        var cloneService = $("#defaultStudentService").clone();
+        cloneService.removeClass("hidden");
+        cloneService.removeAttr("id");
+
+        // count the number of services and increment our counter in the accordian view.
+        var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 1;
+        cloneService.children().children().prop("id", "accordion[" + serviceCount + "]");
+
+        // set up the accordian click event.
+        var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
+        serviceA.attr('href', '#collapse' + serviceCount);
+
+        var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
+
+        $('.serviceContainer').append(cloneService);
+
+        //have to remove the hasdatepicker before we can appy new datepicker to clone
+        cloneService.find('.dtField').each(function () {
+            $(this).removeAttr('id').removeClass('hasDatepicker');
+            $('.dtField').datepicker({
+                dateFormat: "mm/dd/yy",
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "-1:+2",
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    var isDisabled = ($.inArray(string, disabledDays) != -1);
+                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
+                }
+            });
+        });
+
+        panelCollapse.collapse('show');
+
+        initService();
+    });
+
+    //duplicate service for next school year
+    $('#duplicateService').on('click', function () {
+        $(".duplication-loader").css('visibility', 'visible');
+        var parent = $('div:visible.collapse.in');
+
+        if (parent != null) {
+            var studentId = $("#sid").val();
+            var serviceId = parent.data("val");
+
+            if (studentId != undefined && serviceId != undefined) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/DuplicateStudentServicesNextYear',
+                    data: { studentId: studentId, serviceId: serviceId },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Result == "success") {
+                            parent.addClass("duplicate");
+
+                            $.each(data.Data, function (index, serviceObj) {
+
+                                var dupFiscalYear = serviceObj.SchoolYear;
+                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+                                var dupserviceMinutesPerDay = serviceObj.Minutes;
+                                var dupFrequency = serviceObj.Frequency;
+                                var dupLocation = serviceObj.LocationCode;
+                                var dupServiceType = serviceObj.ServiceCode;
+                                var dupServiceProvider = serviceObj.ProviderID;
+                                var dupStartDate = serviceObj.StartDate;
+                                var dupEndDate = null;
+                                var dupGoals = serviceObj.Goals;
+
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
+                            });
+                        }
+                        else {
+                            _showAlert('There was a problem duplicating the Student Services.', false);
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Unable to duplicate the student services.");
+                    }
+                });
+            }
+        }
+        else {
+            _showAlert("Please select a service to duplicate", false);
+        }
     });
 
     //duplicate all services for next school year
@@ -534,103 +647,12 @@
         }
     });
 
-    //duplicate service for next school year
-    $('#duplicateService').on('click', function () {
-        $(".duplication-loader").css('visibility', 'visible');
-        var parent = $('div:visible.collapse.in');
-
-        if (parent != null) {
-            var studentId = $("#sid").val();
-            var serviceId = parent.data("val");
-            if (studentId != undefined && serviceId != undefined) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Home/DuplicateStudentServicesNextYear',
-                    data: { studentId: studentId, serviceId: serviceId },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.Result == "success") {
-                            $.each(data.Data, function (index, serviceObj) {
-
-                                var dupFiscalYear = serviceObj.SchoolYear;
-                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
-                                var dupserviceMinutesPerDay = serviceObj.Minutes;
-                                var dupFrequency = serviceObj.Frequency;
-                                var dupLocation = serviceObj.LocationCode;
-                                var dupServiceType = serviceObj.ServiceCode;
-                                var dupServiceProvider = serviceObj.ProviderID;
-                                var dupStartDate = serviceObj.StartDate;
-                                var dupEndDate = serviceObj.EndDate;
-                                var dupGoals = serviceObj.Goals;
-
-                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
-                            });
-                        }
-                        else {
-                            _showAlert('There was a problem duplicating the Student Services.', false);
-                        }
-                    },
-                    error: function (data) {
-                        console.log("Unable to duplicate the student services.");
-                    }
-                });
-            }
-        }
-        else {
-            _showAlert("Please select a service to duplicate", false);
-        }
-    });
-
-    /* Event */
-    /* When a user clicks on the question mark icon we turn on tooltips */
-    $('.tooltip-help').on('click', function () {
-        $('[data-toggle="tooltip"]').tooltip('toggle');
-    });
-
-    /* Event */
-    /* when clicking on the New Student Goal button */
-    $('#newService').on('click', function () {
-
-        $.each($("div.collapse"), function (index) {
-            $(this).collapse('hide');
-        });
-
-        var cloneService = $("#defaultStudentService").clone();
-        cloneService.removeClass("hidden");
-        cloneService.removeAttr("id");
-
-        // count the number of services and increment our counter in the accordian view.
-        var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 1;
-        cloneService.children().children().prop("id", "accordion[" + serviceCount + "]");
-
-        // set up the accordian click event.
-        var serviceA = cloneService.find('[data-parent="#accordion[0]"]').attr('data-parent', '#accordion[' + serviceCount + ']');
-        serviceA.attr('href', '#collapse' + serviceCount);
-
-        var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
-
-        $('.serviceContainer').append(cloneService);
-
-        //have to remove the hasdatepicker before we can appy new datepicker to clone
-        cloneService.find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker');
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true
-            });
-        });
-
-        panelCollapse.collapse('show');
-
-        initService();
-    });
-
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
             $(this).find("select[name='fiscalYear']").on("change", function (e) {
                 var year = $(this).val();
+
                 var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
                 var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
                 _checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
@@ -651,7 +673,7 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
 
-                _onDateChange(fiscalYear, day, selectedDate, e);
+                _validateDate(fiscalYear, calendaryDay, e);
             });
 
             $(this).find("a i.deleteService").on("click", function (e) {
@@ -759,17 +781,16 @@
 
             $(this).find('.saveService').on("click", function () {
 
-                var alertBox = $(this).closest('.oneStudentService').prev();
-                var form = $(this).closest('.oneStudentService').find('form').serialize();
                 var studentService = $(this).closest('.oneStudentService');
+                var form = studentService.find('form').serialize();
                 var completedService = studentService.find("a i.isServiceCompleted");
-                var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+                var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
                 if (serviceType != undefined && serviceType != "")
-                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
+                    studentService.find(".studentGoalLabel").text(serviceType);
 
                 //check dates are valid before saving
-                var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
+                var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //if isvalid, don't allow user to save
                 if (!isValid)
@@ -783,6 +804,11 @@
                     success: function (data) {
                         if (data.Result == "success") {
 
+                            studentService.addClass("duplicate");
+                            studentService.find(".collapse.in").data("val", data.key);
+                            _showAlert(data.Message, true);
+
+                            // check if all of the services are completed
                             if (studentService.find("input[name='completed']").val() == "true") {
                                 studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
 
@@ -798,14 +824,12 @@
                                 }
                             }
 
-                            _showAlert(data.Message, true);
                             $(window).trigger("saving.bs.modal");
                             return false;
                         }
-                        else {
-
+                        else
+                        {
                             _showAlert(data.Message, false);
-
                         }
                     },
                     error: function (data) {
@@ -865,6 +889,7 @@
         var cloneService = $("#defaultStudentService").clone();
         cloneService.removeClass("hidden");
         cloneService.removeAttr("id");
+        cloneService.addClass("duplicate");
 
         // count the number of services and increment our counter in the accordian view.
         var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 100;
@@ -884,7 +909,14 @@
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
-                changeMonth: true
+                changeMonth: true,
+                yearRange: "-1:+2",
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    var isDisabled = ($.inArray(string, disabledDays) != -1);
+                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
+                }
             });
         });
 
@@ -1069,7 +1101,6 @@
                 }
             });
 
-
             $(this).find(".saveCompletedService").on('click', function (e) {
 
                 $(this).closest("form").find("input[name='completed']").val(true);
@@ -1185,16 +1216,12 @@
                     errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
                 }
 
-                if (data.errorCalendarMessage != "") {
-                    errorMessage = data.errorCalendarMessage;
-                }
-
                 if (!data.IsService) {
                     //if the accidentally select the wrong fiscal year, but think are picking something within that fy
                     if (!data.IsValid) {
                         errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
                     }
-                    else {
+                    else {  // should never get fired.
                         errorMessage = 'OH NOES! That day is not is session. ';
                     }
                 }
@@ -1215,10 +1242,8 @@
             },
             error: function (data) {
                 _showAlert('Unable to connect to the database.', false);
-
             }
         });
-
     }
 
     function _dateCheck(startDateElement, endDateElement) {
@@ -1257,25 +1282,6 @@
         }
 
         return isValid;
-    }
-
-    function _onDateChange(fiscalYear, day, calendaryDay, e) {
-        // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-        if (day == 0) {
-            e.target.setCustomValidity('OH NOES! We hate Sundays! Please pick any day but the Weekend.');
-            e.target.title = 'OH NOES! We hate Sundays! Please pick any day but the Weekend.';
-            e.target.parentNode.classList.add('has-error');
-            var error = e.target.title;
-            _showAlert(error, false);
-        } else if (day == 6) {
-            e.target.setCustomValidity('OH NOES! We hate Saturdays! Please pick any day but the Weekend.');
-            e.target.title = 'OH NOES! We hate Saturdays! Please pick any day but the Weekend.';
-            e.target.parentNode.classList.add('has-error');
-            var error = e.target.title;
-            _showAlert(error, false);
-        } else {
-            _validateDate(fiscalYear, calendaryDay, e);
-        }
     }
 
     function isDate(sDate) {
