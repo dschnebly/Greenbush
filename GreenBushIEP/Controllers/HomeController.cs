@@ -2350,13 +2350,17 @@ namespace GreenbushIep.Controllers
             {
                 StringBuilder sb = new StringBuilder();
 
+                // create the header
+                sb.AppendFormat("{0}", "KIDS ID\tStudent Last Name\tStudent Gender\tStudent Date of Birth\tSchool Year\tAssign Child Count Organization\tNeighborhood Building\tGrade Level\tStatus Code\tExit Date\tSchool Psychologist Provider ID\tSpeech Language Pathologist Provider ID\tCase Manager Provider ID\tExtended School Year\tSpecial Ed Transportation\tAll Day Kindergarten\tBehavior Intervention Plan (BIP)\tClaiming\tPlacements KDCF/JJA/LEA/Parent\tCounty of Residence\tLanguage of Parent\tIEP Date\tGap Allowed\tResponsible Building Identifier\tPrimary Disability\tSecondary Disability\tGifited\tService Location (Attend Building) ID\tPrimary Service Location Indicator\tSetting Code\tService Code\tStaff ID\tPrimary Provider Indicator\tService Start Date\tService End Date\tMinutes per Day\tDays per Week\tFrequency\tTotal Days");
+                sb.Append(Environment.NewLine);
+
                 foreach (var item in query.ToList())
                 {
                     IEP theIEP = new IEP()
                     {
                         current = item.iep,
                         studentFirstName = string.Format("{0}", item.student.FirstName),
-                        studentLastName = string.Format("{0}", item.student.FirstName),
+                        studentLastName = string.Format("{0}", item.student.LastName),
 
                     };
 
@@ -2407,12 +2411,8 @@ namespace GreenbushIep.Controllers
                     }
                     else
                     {
-
                         db.SaveChanges();
-
                     }
-
-
                 }//end foreach
 
 
@@ -2528,7 +2528,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
                 });
 
             }
@@ -2573,7 +2573,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
                 });
 
             }
@@ -2588,7 +2588,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
                 });
 
             }
@@ -2603,7 +2603,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
                 });
             }
             else
@@ -2621,7 +2621,7 @@ namespace GreenbushIep.Controllers
                     errors.Add(new ExportErrorView()
                     {
                         UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                        Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+                        Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
                     });
                 }
                 else
@@ -2682,7 +2682,7 @@ namespace GreenbushIep.Controllers
 
             }
 
-            sb.AppendFormat("{0}\r", "");
+            sb.Append(Environment.NewLine);
 
             return errors;
         }
