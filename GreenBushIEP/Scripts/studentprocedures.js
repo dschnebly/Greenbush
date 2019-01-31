@@ -134,7 +134,7 @@
             data: { Stid: stId, IepId: iepId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
             dataType: 'json',
             success: function (data) {
-                if (data.Result == 'success') {
+                if (data.Result === 'success') {
 
                     location.reload();
 
@@ -245,7 +245,7 @@
                 }
             });
         }
-    })
+    });
 
     // Attach Event
     // if the user is an MIS or ADMIN the Initiation Date is today or later AND then when they click the url button..
@@ -318,7 +318,7 @@
                 }
             });
         }
-    })
+    });
 
     // Attach Event
     // if the iep is an amendment and they make it active
@@ -543,7 +543,7 @@ $('#saveplan').on('click', function () {
         dataType: 'json',
         async: false,
         success: function (data) {
-            if (data.result == "success") {
+            if (data.result === "success") {
                 window.location.href = "/Home/StudentProcedures?stid=" + stId;
             }
             else {
@@ -578,7 +578,7 @@ $("#dismissIEPPlan").on("click", function () {
         dataType: 'json',
         async: false,
         success: function (data) {
-            if (data.result == "success") {
+            if (data.result === "success") {
                 window.location.href = "/Home/StudentProcedures?stid=" + data.message;
             }
             else {

@@ -82,11 +82,12 @@
 				@if (ViewBag.errors != null)
 				{
 					<ul class="errorList">
-					
+
 						@foreach (var error in ViewBag.errors)
 						{
 							<li class="alert-danger-iep">@error.UserID @error.Description</li>
 						}
+
 					</ul>
 				}
 			</div>
@@ -114,7 +115,6 @@
                 changeMonth: true
             });
         });
-
 	});
 </script>
 
