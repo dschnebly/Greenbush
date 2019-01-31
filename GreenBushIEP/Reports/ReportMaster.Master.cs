@@ -43,20 +43,15 @@ namespace GreenBushIEP.Report
 				teachers = (from u in db.tblUsers
 							where u.UserID == usr.UserID && !u.Archive.HasValue
 							select u).Distinct().ToList();
-
-
 			}
 			else
 			{
 				teachers = GetTeacherRecursive(null, usr.UserID);
-				//add person running report, if admin?
-				if(!teachers.Contains(usr))
+
+				//add person running report, if admin, can an admin have students?
+				if((usr.RoleID == admin || usr.RoleID == mis) && !teachers.Contains(usr))
 					teachers.Add(usr);
-				
-
 			}
-
-
 
 			foreach (var item in teachers)
 			{
