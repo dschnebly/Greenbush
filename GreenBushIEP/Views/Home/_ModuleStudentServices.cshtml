@@ -91,6 +91,9 @@
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
 
         <div class="row oneStudentService hidden" id="defaultStudentService">
@@ -207,7 +210,7 @@
                                                     {
                                                         foreach (var serviceType in Model.serviceTypes)
                                                         {
-                                                    <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
+                                                            <option value="@serviceType.ServiceCode">(@serviceType.ServiceCode) @serviceType.Name</option>
                                                         }
                                                     }
                                                 </select>
@@ -222,7 +225,7 @@
                                                     {
                                                         foreach (var serviceProvider in Model.serviceProviders)
                                                         {
-                                                    <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                                            <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                         }
                                                     }
                                                 </select>
@@ -239,7 +242,7 @@
                                                     {
                                                         foreach (var goal in Model.studentGoals)
                                                         {
-                                                    <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                            <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
                                                         }
                                                     }
                                                 </select>
@@ -511,6 +514,7 @@
     /* Event */
     /* when clicking on the New Student Goal button */
     $('#newService').on('click', function () {
+        $(".duplication-loader").css('visibility', 'visible');
 
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
@@ -552,11 +556,14 @@
         panelCollapse.collapse('show');
 
         initService();
+
+        $(".duplication-loader").css('visibility', 'hidden');
     });
 
     //duplicate service for next school year
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
+
         var parent = $('div:visible.collapse.in');
 
         if (parent != null) {
@@ -571,8 +578,6 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.Result == "success") {
-                            parent.addClass("duplicate");
-
                             $.each(data.Data, function (index, serviceObj) {
 
                                 var dupFiscalYear = serviceObj.SchoolYear;
@@ -602,6 +607,8 @@
         else {
             _showAlert("Please select a service to duplicate", false);
         }
+
+        $(".duplication-loader").css('visibility', 'hidden');
     });
 
     //duplicate all services for next school year
@@ -645,6 +652,8 @@
         else {
             _showAlert('There was a problem duplicating the Student Services.', false);
         }
+
+        $(".duplication-loader").css('visibility', 'hidden');
     });
 
     function initService() {
@@ -659,8 +668,7 @@
             });
 
             $(this).find(".dtField").on('change', function (e) {
-
-                if (e.target.value == '') {
+                if (e.target.value == '' || e.target.value == "undefined") {
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
                     e.target.parentNode.classList.add('has-error');
@@ -673,7 +681,7 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
 
-                _validateDate(fiscalYear, calendaryDay, e);
+                _validateDate(fiscalYear, selectedDate, e);
             });
 
             $(this).find("a i.deleteService").on("click", function (e) {
@@ -700,15 +708,11 @@
                                         oneStudentService.parentsUntil(".oneStudentService").parent().remove();
                                         previousService.collapse('show');
                                         _showAlert('Student Service successfully deleted.', true)
+
                                         $(window).trigger("deleting.bs.modal");
                                     }
                                     else {
-                                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                                            $("#alertMessage .moreinfo").html(data.Message);
-                                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                                $("#alertMessage").slideUp(500);
-                                            });
-                                        }
+                                        _showAlert(data.Message, true)
                                     }
                                 },
                                 error: function (data) {
@@ -780,10 +784,12 @@
             });
 
             $(this).find('.saveService').on("click", function () {
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
 
                 var studentService = $(this).closest('.oneStudentService');
                 var form = studentService.find('form').serialize();
-                var completedService = studentService.find("a i.isServiceCompleted");
+                var completedService = studentService.find("a i.thisServiceNotCompleted");
                 var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
                 if (serviceType != undefined && serviceType != "")
@@ -804,16 +810,16 @@
                     success: function (data) {
                         if (data.Result == "success") {
 
-                            studentService.addClass("duplicate");
-                            studentService.find(".collapse.in").data("val", data.key);
                             _showAlert(data.Message, true);
+
+                            studentService.find(".collapse.in").data("val", data.key);
 
                             // check if all of the services are completed
                             if (studentService.find("input[name='completed']").val() == "true") {
-                                studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+                                completedService.removeClass("thisServiceNotCompleted");
 
                                 var allCompleted = true;
-                                $('.oneStudentService').not(':hidden').each(function () {
+                                $('.oneStudentService').not('#defaultStudentService').each(function () {
                                     if ($(this).find("a i.isServiceCompleted").hasClass("thisServiceNotCompleted")) {
                                         allCompleted = false;
                                     }
@@ -824,25 +830,35 @@
                                 }
                             }
 
+                            $(".ajax-loader img").css("visibility", "hidden");
+                            $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                                $('.ajax-loader').css("visibility", "hidden");
+                            });
+
                             $(window).trigger("saving.bs.modal");
                             return false;
                         }
-                        else
-                        {
+                        else {
                             _showAlert(data.Message, false);
                         }
                     },
                     error: function (data) {
-                        _showAlert('Unable to connect to the database.', false);
+                        _showAlert("There was an error while trying to save the data.", false);
                     }
                 });
             });
 
             $(this).find(".saveCompletedService").on('click', function (e) {
 
+                $.each($(".oneStudentService").not("#defaultStudentService"), function () {
+                    $(this).find("form").find("input[name='completed']").val(true);
+                    $(this).find(".saveService").trigger(event.type);
+                });
 
-                $(this).closest("form").find("input[name='completed']").val(true);
-                $(this).prev().trigger(event.type);
+                $(window).trigger("saving.bs.modal");
+                setTimeout(function () {
+                    $('#moduleSection').modal('hide');
+                }, 1200);
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -889,7 +905,6 @@
         var cloneService = $("#defaultStudentService").clone();
         cloneService.removeClass("hidden");
         cloneService.removeAttr("id");
-        cloneService.addClass("duplicate");
 
         // count the number of services and increment our counter in the accordian view.
         var serviceCount = $('.oneStudentService').not("#defaultStudentService").length + 100;
@@ -905,7 +920,7 @@
 
         //have to remove the hasdatepicker before we can appy new datepicker to clone
         cloneService.find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+            $(this).removeAttr('id').removeClass('hasDatepicker');
             $('.dtField').datepicker({
                 dateFormat: "mm/dd/yy",
                 changeYear: true,
@@ -916,235 +931,28 @@
                     var string = jQuery.datepicker.formatDate('d-m-yy', date);
                     var isDisabled = ($.inArray(string, disabledDays) != -1);
                     return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
-                }
+                },
             });
         });
+        cloneService.find("select[name='fiscalYear']").val(nextYear);
+        cloneService.find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
+        cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
+        cloneService.find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
+        cloneService.find("select[name='Location']").val(dupLocation).prop('selected', true);
+        cloneService.find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
+        cloneService.find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
+        cloneService.find("input[name='serviceStartDate']").val(dupStartDate);
+        cloneService.find("input[name='serviceEndDate']").val(dupEndDate);
+        cloneService.find("select[id='studentGoalsSelect']").val(dupGoals);
+        cloneService.find('.chosen-select').chosen({ width: "100%" });
+
+        var serviceType = cloneService.closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
+        if (serviceType != undefined && serviceType != "")
+            cloneService.closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
         panelCollapse.collapse("show");
 
-        initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
-    }
-
-    function initDuplicateService(nextYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
-        $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
-
-            //set to next year
-            $(this).find("select[name='fiscalYear']").val(nextYear);
-            $(this).find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
-            $(this).find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
-            $(this).find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
-            $(this).find("select[name='Location']").val(dupLocation).prop('selected', true);
-            $(this).find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
-            $(this).find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
-            $(this).find("input[name='serviceStartDate']").val(dupStartDate);
-            $(this).find("input[name='serviceEndDate']").val(dupEndDate);
-            $(this).find("select[id='studentGoalsSelect']").val(dupGoals);
-
-            $(this).find('.chosen-select').chosen({ width: "100%" });
-
-            var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-            if (serviceType != undefined && serviceType != "")
-                $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
-
-            /* Closes all the other panel groups except the one you clicked on */
-            $(this).find(".panel-title a").on("click", function () {
-                $(".collapse").each(function () {
-                    $(this).collapse('hide');
-                });
-            });
-
-            $(this).find("select[name='fiscalYear']").on("change", function (e) {
-                var year = $(this).val();
-                var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
-                var serviceMinutesPerDay = $(this).closest(".row").next().find("[name='serviceMinutesPerDay']");
-                _checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
-
-            });
-
-            $(this).find(".dtField").on('change', function (e) {
-                if (e.target.value == '') {
-                    e.target.setCustomValidity('You must enter a calendar date');
-                    e.target.title = 'You must enter a calendar date';
-                    e.target.parentNode.classList.add('has-error');
-
-                    return;
-                }
-
-                var day = new Date(e.target.value).getUTCDay();
-                var selectedDate = e.target.value;
-                var calendaryDay = selectedDate.split('/');
-                var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
-
-                _onDateChange(fiscalYear, day, selectedDate, e);
-
-
-            });
-
-            /* Binding */
-            /* Fires where the user deletes a service */
-            $(this).find("a i.deleteService").on("click", function (e) {
-
-                if ($(e.target).hasClass('deleteService')) {
-                    e.stopPropagation();
-
-                    var answer = confirm('Are you sure you want to delete this student service?');
-                    var oneStudentService = $(e.target);
-                    var studentServiceId = $(e.target).closest('form').find("input[name=StudentSerivceId]").val();
-                    var alertBox = $(this).closest('.oneStudentService').prev();
-
-                    if (answer) {
-                        if (studentServiceId != 0) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '/Home/DeleteStudentService',
-                                data: { studentServiceId: studentServiceId },
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.Result == "success") {
-                                        var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
-                                        oneStudentService.parentsUntil(".oneStudentService").parent().remove();
-                                        previousService.collapse('show');
-                                        _showAlert('Student Service successfully deleted.', true)
-
-                                    }
-                                    else {
-                                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                                            $("#alertMessage .moreinfo").html(data.Message);
-                                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                                $("#alertMessage").slideUp(500);
-                                            });
-                                        }
-                                    }
-                                },
-                                error: function (data) {
-                                    console.log("Unable to delete the student goal.");
-                                }
-                            });
-                        }
-                        else {
-                            var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
-                            oneStudentService.parentsUntil(".oneStudentService").parent().remove();
-                            previousService.collapse('show');
-                        }
-                    }
-                }
-
-            });
-
-            $(this).find(".number-spinner button").on("click", function () {
-
-                var btn = $(this),
-                   oldValue = btn.closest('.number-spinner').find('input').val().trim(),
-                   newValue = parseInt(oldValue);
-
-                if (btn.attr('data-dir') == 'up') {
-                    if (newValue < 5) {
-                        newValue = newValue + 1;
-                    }
-                } else {
-                    if (oldValue > 1) {
-                        newValue = newValue - 1;
-                    }
-                }
-
-                btn.closest('.number-spinner').find('input').val(newValue);
-            });
-
-            $(this).find("input[name='serviceDaysPerWeek']").on("change", function () {
-
-                var min = $(this).attr("min");
-                var max = $(this).attr("max");
-                var number = $(this).val();
-
-                if (number > max) {
-                    $(this).val(5);
-                }
-                else {
-                    $(this).val(1);
-                }
-            })
-
-            $(this).find(".minute-spinner button").on("click", function () {
-
-                var btn = $(this),
-                    maxValue = btn.closest('.minute-spinner').find('input').prop("max"),
-                    oldValue = btn.closest('.minute-spinner').find('input').val().trim(),
-                    newValue = parseInt(oldValue);
-
-                if (btn.attr('data-dir') == 'up') {
-                    if (newValue < maxValue) {
-                        newValue = newValue + 1;
-                    }
-                } else {
-                    if (oldValue > 1) {
-                        newValue = newValue - 1;
-                    }
-                }
-
-                btn.closest('.minute-spinner').find('input').val(newValue);
-            });
-
-            $(this).find(".addServiceGoal").on("click", function () {
-
-                var selectGoal = $(this).prev('select');
-                var selectGoalSelectedTitle = $(selectGoal).find("option:selected").data('title');
-                var selectGoalSelectedId = $(selectGoal).find("option:selected").attr('value');
-
-                var goalCount = $(".serviceStudentGoal").length + 1;
-                if (selectGoalSelectedId != -1) {
-                    $('option:selected', selectGoal).remove();
-
-                    var attachGoal = '<div class="panel panel-info autocollapse serviceStudentGoal" style="margin: 5px 0" data-id="' + selectGoalSelectedId + '" data-title="' + selectGoalSelectedTitle + '"><div class="panel-heading clickable"><h3 class="panel-title"><i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;<i class="fa fa-trophy"></i>&nbsp;' + selectGoalSelectedTitle + '<i class="pull-right glyphicon glyphicon-remove deletegoal"></i><input type="hidden" name="studentServiceGoal' + goalCount + '" value="' + selectGoalSelectedId + '" /></h3></div></div>';
-                    $(this).closest(".row").next(".row").find(".StudentGoals").append(attachGoal);
-
-                    initGoalEvents();
-                }
-            });
-
-            $(this).find(".saveCompletedService").on('click', function (e) {
-
-                $(this).closest("form").find("input[name='completed']").val(true);
-                $(this).prev().trigger(event.type);
-            });
-
-            $(this).find('.saveService').on("click", function () {
-
-                var alertBox = $(this).closest('.oneStudentService').prev();
-                var form = $(this).closest('.oneStudentService').find('form').serialize();
-
-                var serviceType = $(this).closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
-                if (serviceType != undefined && serviceType != "")
-                    $(this).closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
-
-                //check dates before saving
-                var isValid = _dateCheck($(this).closest('.oneStudentService').find("input[name='serviceStartDate']"), $(this).closest('.oneStudentService').find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
-
-                //don't allow user to save
-                if (!isValid)
-                    return false;
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/Home/SaveStudentService',
-                    data: form,
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Result == "success") {
-                            _showAlert(data.Message, true);
-                        }
-                        else {
-                            _showAlert(data.Message, false);
-                        }
-                    },
-                    error: function (data) {
-                        _showAlert('Unable to connect to the database.', false);
-
-                    }
-                });
-            })
-
-            $(".duplication-loader").css('visibility', 'hidden');
-        });
+        initService();
     }
 
     function _validateStartDate(dateVal) {
@@ -1164,10 +972,13 @@
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
             if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
             else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
-            $("#alertMessage .moreinfo").html(message);
-            $("#alertMessage").fadeTo(3000, 1000).slideUp(5000, function () {
-                $("#alertMessage").slideUp(5000);
-            });
+
+            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+                $("#alertMessage .moreinfo").html(message);
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            }
         }
     }
 

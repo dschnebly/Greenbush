@@ -254,6 +254,7 @@
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
+          <Property Name="KSDECode" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="tblEvaluationProcedures">
           <Key>
@@ -1428,7 +1429,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblContacts" EntityType="IndividualizedEducationProgramModel.tblContact" />
           <EntitySet Name="tblCounties" EntityType="IndividualizedEducationProgramModel.tblCounty" />
           <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
-          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
           <EntitySet Name="tblEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" />
           <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
@@ -1467,10 +1467,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblContacts_tblDistricts_USD" Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD">
-            <End Role="tblDistrict" EntitySet="tblDistricts" />
-            <End Role="tblContact" EntitySet="tblContacts" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProvider" EntitySet="tblProviders" />
             <End Role="tblProviderDistrict" EntitySet="tblProviderDistricts" />
@@ -1497,6 +1493,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblDistricts" EntityType="IndividualizedEducationProgramModel.tblDistrict" />
+          <AssociationSet Name="FK_tblContacts_tblDistricts_USD" Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD">
+            <End Role="tblDistrict" EntitySet="tblDistricts" />
+            <End Role="tblContact" EntitySet="tblContacts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1854,19 +1855,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="DisabilityDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DisabilityArea" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tblDistrict">
-          <Key>
-            <PropertyRef Name="USD" />
-          </Key>
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
-          <Property Name="DOC" Type="Boolean" Nullable="false" />
-          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tblContacts" Relationship="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" FromRole="tblDistrict" ToRole="tblContact" />
         </EntityType>
         <EntityType Name="tblEvaluationProcedure">
           <Key>
@@ -2483,18 +2471,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblContacts_tblDistricts_USD">
-          <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="1" />
-          <End Type="IndividualizedEducationProgramModel.tblContact" Role="tblContact" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblDistrict">
-              <PropertyRef Name="USD" />
-            </Principal>
-            <Dependent Role="tblContact">
-              <PropertyRef Name="USD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblProviderDistricts_ProviderID">
           <End Type="IndividualizedEducationProgramModel.tblProvider" Role="tblProvider" Multiplicity="1" />
           <End Type="IndividualizedEducationProgramModel.tblProviderDistrict" Role="tblProviderDistrict" Multiplicity="*" />
@@ -2717,6 +2693,32 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="DateTime" Name="end_Date" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="DraftDays" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tblDistrict">
+          <Key>
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Int32" />
+          <Property Name="DOC" Type="Boolean" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
+          <Property Name="KSDECode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblContacts" Relationship="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" FromRole="tblDistrict" ToRole="tblContact" />
+        </EntityType>
+        <Association Name="FK_tblContacts_tblDistricts_USD">
+          <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblContact" Role="tblContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistrict">
+              <PropertyRef Name="USD" />
+            </Principal>
+            <Dependent Role="tblContact">
+              <PropertyRef Name="USD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3067,19 +3069,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="DisabilityArea" ColumnName="DisabilityArea" />
                 <ScalarProperty Name="DisabilityDescription" ColumnName="DisabilityDescription" />
                 <ScalarProperty Name="DisabilityCode" ColumnName="DisabilityCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblDistricts">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
-              <MappingFragment StoreEntitySet="tblDistricts">
-                <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="DOC" ColumnName="DOC" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3899,6 +3888,20 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblDistricts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
+              <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="KSDECode" ColumnName="KSDECode" />
+                <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="DOC" ColumnName="DOC" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

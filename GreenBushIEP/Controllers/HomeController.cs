@@ -2350,10 +2350,6 @@ namespace GreenbushIep.Controllers
             {
                 StringBuilder sb = new StringBuilder();
 
-                // create the header
-                sb.AppendFormat("{0}", "KIDS ID\tStudent Last Name\tStudent Gender\tStudent Date of Birth\tSchool Year\tAssign Child Count Organization\tNeighborhood Building\tGrade Level\tStatus Code\tExit Date\tSchool Psychologist Provider ID\tSpeech Language Pathologist Provider ID\tCase Manager Provider ID\tExtended School Year\tSpecial Ed Transportation\tAll Day Kindergarten\tBehavior Intervention Plan (BIP)\tClaiming\tPlacements KDCF/JJA/LEA/Parent\tCounty of Residence\tLanguage of Parent\tIEP Date\tGap Allowed\tResponsible Building Identifier\tPrimary Disability\tSecondary Disability\tGifited\tService Location (Attend Building) ID\tPrimary Service Location Indicator\tSetting Code\tService Code\tStaff ID\tPrimary Provider Indicator\tService Start Date\tService End Date\tMinutes per Day\tDays per Week\tFrequency\tTotal Days");
-                sb.Append(Environment.NewLine);
-
                 foreach (var item in query.ToList())
                 {
                     IEP theIEP = new IEP()
@@ -2391,11 +2387,11 @@ namespace GreenbushIep.Controllers
                             studentDetails.building = studentBuilding;
                             studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
                             studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
-                            studentDetails.parentLang = info.ParentLanguage;
-                            studentDetails.primaryDisability = info.Primary_DisabilityCode;
-                            studentDetails.secondaryDisability = info.Secondary_DisabilityCode;
+                            studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
+                            studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode ;
+                            studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
                             studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-                            studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+                            studentDetails.assignChildCount = studentUSD.KSDECode;
                         }
 
                         theIEP.current.FiledOn = DateTime.Now;
@@ -2403,6 +2399,7 @@ namespace GreenbushIep.Controllers
                     }
 
                     var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+
 
                     if (errors.Count > 0)
                     {
@@ -2678,8 +2675,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", service.Frequency);
 
                 //18 total days
-                sb.AppendFormat("{0}\t", "");
-
+                sb.AppendFormat("{0}", "");
             }
 
             sb.Append(Environment.NewLine);

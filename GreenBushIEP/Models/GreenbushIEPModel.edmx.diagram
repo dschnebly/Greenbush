@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="67">
+      <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="8" PointY="1" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAuditLog" Width="1.5" PointX="10.75" PointY="3.75" />
@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContact" Width="1.5" PointX="8" PointY="6" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCounty" Width="1.5" PointX="14.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDisability" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="5.75" PointY="6.625" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" Width="1.5" PointX="14.75" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormArchive" Width="1.5" PointX="15.75" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" Width="1.5" PointX="8.75" PointY="15.75" />
@@ -59,7 +58,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="21.75" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblVersionLog" Width="1.5" PointX="22.75" PointY="0.75" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
@@ -73,6 +71,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGrade" Width="1.5" PointX="24.375" PointY="9.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendar" Width="1.5" PointX="24.75" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="25.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="5.75" PointY="6.5" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
