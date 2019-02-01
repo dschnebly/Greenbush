@@ -483,6 +483,9 @@
     <Compile Include="Models\up_ReportExcessCost_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportIEPSDue_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportProceduralDates_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -524,6 +527,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\DraftIEP\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\IEPDue\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\IEPDue\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
@@ -695,6 +705,7 @@
     <Content Include="Reports\DraftIEP\Report.aspx" />
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
+    <Content Include="Reports\IEPDue\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
     <Content Include="Reports\ServiceReport\Report.aspx" />
@@ -897,6 +908,7 @@
     <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
+    <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
     <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
