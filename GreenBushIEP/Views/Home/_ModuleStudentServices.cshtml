@@ -616,6 +616,7 @@
         $(".duplication-loader").css('visibility', 'visible');
 
         var studentId = $("#sid").val();
+
         if (studentId != undefined) {
             $.ajax({
                 type: 'GET',
@@ -634,7 +635,7 @@
                             var dupServiceType = serviceObj.ServiceCode;
                             var dupServiceProvider = serviceObj.ProviderID;
                             var dupStartDate = serviceObj.StartDate;
-                            var dupEndDate = serviceObj.EndDate;
+                            var dupEndDate = null;
                             var dupGoals = serviceObj.Goals;
 
                             duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
@@ -690,9 +691,8 @@
                     e.stopPropagation();
 
                     var answer = confirm('Are you sure you want to delete this student service?');
-                    var oneStudentService = $(e.target);
+                    var oneStudentService = $(this).closest('.oneStudentService');
                     var studentServiceId = $(e.target).closest('form').find("input[name=StudentSerivceId]").val();
-                    var alertBox = $(this).closest('.oneStudentService').prev();
 
                     if (answer) {
                         if (studentServiceId != 0) {
@@ -704,8 +704,8 @@
                                 success: function (data) {
                                     if (data.Result == "success") {
 
-                                        var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
-                                        oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                                        var previousService = oneStudentService.prev(".oneStudentService:visible").find(".collapse");
+                                        oneStudentService.remove();
                                         previousService.collapse('show');
                                         _showAlert('Student Service successfully deleted.', true)
 
@@ -722,7 +722,7 @@
                         }
                         else {
                             var previousService = $(this).closest(".oneStudentService").prev(".oneStudentService:visible").find(".collapse");
-                            oneStudentService.parentsUntil(".oneStudentService").parent().remove();
+                            oneStudentService.remove();
                             previousService.collapse('show');
                         }
                     }
@@ -812,7 +812,8 @@
 
                             _showAlert(data.Message, true);
 
-                            studentService.find(".collapse.in").data("val", data.key);
+                            studentService.find("input[name='StudentSerivceId']").val(data.key);
+                            studentService.find(".collapse.in").attr("data-val", data.key);
 
                             // check if all of the services are completed
                             if (studentService.find("input[name='completed']").val() == "true") {
@@ -830,13 +831,7 @@
                                 }
                             }
 
-                            $(".ajax-loader img").css("visibility", "hidden");
-                            $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-                                $('.ajax-loader').css("visibility", "hidden");
-                            });
-
                             $(window).trigger("saving.bs.modal");
-                            return false;
                         }
                         else {
                             _showAlert(data.Message, false);
@@ -846,19 +841,38 @@
                         _showAlert("There was an error while trying to save the data.", false);
                     }
                 });
+
+                $(".ajax-loader img").css("visibility", "hidden");
+                $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                });
             });
 
             $(this).find(".saveCompletedService").on('click', function (e) {
+                var canSave = true;
 
                 $.each($(".oneStudentService").not("#defaultStudentService"), function () {
-                    $(this).find("form").find("input[name='completed']").val(true);
-                    $(this).find(".saveService").trigger(event.type);
+
+                    var studentServiceStartDate = $(this).find("input[name='serviceStartDate']");
+                    var studentServiceEndDate = $(this).find("input[name='serviceEndDate']");
+                    var studentServiceFiscalYear = $(this).find("select[name='fiscalYear'] option:selected");
+
+                    if (!_dateCheck(studentServiceStartDate, studentServiceEndDate, studentServiceFiscalYear)) {
+                        return canSave = false;
+                    }
+
+                    if (canSave) {
+                        $(this).find("form").find("input[name='completed']").val(true);
+                        $(this).find(".saveService").trigger(event.type);
+                    }
                 });
 
                 $(window).trigger("saving.bs.modal");
-                setTimeout(function () {
-                    $('#moduleSection').modal('hide');
-                }, 1200);
+                if (canSave) {
+                    setTimeout(function () {
+                        $('#moduleSection').modal('hide');
+                    }, 1200);
+                }
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -935,6 +949,7 @@
             });
         });
         cloneService.find("select[name='fiscalYear']").val(nextYear);
+        cloneService.find("input[name='completed']").val(true);
         cloneService.find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
         cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
         cloneService.find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
@@ -975,7 +990,7 @@
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
                 $("#alertMessage .moreinfo").html(message);
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").fadeTo(5000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
                 });
             }
@@ -1015,46 +1030,48 @@
         var studentId = $("#sid").val();
         var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, studentId: studentId };
 
-        $.ajax({
-            type: 'POST',
-            url: '/Home/ValidateServiceDate',
-            data: args,
-            dataType: 'json',
-            success: function (data) {
-                var errorMessage = "";
+        if (isDate(calendarDay)) {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/ValidateServiceDate',
+                data: args,
+                dataType: 'json',
+                success: function (data) {
+                    var errorMessage = "";
 
-                if (!data.IsValid) {
-                    errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
-                }
-
-                if (!data.IsService) {
-                    //if the accidentally select the wrong fiscal year, but think are picking something within that fy
                     if (!data.IsValid) {
                         errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
                     }
-                    else {  // should never get fired.
-                        errorMessage = 'OH NOES! That day is not is session. ';
+
+                    if (!data.IsService) {
+                        //if the accidentally select the wrong fiscal year, but think are picking something within that fy
+                        if (!data.IsValid) {
+                            errorMessage = "The Initiation and End Date must be within the selected Fiscal Year. " + data.ValidDates;
+                        }
+                        else {  // should never get fired.
+                            errorMessage = 'OH NOES! That day is not is session. ';
+                        }
                     }
-                }
 
-                if (errorMessage != "") {
-                    e.target.setCustomValidity(errorMessage);
-                    e.target.title = errorMessage;
-                    e.target.parentNode.classList.add('has-error');
-                    var error = e.target.title;
-                    _showAlert(error, false);
-                }
-                else {
-                    e.target.setCustomValidity('');
-                    e.target.title = '';
-                    e.target.parentNode.classList.remove('has-error');
-                }
+                    if (errorMessage != "") {
+                        e.target.setCustomValidity(errorMessage);
+                        e.target.title = errorMessage;
+                        e.target.parentNode.classList.add('has-error');
+                        var error = e.target.title;
+                        _showAlert(error, false);
+                    }
+                    else {
+                        e.target.setCustomValidity('');
+                        e.target.title = '';
+                        e.target.parentNode.classList.remove('has-error');
+                    }
 
-            },
-            error: function (data) {
-                _showAlert('Unable to connect to the database.', false);
-            }
-        });
+                },
+                error: function (data) {
+                    _showAlert('Unable to connect to the database.', false);
+                }
+            });
+        }
     }
 
     function _dateCheck(startDateElement, endDateElement) {
