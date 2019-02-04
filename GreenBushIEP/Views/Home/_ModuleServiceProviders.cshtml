@@ -249,7 +249,7 @@
                         }
                     </select>
                     <label class="voffset2">Provider ID/License Number</label>
-                    <input type="text" id="providerCode" name="providerCode" class="form-control" /><br />
+                    <input type="number" min="1" id="providerCode" name="providerCode" class="form-control" /><br />
                 </div>
             </div>
             <div class="modal-footer" style="border: 0 !important;">
@@ -401,7 +401,7 @@
         }
 
         if (code == "" || code == undefined) {
-            errors += "Provider Code is required. ";
+            errors += "Provider Code is required and it must be a number with no spaces. ";
         }
 
         if (selectedDistricts == "" || selectedDistricts == undefined) {

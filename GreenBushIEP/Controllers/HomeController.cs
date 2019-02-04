@@ -2316,14 +2316,14 @@ namespace GreenbushIep.Controllers
                          iep.IepStatus == iepStatus
                          && services.SchoolYear == fiscalYear
                          && (services.FiledOn == null || iep.FiledOn == null)
-                         select new { iep, student }).ToList();
+                         select new { iep, student }).Distinct().ToList();
 
 
             if (query.Count() > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
-                foreach (var item in query.ToList())
+                foreach (var item in query)
                 {
                     IEP theIEP = new IEP()
                     {
@@ -2581,9 +2581,12 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
             }
 
-
+			int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
+				if (count == 25)
+					break;
+
                 service.FiledOn = DateTime.Now;
                 //1 IEP date req
                 if (!studentIEP.current.begin_date.HasValue)
@@ -2649,6 +2652,8 @@ namespace GreenbushIep.Controllers
 
                 //18 total days
                 sb.AppendFormat("{0}", "");
+
+				count++;
             }
 
             sb.Append(Environment.NewLine);
