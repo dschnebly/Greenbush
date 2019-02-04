@@ -91,9 +91,6 @@
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
             <strong class="moreinfo">Oh snap!</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
         </div>
 
         <div class="row oneStudentService hidden" id="defaultStudentService">
@@ -799,8 +796,9 @@
                 var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
                 //if isvalid, don't allow user to save
-                if (!isValid)
-                    return false;
+                if (!isValid) {
+                    _showAlert()
+                }
 
                 $.ajax({
                     type: 'POST',
@@ -984,13 +982,14 @@
 
     function _showAlert(message, positive) {
 
+        var successFade = 3000;
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
-            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;}
+            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;}
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
                 $("#alertMessage .moreinfo").html(message);
-                $("#alertMessage").fadeTo(5000, 500).slideUp(500, function () {
+                $("#alertMessage").fadeTo(successFade, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
                 });
             }
