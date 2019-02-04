@@ -1249,41 +1249,15 @@ namespace GreenbushIep.Controllers
 
                 if (maxYear > 0)
                 {
-
                     tblUser mis = FindSupervisor.GetByRole("2", teacher);
                     tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
                     int startMonth = 7; //july
                     int endMonth = 6; //june
 
-                    //start date must be within the school year
-                    var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true || c.NoService == false) && c.SchoolYear == maxYear);
-
-                    var firstDaySchoolYear = availableCalendarDays.Where(o => o.Month == startMonth && o.SchoolYear == maxYear).FirstOrDefault();
-                    var lastDaySchoolYear = availableCalendarDays.Where(o => o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
-
-                    //keep looking for first day
-                    if (firstDaySchoolYear == null)
-                    {
-                        for (int i = 1; i < 3; i++)
-                        {
-                            startMonth++;
-                            firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == maxYear && o.Month == startMonth && o.Year == maxYear - 1).FirstOrDefault();
-                            if (firstDaySchoolYear != null)
-                                break;
-                        }
-                    }
-
-                    //keep looking for last day
-                    if (lastDaySchoolYear == null)
-                    {
-                        for (int i = 1; i < 3; i++)
-                        {
-                            endMonth--;
-                            lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == maxYear && o.Month == endMonth && o.Year == maxYear).OrderByDescending(o => o.Day).FirstOrDefault();
-                            if (lastDaySchoolYear != null)
-                                break;
-                        }
-                    }
+                    List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && c.canHaveClass == true && c.NoService == false && c.Year >= currentYear && c.Year <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
+                    var whatever = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day);
+                    tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
+                    tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
 
                     List<tblService> services = null;
@@ -1295,7 +1269,6 @@ namespace GreenbushIep.Controllers
                     List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
                     foreach (var service in services)
                     {
-
                         var item = new StudentServiceObject();
                         var meetingDate =
                         item.DaysPerWeek = service.DaysPerWeek;

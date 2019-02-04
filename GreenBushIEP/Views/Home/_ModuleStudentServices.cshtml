@@ -616,6 +616,7 @@
         $(".duplication-loader").css('visibility', 'visible');
 
         var studentId = $("#sid").val();
+
         if (studentId != undefined) {
             $.ajax({
                 type: 'GET',
@@ -812,7 +813,8 @@
 
                             _showAlert(data.Message, true);
 
-                            studentService.find(".collapse.in").data("val", data.key);
+                            studentService.find("input[name='StudentSerivceId']").val(data.key);
+                            studentService.find(".collapse.in").attr("data-val", data.key);
 
                             // check if all of the services are completed
                             if (studentService.find("input[name='completed']").val() == "true") {
@@ -830,13 +832,7 @@
                                 }
                             }
 
-                            $(".ajax-loader img").css("visibility", "hidden");
-                            $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-                                $('.ajax-loader').css("visibility", "hidden");
-                            });
-
                             $(window).trigger("saving.bs.modal");
-                            return false;
                         }
                         else {
                             _showAlert(data.Message, false);
@@ -845,6 +841,11 @@
                     error: function (data) {
                         _showAlert("There was an error while trying to save the data.", false);
                     }
+                });
+
+                $(".ajax-loader img").css("visibility", "hidden");
+                $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                    $('.ajax-loader').css("visibility", "hidden");
                 });
             });
 
@@ -935,6 +936,7 @@
             });
         });
         cloneService.find("select[name='fiscalYear']").val(nextYear);
+        cloneService.find("input[name='completed']").val(true);
         cloneService.find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
         cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
         cloneService.find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
@@ -975,7 +977,7 @@
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
                 $("#alertMessage .moreinfo").html(message);
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").fadeTo(5000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
                 });
             }
