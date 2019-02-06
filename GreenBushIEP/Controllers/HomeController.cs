@@ -2031,8 +2031,8 @@ namespace GreenbushIep.Controllers
             tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
             iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid && i.IEPid == iepId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid : iepId;
             var studentDetails = new StudentDetailsPrintViewModel();
-
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
+			
+			List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
 
             // Get the MIS id of the logged in teacher.
             tblUser mis = FindSupervisor.GetByRole("2", teacher);
@@ -2075,8 +2075,7 @@ namespace GreenbushIep.Controllers
                     studentMath = query.SingleOrDefault().math,
                     studentWritten = query.SingleOrDefault().written,
                     locations = db.tblLocations.ToList(),
-                    serviceTypes = db.tblServiceTypes.ToList(),
-                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
+                    serviceTypes = db.tblServiceTypes.ToList(),                 
                     studentFirstName = string.Format("{0}", student.FirstName),
                     studentLastName = string.Format("{0}", student.LastName),
 
@@ -2132,8 +2131,9 @@ namespace GreenbushIep.Controllers
                         var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                         var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
                         var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+						
 
-                        studentDetails.student = info;
+						studentDetails.student = info;
                         studentDetails.teacher = teacher;
                         studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
                         studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
@@ -2152,6 +2152,14 @@ namespace GreenbushIep.Controllers
                         studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                         studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                         studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
+
+
+						var providers = (from p in db.tblProviders
+										 join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
+										 where d.USD != null && d.USD == info.AssignedUSD
+										 select p).ToList();
+
+						theIEP.serviceProviders = providers;
                     }
 
                     theIEP.studentDetails = studentDetails;
