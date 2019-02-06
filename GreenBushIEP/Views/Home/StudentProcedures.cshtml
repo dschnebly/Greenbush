@@ -1099,7 +1099,7 @@
                     <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         @if (Model.hasAccommodations)
                         {
-                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.studentIEP.isAccommodationsCompleted ? "hidden" : string.Empty)" aria-hidden="true"></i>
+                            <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.studentIEP.isAccommodationsCompleted ? "hidden" : string.Empty)" aria-hidden="true"></i>
                         }
                         <div class="icon">
                             <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="top: 15px;"></i>
@@ -1114,7 +1114,7 @@
                 </li>
                 <li class="ui-state-default filter planning @(Model.needsBehaviorPlan ? "needsAttention" : "hidden")" id="BehaviorWidget">
                     <div class="hero-widget well @(Model.studentIEP.isBehaviorCompleted ? "module-completed" : string.Empty ) @(Model.needsBehaviorPlan ? "needsAttention" : string.Empty)">
-                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.needsBehaviorPlan ? string.Empty : "hidden" )" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.needsBehaviorPlan && !Model.studentIEP.isBehaviorCompleted ? string.Empty : "hidden" )" aria-hidden="true"></i>
                         <div class="icon">
                             <i class="glyphicon glyphicon-road" aria-hidden="true" style="top: 15px;"></i>
                         </div>
