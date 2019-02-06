@@ -2729,15 +2729,15 @@
                                     @service.LocationCode
                                 </td>
                                 <td>
-                                   @if (service.ProviderID.HasValue)
+                                    @if (Model.serviceProviders.Count > 0)
                                     {
-										var sp = Model.serviceProviders.FirstOrDefault(o => o.ProviderID == service.ProviderID);
-										                                        
-                                         if (sp != null)
-                                         {
-                                              <text>@sp.FirstName @sp.LastName</text>
-                                         }
-                                        
+                                        foreach (var serviceProvider in Model.serviceProviders)
+                                        {
+                                            if (service.ProviderID == serviceProvider.ProviderID)
+                                            {
+                                                <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
+                                            }
+                                        }
                                     }
                                     else
                                     {

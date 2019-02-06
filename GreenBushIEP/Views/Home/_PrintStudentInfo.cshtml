@@ -183,90 +183,107 @@
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 		{
 			var serviceCount = 1;
-			<table style="text-align:left">
+			<table style="font-size:8pt;text-align:left">
 				<tr>
-                            <td><b>Ln#</b></td>
-                            <td><b>Service</b></td>
-                            <td><b>Setting</b></td>
-                            <td><b>Provider</b></td>
-                            <td><b>LEA</b></td>
-                            <td><b>AttendBlg</b></td>
-                            <td><b>Mins</b></td>
-                            <td><b>Days</b></td>
-                            <td><b>Start<br />Date</b></td>
-                            <td><b>End<br />Date</b></td>
-                            <td><b>Frequency</b></td>
-                        </tr>
+					<td><b>Ln#</b></td>
+					<td><b>FY</b></td>
+					<td><b>Service<br />Setting</b></td>
+					<td><b>Provider</b></td>
+					<td><b>LEA</b></td>
+					<td><b>AttendBlg</b></td>
+					<td><b>Mins</b></td>
+					<td><b>Days</b></td>
+					<td><b>Start<br />Date</b></td>
+					<td><b>End<br />Date</b></td>
+					<td><b>Freq</b></td>
+				</tr>
 
-				       @foreach (var service in Model.studentServices)
-                        {
-                            <tr>
-                                <td>
-                                    @serviceCount
-                                </td>
-                                <td>
-                                    @if (Model.serviceTypes.Count > 0)
-                                    {
-                                        foreach (var serviceType in Model.serviceTypes)
-                                        {
-                                            if (serviceType.ServiceCode == service.ServiceCode)
-                                            {
-                                                <text>@serviceType.ServiceCode</text>
-                                            }
-                                        }
-                                    }
-                                </td>
-                                <td>
-                                    @service.LocationCode
-                                </td>
-                                <td>
-                                    @if (service.ProviderID.HasValue)
-                                    {
-										var sp = Model.serviceProviders.FirstOrDefault(o => o.ProviderID == service.ProviderID);
-										                                        
-                                         if (sp != null)
-                                         {
-                                              <text>@sp.FirstName @sp.LastName</text>
-                                         }
-                                        
-                                    }
-                                    else
-                                    {
-                                        <text>&nbsp;&nbsp;&nbsp;</text>
-                                    }
-                                </td>
-                                <td>
-									@Model.studentDetails.assignChildCount
-								</td>
-                                <td>
-                                    @(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
-                                </td>
-                                <td>
-                                    @service.Minutes
-                                </td>
-                                <td>
-                                    @service.DaysPerWeek
-                                </td>
-                                <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-                                <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
-                                <td>
-                                    @switch (@service.Frequency)
-                                    {
-                                        case 1: <text>Every week</text>; break;
-                                        case 2: <text>Every 2 weeks</text>; break;
-                                        case 3: <text>Every 3 weeks</text>; break;
-                                        case 4: <text>Every 4 weeks</text>; break;
-                                        case 8: <text>Every 8 weeks</text>; break;
-                                        case 9: <text>Every 9 weeks</text>; break;
-                                        case 12: <text>Every 12 weeks</text>; break;
-                                        case 18: <text>Every 18 weeks</text>; break;
-                                        case 19: <text>3 out of 4 weeks</text>; break;
-                                        case 99: <text>1 day per year</text>; break;
-                                    }
-                                </td>
-                            </tr>
-                            serviceCount++;
-                        }
+				@foreach (var service in Model.studentServices)
+				{
+					<tr>
+						<td>
+							@serviceCount
+						</td>
+						<td>
+							@switch (@service.SchoolYear)
+							{
+								case 2018:<text>2017 - 2018</text>; break;
+								case 2019: <text>2018 - 2019</text>; break;
+								case 2020: <text>2019 - 2020</text>; break;
+								case 2021: <text>2020 - 2021</text>; break;
+								case 2022: <text>2021 - 2022</text>; break;
+							}
+						</td>
+						<td>
+							@if (Model.serviceTypes.Count > 0)
+							{
+								foreach (var serviceType in Model.serviceTypes)
+								{
+									if (serviceType.ServiceCode == service.ServiceCode)
+									{
+										<text>(@serviceType.ServiceCode) @serviceType.Name</text>
+									}
+								}
+							}
+						</td>
+
+						<td>
+							@if (Model.serviceProviders.Count > 0)
+							{
+								foreach (var serviceProvider in Model.serviceProviders)
+								{
+									if (service.ProviderID == serviceProvider.ProviderID)
+									{
+										<text>@serviceProvider.FirstName @serviceProvider.LastName</text>
+									}
+								}
+							}
+							else
+							{
+								<text>&nbsp;&nbsp;&nbsp;</text>
+							}
+						</td>
+						<td>
+							@Model.studentDetails.student.PlacementCode
+						</td>
+						<td>
+							@if (Model.locations.Count > 0)
+							{
+								foreach (var serviceLocation in Model.locations)
+								{
+									if (service.LocationCode == serviceLocation.LocationCode)
+									{
+										<text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
+									}
+								}
+							}
+						</td>
+						<td>
+							@service.Minutes
+						</td>
+						<td>
+							@service.DaysPerWeek
+						</td>
+						<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
+						<td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
+						<td>
+							@switch (@service.Frequency)
+							{
+								case 1:<text>Every week(1)</text>; break;
+								case 2: <text>Every 2 weeks(2)</text>; break;
+								case 3: <text>Every 3 weeks(3)</text>; break;
+								case 4: <text>Every 4 weeks(4)</text>; break;
+								case 8: <text>Every 8 weeks(8)</text>; break;
+								case 9: <text>Every 9 weeks(9)</text>; break;
+								case 12: <text>Every 12 weeks(12)</text>; break;
+								case 18: <text>Every 18 weeks(18)</text>; break;
+								case 19: <text>3 out of 4 weeks(19)</text>; break;
+								case 99: <text>1 day per year(99)</text>; break;
+							}
+						</td>
+					</tr>
+					serviceCount++;
+				}
 			</table>
 			<div class="voffset3">
 			<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
