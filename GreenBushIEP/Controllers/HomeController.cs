@@ -2318,7 +2318,6 @@ namespace GreenbushIep.Controllers
                          && (services.FiledOn == null || iep.FiledOn == null)
                          select new { iep, student }).Distinct().ToList();
 
-
             if (query.Count() > 0)
             {
                 StringBuilder sb = new StringBuilder();
@@ -2330,7 +2329,6 @@ namespace GreenbushIep.Controllers
                         current = item.iep,
                         studentFirstName = string.Format("{0}", item.student.FirstName),
                         studentLastName = string.Format("{0}", item.student.LastName),
-
                     };
 
                     if (theIEP != null && theIEP.current != null)
@@ -2342,7 +2340,6 @@ namespace GreenbushIep.Controllers
                         tblStudentInfo info = null;
                         if (student != null)
                         {
-
                             info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
                             tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                             tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
@@ -2361,7 +2358,7 @@ namespace GreenbushIep.Controllers
                             studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
                             studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
                             studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
-                            studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode ;
+                            studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode;
                             studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
                             studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
                             studentDetails.assignChildCount = studentUSD.KSDECode;
@@ -2373,11 +2370,9 @@ namespace GreenbushIep.Controllers
 
                     var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
 
-
                     if (errors.Count > 0)
                     {
                         exportErrors.AddRange(errors);
-
                     }
                     else
                     {
@@ -2449,6 +2444,7 @@ namespace GreenbushIep.Controllers
                 case 0:
                     gradeCode = "05";
                     break;
+
                 case 1:
                     gradeCode = "06";
                     break;
@@ -2480,15 +2476,19 @@ namespace GreenbushIep.Controllers
                 case 8:
                     gradeCode = "13";
                     break;
+
                 case 9:
                     gradeCode = "14";
                     break;
+
                 case 10:
                     gradeCode = "15";
                     break;
+
                 case 11:
                     gradeCode = "16";
                     break;
+
                 case 12:
                     gradeCode = "17";
                     break;
@@ -2500,7 +2500,6 @@ namespace GreenbushIep.Controllers
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
                     Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
                 });
-
             }
             else
             {
@@ -2545,7 +2544,6 @@ namespace GreenbushIep.Controllers
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
                     Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
                 });
-
             }
             else
             {
@@ -2560,7 +2558,6 @@ namespace GreenbushIep.Controllers
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
                     Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
                 });
-
             }
             else
             {
@@ -2581,11 +2578,11 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
             }
 
-			int count = 1;
+            int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
-				if (count == 25)
-					break;
+                if (count == 25)
+                    break;
 
                 service.FiledOn = DateTime.Now;
                 //1 IEP date req
@@ -2653,7 +2650,7 @@ namespace GreenbushIep.Controllers
                 //18 total days
                 sb.AppendFormat("{0}", "");
 
-				count++;
+                count++;
             }
 
             sb.Append(Environment.NewLine);
