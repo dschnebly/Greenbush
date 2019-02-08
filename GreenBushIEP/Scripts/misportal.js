@@ -67,7 +67,7 @@
                         }
                     },
                     error: function (data) {
-                        alert("Unable to connect to the server!");
+                        alert("Unknown error occurred. Please contact your administrator or a Greenbush official.");
                         console.log(data);
                     },
                     complete: function (data) {

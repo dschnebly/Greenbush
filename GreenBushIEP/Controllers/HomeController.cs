@@ -938,7 +938,8 @@ namespace GreenbushIep.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
             if (student != null)
             {
-                bool studentHasIEP = db.tblIEPs.Where(i => i.UserID == stid).Any();
+                bool studentHasIEP = db.tblIEPs.Where(i => i.UserID == stid).Any(i => i.IsActive);
+
                 if (studentHasIEP)
                 {
                     return RedirectToAction("StudentProcedures", new { stid });
@@ -949,7 +950,6 @@ namespace GreenbushIep.Controllers
                 }
 
                 return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
-
             }
 
             return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);
@@ -1492,7 +1492,7 @@ namespace GreenbushIep.Controllers
             string errorMessage = "There was a problem saving the service";
 
             DateTime temp;
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IsActive).FirstOrDefault();
             if (iep != null)
             {
                 if (StudentSerivceId == 0) // new service
