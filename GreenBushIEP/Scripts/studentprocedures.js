@@ -158,19 +158,51 @@
     });
 
     $("#IEPBeginDate").datepicker({
-        dateFormat: "mm/dd/yy"
+        dateFormat: "mm/dd/yy",
+        changeYear: true,
+        changeMonth: true,
+        yearRange: "-1:+2",
+        beforeShowDay: function (date) {
+            var day = date.getDay();
+            var string = jQuery.datepicker.formatDate('d-m-yy', date);
+            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+        }
     });
 
     $("#IEPMeetingDate").datepicker({
-        dateFormat: "mm/dd/yy"
+        dateFormat: "mm/dd/yy",
+        changeYear: true,
+        changeMonth: true,
+        yearRange: "-1:+2",
+        beforeShowDay: function (date) {
+            var day = date.getDay();
+            var string = jQuery.datepicker.formatDate('d-m-yy', date);
+            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+        }
     });
 
     $("#HealthHearingDate").datepicker({
-        dateFormat: "mm/dd/yy"
+        dateFormat: "mm/dd/yy",
+        changeYear: true,
+        changeMonth: true,
+        yearRange: "-1:+2",
+        beforeShowDay: function (date) {
+            var day = date.getDay();
+            var string = jQuery.datepicker.formatDate('d-m-yy', date);
+            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+        }
     });
 
     $("#HealthVisionDate").datepicker({
-        dateFormat: "mm/dd/yy"
+        dateFormat: "mm/dd/yy",
+        changeYear: true,
+        changeMonth: true,
+        yearRange: "-1:+2",
+        beforeShowDay: function (date) {
+            var day = date.getDay();
+            var string = jQuery.datepicker.formatDate('d-m-yy', date);
+            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+        }
     });
 
     // Attach Event
