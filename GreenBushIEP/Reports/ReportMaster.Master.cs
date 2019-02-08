@@ -174,7 +174,7 @@ namespace GreenBushIEP.Report
 
 			var buildingList = (from bm in db.tblBuildingMappings
 								join b in db.tblBuildings on bm.USD equals b.USD
-								where b.Active == 1 && bm.BuildingID == b.BuildingID
+								where b.Active == 1 && bm.BuildingID == b.BuildingID && bm.UserID == user.UserID
 								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
 			buildings.AddRange(buildingList);
