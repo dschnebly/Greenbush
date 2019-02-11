@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Security.Principal;
 using System.Data;
+using System.Web.Mvc;
 
 namespace GreenBushIEP.Report
 {	
@@ -91,7 +92,22 @@ namespace GreenBushIEP.Report
 			
 		}
 
-		
+		public static List<SelectListItem> GetIEPStatuses()
+		{
+			var statuses = new List<SelectListItem>();
+			statuses.Add(new SelectListItem() { Value = IEPStatus.ACTIVE, Text = IEPStatus.ACTIVE });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.AMENDMENT, Text = IEPStatus.AMENDMENT });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.ANNUAL, Text = IEPStatus.ANNUAL });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.ARCHIVE, Text = IEPStatus.ARCHIVE });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.DELETED, Text = IEPStatus.DELETED });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.DRAFT, Text = IEPStatus.DRAFT });
+			statuses.Add(new SelectListItem() { Value = IEPStatus.PLAN, Text = IEPStatus.PLAN });
+			
+
+			return statuses;
+
+
+		}
 
 		public static List<ProviderViewModel> GetProviders(string userName)
 		{

@@ -26,21 +26,17 @@
 <div class="studentInformationPage">
 	<table class="full">
 		<tr>
-			<td style="width:200px">&nbsp;</td>
-			<td style="text-align:center">
+			<td style="width:600px;text-align:center">
 				<h4><b>Student Information Page</b></h4>
 				@if (@Model.studentDetails.building != null)
-	{
+				{
 					<h5>@Model.studentDetails.building.BuildingName</h5>
 					<h5>@Model.studentDetails.building.Address_Physical</h5>
 					<h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 					<h5>@Model.studentDetails.building.Phone</h5>
 				}
 			</td>
-			<td style="text-align:right;vertical-align:top">
-				Printed:<br />@(DateTime.Now.ToShortDateString())<br />
-				Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
-			</td>
+			
 		</tr>
 	</table>
 	<hr />
