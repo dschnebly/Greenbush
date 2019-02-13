@@ -365,10 +365,10 @@
         //setup up hidden checkbox images for printing to pdf
         $('input:checkbox').change(function () {
 			if ($(this).is(":checked")) {				
-                $(this).addClass("menuitemshow");
-                $(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
-            } else {
-                $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');                				
+				$(this).addClass("menuitemshow");
+				$(this).next(".yesno").text("[x]");             
+            } else {                
+				$(this).next(".yesno").text("[\u00A0\u00A0]");
             }
         });
 
