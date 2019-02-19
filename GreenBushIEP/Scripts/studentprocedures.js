@@ -165,7 +165,7 @@
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
         }
     });
 
@@ -177,7 +177,7 @@
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
         }
     });
 
@@ -189,7 +189,7 @@
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
         }
     });
 
@@ -201,7 +201,7 @@
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
         }
     });
 
@@ -691,7 +691,7 @@ $("input[name='IntelligenceNoConcern']").on('click', function (event) {
 // Attach Event
 // Academic Performance
 $("input[name='AcademicModuleNoConcern']").on('click', function (event) {
-    if ($("input[name='AcademicNoConcern']").is(':checked')) {
+    if ($("input[name='AcademicModuleNoConcern']").is(':checked')) {
         $("input[name='AcademicProgressTowardGenEd']").prop('checked', false);
         $("input[name='AcademicNeeds']").prop('checked', false);
         $("input[name='AcademicNoConcern']").prop('checked', true);
@@ -713,6 +713,7 @@ $("input[name='AcademicModuleNoConcern']").on('click', function (event) {
 // Attach Event
 // Reading
 $("input[name='ReadingNoConcern']").on('click', function (event) {
+
     if ($("input[name='ReadingNoConcern']").is(':checked')) {
         $("input[name='ReadingProgress']").prop('checked', false);
         $("input[name='ReadingTier1']").prop('checked', false);
@@ -839,6 +840,7 @@ $("input[name='WrittenNeed']").on('click', function (event) {
 //Attach Event
 // Functional Academic
 $("input[name='AcademicNoConcern']").on('click', function (event) {
+
     if ($("input[name='AcademicNoConcern']").is(':checked')) {
         $("input[name='AcademicProgressTowardGenEd']").prop('checked', false);
         $("input[name='AcademicNeeds']").prop('checked', false);
