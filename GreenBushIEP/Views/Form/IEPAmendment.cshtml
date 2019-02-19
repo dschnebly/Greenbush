@@ -1,6 +1,6 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-   // var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	
 }
 
@@ -75,10 +75,10 @@
                 </td>
                 <td width=90 style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
-                        <input type="checkbox"/><span style="display:none" class="yesno">[&nbsp;&nbsp;]</span>&nbsp;<span style='font-family:"Calibri",sans-serif'>agree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                        <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;<span style='font-family:"Calibri",sans-serif'>agree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
                     </p>
                     <p class=MsoNormal>
-                       <input type="checkbox" /><span style="display:none" class="yesno">[&nbsp;&nbsp;]</span>&nbsp;<span style='font-family:"Calibri",sans-serif'>disagree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                       <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;<span style='font-family:"Calibri",sans-serif'>disagree</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
                     </p>
                 </td>
                 <td width=444 colspan=2 style='width:333.0pt;padding:0in 5.4pt 0in 5.4pt'>
@@ -122,10 +122,10 @@
                 </td>
                 <td width=90 style='width:67.5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
-                        <input type="checkbox" /><span style="display:none" class="yesno">[&nbsp;&nbsp;]</span>&nbsp;<span style='font-family:"Calibri",sans-serif'>do<o:p></o:p></span>
+                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;<span style='font-family:"Calibri",sans-serif'>do<o:p></o:p></span>
                     </p>
                     <p class=MsoNormal>
-                        <input type="checkbox" /><span style="display:none" class="yesno">[&nbsp;&nbsp;]</span>&nbsp;<span style='font-family:"Calibri",sans-serif'>do not</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;<span style='font-family:"Calibri",sans-serif'>do not</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
                     </p>
                 </td>
                 <td width=348 style='width:261.0pt;padding:0in 5.4pt 0in 5.4pt'>
