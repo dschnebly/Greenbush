@@ -1118,7 +1118,7 @@
                                         <select name="studentGrade" id="studentGrade" class="form-control">
                                             @foreach(tblGrade grade in Model.grades)
                                             {
-                                                <option value="@(grade.gradeID)" selected=@(Model.info.Grade == grade.gradeID)>@(grade.description)</option>
+                                            <option value="@(grade.gradeID)" selected=@(Model.info.Grade == grade.gradeID)>@(grade.description)</option>
                                             }
                                         </select>
                                     </div>
@@ -1226,20 +1226,20 @@
                                                 <select name="statusCode" id="statusCode" class="form-control">
                                                     @if (Model.statusCode != null)
                                                         {
-                                                        <optgroup label="Active">
-                                                            @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
+                                                    <optgroup label="Active">
+                                                        @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
                                                             {
 																string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
-                                                                <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
+                                                            <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                             }
-                                                        </optgroup>
-                                                        <optgroup label="Inactive">
-                                                            @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
+                                                    </optgroup>
+                                                    <optgroup label="Inactive">
+                                                        @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
                                                             {
 																string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
-                                                                <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
+                                                            <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                             }
-                                                        </optgroup>
+                                                    </optgroup>
                                                         }
                                                 </select>
                                             </div>
@@ -1314,163 +1314,164 @@
                         <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Student Relationships</h4>
                         @using (Html.BeginForm("EditStudentContacts", "Manage", null, FormMethod.Post, new { id = "editStudentContacts", @class = "editstudent", onsubmit = "return false;" }))
                         {
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.Hidden("id", Model.student.UserID)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.Hidden("id", Model.student.UserID)
 
                             if (Model.contacts != null)
                             {
 
-                        <div class="step22" id="student-contacts">
-                            @foreach (var contact in Model.contacts)
+                                <div class="step22" id="student-contacts">
+                                    @foreach (var contact in Model.contacts)
                                     {
-                                    <div class="student-contact">
-                                        <div class="row">
-                                            <div class="col-sm-4 nopadding">
-                                                <div class="form-group">
-                                                    <label for="contactFirstName">First Name</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].FirstName" name="contact[@(contact.RealtionshipID.ToString())].FirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
+                                        <div class="student-contact">
+                                            <div class="row">
+                                                <div class="col-sm-4 nopadding">
+                                                    <div class="form-group">
+                                                        <label for="contactFirstName">First Name</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].FirstName" name="contact[@(contact.RealtionshipID.ToString())].FirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].LastName" name="contact[@(contact.RealtionshipID.ToString())].LastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Relationship</label>
+                                                        <select name="contact[@(contact.RealtionshipID.ToString())].Realtionship" class="form-control text-box single-line" data-validate="true">
+                                                            <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
+                                                            <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
+                                                            <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
+                                                            <option value="advocate" selected=@(contact.Realtionship == "advocate")>Education Advocate</option>
+                                                            <option value="self" selected=@(contact.Realtionship == "self")>Self</option>
+                                                            <option value="other" selected=@(contact.Realtionship == "other")>Other</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5 nopadding">
-                                                <div class="form-group">
-                                                    <label>Last Name</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].LastName" name="contact[@(contact.RealtionshipID.ToString())].LastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
+                                            <div class="row">
+                                                <div class="col-sm-4 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Street Address</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Address1" name="contact[@(contact.RealtionshipID.ToString())].Address1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Apt/Ste/Rm</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Address2" name="contact[@(contact.RealtionshipID.ToString())].Address2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <label>City</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].City" name="contact[@(contact.RealtionshipID.ToString())].City" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1 nopadding">
+                                                    <div class="form-group">
+                                                        <label>State</label>
+                                                        <select name="contact[@(contact.RealtionshipID.ToString())].ContactState" class="form-control text-box single-line" data-validate="true">
+                                                            <option value="AL" selected=@(contact.State == "AL")>AL</option>
+                                                            <option value="AK" selected=@(contact.State == "AK")>AK</option>
+                                                            <option value="AZ" selected=@(contact.State == "AZ")>AZ</option>
+                                                            <option value="AR" selected=@(contact.State == "AR")>AR</option>
+                                                            <option value="CA" selected=@(contact.State == "CA")>CA</option>
+                                                            <option value="CO" selected=@(contact.State == "CO")>CO</option>
+                                                            <option value="CT" selected=@(contact.State == "CT")>CT</option>
+                                                            <option value="DE" selected=@(contact.State == "DE")>DE</option>
+                                                            <option value="DC" selected=@(contact.State == "DC")>DC</option>
+                                                            <option value="FL" selected=@(contact.State == "FL")>FL</option>
+                                                            <option value="GA" selected=@(contact.State == "GA")>GA</option>
+                                                            <option value="HI" selected=@(contact.State == "HI")>HI</option>
+                                                            <option value="ID" selected=@(contact.State == "ID")>ID</option>
+                                                            <option value="IL" selected=@(contact.State == "IL")>IL</option>
+                                                            <option value="IN" selected=@(contact.State == "IN")>IN</option>
+                                                            <option value="IA" selected=@(contact.State == "IA")>IA</option>
+                                                            <option value="KS" selected=@(contact.State == "KS")>KS</option>
+                                                            <option value="KY" selected=@(contact.State == "KY")>KY</option>
+                                                            <option value="LA" selected=@(contact.State == "LA")>LA</option>
+                                                            <option value="ME" selected=@(contact.State == "ME")>ME</option>
+                                                            <option value="MD" selected=@(contact.State == "MD")>MD</option>
+                                                            <option value="MA" selected=@(contact.State == "MA")>MA</option>
+                                                            <option value="MI" selected=@(contact.State == "MI")>MI</option>
+                                                            <option value="MN" selected=@(contact.State == "MN")>MN</option>
+                                                            <option value="MS" selected=@(contact.State == "MS")>MS</option>
+                                                            <option value="MO" selected=@(contact.State == "MO")>MO</option>
+                                                            <option value="MT" selected=@(contact.State == "MT")>MT</option>
+                                                            <option value="NE" selected=@(contact.State == "NE")>NE</option>
+                                                            <option value="NV" selected=@(contact.State == "NV")>NV</option>
+                                                            <option value="NH" selected=@(contact.State == "NH")>NH</option>
+                                                            <option value="NJ" selected=@(contact.State == "NJ")>NJ</option>
+                                                            <option value="NM" selected=@(contact.State == "NM")>NM</option>
+                                                            <option value="NY" selected=@(contact.State == "NY")>NY</option>
+                                                            <option value="NC" selected=@(contact.State == "NC")>NC</option>
+                                                            <option value="ND" selected=@(contact.State == "ND")>ND</option>
+                                                            <option value="OH" selected=@(contact.State == "OH")>OH</option>
+                                                            <option value="OK" selected=@(contact.State == "OK")>OK</option>
+                                                            <option value="OR" selected=@(contact.State == "OR")>OR</option>
+                                                            <option value="PA" selected=@(contact.State == "PA")>PA</option>
+                                                            <option value="RI" selected=@(contact.State == "RI")>RI</option>
+                                                            <option value="SC" selected=@(contact.State == "SC")>SC</option>
+                                                            <option value="SD" selected=@(contact.State == "SD")>SD</option>
+                                                            <option value="TN" selected=@(contact.State == "TN")>TN</option>
+                                                            <option value="TX" selected=@(contact.State == "TX")>TX</option>
+                                                            <option value="UT" selected=@(contact.State == "UT")>UT</option>
+                                                            <option value="VT" selected=@(contact.State == "VT")>VT</option>
+                                                            <option value="VA" selected=@(contact.State == "VA")>VA</option>
+                                                            <option value="WA" selected=@(contact.State == "WA")>WA</option>
+                                                            <option value="WV" selected=@(contact.State == "WV")>WV</option>
+                                                            <option value="WI" selected=@(contact.State == "WI")>WI</option>
+                                                            <option value="WY" selected=@(contact.State == "WY")>WY</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Zip Code</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-3 nopadding">
-                                                <div class="form-group">
-                                                    <label>Relationship</label>
-                                                    <select name="contact[@(contact.RealtionshipID.ToString())].Realtionship" class="form-control text-box single-line" data-validate="true">
-                                                        <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
-                                                        <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
-                                                        <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
-                                                        <option value="advocate" selected=@(contact.Realtionship == "advocate")>Education Advocate</option>
-                                                        <option value="other" selected=@(contact.Realtionship == "other")>Other</option>
-                                                    </select>
+                                            <div class="row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dotted #45906d;">
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Phone Number</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Phone" name="contact[@(contact.RealtionshipID.ToString())].Phone" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 nopadding">
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Email" name="contact[@(contact.RealtionshipID.ToString())].Email" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
+                                                        <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 nopadding">
+                                                    <div class="form-group">
+                                                        <button class="btn-circle btn-lg pull-right remove-contact add-contact btn-danger"><i class="glyphicon glyphicon-minus"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-4 nopadding">
-                                                <div class="form-group">
-                                                    <label>Street Address</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Address1" name="contact[@(contact.RealtionshipID.ToString())].Address1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3 nopadding">
-                                                <div class="form-group">
-                                                    <label>Apt/Ste/Rm</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Address2" name="contact[@(contact.RealtionshipID.ToString())].Address2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2 nopadding">
-                                                <div class="form-group">
-                                                    <label>City</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].City" name="contact[@(contact.RealtionshipID.ToString())].City" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-1 nopadding">
-                                                <div class="form-group">
-                                                    <label>State</label>
-                                                    <select name="contact[@(contact.RealtionshipID.ToString())].ContactState" class="form-control text-box single-line" data-validate="true">
-                                                        <option value="AL" selected=@(contact.State == "AL")>AL</option>
-                                                        <option value="AK" selected=@(contact.State == "AK")>AK</option>
-                                                        <option value="AZ" selected=@(contact.State == "AZ")>AZ</option>
-                                                        <option value="AR" selected=@(contact.State == "AR")>AR</option>
-                                                        <option value="CA" selected=@(contact.State == "CA")>CA</option>
-                                                        <option value="CO" selected=@(contact.State == "CO")>CO</option>
-                                                        <option value="CT" selected=@(contact.State == "CT")>CT</option>
-                                                        <option value="DE" selected=@(contact.State == "DE")>DE</option>
-                                                        <option value="DC" selected=@(contact.State == "DC")>DC</option>
-                                                        <option value="FL" selected=@(contact.State == "FL")>FL</option>
-                                                        <option value="GA" selected=@(contact.State == "GA")>GA</option>
-                                                        <option value="HI" selected=@(contact.State == "HI")>HI</option>
-                                                        <option value="ID" selected=@(contact.State == "ID")>ID</option>
-                                                        <option value="IL" selected=@(contact.State == "IL")>IL</option>
-                                                        <option value="IN" selected=@(contact.State == "IN")>IN</option>
-                                                        <option value="IA" selected=@(contact.State == "IA")>IA</option>
-                                                        <option value="KS" selected=@(contact.State == "KS")>KS</option>
-                                                        <option value="KY" selected=@(contact.State == "KY")>KY</option>
-                                                        <option value="LA" selected=@(contact.State == "LA")>LA</option>
-                                                        <option value="ME" selected=@(contact.State == "ME")>ME</option>
-                                                        <option value="MD" selected=@(contact.State == "MD")>MD</option>
-                                                        <option value="MA" selected=@(contact.State == "MA")>MA</option>
-                                                        <option value="MI" selected=@(contact.State == "MI")>MI</option>
-                                                        <option value="MN" selected=@(contact.State == "MN")>MN</option>
-                                                        <option value="MS" selected=@(contact.State == "MS")>MS</option>
-                                                        <option value="MO" selected=@(contact.State == "MO")>MO</option>
-                                                        <option value="MT" selected=@(contact.State == "MT")>MT</option>
-                                                        <option value="NE" selected=@(contact.State == "NE")>NE</option>
-                                                        <option value="NV" selected=@(contact.State == "NV")>NV</option>
-                                                        <option value="NH" selected=@(contact.State == "NH")>NH</option>
-                                                        <option value="NJ" selected=@(contact.State == "NJ")>NJ</option>
-                                                        <option value="NM" selected=@(contact.State == "NM")>NM</option>
-                                                        <option value="NY" selected=@(contact.State == "NY")>NY</option>
-                                                        <option value="NC" selected=@(contact.State == "NC")>NC</option>
-                                                        <option value="ND" selected=@(contact.State == "ND")>ND</option>
-                                                        <option value="OH" selected=@(contact.State == "OH")>OH</option>
-                                                        <option value="OK" selected=@(contact.State == "OK")>OK</option>
-                                                        <option value="OR" selected=@(contact.State == "OR")>OR</option>
-                                                        <option value="PA" selected=@(contact.State == "PA")>PA</option>
-                                                        <option value="RI" selected=@(contact.State == "RI")>RI</option>
-                                                        <option value="SC" selected=@(contact.State == "SC")>SC</option>
-                                                        <option value="SD" selected=@(contact.State == "SD")>SD</option>
-                                                        <option value="TN" selected=@(contact.State == "TN")>TN</option>
-                                                        <option value="TX" selected=@(contact.State == "TX")>TX</option>
-                                                        <option value="UT" selected=@(contact.State == "UT")>UT</option>
-                                                        <option value="VT" selected=@(contact.State == "VT")>VT</option>
-                                                        <option value="VA" selected=@(contact.State == "VA")>VA</option>
-                                                        <option value="WA" selected=@(contact.State == "WA")>WA</option>
-                                                        <option value="WV" selected=@(contact.State == "WV")>WV</option>
-                                                        <option value="WI" selected=@(contact.State == "WI")>WI</option>
-                                                        <option value="WY" selected=@(contact.State == "WY")>WY</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2 nopadding">
-                                                <div class="form-group">
-                                                    <label>Zip Code</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dotted #45906d;">
-                                            <div class="col-sm-2 nopadding">
-                                                <div class="form-group">
-                                                    <label>Phone Number</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Phone" name="contact[@(contact.RealtionshipID.ToString())].Phone" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 nopadding">
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Email" name="contact[@(contact.RealtionshipID.ToString())].Email" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2 nopadding">
-                                                <div class="form-group">
-                                                    <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
-                                                    <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 nopadding">
-                                                <div class="form-group">
-                                                    <button class="btn-circle btn-lg pull-right remove-contact add-contact btn-danger"><i class="glyphicon glyphicon-minus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     }
-                        </div>
-                        <div class="row">
-                            <div class="col-md-pull-10">
-                                <button class="btn-circle btn-lg btn-info pull-right add-contact"><i class="glyphicon glyphicon-plus"></i></button>
-                            </div>
-                        </div>
-                        <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
-                            <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                            <li><button type="button" class="btn btn-info next-step" id="next7">Save and continue</button></li>
-                        </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-pull-10">
+                                        <button class="btn-circle btn-lg btn-info pull-right add-contact"><i class="glyphicon glyphicon-plus"></i></button>
+                                    </div>
+                                </div>
+                                <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+                                    <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                                    <li><button type="button" class="btn btn-info next-step" id="next7">Save and continue</button></li>
+                                </ul>
                             }
                         }
                     </div>
@@ -1543,6 +1544,7 @@
                     <option value="foster">Foster Parent</option>
                     <option value="guardian">Guardian</option>
                     <option value="advocate">Education Advocate</option>
+                    <option value="self">Self</option>
                     <option value="other">Other</option>
                 </select>
             </div>

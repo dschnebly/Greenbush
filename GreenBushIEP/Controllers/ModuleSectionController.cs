@@ -813,7 +813,6 @@ namespace GreenBushIEP.Controllers
 
                     int j = 3;
                     DateTime temp;
-                    int tempInt;
                     bool keyParse = Int32.TryParse(collection[++j], out goalId);
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
 
@@ -850,6 +849,110 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.ProgressDescription_Quarter3 = collection[++j].ToString();
                     studentGoal.goal.ProgressDescription_Quarter4 = collection[++j].ToString();
 
+                    //int tempInt;
+                    //studentGoal.benchmarks.Clear();
+
+                    //int keyNum = ++j;
+                    //string keyName = (collection.Keys.Count - 1) > keyNum ? collection.GetKey(keyNum) : "";
+                    //if (!string.IsNullOrEmpty(keyName))
+                    //{
+                    //    while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
+                    //    {
+                    //        int BenchmarkID;
+                    //        bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
+                    //        tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
+                    //        if (benchmark != null)
+                    //        {
+                    //            benchmark.goalID = studentGoal.goal.goalID;
+                    //            benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
+                    //            benchmark.ObjectiveBenchmark = collection[++j].ToString();
+                    //            benchmark.TransitionActivity = (collection[++j].ToLower() == "true") ? true : false;
+                    //            benchmark.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    //            benchmark.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    //            benchmark.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    //            benchmark.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    //            benchmark.Progress_Quarter1 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.Progress_Quarter2 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.Progress_Quarter3 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.Progress_Quarter4 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.ProgressDescription_Quarter1 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.ProgressDescription_Quarter2 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.ProgressDescription_Quarter3 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                    //            benchmark.ProgressDescription_Quarter4 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+
+                    //            studentGoal.benchmarks.Add(benchmark);
+                    //        }
+
+                    //        keyName = (++j < collection.Count) ? collection.GetKey(j) : String.Empty;
+                    //    }
+                    //}
+
+                    studentGoal.SaveGoal(evalProcedures);
+                    goalId = studentGoal.goal.goalID;
+
+                    return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to the Student Goals: " + e.InnerException.ToString());
+                }
+            }
+
+            return Json(new { Result = "error", Message = "The Student Goal was was not added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditStudentGoalsReadOnly(FormCollection collection)
+        {
+            int goalId = 0;
+            if (ValidateRequest)
+            {
+                try
+                {
+                    string verification = collection[0];
+                    int studentId = Convert.ToInt32(collection["studentId"]);
+                    int iepId = Convert.ToInt32(collection["IEPid"]);
+
+                    int j = 11;
+                    DateTime temp;
+                    bool keyParse = Int32.TryParse(collection[3], out goalId);
+                    StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
+
+                    //studentGoal.goal.IEPid = iepId;
+                    //studentGoal.goal.Module = collection[++j].ToString();
+                    //studentGoal.goal.Title = collection[++j].ToString();
+                    //studentGoal.goal.hasSerivce = collection[++j] == "true" ? true : false;
+                    //studentGoal.goal.AnnualGoal = collection[++j].ToString();
+                    //studentGoal.goal.Baseline = collection[++j].ToString();
+                    //studentGoal.goal.StateStandards = collection[++j].ToString();
+                    //studentGoal.goal.Completed = Convert.ToBoolean(collection["completed"]);
+
+                    //var evalProcedures = "";
+                    //if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
+                    //{
+                    //    var evalProceduresStr = collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).FirstOrDefault();
+                    //    evalProcedures = collection[evalProceduresStr];
+                    //    if (evalProcedures != null)
+                    //    {
+                    //        j++; //only increment when values are submitted otherwise it throws the count off for the rest
+                    //    }
+                    //}
+
+                    studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    studentGoal.goal.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    studentGoal.goal.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    studentGoal.goal.Progress_Quarter1 = collection[++j].ToString();
+                    studentGoal.goal.Progress_Quarter2 = collection[++j].ToString();
+                    studentGoal.goal.Progress_Quarter3 = collection[++j].ToString();
+                    studentGoal.goal.Progress_Quarter4 = collection[++j].ToString();
+                    studentGoal.goal.ProgressDescription_Quarter1 = collection[++j].ToString();
+                    studentGoal.goal.ProgressDescription_Quarter2 = collection[++j].ToString();
+                    studentGoal.goal.ProgressDescription_Quarter3 = collection[++j].ToString();
+                    studentGoal.goal.ProgressDescription_Quarter4 = collection[++j].ToString();
+
+                    int tempInt;
                     studentGoal.benchmarks.Clear();
 
                     int keyNum = ++j;
@@ -861,6 +964,7 @@ namespace GreenBushIEP.Controllers
                             int BenchmarkID;
                             bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
                             tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
+
                             if (benchmark != null)
                             {
                                 benchmark.goalID = studentGoal.goal.goalID;
@@ -879,16 +983,24 @@ namespace GreenBushIEP.Controllers
                                 benchmark.ProgressDescription_Quarter2 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.ProgressDescription_Quarter3 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
                                 benchmark.ProgressDescription_Quarter4 = ++j < collection.Count && collection[j] != null ? collection[j].ToString() : "";
+                                benchmark.Update_Date = DateTime.Now;
+                                benchmark.Create_Date = DateTime.Now;
 
-                                studentGoal.benchmarks.Add(benchmark);
+                                if (benchmark.goalBenchmarkID == 0)
+                                {
+                                    db.tblGoalBenchmarks.Add(benchmark);
+                                }
+
+                                db.SaveChanges();
                             }
 
                             keyName = (++j < collection.Count) ? collection.GetKey(j) : String.Empty;
                         }
                     }
 
-                    studentGoal.SaveGoal(evalProcedures);
-                    goalId = studentGoal.goal.goalID;
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -896,7 +1008,7 @@ namespace GreenBushIEP.Controllers
                 }
             }
 
-            return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = "error", Message = "The Student Goal was was not added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

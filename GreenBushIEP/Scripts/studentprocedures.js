@@ -546,7 +546,6 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
     // this checks if all of the modules are completed.
     var allCompleted = true;
     $.each($(".ui-state-default.iep"), function () {
-        console.log('count');
         if (!$(this).find(".hero-widget").hasClass("module-completed")) {
             allCompleted = false;
             return false; // breaks us out of the $.each loop.

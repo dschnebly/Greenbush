@@ -346,8 +346,8 @@
                                         </div>
                                         <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
                                             <thead class="thead-inverse">
-                                                <tr>
-                                                    <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
+                                                <tr class="ProgressAnnualGoal">
+                                                    <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus" style="float:left;"></i>Progress Towards Annual Goal</th>
                                                 </tr>
                                                 <tr class="PTAGDisplay hidden">
                                                     <th>
@@ -432,7 +432,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <br />
+                                        @*<br />
                                         <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
                                         <br />
                                         <label class="input-labels" style="font-size:16px;margin-top: 5px;">Short Term Benchmark(s)</label>
@@ -440,7 +440,7 @@
                                             <span class="glyphicon glyphicon-plus-sign toggleReportsOfProgress"></span>
                                         </label>
                                         <label class="input-labels pull-right" style="font-size:16px;margin-right: 15px;">T.A.</label>
-                                        <div class="StudentGoalBenchmarks"></div>
+                                        <div class="StudentGoalBenchmarks"></div>*@
                                         <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                                             <div class="form-group">
                                                 <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
@@ -453,6 +453,7 @@
                         </div>
                     </div>
                 }
+
             </div>
 
             if (Model.studentGoals.Count > 0)
@@ -758,13 +759,6 @@
             });
 
             //* Binding */
-            /* when the teacher clicks + icon to see Reports of Progress under each benchmark */
-            $(this).find('.toggleReportsOfProgress').on('click', function (event) {
-                $(this).toggleClass('active');
-                $(this).closest('.StudentGoal ').find('.slideReportProgress').slideToggle("slow");
-            });
-
-            //* Binding */
             /* when the teacher saves the form */
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
@@ -773,9 +767,10 @@
                 var studentGoal = $(this).closest('.StudentGoal');
                 var studentGoalId = studentGoal.find("input[name='StudentGoalId']");
                 var completedGoal = studentGoal.find("a i.isGoalCompleted");
+                var postMethod = studentGoal.find("form").attr('action').split("/").pop();
 
                 var data = $(this).closest('.goalForm').serialize();
-                $.post('/ModuleSection/EditStudentGoals', data)
+                $.post('/ModuleSection/' + postMethod, data)
                 .done(function (results) {
 
                     if (studentGoal.find("input[name='completed']").val() == "true") {
@@ -870,12 +865,19 @@
             //* Binding */
             /* When the user clicks on the minus to view more info for the Progress Towards Annual Goal */
             $(this).find('.ProgressAnnualGoal').on('click', function () {
-                $(this).toggleClass('glyphicon-minus glyphicon-plus');
+                $(this).find("i").toggleClass('glyphicon-minus glyphicon-plus');
                 $(this).closest('table').find('thead tr.PTAGDisplay:first').toggleClass('hidden');
                 $(this).closest('table').find('tbody.PTAGDisplay:first').toggleClass('hidden');
             });
 
             //* Binding */
+            /* when the teacher clicks + icon to see Reports of Progress under each benchmark */
+            $(this).find('.toggleReportsOfProgress').on('click', function (event) {
+                $(this).toggleClass('active');
+                $(this).closest('.StudentGoal ').find('.slideReportProgress').slideToggle("slow");
+            });
+
+            /* Binding */
             /* when the teacher clicks the Add Short Term Benchmark(s) button */
             $(this).find('.newObjectiveBenchmark').on('click', function (event) {
                 var benchmarkCount = $('.StudentGoalBenchmark').not("#defaultObjective").length;
@@ -941,12 +943,12 @@
             });
         });
 
-        initObjective();
+        //initObjective();
     }
 
     function initObjective() {
         $('.StudentGoalBenchmark').not('#defaultObjective').not('.bound').addClass('bound').each(function () {
-
+ 
             //* Binding */
             /* fires when the drop down is selected on each of the Bechnmark modules */
             $(this).find('.bs-dropdown-to-select-group .dropdown-menu li').on('click', function (event) {
@@ -966,11 +968,11 @@
                 if (confirm("Would you like to delete this Benchmark?")) {
                     var studentBenchmark = $(this).parents('.StudentGoalBenchmark')
                     var studentBenchmarkId = studentBenchmark.find('input:hidden:first').prop("value");
-
+    
                     if (studentBenchmarkId == 0) {
                         return studentBenchmark.remove();
                     }
-
+    
                     $.ajax({
                         type: 'POST',
                         url: '/ModuleSection/DeleteStudentBenchmark',
@@ -1064,6 +1066,7 @@
     }
 
     initGoal();
+    initObjective();
 
     /* Binding */
     /* tooltips */
