@@ -324,7 +324,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", teacherIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportProgress_Result> up_ReportProgress(string status, string buildingId, string providerId)
+        public virtual ObjectResult<up_ReportProgress_Result1> up_ReportProgress(string status, string buildingId, string providerId)
         {
             var statusParameter = status != null ?
                 new ObjectParameter("Status", status) :
@@ -338,7 +338,7 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderId", providerId) :
                 new ObjectParameter("ProviderId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result>("up_ReportProgress", statusParameter, buildingIdParameter, providerIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result1>("up_ReportProgress", statusParameter, buildingIdParameter, providerIdParameter);
         }
     }
 }

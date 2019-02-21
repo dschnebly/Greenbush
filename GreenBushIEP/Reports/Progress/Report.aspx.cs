@@ -146,7 +146,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 						, cs.goalBenchmarkID, cs.ObjectiveBenchmark, cs.Method
 						, cs.BencharkDateQ1, cs.BencharkDateQ2, cs.BencharkDateQ3, cs.BencharkDateQ4
 						, cs.ProgressDateQ1, cs.ProgressDateQ3, cs.ProgressDateQ3, cs.ProgressDateQ4
-						, cs.ProgressNotes1, cs.ProgressNotes3, cs.ProgressNotes3, cs.ProgressNotes4
+						, cs.ProgressNotes1, cs.ProgressNotes2, cs.ProgressNotes3, cs.ProgressNotes4
 						, cs.Progress_Quarter1, cs.Progress_Quarter2, cs.Progress_Quarter3, cs.Progress_Quarter4
 						, cs.StudentId);
 			}
