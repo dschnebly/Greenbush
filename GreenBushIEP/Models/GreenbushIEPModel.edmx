@@ -1511,7 +1511,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="up_ReportProgress" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProgress_Result)">
+          <FunctionImport Name="up_ReportProgress" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProgress_Result1)">
             <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
@@ -2776,6 +2776,38 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Progress_Quarter3" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="Progress_Quarter4" Nullable="false" MaxLength="30" />
         </ComplexType>
+        <ComplexType Name="up_ReportProgress_Result1">
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ProviderName" Nullable="false" MaxLength="1" />
+          <Property Type="DateTime" Name="begin_date" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="end_Date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Grade" Nullable="true" />
+          <Property Type="Int32" Name="goalID" Nullable="false" />
+          <Property Type="String" Name="GoalDescription" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="StateStandards" Nullable="false" MaxLength="2000" />
+          <Property Type="String" Name="Baseline" Nullable="false" MaxLength="2000" />
+          <Property Type="Int32" Name="goalBenchmarkID" Nullable="true" />
+          <Property Type="String" Name="ObjectiveBenchmark" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Method" Nullable="false" MaxLength="25" />
+          <Property Type="DateTime" Name="BencharkDateQ1" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="BencharkDateQ2" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="BencharkDateQ3" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="BencharkDateQ4" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProgressNotes1" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ProgressNotes2" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ProgressNotes3" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ProgressNotes4" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="ProgressDateQ1" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ProgressDateQ2" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ProgressDateQ3" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ProgressDateQ4" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Progress_Quarter1" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Progress_Quarter2" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Progress_Quarter3" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Progress_Quarter4" Nullable="false" MaxLength="30" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3972,7 +4004,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="up_ReportProgress" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportProgress">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProgress_Result">
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProgress_Result1">
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
                 <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
@@ -3987,14 +4019,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="goalBenchmarkID" ColumnName="goalBenchmarkID" />
                 <ScalarProperty Name="ObjectiveBenchmark" ColumnName="ObjectiveBenchmark" />
                 <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="ProgressNotes1" ColumnName="ProgressNotes1" />
-                <ScalarProperty Name="ProgressNotes2" ColumnName="ProgressNotes2" />
-                <ScalarProperty Name="ProgressNotes3" ColumnName="ProgressNotes3" />
-                <ScalarProperty Name="ProgressNotes4" ColumnName="ProgressNotes4" />
                 <ScalarProperty Name="BencharkDateQ1" ColumnName="BencharkDateQ1" />
                 <ScalarProperty Name="BencharkDateQ2" ColumnName="BencharkDateQ2" />
                 <ScalarProperty Name="BencharkDateQ3" ColumnName="BencharkDateQ3" />
                 <ScalarProperty Name="BencharkDateQ4" ColumnName="BencharkDateQ4" />
+                <ScalarProperty Name="ProgressNotes1" ColumnName="ProgressNotes1" />
+                <ScalarProperty Name="ProgressNotes2" ColumnName="ProgressNotes2" />
+                <ScalarProperty Name="ProgressNotes3" ColumnName="ProgressNotes3" />
+                <ScalarProperty Name="ProgressNotes4" ColumnName="ProgressNotes4" />
                 <ScalarProperty Name="ProgressDateQ1" ColumnName="ProgressDateQ1" />
                 <ScalarProperty Name="ProgressDateQ2" ColumnName="ProgressDateQ2" />
                 <ScalarProperty Name="ProgressDateQ3" ColumnName="ProgressDateQ3" />
