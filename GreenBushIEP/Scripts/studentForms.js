@@ -31,7 +31,7 @@
                 data: { studentId: id, formId: formid },
                 dataType: 'json',
                 success: function (data) {
-                    if (data.Result == 'success') {
+                    if (data.Result === 'success') {
 
                         button.closest("tr").remove();
 
@@ -72,7 +72,7 @@
 
         $(document).ready(function () {
 
-            $('#files').fileupload({
+            $("input[name='myFile']").fileupload({
                 dataType: 'json',
                 url: '/Home/UploadStudentFile',
                 acceptFileTypes: /(\.|\/)(pdf)$/i,
