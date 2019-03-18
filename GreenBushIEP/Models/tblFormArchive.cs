@@ -17,7 +17,6 @@ namespace GreenBushIEP.Models
         public int FormArchiveID { get; set; }
         public int Student_UserID { get; set; }
         public int Creator_UserID { get; set; }
-        public int IEPid { get; set; }
         public System.DateTime ArchiveDate { get; set; }
         public string FormName { get; set; }
         public byte[] FormFile { get; set; }

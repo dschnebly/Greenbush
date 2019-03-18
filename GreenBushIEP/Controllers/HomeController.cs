@@ -1910,15 +1910,15 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+            //tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
             var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
             if (form != null)
                 viewModel.fileDesc = form.Text;
 
-            if (iep != null)
-                viewModel.iepId = iep.IEPid;
+           //if (iep != null)
+                //viewModel.iepId = iep.IEPid;
 
             StudentLegalView fileViewModel = new StudentLegalView()
             {
@@ -2260,15 +2260,15 @@ namespace GreenbushIep.Controllers
                         return Json(new { result = false, message = "Please select a valid PDF" }, "text/plain");
 
                     byte[] fileData = binaryReader.ReadBytes(myFile.ContentLength);
+
                     tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                    int iepId = db.tblIEPs.Where(i => i.UserID == studentId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid;
+                    //int iepId = db.tblIEPs.Where(i => i.UserID == studentId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid;
 
                     var archive = new tblFormArchive();
                     archive.Creator_UserID = teacher.UserID;
                     archive.Student_UserID = studentId;
                     archive.FormName = string.IsNullOrEmpty(fileName) ? "Upload" : fileName;
                     archive.FormFile = fileData;
-                    archive.IEPid = iepId;
                     archive.ArchiveDate = DateTime.Now;
                     archive.isUpload = true;
 
@@ -2772,7 +2772,7 @@ namespace GreenbushIep.Controllers
                         archive.Student_UserID = id;
                         archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
                         archive.FormFile = mergedFile;//fileIn;
-                        archive.IEPid = iepId;
+                        //archive.IEPid = iepId;
                         archive.ArchiveDate = DateTime.Now;
 
                         db.tblFormArchives.Add(archive);

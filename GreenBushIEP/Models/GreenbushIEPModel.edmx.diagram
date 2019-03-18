@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCounty" Width="1.5" PointX="14.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDisability" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" Width="1.5" PointX="14.75" PointY="3.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormArchive" Width="1.5" PointX="15.75" PointY="6.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" Width="1.5" PointX="8.75" PointY="15.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" Width="1.5" PointX="15.75" PointY="10.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoal" Width="1.5" PointX="0.75" PointY="7.625" />
@@ -73,6 +72,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" Width="1.5" PointX="0.75" PointY="25.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblDistrict" Width="1.5" PointX="5.75" PointY="6.5" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblModule" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormArchive" Width="1.5" PointX="5.375" PointY="25.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

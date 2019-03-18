@@ -10,12 +10,10 @@
 namespace GreenBushIEP.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblRole
+    public partial class string_split_Result
     {
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-        public string LevelName { get; set; }
+        public Nullable<short> idx { get; set; }
+        public string value { get; set; }
     }
 }

@@ -270,7 +270,6 @@
           <Property Name="FormArchiveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Student_UserID" Type="int" Nullable="false" />
           <Property Name="Creator_UserID" Type="int" Nullable="false" />
-          <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="ArchiveDate" Type="datetime" Nullable="false" />
           <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
@@ -594,6 +593,15 @@
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Billable" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblModules">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModuleTable" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -674,6 +682,7 @@
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LevelName" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="tblServiceFrequency">
           <Key>
@@ -753,11 +762,11 @@
           <Property Name="Grade" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
-          <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" />
-          <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" />
+          <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="ClaimingCode" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
-          <Property Name="PlacementCode" Type="char" MaxLength="1" />
+          <Property Name="PlacementCode" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="ExitDate" Type="datetime" />
           <Property Name="InitialIEPDate" Type="datetime" />
@@ -1131,6 +1140,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="string_split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
+          <Parameter Name="DELIMITER" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="idx" Type="smallint" />
+                <Property Name="value" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="uf_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
           <Parameter Name="DELIMITER" Type="char" Mode="In" />
@@ -1223,6 +1244,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblIEPWritten" EntityType="Self.tblIEPWritten" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblModules" EntityType="Self.tblModules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOtherConsiderations" EntityType="Self.tblOtherConsiderations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPlacementCodes" EntityType="Self.tblPlacementCodes" Schema="dbo" store:Type="Tables" />
@@ -1439,7 +1461,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblCounties" EntityType="IndividualizedEducationProgramModel.tblCounty" />
           <EntitySet Name="tblDisabilities" EntityType="IndividualizedEducationProgramModel.tblDisability" />
           <EntitySet Name="tblEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblEvaluationProcedure" />
-          <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmark" />
           <EntitySet Name="tblGoalEvaluationProcedures" EntityType="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure" />
           <EntitySet Name="tblGoals" EntityType="IndividualizedEducationProgramModel.tblGoal" />
@@ -1516,6 +1537,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblModules" EntityType="IndividualizedEducationProgramModel.tblModule" />
+          <FunctionImport Name="string_split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.string_split_Result)">
+            <Parameter Name="MYSTR" Mode="In" Type="String" />
+            <Parameter Name="DELIMITER" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1880,19 +1907,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </Key>
           <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="evaluationProcedure" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblFormArchive">
-          <Key>
-            <PropertyRef Name="FormArchiveID" />
-          </Key>
-          <Property Name="FormArchiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Student_UserID" Type="Int32" Nullable="false" />
-          <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
-          <Property Name="IEPid" Type="Int32" Nullable="false" />
-          <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="isUpload" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGoalBenchmark">
           <Key>
@@ -2289,6 +2303,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LevelName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblServiceFrequency">
           <Key>
@@ -2362,11 +2377,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Grade" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ClaimingCode" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ExitDate" Type="DateTime" Precision="3" />
           <Property Name="InitialIEPDate" Type="DateTime" Precision="3" />
@@ -2808,6 +2823,31 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Progress_Quarter3" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="Progress_Quarter4" Nullable="false" MaxLength="30" />
         </ComplexType>
+        <EntityType Name="tblModule">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleTable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="string_split_Result">
+          <Property Type="Int16" Name="idx" Nullable="true" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <EntityType Name="tblFormArchive">
+          <Key>
+            <PropertyRef Name="FormArchiveID" />
+          </Key>
+          <Property Name="FormArchiveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Student_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Creator_UserID" Type="Int32" Nullable="false" />
+          <Property Name="ArchiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="isUpload" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3166,20 +3206,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               <MappingFragment StoreEntitySet="tblEvaluationProcedures">
                 <ScalarProperty Name="evaluationProcedure" ColumnName="evaluationProcedure" />
                 <ScalarProperty Name="evaluationProcedureID" ColumnName="evaluationProcedureID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFormArchives">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
-              <MappingFragment StoreEntitySet="tblFormArchive">
-                <ScalarProperty Name="isUpload" ColumnName="isUpload" />
-                <ScalarProperty Name="FormFile" ColumnName="FormFile" />
-                <ScalarProperty Name="FormName" ColumnName="FormName" />
-                <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="Creator_UserID" ColumnName="Creator_UserID" />
-                <ScalarProperty Name="Student_UserID" ColumnName="Student_UserID" />
-                <ScalarProperty Name="FormArchiveID" ColumnName="FormArchiveID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3588,6 +3614,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblRoles">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblRole">
               <MappingFragment StoreEntitySet="tblRoles">
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
@@ -4038,6 +4065,37 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblModules">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblModule">
+              <MappingFragment StoreEntitySet="tblModules">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ModuleTable" ColumnName="ModuleTable" />
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="string_split" FunctionName="IndividualizedEducationProgramModel.Store.string_split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.string_split_Result">
+                <ScalarProperty Name="idx" ColumnName="idx" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tblFormArchives">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
+              <MappingFragment StoreEntitySet="tblFormArchive">
+                <ScalarProperty Name="isUpload" ColumnName="isUpload" />
+                <ScalarProperty Name="FormFile" ColumnName="FormFile" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ArchiveDate" ColumnName="ArchiveDate" />
+                <ScalarProperty Name="Creator_UserID" ColumnName="Creator_UserID" />
+                <ScalarProperty Name="Student_UserID" ColumnName="Student_UserID" />
+                <ScalarProperty Name="FormArchiveID" ColumnName="FormArchiveID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

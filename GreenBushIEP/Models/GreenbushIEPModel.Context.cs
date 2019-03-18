@@ -46,7 +46,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
-        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
@@ -90,6 +89,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendar> tblCalendars { get; set; }
         public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblModule> tblModules { get; set; }
+        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -339,6 +340,20 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result1>("up_ReportProgress", statusParameter, buildingIdParameter, providerIdParameter);
+        }
+    
+        [DbFunction("IndividualizedEducationProgramEntities", "string_split")]
+        public virtual IQueryable<string_split_Result> string_split(string mYSTR, string dELIMITER)
+        {
+            var mYSTRParameter = mYSTR != null ?
+                new ObjectParameter("MYSTR", mYSTR) :
+                new ObjectParameter("MYSTR", typeof(string));
+    
+            var dELIMITERParameter = dELIMITER != null ?
+                new ObjectParameter("DELIMITER", dELIMITER) :
+                new ObjectParameter("DELIMITER", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string_split_Result>("[IndividualizedEducationProgramEntities].[string_split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
         }
     }
 }

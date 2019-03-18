@@ -78,9 +78,12 @@
         <div id="sectionC" class="tab-pane fade in" style="padding-top:25px;">
             <div class="drive-wrapper drive-list-view">
                 <div class="form-group">
-                    <label class="file-upload btn btn-primary">
-                        <i class="fa fa-upload"></i> Upload a File<input type="file" name="myFile" class="studentFile" accept="application/pdf" />
-                    </label>
+                    <form enctype="multipart/form-data" method="post">
+                        <label class="file-upload btn btn-primary">
+                            <i class="fa fa-upload"></i> Upload a File
+                            <input type="file" name="myFile" class="studentFile" accept="application/pdf" />
+                        </label>
+                    </form>
                 </div>
                 <div class="table-responsive drive-items-table-wrapper">
                     <table class="table" id="tblUploads">
