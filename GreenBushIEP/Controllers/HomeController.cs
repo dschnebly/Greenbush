@@ -2247,19 +2247,19 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadStudentFile(HttpPostedFileBase files, int studentId)
+        public ActionResult UploadStudentFile(HttpPostedFileBase myFile, int studentId)
         {
             try
             {
-                using (var binaryReader = new BinaryReader(files.InputStream))
+                using (var binaryReader = new BinaryReader(myFile.InputStream))
                 {
-                    var fileName = Path.GetFileName(files.FileName);
+                    var fileName = Path.GetFileName(myFile.FileName);
                     string fileNameExt = Path.GetExtension(fileName);
 
                     if (fileNameExt.ToLower() != ".pdf")
                         return Json(new { result = false, message = "Please select a valid PDF" }, "text/plain");
 
-                    byte[] fileData = binaryReader.ReadBytes(files.ContentLength);
+                    byte[] fileData = binaryReader.ReadBytes(myFile.ContentLength);
                     tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                     int iepId = db.tblIEPs.Where(i => i.UserID == studentId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid;
 
