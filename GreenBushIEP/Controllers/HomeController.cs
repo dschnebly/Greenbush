@@ -1941,7 +1941,14 @@ namespace GreenbushIep.Controllers
 
             }
 
-            viewModel.fileModel = fileViewModel;
+			var lastReEval= db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
+			if (lastReEval != null)
+			{
+				fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();	
+			}
+
+
+			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -1981,13 +1988,17 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "IEP Meeting-Consent to Invite Representative of Non-Educational Agency", Value = "IEPMtgConsent" });
             forms.Add(new SelectListItem { Text = "IEP Meeting-Excusal from Attendance Form", Value = "IEPMtgExcusal" });
             forms.Add(new SelectListItem { Text = "IEP Amendment Form", Value = "IEPAmendment" });
-            forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
+			forms.Add(new SelectListItem { Text = "Re-Evaluation Not Needed Agreement Form", Value = "IEPReEvalNotNeeded" });
+			forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
             forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
             forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
 
-            return forms.OrderBy(x => x.Text).ToList();
+
+			
+
+			return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]

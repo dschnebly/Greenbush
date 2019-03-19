@@ -323,7 +323,7 @@ namespace GreenBushIEP.Models
         public List<tblStudentRelationship> contacts { get; set; }		
 		public tblContact districtContact { get; set; }
 		public string building { get; set; }
-		
+		public string lastReEvalDate { get; set; }
 	}
 
     public class IEPFormViewModel
@@ -348,7 +348,7 @@ namespace GreenBushIEP.Models
 		public int id { get; set; }
 		public string fileName { get; set; }
         public string fileDesc { get; set; }
-		public string fileDate { get; set; }
+		public string fileDate { get; set; }		
 		public StudentLegalView fileModel { get; set; }
 		
 
@@ -359,7 +359,9 @@ namespace GreenBushIEP.Models
             fileModel = new StudentLegalView();
             iepId = 0;
             fileDesc = "";
-        }
+			
+
+		}
     }
 
     public class ModuleAcademicViewModel
