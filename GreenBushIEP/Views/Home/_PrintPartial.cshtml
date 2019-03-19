@@ -2053,7 +2053,7 @@
                                             The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
                                             district and will be meaningful to @(genderPronoun) post secondary goal of working as <span class="underline">@(Model.studentTransition.transition.Planning_Occupation)</span>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
                                             The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
-                                            maintained in the counselor's office
+                                            maintained in the counselor's office.
                                         </p>										
 										<fieldset class="form-group">
 											<p>The Student will participate in coursework to support the Career Path of @(Model.studentTransition.careers.Count > 0 ? Model.studentTransition.careers.FirstOrDefault().CareerPath : "").</p>
@@ -2062,23 +2062,23 @@
                                             @if (Model.studentTransition.transition.Planning_Facilitate)
 											{
 
-												<p>The transition courses of study does focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+												<p>The transition courses of study does focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school.</p>
 
 											}
                                             else
                                             {
-                                                <p>The transition courses of study do not focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school</p>
+                                                <p>The transition courses of study do not focus on improving the academic and functional achievement of the child to faciliate their movement from school to post-school.</p>
 											}
                                             
                                         </fieldset>
                                         <fieldset class="form-group">
                                          @if (Model.studentTransition.transition.Planning_Align)
 										 {
-												<p>The courses of study (and other education experiences) do align with the student's post goals</p>
+												<p>The courses of study (and other education experiences) do align with the student's post goals.</p>
 										 }
                                          else
                                          {
-                                            <p>The courses of study (and other education experiences) do not align with the student's post goals</p>
+                                            <p>The courses of study (and other education experiences) do not align with the student's post goals.</p>
                                          }
                                            
                                         </fieldset>
@@ -2089,7 +2089,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <fieldset class="form-group">
-                                            <span><b>Anticipated Graduation Month/Year</b></span><span> @(Model.studentTransition.transition.Planning_GraduationMonth)-@(Model.studentTransition.transition.Planning_GraduationYear)</span>
+                                            <span><b>Anticipated Graduation Month/Year</b></span><br/><span> @(Model.studentTransition.transition.Planning_GraduationMonth.HasValue ? System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(Model.studentTransition.transition.Planning_GraduationMonth.Value) : "") @(Model.studentTransition.transition.Planning_GraduationYear)</span>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
@@ -2118,25 +2118,25 @@
                                         <fieldset class="form-group">
                                             @if (Model.studentTransition.transition.Planning_BenefitKRS)
 											{
-												<p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
+												<p>The IEP Team determined that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance.</p>
 												<p>Other Agencies: @(Model.studentTransition.transition.Planning_BenefitKRS_OtherAgencies)</p>
 
 											}
                                             else
                                             {
-                                                <p>The IEP Team did not determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance</p>
+                                                <p>The IEP Team did not determine that the student, if age 16 or older, might benefit from Kansas Rehabilitation Service(KRS) assistance.</p>
                                             }
                                             
                                         </fieldset>
                                         <fieldset class="form-group @(Model.studentTransition.transition.Planning_BenefitKRS ? "" : "hidden" )  " id="releaseObtained">
                                             @if (Model.studentTransition.transition.Planning_ConsentPrior)
 											{
-												<p>Consent to release confidential information was obtained to prior to KRS notification</p>
+												<p>Consent to release confidential information was obtained to prior to KRS notification.</p>
 
 											}
                                             else
                                             {
-                                                <p>Consent to release confidential information was not obtained to prior to KRS notification</p>
+                                                <p>Consent to release confidential information was not obtained to prior to KRS notification.</p>
                                             }                                                                                       
                                         </fieldset>
                                     </div>
