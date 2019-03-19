@@ -1199,6 +1199,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
           <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="up_ReportStudentsByBuilding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Usd" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
+          <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="uspCopyIEP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fromIEP" Type="int" Mode="In" />
           <Parameter Name="byUserID" Type="int" Mode="In" />
@@ -1543,6 +1549,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="DELIMITER" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
+          <FunctionImport Name="up_ReportStudentsByBuilding" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result)">
+            <Parameter Name="Usd" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2848,6 +2860,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="isUpload" Type="Boolean" Nullable="false" />
         </EntityType>
+        <ComplexType Name="up_ReportStudentsByBuilding_Result">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4096,6 +4117,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportStudentsByBuilding" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportStudentsByBuilding">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result">
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

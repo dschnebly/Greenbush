@@ -516,6 +516,9 @@
     <Compile Include="Models\up_ReportServices_Result1.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportStudentsByBuilding_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -598,6 +601,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\StudentData\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\StudentData\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ProceduralDates\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -725,6 +735,7 @@
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
+    <Content Include="Reports\StudentData\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\Progress\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
@@ -933,6 +944,7 @@
     <EmbeddedResource Include="Reports\Progress\rptProgressReport.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
     <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
+    <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
