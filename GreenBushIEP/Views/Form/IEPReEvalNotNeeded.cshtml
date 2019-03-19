@@ -3,10 +3,11 @@
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string evalDate = Model.lastReEvalDate != null ? Model.lastReEvalDate : "";
 }
 
 <div>
-    <div class=WordSection1>
+    <div class="module-page">
 
         <p class=MsoNormal align=center style='text-align:center'>
             <span style='font-size:14.0pt;font-family:"Cambria",serif'>RE-EVALUATION NOT NEEDED</span>
@@ -20,9 +21,7 @@
             <span style='font-family:"Calibri",sans-serif'>USD # <u>@(String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u></span>
         </p>
 
-        <p class=MsoNormal align=center style='text-align:center'>
-            <span style='font-family:"Calibri",sans-serif'>&nbsp;</span>
-        </p>
+       
 
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
 
@@ -32,14 +31,12 @@
             <u>
                 <span style='font-family:"Calibri",sans-serif'>@(String.Format(studentFormattedName).PadRight(100 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
-            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(80, ' ').Replace(" ", "\u00A0"))</span></u>
+            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(90, ' ').Replace(" ", "\u00A0"))</span></u>
         </p>
 
         <p class=MsoNormal>
-
             <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
-                @(String.Format("{0}", "Student Name ").PadRight(95, ' ').Replace(" ", "\u00A0"))
-                Date
+                @(String.Format("{0}", "Student Name").PadRight(84, ' ').Replace(" ", "\u00A0"))@(String.Format("{0}", "Date").PadRight(60, ' ').Replace(" ", "\u00A0"))      
             </span>
 
         </p>
@@ -50,42 +47,33 @@
 
         <p class=MsoNormal>
             <u>
-                <span style='font-family:"Calibri",sans-serif'>@(String.Format(contactFormattedName).PadRight(100 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
+                <span style='font-family:"Calibri",sans-serif'>@(String.Format(contactFormattedName).PadRight(102 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
-            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(78, ' ').Replace(" ", "\u00A0"))</span></u>
+            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format(evalDate).PadRight(100 - String.Format(evalDate).Length, ' ').Replace(" ", "\u00A0"))
+			</span></u>
         </p>
 
         <p class=MsoNormal>
             <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
-                @(String.Format("{0}", "Parent(s)/decision maker name ").PadRight(80, ' ').Replace(" ", "\u00A0"))
-                Date of last evaluation/re-evaluation
+                @(String.Format("{0}", "Parent(s)/decision maker name ").PadRight(70, ' ').Replace(" ", "\u00A0"))@(String.Format("{0}", "Date of last evaluation/re-evaluation").PadRight(60, ' ').Replace(" ", "\u00A0"))      
             </span>
         </p>
 
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal>
             <u>
                 <span style='font-family:"Calibri",sans-serif'>@(String.Format(teacherFormattedName).PadRight(100 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span>
             </u>  &nbsp;&nbsp;&nbsp;
-            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(80, ' ').Replace(" ", "\u00A0"))</span></u>
+            <u><span style='font-family:"Calibri",sans-serif'>@(String.Format(string.Empty).PadRight(90, ' ').Replace(" ", "\u00A0"))</span></u>
         </p>
         <p class=MsoNormal>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
-                School
-                representative name                                                           School
-                representative position
-            </span>
-        </p>
-
+			<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+                @(String.Format("{0}", "School representative name").PadRight(73, ' ').Replace(" ", "\u00A0"))@(String.Format("{0}", "School representative position").PadRight(60, ' ').Replace(" ", "\u00A0"))      
+            </span>            
+        </p>       
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal>
             <span style='font-family:"Calibri",sans-serif'>
                 Special
@@ -95,9 +83,7 @@
                 re-evaluation is unnecessary. 
             </span>
         </p>
-
         <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal>
             <span style='font-family:"Calibri",sans-serif'>
                 The above
@@ -106,68 +92,49 @@
                 therefore no re-evaluation will be conducted. Both parties understand that a
                 re-evaluation may be requested by either party at any time in the future.
             </span>
-        </p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
+        </p>       
+		<p class=MsoNormal><span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
         <p class=MsoNormal>
             <span style='font-family:"Calibri",sans-serif'>
-                ________________________________________________________        
-                ___________________________________
+                ____________________________________________________________       
+                __________________________________
             </span>
         </p>
 
         <p class=MsoNormal>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+            <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>
                 Signature
-                of parent/Legal Decision Maker/Student if age 18 or more                                        Date
+                of parent/Legal Decision Maker/Student if age 18 or more                  Date
             </span>
-        </p>
+        </p>	  
 
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal>
             <span style='font-family:"Calibri",sans-serif'>
-                ________________________________________________________       
-                ____________________________________
+                ____________________________________________________________       
+                __________________________________
             </span>
         </p>
 
         <p class=MsoNormal>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+            <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>
                 Signature
-                of second parent/legal decision maker                                                                                    Date
+                of second parent/legal decision maker                                                      Date
             </span>
         </p>
-
         <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
-        <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-
         <p class=MsoNormal>
             <span style='font-family:"Calibri",sans-serif'>
-                ________________________________________________________        
-                _____________________________________
+                ____________________________________________________________       
+                __________________________________
             </span>
         </p>
-
         <p class=MsoNormal>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
+            <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>
                 Signature
-                of school representative                                                                                                            Date
+                of school representative                                                                               Date
             </span>
         </p>
-
     </div>
 
 
