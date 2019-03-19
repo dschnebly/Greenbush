@@ -92,7 +92,7 @@
                             content += '<td>' + json[i].fileName + '</td>';
                             content += '<td>' + json[i].fileDate + '</td>';
                             content += '<td class=\"date pull-right\"><button type=\"button\" class=\"btn btn-default btn-lg downloadForm\" id=\"' + json[i].id + '\"><i class=\"fa fa-download\"></i> <span>&nbsp;Download</span></button></td>';
-                            content += '<td class=\"date\"><button type=\"button\" data-formid=\"' + json[i].id + '\" class=\"btn btn-default btn-lg deleteForm \" id=\"' + json[i].id + '\"><i class="fa fa-remove"></i><span>&nbsp;Delete</span></button></td>'
+                            content += '<td class=\"date\"><button type=\"button\" data-formid=\"' + json[i].id + '\" class=\"btn btn-default btn-lg deleteForm \" id=\"' + json[i].id + '\"><i class="fa fa-remove"></i><span>&nbsp;Delete</span></button></td>';
                             content += '</tr>';
                         }
                         $('#tblUploads tbody').html(content);
