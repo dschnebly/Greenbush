@@ -58,7 +58,7 @@ function init() {
                         // rebuild the list with the new data.
                         $.each(data.Message, function (i, item) {
                             var userImage = item.ImageURL !== null ? '/Avatar/' + item.ImageURL : '/Content/Images/newUser.png';
-							items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='county-name'>" + item.County.toProperCase() + "</div><div class='school-name'>" + item.BuildingName.toProperCase() + "</div></div></li>");
+							items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='school-name'>" + item.BuildingName.toProperCase() + "</div></div></li>");
                         });
 
                         $("ul#studentList").append.apply($("ul#studentList"), items);
@@ -132,7 +132,7 @@ function init() {
             return !~text.indexOf(val);
         }).hide();
     });
-};
+}
 
 jQuery.fn.extend({
     listrap: function () {
