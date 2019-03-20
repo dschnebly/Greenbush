@@ -629,13 +629,8 @@ namespace GreenBushIEP.Controllers
                 info.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                 info.AssignedUSD = collection["assignChildCount"];
                 info.BuildingID = collection["AttendanceBuildingId"];
-                info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
-                info.Ethicity = collection["ethnic"];
-                info.StudentLanguage = collection["studentLanguage"];
-                info.ParentLanguage = collection["parentLanguage"];
-                info.Race = collection["race"];
-                info.Status = "PENDING";
-                info.Grade = Convert.ToInt32(collection["studentGrade"]);
+                info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];                				
+                info.Status = "PENDING";                
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
                 info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
