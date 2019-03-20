@@ -66,7 +66,6 @@ function init() {
                     }
                     else
                     {
-
                         $("ul#studentList").append("<li style='padding-left: 100px;'><b>No Students Found. Try Creating Some.</b></li>");
                     }
                 }

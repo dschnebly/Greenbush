@@ -1424,7 +1424,6 @@ namespace GreenBushIEP.Controllers
                 var students = (from u in db.tblUsers
                                 join su in db.tblStudentInfoes on u.UserID equals su.UserID
                                 join b in db.tblBuildings on su.BuildingID equals b.BuildingID
-                                //join cty in db.tblCounties on su.County equals cty.CountyCode
                                 where
                                 u.RoleID == "5"
                                 && !(u.Archive ?? false)
@@ -1438,7 +1437,6 @@ namespace GreenBushIEP.Controllers
                                     LastName = u.LastName,
                                     ImageURL = u.ImageURL,
                                     BuildingName = b.BuildingName
-                                    //County = cty.CountyName
                                 }).Distinct().ToList();
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
