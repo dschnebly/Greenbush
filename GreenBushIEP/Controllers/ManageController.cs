@@ -609,9 +609,10 @@ namespace GreenBushIEP.Controllers
                 // map the buildings in the building mapping table
                 try
                 {
+
                     db.tblBuildingMappings.Add(new tblBuildingMapping()
                     {
-                        BuildingID = info.BuildingID,
+                        BuildingID = collection["AttendanceBuildingId"],
                         USD = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).Select(b => b.USD).FirstOrDefault(), //info.USD,
                         UserID = info.UserID
                     });
