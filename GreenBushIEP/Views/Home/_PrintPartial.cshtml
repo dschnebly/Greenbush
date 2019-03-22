@@ -2337,12 +2337,12 @@
                             <fieldset class="form-group">
                                 @if (Model.studentOtherConsiderations.Parental_Concerns_flag.HasValue && Model.studentOtherConsiderations.Parental_Concerns_flag.Value)
                                 {
-                                     <p>The parent(s)/legal education decision maker has concerns for enhancing the education of @Model.studentFirstName</p>
+                                     <p>The parent(s)/legal education decision maker has concerns for enhancing the education of @(Model.studentFirstName).</p>
 									 <p>Concerns: @(Model.studentOtherConsiderations.Parental_Concerns_Desc)</p>
                                 }
                                 else
                                 {
-                                    <p>The parent(s)/legal education decision maker does not have concerns for enhancing the education of @Model.studentFirstName</p>
+                                    <p>The parent(s)/legal education decision maker does not have concerns for enhancing the education of @(Model.studentFirstName).</p>
                                 }                                
                             </fieldset>
                         </div>
