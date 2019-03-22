@@ -650,6 +650,8 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="StateAssesment_Alternative_flag" Type="bit" />
           <Property Name="StateAssesment_Alternative_Desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Parental_CopyIEP_flag" Type="bit" Nullable="false" />
+          <Property Name="Parental_RightsBook_flag" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -2280,6 +2282,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <Property Name="StateAssesment_Alternative_flag" Type="Boolean" />
           <Property Name="StateAssesment_Alternative_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Parental_CopyIEP_flag" Type="Boolean" Nullable="false" />
+          <Property Name="Parental_RightsBook_flag" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -3567,6 +3571,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Parental_RightsBook_flag" ColumnName="Parental_RightsBook_flag" />
+                <ScalarProperty Name="Parental_CopyIEP_flag" ColumnName="Parental_CopyIEP_flag" />
                 <ScalarProperty Name="StateAssesment_Alternative_Desc" ColumnName="StateAssesment_Alternative_Desc" />
                 <ScalarProperty Name="StateAssesment_Alternative_flag" ColumnName="StateAssesment_Alternative_flag" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />

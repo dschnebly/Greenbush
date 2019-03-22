@@ -145,7 +145,7 @@
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
-                <label class="standard-font-size">Parental Concerns</label>
+                <label class="standard-font-size">Parental Notifications</label>
             </div>
         </div>
         <div class="row voffset2">
@@ -163,6 +163,30 @@
                         <p id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
                             <input class="form-control standard-font-size" id="Parental_Concerns_Desc" name="Parental_Concerns_Desc" type="text" value="@(Model.Parental_Concerns_Desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
                         </p>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">TThe parent(s)/legal education decision were given/offered a copy of the Parental Rights Booklet.</label>&nbsp;&nbsp;
+                    <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="Parental_RightsBook_flag" id="Parental_RightsBook_flag" class="falsetrueswitch-checkbox" @(Model.Parental_RightsBook_flag ? "checked" : String.Empty ) />
+                        <label class="falsetrueswitch-label" for="Parental_RightsBook_flag">
+                            <span class="falsetrueswitch-inner"></span>
+                            <span class="falsetrueswitch-switch"></span>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">The parent(s)/legal education decision maker were given/offered a copy of the IEP.</label>&nbsp;&nbsp;
+                    <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="Parental_CopyIEP_flag" id="Parental_CopyIEP_flag" class="falsetrueswitch-checkbox" @(Model.Parental_CopyIEP_flag ? "checked" : String.Empty ) />
+                        <label class="falsetrueswitch-label" for="Parental_CopyIEP_flag">
+                            <span class="falsetrueswitch-inner"></span>
+                            <span class="falsetrueswitch-switch"></span>
+                        </label>
                     </div>
                 </fieldset>
             </div>

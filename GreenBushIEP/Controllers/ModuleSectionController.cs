@@ -501,6 +501,8 @@ namespace GreenBushIEP.Controllers
 
                 model.AssistiveTechnology_Require = collection["AssistiveTechnology_Require"] == "on" ? true : false;
                 model.Parental_Concerns_flag = collection["Parental_Concerns_flag"] == "on" ? true : false;
+                model.Parental_CopyIEP_flag = collection["Parental_CopyIEP_flag"] == "on" ? true : false;
+                model.Parental_RightsBook_flag = collection["Parental_Rightsbook_flag"] == "on" ? true : false;
                 model.ExtendedSchoolYear_RegressionRisk = collection["ExtendedSchoolYear_RegressionRisk"] == "on" ? true : false;
                 model.ExtendedSchoolYear_SeverityRisk = collection["ExtendedSchoolYear_SeverityRisk"] == "on" ? true : false;
                 model.Completed = Convert.ToBoolean(collection["Completed"]);
@@ -619,6 +621,8 @@ namespace GreenBushIEP.Controllers
                     OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;
                     OC.Parental_Concerns_flag = model.Parental_Concerns_flag;
                     OC.Parental_Concerns_Desc = model.Parental_Concerns_Desc;
+                    OC.Parental_CopyIEP_flag = model.Parental_CopyIEP_flag;
+                    OC.Parental_RightsBook_flag = model.Parental_RightsBook_flag;
                     OC.Completed = model.Completed;
                     OC.Create_Date = DateTime.Now;
 
