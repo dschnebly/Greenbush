@@ -36,7 +36,7 @@
 					<h5>@Model.studentDetails.building.Phone</h5>
 				}
 			</td>
-			
+
 		</tr>
 	</table>
 	<hr />
@@ -103,7 +103,7 @@
 		</tr>
 		<tr>
 			<td><label>Grade:</label></td>
-			<td>@(studentGrade)</td>                   
+			<td>@(studentGrade)</td>
 			<td><label>Fund Source:</label></td>
 			<td>@Model.studentDetails.placementCodeDesc</td>
 		</tr>
@@ -131,9 +131,9 @@
 		<tr>
 			<td><label>Re-Eval Signed:</label></td>
 			<td>
-				@foreach(var reevalDate in Model.studentDetails.reevalDates)
+				@foreach (var reevalDate in Model.studentDetails.reevalDates)
 				{
-					<span>@reevalDate.evalutationDate.ToShortDateString()</span><br/>
+					<span>@reevalDate.evalutationDate.ToShortDateString()</span><br />
 				}
 			</td>
 			<td><label>3 Year Re-Eval:</label></td>
@@ -166,14 +166,14 @@
 		<tr>
 			<td><label>Hearing Screening:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.ToShortDateString() : string.Empty)</td>
-			
+
 		</tr>
 		<tr>
 			<td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
 		</tr>
 	</table>
-	
 
+	<hr />
 	<div>
 		<h3 class="text-center">SERVICES</h3>
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
@@ -204,11 +204,11 @@
 							@switch (@service.SchoolYear)
 							{
 								case 2018:<text>2017 - 2018</text>; break;
-								case 2019: <text>2018 - 2019</text>; break;
-								case 2020: <text>2019 - 2020</text>; break;
-								case 2021: <text>2020 - 2021</text>; break;
-								case 2022: <text>2021 - 2022</text>; break;
-							}
+							case 2019: <text>2018 - 2019</text>; break;
+						case 2020: <text>2019 - 2020</text>; break;
+					case 2021: <text>2020 - 2021</text>; break;
+				case 2022: <text>2021 - 2022</text>; break;
+		}
 						</td>
 						<td>
 							@if (Model.serviceTypes.Count > 0)
@@ -266,30 +266,211 @@
 							@switch (@service.Frequency)
 							{
 								case 1:<text>Every week(1)</text>; break;
-								case 2: <text>Every 2 weeks(2)</text>; break;
-								case 3: <text>Every 3 weeks(3)</text>; break;
-								case 4: <text>Every 4 weeks(4)</text>; break;
-								case 8: <text>Every 8 weeks(8)</text>; break;
-								case 9: <text>Every 9 weeks(9)</text>; break;
-								case 12: <text>Every 12 weeks(12)</text>; break;
-								case 18: <text>Every 18 weeks(18)</text>; break;
-								case 19: <text>3 out of 4 weeks(19)</text>; break;
-								case 99: <text>1 day per year(99)</text>; break;
-							}
+							case 2: <text>Every 2 weeks(2)</text>; break;
+						case 3: <text>Every 3 weeks(3)</text>; break;
+					case 4: <text>Every 4 weeks(4)</text>; break;
+				case 8: <text>Every 8 weeks(8)</text>; break;
+			case 9: <text>Every 9 weeks(9)</text>; break;
+		case 12: <text>Every 12 weeks(12)</text>; break;
+	case 18: <text>Every 18 weeks(18)</text>; break;
+case 19: <text>3 out of 4 weeks(19)</text>; break;
+case 99: <text>1 day per year(99)</text>; break;
+}
 						</td>
 					</tr>
 					serviceCount++;
 				}
 			</table>
 			<div class="voffset3">
-			<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
+				<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
 			</div>
 		}
 		else
 		{
 			<p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>
 		}
-		
-	</div>		
+
 	</div>
+	<hr />
+	<div>
+		<h3 class="text-center">GOALS</h3>
+		@if (Model.studentGoals != null && Model.studentGoals.Count > 0)
+		{
+			foreach (var sGoal in Model.studentGoals)
+			{
+				var progQ1 = "";
+				var progQ2 = "";
+				var progQ3 = "";
+				var progQ4 = "";
+				var evalText = "";
+				var ddlText = "";
+				switch (sGoal.Module)
+				{
+					case "1": { ddlText = "Health"; break; }
+					case "2": { ddlText = "Motor"; break; }
+					case "3": { ddlText = "Communication"; break; }
+					case "4": { ddlText = "Social-Emotional"; break; }
+					case "5": { ddlText = "General Intelligence"; break; }
+					case "6": { ddlText = "Academic Performance"; break; }
+					case "7": { ddlText = "Reading"; break; }
+					case "8": { ddlText = "Math"; break; }
+					case "9": { ddlText = "Written Language"; break; }
+				} //end switch
+
+				switch (sGoal.Progress_Quarter1)
+				{
+					case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
+					case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+					case "3": { progQ1 = "Goal Met (indicate date)"; break; }
+				} //end switch
+
+				switch (sGoal.Progress_Quarter2)
+				{
+					case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
+					case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+					case "3": { progQ2 = "Goal Met (indicate date)"; break; }
+				} //end switch
+
+				switch (sGoal.Progress_Quarter3)
+				{
+					case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
+					case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+					case "3": { progQ3 = "Goal Met (indicate date)"; break; }
+				} //end switch
+
+				switch (sGoal.Progress_Quarter4)
+				{
+					case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
+					case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+					case "3": { progQ4 = "Goal Met (indicate date)"; break; }
+				} //end switch
+
+
+				foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
+				{
+					switch (ep.evaluationProcedureID)
+					{
+						case 1: { evalText += "Written Observation, "; break; }
+						case 2: { evalText += "Written Performance, "; break; }
+						case 3: { evalText += "Oral Performance, "; break; }
+						case 4: { evalText += "Criterion-Referenced Test, "; break; }
+						case 5: { evalText += "Time Sample, "; break; }
+						case 6: { evalText += "Demonstration/Performance, "; break; }
+						case 7: { evalText += "Other, "; break; }
+
+					} //end switch
+				}
+
+				<div>
+					<div>
+						<div>
+							<div>
+								<label for="StudentGoalTitle">Student Goal</label>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									<span data-bind="bs-drp-sel-label"><b>@ddlText</b></span><p>@sGoal.Title</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Measurable Annual Goal:</label>
+								<p>@sGoal.AnnualGoal</p>
+							</div>
+							<div class="form-group">
+								<label>Goal Baseline</label>
+								<p>@sGoal.Baseline</p>
+							</div>
+							<div class="form-group">
+								<label>State Standards</label>
+								<p>@sGoal.StateStandards</p>
+							</div>
+							<div class="form-group">
+								<label>Evaluation Procedure</label>
+								<p>@evalText.Trim().TrimEnd(',')</p>
+							</div>
+						</div> <!--end panel default-->
+					</div><!--end panel group-->
+				</div><!--end col md 12-->
+			}//end for goals
+		}
+		else
+		{
+			<p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
+		}
+	</div><hr />
+	<div>
+		<h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
+		@if (Model.accommodations != null && Model.accommodations.Count() > 0)
+		{
+
+			<table>
+				<tr>
+					<td><b>Type</b></td>
+					<td><b>Description</b></td>
+					<td><b>Frequency</b></td>
+					<td><b>Location</b></td>
+					<td><b>Duration</b></td>
+					<td><b>Anticipated <br />Start Date</b></td>
+					<td><b>Anticipated <br />End Date</b></td>
+				</tr>
+				@foreach (var accom in Model.accommodations)
+
+				{
+					string shortDesc = "Accommodation ";
+
+					if (@accom.AccomType == 1)
+					{
+						shortDesc = "Accommodation ";
+					}
+					else if (@accom.AccomType == 2)
+					{
+						shortDesc = "Modification ";
+					}
+					else if (@accom.AccomType == 3)
+					{
+						shortDesc = "Supplemental Aids and Services ";
+					}
+					else if (@accom.AccomType == 4)
+					{
+						shortDesc = "Support for School Personnel ";
+					}
+					else if (@accom.AccomType == 5)
+					{
+						shortDesc = "Transportation ";
+					}
+
+					<tr>
+
+						<td>@(shortDesc)</td>
+						<td>@accom.Description</td>
+						<td>@accom.Frequency</td>
+						<td>@accom.Location</td>
+						<td>@accom.Duration</td>
+						<td>
+							@if (accom.AnticipatedStartDate.HasValue)
+							{
+								@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")
+							}
+						</td>
+						<td>
+							@if (accom.AnticipatedEndDate.HasValue)
+							{
+								@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")
+							}
+						</td>
+					</tr>
+
+				} <!--end for each-->
+
+			</table>
+
+		}
+		else
+		{
+			<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Accommodations/Modifications at this time.</p>
+
+		}
+
+	</div>
+</div>
 <!--end student page-->
