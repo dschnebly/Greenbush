@@ -590,21 +590,33 @@ namespace GreenBushIEP.Controllers
                     db.tblOrganizationMappings.RemoveRange(removeList);
                     db.SaveChanges();
 
-                    foreach (string usd in districtArray)
-                    {
-                        if (fullList.Any(l => !l.USD.Contains(usd)))
-                        {
-                            db.tblOrganizationMappings.Add(new tblOrganizationMapping()
-                            {
-                                AdminID = submitter.UserID,
-                                UserID = student.UserID,
-                                USD = usd
-                            });
+					try
+					{
+						foreach (string usd in districtArray)
+						{
+							if (fullList.Any(l => !l.USD.Contains(usd)))
+							{
+								var mappingCount = db.tblOrganizationMappings.Where(o => o.AdminID == submitter.UserID && o.UserID == student.UserID && o.USD == usd).Count();
 
-                            db.SaveChanges();
-                        }
-                    }
-                }
+								if (mappingCount == 0)
+								{
+									db.tblOrganizationMappings.Add(new tblOrganizationMapping()
+									{
+										AdminID = submitter.UserID,
+										UserID = student.UserID,
+										USD = usd
+									});
+
+									db.SaveChanges();
+								}
+							}
+						}
+					}
+					catch (Exception e)
+					{
+						return Json(new { Result = "error", Message = "There was an error while trying to add the student to the Attending USD. \n\n" + e.InnerException.ToString() });
+					}
+				}
 
                 // map the buildings in the building mapping table
                 try
