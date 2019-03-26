@@ -838,7 +838,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="email">Email</label>
+                                        <label for="email">Student Email</label>
                                         @Html.EditorFor(model => model.student.Email, new { htmlAttributes = new { @class = "form-control norequired", id = "email", Name = "email", placeholder = "User email" } })
                                         @Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })
                                     </div>
