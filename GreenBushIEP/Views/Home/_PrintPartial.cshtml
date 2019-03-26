@@ -2329,7 +2329,7 @@
                     <hr />
                     <div class="row voffset2 dont-break">
                         <div class="col-md-12">
-                            <label>Parental Concerns</label>
+                            <label>Parental Notifications</label>
                         </div>
                     </div>
                     <div class="row voffset2">
@@ -2346,6 +2346,32 @@
                                 }                                
                             </fieldset>
                         </div>
+						<div class="col-md-12">
+							<fieldset class="form-group">
+								@if (Model.studentOtherConsiderations.Parental_RightsBook_flag)
+                                {
+                                     <p>The parent(s)/legal education decision were given/offered a copy of the Parental Rights Booklet.</p>									 
+                                }
+                                else
+                                {
+                                    <p>The parent(s)/legal education decision were not given/offered a copy of the Parental Rights Booklet.</p>
+                                }					
+                    
+							</fieldset>
+						</div>
+						<div class="col-md-12">
+							<fieldset class="form-group">
+								@if (Model.studentOtherConsiderations.Parental_CopyIEP_flag)
+                                {
+                                     <p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>									 
+                                }
+                                else
+                                {
+                                    <p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
+                                }					
+                    
+							</fieldset>							
+						</div>
                     </div>
                     <hr />
                     <div class="row voffset2">

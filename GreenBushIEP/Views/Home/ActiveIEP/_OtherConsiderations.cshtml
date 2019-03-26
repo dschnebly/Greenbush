@@ -168,20 +168,31 @@
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
-                <label>Parental Concerns</label>
+                <label>Parental Notifications</label>
             </div>
         </div>
 
         <div class="row voffset2">
             <div class="col-md-12">
                 <fieldset class="form-group">
-                    <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @studentName</label>&nbsp;&nbsp;@(Model.Parental_Concerns_flag != null && Model.Parental_Concerns_flag.Value ? "Yes" : "No" )
+                    <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @(studentName).</label>&nbsp;&nbsp;@(Model.Parental_Concerns_flag != null && Model.Parental_Concerns_flag.Value ? "Yes" : "No" )
                     
-                    <div class="form-check voffset2" id="ParentalConcerns_TextArea">
-                        <div id="PC_Desc" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
+                    <div class="form-check voffset2" id="ParentalConcerns_TextArea" style="display: @(Model.Parental_Concerns_flag.HasValue && Model.Parental_Concerns_flag.Value ? "block;" : "none;")">
+                        <div id="PC_Desc">
                             <p>@(Model.Parental_Concerns_Desc)</p>
                         </div>
                     </div>
+                </fieldset>
+            </div>
+			<div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">The parent(s)/legal education decision were given/offered a copy of the Parental Rights Booklet.</label>&nbsp;&nbsp;@(Model.Parental_RightsBook_flag  ? "Yes" : "No" )
+                    
+                </fieldset>
+            </div>
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">The parent(s)/legal education decision maker were given/offered a copy of the IEP.</label>&nbsp;&nbsp;@(Model.Parental_CopyIEP_flag  ? "Yes" : "No" )                    
                 </fieldset>
             </div>
         </div>
