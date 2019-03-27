@@ -355,6 +355,7 @@
                     <tr>
                         <th>Kids #</th>
                         <th>First Name</th>
+                        <th>Middle Name</th>
                         <th>Last Name</th>
                         <th>IEP Date</th>
                         <th>Birthdate</th>
@@ -367,6 +368,7 @@
                         <tr data-id="@(student.UserID)">
                             <td>@student.KidsID</td>
                             <td>@student.FirstName</td>
+                            <td>@student.MiddleName</td>
                             <td>@student.LastName</td>
                             <td>@DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy")</td>
                             <td>@student.DateOfBirth.ToString("MM/dd/yyyy")</td>

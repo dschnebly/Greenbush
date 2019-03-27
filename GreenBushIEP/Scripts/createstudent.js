@@ -26,7 +26,7 @@
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
 
-        var optionExists = ($("#misDistrict option[value=" + valueSelected + "]").length > 0);
+        var optionExists = $("#misDistrict option[value=" + valueSelected + "]").length > 0;
         if (optionExists) {
             var currentValues = $("#misDistrict").val();
             currentValues.push(valueSelected);
@@ -347,7 +347,7 @@ $("#next5").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 
@@ -376,7 +376,7 @@ $("#next6").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 
@@ -405,7 +405,7 @@ $("#next7").on("click", function () {
                 }
             },
             error: function (data) {
-                alert("There was an error when attempt to connect to the server.")
+                alert("There was an error when attempt to connect to the server.");
             }
         });
 

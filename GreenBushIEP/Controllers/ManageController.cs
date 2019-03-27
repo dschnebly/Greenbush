@@ -166,6 +166,7 @@ namespace GreenBushIEP.Controllers
                     {
                         RoleID = "5",
                         FirstName = collection["firstname"],
+                        MiddleName = collection["middlename"],
                         LastName = collection["lastname"],
                         Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
                         Create_Date = DateTime.Now,
@@ -476,6 +477,7 @@ namespace GreenBushIEP.Controllers
             {
                 model.student.UserID = id;
                 model.student.FirstName = student.FirstName;
+                model.student.MiddleName = student.MiddleName;
                 model.student.LastName = student.LastName;
                 model.student.City = student.City;
                 model.student.State = student.State;
@@ -559,6 +561,7 @@ namespace GreenBushIEP.Controllers
             if (student != null)
             {
                 student.FirstName = collection["firstname"];
+                student.MiddleName = collection["middlename"];
                 student.LastName = collection["lastname"];
                 student.Email = String.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
                 student.RoleID = "5";

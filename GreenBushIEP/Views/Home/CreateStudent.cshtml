@@ -787,12 +787,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label class="control-label required" for="firstname">First Name</label>
                                         @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="control-label" for="middlename">Middke Name</label>
+                                        @Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name", data_validate = "true" } })
+                                        @Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
                                         <label class="control-label required" for="lastname">Last Name</label>
                                         @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })

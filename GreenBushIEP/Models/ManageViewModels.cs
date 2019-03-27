@@ -105,6 +105,7 @@ namespace GreenBushIEP.Models
     {
         public int UserID;
         public string FirstName;
+        public string MiddleName;
         public string LastName;
         public string RoleID;
         public bool hasIEP;
