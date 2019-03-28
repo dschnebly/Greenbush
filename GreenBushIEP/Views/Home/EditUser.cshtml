@@ -150,13 +150,13 @@
                 </div>
             </div>
         </div>
-        <div class="form-group row" id="userWorksAtTheseBuildings">
+        <div class="form-group" id="userWorksAtTheseBuildings">
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-building" title="User Building" aria-hidden="true"></i>
                     </span>
-                    <select id="buildingIds" Name="buildingIds" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" data-role="multiselect" style="min-height: 49px; display:none;">
+                    <select id="buildingIds" Name="buildingIds" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect" style="min-height: 49px;">
                         @if (Model.buildings != null)
                         {
                             foreach (var building in Model.buildings)

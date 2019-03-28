@@ -117,10 +117,10 @@ namespace GreenBushIEP.Models
                 hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
 
-            anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.ACTIVE && i.IsActive);
-            anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.DRAFT && i.Amendment && i.IsActive);
-            anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.DRAFT && !i.Amendment && i.IsActive);
-            anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus == IEPStatus.ANNUAL && i.IsActive);
+            anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive);
+            anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.Amendment && i.IsActive);
+            anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && !i.Amendment && i.IsActive);
+            anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ANNUAL && i.IsActive);
 
             studentHealth = db.tblIEPHealths.Where(h => h.IEPHealthID == current.IEPHealthID).FirstOrDefault();
             studentMotor = db.tblIEPMotors.Where(m => m.IEPMotorID == current.IEPMotorID).FirstOrDefault();
