@@ -114,7 +114,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
                 }
 
                 // show the latest updated version changes
@@ -146,7 +146,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
                 }
 
                 // show the latest updated version changes
@@ -214,7 +214,7 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = theIEP.current != null;
+                    student.hasIEP = theIEP.current.IepStatus != IEPStatus.PLAN;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
@@ -288,7 +288,7 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = theIEP.current != null;
+                    student.hasIEP = theIEP.current.IepStatus != IEPStatus.PLAN;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();

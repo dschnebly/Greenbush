@@ -182,8 +182,8 @@ function tabValidates() {
     $inputs.each(function () {
         var input = $(this);
         var is_valid = input.val();
-        console.log(input);
-        console.log(input.val());
+        //console.log(input);
+        //console.log(input.val());
         if (is_valid === "" || is_valid === null) {
             if (input.is("select")) {
                 $(this).next().addClass('contact-tooltip');

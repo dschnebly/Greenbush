@@ -197,7 +197,7 @@
 
         <ul class="breadcrumb">
             <li><a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Managed Information System Portal</a></li>
-            <li class="active" style="font-size: 20px;">@(Model.Teacher.FirstName + " " + Model.Teacher.LastName)'s Student List</li>
+            <li class="active" style="font-size: 20px;">@(Model.Teacher.FirstName + " " + Model.Teacher.MiddleName + " " + Model.Teacher.LastName)'s Student List</li>
         </ul>
 
         <div class="row">
@@ -219,6 +219,7 @@
                             <thead>
                                 <tr>
                                     <th>First Name</th>
+                                    <th>Middle Name</th>
                                     <th>Last Name</th>
                                     <th>Building Name</th>
                                     <th>Email</th>
@@ -230,6 +231,7 @@
                                 {
                                     <tr class="my-table-item">
                                         <td>@(student.FirstName.ToTitleCase())</td>
+                                        <td>@(student.MiddleName)</td>
                                         <td>@(student.LastName.ToTitleCase())</td>
                                         <td>@(student.BuildingName)</td>
                                         <td><a href="mailto:@(student.Email)">@(student.Email)</a></td>
