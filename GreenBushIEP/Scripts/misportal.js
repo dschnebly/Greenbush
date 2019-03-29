@@ -59,12 +59,9 @@
                     type: 'GET',
                     url: '/Home/UnlockStudentIEP',
                     data: { stid: userId },
-                    dataType: "json",
                     async: false,
                     success: function (data) {
-                        if (data.Result === "success") {
-                            window.location.reload();
-                        }
+                        window.location.reload();
                     },
                     error: function (data) {
                         alert("Unknown error occurred. Please contact your administrator or a Greenbush official.");
@@ -117,7 +114,7 @@
                         if (results.members.length > 0) {
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -172,7 +169,7 @@
 
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -227,7 +224,7 @@
 
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -252,7 +249,7 @@
                     // (after success and error callbacks are executed). 
                 }
             });
-        })
+        });
 
         // attach event
         // fires where the button on an alert message is clicked

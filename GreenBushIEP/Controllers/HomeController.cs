@@ -110,7 +110,7 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
@@ -142,7 +142,7 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
@@ -208,7 +208,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy
-                                }).Distinct().OrderBy(u => u.LastName).ToList();
+                                }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 //get IEP Date
                 foreach (var student in students)
@@ -282,7 +282,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy
-                                }).Distinct().OrderBy(u => u.LastName).ToList();
+                                }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 //get IEP Date
                 foreach (var student in students)
@@ -938,10 +938,11 @@ namespace GreenbushIep.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
             if (student != null)
             {
-                bool studentHasIEP = db.tblIEPs.Where(i => i.UserID == stid).Any();
-                if (studentHasIEP)
+                tblIEP theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
+                if (theIEP != null)
                 {
-                    return RedirectToAction("StudentProcedures", new { stid });
+
+                    return RedirectToAction("StudentProcedures", new { stid, theIEP.IEPid });
                 }
                 else
                 {
@@ -949,7 +950,6 @@ namespace GreenbushIep.Controllers
                 }
 
                 return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
-
             }
 
             return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);

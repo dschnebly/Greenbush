@@ -1192,7 +1192,7 @@
                         <div class="col-md-3 ">
                             <div>
                                 <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date:</h6>
-                                <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
+                                <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
                             </div>
                             <div class="radio">
                                 <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
@@ -1207,7 +1207,7 @@
                         <div class="col-md-3 ">
                             <div>
                                 <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date:</h6>
-                                <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2016-01-01" max="2024-01-01" />
+                                <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
                             </div>
                             <div class="radio">
                                 <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>

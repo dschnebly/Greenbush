@@ -185,7 +185,7 @@
         dateFormat: "mm/dd/yy",
         changeYear: true,
         changeMonth: true,
-        yearRange: "-1:+2",
+        yearRange: "-4:+2",
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
@@ -197,7 +197,7 @@
         dateFormat: "mm/dd/yy",
         changeYear: true,
         changeMonth: true,
-        yearRange: "-1:+2",
+        yearRange: "-4:+2",
         beforeShowDay: function (date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('d-m-yy', date);
