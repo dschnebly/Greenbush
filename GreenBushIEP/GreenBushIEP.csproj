@@ -909,12 +909,13 @@
     <Content Include="Views\Home\ActiveIEP\_StudentTransition.cshtml" />
     <Content Include="Views\Home\_PrintPartial.cshtml" />
     <Content Include="Views\Home\NursePortal.cshtml" />
-    <Content Include="Views\Home\ActiveIEP\_GoalsSection.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_GoalsProgressRO.cshtml" />
     <Content Include="Views\Home\_GoalsProgress.cshtml" />
     <Content Include="Views\Home\_PrintStudentInfo.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\EditMe.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_StudentGoals.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_StudentBenchmarks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

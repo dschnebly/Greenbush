@@ -1095,6 +1095,7 @@ namespace GreenbushIep.Controllers
                     try
                     {
                         db.SaveChanges();
+
                         return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
@@ -1188,6 +1189,9 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentGoals(int studentId, int IEPid)
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+
             if (iep != null)
             {
                 tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
@@ -1217,7 +1221,10 @@ namespace GreenbushIep.Controllers
                     model.studentGoals.Add(new StudentGoal(goal.goalID));
                 }
 
-                return PartialView("_ModuleStudentGoals", model);
+                if (!isReadOnly)
+                    return PartialView("_ModuleStudentGoals", model);
+                else
+                    return PartialView("ActiveIEP/_StudentGoals", model);
             }
 
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());

@@ -288,10 +288,10 @@
           <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" />
           <Property Name="Progress_Quarter3" Type="nvarchar" MaxLength="50" />
           <Property Name="Progress_Quarter4" Type="nvarchar" MaxLength="50" />
-          <Property Name="ProgressDate_Quarter1" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDate_Quarter2" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDate_Quarter3" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDate_Quarter4" Type="datetime" Nullable="false" />
+          <Property Name="ProgressDate_Quarter1" Type="datetime" />
+          <Property Name="ProgressDate_Quarter2" Type="datetime" />
+          <Property Name="ProgressDate_Quarter3" Type="datetime" />
+          <Property Name="ProgressDate_Quarter4" Type="datetime" />
           <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" />
           <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" />
           <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" />
@@ -1935,10 +1935,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Progress_Quarter2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDate_Quarter1" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProgressDate_Quarter1" Type="DateTime" Precision="3" />
+          <Property Name="ProgressDate_Quarter2" Type="DateTime" Precision="3" />
+          <Property Name="ProgressDate_Quarter3" Type="DateTime" Precision="3" />
+          <Property Name="ProgressDate_Quarter4" Type="DateTime" Precision="3" />
           <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />

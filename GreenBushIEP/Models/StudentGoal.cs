@@ -61,6 +61,10 @@ namespace GreenBushIEP.Models
                     currentBenchmark.Progress_Quarter3 = benchmark.Progress_Quarter3;
                     currentBenchmark.Progress_Quarter4 = benchmark.Progress_Quarter4;
                     currentBenchmark.TransitionActivity = benchmark.TransitionActivity;
+                    currentBenchmark.ProgressDate_Quarter1 = DateTime.Now;
+                    currentBenchmark.ProgressDate_Quarter2 = DateTime.Now;
+                    currentBenchmark.ProgressDate_Quarter3 = DateTime.Now;
+                    currentBenchmark.ProgressDate_Quarter4 = DateTime.Now;
                 }
                 else
                 {

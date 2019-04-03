@@ -1,0 +1,98 @@
+﻿@model GreenBushIEP.Models.StudentGoalsViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title pull-left" style="font-size: 30px;"><i class="fa fa-trophy" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Goals</h4>
+    <div class="module-user-name">@(ViewBag.studentName)</div>
+</div>
+<div class="modal-body">
+    <div class="container" id="StudentGoals">
+
+        <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+            <strong class="moreinfo">Oh snap!</strong>
+        </div>
+
+        @if (Model.studentGoals.Count > 0)
+        {
+            foreach (var studentGoal in Model.studentGoals)
+            {
+                var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : "";
+                var sGoal = studentGoal.goal;
+
+                var ddlText = "";
+                switch (sGoal.Module)
+                {
+                    case "1": { ddlText = "Health"; break; }
+                    case "2": { ddlText = "Motor"; break; }
+                    case "3": { ddlText = "Communication"; break; }
+                    case "4": { ddlText = "Social-Emotional"; break; }
+                    case "5": { ddlText = "General Intelligence"; break; }
+                    case "6": { ddlText = "Academic Performance"; break; }
+                    case "7": { ddlText = "Reading"; break; }
+                    case "8": { ddlText = "Math"; break; }
+                    case "9": { ddlText = "Written Language"; break; }
+                } //end switch
+
+                var evalText = "";
+                foreach (var ep in studentGoal.evaluationProcedures.Where(g => g.goalID == studentGoal.goal.goalID))
+                {
+                    switch (ep.evaluationProcedureID)
+                    {
+                        case 1: { evalText += "Written Observation, "; break; }
+                        case 2: { evalText += "Written Performance, "; break; }
+                        case 3: { evalText += "Oral Performance, "; break; }
+                        case 4: { evalText += "Criterion-Referenced Test, "; break; }
+                        case 5: { evalText += "Time Sample, "; break; }
+                        case 6: { evalText += "Demonstration/Performance, "; break; }
+                        case 7: { evalText += "Other, "; break; }
+                    } //end switch
+                }
+                evalText = evalText.Substring(0, evalText.Length - 2);
+
+                <div class="row StudentGoal">
+                    <div class="col-md-12">
+                        <div class="panel-group" id="accordion@(studentGoal.goal.goalID)">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
+                                        <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
+                                            <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="standard-font-size">@ddlText</label>
+                                            <p class="standard-font-size">@(studentGoal.goal.Title)</p>
+                                        </div>
+                                        <label class="standard-font-size">Measurable Annual Goal: </label><br />
+                                        <div class="form-group">
+                                            <p class="standard-font-size">@(studentGoal.goal.AnnualGoal)</p>                                        </div>
+                                        <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                        <div class="form-group">
+                                            <p class="standard-font-size">@(studentGoal.goal.Baseline)</p>
+                                        </div>
+                                        <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
+                                        <div class="form-group">
+                                            <p class="standard-font-size">@(studentGoal.goal.StateStandards)</p>
+                                         </div>
+                                        <label class="standard-font-size" for="StudentEvaluationProcedures">Evaluation Procedure</label>
+                                        <div class="form-group">
+                                            <span class="standard-font-size">@evalText</span>
+                                        </div>
+
+                                        @Html.Partial("~/Views/Home/ActiveIEP/_StudentBenchmarks.cshtml", studentGoal)
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

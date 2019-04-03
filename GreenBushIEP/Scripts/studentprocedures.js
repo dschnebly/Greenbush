@@ -226,9 +226,6 @@
                 success: function (data) {
                     if (data.Result === 'success') {
                         location.reload(true);
-                    } else {
-                        alert(data.Message);
-                        location.reload(true);
                     }
                 },
                 error: function (data) {
@@ -259,7 +256,7 @@
                 type: 'GET',
                 url: '/Manage/CreateIEPAmendment',
                 data: { Stid: stId, IepId: iepId, amend: true },
-                dataType: 'json',
+                dataType: 'application/json',
                 success: function (data) {
                     if (data.Result === 'success') {
                         window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
@@ -295,7 +292,7 @@
                 type: 'GET',
                 url: '/Manage/CreateIEPAnnual',
                 data: { Stid: stId, IepId: iepId },
-                dataType: 'json',
+                dataType: 'application/json',
                 success: function (data) {
                     if (data.Result === 'success') {
                         window.location.href = '/Home/StudentProcedures/?stid=' + stid + '&iepID=' + data.Message;

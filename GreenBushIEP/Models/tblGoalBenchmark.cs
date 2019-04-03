@@ -23,10 +23,10 @@ namespace GreenBushIEP.Models
         public string Progress_Quarter2 { get; set; }
         public string Progress_Quarter3 { get; set; }
         public string Progress_Quarter4 { get; set; }
-        public System.DateTime ProgressDate_Quarter1 { get; set; }
-        public System.DateTime ProgressDate_Quarter2 { get; set; }
-        public System.DateTime ProgressDate_Quarter3 { get; set; }
-        public System.DateTime ProgressDate_Quarter4 { get; set; }
+        public Nullable<System.DateTime> ProgressDate_Quarter1 { get; set; }
+        public Nullable<System.DateTime> ProgressDate_Quarter2 { get; set; }
+        public Nullable<System.DateTime> ProgressDate_Quarter3 { get; set; }
+        public Nullable<System.DateTime> ProgressDate_Quarter4 { get; set; }
         public string ProgressDescription_Quarter1 { get; set; }
         public string ProgressDescription_Quarter2 { get; set; }
         public string ProgressDescription_Quarter3 { get; set; }

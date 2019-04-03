@@ -1391,7 +1391,8 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                int AnnualId = db.uspCopyIEP(Iepid, Stid, false);
+                tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                int AnnualId = db.uspCopyIEP(Iepid, user.UserID, false);
 
                 return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }
@@ -1407,7 +1408,8 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                var AmendmentId = db.uspCopyIEP(IepId, Stid, amend);
+                tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                var AmendmentId = db.uspCopyIEP(IepId, user.UserID, amend);
 
                 return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
             }

@@ -109,151 +109,153 @@
 </div>
 <div class="modal-body">
     <div class="container" id="StudentGoals">
-        <!--needed for creating new short term benchmarks-->
-        <div class="StudentGoalBenchmark hidden" id="defaultObjective">
-            <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
-            <div class="form-group" style="margin-bottom: 0;">
-                <div class="input-group" style="background-color: #F9F9F9;">
-                    <div class="input-group-btn bs-dropdown-to-select-group">
-                        <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                            <span data-bind="bs-drp-sel-label">Select Method...</span>
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <input type="hidden" name="StudentGoalBenchmarkMethod0" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="1">
-                        <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                            <li data-value="1"><a href="#">Written Observation</a></li>
-                            <li data-value="2"><a href="#">Written Performance</a></li>
-                            <li data-value="3"><a href="#">Oral Performance</a></li>
-                            <li data-value="4"><a href="#">Criterion-Referenced Test</a></li>
-                            <li data-value="5"><a href="#">Time Sample</a></li>
-                            <li data-value="6"><a href="#">Demonstration/Performance</a></li>
-                            <li data-value="7"><a href="#">Other</a></li>
-                        </ul>
-                    </div>
-                    <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                        </button>
-                        <input type="hidden" name="StudentGoalBenchmarkHasTransition0" value="false" />
-                    </span>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="slideReportProgress" style="display: none;">
-                <table class="table table-bordered table-bordered table-responsive">
-                    <thead class="thead-inverse" style="background-color: #ededed;">
-                        <tr>
-                            <th class="text-center standard-font-size" colspan="4">Reports of Progress</th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                    <label>1<sup>st</sup>&nbsp;&nbsp;</label>
-                                    <input type="date" class="form-control" name="reportOfProgressQuarter10" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th>
-                                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                    <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-                                    <input type="date" class="form-control" name="reportOfProgressQuarter20" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th>
-                                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                    <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-                                    <input type="date" class="form-control" name="reportOfProgressQuarter30" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th>
-                                <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                    <label>4<sup>th</sup>&nbsp;&nbsp;</label>
-                                    <input type="date" class="form-control" name="reportOfProgressQuarter40" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="input-group input-append">
-                                    <select class="form-control objective" name="ReportsOfProgressSelect10">
-                                        <option value="1">Not applicable during this grading period</option>
-                                        <option value="2">No progress made</option>
-                                        <option value="3">Little progress made</option>
-                                        <option value="4">Progress made; Objective not yet met</option>
-                                        <option value="5">Objective met</option>
-                                    </select>
-                                    <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments10"><span class="glyphicon glyphicon-edit"></span></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group input-append">
-                                    <select class="form-control objective" name="ReportsOfProgressSelect20">
-                                        <option value="1">Not applicable during this grading period</option>
-                                        <option value="2">No progress made</option>
-                                        <option value="3">Little progress made</option>
-                                        <option value="4">Progress made; Objective not yet met</option>
-                                        <option value="5">Objective met</option>
-                                    </select>
-                                    <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments20"><span class="glyphicon glyphicon-edit"></span></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group input-append">
-                                    <select class="form-control objective" name="ReportsOfProgressSelect30">
-                                        <option value="1">Not applicable during this grading period</option>
-                                        <option value="2">No progress made</option>
-                                        <option value="3">Little progress made</option>
-                                        <option value="4">Progress made; Objective not yet met</option>
-                                        <option value="5">Objective met</option>
-                                    </select>
-                                    <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments30"><span class="glyphicon glyphicon-edit"></span></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group input-append">
-                                    <select class="form-control objective" name="ReportsOfProgressSelect40">
-                                        <option value="1">Not applicable during this grading period</option>
-                                        <option value="2">No progress made</option>
-                                        <option value="3">Little progress made</option>
-                                        <option value="4">Progress made; Objective not yet met</option>
-                                        <option value="5">Objective met</option>
-                                    </select>
-                                    <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments40"><span class="glyphicon glyphicon-edit"></span></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hidden">
-                            <td colspan="4">
-                                <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
-                                <div class="form-group shortTermComments">
-                                    <textarea name="reportOfProgressShortTermComments10" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                    <textarea name="reportOfProgressShortTermComments20" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                    <textarea name="reportOfProgressShortTermComments30" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                    <textarea name="reportOfProgressShortTermComments40" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
         <!--which modules need a goal-->
         @Html.HiddenFor(m => m.modulesNeedingGoals)
 
-        @if (Model.isReadOnly)
+        @*@if (Model.isReadOnly)
         {
             @Html.Partial("~/Views/Home/ActiveIEP/_GoalsSection.cshtml", Model)
         }
         else
-        {
+        {*@
+
+            <!--needed for creating new short term benchmarks-->
+            <div class="StudentGoalBenchmark hidden" id="defaultObjective">
+                <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div class="input-group" style="background-color: #F9F9F9;">
+                        <div class="input-group-btn bs-dropdown-to-select-group">
+                            <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                                <span data-bind="bs-drp-sel-label">Select Method...</span>
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <input type="hidden" name="StudentGoalBenchmarkMethod0" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="1">
+                            <ul class="dropdown-menu" role="menu" style="font-size:16px;">
+                                <li data-value="1"><a href="#">Written Observation</a></li>
+                                <li data-value="2"><a href="#">Written Performance</a></li>
+                                <li data-value="3"><a href="#">Oral Performance</a></li>
+                                <li data-value="4"><a href="#">Criterion-Referenced Test</a></li>
+                                <li data-value="5"><a href="#">Time Sample</a></li>
+                                <li data-value="6"><a href="#">Demonstration/Performance</a></li>
+                                <li data-value="7"><a href="#">Other</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
+                                <span class="glyphicon glyphicon-unchecked"></span>
+                            </button>
+                            <input type="hidden" name="StudentGoalBenchmarkHasTransition0" value="false" />
+                        </span>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="slideReportProgress" style="display: none;">
+                    <table class="table table-bordered table-bordered table-responsive">
+                        <thead class="thead-inverse" style="background-color: #ededed;">
+                            <tr>
+                                <th class="text-center standard-font-size" colspan="4">Reports of Progress</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                        <label>1<sup>st</sup>&nbsp;&nbsp;</label>
+                                        <input type="date" class="form-control" name="reportOfProgressQuarter10" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                        <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
+                                        <input type="date" class="form-control" name="reportOfProgressQuarter20" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                        <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
+                                        <input type="date" class="form-control" name="reportOfProgressQuarter30" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                        <label>4<sup>th</sup>&nbsp;&nbsp;</label>
+                                        <input type="date" class="form-control" name="reportOfProgressQuarter40" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="input-group input-append">
+                                        <select class="form-control objective" name="ReportsOfProgressSelect10">
+                                            <option value="1">Not applicable during this grading period</option>
+                                            <option value="2">No progress made</option>
+                                            <option value="3">Little progress made</option>
+                                            <option value="4">Progress made; Objective not yet met</option>
+                                            <option value="5">Objective met</option>
+                                        </select>
+                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments10"><span class="glyphicon glyphicon-edit"></span></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group input-append">
+                                        <select class="form-control objective" name="ReportsOfProgressSelect20">
+                                            <option value="1">Not applicable during this grading period</option>
+                                            <option value="2">No progress made</option>
+                                            <option value="3">Little progress made</option>
+                                            <option value="4">Progress made; Objective not yet met</option>
+                                            <option value="5">Objective met</option>
+                                        </select>
+                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments20"><span class="glyphicon glyphicon-edit"></span></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group input-append">
+                                        <select class="form-control objective" name="ReportsOfProgressSelect30">
+                                            <option value="1">Not applicable during this grading period</option>
+                                            <option value="2">No progress made</option>
+                                            <option value="3">Little progress made</option>
+                                            <option value="4">Progress made; Objective not yet met</option>
+                                            <option value="5">Objective met</option>
+                                        </select>
+                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments30"><span class="glyphicon glyphicon-edit"></span></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group input-append">
+                                        <select class="form-control objective" name="ReportsOfProgressSelect40">
+                                            <option value="1">Not applicable during this grading period</option>
+                                            <option value="2">No progress made</option>
+                                            <option value="3">Little progress made</option>
+                                            <option value="4">Progress made; Objective not yet met</option>
+                                            <option value="5">Objective met</option>
+                                        </select>
+                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments40"><span class="glyphicon glyphicon-edit"></span></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hidden">
+                                <td colspan="4">
+                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                    <div class="form-group shortTermComments">
+                                        <textarea name="reportOfProgressShortTermComments10" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                        <textarea name="reportOfProgressShortTermComments20" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                        <textarea name="reportOfProgressShortTermComments30" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                        <textarea name="reportOfProgressShortTermComments40" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
                     <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
@@ -344,104 +346,103 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
-                                            <thead class="thead-inverse">
-                                                <tr class="ProgressAnnualGoal">
-                                                    <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus" style="float:left;"></i>Progress Towards Annual Goal</th>
-                                                </tr>
-                                                <tr class="PTAGDisplay hidden">
-                                                    <th>
-                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                                            <label>1<sup>st</sup>&nbsp;&nbsp;</label>
-                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate10" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                                            <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate20" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                                            <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate30" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                                            <label>4<sup>th</sup>&nbsp;&nbsp;</label>
-                                                            <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate40" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="PTAGDisplay hidden">
-                                                <tr>
-                                                    <td>
-                                                        <div class="input-group input-append">
-                                                            <select class="form-control" name="ReportAnnualGoal10">
-                                                                <option value="1">Anticipate Meeting Goal</option>
-                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                                <option value="3">Goal Met (indicate date)</option>
-                                                            </select>
-                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments10"><span class="glyphicon glyphicon-edit"></span></span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="input-group input-append">
-                                                            <select class="form-control" name="ReportAnnualGoal20">
-                                                                <option value="1">Anticipate Meeting Goal</option>
-                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                                <option value="3">Goal Met (indicate date)</option>
-                                                            </select>
-                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="input-group input-append">
-                                                            <select class="form-control" name="ReportAnnualGoal30">
-                                                                <option value="1">Anticipate Meeting Goal</option>
-                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                                <option value="3">Goal Met (indicate date)</option>
-                                                            </select>
-                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments30"><span class="glyphicon glyphicon-edit"></span></span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="input-group input-append">
-                                                            <select class="form-control" name="ReportAnnualGoal40">
-                                                                <option value="1">Anticipate Meeting Goal</option>
-                                                                <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
-                                                                <option value="3">Goal Met (indicate date)</option>
-                                                            </select>
-                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments40"><span class="glyphicon glyphicon-edit"></span></span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="hidden">
-                                                    <td colspan="4">
-                                                        <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
-                                                        <div class="form-group shortTermComments">
-                                                            <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                            <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                            <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                            <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        @*<br />
-                                            <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
-                                            <br />
-                                            <label class="input-labels" style="font-size:16px;margin-top: 5px;">Short Term Benchmark(s)</label>
-                                            <label class="input-labels pull-right" style="margin-top: -40px; font-size: 26px; margin-right: 5px">
-                                                <span class="glyphicon glyphicon-plus-sign toggleReportsOfProgress"></span>
-                                            </label>
-                                            <label class="input-labels pull-right" style="font-size:16px;margin-right: 15px;">T.A.</label>
-                                            <div class="StudentGoalBenchmarks"></div>*@
-                                        <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+
+                                        @*<table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
+                                                <thead class="thead-inverse">
+                                                    <tr class="ProgressAnnualGoal">
+                                                        <th class="text-center standard-font-size" colspan="4"><i class="glyphicon glyphicon-plus" style="float:left;"></i>Progress Towards Annual Goal</th>
+                                                    </tr>
+                                                    <tr class="PTAGDisplay hidden">
+                                                        <th>
+                                                            <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                <label>1<sup>st</sup>&nbsp;&nbsp;</label>
+                                                                <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate10" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
+                                                                <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate20" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
+                                                                <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate30" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                <label>4<sup>th</sup>&nbsp;&nbsp;</label>
+                                                                <input type="date" class="form-control standard-font-size" name="ReportAnnualGoalDate40" style="width:60%; height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" />
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="PTAGDisplay hidden">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group input-append">
+                                                                <select class="form-control" name="ReportAnnualGoal10">
+                                                                    <option value="1">Anticipate Meeting Goal</option>
+                                                                    <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                    <option value="3">Goal Met (indicate date)</option>
+                                                                </select>
+                                                                <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments10"><span class="glyphicon glyphicon-edit"></span></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-append">
+                                                                <select class="form-control" name="ReportAnnualGoal20">
+                                                                    <option value="1">Anticipate Meeting Goal</option>
+                                                                    <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                    <option value="3">Goal Met (indicate date)</option>
+                                                                </select>
+                                                                <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-append">
+                                                                <select class="form-control" name="ReportAnnualGoal30">
+                                                                    <option value="1">Anticipate Meeting Goal</option>
+                                                                    <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                    <option value="3">Goal Met (indicate date)</option>
+                                                                </select>
+                                                                <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments30"><span class="glyphicon glyphicon-edit"></span></span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-append">
+                                                                <select class="form-control" name="ReportAnnualGoal40">
+                                                                    <option value="1">Anticipate Meeting Goal</option>
+                                                                    <option value="2">Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                    <option value="3">Goal Met (indicate date)</option>
+                                                                </select>
+                                                                <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments40"><span class="glyphicon glyphicon-edit"></span></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="hidden">
+                                                        <td colspan="4">
+                                                            <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                            <div class="form-group shortTermComments">
+                                                                <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                                <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                                <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                                <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>*@
+
+                                        <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+                                        <br />
+                                        <label class="input-labels" style="font-size:16px;margin-top: 15px;margin-left: 5px;">Short Term Benchmark(s)</label>
+                                        <label class="input-labels pull-right" style="font-size:16px;margin-right: 45px; margin-top:15px;">T.A.</label>
+
+                                        <div class="StudentGoalBenchmarks"></div>
+                                        <div class="col-md-12" style="text-align:center; margin-top: 25px;">
                                             <div class="form-group">
                                                 <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                                                 <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
@@ -456,7 +457,7 @@
 
             </div>
 
-            if (Model.studentGoals.Count > 0)
+            @if (Model.studentGoals.Count > 0)
             {
                 foreach (var studentGoal in Model.studentGoals)
                 {
@@ -542,9 +543,9 @@
                                                     </select>
                                                 </div>
 
-                                                @Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal)
+                                                @Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal, new ViewDataDictionary { { "isReadOnly", Model.isReadOnly } })
 
-                                                <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                                                <div class="col-md-12" style="text-align:center;margin-top: 25px;">
                                                     <div class="form-group">
                                                         <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                                                         <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
@@ -561,8 +562,10 @@
                 }
             }
 
-        }  @*//end else readonly*@
+        @*}*@
+
     </div>
+
     <div class="completed-loader @(Model.studentGoals.Count != 0 && Model.studentGoals.All(sg => sg.goal.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
         <div class="text-center completed-checkbox">
             <div class="form-check">
@@ -589,10 +592,6 @@
             }
         });
 
-        $(".studentGoalType").click(function () {
-            alert("Handler for .click() called.");
-        });
-
         $(".chosen-select").chosen({ width: "100%" });
     });
 
@@ -614,26 +613,26 @@
         cloneGoal.find("input[name='StudentGoalBaseline0']").attr("name", "StudentGoalBaseline" + goalCount);
         cloneGoal.find("input[name='StudentGoalStateStandards0']").attr("name", "StudentGoalStateStandards" + goalCount);
 
-        cloneGoal.find("input[name='reportOfProgressQuarter10']").attr("name", "reportOfProgressQuarter1" + goalCount);
-        cloneGoal.find("input[name='reportOfProgressQuarter20']").attr("name", "reportOfProgressQuarter2" + goalCount);
-        cloneGoal.find("input[name='reportOfProgressQuarter30']").attr("name", "reportOfProgressQuarter3" + goalCount);
-        cloneGoal.find("input[name='reportOfProgressQuarter40']").attr("name", "reportOfProgressQuarter4" + goalCount);
-        cloneGoal.find("input[name='ReportAnnualGoalDate10']").attr("name", "ReportAnnualGoalDate1" + goalCount);
-        cloneGoal.find("input[name='ReportAnnualGoalDate20']").attr("name", "ReportAnnualGoalDate2" + goalCount);
-        cloneGoal.find("input[name='ReportAnnualGoalDate30']").attr("name", "ReportAnnualGoalDate3" + goalCount);
-        cloneGoal.find("input[name='ReportAnnualGoalDate40']").attr("name", "ReportAnnualGoalDate4" + goalCount);
-        cloneGoal.find("select[name='ReportAnnualGoal10']").attr("name", "ReportAnnualGoal1" + goalCount);
-        cloneGoal.find("select[name='ReportAnnualGoal20']").attr("name", "ReportAnnualGoal2" + goalCount);
-        cloneGoal.find("select[name='ReportAnnualGoal30']").attr("name", "ReportAnnualGoal3" + goalCount);
-        cloneGoal.find("select[name='ReportAnnualGoal40']").attr("name", "ReportAnnualGoal4" + goalCount);
-        cloneGoal.find("span[data-value='reportOfAnnualGoalComments10']").attr("data-value", "reportOfAnnualGoalComments1" + goalCount);
-        cloneGoal.find("span[data-value='reportOfAnnualGoalComments20']").attr("data-value", "reportOfAnnualGoalComments2" + goalCount);
-        cloneGoal.find("span[data-value='reportOfAnnualGoalComments30']").attr("data-value", "reportOfAnnualGoalComments3" + goalCount);
-        cloneGoal.find("span[data-value='reportOfAnnualGoalComments40']").attr("data-value", "reportOfAnnualGoalComments4" + goalCount);
-        cloneGoal.find("textarea[name='reportOfAnnualGoalComments10']").attr("name", "reportOfAnnualGoalComments1" + goalCount);
-        cloneGoal.find("textarea[name='reportOfAnnualGoalComments20']").attr("name", "reportOfAnnualGoalComments2" + goalCount);
-        cloneGoal.find("textarea[name='reportOfAnnualGoalComments30']").attr("name", "reportOfAnnualGoalComments3" + goalCount);
-        cloneGoal.find("textarea[name='reportOfAnnualGoalComments40']").attr("name", "reportOfAnnualGoalComments4" + goalCount);
+        //cloneGoal.find("input[name='reportOfProgressQuarter10']").attr("name", "reportOfProgressQuarter1" + goalCount);
+        //cloneGoal.find("input[name='reportOfProgressQuarter20']").attr("name", "reportOfProgressQuarter2" + goalCount);
+        //cloneGoal.find("input[name='reportOfProgressQuarter30']").attr("name", "reportOfProgressQuarter3" + goalCount);
+        //cloneGoal.find("input[name='reportOfProgressQuarter40']").attr("name", "reportOfProgressQuarter4" + goalCount);
+        //cloneGoal.find("input[name='ReportAnnualGoalDate10']").attr("name", "ReportAnnualGoalDate1" + goalCount);
+        //cloneGoal.find("input[name='ReportAnnualGoalDate20']").attr("name", "ReportAnnualGoalDate2" + goalCount);
+        //cloneGoal.find("input[name='ReportAnnualGoalDate30']").attr("name", "ReportAnnualGoalDate3" + goalCount);
+        //cloneGoal.find("input[name='ReportAnnualGoalDate40']").attr("name", "ReportAnnualGoalDate4" + goalCount);
+        //cloneGoal.find("select[name='ReportAnnualGoal10']").attr("name", "ReportAnnualGoal1" + goalCount);
+        //cloneGoal.find("select[name='ReportAnnualGoal20']").attr("name", "ReportAnnualGoal2" + goalCount);
+        //cloneGoal.find("select[name='ReportAnnualGoal30']").attr("name", "ReportAnnualGoal3" + goalCount);
+        //cloneGoal.find("select[name='ReportAnnualGoal40']").attr("name", "ReportAnnualGoal4" + goalCount);
+        //cloneGoal.find("span[data-value='reportOfAnnualGoalComments10']").attr("data-value", "reportOfAnnualGoalComments1" + goalCount);
+        //cloneGoal.find("span[data-value='reportOfAnnualGoalComments20']").attr("data-value", "reportOfAnnualGoalComments2" + goalCount);
+        //cloneGoal.find("span[data-value='reportOfAnnualGoalComments30']").attr("data-value", "reportOfAnnualGoalComments3" + goalCount);
+        //cloneGoal.find("span[data-value='reportOfAnnualGoalComments40']").attr("data-value", "reportOfAnnualGoalComments4" + goalCount);
+        //cloneGoal.find("textarea[name='reportOfAnnualGoalComments10']").attr("name", "reportOfAnnualGoalComments1" + goalCount);
+        //cloneGoal.find("textarea[name='reportOfAnnualGoalComments20']").attr("name", "reportOfAnnualGoalComments2" + goalCount);
+        //cloneGoal.find("textarea[name='reportOfAnnualGoalComments30']").attr("name", "reportOfAnnualGoalComments3" + goalCount);
+        //cloneGoal.find("textarea[name='reportOfAnnualGoalComments40']").attr("name", "reportOfAnnualGoalComments4" + goalCount);
 
         var evals = cloneGoal.find("select[name='StudentGoalBenchmarkMethods0']").attr("id", "StudentGoalBenchmarkMethods" + goalCount);
         evals.chosen({ width: "100%" });
@@ -738,6 +737,7 @@
             //get baseline goal text
             var goalBaselineElement = $(this).find(".aStudentBaseLine");
 
+            //* Binding */
             //check if default selected type has a baseline goal
             if (goalBaselineElement.attr("value") == "") {
                 _checkGoal(1, goalBaselineElement);
@@ -866,18 +866,18 @@
 
             //* Binding */
             /* When the user clicks on the minus to view more info for the Progress Towards Annual Goal */
-            $(this).find('.ProgressAnnualGoal').on('click', function () {
-                $(this).find("i").toggleClass('glyphicon-minus glyphicon-plus');
-                $(this).closest('table').find('thead tr.PTAGDisplay:first').toggleClass('hidden');
-                $(this).closest('table').find('tbody.PTAGDisplay:first').toggleClass('hidden');
-            });
+            //$(this).find('.ProgressAnnualGoal').on('click', function () {
+            //    $(this).find("i").toggleClass('glyphicon-minus glyphicon-plus');
+            //    $(this).closest('table').find('thead tr.PTAGDisplay:first').toggleClass('hidden');
+            //    $(this).closest('table').find('tbody.PTAGDisplay:first').toggleClass('hidden');
+            //});
 
             //* Binding */
             /* when the teacher clicks + icon to see Reports of Progress under each benchmark */
-            $(this).find('.toggleReportsOfProgress').on('click', function (event) {
-                $(this).toggleClass('active');
-                $(this).closest('.StudentGoal ').find('.slideReportProgress').slideToggle("slow");
-            });
+            //$(this).find('.toggleReportsOfProgress').on('click', function (event) {
+            //    $(this).toggleClass('active');
+            //    $(this).closest('.StudentGoal ').find('.slideReportProgress').slideToggle("slow");
+            //});
 
             /* Binding */
             /* when the teacher clicks the Add Short Term Benchmark(s) button */
@@ -888,64 +888,64 @@
                 cloneBenchmark.find("input[name='StudentGoalBenchmarkMethod0']").attr("name", "StudentGoalBenchmarkMethod" + benchmarkCount);
                 cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + benchmarkCount);
                 cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + benchmarkCount);
-                cloneBenchmark.find("input[name='reportOfProgressQuarter10']").attr("name", "reportOfProgressQuarter1" + benchmarkCount);
-                cloneBenchmark.find("input[name='reportOfProgressQuarter20']").attr("name", "reportOfProgressQuarter2" + benchmarkCount);
-                cloneBenchmark.find("input[name='reportOfProgressQuarter30']").attr("name", "reportOfProgressQuarter3" + benchmarkCount);
-                cloneBenchmark.find("input[name='reportOfProgressQuarter40']").attr("name", "reportOfProgressQuarter4" + benchmarkCount);
-                cloneBenchmark.find("select[name='ReportsOfProgressSelect10']").attr("name", "ReportsOfProgressSelect1" + benchmarkCount);
-                cloneBenchmark.find("select[name='ReportsOfProgressSelect20']").attr("name", "ReportsOfProgressSelect2" + benchmarkCount);
-                cloneBenchmark.find("select[name='ReportsOfProgressSelect30']").attr("name", "ReportsOfProgressSelect3" + benchmarkCount);
-                cloneBenchmark.find("select[name='ReportsOfProgressSelect40']").attr("name", "ReportsOfProgressSelect4" + benchmarkCount);
-                cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments10']").attr("name", "reportOfProgressShortTermComments1" + benchmarkCount);
-                cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments20']").attr("name", "reportOfProgressShortTermComments2" + benchmarkCount);
-                cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments30']").attr("name", "reportOfProgressShortTermComments3" + benchmarkCount);
-                cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments40']").attr("name", "reportOfProgressShortTermComments4" + benchmarkCount);
-                cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments10']").attr("data-value", "reportOfProgressShortTermComments1" + benchmarkCount);
-                cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments20']").attr("data-value", "reportOfProgressShortTermComments2" + benchmarkCount);
-                cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments30']").attr("data-value", "reportOfProgressShortTermComments3" + benchmarkCount);
-                cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments40']").attr("data-value", "reportOfProgressShortTermComments4" + benchmarkCount);
+                //cloneBenchmark.find("input[name='reportOfProgressQuarter10']").attr("name", "reportOfProgressQuarter1" + benchmarkCount);
+                //cloneBenchmark.find("input[name='reportOfProgressQuarter20']").attr("name", "reportOfProgressQuarter2" + benchmarkCount);
+                //cloneBenchmark.find("input[name='reportOfProgressQuarter30']").attr("name", "reportOfProgressQuarter3" + benchmarkCount);
+                //cloneBenchmark.find("input[name='reportOfProgressQuarter40']").attr("name", "reportOfProgressQuarter4" + benchmarkCount);
+                //cloneBenchmark.find("select[name='ReportsOfProgressSelect10']").attr("name", "ReportsOfProgressSelect1" + benchmarkCount);
+                //cloneBenchmark.find("select[name='ReportsOfProgressSelect20']").attr("name", "ReportsOfProgressSelect2" + benchmarkCount);
+                //cloneBenchmark.find("select[name='ReportsOfProgressSelect30']").attr("name", "ReportsOfProgressSelect3" + benchmarkCount);
+                //cloneBenchmark.find("select[name='ReportsOfProgressSelect40']").attr("name", "ReportsOfProgressSelect4" + benchmarkCount);
+                //cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments10']").attr("name", "reportOfProgressShortTermComments1" + benchmarkCount);
+                //cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments20']").attr("name", "reportOfProgressShortTermComments2" + benchmarkCount);
+                //cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments30']").attr("name", "reportOfProgressShortTermComments3" + benchmarkCount);
+                //cloneBenchmark.find("textarea[name='reportOfProgressShortTermComments40']").attr("name", "reportOfProgressShortTermComments4" + benchmarkCount);
+                //cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments10']").attr("data-value", "reportOfProgressShortTermComments1" + benchmarkCount);
+                //cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments20']").attr("data-value", "reportOfProgressShortTermComments2" + benchmarkCount);
+                //cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments30']").attr("data-value", "reportOfProgressShortTermComments3" + benchmarkCount);
+                //cloneBenchmark.find("span[data-value='reportOfProgressShortTermComments40']").attr("data-value", "reportOfProgressShortTermComments4" + benchmarkCount);
                 $(this).parent().find('.StudentGoalBenchmarks').append(cloneBenchmark);
 
                 // if toggleReportsOfProgress is active then show the Reports of Progress
-                if ($(this).closest(".StudentGoal").find(".toggleReportsOfProgress").hasClass('active')) {
-                    cloneBenchmark.find('.slideReportProgress').show();
-                }
+                //if ($(this).closest(".StudentGoal").find(".toggleReportsOfProgress").hasClass('active')) {
+                //    cloneBenchmark.find('.slideReportProgress').show();
+                //}
 
                 initObjective();
             });
 
             //* Binding */
             /* when the teacher clicks the comment icon */
-            $(this).find('span.addComment').not('.bound').addClass('bound').on('click', function (event) {
-                var textareaName = $(this).attr("data-value");
-                var textarea = $("textarea[name='" + textareaName + "']");
-                var textAreaLabel = textarea.parent().parent().find("label:first");
-                var textareaIsHidden = textarea.hasClass("hidden");
+            //$(this).find('span.addComment').not('.bound').addClass('bound').on('click', function (event) {
+            //    var textareaName = $(this).attr("data-value");
+            //    var textarea = $("textarea[name='" + textareaName + "']");
+            //    var textAreaLabel = textarea.parent().parent().find("label:first");
+            //    var textareaIsHidden = textarea.hasClass("hidden");
 
-                // close all the comment boxes
-                $(this).closest("tr").next().find("div.shortTermComments textarea").each(function (index) {
-                    $(this).addClass("hidden");
-                });
+            //    // close all the comment boxes
+            //    $(this).closest("tr").next().find("div.shortTermComments textarea").each(function (index) {
+            //        $(this).addClass("hidden");
+            //    });
 
-                // remove all the highlights
-                $(this).closest("tr").find("span.addComment").each(function (index) {
-                    $(this).prev().removeClass("commentsHighlighted");
-                });
+            //    // remove all the highlights
+            //    $(this).closest("tr").find("span.addComment").each(function (index) {
+            //        $(this).prev().removeClass("commentsHighlighted");
+            //    });
 
-                if (textareaIsHidden) {
-                    textarea.removeClass("hidden");
-                    textarea.closest("tr").removeClass("hidden");
-                    $(this).prev().addClass("commentsHighlighted");
-                    textAreaLabel[0].innerText = textarea.attr("placeholder").substring(28, textarea.attr("placeholder").length);
-                }
-                else {
-                    textarea.addClass("hidden");
-                    textarea.closest("tr").addClass("hidden");
-                }
-            });
+            //    if (textareaIsHidden) {
+            //        textarea.removeClass("hidden");
+            //        textarea.closest("tr").removeClass("hidden");
+            //        $(this).prev().addClass("commentsHighlighted");
+            //        textAreaLabel[0].innerText = textarea.attr("placeholder").substring(28, textarea.attr("placeholder").length);
+            //    }
+            //    else {
+            //        textarea.addClass("hidden");
+            //        textarea.closest("tr").addClass("hidden");
+            //    }
+            //});
         });
 
-        //initObjective();
+        initObjective();
     }
 
     function initObjective() {
@@ -1016,33 +1016,33 @@
 
             //* Binding */
             /* when the teacher clicks the comment icon */
-            $(this).find('span.addComment').not('.bound').addClass('bound').on('click', function (event) {
-                var textareaName = $(this).attr("data-value");
-                var textarea = $("textarea[name='" + textareaName + "']");
-                var textAreaLabel = textarea.parent().parent().find("label:first");
-                var textareaIsHidden = textarea.hasClass("hidden");
+            //$(this).find('span.addComment').not('.bound').addClass('bound').on('click', function (event) {
+            //    var textareaName = $(this).attr("data-value");
+            //    var textarea = $("textarea[name='" + textareaName + "']");
+            //    var textAreaLabel = textarea.parent().parent().find("label:first");
+            //    var textareaIsHidden = textarea.hasClass("hidden");
 
-                // close all the comment boxes
-                $(this).closest("tr").next().find("div.shortTermComments textarea").each(function (index) {
-                    $(this).addClass("hidden");
-                });
+            //    // close all the comment boxes
+            //    $(this).closest("tr").next().find("div.shortTermComments textarea").each(function (index) {
+            //        $(this).addClass("hidden");
+            //    });
 
-                // remove all the highlights
-                $(this).closest("tr").find("span.addComment").each(function (index) {
-                    $(this).prev().removeClass("commentsHighlighted");
-                });
+            //    // remove all the highlights
+            //    $(this).closest("tr").find("span.addComment").each(function (index) {
+            //        $(this).prev().removeClass("commentsHighlighted");
+            //    });
 
-                if (textareaIsHidden) {
-                    textarea.removeClass("hidden");
-                    textarea.closest("tr").removeClass("hidden");
-                    $(this).prev().addClass("commentsHighlighted");
-                    textAreaLabel[0].innerText = textarea.attr("placeholder").substring(28, textarea.attr("placeholder").length);
-                }
-                else {
-                    textarea.addClass("hidden");
-                    textarea.closest("tr").addClass("hidden");
-                }
-            });
+            //    if (textareaIsHidden) {
+            //        textarea.removeClass("hidden");
+            //        textarea.closest("tr").removeClass("hidden");
+            //        $(this).prev().addClass("commentsHighlighted");
+            //        textAreaLabel[0].innerText = textarea.attr("placeholder").substring(28, textarea.attr("placeholder").length);
+            //    }
+            //    else {
+            //        textarea.addClass("hidden");
+            //        textarea.closest("tr").addClass("hidden");
+            //    }
+            //});
         });
     }
 
