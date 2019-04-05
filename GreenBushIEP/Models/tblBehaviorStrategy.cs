@@ -20,5 +20,6 @@ namespace GreenBushIEP.Models
         public int BehaviorStrategyTypeID { get; set; }
         public string OtherDescription { get; set; }
         public System.DateTime Create_Date { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

@@ -26,5 +26,7 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public bool Completed { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

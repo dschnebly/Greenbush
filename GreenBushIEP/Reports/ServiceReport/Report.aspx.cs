@@ -16,29 +16,10 @@ namespace GreenBushIEP.Reports.ServiceReport
 		{
 			if (!IsPostBack)
 			{
-
-				var services = GreenBushIEP.Report.ReportMaster.GetServices();
-				this.ServiceType.DataSource = services;
-				this.ServiceType.DataTextField = "Name";
-				this.ServiceType.DataValueField = "ServiceCode";
-				this.ServiceType.DataBind();
-
-				var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(User.Identity.Name);
-				this.districtDD.DataSource = districts;
-				this.districtDD.DataTextField = "DistrictName";
-				this.districtDD.DataValueField = "USD";
-				this.districtDD.DataBind();
-
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
-
+				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
 			}
-
 		}
 
 		protected void Button1_Click(object sender, EventArgs e)
@@ -51,53 +32,22 @@ namespace GreenBushIEP.Reports.ServiceReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string serviceIds = "";
+			string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(this.ServiceType);
+
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+
 			string districtID = this.districtDD.Value;
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
-			foreach (ListItem li in ServiceType.Items)
-			{
-				if (li.Selected)
-				{
-					serviceIds += string.Format("{0},", li.Value);
-				}
-			}
-						
-
-			if (buildingID == "-1")
-			{
-				buildingID = "";
-
-				if (districtID == "-1")
-				{
-					foreach (ListItem districtItem in districtDD.Items)
-					{
-						var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtItem.Value);
-						foreach (var b in selectedBuildings)
-						{
-							buildingID += string.Format("{0},", b.BuildingID);
-						}
-					}
-
-				}
-				else
-				{
-					var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtID);
-					foreach (var b in selectedBuildings)
-					{
-						buildingID += string.Format("{0},", b.BuildingID);
-					}
-				}
-			}
-
-
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+			
 			DateTime startDate = DateTime.Parse(this.startDate.Value);
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
-			DataTable dt = GetData(serviceIds, buildingID, startDate, endDate);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -125,7 +75,7 @@ namespace GreenBushIEP.Reports.ServiceReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("StudentFirstName", typeof(string));
@@ -143,7 +93,7 @@ namespace GreenBushIEP.Reports.ServiceReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(serviceIds, buildingID, startDate, endDate);
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider

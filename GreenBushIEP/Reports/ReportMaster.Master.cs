@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Security.Principal;
 using System.Data;
 using System.Web.Mvc;
+using System.Web.UI.HtmlControls;
 
 namespace GreenBushIEP.Report
 {	
@@ -31,6 +32,62 @@ namespace GreenBushIEP.Report
 				Server.Transfer("Error", true);
 			}
 			
+		}
+
+		public static void StatusList(HtmlSelect statusDD)
+		{	
+
+			var statusList = GreenBushIEP.Report.ReportMaster.GetIEPStatuses();
+			statusDD.DataSource = statusList;
+			statusDD.DataTextField = "Text";
+			statusDD.DataValueField = "Value";
+			statusDD.DataBind();
+		}		
+
+		public static void TeacherList(HtmlSelect teacherDD)
+		{
+			var teacherList = GreenBushIEP.Report.ReportMaster.GetTeachers(HttpContext.Current.User.Identity.Name);
+			teacherDD.DataSource = teacherList;
+			teacherDD.DataTextField = "Name";
+			teacherDD.DataValueField = "UserID";
+			teacherDD.DataBind();
+		}
+
+		public static void DistrictList(HtmlSelect districtDD)
+		{
+			var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(HttpContext.Current.User.Identity.Name);
+			districtDD.DataSource = districts;
+			districtDD.DataTextField = "DistrictName";
+			districtDD.DataValueField = "USD";
+			districtDD.DataBind();
+		}
+
+		public static void BuildingList(HtmlSelect buildingDD)
+		{
+
+			var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(HttpContext.Current.User.Identity.Name);
+			buildingDD.DataSource = buildingList;
+			buildingDD.DataTextField = "BuildingName";
+			buildingDD.DataValueField = "BuildingID";
+			buildingDD.DataBind();
+		}
+
+		public static void ServiceList(HtmlSelect serviceDD)
+		{
+			var services = GreenBushIEP.Report.ReportMaster.GetServices();
+			serviceDD.DataSource = services;
+			serviceDD.DataTextField = "Name";
+			serviceDD.DataValueField = "ServiceCode";
+			serviceDD.DataBind();
+		}
+
+		public static void ProviderList(HtmlSelect providerDD)
+		{
+			var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(HttpContext.Current.User.Identity.Name);
+			providerDD.DataSource = providerList;
+			providerDD.DataTextField = "Name";
+			providerDD.DataValueField = "ProviderID";
+			providerDD.DataBind();
 		}
 
 		public static List<TeacherView> GetTeachers(string userName)
@@ -157,9 +214,7 @@ namespace GreenBushIEP.Report
 		{
 			return db.tblUsers.SingleOrDefault(o => o.Email == userName);
 			
-		}
-
-
+		}		
 
 		public static List<tblDistrict> GetDistricts(string userName)
 		{
@@ -233,6 +288,71 @@ namespace GreenBushIEP.Report
 			}
 
 			return dt;
+		}
+
+		public static string GetServiceFilter(HtmlSelect ServiceType)
+		{
+			string serviceIds = "";
+			foreach (ListItem li in ServiceType.Items)
+			{
+				if (li.Selected)
+				{
+					serviceIds += string.Format("{0},", li.Value);
+				}
+			}
+			return serviceIds;
+		}
+
+		public static string GetDistrictFilter(HtmlSelect districtDD, string districtID)
+		{
+			string districtList = "";
+			if (districtID == "-1")
+			{
+				foreach (ListItem districtItem in districtDD.Items)
+				{
+					districtList += string.Format("{0},", districtItem.Value);
+				}
+
+			}
+			else
+			{
+				districtList = districtID;
+			}
+
+			return districtList;
+		}
+
+		public static string GetBuildingFilter(HtmlSelect districtDD, string buildingID, string districtID)
+		{
+			string buildingList = "";
+			if (buildingID == "-1")
+			{
+				if (districtID == "-1")
+				{
+					foreach (ListItem districtItem in districtDD.Items)
+					{
+						var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(HttpContext.Current.User.Identity.Name, districtItem.Value);
+						foreach (var b in selectedBuildings)
+						{
+							buildingList += string.Format("{0},", b.BuildingID);
+						}
+					}
+				}
+				else
+				{
+					var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(HttpContext.Current.User.Identity.Name, districtID);
+					foreach (var b in selectedBuildings)
+					{
+						buildingList += string.Format("{0},", b.BuildingID);
+					}
+				}
+			}
+			else
+			{
+				buildingList = buildingID;
+			}
+
+			return buildingList;
 		}
 
 	}
