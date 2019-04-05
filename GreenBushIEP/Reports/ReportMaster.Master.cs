@@ -113,30 +113,27 @@ namespace GreenBushIEP.Report
 		{
 			var providerList = new List<ProviderViewModel>();
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
-			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
-			{
-				//teacher, get providers by students?
-				var providers = (from u in db.tblUsers
-								 join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								 join info in db.tblStudentInfoes on u.UserID equals info.UserID
-								 join pd in db.tblProviderDistricts on info.USD equals pd.USD
-								 join p in db.tblProviders on pd.ProviderID equals p.ProviderID
-								 where o.AdminID == user.UserID && !u.Archive.HasValue
-								 select p).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
-				foreach (var provider in providers)
-					providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID});
-			}
-			else
-			{
-				var providers = db.tblProviders.Where(p => p.UserID == user.UserID).ToList();
-				foreach (var provider in providers)
-					providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID });
-							
-			}
+			var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+								   join districts in db.tblDistricts
+										on buildingMaps.USD equals districts.USD
+								   where buildingMaps.UserID == user.UserID
+								   select districts).Distinct().ToList();
+
+			List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
+
+			List<tblProvider> listOfProviders = new List<tblProvider>();
+			listOfProviders = (from providers in db.tblProviders
+							   join districts in db.tblProviderDistricts
+									on providers.ProviderID equals districts.ProviderID
+							   where listOfUSD.Contains(districts.USD)
+							   select providers).Distinct().ToList();
+
+			foreach (var provider in listOfProviders)
+				providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID });
+
 
 			return providerList;
-
 		}
 
 		public static List<tblServiceType> GetServices()
