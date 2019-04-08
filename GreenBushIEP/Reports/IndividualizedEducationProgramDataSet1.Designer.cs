@@ -1086,6 +1086,7 @@ namespace GreenBushIEP.Reports {
                 this.columnDateOfBirth.AllowDBNull = false;
                 this.columnBuildingID.AllowDBNull = false;
                 this.columnBuildingID.MaxLength = 50;
+                this.columnUSD.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1529,6 +1530,7 @@ namespace GreenBushIEP.Reports {
                 this.columnUserID.AutoIncrement = true;
                 this.columnUserID.AllowDBNull = false;
                 this.columnUserID.ReadOnly = true;
+                this.columnUSD.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2069,6 +2071,8 @@ namespace GreenBushIEP.Reports {
                 this.columnBuildingID.MaxLength = 50;
                 this.columnProviderID.AutoIncrement = true;
                 this.columnProviderID.ReadOnly = true;
+                this.columnUSD.AllowDBNull = false;
+                this.columnFrequencyDesc.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2585,6 +2589,7 @@ namespace GreenBushIEP.Reports {
                 this.columnDateOfBirth.AllowDBNull = false;
                 this.columnBuildingID.AllowDBNull = false;
                 this.columnBuildingID.MaxLength = 50;
+                this.columnPrimary_DisabilityCode.AllowDBNull = false;
                 this.columnPrimary_DisabilityCode.MaxLength = 2;
                 this.columnPrimaryExceptionality.ReadOnly = true;
                 this.columnPrimaryExceptionality.MaxLength = 105;
@@ -2605,6 +2610,8 @@ namespace GreenBushIEP.Reports {
                 this.columnLocation.MaxLength = 104;
                 this.columnDaysPerWeek.AllowDBNull = false;
                 this.columnMinutes.AllowDBNull = false;
+                this.columnUSD.AllowDBNull = false;
+                this.columnFrequencyDesc.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4726,12 +4733,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string USD {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportExcessCost.USDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'USD\' in table \'up_ReportExcessCost\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportExcessCost.USDColumn]));
                 }
                 set {
                     this[this.tableup_ReportExcessCost.USDColumn] = value;
@@ -4772,18 +4774,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetBuildingNameNull() {
                 this[this.tableup_ReportExcessCost.BuildingNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsUSDNull() {
-                return this.IsNull(this.tableup_ReportExcessCost.USDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetUSDNull() {
-                this[this.tableup_ReportExcessCost.USDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4987,12 +4977,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string USD {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportProceduralDates.USDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'USD\' in table \'up_ReportProceduralDates\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportProceduralDates.USDColumn]));
                 }
                 set {
                     this[this.tableup_ReportProceduralDates.USDColumn] = value;
@@ -5105,18 +5090,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetBuildingNameNull() {
                 this[this.tableup_ReportProceduralDates.BuildingNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsUSDNull() {
-                return this.IsNull(this.tableup_ReportProceduralDates.USDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetUSDNull() {
-                this[this.tableup_ReportProceduralDates.USDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5374,12 +5347,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string USD {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportProviderCaseload.USDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'USD\' in table \'up_ReportProviderCaseload\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportProviderCaseload.USDColumn]));
                 }
                 set {
                     this[this.tableup_ReportProviderCaseload.USDColumn] = value;
@@ -5390,13 +5358,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string FrequencyDesc {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportProviderCaseload.FrequencyDescColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FrequencyDesc\' in table \'up_ReportProviderCaseload\' is DBNu" +
-                                "ll.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportProviderCaseload.FrequencyDescColumn]));
                 }
                 set {
                     this[this.tableup_ReportProviderCaseload.FrequencyDescColumn] = value;
@@ -5510,30 +5472,6 @@ namespace GreenBushIEP.Reports {
             public void SetBuildingNameNull() {
                 this[this.tableup_ReportProviderCaseload.BuildingNameColumn] = global::System.Convert.DBNull;
             }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsUSDNull() {
-                return this.IsNull(this.tableup_ReportProviderCaseload.USDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetUSDNull() {
-                this[this.tableup_ReportProviderCaseload.USDColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsFrequencyDescNull() {
-                return this.IsNull(this.tableup_ReportProviderCaseload.FrequencyDescColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetFrequencyDescNull() {
-                this[this.tableup_ReportProviderCaseload.FrequencyDescColumn] = global::System.Convert.DBNull;
-            }
         }
         
         /// <summary>
@@ -5608,13 +5546,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string Primary_DisabilityCode {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.Primary_DisabilityCodeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Primary_DisabilityCode\' in table \'up_ReportServices\' is DBN" +
-                                "ull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportServices.Primary_DisabilityCodeColumn]));
                 }
                 set {
                     this[this.tableup_ReportServices.Primary_DisabilityCodeColumn] = value;
@@ -5778,12 +5710,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string USD {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.USDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'USD\' in table \'up_ReportServices\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportServices.USDColumn]));
                 }
                 set {
                     this[this.tableup_ReportServices.USDColumn] = value;
@@ -5794,12 +5721,7 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string FrequencyDesc {
                 get {
-                    try {
-                        return ((string)(this[this.tableup_ReportServices.FrequencyDescColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FrequencyDesc\' in table \'up_ReportServices\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tableup_ReportServices.FrequencyDescColumn]));
                 }
                 set {
                     this[this.tableup_ReportServices.FrequencyDescColumn] = value;
@@ -5828,18 +5750,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStudentLastNameNull() {
                 this[this.tableup_ReportServices.StudentLastNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsPrimary_DisabilityCodeNull() {
-                return this.IsNull(this.tableup_ReportServices.Primary_DisabilityCodeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetPrimary_DisabilityCodeNull() {
-                this[this.tableup_ReportServices.Primary_DisabilityCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5912,30 +5822,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetBuildingNameNull() {
                 this[this.tableup_ReportServices.BuildingNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsUSDNull() {
-                return this.IsNull(this.tableup_ReportServices.USDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetUSDNull() {
-                this[this.tableup_ReportServices.USDColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsFrequencyDescNull() {
-                return this.IsNull(this.tableup_ReportServices.FrequencyDescColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetFrequencyDescNull() {
-                this[this.tableup_ReportServices.FrequencyDescColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -7776,6 +7662,8 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("KIDSID", "KIDSID");
             tableMapping.ColumnMappings.Add("DateOfBirth", "DateOfBirth");
             tableMapping.ColumnMappings.Add("BuildingID", "BuildingID");
+            tableMapping.ColumnMappings.Add("BuildingName", "BuildingName");
+            tableMapping.ColumnMappings.Add("USD", "USD");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -7795,6 +7683,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportExcessCost";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -7802,13 +7691,19 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable dataTable, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable dataTable, string DistrictId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((BuildingId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -7821,13 +7716,19 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable GetData(string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable GetData(string DistrictId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((BuildingId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportExcessCostDataTable();
             this.Adapter.Fill(dataTable);
@@ -7967,6 +7868,8 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("TeacherID", "TeacherID");
             tableMapping.ColumnMappings.Add("BuildingID", "BuildingID");
             tableMapping.ColumnMappings.Add("UserID", "UserID");
+            tableMapping.ColumnMappings.Add("BuildingName", "BuildingName");
+            tableMapping.ColumnMappings.Add("USD", "USD");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -7986,6 +7889,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportProceduralDates";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TeacherId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -7994,19 +7898,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable dataTable, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable dataTable, string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8019,19 +7929,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable GetData(string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable GetData(string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportProceduralDatesDataTable();
             this.Adapter.Fill(dataTable);
@@ -8176,6 +8092,9 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("FirstName", "FirstName");
             tableMapping.ColumnMappings.Add("BuildingID", "BuildingID");
             tableMapping.ColumnMappings.Add("ProviderID", "ProviderID");
+            tableMapping.ColumnMappings.Add("BuildingName", "BuildingName");
+            tableMapping.ColumnMappings.Add("USD", "USD");
+            tableMapping.ColumnMappings.Add("FrequencyDesc", "FrequencyDesc");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -8195,6 +8114,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportProviderCaseload";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProviderId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FiscalYear", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TeacherId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8205,31 +8125,37 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable dataTable, string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable dataTable, string DistrictId, string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((ProviderId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(ProviderId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((FiscalYear == null)) {
+            if ((ProviderId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(FiscalYear));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ProviderId));
             }
-            if ((TeacherId == null)) {
+            if ((FiscalYear == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(FiscalYear));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(BuildingId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8242,31 +8168,37 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable GetData(string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable GetData(string DistrictId, string ProviderId, string FiscalYear, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((ProviderId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(ProviderId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((FiscalYear == null)) {
+            if ((ProviderId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(FiscalYear));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ProviderId));
             }
-            if ((TeacherId == null)) {
+            if ((FiscalYear == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(FiscalYear));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportProviderCaseloadDataTable();
             this.Adapter.Fill(dataTable);
@@ -8410,6 +8342,9 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("Location", "Location");
             tableMapping.ColumnMappings.Add("DaysPerWeek", "DaysPerWeek");
             tableMapping.ColumnMappings.Add("Minutes", "Minutes");
+            tableMapping.ColumnMappings.Add("BuildingName", "BuildingName");
+            tableMapping.ColumnMappings.Add("USD", "USD");
+            tableMapping.ColumnMappings.Add("FrequencyDesc", "FrequencyDesc");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -8429,6 +8364,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportServices";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ServiceId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReportStartDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8439,31 +8375,37 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportServicesDataTable dataTable, string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportServicesDataTable dataTable, string DistrictId, string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((ServiceId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(ServiceId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((ServiceId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ServiceId));
             }
-            if ((ReportStartDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((System.DateTime)(ReportStartDate.Value));
-            }
-            else {
+            if ((BuildingId == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            if ((ReportEndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[4].Value = ((System.DateTime)(ReportEndDate.Value));
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
+            }
+            if ((ReportStartDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((System.DateTime)(ReportStartDate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((ReportEndDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((System.DateTime)(ReportEndDate.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8476,31 +8418,37 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportServicesDataTable GetData(string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportServicesDataTable GetData(string DistrictId, string ServiceId, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((ServiceId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(ServiceId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((ServiceId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(ServiceId));
             }
-            if ((ReportStartDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((System.DateTime)(ReportStartDate.Value));
-            }
-            else {
+            if ((BuildingId == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            if ((ReportEndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[4].Value = ((System.DateTime)(ReportEndDate.Value));
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
+            }
+            if ((ReportStartDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((System.DateTime)(ReportStartDate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((ReportEndDate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((System.DateTime)(ReportEndDate.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             IndividualizedEducationProgramDataSet.up_ReportServicesDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportServicesDataTable();
             this.Adapter.Fill(dataTable);
@@ -8654,6 +8602,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportDraftIEPS";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TeacherId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -8662,19 +8611,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable dataTable, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable dataTable, string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8687,19 +8642,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable GetData(string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable GetData(string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportDraftIEPSDataTable();
             this.Adapter.Fill(dataTable);
@@ -8852,6 +8813,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportIEPSDue";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TeacherId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -8860,19 +8822,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable dataTable, string TeacherId, string BuildingId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable dataTable, string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8885,19 +8853,25 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable GetData(string TeacherId, string BuildingId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable GetData(string DistrictId, string TeacherId, string BuildingId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((TeacherId == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(TeacherId));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((TeacherId == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(TeacherId));
+            }
+            if ((BuildingId == null)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportIEPSDueDataTable();
             this.Adapter.Fill(dataTable);
@@ -9075,6 +9049,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].CommandText = "dbo.up_ReportProgress";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DistrictId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProviderId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -9084,25 +9059,31 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProgressDataTable dataTable, string Status, string BuildingId, string ProviderId) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportProgressDataTable dataTable, string DistrictId, string Status, string BuildingId, string ProviderId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((Status == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Status));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((Status == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Status));
             }
-            if ((ProviderId == null)) {
+            if ((BuildingId == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(ProviderId));
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
+            }
+            if ((ProviderId == null)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(ProviderId));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -9115,25 +9096,31 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportProgressDataTable GetData(string Status, string BuildingId, string ProviderId) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportProgressDataTable GetData(string DistrictId, string Status, string BuildingId, string ProviderId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((Status == null)) {
+            if ((DistrictId == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Status));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(DistrictId));
             }
-            if ((BuildingId == null)) {
+            if ((Status == null)) {
                 this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Status));
             }
-            if ((ProviderId == null)) {
+            if ((BuildingId == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(ProviderId));
+                this.Adapter.SelectCommand.Parameters[3].Value = ((string)(BuildingId));
+            }
+            if ((ProviderId == null)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((string)(ProviderId));
             }
             IndividualizedEducationProgramDataSet.up_ReportProgressDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportProgressDataTable();
             this.Adapter.Fill(dataTable);

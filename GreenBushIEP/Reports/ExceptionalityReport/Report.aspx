@@ -8,6 +8,16 @@
 	<div class="row"  style="margin-bottom: 15px;">
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
+				<label for="districtDD">District</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="districtDD" runat="server" class="chosen-select" data-placeholder="Select District">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
 				<label for="building">Building</label>
 			</div>
 			<div class="col-md-6" >
@@ -37,7 +47,7 @@
 				 <label   for="ServiceType">Service Type</label>
 			</div>
 			<div class="col-md-6" >
-				 <select class="" id="ServiceType" runat="server">
+				 <select id="ServiceType" runat="server" class="chosen-select">
                       <option value="">Select</option>
                 </select>
 			</div>

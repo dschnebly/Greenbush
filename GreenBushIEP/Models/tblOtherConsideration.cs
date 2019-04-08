@@ -50,5 +50,6 @@ namespace GreenBushIEP.Models
         public string StateAssesment_Alternative_Desc { get; set; }
         public bool Parental_CopyIEP_flag { get; set; }
         public bool Parental_RightsBook_flag { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

@@ -50,8 +50,10 @@
 @using (Html.BeginForm("DownloadSpedPro", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
 {
 	<div class="transition-page">
+		<div class="col-md-2 pull-right">
+			<a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Reports" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to reports list"> </a>
+		</div>
 		<h2>SPED Pro Export</h2>
-
 		<div class="container" style="overflow:hidden; margin: 0 auto 75px;">
 			<div class="row">
 				<div class="col-md-12">

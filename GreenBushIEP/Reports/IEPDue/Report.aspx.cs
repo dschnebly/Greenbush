@@ -16,19 +16,9 @@ namespace GreenBushIEP.Reports.IEPDue
 		{
 			if (!IsPostBack)
 			{
-
-				var teacherList = GreenBushIEP.Report.ReportMaster.GetTeachers(User.Identity.Name);
-				this.teacherDD.DataSource = teacherList;
-				this.teacherDD.DataTextField = "Name";
-				this.teacherDD.DataValueField = "UserID";
-				this.teacherDD.DataBind();
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
+				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);				
 			}
 		}
 
@@ -47,6 +37,12 @@ namespace GreenBushIEP.Reports.IEPDue
 			string buildingID = this.buildingDD.Value;
 			string teacher = "";
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
 
 			foreach (ListItem li in teacherDD.Items)
 			{
@@ -76,23 +72,13 @@ namespace GreenBushIEP.Reports.IEPDue
 				teacher = user.UserID.ToString();
 			}
 
-			if (buildingID == "-1")
-			{
-				buildingID = "";
 
-				foreach (ListItem buildingItem in buildingDD.Items)
-				{
-					buildingID += string.Format("{0},", buildingItem.Value);
-				}
-			}
-
-
-			DataTable dt = GetData(teacherIds, buildingID);
+			DataTable dt = GetData(districtFilter, teacherIds, buildingFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
 			{
-				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
 				rds2 = new ReportDataSource("DataSet2", dt2);
 			}
 			else
@@ -110,7 +96,7 @@ namespace GreenBushIEP.Reports.IEPDue
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string teacherIds, string buildingID)
+		private DataTable GetData(string districtFilter, string teacherIds, string buildingID)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("begin_date", typeof(string));
@@ -124,7 +110,7 @@ namespace GreenBushIEP.Reports.IEPDue
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportIEPSDue(teacherIds, buildingID);
+				var list = ctx.up_ReportIEPSDue(districtFilter, teacherIds, buildingID);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName, cs.ProviderName);

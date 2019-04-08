@@ -45,5 +45,6 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> InitialEvalDetermination { get; set; }
         public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
         public bool isGifted { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
     }
 }

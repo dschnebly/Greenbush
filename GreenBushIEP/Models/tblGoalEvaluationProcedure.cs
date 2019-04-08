@@ -18,5 +18,6 @@ namespace GreenBushIEP.Models
         public int goalID { get; set; }
         public int evaluationProcedureID { get; set; }
         public System.DateTime Create_Date { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

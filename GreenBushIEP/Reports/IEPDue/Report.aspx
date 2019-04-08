@@ -3,9 +3,19 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div class="row"  style="margin-bottom: 15px;">
-		<h2>Draft IEPs</h2>
+		<h2>IEPs Coming Due</h2>
 	</div>
 	<div class="row"  style="margin-bottom: 15px;">
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				<label for="districtDD">District</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="districtDD" runat="server" class="chosen-select" data-placeholder="Select District">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="building">Building</label>

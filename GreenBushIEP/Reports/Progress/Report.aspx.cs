@@ -16,25 +16,11 @@ namespace GreenBushIEP.Reports.ProgressReport
 		{
 			if (!IsPostBack)
 			{
-				var statusList = GreenBushIEP.Report.ReportMaster.GetIEPStatuses();
-				this.statusDD.DataSource = statusList;
-				this.statusDD.DataTextField = "Text";
-				this.statusDD.DataValueField = "Value";
-				this.statusDD.DataBind();
-
-
-				var providers = GreenBushIEP.Report.ReportMaster.GetProviders(User.Identity.Name);
-				this.providerDD.DataSource = providers;
-				this.providerDD.DataTextField = "Name";
-				this.providerDD.DataValueField = "ProviderID";
-				this.providerDD.DataBind();
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
+				GreenBushIEP.Report.ReportMaster.StatusList(this.statusDD);
+				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+				
 			}
 		}
 
@@ -57,6 +43,12 @@ namespace GreenBushIEP.Reports.ProgressReport
 			bool cbPrintGoalBenchmarks = this.cbPrintGoalBenchmarks.Checked;
 			string quarter = this.quarters.Value;
 
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+
 			foreach (ListItem li in providerDD.Items)
 			{
 				if (li.Selected)
@@ -72,20 +64,8 @@ namespace GreenBushIEP.Reports.ProgressReport
 					providerIds += string.Format("{0},", li.Value);
 				}
 			}
-						
 
-			if (buildingID == "-1")
-			{
-				buildingID = "";
-
-				foreach (ListItem buildingItem in buildingDD.Items)
-				{
-					buildingID += string.Format("{0},", buildingItem.Value);
-				}
-			}
-
-
-			DataTable dt = GetData(providerIds, buildingID, status);
+			DataTable dt = GetData(districtFilter, providerIds, buildingFilter, status);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			
 			ReportParameter p1 = new ReportParameter("pPrintGoal", cbPrintGoal.ToString());
@@ -100,7 +80,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string providerIds, string buildingID, string status)
+		private DataTable GetData(string districtFilter, string providerIds, string buildingID, string status)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("begin_date", typeof(string));
@@ -138,7 +118,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProgress(status, buildingID, providerIds);
+				var list = ctx.up_ReportProgress(districtFilter, status, buildingID, providerIds);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName

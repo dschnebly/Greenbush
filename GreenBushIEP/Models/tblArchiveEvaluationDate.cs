@@ -18,5 +18,6 @@ namespace GreenBushIEP.Models
         public int userID { get; set; }
         public System.DateTime evalutationDate { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace GreenBushIEP.Models
         public string Behavior { get; set; }
         public string Baseline { get; set; }
         public System.DateTime Create_Date { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     }
 }

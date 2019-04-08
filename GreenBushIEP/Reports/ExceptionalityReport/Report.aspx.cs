@@ -16,20 +16,9 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 		{
 			if (!IsPostBack)
 			{
-
-				var services = GreenBushIEP.Report.ReportMaster.GetServices();
-				this.ServiceType.DataSource = services;
-				this.ServiceType.DataTextField = "Name";
-				this.ServiceType.DataValueField = "ServiceCode";
-				this.ServiceType.DataBind();
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
-
+				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
 			}
 
 		}
@@ -44,39 +33,36 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string serviceIds = "";			
+			string serviceIds = "";		
+			
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+			
 			foreach (ListItem li in ServiceType.Items)
 			{
 				if (li.Selected)
 				{
 					serviceIds += string.Format("{0},", li.Value);
 				}
-			}
-
-			if (buildingID == "-1")
-			{
-				buildingID = "";
-				
-				foreach (ListItem buildingItem in buildingDD.Items)
-				{
-					buildingID += string.Format("{0},", buildingItem.Value);				
-				}				
-			}
+			}					
 
 			DateTime startDate = DateTime.Parse(this.startDate.Value);
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
-			DataTable dt = GetData(serviceIds, buildingID, startDate, endDate);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
 			{
-				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
 				rds2 = new ReportDataSource("DataSet2", dt2);
 			}
 			else
@@ -97,7 +83,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("StudentFirstName", typeof(string));
@@ -117,7 +103,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(serviceIds, buildingID, startDate, endDate);
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,

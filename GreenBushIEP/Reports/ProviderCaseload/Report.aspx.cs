@@ -16,19 +16,9 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 		{
 			if (!IsPostBack)
 			{
-				
-				var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(User.Identity.Name);
-				this.providerDD.DataSource = providerList;
-				this.providerDD.DataTextField = "Name";
-				this.providerDD.DataValueField = "ProviderID";
-				this.providerDD.DataBind();
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
+				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);			
 			}
 		}
 
@@ -49,6 +39,11 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 			string teacher = "";
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
 
 			foreach (ListItem li in providerDD.Items)
 			{
@@ -94,23 +89,14 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			{
 				teacher = user.UserID.ToString();
 			}
+						
 
-			if (buildingID == "-1")
-			{
-				buildingID = "";
-
-				foreach (ListItem buildingItem in buildingDD.Items)
-				{
-					buildingID += string.Format("{0},", buildingItem.Value);
-				}
-			}
-
-			DataTable dt = GetData(providerIds, fiscalYears, teacher, buildingID);
+			DataTable dt = GetData(districtFilter, providerIds, fiscalYears, teacher, buildingFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
 			{
-				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
 				rds2 = new ReportDataSource("DataSet2", dt2);
 			}
 			else
@@ -129,7 +115,7 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string providerId, string fiscalYear, string teacher, string buildingID)
+		private DataTable GetData(string districtFilter, string providerId, string fiscalYear, string teacher, string buildingID)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("LastName", typeof(string));
@@ -147,7 +133,7 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProviderCaseload(providerId, fiscalYear, teacher, buildingID);
+				var list = ctx.up_ReportProviderCaseload(districtFilter,providerId, fiscalYear, teacher, buildingID);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle

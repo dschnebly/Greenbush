@@ -15,21 +15,9 @@ namespace GreenBushIEP.Reports.Owner
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!IsPostBack)
-			{							
-
-				var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(User.Identity.Name);
-				this.districtDD.DataSource = districts;
-				this.districtDD.DataTextField = "DistrictName";
-				this.districtDD.DataValueField = "USD";
-				this.districtDD.DataBind();
-
-
-				var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(User.Identity.Name);
-				this.buildingDD.DataSource = buildingList;
-				this.buildingDD.DataTextField = "BuildingName";
-				this.buildingDD.DataValueField = "BuildingID";
-				this.buildingDD.DataBind();
-
+			{
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
 
 			}
 		}
@@ -44,50 +32,15 @@ namespace GreenBushIEP.Reports.Owner
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string districtIds = "";
+			
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+
 			string districtID = this.districtDD.Value;
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
-			if (districtID != "-1")
-			{
-
-				foreach (ListItem li in districtDD.Items)
-				{
-					if (li.Selected)
-					{
-						districtIds += string.Format("{0},", li.Value);
-					}
-				}
-			}
-
-
-			if (buildingID == "-1")
-			{
-				buildingID = "";
-
-				if (districtID == "-1")
-				{
-					foreach (ListItem districtItem in districtDD.Items)
-					{
-						var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtItem.Value);
-						foreach (var b in selectedBuildings)
-						{
-							buildingID += string.Format("{0},", b.BuildingID);
-						}
-					}
-
-				}
-				else
-				{
-					var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(User.Identity.Name, districtID);
-					foreach (var b in selectedBuildings)
-					{
-						buildingID += string.Format("{0},", b.BuildingID);
-					}
-				}
-			}
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
 
 
 			DateTime? startDate = null;
@@ -99,7 +52,7 @@ namespace GreenBushIEP.Reports.Owner
 			if (!string.IsNullOrEmpty(this.endDate.Value))
 				endDate = DateTime.Parse(this.endDate.Value);
 
-			DataTable dt = GetData(districtIds, buildingID, startDate, endDate);
+			DataTable dt = GetData(districtFilter, buildingFilter, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")

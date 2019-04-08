@@ -22,6 +22,8 @@
           <Property Name="AnticipatedEndDate" Type="datetime" />
           <Property Name="Location" Type="nvarchar" MaxLength="300" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -31,6 +33,7 @@
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="evalutationDate" Type="datetime" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -56,6 +59,7 @@
           <Property Name="Behavior" Type="nvarchar" MaxLength="2000" />
           <Property Name="Baseline" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesis">
           <Key>
@@ -67,6 +71,7 @@
           <Property Name="BehaviorHypothesisTypeID" Type="int" Nullable="false" />
           <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesisTypes">
           <Key>
@@ -91,6 +96,8 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategies">
           <Key>
@@ -102,6 +109,7 @@
           <Property Name="BehaviorStrategyTypeID" Type="int" Nullable="false" />
           <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategyTypes">
           <Key>
@@ -120,6 +128,7 @@
           <Property Name="BehaviorTriggerTypeID" Type="int" Nullable="false" />
           <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblBehaviorTriggerTypes">
           <Key>
@@ -171,6 +180,8 @@
           <Property Name="SchoolYear" Type="smallint" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblCalendarReporting">
           <Key>
@@ -186,6 +197,8 @@
           <Property Name="MinutesPerDay" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -227,6 +240,8 @@
           <Property Name="Active" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblCounties">
           <Key>
@@ -298,6 +313,8 @@
           <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblGoalEvaluationProcedures">
           <Key>
@@ -307,6 +324,7 @@
           <Property Name="goalID" Type="int" Nullable="false" />
           <Property Name="evaluationProcedureID" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblGoals">
           <Key>
@@ -336,6 +354,8 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="EvaluationProcedures" Type="int" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblGrades">
           <Key>
@@ -528,6 +548,8 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="end_Date" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -652,6 +674,7 @@
           <Property Name="StateAssesment_Alternative_Desc" Type="nvarchar" MaxLength="1000" />
           <Property Name="Parental_CopyIEP_flag" Type="bit" Nullable="false" />
           <Property Name="Parental_RightsBook_flag" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -722,6 +745,8 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="FiledOn" Type="datetime" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -776,6 +801,7 @@
           <Property Name="InitialEvalDetermination" Type="datetime" />
           <Property Name="ReEvalConsentSigned" Type="datetime" />
           <Property Name="isGifted" Type="bit" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -808,6 +834,8 @@
           <Property Name="Performance" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblTransitionGoals">
           <Key>
@@ -822,6 +850,8 @@
           <Property Name="WhereAndHow" Type="nvarchar" MaxLength="2000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblTransitions">
           <Key>
@@ -851,6 +881,8 @@
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="nvarchar" MaxLength="500" />
           <Property Name="CareerPathID" Type="int" />
           <Property Name="isReleaseBefore21" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblTransitionServices">
           <Key>
@@ -868,6 +900,8 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblUsers">
           <Key>
@@ -893,6 +927,8 @@
           <Property Name="LastVersionNumberSeen" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="varbinary" MaxLength="50" />
           <Property Name="Salt" Type="varbinary" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -1170,32 +1206,39 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
         <Function Name="up_ReportDraftIEPS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportExcessCost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportIEPSDue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportProceduralDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportProgress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="Status" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportProviderCaseload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
           <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportServices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="ServiceId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
@@ -1420,12 +1463,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="up_ReportProviderCaseload" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProviderCaseload_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
             <Parameter Name="FiscalYear" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportProceduralDates" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDates_Result1)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
@@ -1437,13 +1482,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportServices" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportServices_Result1)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="ServiceId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
             <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="up_ReportExcessCost" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportExcessCost_Result)">
-          <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="uspCopyIEP">
             <Parameter Name="fromIEP" Mode="In" Type="Int32" />
@@ -1528,6 +1575,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblCalendars" EntityType="IndividualizedEducationProgramModel.tblCalendar" />
           <EntitySet Name="tblCalendarReportings" EntityType="IndividualizedEducationProgramModel.tblCalendarReporting" />
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
@@ -1537,10 +1585,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblContact" EntitySet="tblContacts" />
           </AssociationSet>
           <FunctionImport Name="up_ReportIEPSDue" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportIEPSDue_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportProgress" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProgress_Result1)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
@@ -1683,7 +1733,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
           <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
           <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Primary_DisabilityCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Primary_DisabilityCode" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="PrimaryExceptionality" Nullable="false" MaxLength="105" />
           <Property Type="String" Name="SecondaryExceptionality" Nullable="false" MaxLength="105" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -1725,6 +1775,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Location" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -1734,6 +1786,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="evalutationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -1759,6 +1812,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Behavior" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Baseline" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesi">
           <Key>
@@ -1770,6 +1824,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="BehaviorHypothesisTypeID" Type="Int32" Nullable="false" />
           <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblBehaviorHypothesisType">
           <Key>
@@ -1794,6 +1849,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategy">
           <Key>
@@ -1805,6 +1862,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="BehaviorStrategyTypeID" Type="Int32" Nullable="false" />
           <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblBehaviorStrategyType">
           <Key>
@@ -1823,6 +1881,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="BehaviorTriggerTypeID" Type="Int32" Nullable="false" />
           <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblBehaviorTriggerType">
           <Key>
@@ -1899,6 +1958,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="tblDistrict" Relationship="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" FromRole="tblContact" ToRole="tblDistrict" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCounty">
           <Key>
@@ -1945,6 +2006,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblGoalEvaluationProcedure">
           <Key>
@@ -1954,6 +2017,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="goalID" Type="Int32" Nullable="false" />
           <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblGoal">
           <Key>
@@ -1984,6 +2048,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="EvaluationProcedures" Type="Int32" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblGoal" ToRole="tblService" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -2168,6 +2234,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="end_Date" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -2284,6 +2352,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="StateAssesment_Alternative_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Parental_CopyIEP_flag" Type="Boolean" Nullable="false" />
           <Property Name="Parental_RightsBook_flag" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -2351,6 +2420,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -2405,6 +2476,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="InitialEvalDetermination" Type="DateTime" Precision="3" />
           <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
           <Property Name="isGifted" Type="Boolean" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -2437,6 +2509,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Performance" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblTransitionGoal">
           <Key>
@@ -2451,6 +2525,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="WhereAndHow" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblTransition">
           <Key>
@@ -2480,6 +2556,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Planning_BenefitKRS_OtherAgencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CareerPathID" Type="Int32" />
           <Property Name="isReleaseBefore21" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblTransitionService">
           <Key>
@@ -2497,6 +2575,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -2693,6 +2773,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="LastVersionNumberSeen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="Binary" MaxLength="50" FixedLength="false" />
           <Property Name="Salt" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblGrade">
           <Key>
@@ -2718,6 +2800,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="SchoolYear" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCalendarReporting">
           <Key>
@@ -2733,6 +2817,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="MinutesPerDay" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <ComplexType Name="up_ReportDraftIEPS_Result">
           <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
@@ -3008,6 +3094,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="AnticipatedEndDate" ColumnName="AnticipatedEndDate" />
@@ -3027,6 +3115,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblArchiveEvaluationDates">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveEvaluationDate">
               <MappingFragment StoreEntitySet="tblArchiveEvaluationDate">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="evalutationDate" ColumnName="evalutationDate" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -3052,6 +3141,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviorBaselines">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorBaseline">
               <MappingFragment StoreEntitySet="tblBehaviorBaselines">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Baseline" ColumnName="Baseline" />
                 <ScalarProperty Name="Behavior" ColumnName="Behavior" />
@@ -3064,6 +3154,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviorHypothesis">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorHypothesi">
               <MappingFragment StoreEntitySet="tblBehaviorHypothesis">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
                 <ScalarProperty Name="BehaviorHypothesisTypeID" ColumnName="BehaviorHypothesisTypeID" />
@@ -3084,6 +3175,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviors">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehavior">
               <MappingFragment StoreEntitySet="tblBehaviors">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
@@ -3102,6 +3195,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviorStrategies">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorStrategy">
               <MappingFragment StoreEntitySet="tblBehaviorStrategies">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
                 <ScalarProperty Name="BehaviorStrategyTypeID" ColumnName="BehaviorStrategyTypeID" />
@@ -3122,6 +3216,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBehaviorTriggers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBehaviorTrigger">
               <MappingFragment StoreEntitySet="tblBehaviorTriggers">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
                 <ScalarProperty Name="BehaviorTriggerTypeID" ColumnName="BehaviorTriggerTypeID" />
@@ -3193,6 +3288,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblContacts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblContact">
               <MappingFragment StoreEntitySet="tblContacts">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
@@ -3237,6 +3334,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGoalBenchmarks">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalBenchmark">
               <MappingFragment StoreEntitySet="tblGoalBenchmarks">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="ProgressDescription_Quarter4" ColumnName="ProgressDescription_Quarter4" />
@@ -3262,6 +3361,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGoalEvaluationProcedures">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure">
               <MappingFragment StoreEntitySet="tblGoalEvaluationProcedures">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="evaluationProcedureID" ColumnName="evaluationProcedureID" />
                 <ScalarProperty Name="goalID" ColumnName="goalID" />
@@ -3272,6 +3372,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGoals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoal">
               <MappingFragment StoreEntitySet="tblGoals">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="EvaluationProcedures" ColumnName="EvaluationProcedures" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -3465,6 +3567,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="end_Date" ColumnName="end_Date" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -3571,6 +3675,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Parental_RightsBook_flag" ColumnName="Parental_RightsBook_flag" />
                 <ScalarProperty Name="Parental_CopyIEP_flag" ColumnName="Parental_CopyIEP_flag" />
                 <ScalarProperty Name="StateAssesment_Alternative_Desc" ColumnName="StateAssesment_Alternative_Desc" />
@@ -3660,6 +3765,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="FiledOn" ColumnName="FiledOn" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -3701,6 +3808,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="isGifted" ColumnName="isGifted" />
                 <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
                 <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
@@ -3758,6 +3866,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitionAssessments">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionAssessment">
               <MappingFragment StoreEntitySet="tblTransitionAssessments">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Performance" ColumnName="Performance" />
@@ -3772,6 +3882,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitionGoals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionGoal">
               <MappingFragment StoreEntitySet="tblTransitionGoals">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="WhereAndHow" ColumnName="WhereAndHow" />
@@ -3787,6 +3899,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransition">
               <MappingFragment StoreEntitySet="tblTransitions">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="isReleaseBefore21" ColumnName="isReleaseBefore21" />
                 <ScalarProperty Name="CareerPathID" ColumnName="CareerPathID" />
                 <ScalarProperty Name="Planning_BenefitKRS_OtherAgencies" ColumnName="Planning_BenefitKRS_OtherAgencies" />
@@ -3817,6 +3931,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblTransitionServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblTransitionService">
               <MappingFragment StoreEntitySet="tblTransitionServices">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -3953,6 +4069,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
               <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="LastVersionNumberSeen" ColumnName="LastVersionNumberSeen" />
@@ -3988,6 +4106,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblCalendars">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendar">
               <MappingFragment StoreEntitySet="tblCalendar">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
@@ -4006,6 +4126,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblCalendarReportings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblCalendarReporting">
               <MappingFragment StoreEntitySet="tblCalendarReporting">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="MinutesPerDay" ColumnName="MinutesPerDay" />
