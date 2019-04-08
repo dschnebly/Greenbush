@@ -1,0 +1,385 @@
+﻿@model GreenBushIEP.Models.StudentGoalsViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-stats" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Progress Report</h4>
+    <div class="module-user-name">@(ViewBag.studentName)</div>
+</div>
+<div class="modal-body">
+    @if (Model.studentGoals.Count > 0)
+    {
+        foreach (var studentGoal in Model.studentGoals)
+        {
+            var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : String.Empty;
+
+            var sgText = "";
+            switch (studentGoal.goal.Module)
+            {
+                case "1": { sgText = "Health"; break; }
+                case "2": { sgText = "Motor"; break; }
+                case "3": { sgText = "Communication"; break; }
+                case "4": { sgText = "Social-Emotional"; break; }
+                case "5": { sgText = "General Intelligence"; break; }
+                case "6": { sgText = "Academic Performance"; break; }
+                case "7": { sgText = "Reading"; break; }
+                case "8": { sgText = "Math"; break; }
+                case "9": { sgText = "Written Language"; break; }
+            } //end switch
+
+            using (Html.BeginForm("EditProgressReport", "ModuleSection", FormMethod.Post, new { @class = "goalForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.Hidden("progressGoalId", studentGoal.goal.goalID)
+                @Html.Hidden("studentId", Model.studentId)
+                @Html.Hidden("iepId", studentGoal.goal.IEPid)
+
+                <div class="col-md-12 progressGoalReport">
+                    <div class="panel-group" id="accordion@(studentGoal.goal.Title)">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
+                                        <input type="hidden" name="GoalId" value="@(studentGoal.goal.goalID)" />
+                                        <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
+                                <div class="panel-body">
+
+                                    <label class="standard-font-size">@(sgText)</label><br />
+                                    <label class="standard-font-size">Measurable Annual Goal</label><br />
+                                    <div class="form-group">
+                                        <p class="standard-font-size">@(studentGoal.goal.AnnualGoal)</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
+                                            <thead class="thead-inverse">
+                                                <tr class="ProgressAnnualGoal">
+                                                    <th class="text-center standard-font-size" colspan="4">Progress Towards Annual Goal</th>
+                                                </tr>
+                                                <tr class="PTAGDisplay hidden">
+                                                    <th>
+                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                            <label>1<sup>st</sup>&nbsp;&nbsp;</label>
+                                                            <input type="date" class="form-control" name="ReportAnnualGoalDate1@(studentGoal.goal.goalID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(studentGoal.goal.ProgressDate_Quarter1.ToString("yyyy-MM-dd"))" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                            <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
+                                                            <input type="date" class="form-control" name="ReportAnnualGoalDate2@(studentGoal.goal.goalID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(studentGoal.goal.ProgressDate_Quarter2.ToString("yyyy-MM-dd"))" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                            <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
+                                                            <input type="date" class="form-control" name="ReportAnnualGoalDate3@(studentGoal.goal.goalID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(studentGoal.goal.ProgressDate_Quarter3.ToString("yyyy-MM-dd"))" />
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                            <label>4<sup>th</sup>&nbsp;&nbsp;</label>
+                                                            <input type="date" class="form-control" name="ReportAnnualGoalDate4@(studentGoal.goal.goalID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(studentGoal.goal.ProgressDate_Quarter4.ToString("yyyy-MM-dd"))" />
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="PTAGDisplay">
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal10">
+                                                                <option value="1" @(studentGoal.goal.Progress_Quarter1 == "1" ? "selected='selected'" : String.Empty )>Anticipate Meeting Goal</option>
+                                                                <option value="2" @(studentGoal.goal.Progress_Quarter1 == "2" ? "selected='selected'" : String.Empty )>Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3" @(studentGoal.goal.Progress_Quarter1 == "3" ? "selected='selected'" : String.Empty )>Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments10"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal20">
+                                                                <option value="1" @(studentGoal.goal.Progress_Quarter2 == "1" ? "selected='selected'" : String.Empty )>Anticipate Meeting Goal</option>
+                                                                <option value="2" @(studentGoal.goal.Progress_Quarter2 == "2" ? "selected='selected'" : String.Empty )>Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3" @(studentGoal.goal.Progress_Quarter2 == "3" ? "selected='selected'" : String.Empty )>Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal30">
+                                                                <option value="1" @(studentGoal.goal.Progress_Quarter3 == "1" ? "selected='selected'" : String.Empty )>Anticipate Meeting Goal</option>
+                                                                <option value="2" @(studentGoal.goal.Progress_Quarter3 == "2" ? "selected='selected'" : String.Empty )>Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3" @(studentGoal.goal.Progress_Quarter3 == "3" ? "selected='selected'" : String.Empty )>Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments30"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group input-append">
+                                                            <select class="form-control" name="ReportAnnualGoal40">
+                                                                <option value="1" @(studentGoal.goal.Progress_Quarter4 == "1" ? "selected='selected'" : String.Empty )>Anticipate Meeting Goal</option>
+                                                                <option value="2" @(studentGoal.goal.Progress_Quarter4 == "2" ? "selected='selected'" : String.Empty )>Do Not Anticipate Meeting Goal (note reason)</option>
+                                                                <option value="3" @(studentGoal.goal.Progress_Quarter4 == "3" ? "selected='selected'" : String.Empty )>Goal Met (indicate date)</option>
+                                                            </select>
+                                                            <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments40"><span class="glyphicon glyphicon-edit"></span></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="hidden">
+                                                    <td colspan="4">
+
+                                                        <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                        <div class="form-group shortTermComments">
+                                                            <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter1)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter2)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter3)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter4)</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <br />
+                                        <label class="standard-font-size">Goal Short Term Benchmark(s)</label>
+                                        @foreach (var benchmark in studentGoal.benchmarks)
+                                        {
+                                            var ddlText = "";
+                                            switch (benchmark.Method)
+                                            {
+                                                case 1: { ddlText = "Written Observation"; break; }
+                                                case 2: { ddlText = "Written Performance"; break; }
+                                                case 3: { ddlText = "Oral Performance"; break; }
+                                                case 4: { ddlText = "Criterion-Referenced Test"; break; }
+                                                case 5: { ddlText = "Time Sample"; break; }
+                                                case 6: { ddlText = "Demonstration/Performance"; break; }
+                                                case 7: { ddlText = "Other"; break; }
+                                            }
+
+                                            <div class="StudentGoalBenchmark">
+                                                <input type="hidden" name="StudentGoalBenchmarkId@(benchmark.goalBenchmarkID)" value="@(benchmark.goalBenchmarkID)" />
+                                                <div class="form-group" style="margin-bottom: 0;">
+                                                    <div class="input-group" style="background-color: #F9F9F9;">
+                                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                                            <button type="button" class="btn btn-default as-is" style="font-size:16px; height: 49px;">
+                                                                <span>@(ddlText)</span>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" value="@(benchmark.ObjectiveBenchmark.ToString())" name="StudentGoalBenchmarkTitle@(benchmark.goalBenchmarkID)" disabled="disabled" class="StudentGoalBenchmarkTitle form-control" style="background-color: #fff;" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
+                                                                <span class="glyphicon @(benchmark.TransitionActivity ? " glyphicon-check" : "glyphicon-unchecked" )"></span>
+                                                            </button>
+                                                            <input type="hidden" name="StudentGoalBenchmarkHasTransition@(benchmark.goalBenchmarkID)" value="@(benchmark.TransitionActivity.ToString())" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slideReportProgress">
+                                                    <table class="table table-bordered table-bordered table-responsive">
+                                                        <thead class="thead-inverse" style="background-color: #ededed;">
+                                                            <tr>
+                                                                <th class="text-center standard-font-size" colspan="4">Reports of Progress</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>
+                                                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                        <label>1<sup>st</sup>&nbsp;&nbsp;</label>
+                                                                        <input type="date" class="form-control" name="reportOfProgressQuarter1@(benchmark.goalBenchmarkID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(((DateTime)benchmark.ProgressDate_Quarter1).ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                        <label>2<sup>nd</sup>&nbsp;&nbsp;</label>
+                                                                        <input type="date" class="form-control" name="reportOfProgressQuarter2@(benchmark.goalBenchmarkID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(((DateTime)benchmark.ProgressDate_Quarter2).ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                        <label>3<sup>rd</sup>&nbsp;&nbsp;</label>
+                                                                        <input type="date" class="form-control" name="reportOfProgressQuarter3@(benchmark.goalBenchmarkID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(((DateTime)benchmark.ProgressDate_Quarter3).ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </th>
+                                                                <th>
+                                                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                                                        <label>4<sup>th</sup>&nbsp;&nbsp;</label>
+                                                                        <input type="date" class="form-control" name="reportOfProgressQuarter4@(benchmark.goalBenchmarkID)" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="YYYY-MM-DD" value="@(((DateTime)benchmark.ProgressDate_Quarter4).ToString("yyyy-MM-dd"))" />
+                                                                    </div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <select class="form-control objective" name="ReportsOfProgressSelect1@(benchmark.goalBenchmarkID)">
+                                                                            <option value="1" @(benchmark.Progress_Quarter1 == "1" ? "selected='selected'" : String.Empty )>Not applicable during this grading period</option>
+                                                                            <option value="2" @(benchmark.Progress_Quarter1 == "2" ? "selected='selected'" : String.Empty )>No progress made</option>
+                                                                            <option value="3" @(benchmark.Progress_Quarter1 == "3" ? "selected='selected'" : String.Empty )>Little progress made</option>
+                                                                            <option value="4" @(benchmark.Progress_Quarter1 == "4" ? "selected='selected'" : String.Empty )>Progress made; Objective not yet met</option>
+                                                                            <option value="5" @(benchmark.Progress_Quarter1 == "5" ? "selected='selected'" : String.Empty )>Objective met</option>
+                                                                        </select>
+                                                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments1@(benchmark.goalBenchmarkID)"><span class="glyphicon glyphicon-edit"></span></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <select class="form-control objective" name="ReportsOfProgressSelect2@(benchmark.goalBenchmarkID)">
+                                                                            <option value="1" @(benchmark.Progress_Quarter2 == "1" ? "selected='selected'" : String.Empty )>Not applicable during this grading period</option>
+                                                                            <option value="2" @(benchmark.Progress_Quarter2 == "2" ? "selected='selected'" : String.Empty )>No progress made</option>
+                                                                            <option value="3" @(benchmark.Progress_Quarter2 == "3" ? "selected='selected'" : String.Empty )>Little progress made</option>
+                                                                            <option value="4" @(benchmark.Progress_Quarter2 == "4" ? "selected='selected'" : String.Empty )>Progress made; Objective not yet met</option>
+                                                                            <option value="5" @(benchmark.Progress_Quarter2 == "5" ? "selected='selected'" : String.Empty )>Objective met</option>
+                                                                        </select>
+                                                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments2@(benchmark.goalBenchmarkID)"><span class="glyphicon glyphicon-edit"></span></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <select class="form-control objective" name="ReportsOfProgressSelect3@(benchmark.goalBenchmarkID)">
+                                                                            <option value="1" @(benchmark.Progress_Quarter3 == "1" ? "selected='selected'" : String.Empty )>Not applicable during this grading period</option>
+                                                                            <option value="2" @(benchmark.Progress_Quarter3 == "2" ? "selected='selected'" : String.Empty )>No progress made</option>
+                                                                            <option value="3" @(benchmark.Progress_Quarter3 == "3" ? "selected='selected'" : String.Empty )>Little progress made</option>
+                                                                            <option value="4" @(benchmark.Progress_Quarter3 == "4" ? "selected='selected'" : String.Empty )>Progress made; Objective not yet met</option>
+                                                                            <option value="5" @(benchmark.Progress_Quarter3 == "5" ? "selected='selected'" : String.Empty )>Objective met</option>
+                                                                        </select>
+                                                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments3@(benchmark.goalBenchmarkID)"><span class="glyphicon glyphicon-edit"></span></span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group input-append">
+                                                                        <select class="form-control objective" name="ReportsOfProgressSelect4@(benchmark.goalBenchmarkID)">
+                                                                            <option value="1" @(benchmark.Progress_Quarter4 == "1" ? "selected='selected'" : String.Empty )>Not applicable during this grading period</option>
+                                                                            <option value="2" @(benchmark.Progress_Quarter4 == "2" ? "selected='selected'" : String.Empty )>No progress made</option>
+                                                                            <option value="3" @(benchmark.Progress_Quarter4 == "3" ? "selected='selected'" : String.Empty )>Little progress made</option>
+                                                                            <option value="4" @(benchmark.Progress_Quarter4 == "4" ? "selected='selected'" : String.Empty )>Progress made; Objective not yet met</option>
+                                                                            <option value="5" @(benchmark.Progress_Quarter4 == "5" ? "selected='selected'" : String.Empty )>Objective met</option>
+                                                                        </select>
+                                                                        <span class="input-group-addon add-on addComment" data-value="reportOfProgressShortTermComments4@(benchmark.goalBenchmarkID)"><span class="glyphicon glyphicon-edit"></span></span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="hidden">
+                                                                <td colspan="4">
+                                                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                                                    <div class="form-group shortTermComments">
+                                                                        <textarea name="reportOfProgressShortTermComments1@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter1)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments2@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter2)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments3@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter3)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments4@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter4)</textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="col-md-12" style="text-align:center;margin-top: 25px;">
+                                            <div class="form-group">
+                                                <button type="button" class="formbtn btn btn-success btn-lg SaveReport"><i class="glyphicon glyphicon-check"></i>&nbsp;Save</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+<div class="completed-loader completed-loader-hidden"></div>
+<div class="ajax-loader">
+    <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+    <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
+    <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
+</div>
+<script>
+    function initProgressReport() {
+        $('.progressGoalReport').not('.bound').addClass('bound').each(function () {
+
+            /* Binding */
+            /* when the teacher saves the form */
+            $(this).find(".SaveReport").on('click', function () {
+                $('.completed-loader').removeClass('completed-loader-hidden').addClass('completed-loader-visible');
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var progressGoal = $(this).closest('.progressGoalReport');
+                var postMethod = progressGoal.closest("form").attr('action').split("/").pop();
+                var data = progressGoal.closest("form").serialize();
+
+                $.post('/ModuleSection/' + postMethod, data)
+                .done(function (results) {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
+
+                    $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
+                    $(window).trigger("saving.bs.modal");
+                })
+                .fail(function (error) {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    });
+
+                    $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
+                });
+            });
+
+            //* Binding */
+            //* when the teacher clicks the comment icon */
+            $(this).find('span.addComment').not('.bound').addClass('bound').on('click', function (event) {
+                var textareaName = $(this).attr("data-value");
+                var textarea = $("textarea[name='" + textareaName + "']");
+                var textAreaLabel = textarea.parent().parent().find("label:first");
+                var textareaIsHidden = textarea.hasClass("hidden");
+
+                // close all the comment boxes
+                $(this).closest("tr").next().find("div.shortTermComments textarea").each(function (index) {
+                    $(this).addClass("hidden");
+                });
+
+                // remove all the highlights
+                $(this).closest("tr").find("span.addComment").each(function (index) {
+                    $(this).prev().removeClass("commentsHighlighted");
+                });
+
+                if (textareaIsHidden) {
+                    textarea.removeClass("hidden");
+                    textarea.closest("tr").removeClass("hidden");
+                    $(this).prev().addClass("commentsHighlighted");
+                    textAreaLabel[0].innerText = textarea.attr("placeholder").substring(28, textarea.attr("placeholder").length);
+                }
+                else {
+                    textarea.addClass("hidden");
+                    textarea.closest("tr").addClass("hidden");
+                }
+            });
+
+            //* Event */
+            /* Closes all the other panel groups except the one you clicked on */
+            $(this).find(".panel-title a").on("click", function () {
+                $(".panel-collapse").each(function () {
+                    $(this).collapse('hide');
+                });
+            });
+        });
+    }
+    initProgressReport();
+</script>

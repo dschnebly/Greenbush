@@ -34,6 +34,10 @@ namespace GreenBushIEP.Models
             if (ourGoal == null)
             {
                 this.goal.Create_Date = DateTime.Now;
+                this.goal.ProgressDate_Quarter1 = DateTime.Now;
+                this.goal.ProgressDate_Quarter2 = DateTime.Now;
+                this.goal.ProgressDate_Quarter3 = DateTime.Now;
+                this.goal.ProgressDate_Quarter4 = DateTime.Now;
                 db.tblGoals.Add(this.goal);
             }
 
@@ -61,19 +65,26 @@ namespace GreenBushIEP.Models
                     currentBenchmark.Progress_Quarter3 = benchmark.Progress_Quarter3;
                     currentBenchmark.Progress_Quarter4 = benchmark.Progress_Quarter4;
                     currentBenchmark.TransitionActivity = benchmark.TransitionActivity;
-                    currentBenchmark.ProgressDate_Quarter1 = DateTime.Now;
-                    currentBenchmark.ProgressDate_Quarter2 = DateTime.Now;
-                    currentBenchmark.ProgressDate_Quarter3 = DateTime.Now;
-                    currentBenchmark.ProgressDate_Quarter4 = DateTime.Now;
+                    currentBenchmark.Update_Date = DateTime.Now;
                 }
                 else
                 {
-                    benchmark.goalID = goal.goalID;
-                    benchmark.Create_Date = DateTime.Now;
-                    db.tblGoalBenchmarks.Add(benchmark);
+                    tblGoalBenchmark goalBenchmark = new tblGoalBenchmark();
+
+                    goalBenchmark.goalID = this.goal.goalID;
+                    goalBenchmark.Method = benchmark.Method;
+                    goalBenchmark.ObjectiveBenchmark = benchmark.ObjectiveBenchmark;
+                    goalBenchmark.ProgressDate_Quarter1 = DateTime.Now;
+                    goalBenchmark.ProgressDate_Quarter2 = DateTime.Now;
+                    goalBenchmark.ProgressDate_Quarter3 = DateTime.Now;
+                    goalBenchmark.ProgressDate_Quarter4 = DateTime.Now;
+                    goalBenchmark.TransitionActivity = benchmark.TransitionActivity;
+                    goalBenchmark.Create_Date = DateTime.Now;
+                    goalBenchmark.Update_Date = DateTime.Now;
+
+                    db.tblGoalBenchmarks.Add(goalBenchmark);
                 }
 
-                benchmark.Update_Date = DateTime.Now;
                 db.SaveChanges();
             }
 
@@ -81,10 +92,12 @@ namespace GreenBushIEP.Models
             {
                 var evalProceduresArray = evalProcedures.Split(',');
                 var currentList = db.tblGoalEvaluationProcedures.Where(o => o.goalID == this.goal.goalID);
+
                 foreach (tblGoalEvaluationProcedure obj in currentList)
                 {
                     db.tblGoalEvaluationProcedures.Remove(obj);                    
                 }
+
                 db.SaveChanges();//delete exting rows
 
                 foreach (var evalProc in evalProceduresArray)
@@ -97,6 +110,7 @@ namespace GreenBushIEP.Models
                         db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now });                        
                     }
                 }
+
                 db.SaveChanges(); //save new rows
             }
         }

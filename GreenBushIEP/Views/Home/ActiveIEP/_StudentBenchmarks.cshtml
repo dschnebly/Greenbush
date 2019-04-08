@@ -1,7 +1,6 @@
 ﻿@model GreenBushIEP.Models.StudentGoal
 
-<label class="input-labels" style="font-size:16px;margin-top: 15px;margin-bottom: 15px;">Short Term Benchmark(s)</label>
-
+<label class="input-labels standard-font-size">Short Term Benchmark(s)</label>
 <div class="StudentGoalBenchmarks">
     @foreach (var benchmark in @Model.benchmarks)
     {
@@ -17,12 +16,14 @@
             case 7: { ddlText = "Other"; break; }
         } //end switch
 
+        var ta = benchmark.TransitionActivity ? "<li>This is a Transition Activity.</li>" : String.Empty;
+
         <div class="StudentGoalBenchmark">
             <div class="form-group">
-                <ul style="padding-left: 35px;">
+                <ul style="padding-left: 35px; font-size: 15px;">
                     <li><b>@ddlText</b></li>
                     <li>@(benchmark.ObjectiveBenchmark.ToString())</li>
-                    <li><span>Transition Activity: </span>@(benchmark.TransitionActivity ? "On" : "Off")</li>
+                    @(Html.Raw(ta))
                 </ul>
             </div>
         </div>

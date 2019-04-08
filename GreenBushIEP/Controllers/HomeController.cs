@@ -839,6 +839,16 @@ namespace GreenbushIep.Controllers
                         else
                             return PartialView("_ModuleGeneralIntelligenceSection", intelligenceModel);
 
+                    case "ProgressModule":
+                        StudentGoalsViewModel model = new StudentGoalsViewModel();
+                        List<tblGoal> studentGoals = db.tblGoals.Where(g => g.IEPid == iepId).ToList();
+                        foreach (tblGoal goal in studentGoals)
+                        {
+                            model.studentGoals.Add(new StudentGoal(goal.goalID));
+                        }
+
+                        return PartialView("ActiveIEP/_ProgressReport", model);
+
                     default:
                         return Json(new { Result = "error", Message = "Unknown View" }, JsonRequestBehavior.AllowGet);
                 }
@@ -1924,8 +1934,8 @@ namespace GreenbushIep.Controllers
             if (form != null)
                 viewModel.fileDesc = form.Text;
 
-           //if (iep != null)
-                //viewModel.iepId = iep.IEPid;
+            //if (iep != null)
+            //viewModel.iepId = iep.IEPid;
 
             StudentLegalView fileViewModel = new StudentLegalView()
             {
@@ -1948,14 +1958,14 @@ namespace GreenbushIep.Controllers
 
             }
 
-			var lastReEval= db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
-			if (lastReEval != null)
-			{
-				fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();	
-			}
+            var lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
+            if (lastReEval != null)
+            {
+                fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();
+            }
 
 
-			viewModel.fileModel = fileViewModel;
+            viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -1995,17 +2005,17 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "IEP Meeting-Consent to Invite Representative of Non-Educational Agency", Value = "IEPMtgConsent" });
             forms.Add(new SelectListItem { Text = "IEP Meeting-Excusal from Attendance Form", Value = "IEPMtgExcusal" });
             forms.Add(new SelectListItem { Text = "IEP Amendment Form", Value = "IEPAmendment" });
-			forms.Add(new SelectListItem { Text = "Re-Evaluation Not Needed Agreement Form", Value = "IEPReEvalNotNeeded" });
-			forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
+            forms.Add(new SelectListItem { Text = "Re-Evaluation Not Needed Agreement Form", Value = "IEPReEvalNotNeeded" });
+            forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
             forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
             forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
 
 
-			
 
-			return forms.OrderBy(x => x.Text).ToList();
+
+            return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]
@@ -2790,7 +2800,7 @@ namespace GreenbushIep.Controllers
                         archive.Student_UserID = id;
                         archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
                         archive.FormFile = mergedFile;//fileIn;
-                        //archive.IEPid = iepId;
+                                                      //archive.IEPid = iepId;
                         archive.ArchiveDate = DateTime.Now;
 
                         db.tblFormArchives.Add(archive);
