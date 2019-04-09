@@ -20,5 +20,8 @@ namespace GreenBushIEP.Models
         public int UserID { get; set; }
         public string BuildingName { get; set; }
         public string USD { get; set; }
+        public string ContactName { get; set; }
+        public string Email { get; set; }
+        public string AddressLine { get; set; }
     }
 }

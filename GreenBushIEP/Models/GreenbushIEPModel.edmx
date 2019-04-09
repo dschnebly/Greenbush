@@ -2958,6 +2958,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="625" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4255,6 +4258,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

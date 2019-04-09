@@ -14,7 +14,7 @@
     <Shape ID="DesignTable:up_ReportDraftIEPS" ZOrder="4" X="1397" Y="416" Height="191" Width="296" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
     <Shape ID="DesignTable:up_ReportIEPSDue" ZOrder="3" X="786" Y="424" Height="172" Width="296" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:up_ReportProgress" ZOrder="2" X="1062" Y="474" Height="305" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:up_ReportStudentsByBuilding" ZOrder="1" X="1366" Y="630" Height="210" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
+    <Shape ID="DesignTable:up_ReportStudentsByBuilding" ZOrder="1" X="1366" Y="630" Height="267" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="216" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

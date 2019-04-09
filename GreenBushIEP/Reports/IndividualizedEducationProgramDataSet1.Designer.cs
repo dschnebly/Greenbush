@@ -4127,6 +4127,12 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnUSD;
             
+            private global::System.Data.DataColumn columnContactName;
+            
+            private global::System.Data.DataColumn columnEmail;
+            
+            private global::System.Data.DataColumn columnAddressLine;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportStudentsByBuildingDataTable() {
@@ -4218,6 +4224,30 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ContactNameColumn {
+                get {
+                    return this.columnContactName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn EmailColumn {
+                get {
+                    return this.columnEmail;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn AddressLineColumn {
+                get {
+                    return this.columnAddressLine;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4253,7 +4283,7 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD) {
+            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD, string ContactName, string Email, string AddressLine) {
                 up_ReportStudentsByBuildingRow rowup_ReportStudentsByBuildingRow = ((up_ReportStudentsByBuildingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StudentFirstName,
@@ -4262,7 +4292,10 @@ namespace GreenBushIEP.Reports {
                         BuildingID,
                         null,
                         BuildingName,
-                        USD};
+                        USD,
+                        ContactName,
+                        Email,
+                        AddressLine};
                 rowup_ReportStudentsByBuildingRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportStudentsByBuildingRow);
                 return rowup_ReportStudentsByBuildingRow;
@@ -4292,6 +4325,9 @@ namespace GreenBushIEP.Reports {
                 this.columnUserID = base.Columns["UserID"];
                 this.columnBuildingName = base.Columns["BuildingName"];
                 this.columnUSD = base.Columns["USD"];
+                this.columnContactName = base.Columns["ContactName"];
+                this.columnEmail = base.Columns["Email"];
+                this.columnAddressLine = base.Columns["AddressLine"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4311,6 +4347,12 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnBuildingName);
                 this.columnUSD = new global::System.Data.DataColumn("USD", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUSD);
+                this.columnContactName = new global::System.Data.DataColumn("ContactName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContactName);
+                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmail);
+                this.columnAddressLine = new global::System.Data.DataColumn("AddressLine", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAddressLine);
                 this.columnStudentFirstName.MaxLength = 255;
                 this.columnStudentLastName.MaxLength = 255;
                 this.columnDateCreated.AllowDBNull = false;
@@ -4324,6 +4366,12 @@ namespace GreenBushIEP.Reports {
                 this.columnBuildingName.MaxLength = 255;
                 this.columnUSD.AllowDBNull = false;
                 this.columnUSD.MaxLength = 50;
+                this.columnContactName.ReadOnly = true;
+                this.columnContactName.MaxLength = 201;
+                this.columnEmail.ReadOnly = true;
+                this.columnEmail.MaxLength = 255;
+                this.columnAddressLine.ReadOnly = true;
+                this.columnAddressLine.MaxLength = 625;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7005,6 +7053,56 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ContactName {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.ContactNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ContactName\' in table \'up_ReportStudentsByBuilding\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.ContactNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Email {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.EmailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Email\' in table \'up_ReportStudentsByBuilding\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.EmailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string AddressLine {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.AddressLineColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AddressLine\' in table \'up_ReportStudentsByBuilding\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.AddressLineColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStudentFirstNameNull() {
                 return this.IsNull(this.tableup_ReportStudentsByBuilding.StudentFirstNameColumn);
             }
@@ -7037,6 +7135,42 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetBuildingNameNull() {
                 this[this.tableup_ReportStudentsByBuilding.BuildingNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsContactNameNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.ContactNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetContactNameNull() {
+                this[this.tableup_ReportStudentsByBuilding.ContactNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsEmailNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.EmailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetEmailNull() {
+                this[this.tableup_ReportStudentsByBuilding.EmailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAddressLineNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.AddressLineColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAddressLineNull() {
+                this[this.tableup_ReportStudentsByBuilding.AddressLineColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -9256,6 +9390,9 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("UserID", "UserID");
             tableMapping.ColumnMappings.Add("BuildingName", "BuildingName");
             tableMapping.ColumnMappings.Add("USD", "USD");
+            tableMapping.ColumnMappings.Add("ContactName", "ContactName");
+            tableMapping.ColumnMappings.Add("Email", "Email");
+            tableMapping.ColumnMappings.Add("AddressLine", "AddressLine");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
