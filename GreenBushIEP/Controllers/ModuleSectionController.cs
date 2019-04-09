@@ -886,6 +886,23 @@ namespace GreenBushIEP.Controllers
 
         [HttpPost]
         [Authorize]
+        public ActionResult RemoveStudentTransition(int studentId, int iepId)
+        {
+            tblIEP theIEP = db.tblIEPs.Where(i => i.IEPid == iepId && i.UserID == studentId).FirstOrDefault();
+            if(theIEP != null)
+            {
+                tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iepId).FirstOrDefault();
+                transition.isReleaseBefore21 = false;
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "The transition was updated." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to access the transition." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
         public ActionResult EditProgressReport(FormCollection collection)
         {
             if (ValidateRequest)
