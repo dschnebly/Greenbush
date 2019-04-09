@@ -494,9 +494,9 @@
                                                     <textarea id="transitionGoalBehavior" name="transitionGoalBehavior" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior"></textarea>
 
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <textarea id="transitionGoalHow" name="transitionGoalHow" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How"></textarea>
-                                                </div>
+												<div class="col-md-3">													
+														<textarea id="transitionGoalHow" name="transitionGoalHow" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How"></textarea>													
+												</div>												 
                                             </div>
                                         </div>
                                     </div>
@@ -556,7 +556,7 @@
 
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <textarea id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(goal.WhereAndHow)</textarea>
+                                                                        <textarea id="transitionEducationCompleted@(goal.TransitionGoalID)" name="transitionEducationCompleted@(goal.TransitionGoalID)" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000">@(goal.WhereAndHow)</textarea>
 
                                                                     </div>
                                                                 </div>
@@ -616,7 +616,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         @*<input class="form-control" type="text" id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">*@
-                                                                        <textarea id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior">@(goal.WhereAndHow)</textarea>
+                                                                        <textarea id="transitionEmploymentCompleted@(goal.TransitionGoalID)" name="transitionEmploymentCompleted@(goal.TransitionGoalID)" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Behavior">@(goal.WhereAndHow)</textarea>
 
                                                                     </div>
                                                                 </div>
@@ -676,7 +676,7 @@
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         @*<input class="form-control" type="text" id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" placeholder="Where and How" title="Where and How" value="@(goal.WhereAndHow)">*@
-                                                                        <textarea id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" class="form-control" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How">@(goal.WhereAndHow)</textarea>
+                                                                        <textarea id="transitionIndependentCompleted@(goal.TransitionGoalID)" name="transitionIndependentCompleted@(goal.TransitionGoalID)" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How">@(goal.WhereAndHow)</textarea>
 
                                                                     </div>
                                                                 </div>
@@ -1392,7 +1392,15 @@
         var navListItems = $('ul.setup-panel li a'),
             allWells = $('.setup-content');
 
-        allWells.hide();
+		allWells.hide();
+
+		$('.textHow').on('blur', function(e) {			
+			var currentValue = $(this).val();
+			var n = currentValue.endsWith(".");
+			if (!n)
+				$(this).val(currentValue + ".");
+
+		});
 
         if (isReleaseBefore21) {
             $("#studentBirthdayAgeOver21").removeClass("hidden");
@@ -1780,6 +1788,14 @@
         cloneEducation.find("#transitionGoalBehavior").prop("id", "transitionEducationBehavior" + educationCount).attr("name", "transitionEducationBehavior" + educationCount);
         cloneEducation.find("#transitionGoalHow").prop("id", "transitionEducationCompleted" + educationCount).attr("name", "transitionEducationCompleted" + educationCount);
 
+		cloneEducation.find('.textHow').on('blur', function(e) {			
+			var currentValue = $(this).val();
+			var n = currentValue.endsWith(".");
+			if (!n)
+				$(this).val(currentValue + ".");
+
+		});
+
         // close all but the last assessment.
         $(".transitionEducation").find(".panel-collapse.in").collapse("hide");
 
@@ -1853,6 +1869,14 @@
         cloneEmployment.find("#transitionGoalBehavior").prop("id", "transitionEmploymentBehavior" + employmentCount).attr("name", "transitionEmploymentBehavior" + employmentCount);
         cloneEmployment.find("#transitionGoalHow").prop("id", "transitionEmploymentCompleted" + employmentCount).attr("name", "transitionEmploymentCompleted" + employmentCount);
 
+		cloneEmployment.find('.textHow').on('blur', function(e) {			
+			var currentValue = $(this).val();
+			var n = currentValue.endsWith(".");
+			if (!n)
+				$(this).val(currentValue + ".");
+
+		});
+
         // close all but the last assessment.
         $(".transitionEmployment").find(".panel-collapse.in").collapse("hide");
 
@@ -1925,6 +1949,14 @@
         cloneIndependent.find("#transitionGoalGraduation").prop("id", "transitionIndependentGraduation" + independentCount).attr("name", "transitionIndependentGraduation" + independentCount);
         cloneIndependent.find("#transitionGoalBehavior").prop("id", "transitionIndependentBehavior" + independentCount).attr("name", "transitionIndependentBehavior" + independentCount);
         cloneIndependent.find("#transitionGoalHow").prop("id", "transitionIndependentCompleted" + independentCount).attr("name", "transitionIndependentCompleted" + independentCount);
+
+		cloneIndependent.find('.textHow').on('blur', function(e) {			
+			var currentValue = $(this).val();
+			var n = currentValue.endsWith(".");
+			if (!n)
+				$(this).val(currentValue + ".");
+
+		});
 
         // close all but the last assessment.
         $(".transitionIndependent").find(".panel-collapse.in").collapse("hide");
