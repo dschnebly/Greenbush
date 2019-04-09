@@ -142,7 +142,7 @@
 
                                                         <input type="text" data-val="true" value="@(Model.DefaultEndDate)" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
                                                                id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999;" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,7 +264,6 @@
     });
 
     function initGoal(element) {
-
         element.not('#defaultgoal').not('.bound').addClass('bound').each(function (index) {
             $(this).find("input[type=date]").on('input', function (e) {
 
@@ -336,6 +335,11 @@
 
                 if ($(this).closest('.oneStudentGoal').find('.accommodationDuration').val().length == 0) {
                     alert('The following field is required not to be empty: Duration');
+                    return false;
+                }
+
+                if ($(this).closest('.oneStudentGoal').find('input[name="AnticipatedEndDate"]').val().length == 0) {
+                    alert('The following field is required not to be empty: Anticipated End Date');
                     return false;
                 }
 
@@ -490,11 +494,11 @@
             initGoal($(this));
         });
 
-        $(this).find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-            });
-        });
+        //$(this).find('.dtField').each(function () {
+        //    $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+        //    $('.dtField').datepicker({
+        //        dateFormat: "mm/dd/yy",
+        //    });
+        //});
     });
 </script>

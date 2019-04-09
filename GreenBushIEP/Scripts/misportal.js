@@ -53,7 +53,6 @@
             if ($('#confirmStart').val() === 'START') {
                 var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
 
-                //window.location = '/Home/StudentProcedures?stid=' + userId ;
                 $(".ajax-loader").show();
                 $.ajax({
                     type: 'GET',
@@ -61,7 +60,7 @@
                     data: { stid: userId },
                     async: false,
                     success: function (data) {
-                        window.location.reload();
+                        location.reload();
                     },
                     error: function (data) {
                         alert("Unknown error occurred. Please contact your administrator or a Greenbush official.");

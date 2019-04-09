@@ -951,12 +951,15 @@ namespace GreenbushIep.Controllers
                 tblIEP theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                 if (theIEP != null)
                 {
-
                     return RedirectToAction("StudentProcedures", new { stid, theIEP.IEPid });
                 }
                 else
                 {
                     new IEP(student.UserID);
+
+                    theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
+                    theIEP.IepStatus = IEPStatus.DRAFT;
+                    db.SaveChanges();
                 }
 
                 return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
@@ -1762,7 +1765,7 @@ namespace GreenbushIep.Controllers
                 }
 
                 model.DefaultStartDate = iep.begin_date.HasValue ? iep.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
-                model.DefaultEndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+                model.DefaultEndDate = String.Empty;
             }
 
             ViewBag.Locations = locationList;
