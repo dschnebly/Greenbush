@@ -2243,41 +2243,40 @@
 			 		@if (Model.studentDetails != null && Model.studentDetails.isDOC)
 				   {
 			 		<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
-			   }
-			   else
-			   {
-			 	<div class="form-check" style="padding-top:5px;padding-right:5px">
-			 		@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
+				   }
+				   else
 				   {
-			 		<p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")">Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
-			   }
-			 	@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-				{
-			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-			}
-			 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-			 {
-			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")">Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
-			}
-			 @if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
-			 {
-			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
-			}
+			 		<div class="form-check" style="padding-top:5px;padding-right:5px">
+			 			@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
+						{
+			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")">Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
+						}
+			 			@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+						{
+			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+						}
+						@if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+						{
+			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")">Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
+						}
+						@if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
+						{
+			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
+						}
 			 </div>
 			 <div class="form-check voffset2" id="StateAssessment_TextArea">
 			 	@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
 				{
-			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
-
-		 }
-			 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-			 {
-			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
-		 }
-			 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-			 {
-			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
-		 }
+			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
+				}
+				@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+				{
+			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
+				}
+				@if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+				{
+			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
+				}
 			 </div>
 		 }
 			 </div>
@@ -2288,64 +2287,45 @@
 			 		@if (Model.studentDetails != null && Model.studentDetails.isDOC)
 				   {
 			 		<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
-			   }
-			   else
-			   {
-
-			 	<div class="form-check" style="padding-top:5px;padding-right:5px">
-			 		@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
+				   }
+				   else
 				   {
-			 		<p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
-			   }
-			 	@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-				{
-			 	<p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-			}
-			 @if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-			 {
-			 	<p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
-			}
-			 @if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
-			 {
-			 	<p>Student has completed all required State Assessments.</p>
-			}
+			 		<div class="form-check" style="padding-top:5px;padding-right:5px">
+			 			@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
+					   {
+			 				<p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
+						}
+			 			@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
+						{
+			 				<p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+						}
+						@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+						{
+			 				<p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
+						}
+						@if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
+						{
+			 				<p>Student has completed all required State Assessments.</p>
+						}
 			 </div>
 			 <div class="form-check voffset2" id="StateAssessment_TextArea">
 			 	@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
 				{
-			 	<p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
-		 }
-			 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-			 {
-			 	<p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
-		 }
-			 @if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-			 {
-			 	<p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>
-		 }
+			 		<p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
+				}
+				@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
+				{
+			 		<p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
+				}
+				@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+				{
+			 		<p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>
+				}
 			 </div>
 		 }
 			 </div>
 			 </div>
-			 @*<hr />
-	<div class="row voffset2">
-		<div class="col-md-12">
-			<label>Transportation Plan</label>
-			<div class="form-check">
-				 @if (Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value)
-				 {
-					<p class="@(Model.studentOtherConsiderations.Transporation_NotEligible.HasValue && Model.studentOtherConsiderations.Transporation_NotEligible.Value ? "" : "hidden")" >The student is not eligible for transportation.</p>
-				 }
-				 @if (Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value)
-				 {
-				 <p class="@(Model.studentOtherConsiderations.Transporation_Required.HasValue && Model.studentOtherConsiderations.Transporation_Required.Value ? "" : "hidden")" >The nature of the student’s disability is such that transportation is required.</p>
-				 }
-			</div>
-			<div style="display: @(Model.studentOtherConsiderations.Transporation_Other_flag.HasValue && Model.studentOtherConsiderations.Transporation_Other_flag.Value ? "block;" : "none;")">
-				 <p>@(Model.studentOtherConsiderations.Transporation_Other_desc)</p>
-			</div>
-		</div>
-	</div>*@
+	
 			 <hr />
 			 <div class="row voffset2 dont-break">
 			 	<div class="col-md-12">
@@ -2502,218 +2482,6 @@
 			 	<label>Evaluation Procedure</label>
 			 	<p>@evalText.Trim().TrimEnd(',')</p>
 			 </div>
-			 @*<table class="table table-bordered table-responsive" style="margin-top:10px;margin-bottom: 0; background-color: transparent;">
-		<thead class="thead-inverse">
-			<tr>
-				<th class="text-center" colspan="4"><i class="ProgressAnnualGoal" style="float:left;"></i>Progress Towards Annual Goal</th>
-			</tr>
-			<tr class="PTAGDisplay ">
-				<th>
-					<div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-
-				</th>
-				<th>
-					<div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-
-				</th>
-				<th>
-					<div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-
-				</th>
-				<th>
-					<div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup><br />@sGoal.ProgressDate_Quarter1.Date.ToShortDateString()</div>
-
-				</th>
-			</tr>
-		</thead>
-		<tbody class="PTAGDisplay ">
-			<tr>
-				<td>
-					<span>@progQ1</span>
-				</td>
-				<td>
-					<span>@progQ2</span>
-				</td>
-				<td>
-					<span>@progQ3</span>
-				</td>
-				<td>
-					<span>@progQ4</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4">
-					<label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter the student's performance while attempt to reach this goal">Comments</label>
-					<div class="form-group shortTermComments">
-						<p name="reportOfAnnualGoalComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter1</p>
-						<p name="reportOfAnnualGoalComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter2</p>
-						<p name="reportOfAnnualGoalComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter3</p>
-						<p name="reportOfAnnualGoalComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@sGoal.ProgressDescription_Quarter4</p>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>*@
-
-			 @*@if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
-	{
-		foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
-		{
-			var ddlText2 = "";
-			var gbProgQ1 = "";
-			var gbProgQ2 = "";
-			var gbProgQ3 = "";
-			var gbProgQ4 = "";
-			var isChecked = "glyphicon-unchecked";
-
-			if (gb.TransitionActivity)
-			{
-				isChecked = "glyphicon-check";
-			}
-
-			switch (gb.Method)
-			{
-				case 1: { ddlText2 = "Written Observation"; break; }
-				case 2: { ddlText2 = "Written Performance"; break; }
-				case 3: { ddlText2 = "Oral Performance"; break; }
-				case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-				case 5: { ddlText2 = "Time Sample"; break; }
-				case 6: { ddlText2 = "Demonstration/Performance"; break; }
-				case 7: { ddlText2 = "Other"; break; }
-			} //end switch
-
-			switch (gb.Progress_Quarter1)
-			{
-				case "1": { gbProgQ1 = "Not applicable during this grading period"; break; }
-				case "2": { gbProgQ1 = "No progress made"; break; }
-				case "3": { gbProgQ1 = "Little progress made"; break; }
-				case "4": { gbProgQ1 = "Progress made; Objective not yet met"; break; }
-				case "5": { gbProgQ1 = "Objective met"; break; }
-
-			} //end switch
-
-			switch (gb.Progress_Quarter2)
-			{
-				case "1": { gbProgQ2 = "Not applicable during this grading period"; break; }
-				case "2": { gbProgQ2 = "No progress made"; break; }
-				case "3": { gbProgQ2 = "Little progress made"; break; }
-				case "4": { gbProgQ2 = "Progress made; Objective not yet met"; break; }
-				case "5": { gbProgQ2 = "Objective met"; break; }
-
-			} //end switch
-
-			switch (gb.Progress_Quarter3)
-			{
-				case "1": { gbProgQ3 = "Not applicable during this grading period"; break; }
-				case "2": { gbProgQ3 = "No progress made"; break; }
-				case "3": { gbProgQ3 = "Little progress made"; break; }
-				case "4": { gbProgQ3 = "Progress made; Objective not yet met"; break; }
-				case "5": { gbProgQ3 = "Objective met"; break; }
-
-			} //end switch
-
-			switch (gb.Progress_Quarter4)
-			{
-				case "1": { gbProgQ4 = "Not applicable during this grading period"; break; }
-				case "2": { gbProgQ4 = "No progress made"; break; }
-				case "3": { gbProgQ4 = "Little progress made"; break; }
-				case "4": { gbProgQ4 = "Progress made; Objective not yet met"; break; }
-				case "5": { gbProgQ4 = "Objective met"; break; }
-
-			} //end switch
-
-			<label class="input-labels" style="padding: 2px;">Short Term Benchmark(s)</label>
-
-			<div class="StudentGoalBenchmarks">
-
-				<div class="form-group" style="padding:2px;">
-					<label>@ddlText2</label>&nbsp;<span>@gb.ObjectiveBenchmark</span>
-					<b>T.A.</b>
-					<img src="@(isChecked == "" ? @imageNotChecked : @imageChecked)" class='imgCheck' />&nbsp;
-					<input type="checkbox" id="StudentEvaluationProceduresChk" name="StudentEvaluationProceduresChk" @(isChecked == "" ? String.Empty : "checked") />
-
-				</div>
-				<div class="slideReportProgress">
-					<table class="table table-bordered table-bordered table-responsive">
-						<thead class="thead-inverse" style="background-color: transparent;">
-							<tr>
-								<th class="text-center" colspan="4">Reports of Progress</th>
-							</tr>
-							<tr>
-								<th>
-									<div class="pull-left col-md-offset-2" style="margin-top: 5px;">1<sup>st</sup></div>
-									<div class="col-md-9 date">
-										<input type="text" class="form-control" name="reportOfProgressQuarter10" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter1.Date.ToShortDateString()" />
-									</div>
-								</th>
-								<th>
-									<div class="pull-left col-md-offset-2" style="margin-top: 5px;">2<sup>nd</sup></div>
-									<div class="col-md-9 date">
-										<input type="text" class="form-control" name="reportOfProgressQuarter20" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter2.Date.ToShortDateString()" />
-									</div>
-								</th>
-								<th>
-									<div class="pull-left col-md-offset-2" style="margin-top: 5px;">3<sup>rd</sup></div>
-									<div class="col-md-9 date">
-										<input type="text" class="form-control" name="reportOfProgressQuarter30" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter3.Date.ToShortDateString()" />
-									</div>
-								</th>
-								<th>
-									<div class="pull-left col-md-offset-2" style="margin-top: 5px;">4<sup>th</sup></div>
-									<div class="col-md-9 date">
-										<input type="text" class="form-control" name="reportOfProgressQuarter40" style="height: 30px; padding: 0 0 0 10px; line-height: normal;" pattern="MM/dd/yyyy" value="@gb.ProgressDate_Quarter4.Date.ToShortDateString()" />
-									</div>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<div class="input-group input-append">
-										<span>@gbProgQ1</span>
-
-									</div>
-								</td>
-								<td>
-									<div class="input-group input-append">
-										<span>@gbProgQ2</span>
-
-
-									</div>
-								</td>
-								<td>
-									<div class="input-group input-append">
-										<span>@gbProgQ3</span>
-
-
-									</div>
-								</td>
-								<td>
-									<div class="input-group input-append">
-										<span>@gbProgQ4</span>
-
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4">
-									<label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
-									<div class="form-group shortTermComments">
-										<p name="reportOfProgressShortTermComments10" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter1</p>
-										<p name="reportOfProgressShortTermComments20" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter2</p>
-										<p name="reportOfProgressShortTermComments30" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter3</p>
-										<p name="reportOfProgressShortTermComments40" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit.">@gb.ProgressDescription_Quarter4</p>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-			</div>
-		}//end foreach short term bench
-	}*@
-
 			 </div> <!--end panel default-->
 			 </div><!--end panel group-->
 			 </div><!--end col md 12-->
@@ -2722,98 +2490,98 @@
 	 else
 	 {
 			 <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
-		 }
-			 </div><!--end section break-->
-			 <div>
-			 	<h3 class="text-center">SERVICES</h3>
+	 }
+	 </div><!--end section break-->
+	 <div class="dont-break">
+		<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 				{
 					var serviceCount = 1;
-			 	<table style="text-align:left">
-			 		<tr>
-			 			<td><b>Ln#</b></td>
-			 			<td><b>Service</b></td>
-			 			<td><b>Setting</b></td>
-			 			<td><b>Provider</b></td>
-			 			<td><b>LEA</b></td>
-			 			<td><b>AttendBlg</b></td>
-			 			<td><b>Mins</b></td>
-			 			<td><b>Days</b></td>
-			 			<td><b>Start<br />Date</b></td>
-			 			<td><b>End<br />Date</b></td>
-			 			<td><b>Frequency</b></td>
-			 		</tr>
+				<table style="text-align:left">
+					<tr>
+						<td><b>Ln#</b></td>
+						<td><b>Service</b></td>
+						<td><b>Setting</b></td>
+						@*<td><b>Provider</b></td>*@
+						<td><b>LEA</b></td>
+						<td><b>AttendBlg</b></td>
+						<td><b>Mins</b></td>
+						<td><b>Days</b></td>
+						<td><b>Start<br />Date</b></td>
+						<td><b>End<br />Date</b></td>
+						<td><b>Frequency</b></td>
+					</tr>
 
-			 		@foreach (var service in Model.studentServices)
-				   {
-			 		<tr>
-			 			<td>
-			 				@serviceCount
-			 		</td>
-			 		<td>
-			 			@if (Model.serviceTypes.Count > 0)
-					  {
-						  foreach (var serviceType in Model.serviceTypes)
-						  {
-							  if (serviceType.ServiceCode == service.ServiceCode)
-							  {
-			 					<text>@serviceType.ServiceCode</text>
-				  }
-			  }
-		  }
-			 	</td>
-			 	<td>
-			 		@service.LocationCode
-			 </td>
-			 <td>
-			 	@if (Model.serviceProviders.Count > 0)
-				{
-					foreach (var serviceProvider in Model.serviceProviders)
+					@foreach (var service in Model.studentServices)
 					{
-						if (service.ProviderID == serviceProvider.ProviderID)
-						{
-			 			<text>@serviceProvider.FirstName @serviceProvider.LastName</text>
-			   }
-		   }
-	   }
-	   else
-	   {
-			 <text>&nbsp;&nbsp;&nbsp;</text>
-		 }
-			 </td>
-			 <td>
-			 	@Model.studentDetails.assignChildCount
-			 </td>
-			 <td>
-			 	@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
-			 </td>
-			 <td>
-			 	@service.Minutes
-			 </td>
-			 <td>
-			 	@service.DaysPerWeek
-			 </td>
-			 <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-			 <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
-			 <td>
-			 	@switch (@service.Frequency)
-				{
-					case 1:<text>Every week</text>; break;
-			case 2: <text>Every 2 weeks</text>; break;
-		 case 3: <text>Every 3 weeks</text>; break;
-		 case 4: <text>Every 4 weeks</text>; break;
-		 case 8: <text>Every 8 weeks</text>; break;
-		 case 9: <text>Every 9 weeks</text>; break;
-		 case 12: <text>Every 12 weeks</text>; break;
-		 case 18: <text>Every 18 weeks</text>; break;
-		 case 19: <text>3 out of 4 weeks</text>; break;
-		 case 99: <text>1 day per year</text>; break;
-	 }
-			 </td>
-			 </tr>
-			 serviceCount++;
-		 }
-			 </table>
+						<tr>
+							<td>
+								@serviceCount
+							</td>
+							<td>
+								@if (Model.serviceTypes.Count > 0)
+								{
+									foreach (var serviceType in Model.serviceTypes)
+									{
+										if (serviceType.ServiceCode == service.ServiceCode)
+										{
+											<text>@serviceType.ServiceCode</text>
+										}
+									}
+								}
+							</td>
+							<td>
+								@service.LocationCode
+							</td>
+							@*<td>
+							   @if (Model.serviceProviders.Count > 0)
+							   {
+								   foreach (var serviceProvider in Model.serviceProviders)
+								   {
+									   if (service.ProviderID == serviceProvider.ProviderID)
+									   {
+										   <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
+									   }
+								   }
+							  }
+							  else
+							  {
+									<text>&nbsp;&nbsp;&nbsp;</text>
+							  }
+							</td>*@
+							<td>
+								@Model.studentDetails.assignChildCount
+							</td>
+							<td>
+								@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
+							</td>
+							<td>
+								@service.Minutes
+							</td>
+							<td>
+								@service.DaysPerWeek
+							</td>
+							<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
+							<td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
+							<td>
+								@switch (@service.Frequency)
+								{
+									case 1:<text>Every week</text>; break;
+									case 2: <text>Every 2 weeks</text>; break;
+									case 3: <text>Every 3 weeks</text>; break;
+									case 4: <text>Every 4 weeks</text>; break;
+									case 8: <text>Every 8 weeks</text>; break;
+									case 9: <text>Every 9 weeks</text>; break;
+									case 12: <text>Every 12 weeks</text>; break;
+									case 18: <text>Every 18 weeks</text>; break;
+									case 19: <text>3 out of 4 weeks</text>; break;
+									case 99: <text>1 day per year</text>; break;
+								}
+							</td>
+						</tr>
+						serviceCount++;
+					}
+				</table>
 			 <div class="voffset3">
 			 	<p>In the case of unforeseen circumstances, one or more of the above personnel may change or a temporary substitute may be used in order to prevent services from being interrupted.</p>
 			 </div>

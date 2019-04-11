@@ -290,6 +290,35 @@ namespace GreenBushIEP.Report
 			return dt;
 		}
 
+		public static string GetTeacherFilter(HtmlSelect teacherDD, string teacherId)
+		{
+			string teacherList = "";
+
+			if (teacherId == "")
+			{
+				foreach (ListItem li in teacherDD.Items)
+				{
+					if (li.Selected)
+					{
+						teacherList += string.Format("{0},", li.Value);
+					}
+				}
+
+				if (string.IsNullOrEmpty(teacherList))
+				{
+					//get all, but limit list
+					var providerList = GreenBushIEP.Report.ReportMaster.GetTeachers(HttpContext.Current.User.Identity.Name);
+					teacherList = string.Join(",", providerList.Select(o => o.UserID));
+				}
+			}
+			else
+			{
+				teacherList = teacherId;
+			}
+
+			return teacherList;
+		}
+
 		public static string GetServiceFilter(HtmlSelect ServiceType)
 		{
 			string serviceIds = "";

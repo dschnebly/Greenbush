@@ -496,6 +496,9 @@
     <Compile Include="Models\up_ReportIEPSDue_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportProceduralDatesTracking_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportProceduralDates_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -605,6 +608,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ProceduralDatesTracking\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ProceduralDatesTracking\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\StudentData\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -739,6 +749,7 @@
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
+    <Content Include="Reports\ProceduralDatesTracking\Report.aspx" />
     <Content Include="Reports\StudentData\Report.aspx" />
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\Progress\Report.aspx" />
@@ -945,6 +956,7 @@
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
+    <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
     <EmbeddedResource Include="Reports\Progress\rptProgressReport.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
