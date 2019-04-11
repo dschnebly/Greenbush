@@ -359,6 +359,11 @@ namespace GreenBushIEP.Models
                 db.SaveChanges();
 
                 this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
+                if (!this.AcademicModuleNoConcern) // if any of the four types has a problem than the module is not completed
+                {
+                    studentAcademic.Completed = false;
+                    db.SaveChanges();
+                }
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
 

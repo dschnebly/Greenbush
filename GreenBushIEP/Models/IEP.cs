@@ -114,7 +114,7 @@ namespace GreenBushIEP.Models
             {
                 IEP studentIEP = CreateNewIEP(stid);
                 current = studentIEP.current;
-                hasPlan = current.IepStatus != IEPStatus.PLAN;
+                hasPlan = false;
             }
 
             anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive);

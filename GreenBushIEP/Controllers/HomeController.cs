@@ -786,6 +786,7 @@ namespace GreenbushIep.Controllers
                         if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); }
                         if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); }
                         if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); }
+
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_AcademicSection", academicModel);
                         else
