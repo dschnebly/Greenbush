@@ -505,7 +505,9 @@ namespace GreenBushIEP.Controllers
                 model.Parental_RightsBook_flag = collection["Parental_Rightsbook_flag"] == "on" ? true : false;
                 model.ExtendedSchoolYear_RegressionRisk = collection["ExtendedSchoolYear_RegressionRisk"] == "on" ? true : false;
                 model.ExtendedSchoolYear_SeverityRisk = collection["ExtendedSchoolYear_SeverityRisk"] == "on" ? true : false;
-                model.Completed = Convert.ToBoolean(collection["Completed"]);
+				model.Potential_HarmfulEffects_flag = collection["Potential_Harmful_Effects_flag"] == "on" ? true : false;
+				model.Potential_HarmfulEffects_desc = collection["Potential_Harmful_Effects_Desc"];
+				model.Completed = Convert.ToBoolean(collection["Completed"]);
 
                 var dwa = collection["DistrictWideAssessments"];
                 switch (dwa)
@@ -558,30 +560,30 @@ namespace GreenBushIEP.Controllers
                         break;
                 }
 
-                string otherDesc = "";
+				string otherDesc = "";
 
-                var vehicleTypeValue = collection["inputVehicleType"];
-                var beginDate = collection["inputBegin"];
-                var endDate = collection["inputEnd"];
-                var minutesValue = collection["inputMinutes"];
-                var vehicleType = "";
-                var minutes = "25";
-                if (!string.IsNullOrEmpty(vehicleTypeValue))
-                {
-                    if (vehicleTypeValue == "1")
-                        vehicleType = "special education";
-                    else if (vehicleTypeValue == "2")
-                        vehicleType = "general education";
-                    else
-                        vehicleType = "";
-                }
+				var vehicleTypeValue = collection["inputVehicleType"];
+				var beginDate = collection["inputBegin"];
+				var endDate = collection["inputEnd"];
+				var minutesValue = collection["inputMinutes"];
+				var vehicleType = "";
+				var minutes = "25";
+				if (!string.IsNullOrEmpty(vehicleTypeValue))
+				{
+					if (vehicleTypeValue == "1")
+						vehicleType = "special education";
+					else if (vehicleTypeValue == "2")
+						vehicleType = "general education";
+					else
+						vehicleType = "";
+				}
 
-                minutes = string.IsNullOrEmpty(minutesValue) ? "25" : minutesValue;
+				minutes = string.IsNullOrEmpty(minutesValue) ? "25" : minutesValue;
 
-                otherDesc = string.Format(@"The student will receive transportation each day that school is in session, on a {0} vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ({1} minutes estimated normal commute) beginning on {2} and ending on {3} following the school calendar.", vehicleType, minutes, beginDate, endDate);
+				otherDesc = string.Format(@"The student will receive transportation each day that school is in session, on a {0} vehicle, from the time the student boards the vehicle from the departure point until arrival at the destination and from the time the student boards the vehicle until arrival at the returning destination. ({1} minutes estimated normal commute) beginning on {2} and ending on {3} following the school calendar.", vehicleType, minutes, beginDate, endDate);
 
-                //find existing if updating
-                tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
+				//find existing if updating
+				tblOtherConsideration OC = db.tblOtherConsiderations.Where(c => c.OtherConsiderationID == model.OtherConsiderationID).FirstOrDefault();
 
                 if (OC == null)
                 {
@@ -623,6 +625,8 @@ namespace GreenBushIEP.Controllers
                     OC.Parental_Concerns_Desc = model.Parental_Concerns_Desc;
                     OC.Parental_CopyIEP_flag = model.Parental_CopyIEP_flag;
                     OC.Parental_RightsBook_flag = model.Parental_RightsBook_flag;
+					OC.Potential_HarmfulEffects_flag = model.Potential_HarmfulEffects_flag;
+					OC.Potential_HarmfulEffects_desc = model.Potential_HarmfulEffects_desc;
                     OC.Completed = model.Completed;
                     OC.Create_Date = DateTime.Now;
 

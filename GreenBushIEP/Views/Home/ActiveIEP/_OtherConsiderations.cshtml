@@ -196,7 +196,26 @@
                 </fieldset>
             </div>
         </div>
-
+		<hr />
+        <div class="row voffset2">
+            <div class="col-md-12">
+                <label>Potential Harmful Effects</label>
+            </div>
+        </div>
+        <div class="row voffset2">
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student?</label>&nbsp;&nbsp;@(Model.Potential_HarmfulEffects_flag != null && Model.Potential_HarmfulEffects_flag.Value ? "Yes" : "No" )
+                    
+                    <div class="form-check voffset2" id="Potential_HarmfulEffects_TextArea" style="display: @(Model.Potential_HarmfulEffects_flag.HasValue && Model.Potential_HarmfulEffects_flag.Value ? "block;" : "none;")">
+                        <div id="PC_Desc">
+							<label style="font-size:16px">Do the positive effects of the placement outweigh the potential harmful effects?</label>&nbsp;&nbsp;
+                            <p>@(Model.Potential_HarmfulEffects_desc)</p>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>			
+        </div>
         <hr />
         <div class="row voffset2">
             <div class="col-md-12">
