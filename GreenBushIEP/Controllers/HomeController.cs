@@ -1783,11 +1783,11 @@ namespace GreenbushIep.Controllers
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
-            ViewBag.vehicleType = 0;
-            ViewBag.minutes = "25";
-            ViewBag.begin = "";
-            ViewBag.end = "";
-            if (iep != null)
+			ViewBag.vehicleType = 0;
+			ViewBag.minutes = "25";
+			ViewBag.begin = "";
+			ViewBag.end = "";
+			if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 

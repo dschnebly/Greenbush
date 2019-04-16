@@ -675,6 +675,8 @@
           <Property Name="Parental_CopyIEP_flag" Type="bit" Nullable="false" />
           <Property Name="Parental_RightsBook_flag" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="Potential_HarmfulEffects_flag" Type="bit" />
+          <Property Name="Potential_HarmfulEffects_desc" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -2367,6 +2369,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Parental_CopyIEP_flag" Type="Boolean" Nullable="false" />
           <Property Name="Parental_RightsBook_flag" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Potential_HarmfulEffects_flag" Type="Boolean" />
+          <Property Name="Potential_HarmfulEffects_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -3709,6 +3713,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Potential_HarmfulEffects_desc" ColumnName="Potential_HarmfulEffects_desc" />
+                <ScalarProperty Name="Potential_HarmfulEffects_flag" ColumnName="Potential_HarmfulEffects_flag" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Parental_RightsBook_flag" ColumnName="Parental_RightsBook_flag" />
                 <ScalarProperty Name="Parental_CopyIEP_flag" ColumnName="Parental_CopyIEP_flag" />

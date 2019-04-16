@@ -143,12 +143,10 @@
             </div>
         }
         <hr />
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <label class="standard-font-size">Parental Concerns/Input</label>
-            </div>
-        </div>
-        <div class="row voffset2">
+        <div class="row">          
+			<div class="col-md-12">
+                  <label class="standard-font-size">Parental Concerns/Input</label>
+            </div>          
             <div class="col-md-12">
                 <fieldset class="form-group">
                     <label style="font-size:16px">The parent(s)/legal education decision maker has concerns for enhancing the education of @(studentName).</label>&nbsp;&nbsp;
@@ -166,13 +164,11 @@
                     </div>
                 </fieldset>
             </div>
-        </div>
-        <div class="row voffset2">
-            <div class="row voffset2">
-                <div class="col-md-12">
-                    <label class="standard-font-size">Parental Notifications</label>
-                </div>
-            </div>
+         </div>        
+        <div class="row">           
+            <div class="col-md-12">
+                <label class="standard-font-size">Parental Notifications</label>
+            </div>           
             <div class="col-md-12">
                 <fieldset class="form-group">
                     <label style="font-size:16px">The parent(s)/legal education decision were maker given/offered a copy of the Parental Rights Booklet.</label>&nbsp;&nbsp;
@@ -198,8 +194,32 @@
                 </fieldset>
             </div>
         </div>
+		<hr />
+		 <div class="row">            
+            <div class="col-md-12">
+                <label class="standard-font-size">Potential Harmful Effects</label>
+            </div>            
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    <label style="font-size:16px">Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student?</label>&nbsp;&nbsp;
+                    <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="Potential_Harmful_Effects_flag" id="Potential_Harmful_Effects_flag" class="falsetrueswitch-checkbox" @(Model.Potential_HarmfulEffects_flag.HasValue &&  Model.Potential_HarmfulEffects_flag.Value ? "checked" : String.Empty ) />
+                        <label class="falsetrueswitch-label" for="Potential_Harmful_Effects_flag">
+                            <span class="falsetrueswitch-inner"></span>
+                            <span class="falsetrueswitch-switch"></span>
+                        </label>
+                    </div>
+					<div id="PHE_Desc" class="form-check voffset2" style="display: @(Model.Potential_HarmfulEffects_flag.HasValue && Model.Potential_HarmfulEffects_flag.Value ? "block;" : "none;")">
+						<label style="font-size:16px">Do the positive effects of the placement outweigh the potential harmful effects?</label>&nbsp;&nbsp;
+                        <p>
+                            <input class="form-control standard-font-size" id="Potential_Harmful_Effects_Desc" name="Potential_Harmful_Effects_Desc" type="text" value="@(Model.Potential_HarmfulEffects_desc)" placeholder="Explain" maxlength=1000 data-toggle="tooltip" data-placement="bottom" title="1000 character limit." />
+                        </p>
+                    </div>
+                </fieldset>
+            </div>            
+        </div>
         <hr style="margin: 0;" />
-        <div class="row voffset2">
+		<div class="row voffset2">
             <div class="col-md-12">
                 <label class="standard-font-size">Considerations</label>
             </div>
@@ -211,6 +231,9 @@
                 <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
             </div>
         </div>
+		
+           
+
         <div class="row">
             <div class="col-md-12" style="text-align:center; margin-top: 10px;">
                 <div class="form-group">
@@ -246,7 +269,18 @@
             $("#PC_Desc").hide();
             $("#Parental_Concerns_Desc").val('');
         }
-    });
+	});
+
+	$("input:checkbox[name=Potential_Harmful_Effects_flag]").on('click', function (event) {
+        if ($("input:checkbox[name=Potential_Harmful_Effects_flag]").is(':checked')) {
+            $("#PHE_Desc").show();
+        }
+        else {
+            $("#PHE_Desc").hide();
+            $("#Potential_Harmful_Effects_Desc").val('');
+        }
+	});
+	
 
     $("input:checkbox[name=AssistiveTechnology_Require]").on('click', function (event) {
         if ($("input:checkbox[name=AssistiveTechnology_Require]").is(':checked')) {
