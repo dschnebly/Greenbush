@@ -797,7 +797,8 @@
 
                 //if isvalid, don't allow user to save
                 if (!isValid) {
-                    _showAlert()
+                    _showAlert();
+                    return false;
                 }
 
                 $.ajax({
@@ -856,7 +857,8 @@
                     var studentServiceFiscalYear = $(this).find("select[name='fiscalYear'] option:selected");
 
                     if (!_dateCheck(studentServiceStartDate, studentServiceEndDate, studentServiceFiscalYear)) {
-                        return canSave = false;
+                        canSave = false;
+                        alert(canSave);
                     }
 
                     if (canSave) {
@@ -865,8 +867,9 @@
                     }
                 });
 
-                $(window).trigger("saving.bs.modal");
                 if (canSave) {
+                    $(window).trigger("saving.bs.modal");
+
                     setTimeout(function () {
                         $('#moduleSection').modal('hide');
                     }, 1200);

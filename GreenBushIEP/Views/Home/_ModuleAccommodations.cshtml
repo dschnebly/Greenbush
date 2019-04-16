@@ -383,6 +383,13 @@
                                 if (allCompleted) {
                                     $("#AccommodationWidget .hero-widget").addClass("module-completed");
                                     $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
+
+                                    $(window).trigger("saving.bs.modal");
+
+                                    setTimeout(function () {
+                                        $('#moduleSection').modal('hide');
+                                    }, 1200);
+
                                 } else {
                                     $("#AccommodationWidget .hero-widget").removeClass("module-completed");
                                     $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
