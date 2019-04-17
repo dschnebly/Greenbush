@@ -2,7 +2,6 @@
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
-
 <div class="module-page">
     <div class=WordSection1>
         <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
@@ -18,10 +17,7 @@
             I, the parent (or adult student) identified below, have been informed that
         </p>
         <p>
-            <u>USD @(String.Format(schoolDistrict).PadRight(68 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u>:
-
-
-
+            <span style="text-decoration:underline;"><textarea  data-val="107" style="width:150px;height:20px;"></textarea><span style="display:none" class="input-value"></span></span>:					   
         </p>
         <p>
             (Participating Agency)
@@ -34,15 +30,12 @@
             <span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span> may be providing or paying for certain transition services for my child (or
             me) and
         </p>
-        <p>
-            I have been further informed that:
-        </p>
-        <ul type="">
+        <p>I have been further informed that:</p>
+        <ul>
             <li>
                 It is appropriate for a representative of the above agency to attend an
                 IEP meeting at which transition services will be discussed; and
-            </li>
-       
+            </li>       
             <li>
                 Information in my child’s (or in my) education records, including the
                 IEP, that is relevant to the development of postsecondary goals,
@@ -51,11 +44,8 @@
                 disclosure can be made only with my consent which I understand must be
                 voluntarily given and may be revoked at any time;
             </li>
-        </ul>
-        
-        <p align="center">
-            <u>CONSENT</u>
-        </p>
+        </ul>        
+        <p align="center"><u>CONSENT</u></p>
         <p>
             Having been informed as stated above, I give my consent for the school
             district to:
@@ -73,9 +63,6 @@
         <p>
             __________________________________________ Date: ______________________
         </p>
-        <p>
-            (Parent/Adult Student signature)
-        </p>
-
+        <p>(Parent/Adult Student signature)</p>
     </div>
 </div>

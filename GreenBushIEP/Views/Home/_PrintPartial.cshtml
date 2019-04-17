@@ -34,7 +34,7 @@
                         <h5>@Model.studentDetails.building.BuildingName</h5>
                         <h5>@Model.studentDetails.building.Address_Physical</h5>
                         <h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
-                        <h5>@Model.studentDetails.building.Phone</h5>
+                        <h5 x-ms-format-detection="none">@Model.studentDetails.building.Phone</h5>
                         }
                     </td>
                     @*<td style="text-align:right;vertical-align:top">
@@ -80,7 +80,7 @@
                         <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
                     </tr>
                     <tr>
-                        <td><label>Phones:</label></td>
+                        <td><label>Phone:</label></td>
                         <td>@primeContact.Phone</td>
                     
                         <td><label>Email:</label></td>
@@ -218,7 +218,7 @@
 			 	<td>@(studentGrade)</td>
 			 </tr>
 			 <tr>
-			 	<td><label>Phones:</label></td>
+			 	<td><label>Phone:</label></td>
 			 	<td>@( primeContact != null ? @primeContact.Phone : "")</td>
 			 <td><label>IEP Date:</label></td>
 			 <td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
