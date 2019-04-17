@@ -80,7 +80,7 @@
                         <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
                     </tr>
                     <tr>
-                        <td><label>Phones:</label></td>
+                        <td><label>Phone:</label></td>
                         <td>@primeContact.Phone</td>
                     
                         <td><label>Email:</label></td>
@@ -218,7 +218,7 @@
 			 	<td>@(studentGrade)</td>
 			 </tr>
 			 <tr>
-			 	<td><label>Phones:</label></td>
+			 	<td><label>Phone:</label></td>
 			 	<td>@( primeContact != null ? @primeContact.Phone : "")</td>
 			 <td><label>IEP Date:</label></td>
 			 <td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
