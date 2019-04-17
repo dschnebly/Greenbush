@@ -35,6 +35,19 @@
             $("#misDistrict").trigger("chosen:updated");
         }
     });
+
+    $(".add-contact").on("click", function () {
+        // clone and unhide the contact template.
+        var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
+        var index = $(".student-contact").length;
+
+        newContact.html(newContact.html().replace(/\[#\]/g, '[' + index + ']'));
+        newContact.find(".contact-button").removeClass("contact-button btn-info").addClass('btn-danger');
+
+        initContacts();
+
+        return false;
+    });
 });
 
 function init() {
@@ -182,8 +195,7 @@ function tabValidates() {
     $inputs.each(function () {
         var input = $(this);
         var is_valid = input.val();
-        //console.log(input);
-        //console.log(input.val());
+
         if (is_valid === "" || is_valid === null) {
             if (input.is("select")) {
                 $(this).next().addClass('contact-tooltip');
@@ -204,32 +216,14 @@ function tabValidates() {
 
 function initContacts() {
 
-    $('.add-contact').each(function (index) {
-
-        $(this).not('.bound').addClass('bound').on("click", function (e) {
-            if ($(this).find('i').hasClass("glyphicon-plus")) {
-
-                // clone and unhide the contact template.
-                var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
-                //var count = $("#student-contacts .student-contact").length; //$("#numberOfContacts").val();
-
-                // new contact id.
-                //newContact.find("#relationshipId").val(count).attr("name", "contacts[#].relationshipId").attr("id", "contacts[#].relationshipId");
-                newContact.html(newContact.html().replace(/\[#\]/g, '[' + ++index + ']'));
-                newContact.find(".contact-button").removeClass("contact-button").addClass("add-contact").removeClass("btn-info").addClass('btn-danger');
-
-                // rebind the recently added contact.
-                initContacts();
-
-                return false;
-            } else {
-                $(this).unbind("click").parents(".student-contact").fadeOut(300, function () {
-                    $(this).remove();
-                });
-            }
+    $('.student-contact:not(.bound)').addClass('bound').each(function (index) {
+        $(this).find('.remove-contact').on("click", function (e) {
+            $(this).parents(".student-contact").fadeOut(300, function () {
+                $(this).remove();
+            });
         });
-
     });
+
 }
 
 $("#next2").on("click", function () {
