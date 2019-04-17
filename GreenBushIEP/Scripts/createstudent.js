@@ -36,7 +36,7 @@
         }
     });
 
-    $(".glyphicon-plus").on("click", function () {
+    $(".add-contact").on("click", function () {
         // clone and unhide the contact template.
         var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
         var index = $(".student-contact").length;
