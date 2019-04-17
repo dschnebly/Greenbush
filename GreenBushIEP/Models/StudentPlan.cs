@@ -43,6 +43,7 @@ namespace GreenBushIEP.Models
         public bool IntelligenceAreaOfNeed { get; set; }
         public bool AcademicModuleNoConcern { get; set; }
         public bool AcademicNoConcern { get; set; }
+        public bool AcademicCompleted { get; set; }
         public bool AcademicNeeds { get; set; }
         public bool AcademicProgressTowardGenEd { get; set; }
         public bool ReadingNoConcern { get; set; }
@@ -93,6 +94,7 @@ namespace GreenBushIEP.Models
             this.IntelligenceProgressTowardGenEd = false;
             this.IntelligenceAreaOfNeed = false;
             this.AcademicModuleNoConcern = true;
+            this.AcademicCompleted = false;
             this.AcademicNoConcern = true;
             this.AcademicNeeds = false;
             this.AcademicProgressTowardGenEd = false;
@@ -182,6 +184,7 @@ namespace GreenBushIEP.Models
                 tblIEPAcademic studentAcademic = db.tblIEPAcademics.FirstOrDefault(a => a.IEPAcademicID == studentIEP.IEPAcademicID);
                 if (studentAcademic != null)
                 {
+                    this.AcademicCompleted = studentAcademic.Completed;
                     this.AcademicNeeds = studentAcademic.AreaOfNeed;
                     this.AcademicNoConcern = studentAcademic.NoConcerns;
                     this.AcademicProgressTowardGenEd = studentAcademic.ProgressTowardGenEd;
