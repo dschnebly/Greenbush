@@ -249,6 +249,7 @@
 
                     $('.oneStudentGoal').not('#defaultGoal').each(function () {
                         $(this).find("a i.isGoalCompleted").addClass("thisGoalNotCompleted");
+                        $(this).find("input[name=Completed]").val(false);
                     });
 
                     $("#AccommodationWidget .hero-widget").removeClass("module-completed");

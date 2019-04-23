@@ -1374,8 +1374,12 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The Service Module was updated." }, JsonRequestBehavior.AllowGet);
                 case "Accommodation":
-                    db.tblAccommodations.Where(a => a.IEPid == stdIEPId).ToList().ForEach(a => a.Completed = false);
-                    db.SaveChanges();
+                    var list = db.tblAccommodations.Where(a => a.IEPid == stdIEPId).ToList();
+                    foreach(tblAccommodation accomodation in list)
+                    {
+                        accomodation.Completed = false;
+                        db.SaveChanges();
+                    }
                     return Json(new { Result = "success", Message = "The Accommodations Module was updated." }, JsonRequestBehavior.AllowGet);
                 case "Behavior":
                     db.tblBehaviors.Where(b => b.IEPid == stdIEPId).FirstOrDefault().Completed = false;
