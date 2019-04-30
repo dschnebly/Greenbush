@@ -932,6 +932,7 @@
     <Content Include="Views\Home\ActiveIEP\_StudentGoals.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_StudentBenchmarks.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_ProgressReport.cshtml" />
+    <Content Include="Views\Form\TeamEvaluation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
