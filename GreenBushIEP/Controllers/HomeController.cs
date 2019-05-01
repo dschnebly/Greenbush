@@ -2237,7 +2237,7 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
-        public ActionResult contactUs(FormCollection collection)
+        public ActionResult ContactUs(FormCollection collection)
         {
             try
             {
@@ -2247,7 +2247,7 @@ namespace GreenbushIep.Controllers
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
                 mailMessage.To.Add("melanie.johnson@greenbush.org");
-                mailMessage.Subject = "IEP contact from online. This is super important. Drop everything! ";
+                mailMessage.Subject = "IEP Greenbush Contact. Message from Backpack!";
                 mailMessage.Body = String.Format("{0} has contacted you from email {1} with this message {2}", collection["Name"], collection["email"], collection["Message"]);
                 smtpClient.Send(mailMessage);
             }
