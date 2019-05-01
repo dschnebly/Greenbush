@@ -1,0 +1,62 @@
+﻿
+@{
+
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
+	string contactPhone = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Phone : "";
+	string contactAddress = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 + " " + Model.contacts[0].City + " " + Model.contacts[0].State + " " + Model.contacts[0].Zip : "";
+	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
+	string placement = Model.studentInfo != null ? Model.studentInfo.PlacementCode : "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+}
+<div class="module-page">
+	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;margin-bottom:35px' class="voffset2">
+		<p class=MsoNormal align=center style='text-align:center'>
+			<span style='font-size: 16pt;'><b>CONFERENCE SUMMARY</b></span>
+		</p>
+	</div>
+	<p class="voffset3" style="font-weight:normal">
+		<span style="font-weight:bold">Student's Name: </span> <u>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+		<span style="font-weight:bold">DOB:</span> <u>@(String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</u>
+	</p>
+	<p class="voffset3" style="font-weight:normal">
+		<span style="font-weight:bold">Parent's Name:</span>
+		<u>@(String.Format(contactFormattedName).PadRight(58 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Phone:</span>
+		<u>@(String.Format(contactPhone).PadRight(22 - String.Format(contactPhone).Length, ' ').Replace(" ", "\u00A0"))</u>
+	</p>
+
+	<p class="voffset3" style="font-weight:normal">
+		<span style="font-weight:bold">Address:</span>
+		<u>@(String.Format(contactAddress).PadRight(114 - String.Format(contactAddress).Length, ' ').Replace(" ", "\u00A0"))</u>
+	</p>
+	<p class="voffset3" style="font-weight:normal">
+		<span style="font-weight:bold">School District:</span>
+		<u>@(String.Format(usdName).PadRight(25 - String.Format(usdName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Current Placement:</span>
+		<u>@(String.Format(placement).PadRight(15 - String.Format(placement).Length, ' ').Replace(" ", "\u00A0"))</u>
+	</p>
+
+	<p class="voffset3" style="font-weight:normal">
+		<span style="font-weight:bold">Teacher:</span>
+		<u>@(String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
+		<u><textarea style="width:100px;height:25px">@(String.Format(districtContactName).PadRight(15 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none" class="input-value"></span></u>
+	</p>
+
+	<p class="voffset3" style="font-weight:normal">
+		<b><span>Requested by</span></b>
+		<b><u><textarea style="width:100px;height:25px"></textarea><span style="display:none" class="input-value"></span></u></b>
+	</p>	
+	<p style="margin-top:15px"><span><b>Reason(s) for Conference:</b> <br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value"></span>		</span></p>
+	<p style="margin-top:15px"><span><b>Conclusions:</b> <br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value"></span>		</span></p>
+	<p style="margin-top:15px"><span><b>Signatures of Participants in Conference:</b></span></p>
+	<table border=0 cellspacing=5 cellpadding=1 style='width:350px;border-collapse:collapse;'>
+		<tr><th>Name</th><th>Date</th></tr>
+		<tr><td>___________________________________</td><td>__________________</td></tr>
+		<tr><td>___________________________________</td><td>__________________</td></tr>
+		<tr><td>___________________________________</td><td>__________________</td></tr>
+		<tr><td>___________________________________</td><td>__________________</td></tr>		
+	</table>
+</div> <!--end module-->
