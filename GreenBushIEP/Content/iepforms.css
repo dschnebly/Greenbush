@@ -205,7 +205,8 @@ dd {
 }
 
 .funkyradio input[type="radio"]:empty,
-.funkyradio input[type="checkbox"]:empty {
+.funkyradio input[type="checkbox"]:empty,
+.funkyradio input[type="checkbox"]::-ms-check {
 	display: none;
 }
 
@@ -214,7 +215,6 @@ dd {
 		position: relative;
 		line-height: 2.5em;
 		text-indent: 3.25em;
-		/*margin-top: 2em;*/
 		cursor: pointer;
 		-webkit-user-select: none;
 		-moz-user-select: none;
@@ -295,7 +295,7 @@ dd {
 	background-color: #f0ad4e;
 }
 
-.funkyradio-info input[type="radio"]:checked ~ label:before,
+.funkyradio-info input[type="radio"]:checked ~ label:before, 
 .funkyradio-info input[type="checkbox"]:checked ~ label:before {
 	color: #fff;
 	background-color: #5bc0de;
