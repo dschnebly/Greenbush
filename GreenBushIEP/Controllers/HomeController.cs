@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -1783,11 +1784,11 @@ namespace GreenbushIep.Controllers
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
-			ViewBag.vehicleType = 0;
-			ViewBag.minutes = "25";
-			ViewBag.begin = "";
-			ViewBag.end = "";
-			if (iep != null)
+            ViewBag.vehicleType = 0;
+            ViewBag.minutes = "25";
+            ViewBag.begin = "";
+            ViewBag.end = "";
+            if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -2234,6 +2235,28 @@ namespace GreenbushIep.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        public ActionResult contactUs(FormCollection collection)
+        {
+            try
+            {
+                // email this user the password
+                SmtpClient smtpClient = new SmtpClient();
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
+                mailMessage.To.Add("melanie.johnson@greenbush.org");
+                mailMessage.Subject = "IEP contact from online. This is super important. Drop everything! ";
+                mailMessage.Body = String.Format("{0} has contacted you from email {1} with this message {2}", collection["Name"], collection["email"], collection["Message"]);
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception e)
+            {
+                throw new EmailException("There was a problem when emailing the new user password.", e);
+            }
+
+            return View("Home");
         }
 
         public ActionResult MySettings()
