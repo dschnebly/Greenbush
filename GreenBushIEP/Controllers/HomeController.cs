@@ -115,7 +115,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
                 }
 
                 // show the latest updated version changes
@@ -147,7 +147,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
                 }
 
                 // show the latest updated version changes
