@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -110,7 +111,7 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
@@ -142,7 +143,7 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
@@ -1783,11 +1784,11 @@ namespace GreenbushIep.Controllers
             var model = new tblOtherConsideration();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             bool isReadOnly = false;
-			ViewBag.vehicleType = 0;
-			ViewBag.minutes = "25";
-			ViewBag.begin = "";
-			ViewBag.end = "";
-			if (iep != null)
+            ViewBag.vehicleType = 0;
+            ViewBag.minutes = "25";
+            ViewBag.begin = "";
+            ViewBag.end = "";
+            if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
@@ -2235,6 +2236,28 @@ namespace GreenbushIep.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        public ActionResult ContactUs(FormCollection collection)
+        {
+            try
+            {
+                // email this user the password
+                SmtpClient smtpClient = new SmtpClient();
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
+                mailMessage.To.Add("melanie.johnson@greenbush.org");
+                mailMessage.Subject = "IEP Greenbush Contact. Message from Backpack!";
+                mailMessage.Body = String.Format("{0} has contacted you from email {1} with this message {2}", collection["Name"], collection["email"], collection["Message"]);
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception e)
+            {
+                throw new EmailException("There was a problem when emailing the new user password.", e);
+            }
+
+            return View("Home");
         }
 
         public ActionResult MySettings()
