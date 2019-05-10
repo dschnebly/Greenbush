@@ -1071,7 +1071,7 @@ namespace GreenbushIep.Controllers
 
         // GET: Manage/UpdateIEPStatus/5
         [HttpGet]
-        [Authorize(Roles = mis)]
+        [Authorize(Roles = mis + ", " + admin)]
         public ActionResult UpdateIEPStatusToActive(int stId, int IEPid)
         {
             // switch the flag

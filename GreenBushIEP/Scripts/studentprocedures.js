@@ -229,7 +229,7 @@
                     }
                 },
                 error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                    alert(data.Message);
                 },
                 complete: function () {
                     $('.ajax-loader').css("visibility", "hidden");
@@ -256,17 +256,19 @@
                 type: 'GET',
                 url: '/Manage/CreateIEPAmendment',
                 data: { Stid: stId, IepId: iepId, amend: true },
-                dataType: 'application/json',
+                dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
                         window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
                     } else {
-                        alert(data.Message);
+                        alert('thoo-ooo');
+                        console.log(data);
                         location.reload(true);
                     }
                 },
                 error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                    console.log(data);
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin. Error Message - " + data.Message);
                 },
                 complete: function () {
                     $('.ajax-loader').css("visibility", "hidden");
