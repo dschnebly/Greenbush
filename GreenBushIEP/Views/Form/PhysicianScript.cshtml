@@ -1,32 +1,31 @@
 ﻿@{
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-    string idStr = Model.studentInfo != null ? Model.studentInfo.KIDSID.ToString() : "";
-    
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+	string idStr = Model.studentInfo != null ? Model.studentInfo.KIDSID.ToString() : "";
+	string schoolDistrictNum = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+	string schoolDistrictName = Model.districtName;
+	string usd = string.Format("{0}/{1}", schoolDistrictNum, schoolDistrictName);
 }
-
-
    <div class="module-page">
-
     <p class=MsoNormal align=center style='text-align:center'>
         <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
             Physician’s Order/Authorization/Prescription<o:p></o:p>
         </span>
     </p>
-
     <p class=MsoNormal align=center style='text-align:center'>
         <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
             Medicaid Billing<o:p></o:p>
         </span>
     </p>
-
     <p class=MsoNormal align=center style='text-align:center'>
         <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
             (District/Interlocal/Coop Name)<o:p></o:p>
         </span>
     </p>
-
-
+	<p class=MsoNormal style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
+        USD Name/Number <u>@((usd.Length) > 70 ? usd : String.Format(usd).PadRight(70 - String.Format(usd).Length, ' ').Replace(" ", "\u00A0"))</u>
+		
+    </p>
     <p class=MsoNormal style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
         Student Name <u>@(String.Format(studentFormattedName).PadRight(70 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>
     </p>
@@ -36,7 +35,6 @@
     <p class=MsoNormal style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
         State Student ID# <u>@(String.Format(idStr).PadRight(75 - String.Format(idStr).Length, ' ').Replace(" ", "\u00A0"))</u>
     </p>
-
     <p class=MsoNormal style='text-align:left;margin-top:8px'>
         <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;'>
             <o:p>
@@ -51,10 +49,8 @@
             <li>Occupational Therapy</li>
             <li>Physical Therapy</li>
             <li>Social Work Services/Counseling</li>
-
         </ul>
     </p>
-
     <p class=MsoNormal style='text-align:left;margin-top:8px'>
         <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;'>
             <o:p>
@@ -64,9 +60,7 @@
                 assistant, or nurse practitioner.
             </o:p>
         </span>
-
     </p>
-
     <p class=MsoNormal style='text-align:left;margin-top:8px'>
         <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;'>
             <o:p>
@@ -76,23 +70,17 @@
                 IEP.
             </o:p>
         </span>
-
     </p>
-
-
     <table style="margin-top:5px;">
         <tr>
             <td width="150"><u><textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u></td>
             <td>&nbsp;&nbsp;<u><textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u></td>
-
         </tr>
         <tr>
             <td width="150">Health Care Provider – Printed Name</td>
             <td>&nbsp;&nbsp;Date</td>
         </tr>
     </table>
-
-
     <table style="margin-top:8px">
         <tr>
             <td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
@@ -100,25 +88,9 @@
 
         </tr>
         <tr>
-            <td>Parent/Guardian Signature</td>
+            <td>Physician Signature</td>
             <td>Credentials and NPI Number</td>
-
         </tr>
     </table>
-
-
-    <p class=MsoNormal style='text-align:left;margin-top:4px'>
-        <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;'>
-            <o:p>
-
-                (Please note: This sample contains the necessary data elements per KMAP for the 7/19/17
-                LEA Manual update. Per KMAP - services should be selected and it is asked that frequency
-                should be indicated.)
-            </o:p>
-        </span>
-
-    </p>
-
-
 </div>
     

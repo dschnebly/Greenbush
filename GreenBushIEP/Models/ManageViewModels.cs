@@ -324,6 +324,7 @@ namespace GreenBushIEP.Models
         public List<tblStudentRelationship> contacts { get; set; }		
 		public tblContact districtContact { get; set; }
 		public string building { get; set; }
+		public string districtName { get; set; }
 		public string lastReEvalDate { get; set; }
 	}
 

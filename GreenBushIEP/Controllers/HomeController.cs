@@ -1969,8 +1969,14 @@ namespace GreenbushIep.Controllers
                 fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();
             }
 
+			if (fileViewModel.studentInfo != null && fileViewModel.studentInfo.AssignedUSD != null)
+			{
+				var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
+				fileViewModel.districtName = district != null ? district.DistrictName : "";
+			}
+						
 
-            viewModel.fileModel = fileViewModel;
+			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
