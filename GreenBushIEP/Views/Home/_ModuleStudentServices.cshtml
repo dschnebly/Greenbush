@@ -858,7 +858,7 @@
 
                     if (!_dateCheck(studentServiceStartDate, studentServiceEndDate, studentServiceFiscalYear)) {
                         canSave = false;
-                        alert(canSave);
+                        alert('Unable to save the service because the dates are incorrect');
                     }
 
                     if (canSave) {

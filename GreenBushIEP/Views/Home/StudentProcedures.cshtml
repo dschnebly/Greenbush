@@ -1041,7 +1041,7 @@
                     </div>
                 </li>
                 <li class="ui-state-default filter iep @(Model.studentPlan.AcademicModuleNoConcern ? "widgetDisabled" : string.Empty )" id="AcademicWidget">
-                    <div class="hero-widget well @(Model.studentPlan.AcademicCompleted ? "module-completed" : string.Empty )">
+                    <div class="hero-widget well @(Model.studentIEP.isAcademicCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fa fa-university"></i>
                         </div>
