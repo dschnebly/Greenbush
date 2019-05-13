@@ -115,7 +115,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
                 }
 
                 // show the latest updated version changes
@@ -147,7 +147,7 @@ namespace GreenbushIep.Controllers
 
                 foreach (var student in model.members.Where(m => m.RoleID == student))
                 {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.PLAN).Any();
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
                 }
 
                 // show the latest updated version changes
@@ -962,9 +962,9 @@ namespace GreenbushIep.Controllers
                     theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;
                     db.SaveChanges();
-
-                    return RedirectToAction("StudentProcedures", new { stid, theIEP.IEPid });
                 }
+
+                return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);
