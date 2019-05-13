@@ -962,9 +962,9 @@ namespace GreenbushIep.Controllers
                     theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;
                     db.SaveChanges();
-                }
 
-                return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("StudentProcedures", new { stid, theIEP.IEPid });
+                }
             }
 
             return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);
@@ -1104,7 +1104,7 @@ namespace GreenbushIep.Controllers
 
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
-                    iepDraft.begin_date = DateTime.Now;
+                    //iepDraft.begin_date = DateTime.Now;
                     iepDraft.end_Date = (!iepDraft.Amendment) ? iepDraft.begin_date.Value.AddYears(1) : iepDraft.end_Date;
 
                     try
