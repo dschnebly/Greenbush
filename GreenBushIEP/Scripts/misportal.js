@@ -60,7 +60,11 @@
                     data: { stid: userId },
                     async: false,
                     success: function (data) {
-                        location.reload();
+                        if (data.Result == "success") {
+                            window.location.href = window.location.href;
+                        } else {
+                            alert(data.Message);
+                        }
                     },
                     error: function (data) {
                         alert("Unknown error occurred. Please contact your administrator or a Greenbush official.");
