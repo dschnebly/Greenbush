@@ -895,17 +895,19 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+				//tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);				
+				tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+				tblUser misUser = FindSupervisor.GetByRole("2", user);
 
-                // EDIT the user
-                if (user != null)
+				// EDIT the user
+				if (user != null)
                 {
                     if (!string.IsNullOrEmpty(collection["teacherID"])) { user.TeacherID = collection["teacherID"]; }
                     if (!string.IsNullOrEmpty(collection["role"])) { user.RoleID = collection["role"]; }
                     user.FirstName = collection["FirstName"];
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
+					
                     if (collection.AllKeys.Contains("password"))
                     {
                         string password = collection["password"].ToString();
@@ -957,7 +959,7 @@ namespace GreenBushIEP.Controllers
                     {
                         districtMappings.Add(new tblOrganizationMapping()
                         {
-                            AdminID = submitter.UserID,
+                            AdminID = misUser.UserID,
                             UserID = id,
                             USD = district
                         });
