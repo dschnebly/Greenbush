@@ -962,9 +962,9 @@ namespace GreenbushIep.Controllers
                     theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;
                     db.SaveChanges();
-                }
 
-                return Json(new { Result = "success", Message = "student IEP was unlocked." }, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("StudentProcedures", new { stid, theIEP.IEPid });
+                }
             }
 
             return Json(new { Result = "error", Message = "Error unlocking the student IEP." }, JsonRequestBehavior.AllowGet);
