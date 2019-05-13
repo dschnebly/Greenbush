@@ -374,8 +374,7 @@ namespace GreenBushIEP.Models
                 {
                     otherConsideration.ExtendedSchoolYear_Necessary = this.ExtendYear.ToString();
                     otherConsideration.AssistiveTechnology_Require = this.RequireAssistiveTechnology;
-                    otherConsideration.Completed = !(this.RequireAssistiveTechnology | this.ExtendYear > 0);
-                    
+                    //otherConsideration.Completed = !(this.RequireAssistiveTechnology | this.ExtendYear > 0);
                 }
                 db.SaveChanges();
             }

@@ -238,7 +238,7 @@ namespace GreenBushIEP.Models
             // Adding Other Considerations Table
             studentOtherConsiderations = new tblOtherConsideration();
             studentOtherConsiderations.IEPid = current.IEPid;
-            studentOtherConsiderations.Completed = true;
+            studentOtherConsiderations.Completed = false;
             studentOtherConsiderations.Create_Date = DateTime.Now;
 
             try
