@@ -68,26 +68,43 @@
                 </tr>
             </table>
 
-            @if (primeContact != null)
-            {
-                <hr />
-                <table  style="width:100%">
+			<hr />
+            @if (Model.studentDetails.contacts.Any(o => o.PrimaryContact == 1))
+			{
+
+                <table style="width:100%">
+					@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+					{
                     <tr>
                         <td style="width:75px;"><label>Contact 1:</label></td>
-                        <td>@primeContact.FirstName @primeContact.LastName</td>
+                        <td>@primaryContact.FirstName @primaryContact.LastName</td>
                     
                         <td><label>Address:</label></td>
-                        <td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
+                        <td>@primaryContact.Address1 @primaryContact.Address2 @primaryContact.City@(primaryContact.State == null ? "" : ", " + primaryContact.State) @primaryContact.Zip</td>
                     </tr>
                     <tr>
                         <td><label>Phone:</label></td>
-                        <td>@primeContact.Phone</td>
+                        <td>@primaryContact.Phone</td>
                     
                         <td><label>Email:</label></td>
-                        <td>@primeContact.Email</td>
+                        <td>@primaryContact.Email</td>
                     </tr>
+					}
                 </table>
-            }
+			}
+			else
+			{
+				<table style="width:100%">					
+                    <tr>
+                        <td style="width:75px;"><label>Contact 1:</label></td><td></td>                    
+                        <td><label>Address:</label></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><label>Phone:</label></td><td></td>                    
+                        <td><label>Email:</label></td><td></td>
+                    </tr>					
+                </table>
+			}
             <hr />
             <table class="full">
                 <tr>
@@ -196,39 +213,42 @@
 			 	<tr>
 			 		<td><label>Legal Name:</label></td>
 			 		<td>@(studentFullName)</td>
-			 	<td><label>KSDE KIDS ID:</label></td>
-			 	<td>@(Model.studentDetails.student.KIDSID)</td>
-			 </tr>
-			 <tr>
-			 	<td><label>Contact 1:</label></td>
-			 	<td>@( primeContact != null ? string.Format("{0} {1}", primeContact.FirstName, @primeContact.LastName) : "")</td>
-			 <td><label>Birthdate:</label></td>
-			 <td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
-			 </tr>
-			 <tr>
-			 	<td><label>Address:</label></td>
-			 	<td>@( primeContact != null ? string.Format("{0} {1} {2}, {3} {4}", @primeContact.Address1, @primeContact.Address2, @primeContact.City, @primeContact.State, @primeContact.Zip) : "" )</td>
-			 <td><label>Age on IEP Date:</label></td>
-			 <td style="width:150px;">@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
-			 </tr>
-			 <tr>
-			 	<td></td>
-			 	<td></td>
-			 	<td><label>Grade:</label></td>
-			 	<td>@(studentGrade)</td>
-			 </tr>
-			 <tr>
-			 	<td><label>Phone:</label></td>
-			 	<td>@( primeContact != null ? @primeContact.Phone : "")</td>
-			 <td><label>IEP Date:</label></td>
-			 <td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
-			 </tr>
-			 <tr>
-			 	<td><label>Email:</label></td>
-			 	<td>@( primeContact != null ? @primeContact.Email : "")</td>
-			 <td><label>Initiation:</label></td>
-			 <td style="width:150px;">@Model.studentDetails.inititationDate</td>
-			 </tr>
+			 		<td><label>KSDE KIDS ID:</label></td>
+			 		<td>@(Model.studentDetails.student.KIDSID)</td>
+				</tr>
+				 <tr>
+			 		<td><label>Birthdate:</label></td>
+			 		<td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
+			 		<td><label>Age on IEP Date:</label></td>
+			 		<td>@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
+				</tr>
+				 <tr>
+			 		<td><label>Grade:</label></td>
+			 		<td>@(studentGrade)</td>
+					<td><label>IEP Date:</label></td>
+					<td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>			 
+				 </tr>
+				 <tr>
+					<td><label>Initiation:</label></td>
+					<td style="width:150px;">@Model.studentDetails.inititationDate</td>
+			 		<td></td>
+			 		<td></td>			
+				 </tr>
+			 @foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+			 {
+				 <tr>
+			 		<td><label>Contact 1:</label></td>
+			 		<td>@( primaryContact != null ? string.Format("{0} {1}", primaryContact.FirstName, primaryContact.LastName) : "")</td>
+					<td><label>Address:</label></td>
+			 		<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
+				 </tr>
+				 <tr>			 		
+				 	<td><label>Phone:</label></td>
+			 		<td>@( primaryContact != null ? primaryContact.Phone : "")</td>
+					 <td><label>Email:</label></td>
+			 		<td>@( primaryContact != null ? primaryContact.Email : "")</td>
+				 </tr>
+			 }									 
 			 <tr>
 			 	<td><label>Neighborhood School:</label></td>
 			 	<td>@Model.studentDetails.neighborhoodBuilding.BuildingName</td>

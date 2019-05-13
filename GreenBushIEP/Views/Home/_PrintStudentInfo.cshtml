@@ -4,7 +4,7 @@
 
 	Layout = "";
 	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
-	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
+	//var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 	var studentGrade = "";
@@ -67,23 +67,44 @@
 		</tr>
 	</table>
 
-	@if (primeContact != null)
+	<hr />
+	@if (Model.studentDetails.contacts.Any(o => o.PrimaryContact == 1))
 	{
-		<hr />
-		<table class="full">
+
+		<table style="width:100%">
+			@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+			{
+				<tr>
+					<td style="width:75px;"><label>Contact 1:</label></td>
+					<td>@primaryContact.FirstName @primaryContact.LastName</td>
+
+					<td><label>Address:</label></td>
+					<td>@primaryContact.Address1 @primaryContact.Address2 @primaryContact.City@(primaryContact.State == null ? "" : ", " + primaryContact.State) @primaryContact.Zip</td>
+				</tr>
+				<tr>
+					<td><label>Phone:</label></td>
+					<td>@primaryContact.Phone</td>
+
+					<td><label>Email:</label></td>
+					<td>@primaryContact.Email</td>
+				</tr>
+			}
+		</table>
+	}
+	else
+	{
+		<table style="width:100%">
 			<tr>
 				<td style="width:75px;"><label>Contact 1:</label></td>
-				<td>@primeContact.FirstName @primeContact.LastName</td>
-
+				<td></td>
 				<td><label>Address:</label></td>
-				<td>@primeContact.Address1 @primeContact.Address2 @primeContact.City@(@primeContact.State == null ? "" : ", " + @primeContact.State) @primeContact.Zip</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><label>Phone:</label></td>
-				<td>@primeContact.Phone</td>
-
+				<td></td>
 				<td><label>Email:</label></td>
-				<td>@primeContact.Email</td>
+				<td></td>
 			</tr>
 		</table>
 	}
@@ -280,7 +301,7 @@ case 99: <text>1 day per year(99)</text>; break;
 					</tr>
 					serviceCount++;
 				}
-			</table>			
+			</table>
 		}
 		else
 		{
