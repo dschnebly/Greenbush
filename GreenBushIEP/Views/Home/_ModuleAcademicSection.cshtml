@@ -264,7 +264,7 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
                 <div class="form-group">
-                    <button type="button" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="submit" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="saveAcademicCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
@@ -530,7 +530,8 @@
                     }
 
                     $(window).trigger("saving.bs.modal");
-                    window.location.href = '/Home/StudentProcedures?stid=' + stid;
+                    //window.location.href = '/Home/StudentProcedures?stid=' + stid + '&iepID=';
+                    window.history.go(0);
                 } else {
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
