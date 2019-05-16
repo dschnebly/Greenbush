@@ -937,19 +937,40 @@ $(".service-section").on('click', function (e) {
 
     $.ajax({
         type: 'GET',
-        url: '/Home/StudentServices',
+        url: '/Home/CheckCalendar',
         data: { studentId: stId, IEPid: iepId },
-        dataType: 'html',
+        dataType: 'json',
         success: function (data) {
-            if (data.length !== 0) {
-                $("#module-form-section").html(data);
-                $('#moduleSection').modal('show');
+            if (data.Result == "success") {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/StudentServices',
+                    data: { studentId: stId, IEPid: iepId },
+                    dataType: 'html',
+                    success: function (data) {
+                        if (data.length !== 0) {
+                            $("#module-form-section").html(data);
+                            $('#moduleSection').modal('show');
+                        }
+                        else {
+                            $("#alertMessage .moreinfo").html('Server Error');
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
+                    }
+                });
+
             }
             else {
-                $("#alertMessage .moreinfo").html('Server Error');
-                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
+                alert(data.Message);
             }
         },
         error: function (data) {

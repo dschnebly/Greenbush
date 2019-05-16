@@ -1334,6 +1334,24 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult CheckCalendar(int studentId, int IEPid)
+        {
+            int lastYear = DateTime.Now.AddYears(-1).Year;
+            int thirdYear = DateTime.Now.AddYears(2).Year;
+            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+            List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
+
+            if (calendar.Count == 0)
+            {
+                return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you procede." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "success",  Message = "Nicely Done" }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        [Authorize]
         public ActionResult StudentServices(int studentId, int IEPid)
         {
             bool isReadOnly = false;
