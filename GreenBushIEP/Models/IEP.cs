@@ -135,9 +135,10 @@ namespace GreenBushIEP.Models
             studentGoals = db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList();
             studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
             accommodations = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).ToList();
+			var transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
 
-            // all our database information should be loaded by now. Just query our student lists.
-            isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;
+			// all our database information should be loaded by now. Just query our student lists.
+			isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;
             isMotorCompleted = studentMotor != null ? studentMotor.Completed : false;
             isCommunicationCompleted = studentCommunication != null ? studentCommunication.Completed : false;
             isSocialCompleted = studentSocial != null ? studentSocial.Completed : false;
@@ -150,8 +151,8 @@ namespace GreenBushIEP.Models
             isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
             isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan)) ;
             isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
-
-            bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
+			isTransitionCompleted = transitions != null ? transitions.Any(o => o.Completed) : false;
+			bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
             bool motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
             bool communicationNeeds = (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value));
             bool socialNeeds = (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value));

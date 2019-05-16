@@ -1068,6 +1068,7 @@ namespace GreenBushIEP.Controllers
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault() ?? new tblTransition();
                     transition.IEPid = iedId;
+					transition.isReleaseBefore21 = true;
                     transition.Assessment_Needs = collection["transitionNeeds"].ToString();
                     transition.Assessment_Strengths = collection["transitionStrengths"].ToString();
                     transition.Assessment_Prefrences = collection["transitionPreferences"].ToString();
@@ -1103,7 +1104,8 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
                     }
-                }
+					
+				}
                 catch (Exception e)
                 {
                     throw new Exception("Unable to save changes to Transition Assessments: " + e.InnerException.ToString());
@@ -1317,8 +1319,10 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
                     transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;
                     transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
-                    transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
-                    db.SaveChanges();
+					//transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" ? true : false;
+					transition.isReleaseBefore21 = true;
+					transition.Completed = (collection["isComplete"] != null) ? true : false;
+					db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
                 }
@@ -1373,7 +1377,11 @@ namespace GreenBushIEP.Controllers
                     db.tblServices.Where(s => s.IEPid == stdIEPId).ToList().ForEach(s => s.Completed = false);
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The Service Module was updated." }, JsonRequestBehavior.AllowGet);
-                case "Accommodation":
+				case "Transition":
+					db.tblTransitions.Where(s => s.IEPid == stdIEPId).ToList().ForEach(s => s.Completed = false);
+					db.SaveChanges();
+					return Json(new { Result = "success", Message = "The Student Transition was updated." }, JsonRequestBehavior.AllowGet);
+				case "Accommodation":
                     var list = db.tblAccommodations.Where(a => a.IEPid == stdIEPId).ToList();
                     foreach(tblAccommodation accomodation in list)
                     {

@@ -310,7 +310,7 @@
 			 		<td>________________________________</td>
 			 		<td>________________________________</td>
 			 	</tr>
-			 	<tr>
+			 	@*<tr>
 			 		<td>________________________________</td>
 			 		<td>________________________________</td>
 			 		<td>________________________________</td>
@@ -319,9 +319,42 @@
 			 		<td>________________________________</td>
 			 		<td>________________________________</td>
 			 		<td>________________________________</td>
-			 	</tr>
+			 	</tr>*@
 			 </table>
-			 <div class="row voffset2 transition-break">
+		 <div class="row voffset2 dont-break">
+			 	<div class="col-md-12">
+			 		<label>Parental Notifications</label>
+			 	</div>
+			 </div>
+			 <div class="row voffset2">
+			 	<div class="col-md-12">
+			 		<fieldset class="form-group">
+			 			@if (Model.studentOtherConsiderations.Parental_RightsBook_flag)
+						{
+			 				<p>The parent(s)/legal education decision maker were given/offered a copy of the Parental Rights Booklet in their native language.</p>
+						}
+						else
+						{
+			 			    <p>The parent(s)/legal education decision maker were not given/offered a copy of the Parental Rights Booklet in their native language.</p>
+					    }
+						 <span style="font-size:9pt">_______  Initial Here</span>
+			 	</fieldset>
+			 </div>
+			 <div class="col-md-12">
+			 	<fieldset class="form-group">
+			 		@if (Model.studentOtherConsiderations.Parental_CopyIEP_flag)
+				    {
+			 			<p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>
+				   }
+				   else
+				   {
+			 			<p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
+				   }
+					 <span style="font-size:9pt">_______ Initial Here</span>
+			 </fieldset>
+			 </div>
+			 </div>
+			 <div class="row voffset2">
 			 	<div class="col-md-12">
 			 		<label>Parental Concerns/Input</label>
 			 	</div>
@@ -341,39 +374,9 @@
 			 	</fieldset>
 			 </div>
 			 </div>
-			 <div class="row voffset2 dont-break">
-			 	<div class="col-md-12">
-			 		<label>Parental Notifications</label>
-			 	</div>
-			 </div>
-			 <div class="row voffset2">
-			 	<div class="col-md-12">
-			 		<fieldset class="form-group">
-			 			@if (Model.studentOtherConsiderations.Parental_RightsBook_flag)
-						{
-			 				<p>The parent(s)/legal education decision maker were given/offered a copy of the Parental Rights Booklet in their native language.</p>
-						}
-						else
-						{
-			 			    <p>The parent(s)/legal education decision maker were not given/offered a copy of the Parental Rights Booklet in their native language.</p>
-					    }
-			 	</fieldset>
-			 </div>
-			 <div class="col-md-12">
-			 	<fieldset class="form-group">
-			 		@if (Model.studentOtherConsiderations.Parental_CopyIEP_flag)
-				    {
-			 			<p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>
-				   }
-				   else
-				   {
-			 			<p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
-				   }
-			 </fieldset>
-			 </div>
-			 </div>
-			 <hr />
-			 <h3 class="text-center transition-break">HEALTH</h3>
+		
+			 <hr/>
+			 <h3 class="text-center">HEALTH</h3>
 
 			 @if (!Model.studentHealth.NoConcerns)
 			 {

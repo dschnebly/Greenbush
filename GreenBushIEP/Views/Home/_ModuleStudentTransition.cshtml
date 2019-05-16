@@ -233,7 +233,7 @@
 </style>
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="close" data-dismiss="modal" id="headerClose"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" style="font-size: 30px;">
         <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
@@ -453,6 +453,13 @@
                                     </div>
                                 </div>
 
+								<div class="row">
+                                    <div class="col-md-12">
+                                        <button id="activate-step-2-draft" type="button" class="formbtn btn btn-primary btn-lg pull-right"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                    </div>
+                                </div>
+								
+
                             }
                         </div>
                     </div>
@@ -495,7 +502,7 @@
 
                                                 </div>
 												<div class="col-md-3">													
-														<textarea id="transitionGoalHow" name="transitionGoalHow" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How"></textarea>													
+													<textarea id="transitionGoalHow" name="transitionGoalHow" class="form-control textHow" rows="3" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." maxlength="2000" placeholder="Where and How"></textarea>													
 												</div>												 
                                             </div>
                                         </div>
@@ -694,6 +701,12 @@
                                         <button id="activate-step-3" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Add Transition Services</button>
                                     </div>
                                 </div>
+								<div class="row">
+                                    <div class="col-md-12">
+                                        <button id="activate-step-3-draft" type="button" class="formbtn btn btn-primary btn-lg pull-right"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                    </div>
+                                </div>
+								
                             }
 
                         </div>
@@ -1243,6 +1256,11 @@
                                         <button id="activate-step-4" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Add Course of Study</button>
                                     </div>
                                 </div>
+								<div class="row">
+                                    <div class="col-md-12">
+                                        <button id="activate-step-4-draft" type="button" class="formbtn btn btn-primary btn-lg pull-right"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
@@ -1365,11 +1383,21 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+								<div class="row">
+									<div class="col-md-12" style="text-align:center;">
+										<div class="form-group">
+											<button id="saveFinishDraft" type="button" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>											
+											<button id="saveFinish" type="button" class="formbtn btn btn-success btn-lg"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+										</div>
+									</div>
+								</div>
+
+                                @*<div class="row">
                                     <div class="col-md-12">
                                         <button id="saveFinish" class="btn btn-primary btn-lg" style="margin-top: 20px;" type="button">Finish Transition</button>
                                     </div>
-                                </div>
+                                </div>*@
+								
                             }
                         </div>
                     </div>
@@ -1377,11 +1405,19 @@
             </div>
         </div>
 
-        <div class="modal-footer" style="border-top: 0;">
-            <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+        <div class="modal-footer" style="border-top: 0;">            
+            @*<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>*@
         </div>
     </div>
-
+	<div class="completed-loader @(Model.transition != null && Model.transition.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="~/Scripts/editable.js"></script>
 <script>
@@ -1404,7 +1440,33 @@
 
         if (isReleaseBefore21) {
             $("#studentBirthdayAgeOver21").removeClass("hidden");
-        }
+		}
+
+		// Attach Event
+		// when the use clicks the completed checkbox
+		$("#isCompletedModule").on("click", function () {
+			var IEPId = $("#studentIEPId").val();
+
+			$.ajax({
+				type: 'GET',
+				url: '/ModuleSection/ModuleCompleted',
+				data: { stdIEPId: IEPId, module: "Transition" },
+				dataType: "json",
+				success: function (data) {
+					if (data.Result == "success") {
+						$(".completed-loader").fadeOut();
+						$("#Completed").val(false);
+
+						$("#TransitionWidget .hero-widget").removeClass("module-completed");
+					} else {
+						console.log("Error when updating the module.")
+					}
+				},
+				error: function (data) {
+					console.log("Unable to mark Health Module as complete.");
+				}
+			});
+		});
 
         $(this).find("#isStudentBirthdayAgeOver21").on("click", function () {
             if(!$(this).is(':checked'))
@@ -1463,8 +1525,9 @@
 
         $('ul.setup-panel li.active a').trigger('click');
 
-        $('#activate-step-2').on('click', function (e) {
+        $('#activate-step-2, #activate-step-2-draft').on('click', function (e) {
 
+			$(window).trigger("saving.bs.modal");
             var formData = $('#transitionAssessmentForm');
 
             $.ajax({
@@ -1474,7 +1537,7 @@
                 data: formData.serialize(),
                 success: function (data) {
                     if (data.Result == "success") {
-                        console.log("Assessments successfull updated.");
+						console.log("Assessments successfully updated.");					
                     }
                     else {
                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1490,12 +1553,18 @@
                 }
             });
 
-            $('ul.setup-panel li:eq(1)').removeClass('disabled');
-            $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+			$('ul.setup-panel li:eq(1)').removeClass('disabled');
+
+			if (this.id == "activate-step-2")
+				$('ul.setup-panel li a[href="#step-2"]').trigger('click');
+			else {
+				$('#headerClose').trigger('click');
+			}
         });
 
-        $('#activate-step-3').on('click', function (e) {
+        $('#activate-step-3, #activate-step-3-draft').on('click', function (e) {
 
+			$(window).trigger("saving.bs.modal");
             var formData = $('#transitionGoalForm');
 
             $.ajax({
@@ -1522,12 +1591,18 @@
                 }
             });
 
-            $('ul.setup-panel li:eq(2)').removeClass('disabled');
-            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+			$('ul.setup-panel li:eq(2)').removeClass('disabled');
+
+			if (this.id == "activate-step-3")
+				$('ul.setup-panel li a[href="#step-3"]').trigger('click');
+			else {
+				$('#headerClose').trigger('click');
+			}
+            
         });
 
-        $('#activate-step-4').on('click', function (e) {
-
+        $('#activate-step-4, #activate-step-4-draft').on('click', function (e) {
+			$(window).trigger("saving.bs.modal");
             var formData = $('#transitionServiceForm');
 
             $.ajax({
@@ -1553,12 +1628,18 @@
                 }
             });
 
-            $('ul.setup-panel li:eq(3)').removeClass('disabled');
-            $('ul.setup-panel li a[href="#step-4"]').trigger('click');
+			
+			$('ul.setup-panel li:eq(3)').removeClass('disabled');
+			if (this.id == "activate-step-4")
+				$('ul.setup-panel li a[href="#step-4"]').trigger('click');
+			else {
+				$('#headerClose').trigger('click');
+			}
+
         });
 
-        $('#saveFinish').on('click', function (e) {
-
+        $('#saveFinish, #saveFinishDraft').on('click', function (e) {
+			
             // make sure occupation is filled out before saving.
             if ($("#inline-occupation").text() == "Enter occupation") {
                 alert("Please enter an occupation before saving.");
@@ -1574,19 +1655,22 @@
             //    e.stopPropagation();
             //	return;
             //}
-            var formData = $('#transitionStudyForm');
+			var formData = $('#transitionStudyForm');
+			var dataToSend = formData.serialize() + '&occupationText=' + $("#inline-occupation").text()
+			if (this.id == "saveFinish") {
+				dataToSend = dataToSend + '&isComplete=1';
+			}
 
             $.ajax({
                 type: 'POST',
                 url: '/ModuleSection/EditTransitionStudy',
                 dataType: "json",
-                data: formData.serialize() + '&occupationText=' + $("#inline-occupation").text(),
+                data: dataToSend,
                 success: function (data) {
                     if (data.Result == "success") {
                         $(window).trigger("saving.bs.modal");
                         console.log("Course of Study successfully updated.");
-                        $('#moduleSection').modal('hide');
-
+						$('#moduleSection').modal('hide');
                     }
                     else {
                         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
