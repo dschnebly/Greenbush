@@ -261,8 +261,7 @@
                     if (data.Result === 'success') {
                         window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
                     } else {
-                        alert('thoo-ooo');
-                        console.log(data);
+                        alert(data.Message);
                         location.reload(true);
                     }
                 },

@@ -1042,7 +1042,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = mis + "," + owner)]
+        [Authorize(Roles = mis + "," + admin + "," + teacher)]
         public ActionResult UpdateIEPAmendmentToActive(int stId, int IEPid)
         {
             // get the iep and make sure it's an amendment.
