@@ -75,7 +75,7 @@
 			@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
 			{
 				<tr>
-					<td style="width:75px;"><label>Contact 1:</label></td>
+					<td style="width:75px;"><label>Contact:</label></td>
 					<td>@primaryContact.FirstName @primaryContact.LastName</td>
 
 					<td><label>Address:</label></td>
