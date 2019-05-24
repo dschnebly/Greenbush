@@ -265,9 +265,9 @@
                         location.reload(true);
                     }
                 },
-                error: function (data) {
-                    console.log(data);
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin. Error Message - " + data.Message);
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
                 },
                 complete: function () {
                     $('.ajax-loader').css("visibility", "hidden");
@@ -286,6 +286,7 @@
         if (answer) {
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
+
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
 
@@ -296,14 +297,15 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/StudentProcedures/?stid=' + stid + '&iepID=' + data.Message;
+                        window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
                     } else {
                         alert(data.Message);
                         location.reload(true);
                     }
                 },
-                error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
                 },
                 complete: function () {
                     $('.ajax-loader').css("visibility", "hidden");

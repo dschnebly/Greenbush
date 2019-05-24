@@ -1398,7 +1398,7 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(Iepid, user.UserID, false);
-                int AnnualId = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus == IEPStatus.DRAFT).FirstOrDefault().IEPid;
+                int AnnualId = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault().IEPid;
 
                 return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }
