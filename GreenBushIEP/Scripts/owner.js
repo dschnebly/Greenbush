@@ -43,7 +43,6 @@
                             $(value).addClass('hidden');
                         });
 
-                        var results = data.Message;
                         $('#userBuildings').append('<option value="-1">All Buildings</option>');
                         if (results.buildings.length > 0) {
                             $.each(results.buildings, function (index, value) {
@@ -55,7 +54,7 @@
                         if (results.members.length > 0) {
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -110,7 +109,7 @@
 
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -165,7 +164,7 @@
 
                             $.each(filterCollection, function (filterIndex, filterValue) {
                                 $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') == value.UserID) {
+                                    if ($(filterValue).data('id') === value.UserID) {
                                         $(filterValue).removeClass('hidden');
                                         return false;
                                     }
@@ -372,6 +371,46 @@
                         $("#alertMessage").removeClass('alert alert-info').show();
                         $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
                         $("#alertMessage .moreinfo").html(data.Message);
+                    }
+                });
+            }
+        });
+
+        // attach event
+        // fires when an start button in pressed on a student IEP
+        $('#initIEP').on('show.bs.modal', function (e) {
+            var user = $(e.relatedTarget).data('id');
+            $(e.currentTarget).find('input[name="id"]').val(user);
+            $('#confirmStart').val('');
+        });
+
+        // attach event
+        // fires when you click start on the module startInit form.
+        $('#initIEP button[type=submit]').on('click', function (e) {
+            if ($('#confirmStart').val() === 'START') {
+                var userId = $(e.currentTarget).parent().parent().find('input[name="id"]').val();
+
+                $(".ajax-loader").show();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/UnlockStudentIEP',
+                    data: { stid: userId },
+                    async: false,
+                    success: function (data) {
+                        if (data.Result === "success") {
+                            window.location.href = window.location.href;
+                        } else {
+                            alert(data.Message);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Unknown error occurred. Please contact your administrator or a Greenbush official.");
+                        console.log(data);
+                    },
+                    complete: function (data) {
+                        $(".ajax-loader").hide();
+                        //A function to be called when the request finishes 
+                        // (after success and error callbacks are executed). 
                     }
                 });
             }

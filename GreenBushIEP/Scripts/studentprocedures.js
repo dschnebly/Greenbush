@@ -293,7 +293,7 @@
                 type: 'GET',
                 url: '/Manage/CreateIEPAnnual',
                 data: { Stid: stId, IepId: iepId },
-                dataType: 'application/json',
+                dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
                         window.location.href = '/Home/StudentProcedures/?stid=' + stid + '&iepID=' + data.Message;

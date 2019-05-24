@@ -60,7 +60,7 @@
                     data: { stid: userId },
                     async: false,
                     success: function (data) {
-                        if (data.Result == "success") {
+                        if (data.Result === "success") {
                             window.location.href = window.location.href;
                         } else {
                             alert(data.Message);

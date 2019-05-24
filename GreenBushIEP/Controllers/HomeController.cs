@@ -87,6 +87,11 @@ namespace GreenbushIep.Controllers
                 model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
                 model.members = (from user in db.tblUsers where user.RoleID != owner && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
+                foreach (var student in model.members.Where(m => m.RoleID == student))
+                {
+                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive).Any();
+                }
+
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
 
