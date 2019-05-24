@@ -897,7 +897,10 @@ namespace GreenBushIEP.Controllers
             {
 				//tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);				
 				tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-				tblUser misUser = FindSupervisor.GetByRole("2", user);
+				tblUser misUser = FindSupervisor.GetUSersMIS(user);
+                if(user.UserID == misUser.UserID) {  // I'm my own grandpapa 
+                    misUser = db.tblUsers.Where(u => u.UserID == 1).FirstOrDefault();
+                }
 
 				// EDIT the user
 				if (user != null)

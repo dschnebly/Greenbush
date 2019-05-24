@@ -1271,7 +1271,7 @@ namespace GreenbushIep.Controllers
 
                 if (maxYear > 0)
                 {
-                    tblUser mis = FindSupervisor.GetByRole("2", teacher);
+                    tblUser mis = FindSupervisor.GetUSersMIS(teacher);
                     tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
                     int startMonth = 7; //july
                     int endMonth = 6; //june
@@ -1357,7 +1357,7 @@ namespace GreenbushIep.Controllers
             bool isReadOnly = false;
 
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name); // current teacher-esque user.
-            tblUser mis = FindSupervisor.GetByRole("2", teacher); // get the mis of the teacher
+            tblUser mis = FindSupervisor.GetUSersMIS(teacher); // get the mis of the teacher
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault(); // gimme the student's iep.
 
             if (iep != null)
@@ -1435,7 +1435,7 @@ namespace GreenbushIep.Controllers
         public ActionResult ValidateCalendarReporting(int fiscalYear, int studentId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser mis = FindSupervisor.GetByRole("2", teacher);
+            tblUser mis = FindSupervisor.GetUSersMIS(teacher);
             tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
             int minutesPerDay = 60;
             int daysPerWeek = 5;
@@ -1454,7 +1454,7 @@ namespace GreenbushIep.Controllers
         private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService, out string validDates)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser mis = FindSupervisor.GetByRole("2", teacher);
+            tblUser mis = FindSupervisor.GetUSersMIS(teacher);
             tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
             int startMonth = 7; //july
@@ -2093,7 +2093,7 @@ namespace GreenbushIep.Controllers
             List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
 
             // Get the MIS id of the logged in teacher.
-            tblUser mis = FindSupervisor.GetByRole("2", teacher);
+            tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
             var query = (from iep in db.tblIEPs
                          join health in db.tblIEPHealths

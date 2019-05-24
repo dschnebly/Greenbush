@@ -7,9 +7,16 @@ namespace GreenBushIEP.Helper
     {
         private static IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
-        public static tblUser GetByRole(string roleId, tblUser user)
+        private const string owner = "1"; //level 5
+        private const string mis = "2"; //level 4
+        private const string admin = "3"; //level 3
+        private const string teacher = "4"; //level 2
+        private const string student = "5";
+        private const string nurse = "6"; //level 1
+
+        public static tblUser GetUSersMIS(tblUser user)
         {
-            if (user.RoleID == roleId || user.RoleID == "1")
+            if (user.RoleID == mis || user.RoleID == owner)
             {
                 return user;
             }
@@ -19,8 +26,7 @@ namespace GreenBushIEP.Helper
                                   where o.UserID == user.UserID
                                   select u).FirstOrDefault();
 
-            return GetByRole(roleId, supervisor);
+            return GetUSersMIS(supervisor);
         }
-
     }
 }
