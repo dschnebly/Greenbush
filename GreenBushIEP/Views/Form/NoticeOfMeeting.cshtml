@@ -13,24 +13,19 @@
 <div class="module-page">
 
     <div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in'>
-
         <p class=MsoNormal align=center style='text-align:center'>   
             <span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
         </p>
-
     </div>
 
-    <p class=MsoNormal><span style='font-size:7.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
-
-    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=667
-           style='width:6.95in;margin-left:-.05in;border-collapse:collapse;mso-yfti-tbllook:
+    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=667 style='width:6.95in;margin-left:-.05in;border-collapse:collapse;mso-yfti-tbllook:
  480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
         <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
             <td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
 
                 <p class=MsoNormal style='tab-stops:lined 261.0pt'>
                     <span style='font-size:  11.0pt'><b>To:</b>					
-					<span style="text-decoration:underline;"><textarea  data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span>
+					<span style="text-decoration:underline"><textarea style="width:150px;height:20px;">@((contactFormattedName.Length) > 72 ? contactFormattedName : String.Format(contactFormattedName).PadRight(72 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((contactFormattedName.Length) > 72 ? contactFormattedName : String.Format(contactFormattedName).PadRight(72 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 					
 					</span>
                     <span style='font-size:11.0pt'><o:p></o:p></span>
@@ -132,50 +127,36 @@
                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp; 
             </p>
         </td>
-        <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
-      height:99.9pt;font-size:11pt'>
-            <p class=MsoNormal>
+        <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in; height:99.9pt;'>
+            <p class=MsoNormal><span>
                 The results of the evaluation or reevaluation of your
-                child are now available.<span style='mso-spacerun:yes'>  </span>By law, we
+                child are now available. By law, we
                 must meet with you to review the evaluation results for your child, including
                 any evaluations or information you wish to provide, current classroom-based
                 assessments and observations, and teacher or other staff observations, to
-                determine, with your input:
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+                determine, with your input:</span>
+            </p>            
             <p class=MsoNormal>
                 <b>
-                    <span style='font-size:9.0pt'>
+                    <span>
                         1) your child’s academic achievement, functional performance, and educational needs;
                     </span>
                 </b>
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+            </p>            
             <p class=MsoNormal>
                 <b>
-                    <span style='font-size:9.0pt'>
-                        <span style='mso-tab-count:
-      1'></span>2) whether your child has
-                    </span>
-                </b><b>
-                    <span style='font-size:9.0pt;font-family:"Times",serif;color:red'></span>
-                </b><b>
-                    <span style='font-size:9.0pt;font-family:"Times",serif'>or continues to have</span>
-                </b><b>
-                    <span style='font-size:9.0pt'>an exceptionality; and</span>
+                    <span>
+                        <span style='mso-tab-count:1'></span>2) whether your child has or continues to have an exceptionality; and
+					</span>
                 </b>
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+            </p>            
             <p class=MsoNormal>
                 <b>
-                    <span style='font-size:9.0pt'>
-                        <span style='mso-tab-count:
-      1'></span>3) whether your child needs special education and
-                        related services.
+                    <span>
+                        <span style='mso-tab-count:1'></span>3) whether your child needs special education and related services.
                     </span>
                 </b>
-            </p>
-            <p class=MsoNormal><span style='font-size:8.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span></p>
+            </p>            
         </td>
     </tr>
 </table>
@@ -189,130 +170,66 @@
     </b><span style='mso-spacerun:yes'></span>
 </p>
 
-<p class=MsoNormal style="font-size:11pt">
+<p class=MsoNormal><span>
     As the parent of an exceptional child, you are entitled
     to a 10-day prior written notice of any meeting to discuss the needs of your
     child and develop an individualized education program (IEP).<span style='mso-spacerun:yes'></span>You may consent to hold the meeting with less
-    than 10-days written notice.
-</p><br/>
-
-<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
-       style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:
-     0in .05in 0in .05in'>
-    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-        <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
-            <p class=MsoNormal>
-               
-
-            </p>
-        </td>
+    than 10-days written notice.</span>
+</p>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:     0in .05in 0in .05in'>
+    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>        
         <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
-            <p class=MsoNormal>
-                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
-      letter-spacing:-.1pt'>If it is determined that your child is eligible,</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Times",serif;
-      letter-spacing:-.1pt'>or continues to be eligible,</span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>
-                    for
-                    special education and related services,
-                </span><span style='font-size:10.0pt;
-      letter-spacing:-.1pt'>the IEP team</span><span style='font-size:10.0pt;
-      mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>
-                    will develop an
-                    individualized education program (IEP) for your child and determine the
-                    appropriate placement.
-                </span>
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt'>&nbsp;<o:p></o:p></span></p>
-            <p class=MsoNormal>
-                <span style='font-size:10.0pt'>The team will make its decisions based upon the results of the evaluation procedures which
+            <p class=MsoNormal style='margin-left:.25in;  text-indent:-.25in;'>
+                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>				
+				 <br/><br/><span style="padding-top:10px">
+                The team will make its decisions based upon the results of the evaluation procedures which
                     we previously told you we would administer in the Notice of Proposed
-                    Evaluation and Request for Consent, which you signed.<span style='mso-spacerun:yes'></span>
-                </span><span style='font-size:10.0pt'>
-                    The team will also consider the strengths of your child and any recommendations you have
-                    for enhancing the education of your child.
-                </span>
-            </p>
-            <p class=MsoNormal>
-                <b><span style='font-size:6.0pt'>&nbsp;</span></b><span style='font-size:2.0pt;mso-bidi-font-size:6.0pt'><o:p></o:p></span>
-            </p>
+                    Evaluation and Request for Consent, which you signed. The team will also consider the strengths of your child and any recommendations you have for enhancing the education of your child.            				
+				</span>    
+            </p>            
+            
+            
         </td>
     </tr>
-    <tr style='mso-yfti-irow:1'>
-        <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
-            <p class=MsoNormal>
-           
-            </p>
+    <tr style='mso-yfti-irow:1'>       
+		<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>            
+			<p class=MsoNormal>
+                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                    Discuss  possible changes in your child's individualized education program (IEP).
+                </span>
+            </p>            
         </td>
-        <td width=636 valign=top style='width:477.0pt;padding:0in .05in .25in .05in'>
+    </tr>
+    <tr style='mso-yfti-irow:2;height:4.55pt'>        
+		<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>            
             <p class=MsoNormal>
                 <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-                    Discuss
-                    possible changes in your child's individualized education program (IEP).
+                    Conduct an annual review of your child's individualized education program (IEP).
                 </span>
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt'>&nbsp;<o:p></o:p></span></p>
+            </p>            
         </td>
     </tr>
-    <tr style='mso-yfti-irow:2;height:4.55pt'>
-        <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in;
-      height:4.55pt'>
-            <p class=MsoNormal>
-             
-            </p>
-        </td>
-        <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
-      height:4.55pt'>
-            <p class=MsoNormal>
-                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-                    Conduct
-                    an annual review of your child's individualized education program (IEP).
-                </span>
-            </p>
-            <p class=MsoNormal style='mso-line-height-alt:4.55pt'>
-                <span style='font-size:
-      6.0pt'>&nbsp;<o:p></o:p></span>
-            </p>
-        </td>
-    </tr>
-    <tr style='mso-yfti-irow:3'>
-        <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in'>
-            <p class=MsoNormal>
-              
-            </p>
-        </td>
-        <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
-            <p class=MsoNormal>
+    <tr style='mso-yfti-irow:3'>        
+       		<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>            
+            <p class=MsoNormal style='margin-left:.25in;  text-indent:-.25in;'>
                 <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; <span style='font-size:10.0pt'>
-    If
-    your child
-    will be at least 14 years old
-    during the anticipated duration of this IEP,
-    the IEP team will develop postsecondary
-    goals
-    based on transition assessments and
-    transition services to promote movement from
-    school to post school activities.<span style='mso-spacerun:yes'>  </span>Postsecondary
-    goals and transition services can be considered at a younger age if
-    determined appropriate by the IEP Team.
-    Your child is invited by the school to attend the meeting.
-</span>
-                
-            </p>
-            <p class=MsoNormal><span style='font-size:6.0pt'><o:p>&nbsp;</o:p></span></p>
+					If your child will be at least 14 years old
+					during the anticipated duration of this IEP,
+					the IEP team will develop postsecondary
+					goals based on transition assessments and
+					transition services to promote movement from
+					school to post school activities. Postsecondary
+					goals and transition services can be considered at a younger age if
+					determined appropriate by the IEP Team.
+					Your child is invited by the school to attend the meeting.
+				</span>                
+            </p>           
         </td>
     </tr>
-    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:28.35pt'>
-        <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in;
-      height:28.35pt'>
-            <p class=MsoNormal>
-              
-            </p>
-        </td>
-        <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in;
-      height:28.35pt'>
+    <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:28.35pt'>      
+        		<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>           
+
             <p class=MsoNormal><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>Other<o:p></o:p></span></p>
-            <p class=MsoNormal>
-                <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>&nbsp;</span><span style='font-size:6.0pt'><o:p></o:p></span>
-            </p>
         </td>
     </tr>
 </table>
@@ -325,35 +242,29 @@
     </span><span style='font-size:10.0pt'><o:p></o:p></span>
 </p>
 
-<p class=MsoNormal style='text-indent:.25in'>
+<p class=MsoNormal style='text-indent:.3in'>
     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
         <span style='mso-tab-count:1'></span>1. A general education teacher of your child;
     </span><span style='font-size:10.0pt'><o:p></o:p></span>
 </p>
 
-
-    <p class=MsoNormal style='text-indent:.25in'>
+    <p class=MsoNormal style='text-indent:.3in'>
         <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>2. A special education teacher of your child;</span>
     </p>
-<p class=MsoNormal style='text-indent:.25in'>
+<p class=MsoNormal style='text-indent:.3in'>
     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>3. A school representative;</span>
 </p>
-
-<p class='MsoNormal page-break' style='display:block; text-indent:.25in;font-size:10.0pt;'>
-
+<p class=MsoNormal style='margin-left:.5in;  text-indent:-.20in;font-size:10.0pt;'>
     4. If this is an initial IEP, a representative of the Part C system (Early Intervention Program for Infants with Disabilities) if your child is transitioning from Part C to Part B, and you have requested participation of a Part C representative.
 
 </p>
-<p class=MsoNormal style="display: block;text-indent:.25in;font-size:10.0pt;">
+<p class=MsoNormal style='margin-left:.5in;  text-indent:-.20in;font-size:10.0pt;'>
         5. Student @studentFormattedName As required by federal and state regulations, the district invites your son/daughter to attend the IEP meeting when postsecondary goals and transition services will
         be considered. Postsecondary goals and transition services can be considered at any age,
-        but must be included in the first IEP to be in effect when your child reaches age 14.
-    
+        but must be included in the first IEP to be in effect when your child reaches age 14.    
 </p>
-
-<p class=MsoNormal style='text-indent:.25in;font-size:10.0pt;'>
-    6. Other(s) who can help explain the evaluation results or who have knowledge or special expertise regarding your child or services that may be needed.
-
+<p class=MsoNormal style='margin-left:.5in;  text-indent:-.20in;font-size:10.0pt;'>
+	    6. Other(s) who can help explain the evaluation results or who have knowledge or special expertise regarding your child or services that may be needed.
 </p>
 
 <p class=MsoNormal>
@@ -362,10 +273,9 @@
 
 <p class=MsoNormal>
     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>&nbsp;(position)
-        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>&nbsp;(position )
-    </span><span style='font-size:
-    10.0pt'><o:p></o:p></span>
+        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span><span> (position) </span>
+        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span><span> (position) </span>
+    </span>
 </p>
 
 <p class=MsoNormal style='tab-stops:.5in lined 243.0pt blank 301.5pt lined 6.25in'>
@@ -374,50 +284,29 @@
 
 <p class=MsoNormal style='tab-stops:.5in 3.5in lined 6.25in'>
     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>&nbsp;(position)
-        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>&nbsp;(position )<o:p></o:p>
+        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span><span> (position) </span>
+        <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span><span> (position) </span>
     </span>
 </p>
 
 <p class=MsoNormal style='tab-stops:.5in 3.5in lined 6.25in'>
     <span style='font-size:4.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span>
 </p>
-
-<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
-    mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
-    margin-left:0in;margin-right:9.0pt'>
-
-    <p class=MsoBlockText style='margin-right:0in;border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='font-size:
-    10.0pt;'>
+<div>
+    <p class=MsoNormal style='font-size:10.0pt;'>        
             If necessary, and with your consent, staff from other agencies that may be able to provide
             appropriate transition services/linkages will
             be invited to our meeting.The agencies
-            they represent are shown below:
-        </span>
+            they represent are shown below:        
     </p>
-
-    <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='font-size:7.0pt'><o:p>&nbsp;</o:p></span>
-    </p>
-
-    <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+    <p class=MsoNormal style=''>
         <span style='font-size:10.0pt'>
             <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
         </span>
     </p>
-
-    <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='font-size:2.0pt;mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span>
-    </p>
-
+    
 </div>
-
-<p class="MsoNormal">
+<p class="MsoNormal" style="margin-top:8px">
     <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
         It
         is very important that the parents, or you as the student, if<span style='color:red'></span>age 18 or over, attend this meeting.<span style='mso-spacerun:yes'></span>Parents may invite their minor child to this
@@ -444,46 +333,23 @@
     <span style='font-size:10.0pt;
     mso-bidi-font-size:12.0pt'>(School Contact)<span style='mso-tab-count:1'>                                                                             </span></span>
 </p>
-<br/><br/>
-<div style='margin-top:25px;mso-element:para-border-div;border:solid windowtext 1.0pt;
-    mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
 
-    <p class=MsoNormal align=center style='text-align:center;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <b>
-            <span style='font-size:11.0pt'>PROCEDURAL SAFEGUARDS TO PROTECT PARENTS’ RIGHTS</span>
-        </b><span style='font-size:11.0pt'><o:p></o:p></span>
-    </p>
+	<p class=MsoNormal align=center style='margin-top:8px;text-align:center'>
+    <b><span style='font-size:11.0pt'>PROCEDURAL SAFEGUARDS TO PROTECT PARENTS’ RIGHTS<o:p></o:p></span></b>
+</p>
 
-    <p class=MsoNormal style='border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='font-size:
-    6.0pt'>&nbsp;</span>
-    </p>
-
-    <p class=MsoNormal style='margin-left:9.0pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='mso-tab-count:1'></span><span style='font-size:10.0pt;mso-bidi-font-size:
-    12.0pt'>
-            Both state and federal laws concerning the education of children with
-            exceptionalities include many parental rights.<span style='mso-spacerun:yes'>
-            </span>Receiving notices of action the school wants to take in regard to your
+<p class=MsoNormal>
+    <span style='font-size:10.0pt'>
+        Both state and federal laws concerning the education of children with
+            exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your
             child and being a part of your child’s educational planning team are examples
-            of the rights these laws give you.<span style='mso-spacerun:yes'>  </span>These
+            of the rights these laws give you. These
             laws also require that the school follow certain procedures to make sure you
-            know your rights and have an opportunity to exercise those rights.<span style='mso-spacerun:yes'></span>A copy of your rights is provided to you upon
-            request, and at least once each year.<span style='mso-spacerun:yes'>
-            </span>You should carefully read them and, if you have any questions regarding
-            your rights, you may contact the school representative listed above.<o:p></o:p>
-        </span>
-    </p>
-
-    <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span>
-    </p>
-
-</div>
+            know your rights and have an opportunity to exercise those rights. A copy of your rights is provided to you upon
+            request, and at least once each year. You should carefully read them and, if you have any questions regarding
+            your rights, you may contact the school representative listed above.
+    </span>
+</p>
 
 <p class=MsoNormal align=center style='margin-top:8px;text-align:center'>
     <b style='mso-bidi-font-weight:
@@ -578,15 +444,10 @@
         </span>
     </p>
 
-    @*<p class=MsoNormal style='text-indent:.75in;tab-stops:351.0pt 401.25pt;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-        (Name)<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>(Date)<span style='mso-tab-count:1'></span><o:p></o:p>
-
-
-    </p>*@
 
 </div>
 
-<br clear='all' style='overflow:hidden;page-break-before:always;'>
+<br clear='all' style='overflow:hidden;'>
 
 <p class=MsoNormal>
     <span style='mso-bookmark:OLE_LINK2'>

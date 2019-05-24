@@ -2377,117 +2377,129 @@ namespace GreenbushIep.Controllers
             return View("~/Reports/SpedPro/Index.cshtml");
         }
 
-        [Authorize]
-        public ActionResult DownloadSpedPro(FormCollection collection)
-        {
-            string fiscalYearStr = collection["fiscalYear"];
-            int fiscalYear = 0;
-            Int32.TryParse(fiscalYearStr, out fiscalYear);
+		[Authorize]
+		public ActionResult DownloadSpedPro(FormCollection collection)
+		{
+			string fiscalYearStr = collection["fiscalYear"];
+			int fiscalYear = 0;
+			Int32.TryParse(fiscalYearStr, out fiscalYear);
 
-            string iepStatus = IEPStatus.ACTIVE;
-            var exportErrors = new List<ExportErrorView>();
+			tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			if (MIS != null)
+			{
+								
+				var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
+				List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+				
+				string iepStatus = IEPStatus.ACTIVE;
+				var exportErrors = new List<ExportErrorView>();
 
-            var query = (from iep in db.tblIEPs
-                         join student in db.tblUsers
-                             on iep.UserID equals student.UserID
-                         join services in db.tblServices
-                             on iep.IEPid equals services.IEPid
-                         where
-                         iep.IepStatus == iepStatus
-                         && services.SchoolYear == fiscalYear
-                         && (services.FiledOn == null || iep.FiledOn == null)
-                         select new { iep, student }).Distinct().ToList();
+				var query = (from iep in db.tblIEPs
+							 join student in db.tblUsers
+								 on iep.UserID equals student.UserID
+							 join services in db.tblServices
+								 on iep.IEPid equals services.IEPid
+							 join building in db.tblBuildingMappings
+							     on student.UserID equals building.UserID
+							 where
+							 iep.IepStatus == iepStatus
+							 && services.SchoolYear == fiscalYear
+							 && (services.FiledOn == null || iep.FiledOn == null)
+							 && myBuildings.Contains(building.BuildingID)
+							 select new { iep, student }).Distinct().ToList();
 
-            if (query.Count() > 0)
-            {
-                StringBuilder sb = new StringBuilder();
+				if (query.Count() > 0)
+				{
+					StringBuilder sb = new StringBuilder();
 
-                foreach (var item in query)
-                {
-                    IEP theIEP = new IEP()
-                    {
-                        current = item.iep,
-                        studentFirstName = string.Format("{0}", item.student.FirstName),
-                        studentLastName = string.Format("{0}", item.student.LastName),
-                    };
+					foreach (var item in query)
+					{
+						IEP theIEP = new IEP()
+						{
+							current = item.iep,
+							studentFirstName = string.Format("{0}", item.student.FirstName),
+							studentLastName = string.Format("{0}", item.student.LastName),
+						};
 
-                    if (theIEP != null && theIEP.current != null)
-                    {
-                        var studentDetails = new StudentDetailsPrintViewModel();
-                        theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.SchoolYear == fiscalYear).ToList();
-                        theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
+						if (theIEP != null && theIEP.current != null)
+						{
+							var studentDetails = new StudentDetailsPrintViewModel();
+							theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+							theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
 
-                        tblStudentInfo info = null;
-                        if (student != null)
-                        {
-                            info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
-                            tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-                            tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-                        }
+							tblStudentInfo info = null;
+							if (student != null)
+							{
+								info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
+								tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+								tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+							}
 
-                        if (info != null && theIEP.current != null)
-                        {
-                            var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-                            var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-                            var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-                            var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+							if (info != null && theIEP.current != null)
+							{
+								var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+								var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+								var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+								var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
 
-                            studentDetails.student = info;
-                            studentDetails.gender = info.Gender;
-                            studentDetails.building = studentBuilding;
-                            studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-                            studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
-                            studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
-                            studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode;
-                            studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
-                            studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-                            studentDetails.assignChildCount = studentUSD.KSDECode;
-                        }
+								studentDetails.student = info;
+								studentDetails.gender = info.Gender;
+								studentDetails.building = studentBuilding;
+								studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+								studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
+								studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
+								studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode;
+								studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
+								studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+								studentDetails.assignChildCount = studentUSD.KSDECode;
+							}
 
-                        theIEP.current.FiledOn = DateTime.Now;
-                        theIEP.studentDetails = studentDetails;
-                    }
+							theIEP.current.FiledOn = DateTime.Now;
+							theIEP.studentDetails = studentDetails;
+						}
 
-                    var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+						var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
 
-                    if (errors.Count > 0)
-                    {
-                        exportErrors.AddRange(errors);
-                    }
-                    else
-                    {
-                        db.SaveChanges();
-                    }
-                }//end foreach
+						if (errors.Count > 0)
+						{
+							exportErrors.AddRange(errors);
+
+						}
+
+					}//end foreach
 
 
-                if (exportErrors.Count == 0)
-                {
-                    Response.Clear();
-                    Response.ClearHeaders();
+					if (exportErrors.Count == 0)
+					{
+						//on save if no errors
+						db.SaveChanges();
 
-                    Response.AppendHeader("Content-Length", sb.Length.ToString());
-                    Response.ContentType = "text/plain";
-                    Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
+						Response.Clear();
+						Response.ClearHeaders();
 
-                    Response.Write(sb);
-                    Response.End();
-                }
-                else
-                {
-                    ViewBag.errors = exportErrors;
-                }
-            }
-            else
-            {
-                exportErrors.Add(new ExportErrorView()
-                {
-                    UserID = "",
-                    Description = "No data found to export."
-                });
+						Response.AppendHeader("Content-Length", sb.Length.ToString());
+						Response.ContentType = "text/plain";
+						Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
 
-                ViewBag.errors = exportErrors;
-            }
+						Response.Write(sb);
+						Response.End();
+					}
+					else
+					{
+						ViewBag.errors = exportErrors;
+					}
+				}
+				else
+				{
+					exportErrors.Add(new ExportErrorView()
+					{
+						UserID = "",
+						Description = "No data found to export."
+					});
+
+					ViewBag.errors = exportErrors;
+				}
+			}
 
             return View("~/Reports/SpedPro/Index.cshtml");
         }
