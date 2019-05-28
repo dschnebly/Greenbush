@@ -161,6 +161,14 @@ namespace GreenBushIEP.Controllers
                 {
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
+                    // check that the kidsIS doesn't already exsist in the system.
+                    long kidsID = Convert.ToInt64(collection["kidsid"]);
+                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+                    if(exsistingStudent != null)
+                    {
+                        return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+                    }
+
                     // Create New User 
                     tblUser student = new tblUser()
                     {
@@ -198,7 +206,7 @@ namespace GreenBushIEP.Controllers
                     tblStudentInfo studentInfo = new tblStudentInfo()
                     {
                         UserID = student.UserID,
-                        KIDSID = Convert.ToInt64(collection["kidsid"]),
+                        KIDSID = kidsID,
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
                         Primary_DisabilityCode = collection["primaryDisability"].ToString(),
                         Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
