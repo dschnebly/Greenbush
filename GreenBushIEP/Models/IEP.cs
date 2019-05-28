@@ -103,7 +103,7 @@ namespace GreenBushIEP.Models
 
         public IEP(int stid, int? iepId = null)
         {
-            listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
+            listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
 
             if (listOfStudentsIEPs.Count > 0)
             {
