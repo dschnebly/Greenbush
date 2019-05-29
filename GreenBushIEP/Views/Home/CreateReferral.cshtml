@@ -1,0 +1,1334 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.StudentDetailsViewModel
+
+@{
+	ViewBag.Title = "Create a New Referral";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+	@Styles.Render("~/Content/transition.css")
+	@Styles.Render("~/Content/chosen.css")
+	@Styles.Render("~/Content/jquery-ui.min.css")
+
+}
+
+<style>
+	.btn-file {
+		position: relative;
+		overflow: hidden;
+	}
+
+		.btn-file input[type=file] {
+			position: absolute;
+			top: 0;
+			right: 0;
+			min-width: 100%;
+			min-height: 100%;
+			font-size: 100px;
+			text-align: right;
+			filter: alpha(opacity=0);
+			opacity: 0;
+			outline: none;
+			background: white;
+			cursor: inherit;
+			display: block;
+		}
+
+	.btn-circle {
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		padding: 6px 0;
+		font-size: 12px;
+		line-height: 1.428571429;
+		border-radius: 15px;
+		border-width: 1px;
+	}
+
+		.btn-circle:focus {
+			outline: none;
+		}
+
+		.btn-circle.btn-lg {
+			width: 50px;
+			height: 50px;
+			padding: 10px 16px;
+			font-size: 18px;
+			line-height: 1.33;
+			border-radius: 25px;
+			margin-bottom: 10px;
+		}
+
+		.btn-circle.btn-xl {
+			width: 70px;
+			height: 70px;
+			padding: 10px 16px;
+			font-size: 24px;
+			line-height: 1.33;
+			border-radius: 35px;
+			margin-bottom: 10px;
+		}
+
+	.wizard {
+		margin: 20px auto;
+		background: #fff;
+	}
+
+		.wizard .nav-tabs {
+			position: relative;
+			margin-bottom: 0;
+			border-bottom-color: #e0e0e0;
+		}
+
+		.wizard > div.wizard-inner {
+			position: relative;
+		}
+
+	.connecting-line {
+		height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 70%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		z-index: 1;
+	}
+
+	.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+		color: #555555;
+		cursor: default;
+		border: 0;
+		border-bottom-color: transparent;
+	}
+
+	span.round-tab {
+		width: 70px;
+		height: 70px;
+		line-height: 70px;
+		display: inline-block;
+		border-radius: 100px;
+		background: #fff;
+		border: 2px solid #e0e0e0;
+		z-index: 2;
+		position: absolute;
+		left: 0;
+		text-align: center;
+		font-size: 25px;
+	}
+
+		span.round-tab i {
+			color: #555555;
+		}
+
+	.wizard li.active span.round-tab {
+		background: #fff;
+		border: 2px solid #5bc0de;
+	}
+
+		.wizard li.active span.round-tab i {
+			color: #5bc0de;
+		}
+
+	span.round-tab:hover {
+		color: #333;
+		border: 2px solid #333;
+	}
+
+	.wizard .nav-tabs > li {
+		width: 24%;
+	}
+
+	.wizard li:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 0;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 5px solid transparent;
+		border-bottom-color: #5bc0de;
+		transition: 0.1s ease-in-out;
+	}
+
+	.wizard li.active:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 1;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 10px solid transparent;
+		border-bottom-color: #5bc0de;
+	}
+
+	.wizard .nav-tabs > li a {
+		width: 70px;
+		height: 70px;
+		margin: 20px auto;
+		border-radius: 100%;
+		padding: 0;
+	}
+
+		.wizard .nav-tabs > li a:hover {
+			background: transparent;
+		}
+
+	.wizard .tab-pane {
+		position: relative;
+		padding-top: 20px;
+	}
+
+	.wizard h3 {
+		margin-top: 0;
+	}
+
+	.step11 .step22 .step33 .row {
+		padding-bottom: 5px;
+	}
+
+	.unselect_img {
+		width: 18px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.active-header {
+		-moz-border-radius: 5px 5px 0 0;
+		-webkit-border-radius: 5px 5px 0 0;
+		border-radius: 5px 5px 0 0;
+		background: #F53B27;
+	}
+
+		.active-header:after {
+			content: "\f068";
+			font-family: 'FontAwesome';
+			float: right;
+			margin: 5px;
+			font-weight: 400;
+		}
+
+	.inactive-header {
+		background: #333;
+	}
+
+		.inactive-header:after {
+			content: "\f067";
+			font-family: 'FontAwesome';
+			float: right;
+			margin: 4px 5px;
+			font-weight: 400;
+		}
+
+	.saveandcontinue li button,
+	.saveandcontinue li a {
+		font-size: 18px;
+		line-height: 1.3333333;
+		padding: 10px 16px;
+	}
+
+	.saveandcontinue {
+		padding-top: 15px;
+	}
+
+	.search-choice span {
+		line-height: 2.7;
+		font-size: 14px;
+	}
+
+	.vertical-align {
+		display: flex;
+		align-items: center;
+	}
+
+	.avatar {
+		margin-bottom: 15px;
+	}
+
+	.multiselect-container {
+		position: absolute;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+		.multiselect-container .input-group {
+			margin: 5px;
+		}
+
+		.multiselect-container > li {
+			padding: 0;
+		}
+
+			.multiselect-container > li > a.multiselect-all label {
+				font-weight: bold;
+			}
+
+			.multiselect-container > li > label.multiselect-group {
+				margin: 0;
+				padding: 3px 20px 3px 10px;
+				height: 100%;
+				font-weight: bold;
+			}
+
+			.multiselect-container > li > a > label {
+				margin: 0;
+				height: 100%;
+				cursor: pointer;
+				font-weight: normal;
+			}
+
+				.multiselect-container > li > a > label.radio,
+				.multiselect-container > li > a > label.checkbox {
+					margin: 0;
+				}
+
+				.multiselect-container > li > a > label > input[type="checkbox"] {
+					margin-bottom: 5px;
+				}
+
+	.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+	}
+
+	.dropdown-menu > li > a {
+		padding: 6px 40px;
+	}
+
+	.dropdown-toggle {
+		padding: 10px 16px;
+		font-size: 18px;
+		line-height: 1.33;
+		border-radius: 0; /* 6px; */
+	}
+
+	.dropdown-toggle {
+		font-size: 14px;
+		min-height: 49px;
+	}
+
+	#AddNewContact:hover {
+		-webkit-animation: pulse 1s ease 0s;
+		-o-animation: pulse 1s ease 0s;
+		-moz-animation: pulse 1s ease 0s;
+		animation: pulse 1s ease 0s;
+	}
+
+	.remove-contact {
+		position: relative;
+		top: 25px;
+		left: 15px;
+	}
+
+	.checkbox label:after,
+	.radio label:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+
+	.checkbox .cr,
+	.radio .cr {
+		position: relative;
+		display: inline-block;
+		border: 1px solid #a9a9a9;
+		border-radius: .25em;
+		width: 1.3em;
+		height: 1.3em;
+		float: left;
+		margin-right: .5em;
+	}
+
+	.radio .cr {
+		border-radius: 50%;
+	}
+
+		.checkbox .cr .cr-icon,
+		.radio .cr .cr-icon {
+			position: absolute;
+			font-size: .8em;
+			line-height: 0;
+			top: 50%;
+			left: 20%;
+		}
+
+		.radio .cr .cr-icon {
+			margin-left: 0.04em;
+		}
+
+	.checkbox label input[type="checkbox"],
+	.radio label input[type="radio"] {
+		display: none;
+	}
+
+		.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+		.radio label input[type="radio"] + .cr > .cr-icon {
+			transform: scale(3) rotateZ(-20deg);
+			opacity: 0;
+			transition: all .3s ease-in;
+		}
+
+		.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+		.radio label input[type="radio"]:checked + .cr > .cr-icon {
+			transform: scale(1) rotateZ(0deg);
+			opacity: 1;
+		}
+
+		.checkbox label input[type="checkbox"]:disabled + .cr,
+		.radio label input[type="radio"]:disabled + .cr {
+			opacity: .5;
+		}
+
+	.onoffswitch1 {
+		position: relative;
+		width: 110px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+	}
+
+	.onoffswitch1-checkbox {
+		display: none;
+	}
+
+	.onoffswitch1-label {
+		display: block;
+		overflow: hidden;
+		cursor: pointer;
+		border: 2px solid #999999;
+		border-radius: 30px;
+	}
+
+	.onoffswitch1-inner {
+		display: block;
+		width: 200%;
+		margin-left: -100%;
+		-moz-transition: margin 0.3s ease-in 0s;
+		-webkit-transition: margin 0.3s ease-in 0s;
+		-o-transition: margin 0.3s ease-in 0s;
+		transition: margin 0.3s ease-in 0s;
+	}
+
+		.onoffswitch1-inner:before, .onoffswitch1-inner:after {
+			display: block;
+			float: left;
+			width: 50%;
+			height: 45px;
+			padding: 0;
+			line-height: 45px;
+			font-size: 14px;
+			color: white;
+			font-family: Trebuchet, Arial, sans-serif;
+			font-weight: bold;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			border-radius: 45px;
+			box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+		}
+
+		.onoffswitch1-inner:before {
+			content: "Female";
+			padding-left: 10px;
+			background-color: #ffb6c1;
+			color: #FFFFFF;
+			border-radius: 45px 0 0 45px;
+		}
+
+		.onoffswitch1-inner:after {
+			content: "Male";
+			padding-right: 10px;
+			background-color: #2FCCFF;
+			color: #FFFFFF;
+			text-align: right;
+			border-radius: 0 45px 45px 0;
+		}
+
+	.onoffswitch1-switch {
+		display: block;
+		width: 30px;
+		margin: 0px;
+		background: #FFFFFF;
+		border: 2px solid #999999;
+		border-radius: 30px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 80px;
+		-moz-transition: all 0.3s ease-in 0s;
+		-webkit-transition: all 0.3s ease-in 0s;
+		-o-transition: all 0.3s ease-in 0s;
+		transition: all 0.3s ease-in 0s;
+		background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		box-shadow: 0 1px 1px white inset;
+	}
+
+	.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-inner {
+		margin-left: 0;
+	}
+
+	.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-switch {
+		right: 0px;
+	}
+
+	.onoffswitch2 {
+		position: relative;
+		width: 110px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+	}
+
+	.onoffswitch2-checkbox {
+		display: none;
+	}
+
+	.onoffswitch2-label {
+		display: block;
+		overflow: hidden;
+		cursor: pointer;
+		border: 2px solid #999999;
+		border-radius: 30px;
+	}
+
+	.onoffswitch2-inner {
+		display: block;
+		width: 200%;
+		margin-left: -100%;
+		-moz-transition: margin 0.3s ease-in 0s;
+		-webkit-transition: margin 0.3s ease-in 0s;
+		-o-transition: margin 0.3s ease-in 0s;
+		transition: margin 0.3s ease-in 0s;
+	}
+
+		.onoffswitch2-inner:before, .onoffswitch2-inner:after {
+			display: block;
+			float: left;
+			width: 50%;
+			height: 45px;
+			padding: 0;
+			line-height: 45px;
+			font-size: 14px;
+			color: white;
+			font-family: Trebuchet, Arial, sans-serif;
+			font-weight: bold;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			border-radius: 45px;
+			box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+		}
+
+		.onoffswitch2-inner:before {
+			content: "YES";
+			padding-left: 10px;
+			background-color: #2FCCFF;
+			color: #FFFFFF;
+			border-radius: 45px 0 0 45px;
+		}
+
+		.onoffswitch2-inner:after {
+			content: "NO";
+			padding-right: 10px;
+			background-color: #FFFFFF;
+			color: #999999;
+			text-align: right;
+			border-radius: 0 45px 45px 0;
+		}
+
+	.onoffswitch2-switch {
+		display: block;
+		width: 30px;
+		margin: 0px;
+		background: #FFFFFF;
+		border: 2px solid #999999;
+		border-radius: 30px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 80px;
+		-moz-transition: all 0.3s ease-in 0s;
+		-webkit-transition: all 0.3s ease-in 0s;
+		-o-transition: all 0.3s ease-in 0s;
+		transition: all 0.3s ease-in 0s;
+		background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+		box-shadow: 0 1px 1px white inset;
+	}
+
+	.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+		margin-left: 0;
+	}
+
+	.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+		right: 0px;
+	}
+
+	.required {
+		color: #C9302C;
+	}
+
+	.norequired {
+		border: 1px solid #aaa;
+	}
+
+	.contact-tooltip {
+		border: 2px solid #9F6000;
+	}
+
+	@@media( max-width : 585px ) {
+
+		.wizard {
+			width: 90%;
+			height: auto !important;
+		}
+
+		span.round-tab {
+			font-size: 16px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+
+		.wizard .nav-tabs > li a {
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+
+		.wizard li.active:after {
+			content: " ";
+			position: absolute;
+			left: 35%;
+		}
+
+		.add-contact {
+			position: relative;
+			top: -40px;
+		}
+	}
+
+	@@-webkit-keyframes pulse {
+		0% {
+			-webkit-transform: scale(1);
+		}
+
+		50% {
+			-webkit-transform: scale(1.2);
+		}
+
+		100% {
+			-webkit-transform: scale(1);
+		}
+	}
+
+	@@-o-keyframes pulse {
+		0% {
+			-o-transform: scale(1);
+		}
+
+		50% {
+			-o-transform: scale(1.2);
+		}
+
+		100% {
+			-o-transform: scale(1);
+		}
+	}
+
+	@@-moz-keyframes pulse {
+		0% {
+			-moz-transform: scale(1);
+		}
+
+		50% {
+			-moz-transform: scale(1.2);
+		}
+
+		100% {
+			-moz-transform: scale(1);
+		}
+	}
+
+	@@keyframes pulse {
+		0% {
+			transform: scale(1);
+		}
+
+		50% {
+			transform: scale(1.2);
+		}
+
+		100% {
+			transform: scale(1);
+		}
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-10">
+			<ul class="breadcrumb" style="margin-top: 18px;">
+				<li>@Html.ActionLink((string)("Referrals").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+				<li class="active" style="font-size: 20px;">@ViewBag.Title</li>
+			</ul>
+		</div>
+		<div class="col-md-2 pull-right">
+			@Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+		</div>
+	</div>
+	<div class="row">
+
+		<section>
+			<div class="wizard">
+				<div class="wizard-inner">
+					<div class="connecting-line"></div>
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+								<span class="round-tab">
+									<i class="fa fa-child"></i>
+								</span>
+							</a>
+						</li>
+						<li role="presentation" class="disabled">
+							<a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+								<span class="round-tab">
+									<i class="glyphicon glyphicon-cog"></i>
+								</span>
+							</a>
+						</li>
+						<li role="presentation" class="disabled">
+							<a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+								<span class="round-tab">
+									<i class="glyphicon glyphicon-home"></i>
+								</span>
+							</a>
+						</li>
+						@*<li role="presentation" class="disabled">
+								<a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+									<span class="round-tab">
+										<i class="glyphicon glyphicon-ok"></i>
+									</span>
+								</a>
+							</li>*@
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div id="step1" class="tab-pane active" role="tabpanel">
+						@using (Html.BeginForm("CreateReferral", "Manage", null, FormMethod.Post, new { id = "createNewReferral", @class = "newstudent" }))
+						{
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+							<div class="step11">
+								<div class="row">
+									<div class="col-md-3">
+										<label class="control-label" for="kidsid">KIDS ID</label>
+										@Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", max = "9999999999", step = "1", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
+										@Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-2">
+										<div class="bootstrap-iso">
+											<div class="container-fluid">
+												<div class="row">
+													<label class="control-label" for="dob">Birthdate</label>
+													@Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob" } })
+													@Html.ValidationMessage("dob", "", new { @class = "text-danger" })
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<label>Gender</label>
+										<div class="onoffswitch1">
+											<input type="checkbox" name="gender" class="onoffswitch1-checkbox" id="gender" checked>
+											<label class="onoffswitch1-label" for="gender">
+												<span class="onoffswitch1-inner"></span>
+												<span class="onoffswitch1-switch"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<label class="control-label required" for="firstname">First Name</label>
+										@Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
+										@Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-4">
+										<label class="control-label required" for="middlename">Middle Name</label>
+										@Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name" } })
+										@Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
+									</div>
+									<div class="col-md-4">
+										<label class="control-label required" for="lastname">Last Name</label>
+										@Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
+										@Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="row voffset3">
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for="studentStreetAddress1">Student's Street Address</label>
+											<input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text" data-validate="true" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label for="studentStreetAddress2">Apt/Ste/Rm</label>
+											<input name="studentStreetAddress2" id="studentStreetAddress2" class="form-control norequired" placeholder="Apartment/Suite/Room" type="text" />
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for="studentCity">City</label>
+											<input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" data-validate="true" />
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-group">
+											<label for="studentState">State</label>
+											<select name="studentState" id="studentState" class="form-control norequired" data-validate="true">
+												<option value="AL">AL</option>
+												<option value="AK">AK</option>
+												<option value="AZ">AZ</option>
+												<option value="AR">AR</option>
+												<option value="CA">CA</option>
+												<option value="CO">CO</option>
+												<option value="CT">CT</option>
+												<option value="DE">DE</option>
+												<option value="DC">DC</option>
+												<option value="FL">FL</option>
+												<option value="GA">GA</option>
+												<option value="HI">HI</option>
+												<option value="ID">ID</option>
+												<option value="IL">IL</option>
+												<option value="IN">IN</option>
+												<option value="IA">IA</option>
+												<option value="KS" selected="selected">KS</option>
+												<option value="KY">KY</option>
+												<option value="LA">LA</option>
+												<option value="ME">ME</option>
+												<option value="MD">MD</option>
+												<option value="MA">MA</option>
+												<option value="MI">MI</option>
+												<option value="MN">MN</option>
+												<option value="MS">MS</option>
+												<option value="MO">MO</option>
+												<option value="MT">MT</option>
+												<option value="NE">NE</option>
+												<option value="NV">NV</option>
+												<option value="NH">NH</option>
+												<option value="NJ">NJ</option>
+												<option value="NM">NM</option>
+												<option value="NY">NY</option>
+												<option value="NC">NC</option>
+												<option value="ND">ND</option>
+												<option value="OH">OH</option>
+												<option value="OK">OK</option>
+												<option value="OR">OR</option>
+												<option value="PA">PA</option>
+												<option value="RI">RI</option>
+												<option value="SC">SC</option>
+												<option value="SD">SD</option>
+												<option value="TN">TN</option>
+												<option value="TX">TX</option>
+												<option value="UT">UT</option>
+												<option value="VT">VT</option>
+												<option value="VA">VA</option>
+												<option value="WA">WA</option>
+												<option value="WV">WV</option>
+												<option value="WI">WI</option>
+												<option value="WY">WY</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label for="studentZipCode">Zip Code</label>
+											<input name="studentZipCode" id="studentZipCode" class="form-control norequired" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" />
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row voffset3">
+									<div class="col-md-2">
+										<label for="studentCounty">County of Residence</label>
+										<select name="studentCounty" id="studentCounty" class="form-control">
+											<option value="AL">Allen</option>
+											<option value="AN">Anderson</option>
+											<option value="AT">Atchison</option>
+											<option value="BA">Barber</option>
+											<option value="BT">Barton</option>
+											<option value="BR">Brown</option>
+											<option value="BB">Bourbon</option>
+											<option value="BU">Butler</option>
+											<option value="CS">Chase</option>
+											<option value="CQ">Chautauqua</option>
+											<option value="CK">Cherokee</option>
+											<option value="CN">Cheyenne</option>
+											<option value="CA">Clark</option>
+											<option value="CY">Clay</option>
+											<option value="CD">Cloud</option>
+											<option value="CF">Coffey</option>
+											<option value="CM">Comanche</option>
+											<option value="CL">Cowley</option>
+											<option value="CR">Crawford</option>
+											<option value="DC">Decatur</option>
+											<option value="DK">Dickinson</option>
+											<option value="DP">Doniphan</option>
+											<option value="DG">Douglas</option>
+											<option value="ED">Edwards</option>
+											<option value="EK">Elk</option>
+											<option value="EL">Ellis</option>
+											<option value="EW">Ellsworth</option>
+											<option value="FI">Finney</option>
+											<option value="FO">Ford</option>
+											<option value="FR">Franklin</option>
+											<option value="GE">Geary</option>
+											<option value="GO">Gove</option>
+											<option value="GH">Graham</option>
+											<option value="GT">Grant</option>
+											<option value="GY">Gray</option>
+											<option value="GL">Greeley</option>
+											<option value="GW">Greenwood</option>
+											<option value="HM">Hamilton</option>
+											<option value="HP">Harper</option>
+											<option value="HV">Harvey</option>
+											<option value="HS">Haskell</option>
+											<option value="HG">Hodgeman</option>
+											<option value="JA">Jackson</option>
+											<option value="JF">Jefferson</option>
+											<option value="JW">Jewell</option>
+											<option value="JO">Johnson</option>
+											<option value="KE">Kearny</option>
+											<option value="KM">Kingman</option>
+											<option value="KW">Kiowa</option>
+											<option value="LB">Labette</option>
+											<option value="LE">Lane</option>
+											<option value="LV">Leavenworth</option>
+											<option value="LC">Lincoln</option>
+											<option value="LN">Linn</option>
+											<option value="LG">Logan</option>
+											<option value="LY">Lyon</option>
+											<option value="MN">Marion</option>
+											<option value="MS">Marshall</option>
+											<option value="MP">McPherson</option>
+											<option value="ME">Meade</option>
+											<option value="MI">Miami</option>
+											<option value="MC">Mitchell</option>
+											<option value="MG">Montgomery</option>
+											<option value="MR">Morris</option>
+											<option value="MT">Morton</option>
+											<option value="NM">Nemaha</option>
+											<option value="NO">Neosho</option>
+											<option value="NS">Ness</option>
+											<option value="NT">Norton</option>
+											<option value="OS">Osage</option>
+											<option value="OB">Osborne</option>
+											<option value="OT">Ottawa</option>
+											<option value="PN">Pawnee</option>
+											<option value="PL">Phillips</option>
+											<option value="PT">Pottawatomie</option>
+											<option value="PR">Pratt</option>
+											<option value="RA">Rawlins</option>
+											<option value="RN">Reno</option>
+											<option value="RP">Republic</option>
+											<option value="RC">Rice</option>
+											<option value="RL">Riley</option>
+											<option value="RO">Rooks</option>
+											<option value="RH">Rush</option>
+											<option value="RS">Russell</option>
+											<option value="SA">Saline</option>
+											<option value="SC">Scott</option>
+											<option value="SG">Sedgwick</option>
+											<option value="SW">Seward</option>
+											<option value="SN">Shawnee</option>
+											<option value="SD">Sheridan</option>
+											<option value="SH">Sherman</option>
+											<option value="SM">Smith</option>
+											<option value="SF">Stafford</option>
+											<option value="ST">Stanton</option>
+											<option value="SV">Stevens</option>
+											<option value="SU">Sumner</option>
+											<option value="TH">Thomas</option>
+											<option value="TR">Trego</option>
+											<option value="WB">Wabaunsee</option>
+											<option value="WA">Wallace</option>
+											<option value="WS">Washington</option>
+											<option value="WH">Wichita</option>
+											<option value="WL">Wilson</option>
+											<option value="WO">Woodson</option>
+											<option value="WY">Wyandotte</option>
+											<option value="OC">Other Country</option>
+											<option value="UU">Unknown</option>
+											<option value="ZZ">Other States</option>
+											<option value="CO">Colorado</option>
+											<option value="MO">Missouri</option>
+											<option value="NE">Nebraska</option>
+											<option value="OK">Oklahoma</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="studentGrade">Student Grade</label>
+										<select name="studentGrade" id="studentGrade" class="form-control">
+											@foreach (tblGrade grade in Model.grades)
+											{
+												<option value="@(grade.gradeID)">@(grade.description)</option>
+											}
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="studentRace">Student Race</label>
+										<select name="studentRace" id="studentRace" class="form-control">
+											<option value="White">White</option>
+											<option value="Hawaiian">Native Hawaiian or Other Pacific Islander</option>
+											<option value="Asian">Asian</option>
+											<option value="African American">Black or African American</option>
+											<option value="Native America">American Indian or Alaska Native</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="studentEthnic">Hispanic Ethnicity</label>
+										<select name="studentEthnic" id="studentEthnic" class="form-control">
+											<option value="">Select</option>
+											<option value="Y">Hispanic/Latino</option>
+											<option value="N">Not Hispanic/Latino</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="studentLanguage">Student Language</label>
+										<select name="studentLanguage" id="studentLanguage" class="form-control">
+											<option value="EN" selected="selected">EN - English</option>
+											<option value="ES">ES - Spanish</option>
+											<option value="DE">DE - German</option>
+											<option value="FR">FR - French</option>
+											<option value="RU">RU - Russian</option>
+											<option value="A">A - Augmentative Communication</option>
+											<option value="AR">AR - Arabic</option>
+											<option value="DIN">DIN - Dinka (Sudanese)</option>
+											<option value="HMN">HMN - Hmong</option>
+											<option value="IRA">IRA - Farsi(Iranian)</option>
+											<option value="KHMR">KHMR - Khmen / Cambodian</option>
+											<option value="KO">KO - Korean</option>
+											<option value="LO">LO - Lao</option>
+											<option value="M">M - Mode of Communication</option>
+											<option value="NAT-AM">NAT-A, - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
+											<option value="N">N - Non-Verbal and Non-Sign</option>
+											<option value="O">O - Other</option>
+											<option value="PH">PH - Phllippine - Tagalog</option>
+											<option value="SO">SO - Somali</option>
+											<option value="TH">TH - Thai</option>
+											<option value="VI">VI - Vietnamese</option>
+											<option value="YU">YU - Yugoslavian, Croatian, Bosnian, Serb</option>
+											<option value="ZH-ZH-CMN">ZH-ZH-CMN - Mandarin</option>
+											<option value="ZH-YUE">ZH-YUE - Cantonese</option>
+											<option value="ZH-WUU">ZH-WUU - Wu</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="parentLanguage">Parents Language</label>
+										<select name="parentLanguage" id="parentLanguage" class="form-control">
+											<option value="EN" selected="selected">EN - English</option>
+											<option value="ES">ES - Spanish</option>
+											<option value="DE">DE - German</option>
+											<option value="FR">FR - French</option>
+											<option value="RU">RU - Russian</option>
+											<option value="A">A - Augmentative Communication</option>
+											<option value="AR">AR - Arabic</option>
+											<option value="DIN">DIN - Dinka (Sudanese)</option>
+											<option value="HMN">HMN - Hmong</option>
+											<option value="IRA">IRA - Farsi(Iranian)</option>
+											<option value="KHMR">KHMR - Khmen / Cambodian</option>
+											<option value="KO">KO - Korean</option>
+											<option value="LO">LO - Lao</option>
+											<option value="M">M - Mode of Communication</option>
+											<option value="NAT-AM">NAT-A, - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
+											<option value="N">N - Non-Verbal and Non-Sign</option>
+											<option value="O">O - Other</option>
+											<option value="PH">PH - Phllippine - Tagalog</option>
+											<option value="SO">SO - Somali</option>
+											<option value="TH">TH - Thai</option>
+											<option value="VI">VI - Vietnamese</option>
+											<option value="YU">YU - Yugoslavian, Croatian, Bosnian, Serb</option>
+											<option value="ZH-ZH-CMN">ZH-ZH-CMN - Mandarin</option>
+											<option value="ZH-YUE">ZH-YUE - Cantonese</option>
+											<option value="ZH-WUU">ZH-WUU - Wu</option>
+										</select>
+									</div>
+								</div>
+
+							</div>
+							<ul class="list-inline pull-right saveandcontinue">
+								<li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+								<li><button type="button" class="btn btn-info next-step" id="next2">Save and continue</button></li>
+							</ul>
+						}
+					</div>
+					<div id="step2" class="tab-pane" role="tabpanel">
+						<div id="step2" class="tab-pane active" role="tabpanel">
+							@using (Html.BeginForm("CreateReferralOptions", "Manage", null, FormMethod.Post, new { id = "createReferralData", @class = "newstudent" }))
+							{
+								@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+								@Html.Hidden("studentId", 0)
+								<div class="step11">
+
+									<div class="row voffset3">
+										<div class="col-md-2">
+											<label class="control-label" for="assignChildCount">Assign Child Count</label>
+											<select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" required data-placeholder="Choose a district...">
+												@if (Model.allDistricts != null)
+												{
+													foreach (var district in Model.allDistricts)
+													{
+														<option value="@district.USD">@district.DistrictName</option>
+													}
+												}
+											</select>
+										</div>
+										@*<div class="col-md-3">
+												<label class="control-label" for="misDistrict">Attending District</label>
+												<select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
+													@if (Model.districts != null)
+													{
+														foreach (var district in Model.districts)
+														{
+															string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
+															<option value="@district.USD" @selected>@district.DistrictName</option>
+														}
+													}
+												</select>
+											</div>*@
+										<div class="col-md-3">
+											<label class="control-label">Neighborhood School</label>
+											<select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-placeholder="Choose a building..."></select>
+										</div>
+										<div class="col-md-3">
+											<label class="control-label">Responsible School</label>
+											<select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-placeholder="Choose a building..."></select>
+										</div>
+									</div>
+									<div class="row voffset3">
+										<div class="col-md-3">
+											<div class="bootstrap-iso">
+												<div class="container-fluid">
+													<div class="row">
+														<label for="initialConsentSignature" class="control-label">Initial Evaluation Consent Signed</label>
+														<input id="initialConsentSignature" name="initialConsentSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row voffset3">
+										<div class="col-md-12">
+											<label>Enter the name(s) of all providers who will need access to the file as well as any additional information you have that may help identify the student.  Was the student previously evaluated?  Was the student previously in special ed? Previous Name(s) of the student? etc</label>
+											<textarea id="ReferralNotes" name="ReferralNotes" class="form-control" maxlength=5000 rows=10></textarea>
+										</div>
+									</div>
+
+								</div>
+								<ul class="list-inline pull-right saveandcontinue">									
+									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+									<li><button type="button" class="btn btn-info btn-info-full" id="next3">Save and continue</button></li>
+								</ul>
+							}
+						</div>
+					</div>
+					<div id="step3" class="tab-pane" role="tabpanel">
+						<h4 style="font-size:1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
+						@using (Html.BeginForm("CreateReferralContacts", "Manage", null, FormMethod.Post, new { id = "createReferralContacts", @class = "newstudent" }))
+						{
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+							@Html.Hidden("studentId", 0)
+
+							if (Model.contacts != null)
+							{
+								<div class="step33" id="student-contacts">
+									<!-- student contact area -->
+								</div>
+								<div class="row">
+									<div class="col-md-pull-10">
+										<button type="button" class="btn-circle btn-lg btn-info pull-right add-contact"><i class="glyphicon glyphicon-plus"></i></button>
+									</div>
+								</div>
+								<ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>
+									<li><button type="submit" class="btn btn-info btn-info-full" id="next4">Submit</button></li>
+								</ul>
+							}
+						}
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+<div class="ajax-loader" style="visibility: hidden;">
+	<img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+</div>
+
+
+<!-- student contact template file -->
+<div id="contact-template" style="display: none;">
+	<div class="row">
+		<div class="col-sm-4 nopadding">
+			<div class="form-group">
+				<label>First Name</label>
+				<input name="contacts[#].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
+			</div>
+		</div>
+
+		<div class="col-sm-3 nopadding">
+			<div class="form-group">
+				<label>Last Name</label>
+				<input name="contacts[#].ContactLastName" class="form-control text-box single-line" placeholder="Last Name" type="text" data-validate="true" />
+			</div>
+		</div>
+		<div class="col-sm-2 nopadding">
+			<div class="form-group">
+				<label>Relationship</label>
+				<select name="contacts[#].ContactRelationship" class="form-control text-box single-line">
+					<option value="parent">Parent</option>
+					<option value="foster">Foster Parent</option>
+					<option value="guardian">Guardian</option>
+					<option value="advocate">Education Advocate</option>
+					<option value="self">Self</option>
+					<option value="other">Other</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 nopadding">
+			<div class="form-group">
+				<label>Street Address</label>
+				<input name="contacts[#].ContactStreetAddress1" class="form-control text-box single-line" id="ContactStreetAddress1" placeholder="Address" type="text" data-validate="true" />
+			</div>
+		</div>
+		<div class="col-sm-3 nopadding">
+			<div class="form-group">
+				<label>Apt/Ste/Rm</label>
+				<input name="contacts[#].ContactStreetAddress2" class="form-control text-box single-line" id="ContactStreetAddress2" placeholder="Apartment/Suite/Room" type="text" />
+			</div>
+		</div>
+		<div class="col-sm-2 nopadding">
+			<div class="form-group">
+				<label>City</label>
+				<input name="contacts[#].ContactCity" class="form-control text-box single-line" id="ContactCity" placeholder="Contact City" type="text" data-validate="true" />
+			</div>
+		</div>
+		<div class="col-sm-1 nopadding">
+			<div class="form-group">
+				<label>State</label>
+				<select name="contacts[#].ContactState" class="form-control text-box single-line">
+					<option value="AL">AL</option>
+					<option value="AK">AK</option>
+					<option value="AZ">AZ</option>
+					<option value="AR">AR</option>
+					<option value="CA">CA</option>
+					<option value="CO">CO</option>
+					<option value="CT">CT</option>
+					<option value="DE">DE</option>
+					<option value="DC">DC</option>
+					<option value="FL">FL</option>
+					<option value="GA">GA</option>
+					<option value="HI">HI</option>
+					<option value="ID">ID</option>
+					<option value="IL">IL</option>
+					<option value="IN">IN</option>
+					<option value="IA">IA</option>
+					<option value="KS" selected="selected">KS</option>
+					<option value="KY">KY</option>
+					<option value="LA">LA</option>
+					<option value="ME">ME</option>
+					<option value="MD">MD</option>
+					<option value="MA">MA</option>
+					<option value="MI">MI</option>
+					<option value="MN">MN</option>
+					<option value="MS">MS</option>
+					<option value="MO">MO</option>
+					<option value="MT">MT</option>
+					<option value="NE">NE</option>
+					<option value="NV">NV</option>
+					<option value="NH">NH</option>
+					<option value="NJ">NJ</option>
+					<option value="NM">NM</option>
+					<option value="NY">NY</option>
+					<option value="NC">NC</option>
+					<option value="ND">ND</option>
+					<option value="OH">OH</option>
+					<option value="OK">OK</option>
+					<option value="OR">OR</option>
+					<option value="PA">PA</option>
+					<option value="RI">RI</option>
+					<option value="SC">SC</option>
+					<option value="SD">SD</option>
+					<option value="TN">TN</option>
+					<option value="TX">TX</option>
+					<option value="UT">UT</option>
+					<option value="VT">VT</option>
+					<option value="VA">VA</option>
+					<option value="WA">WA</option>
+					<option value="WV">WV</option>
+					<option value="WI">WI</option>
+					<option value="WY">WY</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-sm-2 nopadding">
+			<div class="form-group">
+				<label>Zip Code</label>
+				<input name="contacts[#].ContactZipCode" class="form-control text-box single-line" id="ContactZipCode" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" />
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dotted #45906d;">
+		<div class="col-sm-2 nopadding">
+			<div class="form-group">
+				<label>Phone Number</label>
+				<input name="contacts[#].ContactPhoneNumber" type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
+			</div>
+		</div>
+		<div class="col-sm-4 nopadding">
+			<div class="form-group">
+				<label>Email</label>
+				<input name="contacts[#].ContactEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
+			</div>
+		</div>
+		<div class="col-sm-2 nopadding">
+			<div class="form-group">
+				<input name="contacts[#].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" />
+				<label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
+			</div>
+		</div>
+		<div class="col-sm-4 nopadding">
+			<div class="form-group">
+				<button type="button" class="btn-circle btn-lg btn-info pull-right contact-button remove-contact"><i class="glyphicon glyphicon-minus"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/createreferral.js"></var>
+
+@section scripts {
+	@Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
+	@Scripts.Render("~/Scripts/fasw.transitions.js")
+	@Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
+	@Scripts.Render("~/Scripts/createreferral.js")
+}

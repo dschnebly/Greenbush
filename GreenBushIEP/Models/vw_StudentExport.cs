@@ -36,5 +36,7 @@ namespace GreenBushIEP.Models
         public bool isGBMedicaid { get; set; }
         public Nullable<System.DateTime> IEPStartDate { get; set; }
         public Nullable<System.DateTime> IEPEndDate { get; set; }
+        public bool isTestDistrict { get; set; }
+        public bool isTestUser { get; set; }
     }
 }

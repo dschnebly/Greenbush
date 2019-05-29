@@ -12,18 +12,21 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblBuilding
+    public partial class tblReferralRelationship
     {
-        public string BuildingID { get; set; }
-        public string USD { get; set; }
-        public string BuildingName { get; set; }
-        public Nullable<int> Active { get; set; }
-        public string Phone { get; set; }
+        public int RealtionshipID { get; set; }
+        public int ReferralID { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string City { get; set; }
-        public string Zip { get; set; }
-        public string Address_Mailing { get; set; }
-        public string Address_Physical { get; set; }
         public string State { get; set; }
-        public bool isTest { get; set; }
+        public string Zip { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Realtionship { get; set; }
+        public Nullable<int> PrimaryContact { get; set; }
     }
 }

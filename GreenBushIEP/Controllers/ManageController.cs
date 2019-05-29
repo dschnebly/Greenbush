@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
@@ -129,8 +130,283 @@ namespace GreenBushIEP.Controllers
             }
         }
 
-        // GET: Manage/CreateStudent
-        [HttpGet]
+		// GET: Manage/CreateReferral
+		[HttpGet]
+		public ActionResult CreateReferral()
+		{
+			StudentDetailsViewModel model = new StudentDetailsViewModel();
+			
+			model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			//model.districts =  db.tblDistricts.Where(d => d.Active == 1).ToList();
+			model.allDistricts = db.tblDistricts.Where(d => d.Active == 1).ToList();
+			model.student.DateOfBirth = DateTime.Now.AddYears(-5);
+			model.placementCode = db.tblPlacementCodes.ToList();
+			model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
+			model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
+			model.contacts.Add(new tblStudentRelationship() { Realtionship = "parent", State = "KS" });
+			model.statusCode = db.tblStatusCodes.ToList();
+			model.grades = db.tblGrades.ToList();
+
+			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+		
+			return View("~/Views/Home/CreateReferral.cshtml", model);
+		}
+
+		// POST: Manage/CreateReferral
+		[HttpPost]
+		public JsonResult CreateReferral(FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					// check that the kidsIS doesn't already exsist in the system.
+					string kidsIdStr = collection["kidsid"].ToString();
+					long kidsID = 0;
+
+					if (!string.IsNullOrEmpty(kidsIdStr))
+					{
+						kidsID = Convert.ToInt64(kidsIdStr);
+						tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+						if (exsistingStudent != null)
+						{
+							return Json(new { Result = "error", Message = "The student is already in the system. Please contact Greenbush." });
+						}
+					}
+
+					
+					// Create New					
+					tblReferralInfo studentInfo = new tblReferralInfo()
+					{
+						//UserID = student.UserID,
+						FirstName = collection["firstname"],
+						MiddleInitial = collection["middlename"],
+						LastName = collection["lastname"],
+						KIDSID = kidsID,						
+						Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+						Address1 = collection["studentStreetAddress1"].ToString(),
+						Address2 = collection["studentStreetAddress2"].ToString(),
+						City = collection["studentCity"].ToString(),
+					    State = collection["studentState"].ToString(),
+						Zip = collection["studentZipCode"].ToString(),
+						County = collection["studentCounty"].ToString(),
+						Grade = Convert.ToInt32(collection["studentGrade"]),
+						Race = collection["studentRace"].ToString(),
+						Ethicity = collection["studentEthnic"].ToString(),
+						StudentLanguage = collection["studentLanguage"].ToString(),
+						ParentLanguage = collection["parentLanguage"].ToString(),						
+						CreatedBy = submitter.UserID,
+						Create_Date = DateTime.Now,
+						Update_Date = DateTime.Now						
+					};
+
+					
+
+					if (!String.IsNullOrEmpty(collection["dob"]))
+					{
+						studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+					}
+
+
+					try
+					{
+						db.tblReferralInfoes.Add(studentInfo);
+						db.SaveChanges();
+					}
+					catch (Exception e)
+					{
+						return Json(new { Result = "error", Message = "There was an error while trying to create the referral. \n\n" + e.InnerException.ToString() });
+					}
+										
+					return Json(new { Result = "success", Message = studentInfo.ReferralID });
+				}
+				catch (DbEntityValidationException ex)
+				{
+					// Retrieve the error messages as a list of strings.
+					var errorMessages = ex.EntityValidationErrors
+							.SelectMany(x => x.ValidationErrors)
+							.Select(x => x.ErrorMessage);
+
+					// Join the list to a single string.
+					var fullErrorMessage = string.Join("; ", errorMessages);
+
+					// Combine the original exception message with the new one.
+					var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+					Console.Write(exceptionMessage);
+				}
+
+			}
+
+			return Json(new { Result = "error", Message = "There was an error while trying to create the referral. Please try again or contact your administrator." });
+		}
+
+		// POST: Manage/CreateStudent
+		[HttpPost]
+		public JsonResult CreateReferralSchoolData(FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					//tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+					int studentId = Convert.ToInt32(collection["studentId"]);
+
+					tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == studentId).FirstOrDefault();
+					if (student != null)
+					{
+						student.AssignedUSD = collection["assignChildCount"].ToString();
+						student.ResponsibleBuildingID = collection["AttendanceBuildingId"];
+						student.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
+						student.ReferralNotes = collection["ReferralNotes"];
+
+						if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+						{
+							student.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
+						}
+
+						db.SaveChanges();
+					}
+					return Json(new { Result = "success", Message = student.ReferralID });
+				}
+				catch (DbEntityValidationException ex)
+				{
+					// Retrieve the error messages as a list of strings.
+					var errorMessages = ex.EntityValidationErrors
+							.SelectMany(x => x.ValidationErrors)
+							.Select(x => x.ErrorMessage);
+
+					// Join the list to a single string.
+					var fullErrorMessage = string.Join("; ", errorMessages);
+
+					// Combine the original exception message with the new one.
+					var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+					Console.Write(exceptionMessage);
+				}
+
+			}
+
+			return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
+		}
+
+		[HttpPost]
+		public JsonResult CreateReferralContacts(FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					int studentId = Convert.ToInt32(collection["studentId"]);
+
+					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+					tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == studentId).FirstOrDefault();
+
+					int j = 0;
+					int loopCounter = 1;
+					while (++j < collection.Count - 1)
+					{
+						tblReferralRelationship contact = new tblReferralRelationship()
+						{
+							RealtionshipID = 0,
+							ReferralID = studentId,
+							FirstName = collection[j].ToString(),
+							LastName = collection[++j].ToString(),
+							Realtionship = collection[++j].ToString(),
+							Address1 = collection[++j].ToString(),
+							Address2 = collection[++j].ToString(),
+							City = collection[++j].ToString(),
+							State = collection[++j].ToString(),
+							Zip = collection[++j].ToString(),
+							Phone = collection[++j].ToString(),
+							Email = collection[++j].ToString(),
+						};
+
+						/////////////////////////////
+						// This whole if block is due to the fact that checkbox false values are NOT passed to our collection
+						// and the checkbox is the last value in the collection fields.
+						/////////////////////////////
+						if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
+						{
+							if (collection.GetKey(j) == string.Format("contacts[{0}].PrimaryContact", loopCounter))
+							{
+								contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
+							}
+							else { j--; }
+						}
+
+						try
+						{
+							db.tblReferralRelationships.Add(contact);
+							db.SaveChanges();
+						}
+						catch (Exception e)
+						{
+							return Json(new { Result = "error", Message = "There was an error while trying to add the referral's contacts. \n\n" + e.InnerException.ToString() });
+						}
+
+						loopCounter++;
+					}
+
+					// email 
+
+					List<tblUser> list = new List<tblUser>();
+					string misRole = "2"; //level 4
+					list = (from org in db.tblOrganizationMappings
+										join user in db.tblUsers
+											on org.UserID equals user.UserID
+										where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == student.AssignedUSD
+										select user).Distinct().ToList();
+
+
+					if (list != null && list.Any())
+					{	
+						
+						SmtpClient smtpClient = new SmtpClient();
+						MailMessage mailMessage = new MailMessage();
+						mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
+
+						foreach (var misUser in list)
+						{
+							if (!string.IsNullOrEmpty(misUser.Email))
+							{
+								mailMessage.To.Add(misUser.Email);
+							}
+						}
+						mailMessage.Subject = "Referral Request";
+						mailMessage.Body = "A new Referral Request has been created. Please log into the IEP Backpack to review the details. " + Environment.NewLine + Environment.NewLine + "Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance." + Environment.NewLine + Environment.NewLine + " URL: https://greenbushbackpack.org ";
+
+						smtpClient.Send(mailMessage);
+						
+					}
+
+					
+					return Json(new { Result = "success", Message = student.ReferralID });
+				}
+				catch (DbEntityValidationException ex)
+				{
+					// Retrieve the error messages as a list of strings.
+					var errorMessages = ex.EntityValidationErrors
+							.SelectMany(x => x.ValidationErrors)
+							.Select(x => x.ErrorMessage);
+
+					// Join the list to a single string.
+					var fullErrorMessage = string.Join("; ", errorMessages);
+
+					// Combine the original exception message with the new one.
+					var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+					Console.Write(exceptionMessage);
+				}
+			}
+			
+			return Json(new { Result = "error", Message = "There was an error while trying to create the referral's contacts. Please try again or contact your administrator." });
+		}
+				
+		// GET: Manage/CreateStudent
+		[HttpGet]
         public ActionResult CreateStudent()
         {
             StudentDetailsViewModel model = new StudentDetailsViewModel();
