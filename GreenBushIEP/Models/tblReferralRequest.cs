@@ -12,22 +12,15 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblReferralRelationship
+    public partial class tblReferralRequest
     {
-        public int RealtionshipID { get; set; }
+        public int ReferalRequestID { get; set; }
+        public int UserID_Requster { get; set; }
+        public int UserID_District { get; set; }
         public int ReferralID { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Realtionship { get; set; }
-        public Nullable<int> PrimaryContact { get; set; }
+        public bool Complete { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     
         public virtual tblReferralInfo tblReferralInfo { get; set; }
     }

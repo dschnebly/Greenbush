@@ -439,6 +439,9 @@
     <Compile Include="Models\tblReferralRelationship.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblReferralRequest.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblRole.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -779,6 +782,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\createreferral.js" />
+    <Content Include="Scripts\editreferral.js" />
     <Content Include="Scripts\createstudent.js" />
     <Content Include="Scripts\editable.js" />
     <Content Include="Reports\IndividualizedEducationProgramDataSet1.xsc">
@@ -942,6 +946,8 @@
     <Content Include="Views\Form\TeamEvaluation.cshtml" />
     <Content Include="Views\Form\ConferenceSummary.cshtml" />
     <Content Include="Views\Home\CreateReferral.cshtml" />
+    <Content Include="Views\Home\Referrals.cshtml" />
+    <Content Include="Views\Home\EditReferral.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

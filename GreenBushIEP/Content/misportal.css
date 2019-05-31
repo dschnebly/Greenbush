@@ -252,7 +252,7 @@ hr {
             display: none;
         }
 
-#mySettings, #add-system-user, #add-student-user, #reports {
+#mySettings, #add-system-user, #add-student-user, #reports, #referrals {
     margin-left: 15px;
 }
 

@@ -1,0 +1,64 @@
+﻿
+@{
+	ViewBag.Title = "Referrals";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section stylesheets {
+
+}
+
+<div class="modal-header">
+    <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-address-book" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Referrals</h4>
+</div>
+<div class="alert alert-danger" id="alertMessage" role="alert" style="display:none;">
+    <strong class="moreinfo">Oh snap!</strong>
+</div>
+<div class="modal-body">  
+        <div style="padding-left:5px;padding-top:5px;">
+            <table class="table" style="width:90%" id="tblArchives">
+                <thead>
+                    <tr>
+                        <th class="date">Date</th>
+                        <th>Complete</th>
+						<th>KIDSID</th>
+						<th>Last Name</th>
+						<th>First Name</th>
+						<th>Additional Information</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+						if (ViewBag.Referrals != null)
+						{
+							foreach (var referral in ViewBag.Referrals as List<GreenBushIEP.Models.ReferralViewModel>)
+							{
+                            <tr>
+
+                                <td class="name truncate">@referral.submitDate</td>
+								<td class="name truncate">@(referral.isComplete ? "Yes" : "No")</td>
+								<td class="name truncate">@referral.kidsId</td>
+                                <td class="name truncate">@referral.lastName</td>
+								<td class="name truncate">@referral.firstName</td>
+								<td class="name truncate">@referral.notes</td>
+                                <td class="date pull-right">
+								<a title="View" class="btn btn-info pull-right edit-btn" role="button" href="/Manage/EditReferral/@referral.referralId" data-toggle="tooltip" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+								
+								</td>
+                            </tr>							
+								}
+							}
+					}
+                </tbody>
+            </table>
+        </div>
+      
+
+    <!-- loading the file even though it's an ajax call -->
+    @*<var data-reload="true" data-src="/Scripts/studentForms.js"></var>*@
+
+    @section scripts {
+        @*@Scripts.Render("~/Scripts/studentForms.js")*@
+    }
+</div>

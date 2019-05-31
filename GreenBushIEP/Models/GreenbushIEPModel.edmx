@@ -757,6 +757,18 @@
           <Property Name="Realtionship" Type="nvarchar" MaxLength="10" />
           <Property Name="PrimaryContact" Type="int" />
         </EntityType>
+        <EntityType Name="tblReferralRequests">
+          <Key>
+            <PropertyRef Name="ReferalRequestID" />
+          </Key>
+          <Property Name="ReferalRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID_Requster" Type="int" Nullable="false" />
+          <Property Name="UserID_District" Type="int" Nullable="false" />
+          <Property Name="ReferralID" Type="int" Nullable="false" />
+          <Property Name="Complete" Type="bit" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblRoles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -1178,6 +1190,30 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblReferralRelationships_to_tblReferralInfo">
+          <End Role="tblReferralInfo" Type="Self.tblReferralInfo" Multiplicity="1" />
+          <End Role="tblReferralRelationships" Type="Self.tblReferralRelationships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRelationships">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblReferralRequests_to_tblReferralInfo">
+          <End Role="tblReferralInfo" Type="Self.tblReferralInfo" Multiplicity="1" />
+          <End Role="tblReferralRequests" Type="Self.tblReferralRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRequests">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblServices_GoalID">
           <End Role="tblGoals" Type="Self.tblGoals" Multiplicity="1" />
           <End Role="tblServiceGoals" Type="Self.tblServiceGoals" Multiplicity="*" />
@@ -1367,6 +1403,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferralInfo" EntityType="Self.tblReferralInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferralRelationships" EntityType="Self.tblReferralRelationships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReferralRequests" EntityType="Self.tblReferralRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceFrequency" EntityType="Self.tblServiceFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
@@ -1485,6 +1522,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="Self.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProviders" EntitySet="tblProviders" />
             <End Role="tblProviderDistricts" EntitySet="tblProviderDistricts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRelationships_to_tblReferralInfo" Association="Self.FK_tblReferralRelationships_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfo" />
+            <End Role="tblReferralRelationships" EntitySet="tblReferralRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRequests_to_tblReferralInfo" Association="Self.FK_tblReferralRequests_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfo" />
+            <End Role="tblReferralRequests" EntitySet="tblReferralRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_tblServices_GoalID" Association="Self.FK_tblServices_GoalID">
             <End Role="tblGoals" EntitySet="tblGoals" />
@@ -1688,6 +1733,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </FunctionImport>
           <EntitySet Name="tblReferralInfoes" EntityType="IndividualizedEducationProgramModel.tblReferralInfo" />
           <EntitySet Name="tblReferralRelationships" EntityType="IndividualizedEducationProgramModel.tblReferralRelationship" />
+          <EntitySet Name="tblReferralRequests" EntityType="IndividualizedEducationProgramModel.tblReferralRequest" />
+          <AssociationSet Name="FK_tblReferralRelationships_to_tblReferralInfo" Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfoes" />
+            <End Role="tblReferralRelationship" EntitySet="tblReferralRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRequests_to_tblReferralInfo" Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfoes" />
+            <End Role="tblReferralRequest" EntitySet="tblReferralRequests" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3109,6 +3163,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="tblReferralRelationships" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRelationship" />
+          <NavigationProperty Name="tblReferralRequests" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRequest" />
         </EntityType>
         <EntityType Name="tblReferralRelationship">
           <Key>
@@ -3128,7 +3184,45 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Realtionship" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PrimaryContact" Type="Int32" />
+          <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralRelationship" ToRole="tblReferralInfo" />
         </EntityType>
+        <EntityType Name="tblReferralRequest">
+          <Key>
+            <PropertyRef Name="ReferalRequestID" />
+          </Key>
+          <Property Name="ReferalRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID_Requster" Type="Int32" Nullable="false" />
+          <Property Name="UserID_District" Type="Int32" Nullable="false" />
+          <Property Name="ReferralID" Type="Int32" Nullable="false" />
+          <Property Name="Complete" Type="Boolean" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralRequest" ToRole="tblReferralInfo" />
+        </EntityType>
+        <Association Name="FK_tblReferralRelationships_to_tblReferralInfo">
+          <End Type="IndividualizedEducationProgramModel.tblReferralInfo" Role="tblReferralInfo" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblReferralRelationship" Role="tblReferralRelationship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRelationship">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblReferralRequests_to_tblReferralInfo">
+          <End Type="IndividualizedEducationProgramModel.tblReferralInfo" Role="tblReferralInfo" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblReferralRequest" Role="tblReferralRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRequest">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4506,6 +4600,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ReferralID" ColumnName="ReferralID" />
                 <ScalarProperty Name="RealtionshipID" ColumnName="RealtionshipID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReferralRequests">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralRequest">
+              <MappingFragment StoreEntitySet="tblReferralRequests">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Complete" ColumnName="Complete" />
+                <ScalarProperty Name="ReferralID" ColumnName="ReferralID" />
+                <ScalarProperty Name="UserID_District" ColumnName="UserID_District" />
+                <ScalarProperty Name="UserID_Requster" ColumnName="UserID_Requster" />
+                <ScalarProperty Name="ReferalRequestID" ColumnName="ReferalRequestID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

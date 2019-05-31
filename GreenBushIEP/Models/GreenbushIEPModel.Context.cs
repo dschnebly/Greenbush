@@ -93,6 +93,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
         public virtual DbSet<tblReferralInfo> tblReferralInfoes { get; set; }
         public virtual DbSet<tblReferralRelationship> tblReferralRelationships { get; set; }
+        public virtual DbSet<tblReferralRequest> tblReferralRequests { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

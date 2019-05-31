@@ -715,13 +715,13 @@
 								</span>
 							</a>
 						</li>
-						@*<li role="presentation" class="disabled">
+						<li role="presentation" class="disabled">
 								<a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
 									<span class="round-tab">
 										<i class="glyphicon glyphicon-ok"></i>
 									</span>
 								</a>
-							</li>*@
+							</li>
 					</ul>
 				</div>
 				<div class="tab-content">
@@ -1165,11 +1165,26 @@
 									</div>
 								</div>
 								<ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
-									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-									<li><button type="submit" class="btn btn-info btn-info-full" id="next4">Submit</button></li>
+									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>									
+									<li><button type="button" class="btn btn-info btn-info-full" id="next4">Save and continue</button></li>
 								</ul>
 							}
 						}
+					</div>
+					<div id="complete" class="tab-pane" role="tabpanel">
+						<h2 style="margin-bottom: 1.5em;">Referral Summary</h2>
+						@using (Html.BeginForm("SubmitReferral", "Manage", null, FormMethod.Post, new { id = "submitReferral", onsubmit = "return false;" }))
+						{
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+							@Html.Hidden("studentId", 0)
+
+							<p id="pSummary"></p>							
+						}
+
+								<ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>									
+                                    <li><button type="button" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;">Submit Referral</button></li>
+								</ul>
 					</div>
 					<div class="clearfix"></div>
 				</div>

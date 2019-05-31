@@ -14,6 +14,13 @@ namespace GreenBushIEP.Models
     
     public partial class tblReferralInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblReferralInfo()
+        {
+            this.tblReferralRelationships = new HashSet<tblReferralRelationship>();
+            this.tblReferralRequests = new HashSet<tblReferralRequest>();
+        }
+    
         public int ReferralID { get; set; }
         public Nullable<int> UserID { get; set; }
         public string FirstName { get; set; }
@@ -42,5 +49,10 @@ namespace GreenBushIEP.Models
         public System.DateTime Update_Date { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblReferralRelationship> tblReferralRelationships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblReferralRequest> tblReferralRequests { get; set; }
     }
 }
