@@ -1042,6 +1042,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="isTestUser" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleAccommodationFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_ModuleAccommodationFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="NeedMetByAccommodation" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="NeedMetByAccommodation" Type="bit" Nullable="false" />
+          <Property Name="Module" Type="varchar" MaxLength="13" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ModuleGoalFlags">
           <Key>
@@ -1050,6 +1062,20 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFl
           </Key>
           <Property Name="IEPid" Type="int" Nullable="false" />
           <Property Name="NeedMetByGoal" Type="int" />
+          <Property Name="Module" Type="varchar" MaxLength="13" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleOtherFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_ModuleOtherFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="NeedMetByOther" />
+            <PropertyRef Name="NeedMetByOtherDescription" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="NeedMetByOther" Type="bit" Nullable="false" />
+          <Property Name="NeedMetByOtherDescription" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="Module" Type="varchar" MaxLength="13" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1437,12 +1463,27 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_GoalExport].[isTestUser] AS [isTestUser]
     FROM [dbo].[vw_GoalExport] AS [vw_GoalExport]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="Self.vw_ModuleAccommodationFlags" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ModuleAccommodationFlags].[IEPid] AS [IEPid], 
+    [vw_ModuleAccommodationFlags].[NeedMetByAccommodation] AS [NeedMetByAccommodation], 
+    [vw_ModuleAccommodationFlags].[Module] AS [Module]
+    FROM [dbo].[vw_ModuleAccommodationFlags] AS [vw_ModuleAccommodationFlags]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="Self.vw_ModuleGoalFlags" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_ModuleGoalFlags].[IEPid] AS [IEPid], 
     [vw_ModuleGoalFlags].[NeedMetByGoal] AS [NeedMetByGoal], 
     [vw_ModuleGoalFlags].[Module] AS [Module]
     FROM [dbo].[vw_ModuleGoalFlags] AS [vw_ModuleGoalFlags]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_ModuleOtherFlags" EntityType="Self.vw_ModuleOtherFlags" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ModuleOtherFlags].[IEPid] AS [IEPid], 
+    [vw_ModuleOtherFlags].[NeedMetByOther] AS [NeedMetByOther], 
+    [vw_ModuleOtherFlags].[NeedMetByOtherDescription] AS [NeedMetByOtherDescription], 
+    [vw_ModuleOtherFlags].[Module] AS [Module]
+    FROM [dbo].[vw_ModuleOtherFlags] AS [vw_ModuleOtherFlags]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_PrimaryDisabilities" EntityType="Self.vw_PrimaryDisabilities" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1742,6 +1783,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <End Role="tblReferralInfo" EntitySet="tblReferralInfoes" />
             <End Role="tblReferralRequest" EntitySet="tblReferralRequests" />
           </AssociationSet>
+          <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" />
+          <EntitySet Name="vw_ModuleOtherFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleOtherFlags" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3223,6 +3266,28 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_ModuleAccommodationFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="NeedMetByAccommodation" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="NeedMetByAccommodation" Type="Boolean" Nullable="false" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_ModuleOtherFlags">
+          <Key>
+            <PropertyRef Name="IEPid" />
+            <PropertyRef Name="NeedMetByOther" />
+            <PropertyRef Name="NeedMetByOtherDescription" />
+            <PropertyRef Name="Module" />
+          </Key>
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="NeedMetByOther" Type="Boolean" Nullable="false" />
+          <Property Name="NeedMetByOtherDescription" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4613,6 +4678,25 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="UserID_District" ColumnName="UserID_District" />
                 <ScalarProperty Name="UserID_Requster" ColumnName="UserID_Requster" />
                 <ScalarProperty Name="ReferalRequestID" ColumnName="ReferalRequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ModuleAccommodationFlags">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags">
+              <MappingFragment StoreEntitySet="vw_ModuleAccommodationFlags">
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="NeedMetByAccommodation" ColumnName="NeedMetByAccommodation" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_ModuleOtherFlags">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ModuleOtherFlags">
+              <MappingFragment StoreEntitySet="vw_ModuleOtherFlags">
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
+                <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

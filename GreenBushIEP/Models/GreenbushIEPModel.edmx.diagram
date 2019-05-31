@@ -79,6 +79,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblReferralRequest" Width="1.5" PointX="27.625" PointY="19.875" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" Width="1.5" PointX="26.375" PointY="3.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleOtherFlags" Width="1.5" PointX="26.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
