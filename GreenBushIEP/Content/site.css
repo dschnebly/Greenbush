@@ -578,6 +578,14 @@ tbody > tr {
     z-index: 99999 !important;
 }
 
+.text-success {	
+	color: rgb(25, 204, 25);
+}
+
+.text-danger {	
+	color: red;
+}
+
 /*==================================================
 =            Teacher's Students List               =
 ==================================================*/

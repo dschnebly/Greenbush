@@ -37,7 +37,15 @@
                             <tr>
 
                                 <td class="name truncate">@referral.submitDate</td>
-								<td class="name truncate">@(referral.isComplete ? "Yes" : "No")</td>
+								<td class="name truncate">
+								@if (referral.isComplete)
+								{
+									<text><span class='text-success'>Yes</span></text>
+								}
+								else
+								{
+									<text><span class='text-danger'>No</span></text>
+								}</td>
 								<td class="name truncate">@referral.kidsId</td>
                                 <td class="name truncate">@referral.lastName</td>
 								<td class="name truncate">@referral.firstName</td>

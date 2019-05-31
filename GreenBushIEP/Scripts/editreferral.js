@@ -278,7 +278,9 @@ $("#next3").on("click", function () {
                     $($active).next().find('a[data-toggle="tab"]').click();
 
                     // add student id to the avatar form here.
-                    $("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);
@@ -306,7 +308,11 @@ $("#next4").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);
@@ -334,7 +340,9 @@ $("#next5").on("click", function () {
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
                     $($active).next().find('a[data-toggle="tab"]').click();
-
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);
@@ -363,7 +371,10 @@ $("#next6").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+					$($active).next().find('a[data-toggle="tab"]').click();
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);
@@ -392,7 +403,10 @@ $("#next7").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+					$($active).next().find('a[data-toggle="tab"]').click();
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);

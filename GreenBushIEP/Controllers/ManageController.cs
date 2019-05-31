@@ -497,7 +497,7 @@ namespace GreenBushIEP.Controllers
 
 					int j = 0;
 					int loopCounter = 1;
-					while (++j < collection.Count - 1)
+					while (++j < collection.Count - 2)
 					{
 						tblStudentRelationship contact = new tblStudentRelationship()
 						{

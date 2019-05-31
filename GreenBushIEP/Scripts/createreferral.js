@@ -31,11 +31,6 @@ function init() {
         width: "100%"
     });
 
-    $("#submitForm").on('click', function () {
-        document.forms[3].submit();
-    });
-
-    //$('#buildingIds').hide();
     var link = document.createElement("a");
     link.href = "/Scripts/bootstrap-mutliselect.js";
 
@@ -124,9 +119,7 @@ function init() {
                 $(".info").hide();
             }
         });
-    });
-
-   
+    });	  
 
     function nextTab(elem) {
         $(elem).next().find('a[data-toggle="tab"]').click();
@@ -135,7 +128,6 @@ function init() {
         $(elem).prev().find('a[data-toggle="tab"]').click();
     }
 }
-
 
 function tabValidates() {
     var validates = true;
@@ -173,7 +165,6 @@ function initContacts() {
             });
         });
     });
-
 }
 
 $("#next2").on("click", function () {
@@ -197,7 +188,8 @@ $("#next2").on("click", function () {
                     // create a new student id and add it to the contacts form here.
 					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-                    $("form:eq(3)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(4)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);
@@ -227,8 +219,7 @@ $("#next3").on("click", function () {
 					var $active = $('.wizard .nav-tabs li.active');
 					$active.next().removeClass('disabled');
 					$($active).next().find('a[data-toggle="tab"]').click();
-
-					// add student id to the avatar form here.
+					
 					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
@@ -269,9 +260,7 @@ $("#next4").on("click", function () {
 					$("form:eq(4)").find("input[name='studentId']").val(data.Message);
 
 					$("#pSummary").html(data.Summary);
-					//var returnUrl = '/Home/Portal';
-					//window.location = returnUrl;
-
+					
                 } else {
 
                     alert(data.Message);
