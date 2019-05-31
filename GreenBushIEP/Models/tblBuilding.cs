@@ -24,5 +24,6 @@ namespace GreenBushIEP.Models
         public string Address_Mailing { get; set; }
         public string Address_Physical { get; set; }
         public string State { get; set; }
+        public bool isTest { get; set; }
     }
 }

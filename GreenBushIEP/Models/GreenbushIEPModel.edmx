@@ -163,6 +163,7 @@
           <Property Name="Address_Mailing" Type="nvarchar" MaxLength="250" />
           <Property Name="Address_Physical" Type="nvarchar" MaxLength="250" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="isTest" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendar">
           <Key>
@@ -270,6 +271,7 @@
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
           <Property Name="KSDECode" Type="nvarchar" MaxLength="5" />
+          <Property Name="isTest" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblEvaluationProcedures">
           <Key>
@@ -703,6 +705,70 @@
           <Property Name="ProviderCode" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblReferralInfo">
+          <Key>
+            <PropertyRef Name="ReferralID" />
+          </Key>
+          <Property Name="ReferralID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MiddleInitial" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="255" />
+          <Property Name="City" Type="nvarchar" MaxLength="255" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="KIDSID" Type="bigint" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+          <Property Name="County" Type="char" MaxLength="2" />
+          <Property Name="Race" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ethicity" Type="nvarchar" MaxLength="50" />
+          <Property Name="StudentLanguage" Type="nvarchar" MaxLength="10" />
+          <Property Name="ParentLanguage" Type="nvarchar" MaxLength="10" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="AssignedUSD" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsibleBuildingID" Type="nvarchar" MaxLength="50" />
+          <Property Name="NeighborhoodBuildingID" Type="nvarchar" MaxLength="50" />
+          <Property Name="InitialEvalConsentSigned" Type="datetime" />
+          <Property Name="ReferralNotes" Type="nvarchar(max)" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblReferralRelationships">
+          <Key>
+            <PropertyRef Name="RealtionshipID" />
+          </Key>
+          <Property Name="RealtionshipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferralID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="255" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Realtionship" Type="nvarchar" MaxLength="10" />
+          <Property Name="PrimaryContact" Type="int" />
+        </EntityType>
+        <EntityType Name="tblReferralRequests">
+          <Key>
+            <PropertyRef Name="ReferalRequestID" />
+          </Key>
+          <Property Name="ReferalRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID_Requster" Type="int" Nullable="false" />
+          <Property Name="UserID_District" Type="int" Nullable="false" />
+          <Property Name="ReferralID" Type="int" Nullable="false" />
+          <Property Name="Complete" Type="bit" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblRoles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -931,6 +997,7 @@
           <Property Name="Salt" Type="varbinary" MaxLength="50" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="isTest" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -955,6 +1022,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Service_Billable" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="ServiceID" Type="int" Nullable="false" />
           <Property Name="KIDSID" Type="nvarchar" MaxLength="4000" />
@@ -969,6 +1038,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="Location_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Service_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
+          <Property Name="isTestDistrict" Type="bit" Nullable="false" />
+          <Property Name="isTestUser" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1014,6 +1085,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Export" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="AssignedUSD" Type="nvarchar" MaxLength="50" />
           <Property Name="KIDSID" Type="nvarchar" MaxLength="10" />
@@ -1036,6 +1109,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
           <Property Name="Location_Billable" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="Export" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
+          <Property Name="isTestDistrict" Type="bit" Nullable="false" />
+          <Property Name="isTestUser" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1051,6 +1126,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Service_Billable" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="StudentNumber" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
@@ -1074,6 +1151,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
           <Property Name="IEPStartDate" Type="datetime" />
           <Property Name="IEPEndDate" Type="datetime" />
+          <Property Name="isTestDistrict" Type="bit" Nullable="false" />
+          <Property Name="isTestUser" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="0..1" />
@@ -1108,6 +1187,30 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             </Principal>
             <Dependent Role="tblProviderDistricts">
               <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblReferralRelationships_to_tblReferralInfo">
+          <End Role="tblReferralInfo" Type="Self.tblReferralInfo" Multiplicity="1" />
+          <End Role="tblReferralRelationships" Type="Self.tblReferralRelationships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRelationships">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblReferralRequests_to_tblReferralInfo">
+          <End Role="tblReferralInfo" Type="Self.tblReferralInfo" Multiplicity="1" />
+          <End Role="tblReferralRequests" Type="Self.tblReferralRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRequests">
+              <PropertyRef Name="ReferralID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1180,18 +1283,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="string_split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
-          <Parameter Name="DELIMITER" Type="char" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="idx" Type="smallint" />
-                <Property Name="value" Type="varchar" MaxLength="8000" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <Function Name="uf_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
           <Parameter Name="DELIMITER" Type="char" Mode="In" />
@@ -1310,6 +1401,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblPlacementCodes" EntityType="Self.tblPlacementCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviderDistricts" EntityType="Self.tblProviderDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReferralInfo" EntityType="Self.tblReferralInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReferralRelationships" EntityType="Self.tblReferralRelationships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReferralRequests" EntityType="Self.tblReferralRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRoles" EntityType="Self.tblRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceFrequency" EntityType="Self.tblServiceFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblServiceGoals" EntityType="Self.tblServiceGoals" Schema="dbo" store:Type="Tables" />
@@ -1338,7 +1432,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_GoalExport].[ServiceType_Billable] AS [ServiceType_Billable], 
     [vw_GoalExport].[Location_Billable] AS [Location_Billable], 
     [vw_GoalExport].[Service_Billable] AS [Service_Billable], 
-    [vw_GoalExport].[isGBMedicaid] AS [isGBMedicaid]
+    [vw_GoalExport].[isGBMedicaid] AS [isGBMedicaid], 
+    [vw_GoalExport].[isTestDistrict] AS [isTestDistrict], 
+    [vw_GoalExport].[isTestUser] AS [isTestUser]
     FROM [dbo].[vw_GoalExport] AS [vw_GoalExport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="Self.vw_ModuleGoalFlags" store:Type="Views" store:Schema="dbo">
@@ -1382,7 +1478,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_ServiceExport].[ServiceType_Billable] AS [ServiceType_Billable], 
     [vw_ServiceExport].[Location_Billable] AS [Location_Billable], 
     [vw_ServiceExport].[Export] AS [Export], 
-    [vw_ServiceExport].[isGBMedicaid] AS [isGBMedicaid]
+    [vw_ServiceExport].[isGBMedicaid] AS [isGBMedicaid], 
+    [vw_ServiceExport].[isTestDistrict] AS [isTestDistrict], 
+    [vw_ServiceExport].[isTestUser] AS [isTestUser]
     FROM [dbo].[vw_ServiceExport] AS [vw_ServiceExport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_StudentExport" EntityType="Self.vw_StudentExport" store:Type="Views" store:Schema="dbo">
@@ -1408,7 +1506,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_StudentExport].[Service_Billable] AS [Service_Billable], 
     [vw_StudentExport].[isGBMedicaid] AS [isGBMedicaid], 
     [vw_StudentExport].[IEPStartDate] AS [IEPStartDate], 
-    [vw_StudentExport].[IEPEndDate] AS [IEPEndDate]
+    [vw_StudentExport].[IEPEndDate] AS [IEPEndDate], 
+    [vw_StudentExport].[isTestDistrict] AS [isTestDistrict], 
+    [vw_StudentExport].[isTestUser] AS [isTestUser]
     FROM [dbo].[vw_StudentExport] AS [vw_StudentExport]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
@@ -1422,6 +1522,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="Self.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProviders" EntitySet="tblProviders" />
             <End Role="tblProviderDistricts" EntitySet="tblProviderDistricts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRelationships_to_tblReferralInfo" Association="Self.FK_tblReferralRelationships_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfo" />
+            <End Role="tblReferralRelationships" EntitySet="tblReferralRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRequests_to_tblReferralInfo" Association="Self.FK_tblReferralRequests_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfo" />
+            <End Role="tblReferralRequests" EntitySet="tblReferralRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_tblServices_GoalID" Association="Self.FK_tblServices_GoalID">
             <End Role="tblGoals" EntitySet="tblGoals" />
@@ -1623,6 +1731,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
             <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="tblReferralInfoes" EntityType="IndividualizedEducationProgramModel.tblReferralInfo" />
+          <EntitySet Name="tblReferralRelationships" EntityType="IndividualizedEducationProgramModel.tblReferralRelationship" />
+          <EntitySet Name="tblReferralRequests" EntityType="IndividualizedEducationProgramModel.tblReferralRequest" />
+          <AssociationSet Name="FK_tblReferralRelationships_to_tblReferralInfo" Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfoes" />
+            <End Role="tblReferralRelationship" EntitySet="tblReferralRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblReferralRequests_to_tblReferralInfo" Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo">
+            <End Role="tblReferralInfo" EntitySet="tblReferralInfoes" />
+            <End Role="tblReferralRequest" EntitySet="tblReferralRequests" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1932,6 +2051,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Address_Mailing" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Address_Physical" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isTest" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -2657,6 +2777,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Service_Billable" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="ServiceID" Type="Int32" Nullable="false" />
           <Property Name="KIDSID" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
@@ -2671,6 +2793,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Location_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Service_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
+          <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
+          <Property Name="isTestUser" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_ModuleGoalFlags">
           <Key>
@@ -2708,6 +2832,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Export" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="KIDSID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -2730,6 +2856,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Location_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="Export" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
+          <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
+          <Property Name="isTestUser" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_StudentExport">
           <Key>
@@ -2743,6 +2871,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <PropertyRef Name="Location_Billable" />
             <PropertyRef Name="Service_Billable" />
             <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
           </Key>
           <Property Name="StudentNumber" Type="Int32" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -2766,6 +2896,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="IEPStartDate" Type="DateTime" Precision="3" />
           <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
+          <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
+          <Property Name="isTestUser" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -2793,6 +2925,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="Salt" Type="Binary" MaxLength="50" FixedLength="false" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="isTest" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblGrade">
           <Key>
@@ -2859,6 +2992,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="KSDECode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblContacts" Relationship="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" FromRole="tblDistrict" ToRole="tblContact" />
+          <Property Name="isTest" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblContacts_tblDistricts_USD">
           <End Type="IndividualizedEducationProgramModel.tblDistrict" Role="tblDistrict" Multiplicity="1" />
@@ -2997,6 +3131,98 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Teachers" Nullable="true" />
           <Property Type="String" Name="StudentMiddleName" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="tblReferralInfo">
+          <Key>
+            <PropertyRef Name="ReferralID" />
+          </Key>
+          <Property Name="ReferralID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleInitial" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="KIDSID" Type="Int64" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="County" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Race" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ethicity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StudentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsibleBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NeighborhoodBuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InitialEvalConsentSigned" Type="DateTime" Precision="3" />
+          <Property Name="ReferralNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="tblReferralRelationships" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRelationship" />
+          <NavigationProperty Name="tblReferralRequests" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRequest" />
+        </EntityType>
+        <EntityType Name="tblReferralRelationship">
+          <Key>
+            <PropertyRef Name="RealtionshipID" />
+          </Key>
+          <Property Name="RealtionshipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferralID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Realtionship" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryContact" Type="Int32" />
+          <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralRelationship" ToRole="tblReferralInfo" />
+        </EntityType>
+        <EntityType Name="tblReferralRequest">
+          <Key>
+            <PropertyRef Name="ReferalRequestID" />
+          </Key>
+          <Property Name="ReferalRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID_Requster" Type="Int32" Nullable="false" />
+          <Property Name="UserID_District" Type="Int32" Nullable="false" />
+          <Property Name="ReferralID" Type="Int32" Nullable="false" />
+          <Property Name="Complete" Type="Boolean" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralRequest" ToRole="tblReferralInfo" />
+        </EntityType>
+        <Association Name="FK_tblReferralRelationships_to_tblReferralInfo">
+          <End Type="IndividualizedEducationProgramModel.tblReferralInfo" Role="tblReferralInfo" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblReferralRelationship" Role="tblReferralRelationship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRelationship">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblReferralRequests_to_tblReferralInfo">
+          <End Type="IndividualizedEducationProgramModel.tblReferralInfo" Role="tblReferralInfo" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tblReferralRequest" Role="tblReferralRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblReferralInfo">
+              <PropertyRef Name="ReferralID" />
+            </Principal>
+            <Dependent Role="tblReferralRequest">
+              <PropertyRef Name="ReferralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3285,6 +3511,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblBuildings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuilding">
               <MappingFragment StoreEntitySet="tblBuildings">
+                <ScalarProperty Name="isTest" ColumnName="isTest" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Address_Physical" ColumnName="Address_Physical" />
                 <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
@@ -4010,6 +4237,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="vw_GoalExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_GoalExport">
               <MappingFragment StoreEntitySet="vw_GoalExport">
+                <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
+                <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
                 <ScalarProperty Name="Service_Billable" ColumnName="Service_Billable" />
                 <ScalarProperty Name="Location_Billable" ColumnName="Location_Billable" />
@@ -4054,6 +4283,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="vw_ServiceExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ServiceExport">
               <MappingFragment StoreEntitySet="vw_ServiceExport">
+                <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
+                <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
                 <ScalarProperty Name="Export" ColumnName="Export" />
                 <ScalarProperty Name="Location_Billable" ColumnName="Location_Billable" />
@@ -4081,6 +4312,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="vw_StudentExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_StudentExport">
               <MappingFragment StoreEntitySet="vw_StudentExport">
+                <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
+                <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="IEPEndDate" ColumnName="IEPEndDate" />
                 <ScalarProperty Name="IEPStartDate" ColumnName="IEPStartDate" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
@@ -4109,6 +4342,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblUser">
               <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="isTest" ColumnName="isTest" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
@@ -4196,6 +4430,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblDistricts">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblDistrict">
               <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="isTest" ColumnName="isTest" />
                 <ScalarProperty Name="KSDECode" ColumnName="KSDECode" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
                 <ScalarProperty Name="State" ColumnName="State" />
@@ -4264,14 +4499,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="string_split" FunctionName="IndividualizedEducationProgramModel.Store.string_split">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.string_split_Result">
-                <ScalarProperty Name="idx" ColumnName="idx" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="tblFormArchives">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
               <MappingFragment StoreEntitySet="tblFormArchive">
@@ -4322,6 +4549,73 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblReferralInfoes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralInfo">
+              <MappingFragment StoreEntitySet="tblReferralInfo">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ReferralNotes" ColumnName="ReferralNotes" />
+                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
+                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
+                <ScalarProperty Name="ResponsibleBuildingID" ColumnName="ResponsibleBuildingID" />
+                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
+                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
+                <ScalarProperty Name="Ethicity" ColumnName="Ethicity" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReferralID" ColumnName="ReferralID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReferralRelationships">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralRelationship">
+              <MappingFragment StoreEntitySet="tblReferralRelationships">
+                <ScalarProperty Name="PrimaryContact" ColumnName="PrimaryContact" />
+                <ScalarProperty Name="Realtionship" ColumnName="Realtionship" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ReferralID" ColumnName="ReferralID" />
+                <ScalarProperty Name="RealtionshipID" ColumnName="RealtionshipID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReferralRequests">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralRequest">
+              <MappingFragment StoreEntitySet="tblReferralRequests">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Complete" ColumnName="Complete" />
+                <ScalarProperty Name="ReferralID" ColumnName="ReferralID" />
+                <ScalarProperty Name="UserID_District" ColumnName="UserID_District" />
+                <ScalarProperty Name="UserID_Requster" ColumnName="UserID_Requster" />
+                <ScalarProperty Name="ReferalRequestID" ColumnName="ReferalRequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
