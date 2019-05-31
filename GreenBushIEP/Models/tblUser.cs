@@ -36,6 +36,5 @@ namespace GreenBushIEP.Models
         public byte[] Salt { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public bool isTest { get; set; }
     }
 }

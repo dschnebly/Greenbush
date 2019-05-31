@@ -28,7 +28,6 @@ namespace GreenBushIEP.Models
         public string State { get; set; }
         public bool isGBMedicaid { get; set; }
         public string KSDECode { get; set; }
-        public bool isTest { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblContact> tblContacts { get; set; }

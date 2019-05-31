@@ -74,13 +74,6 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblContacts_tblDistricts_USD" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblModule" Width="1.5" PointX="25.375" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormArchive" Width="1.5" PointX="5.375" PointY="25.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblReferralInfo" Width="1.5" PointX="25.375" PointY="18.375" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblReferralRelationship" Width="1.5" PointX="27.625" PointY="18.125" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblReferralRequest" Width="1.5" PointX="27.625" PointY="22.875" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" Width="1.5" PointX="26.375" PointY="3.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleOtherFlags" Width="1.5" PointX="26.375" PointY="6.75" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" />
-        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
