@@ -712,7 +712,7 @@
           <Property Name="ReferralID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="MiddleInitial" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MiddleInitial" Type="nvarchar" MaxLength="255" />
           <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Address1" Type="nvarchar" MaxLength="255" />
           <Property Name="Address2" Type="nvarchar" MaxLength="255" />
@@ -3138,7 +3138,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ReferralID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleInitial" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleInitial" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />

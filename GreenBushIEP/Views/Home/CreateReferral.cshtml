@@ -767,7 +767,7 @@
 										@Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
 									</div>
 									<div class="col-md-4">
-										<label class="control-label required" for="middlename">Middle Name</label>
+										<label class="control-label" for="middlename">Middle Name</label>
 										@Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name" } })
 										@Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
 									</div>
@@ -781,7 +781,7 @@
 									<div class="col-sm-4">
 										<div class="form-group">
 											<label for="studentStreetAddress1">Student's Street Address</label>
-											<input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text" data-validate="true" />
+											<input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text"  />
 										</div>
 									</div>
 									<div class="col-sm-3">
@@ -793,7 +793,7 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label for="studentCity">City</label>
-											<input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" data-validate="true" />
+											<input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" />
 										</div>
 									</div>
 									<div class="col-sm-1">
