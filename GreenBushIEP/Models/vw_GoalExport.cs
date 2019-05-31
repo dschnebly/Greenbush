@@ -27,5 +27,7 @@ namespace GreenBushIEP.Models
         public string Location_Billable { get; set; }
         public string Service_Billable { get; set; }
         public bool isGBMedicaid { get; set; }
+        public bool isTestDistrict { get; set; }
+        public bool isTestUser { get; set; }
     }
 }

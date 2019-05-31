@@ -429,6 +429,15 @@
     <Compile Include="Models\tblProviderDistrict.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblReferralInfo.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblReferralRelationship.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblReferralRequest.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblRole.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -525,7 +534,13 @@
     <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_ModuleAccommodationFlags.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ModuleGoalFlags.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_ModuleOtherFlags.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_PrimaryDisabilities.cs">
