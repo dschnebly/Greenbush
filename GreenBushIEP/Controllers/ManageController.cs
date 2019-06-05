@@ -137,34 +137,37 @@ namespace GreenBushIEP.Controllers
 		{
 			var currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-			var district = (from org in db.tblOrganizationMappings
+			var districts = (from org in db.tblOrganizationMappings
 							join user in db.tblUsers
 								on org.UserID equals user.UserID
 							where (user.UserID == currentUser.UserID)
-							select org).Distinct().Take(1).FirstOrDefault();
+							select org).Distinct();
 
 			List<ReferralViewModel> referralList = new List<ReferralViewModel>();
-			if (district != null)
+			if (districts != null)
 			{
-				var referrals = db.tblReferralInfoes.Where(o => o.AssignedUSD == district.USD).OrderByDescending(o => o.ReferralID).ToList();
-
-				foreach (var referral in referrals)
+				foreach (var district in districts)
 				{
-					ReferralViewModel model = new ReferralViewModel();
+					var referrals = db.tblReferralInfoes.Where(o => o.AssignedUSD == district.USD).OrderByDescending(o => o.ReferralID).ToList();
 
-					var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
-					if (request != null)
+					foreach (var referral in referrals)
 					{
-						model.submitDate = request.Create_Date.ToShortDateString();
-						model.isComplete = request.Complete;
-					}					
-					model.referralId = referral.ReferralID;
-					model.lastName = referral.LastName;
-					model.firstName = referral.FirstName;
-					model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
-					model.notes = referral.ReferralNotes;
-					referralList.Add(model);
+						ReferralViewModel model = new ReferralViewModel();
 
+						var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+						if (request != null)
+						{
+							model.submitDate = request.Create_Date.ToShortDateString();
+							model.isComplete = request.Complete;
+						}
+						model.referralId = referral.ReferralID;
+						model.lastName = referral.LastName;
+						model.firstName = referral.FirstName;
+						model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
+						model.notes = referral.ReferralNotes;
+						referralList.Add(model);
+
+					}
 				}
 				
 			}
@@ -201,10 +204,12 @@ namespace GreenBushIEP.Controllers
 				model.student.BuildingID = student.ResponsibleBuildingID;
 				model.student.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
 				model.student.County = student.County;
-				
+				model.student.USD = student.AssignedUSD;
+
 				tblStudentInfo studentinfo = new tblStudentInfo();
 				studentinfo.County = student.County;
 				studentinfo.AssignedUSD = student.AssignedUSD;
+				
 				studentinfo.BuildingID = student.ResponsibleBuildingID;
 				studentinfo.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
 				studentinfo.ParentLanguage = student.ParentLanguage;
@@ -253,7 +258,7 @@ namespace GreenBushIEP.Controllers
 			model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
 			model.statusCode = db.tblStatusCodes.ToList();
 			model.grades = db.tblGrades.ToList();
-			//model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+			model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where o.USD == student.AssignedUSD select d).Distinct().ToList();
 
 			foreach (var d in model.districts)
 			{
@@ -282,6 +287,12 @@ namespace GreenBushIEP.Controllers
 					
 					// check that the kidsIS doesn't already exsist in the system.
 					long kidsID = Convert.ToInt64(collection["kidsid"]);
+
+					if (kidsID == 0)
+					{
+						return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
+					}
+
 					tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
 					if (exsistingStudent != null)
 					{
