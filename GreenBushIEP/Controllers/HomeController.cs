@@ -2285,7 +2285,8 @@ namespace GreenbushIep.Controllers
                 throw new EmailException("There was a problem when emailing the new user password.", e);
             }
 
-            return View("Home");
+			return RedirectToAction("Portal", "Home");
+			
         }
 
         public ActionResult MySettings()

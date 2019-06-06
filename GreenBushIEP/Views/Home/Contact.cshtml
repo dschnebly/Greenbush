@@ -10,7 +10,8 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 <div class="container">
     <div class="row">
-        @Html.BeginForm("ContactUs", "Home", FormMethod.Post, new { role = "form", id = "contact-form", @Class = "contact-form" })
+        @using (Html.BeginForm("ContactUs", "Home", FormMethod.Post, new { role = "form", id = "contact-form", @Class = "contact-form" }))
+		{
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
