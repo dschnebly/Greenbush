@@ -51,7 +51,8 @@
                 }
             });
         });
-
+				
+		
         $(".closeForms").on("click", function (e) {
             window.location.href = '/Home/TeacherPortal';
         });
@@ -116,7 +117,9 @@
         });//end document ready
     }
 
-    init();
+	init();
+
+
     function _showAlert(message, positive) {
 
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
