@@ -1955,16 +1955,15 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            //tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+            
             var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
-            if (form != null)
-                viewModel.fileDesc = form.Text;
-
-            //if (iep != null)
-            //viewModel.iepId = iep.IEPid;
-
+			if (form != null)
+			{
+				viewModel.fileDesc = form.Text;				
+			}			
+            
             StudentLegalView fileViewModel = new StudentLegalView()
             {
                 student = student,
