@@ -918,7 +918,7 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(Model.GetIEPStatus(iep))</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !iep.Amendment ? "ANNUAL" : string.Empty) @(Model.GetIEPStatus(iep)) @(iep.Amendment ? "DRAFT" : string.Empty)</a></li>
                                     }
                                 }
                             }
