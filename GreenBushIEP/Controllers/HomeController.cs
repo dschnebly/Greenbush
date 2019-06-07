@@ -1889,7 +1889,7 @@ namespace GreenbushIep.Controllers
         {
             var studentId = Convert.ToInt32(collection["student.UserID"]);
 
-            StudentPlan thePlan = new StudentPlan();
+            StudentPlan thePlan = new StudentPlan(studentId);
 
             // reset all the no concern flags
             thePlan.AcademicNoConcern = false;
