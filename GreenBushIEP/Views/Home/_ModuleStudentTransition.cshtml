@@ -1409,6 +1409,16 @@
             @*<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>*@
         </div>
     </div>
+
+	<div class="row studentBirthdayAgeOver21Btn @(Model.isDOC && Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? "hidden" :  String.Empty)" >
+		<div class="col-md-12" style="text-align:center;">
+			<div class="form-group">
+				<button id="saveFinishDraft" type="button" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>											
+				<button id="saveFinish" type="button" class="formbtn btn btn-success btn-lg"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+			</div>
+		</div>
+	</div>
+
 	<div class="completed-loader @(Model.transition != null && Model.transition.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
         <div class="text-center completed-checkbox">
             <div class="form-check">
@@ -1469,35 +1479,37 @@
 		});
 
         $(this).find("#isStudentBirthdayAgeOver21").on("click", function () {
-            if(!$(this).is(':checked'))
-            {
-                var stid = $("#studentId").val();
-                var studentIepId = $("#studentIEPId").val();
+			if (!$(this).is(':checked')) {
+				var stid = $("#studentId").val();
+				var studentIepId = $("#studentIEPId").val();
+				$(".studentBirthdayAgeOver21Btn").removeClass("hidden"); //show save and complete
+				$.ajax({
+					type: 'POST',
+					url: '/ModuleSection/RemoveStudentTransition',
+					data: { studentId: stid, iepId: studentIepId },
+					dataType: "json",
+					success: function (data) {
+						if (data.Result == "success") {
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/ModuleSection/RemoveStudentTransition',
-                    data: { studentId: stid, iepId: studentIepId },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.Result == "success") {
-
-                            $(window).trigger("saving.bs.modal");
-                        }
-                        else {
-                            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                                $("#alertMessage .moreinfo").html(data.Message);
-                                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                    $("#alertMessage").slideUp(500);
-                                });
-                            }
-                        }
-                    },
-                    error: function (data) {
-                        console.log("Unable to delete the student goal.");
-                    }
-                });
-            }
+							$(window).trigger("saving.bs.modal");
+						}
+						else {
+							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+								$("#alertMessage .moreinfo").html(data.Message);
+								$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+									$("#alertMessage").slideUp(500);
+								});
+							}
+						}
+					},
+					error: function (data) {
+						console.log("Unable to delete the student goal.");
+					}
+				});
+			}
+			else {
+				$(".studentBirthdayAgeOver21Btn").addClass("hidden");
+			}
         });
 
         navListItems.click(function (e) {
