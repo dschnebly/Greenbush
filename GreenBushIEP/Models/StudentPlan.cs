@@ -264,7 +264,7 @@ namespace GreenBushIEP.Models
                     studentHealth.VisionResult = this.HealthVisionResult;
                     studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
                     studentHealth.HealthCarePlan = this.HealthCarePlan;
-                    studentHealth.Completed = this.HealthNoConcern;
+                    studentHealth.Completed = studentHealth.Completed || this.HealthNoConcern;
                 }
                 db.SaveChanges();
 
