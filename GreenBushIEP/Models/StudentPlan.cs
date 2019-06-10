@@ -217,17 +217,17 @@ namespace GreenBushIEP.Models
                 this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
 
                 tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();
-                if(info != null)
+                if (info != null)
                 {
                     tblDistrict district = db.tblDistricts.Where(d => d.USD == info.USD).FirstOrDefault();
-                    if(district != null)
+                    if (district != null)
                     {
                         isDOC = district.DOC;
                     }
                 }
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
-                if(otherConsideration != null)
+                if (otherConsideration != null)
                 {
                     int extendYear = 0;
                     Int32.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out extendYear);
@@ -254,17 +254,33 @@ namespace GreenBushIEP.Models
 
                 if (studentHealth != null)
                 {
+                    if (this.HealthNoConcern)
+                    {
+                        this.HealthProgressTowardGenEd = false;
+                        this.HealthDiagnosis = false;
+                        studentHealth.Completed = true;
+                    }
+
                     studentHealth.Diagnosis = this.HealthDiagnosis;
                     studentHealth.HearingDate = this.HealthHearingDate;
                     studentHealth.HearingResult = this.HealthHearingResult;
                     studentHealth.Medications = this.HealthMedications;
-                    studentHealth.NoConcerns = this.HealthNoConcern;
                     studentHealth.VisionDate = this.HealthVisionDate;
                     studentHealth.VisionImpaired = this.HealthVisionImpaired;
                     studentHealth.VisionResult = this.HealthVisionResult;
                     studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
                     studentHealth.HealthCarePlan = this.HealthCarePlan;
-                    studentHealth.Completed = studentHealth.Completed || this.HealthNoConcern;
+
+                    if (this.HealthProgressTowardGenEd || this.HealthDiagnosis)
+                    {
+                        studentHealth.NoConcerns = false;
+                    }
+                    else
+                    {
+                        studentHealth.NoConcerns = true;
+                        studentHealth.ProgressTowardGenEd = false;
+                        studentHealth.Diagnosis = false;
+                    }
                 }
                 db.SaveChanges();
 
