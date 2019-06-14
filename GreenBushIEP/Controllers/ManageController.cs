@@ -506,7 +506,7 @@ namespace GreenBushIEP.Controllers
 					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 					tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
 
-					int j = 0;
+					int j = 1;
 					int loopCounter = 1;
 					while (++j < collection.Count - 2)
 					{
