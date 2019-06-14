@@ -1409,8 +1409,9 @@
             @*<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>*@
         </div>
     </div>
-
-	<div class="row studentBirthdayAgeOver21Btn @(Model.isDOC && Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? "hidden" :  String.Empty)" >
+	@if (Model.isDOC)
+	{
+	<div class="row studentBirthdayAgeOver21Btn @(Model.isDOC && Model.transition.isReleaseBefore21.HasValue && Model.transition.isReleaseBefore21.Value ? "hidden" : String.Empty)" >
 		<div class="col-md-12" style="text-align:center;">
 			<div class="form-group">
 				<button id="saveFinishDraft" type="button" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>											
@@ -1418,7 +1419,7 @@
 			</div>
 		</div>
 	</div>
-
+	}
 	<div class="completed-loader @(Model.transition != null && Model.transition.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
         <div class="text-center completed-checkbox">
             <div class="form-check">
