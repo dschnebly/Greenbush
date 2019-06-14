@@ -683,7 +683,7 @@
             </ul>
         </div>
         <div class="col-md-2 pull-right">
-            @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+            @Html.ActionLink(" ", "Referrals", "Manage", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
         </div>
     </div>
     <div class="row">
@@ -752,10 +752,11 @@
                                         <label for="studentPlacement">Placed By</label>
                                         <select name="studentPlacement" id="studentPlacement" class="form-control">
                                             @if (Model.placementCode != null)
-                                            {
-                                                foreach (var code in Model.placementCode)
-                                                {
-                                                    string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
+											{
+												foreach (var code in Model.placementCode)
+												{
+													string selected = @code.PlacementCode == "L" ? "selected=selected" : "";
+													//string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
                                                     <option value="@code.PlacementCode" @selected>@code.PlacementDescription</option>
                                                 }
                                             }
@@ -995,7 +996,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label for="studentZipCode">Zip Code</label>
+                                                <label class="required" for="studentZipCode">Zip Code</label>
                                                 <input name="studentZipCode" id="studentZipCode" class="form-control norequired" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" value="@(Model.student.Zip)" />
                                             </div>
                                         </div>
@@ -1211,7 +1212,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input name="claimingCode" id="claimingCode" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(Model.info.ClaimingCode ? "checked" : "")>
+                                                <input name="claimingCode" id="claimingCode" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" checked>
                                                 <label for="claimingCode" style="float: left; position: relative; bottom: 16px; left: 20%;">Claiming Code</label>
                                             </div>
                                         </div>
@@ -1435,8 +1436,8 @@
                                                 </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
-                                                        <label>Zip Code</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false">
+                                                        <label >Zip Code</label>
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false" >
                                                     </div>
                                                 </div>
                                             </div>
