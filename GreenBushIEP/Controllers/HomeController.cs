@@ -1678,7 +1678,27 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "Unknown Error Occured." }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
+		[HttpGet]
+		[Authorize]
+		public ActionResult GetLastFiscalDay(int studentId, string fyYear)
+		{
+			tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+
+			int lastYear = 0;
+			Int32.TryParse(fyYear, out lastYear);
+			
+			List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
+
+			var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+
+			if (lastDay != null)				
+				return Json(new { Result = "success", Value = lastDay.calendarDate.Value.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+			else
+				return Json(new { Result = "success", Value = "" }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
         [Authorize]
         public ActionResult StudentTransition(int studentId, int IEPid)
         {

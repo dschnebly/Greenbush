@@ -474,7 +474,7 @@
 </div>
 
 <script>
-
+	
     var holidays = '@Html.Raw(Json.Encode(@Model.calendar))';
     var disabledDays = JSON.parse(holidays).Data;
 
@@ -551,6 +551,17 @@
         });
 
         panelCollapse.collapse('show');
+
+
+		var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
+		var endDateObject = cloneService.find("input[name='serviceEndDate']");
+		var serviceEndDate = endDateObject.val();
+		var splitDate = serviceEndDate.split('/');
+		if (splitDate[2] != fiscalYear) {
+			//update end date to match selected fiscal year
+			endDateObject.addClass("updateEndDateYear");
+			getLastDate(fiscalYear);
+		}
 
         initService();
 
@@ -968,6 +979,13 @@
 
         panelCollapse.collapse("show");
 
+
+		//var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
+		//var endDateObject = cloneService.find("input[name='serviceEndDate']");
+		////update end date to match selected fiscal year
+		//endDateObject.addClass("updateEndDateYear");
+		//getLastDate(fiscalYear);		
+		
         initService();
     }
 
@@ -1118,7 +1136,34 @@
         if (sDate.toString() == parseInt(sDate).toString()) return false;
         var tryDate = new Date(sDate);
         return (tryDate && tryDate.toString() != "NaN" && tryDate != "Invalid Date");
-    }
+	}
+
+	function getLastDate(fyYear) {
+
+		// GetLastFiscalDay(int studentId, string fyYear)
+		var studentId = $("#sid").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetLastFiscalDay',
+            data: { studentId: studentId, fyYear: fyYear },
+            dataType: "json",
+            success: function (data) {
+				if (data.Result == "success") {
+					if (data.Value != "") {
+						var endDates = document.getElementsByClassName("updateEndDateYear");
+						for (m = 0; m < endDates.length; m++) {
+							endDates[m].value = data.Value;
+							endDates[m].classList.remove("updateEndDateYear");
+						}
+					}
+				}
+            },
+            error: function (data) {
+                console.log("Unable get last day fiscal year.");
+            }
+        });
+	}
 
     $("#isCompletedModule").on("click", function () {
         var IEPId = $("#studentIEPId").val();
