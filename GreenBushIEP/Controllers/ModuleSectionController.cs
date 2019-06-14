@@ -1,5 +1,6 @@
 ﻿using GreenBushIEP.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -850,34 +851,76 @@ namespace GreenBushIEP.Controllers
 
                     int tempInt;
                     studentGoal.benchmarks.Clear();
+					List<int> existingBenchmarks = new List<int>();
 
-                    int keyNum = ++j;
-                    string keyName = (collection.Keys.Count - 1) > keyNum ? collection.GetKey(keyNum) : "";
-                    if (!string.IsNullOrEmpty(keyName))
-                    {
-                        while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
-                        {
-                            int BenchmarkID;
-                            bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
-                            tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
-                            if (benchmark != null)
-                            {
-                                benchmark.goalID = studentGoal.goal.goalID;
-                                benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
-                                benchmark.ObjectiveBenchmark = collection[++j].ToString();
-                                benchmark.TransitionActivity = (collection[++j].ToLower() == "true") ? true : false;
+					foreach (var key in collection.AllKeys)
+					{
+						int benchmarkIDVal = 0;
+						int tempId = 0;
+						if (key.Contains("StudentGoalBenchmarkId"))
+						{							
+							var value = collection[key];
+							Int32.TryParse(value, out benchmarkIDVal);
+							tblGoalBenchmark benchmark = benchmarkIDVal == 0 ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == benchmarkIDVal).FirstOrDefault();
+							Int32.TryParse(key.Substring(22), out tempId);
 
-                                studentGoal.benchmarks.Add(benchmark);
-                            }
+							if (benchmarkIDVal == 0)
+							{
+								//get temp value								
+								benchmarkIDVal = tempId;
+							}
+							else
+							{
+								existingBenchmarks.Add(benchmarkIDVal);								
+							}
+														
+							if (benchmark != null)
+							{
 
-                            keyName = (++j < collection.Count) ? collection.GetKey(j) : String.Empty;
-                        }
-                    }
+								string methodStr = collection[string.Format("StudentGoalBenchmarkMethod{0}", benchmarkIDVal)];
+								string transitionActivity  = collection[string.Format("StudentGoalBenchmarkHasTransition{0}", benchmarkIDVal)];
+								benchmark.goalID = studentGoal.goal.goalID;
+								benchmark.Method = methodStr != null && methodStr != "" ? Int32.TryParse(methodStr, out tempInt) ? tempInt : 0 : 0;
+								benchmark.ObjectiveBenchmark = collection[string.Format("StudentGoalBenchmarkTitle{0}", benchmarkIDVal)];
+								benchmark.TransitionActivity = transitionActivity != null && transitionActivity != "" ? (transitionActivity.ToLower() == "true") ? true : false : false;
+								
+								studentGoal.benchmarks.Add(benchmark);
+							}
+						}
+					}
+
+
+
+					//int keyNum = ++j;
+     //               string keyName = (collection.Keys.Count - 1) > keyNum ? collection.GetKey(keyNum) : "";
+     //               if (!string.IsNullOrEmpty(keyName))
+     //               {
+     //                   while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
+     //                   {
+     //                       int BenchmarkID;
+     //                       bool isBenchmarkID = Int32.TryParse(collection[j], out BenchmarkID);
+     //                       tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
+     //                       if (benchmark != null)
+     //                       {
+     //                           benchmark.goalID = studentGoal.goal.goalID;
+     //                           benchmark.Method = collection[++j] != null && collection[j] != "" ? Int32.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
+     //                           benchmark.ObjectiveBenchmark = collection[++j].ToString();
+     //                           benchmark.TransitionActivity = (collection[++j].ToLower() == "true") ? true : false;
+
+     //                           studentGoal.benchmarks.Add(benchmark);
+     //                       }
+
+     //                       keyName = (++j < collection.Count) ? collection.GetKey(j) : String.Empty;
+     //                   }
+     //               }
 
                     studentGoal.SaveGoal(evalProcedures);
                     goalId = studentGoal.goal.goalID;
 
-                    return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId }, JsonRequestBehavior.AllowGet);
+
+					var newGoalBenchmarks = db.tblGoalBenchmarks.Where(b => b.goalID == goalId && !(existingBenchmarks.Contains(b.goalBenchmarkID))).ToList();
+					
+					return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId, GoalBenchmarks = newGoalBenchmarks }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
