@@ -1682,20 +1682,28 @@ namespace GreenbushIep.Controllers
 		[Authorize]
 		public ActionResult GetLastFiscalDay(int studentId, string fyYear)
 		{
-			tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
-			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-
-			int lastYear = 0;
-			Int32.TryParse(fyYear, out lastYear);
-			
-			List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
-
-			var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+			var lastDay = GetLastFiscalCalendarDay(studentId, fyYear);
 
 			if (lastDay != null)				
 				return Json(new { Result = "success", Value = lastDay.calendarDate.Value.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
 			else
 				return Json(new { Result = "success", Value = "" }, JsonRequestBehavior.AllowGet);
+		}
+
+		private tblCalendar GetLastFiscalCalendarDay(int studentId, string fyYear)
+		{
+			tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+
+			int lastYear = 0;
+			Int32.TryParse(fyYear, out lastYear);
+
+			List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
+
+			var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+
+			return lastDay;
+
 		}
 
 		[HttpGet]
@@ -2695,7 +2703,26 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
             }
 
-            int count = 1;
+			string serviceEndDateOverride = "";
+
+			//if exit data exists
+			if (studentIEP.studentDetails.student.ExitDate.HasValue)
+			{
+				//find last available calendar data before this date
+				var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
+
+				if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
+				{
+					serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
+				}
+				else
+				{
+					serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
+				}
+			}
+
+
+			int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
@@ -2753,7 +2780,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
 
                 //14 Service end Date
-                sb.AppendFormat("{0}\t", service.EndDate.ToShortDateString());
+                sb.AppendFormat("{0}\t", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString(): serviceEndDateOverride);
 
                 //15 minutes
                 sb.AppendFormat("{0}\t", service.Minutes);
