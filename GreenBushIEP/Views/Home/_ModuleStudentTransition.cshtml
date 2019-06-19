@@ -6,6 +6,10 @@
 }
 
 <style>
+	.contact-tooltip {
+        border: 2px solid #9F6000;
+    }
+
     .courseOfStudyHeader {
         font-weight: bold;
         margin-top: 0;
@@ -270,7 +274,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="row form-group" style="margin-bottom: 0px;">
+                <div class="wizard row form-group" style="margin-bottom: 0px;">
                     <div class="col-xs-12">
                         <ul class="nav nav-pills nav-justified thumbnail setup-panel">
                             <li class="active">
@@ -333,12 +337,12 @@
                                                     <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                     <div class="input-group" style="margin-bottom: 5px;">
                                                         <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input type="text" data-val="true" data-val-date="The field Completed Date must be a date." data-val-required="The Completed On Date field is required." id="transitionAssessmentCompletedDefault" name="transitionAssessmentCompletedDefault" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999">
+                                                        <input type="text" data-val-date="The field Completed Date must be a date." data-val-required="The Completed On Date field is required." id="transitionAssessmentCompletedDefault" name="transitionAssessmentCompletedDefault" class="form-control dtField" aria-describedby="basic-addon1" value="" style="z-index: 99999">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <label for="performance">Performance</label>
-                                                    <textarea rows="2" name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group" maxlength="2000"></textarea>
+                                                    <textarea rows="2"  name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group" maxlength="2000"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,7 +397,7 @@
                                                                         <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                                         <div class="input-group" style="margin-bottom: 5px;">
                                                                             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                            <input type="text" data-val="true" data-val-date="The field Completed Date must be a date." data-val-required="The Completed Date field is required." id="transitionAssessmentCompleted@(assessment.TransitionAssementID)" name="transitionAssessmentCompleted@(assessment.TransitionAssementID)" class="form-control dtField" aria-describedby="basic-addon1" value="@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")" style="z-index: 99999" />
+                                                                            <input type="text" data-validate="true" data-val-date="The field Completed Date must be a date." data-val-required="The Completed Date field is required." id="transitionAssessmentCompleted@(assessment.TransitionAssementID)" name="transitionAssessmentCompleted@(assessment.TransitionAssementID)" class="form-control dtField" aria-describedby="basic-addon1" value="@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")" style="z-index: 99999" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-9">
@@ -415,7 +419,7 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="input-group-addon assessment-needs">Transition Needs</div>
-                                            <textarea id="transitionNeeds" name="transitionNeeds" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Needs)</textarea>
+                                            <textarea id="transitionNeeds" name="transitionNeeds" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom" data-validate='true' data-val-required="Transition Needs required.">@(Model.transition.Assessment_Needs)</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -424,7 +428,7 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="input-group-addon assessment-needs">Transition Strengths</div>
-                                            <textarea id="transitionNeeds" name="transitionStrengths" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Strengths)</textarea>
+                                            <textarea id="transitionNeeds" name="transitionStrengths" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom" data-validate='true' data-val-required="Transition Strengths required.">@(Model.transition.Assessment_Strengths)</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -433,7 +437,7 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="input-group-addon assessment-needs">Transition Preferences</div>
-                                            <textarea id="transitionPreferences" name="transitionPreferences" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Prefrences)</textarea>
+                                            <textarea id="transitionPreferences" name="transitionPreferences" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom" data-validate='true' data-val-required="Transition Preferences required.">@(Model.transition.Assessment_Prefrences)</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -442,7 +446,7 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="input-group-addon assessment-needs">Transition Interest</div>
-                                            <textarea id="transitionInterest" name="transitionInterest" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom">@(Model.transition.Assessment_Interest)</textarea>
+                                            <textarea id="transitionInterest" name="transitionInterest" class="form-control" rows="5" data-toggle="tooltip" data-placement="bottom" data-validate='true' data-val-required="Transition Interest required.">@(Model.transition.Assessment_Interest)</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -1282,7 +1286,7 @@
                                         <p>
                                             @(@Model.student.FirstName)&nbsp;@(Model.student.LastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
                                             The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
-                                            district and will be meaningful to @(genderPronoun) post secondary goal of working as <a href="#" id="inline-occupation" name="inline-occupation" data-type="text" data-title="Enter occupation" class="editable editable-click" style="display: inline;border: 1px solid black;padding:3px;border-radius:5px;">@(Model.transition.Planning_Occupation != "" ? Model.transition.Planning_Occupation : "Enter occupation")</a>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
+                                            district and will be meaningful to @(genderPronoun) post secondary goal of working as <a href="#" id="inline-occupation" name="inline-occupation" data-type="text" data-title="Enter occupation" data-validate="true" class="editable editable-click" style="display: inline;border: 1px solid black;padding:3px;border-radius:5px;">@(Model.transition.Planning_Occupation != "" ? Model.transition.Planning_Occupation : "Enter occupation")</a>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
                                             The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
                                             maintained in the counselor's office
                                         </p>
@@ -1290,7 +1294,7 @@
                                         <fieldset class="form-group">
                                             <label style="padding: 5px 0 10px;">The Student will participate in coursework to support the Career Path of</label>&nbsp;&nbsp;
                                             <div style="display: inline-block; vertical-align: middle;">
-                                                <select id="CareerPathID" name="CareerPathID" class="form-control" data-placeholder="Select Career Path">
+                                                <select id="CareerPathID" name="CareerPathID" data-validate="true" class="form-control" data-placeholder="Select Career Path">
                                                     <option></option>
                                                     @if (Model.careers != null)
                                                     {
@@ -1335,14 +1339,14 @@
                                         <fieldset class="form-group">
                                             <label for="Duration">Anticipated Graduation Month/Year</label>
                                             <div class="input-group">
-                                                <input type="month" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear.HasValue ? Model.transition.Planning_GraduationYear.Value : 0)-@((Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0) < 10 ? string.Format("0{0}",(Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0)): (Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value.ToString() : ""))">
+                                                <input type="month" data-validate="true" name="graduationYear" class="form-control text-center" value="@(Model.transition.Planning_GraduationYear.HasValue ? Model.transition.Planning_GraduationYear.Value : 0)-@((Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0) < 10 ? string.Format("0{0}",(Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value : 0)): (Model.transition.Planning_GraduationMonth.HasValue ? Model.transition.Planning_GraduationMonth.Value.ToString() : ""))">
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset class="form-group">
                                             <label>&nbsp;</label>
-                                            <select class="form-control" name="planningCompletion" id="planningCompletion">
+                                            <select class="form-control" name="planningCompletion" id="planningCompletion" data-validate="true">
                                                 <option @(Model.transition.Planning_Completion == "Graduate with a High School Diploma" ? "selected='selected'" : "")>Graduate with a High School Diploma</option>
                                                 <option @(Model.transition.Planning_Completion == "Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age" ? "selected='selected'" : "")>Complete their Educational Program or Exit at the end of the school year during which the student becomes 21 years of age</option>
                                             </select>
@@ -1351,7 +1355,7 @@
                                     <div class="col-md-3">
                                         <fieldset class="form-group">
                                             <label for="totalcredits">Total # of Credits required by district</label>
-                                            <input type="text" name="totalcredits" id="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
+                                            <input type="text" data-validate="true" name="totalcredits" id="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
                                         </fieldset>
                                     </div>
                                 </div>
@@ -1432,16 +1436,17 @@
 </div>
 <script src="~/Scripts/editable.js"></script>
 <script>
-    $(document).ready(function () {
-        var canComplete = '@Model.canComplete' == "True" ? true : false;
-        var isReleaseBefore21 = '@isReleaseBefore21' == "True" ? true : false;
-        var studentIEP
-        var navListItems = $('ul.setup-panel li a'),
-            allWells = $('.setup-content');
+	debugger;
+	$(document).ready(function () {
+		var canComplete = '@Model.canComplete' == "True" ? true : false;
+		var isReleaseBefore21 = '@isReleaseBefore21' == "True" ? true : false;
+		var studentIEP
+		var navListItems = $('ul.setup-panel li a'),
+			allWells = $('.setup-content');
 
 		allWells.hide();
 
-		$('.textHow').on('blur', function(e) {			
+		$('.textHow').on('blur', function (e) {
 			var currentValue = $(this).val();
 			var n = currentValue.endsWith(".");
 			if (!n)
@@ -1449,8 +1454,8 @@
 
 		});
 
-        if (isReleaseBefore21) {
-            $("#studentBirthdayAgeOver21").removeClass("hidden");
+		if (isReleaseBefore21) {
+			$("#studentBirthdayAgeOver21").removeClass("hidden");
 		}
 
 		// Attach Event
@@ -1479,7 +1484,7 @@
 			});
 		});
 
-        $(this).find("#isStudentBirthdayAgeOver21").on("click", function () {
+		$(this).find("#isStudentBirthdayAgeOver21").on("click", function () {
 			if (!$(this).is(':checked')) {
 				var stid = $("#studentId").val();
 				var studentIepId = $("#studentIEPId").val();
@@ -1511,151 +1516,148 @@
 			else {
 				$(".studentBirthdayAgeOver21Btn").addClass("hidden");
 			}
-        });
+		});
 
-        navListItems.click(function (e) {
-            e.preventDefault();
-            var $target = $($(this).attr('href')),
-                $item = $(this).closest('li');
+		navListItems.click(function (e) {
+			e.preventDefault();
+			var $target = $($(this).attr('href')),
+				$item = $(this).closest('li');
 
-            if (!$item.hasClass('disabled')) {
-                navListItems.closest('li').removeClass('active');
-                $item.addClass('active');
-                allWells.hide();
-                $target.show();
-            }
-        });
+			if (!$item.hasClass('disabled')) {
+				navListItems.closest('li').removeClass('active');
+				$item.addClass('active');
+				allWells.hide();
+				$target.show();
+			}
+		});
 
-        $(this).find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-            });
-        });
+		$(this).find('.dtField').each(function () {
+			$(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+			$('.dtField').datepicker({
+				dateFormat: "mm/dd/yy",
+			});
+		});
 
-        // update the date displayed in the deafaul transition label to todays date.
-        $(this).find("#assessmentDefault").find(".transitionTitleDate").html(new Date().toISOString().substr(0, 10));
+		// update the date displayed in the deafaul transition label to todays date.
+		$(this).find("#assessmentDefault").find(".transitionTitleDate").html(new Date().toISOString().substr(0, 10));
 
-        $('ul.setup-panel li.active a').trigger('click');
+		$('ul.setup-panel li.active a').trigger('click');
 
-        $('#activate-step-2, #activate-step-2-draft').on('click', function (e) {
+		$('#activate-step-2, #activate-step-2-draft').on('click', function (e) {
 
 			$(window).trigger("saving.bs.modal");
-            var formData = $('#transitionAssessmentForm');
+			var formData = $('#transitionAssessmentForm');
+			if (tabValidates()) {
+				$.ajax({
+					type: 'POST',
+					url: '/ModuleSection/EditTransitionAssessements',
+					dataType: "json",
+					data: formData.serialize(),
+					success: function (data) {
+						if (data.Result == "success") {
+							$('ul.setup-panel li:eq(1)').removeClass('disabled');
+							$('ul.setup-panel li a[href="#step-2"]').trigger('click');
+							console.log("Assessments successfully updated.");
+						}
+						else {
+							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+								$("#alertMessage .moreinfo").html(data.Message);
+								$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+									$("#alertMessage").slideUp(500);
+								});
+							}
+						}
+					},
+					error: function (data) {
+						console.log("Unable to delete the student goal.");
+					}
+				});
 
-            $.ajax({
-                type: 'POST',
-                url: '/ModuleSection/EditTransitionAssessements',
-                dataType: "json",
-                data: formData.serialize(),
-                success: function (data) {
-                    if (data.Result == "success") {
-						console.log("Assessments successfully updated.");					
-                    }
-                    else {
-                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                            $("#alertMessage .moreinfo").html(data.Message);
-                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                $("#alertMessage").slideUp(500);
-                            });
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log("Unable to delete the student goal.");
-                }
-            });
 
-			$('ul.setup-panel li:eq(1)').removeClass('disabled');
-
-			if (this.id == "activate-step-2")
-				$('ul.setup-panel li a[href="#step-2"]').trigger('click');
-			else {
-				$('#headerClose').trigger('click');
 			}
-        });
+		});
 
-        $('#activate-step-3, #activate-step-3-draft').on('click', function (e) {
+		$('#activate-step-3, #activate-step-3-draft').on('click', function (e) {
 
 			$(window).trigger("saving.bs.modal");
-            var formData = $('#transitionGoalForm');
+			var formData = $('#transitionGoalForm');
+			if (tabValidates()) {
+				$.ajax({
+					type: 'POST',
+					url: '/ModuleSection/EditTransitionGoals',
+					dataType: "json",
+					data: formData.serialize(),
+					success: function (data) {
+						if (data.Result == "success") {
+							canComplete = data.CanComplete;
+							console.log("Goals successfull updated.");
+							$('ul.setup-panel li:eq(2)').removeClass('disabled');
+							$('ul.setup-panel li a[href="#step-3"]').trigger('click');
 
-            $.ajax({
-                type: 'POST',
-                url: '/ModuleSection/EditTransitionGoals',
-                dataType: "json",
-                data: formData.serialize(),
-                success: function (data) {
-                    if (data.Result == "success") {
-                        canComplete = data.CanComplete;
-                        console.log("Goals successfull updated.");
-                    }
-                    else {
-                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                            $("#alertMessage .moreinfo").html(data.Message);
-                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                $("#alertMessage").slideUp(500);
-                            });
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log("Unable to delete the student goal.");
-                }
-            });
-
-			$('ul.setup-panel li:eq(2)').removeClass('disabled');
-
-			if (this.id == "activate-step-3")
-				$('ul.setup-panel li a[href="#step-3"]').trigger('click');
-			else {
-				$('#headerClose').trigger('click');
+						}
+						else {
+							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+								$("#alertMessage .moreinfo").html(data.Message);
+								$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+									$("#alertMessage").slideUp(500);
+								});
+							}
+						}
+					},
+					error: function (data) {
+						console.log("Unable to delete the student goal.");
+					}
+				});
 			}
-            
-        });
 
-        $('#activate-step-4, #activate-step-4-draft').on('click', function (e) {
+
+
+		});
+
+		$('#activate-step-4, #activate-step-4-draft').on('click', function (e) {
 			$(window).trigger("saving.bs.modal");
-            var formData = $('#transitionServiceForm');
-
-            $.ajax({
-                type: 'POST',
-                url: '/ModuleSection/EditTransitionServices',
-                dataType: "json",
-                data: formData.serialize(),
-                success: function (data) {
-                    if (data.Result == "success") {
-                        console.log("Services successfull updated.");
-                    }
-                    else {
-                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                            $("#alertMessage .moreinfo").html(data.Message);
-                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                $("#alertMessage").slideUp(500);
-                            });
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log("Unable to delete the student goal.");
-                }
-            });
-
-			
-			$('ul.setup-panel li:eq(3)').removeClass('disabled');
-			if (this.id == "activate-step-4")
-				$('ul.setup-panel li a[href="#step-4"]').trigger('click');
-			else {
-				$('#headerClose').trigger('click');
+			var formData = $('#transitionServiceForm');
+			if (tabValidates()) {
+				$.ajax({
+					type: 'POST',
+					url: '/ModuleSection/EditTransitionServices',
+					dataType: "json",
+					data: formData.serialize(),
+					success: function (data) {
+						if (data.Result == "success") {
+							console.log("Services successfully updated.");
+							$('ul.setup-panel li:eq(3)').removeClass('disabled');
+							$('ul.setup-panel li a[href="#step-4"]').trigger('click');
+						}
+						else {
+							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+								$("#alertMessage .moreinfo").html(data.Message);
+								$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+									$("#alertMessage").slideUp(500);
+								});
+							}
+						}
+					},
+					error: function (data) {
+						console.log("Unable to delete the student goal.");
+					}
+				});
 			}
-
-        });
+		});
+	
 
         $('#saveFinish, #saveFinishDraft').on('click', function (e) {
 			
             // make sure occupation is filled out before saving.
-            if ($("#inline-occupation").text() == "Enter occupation") {
-                alert("Please enter an occupation before saving.");
+            if ($("#inline-occupation").text() == "Enter occupation" || $("#inline-occupation").text() == "Empty") {
+
+				if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+					$("#alertMessage .moreinfo").html('Please enter an occupation before saving.');
+					$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+						$("#alertMessage").slideUp(500);
+					});
+				}
+				
                 e.stopPropagation();
                 $('#inline-occupation').editable('toggle');
 
@@ -1673,31 +1675,32 @@
 			if (this.id == "saveFinish") {
 				dataToSend = dataToSend + '&isComplete=1';
 			}
-
-            $.ajax({
-                type: 'POST',
-                url: '/ModuleSection/EditTransitionStudy',
-                dataType: "json",
-                data: dataToSend,
-                success: function (data) {
-                    if (data.Result == "success") {
-                        $(window).trigger("saving.bs.modal");
-                        console.log("Course of Study successfully updated.");
-						$('#moduleSection').modal('hide');
-                    }
-                    else {
-                        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                            $("#alertMessage .moreinfo").html(data.Message);
-                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                                $("#alertMessage").slideUp(500);
-                            });
-                        }
-                    }
-                },
-                error: function (data) {
-                    console.log("There was an error saving the Course of Study");
-                }
-            });
+			if (tabValidates()) {
+				$.ajax({
+					type: 'POST',
+					url: '/ModuleSection/EditTransitionStudy',
+					dataType: "json",
+					data: dataToSend,
+					success: function (data) {
+						if (data.Result == "success") {
+							$(window).trigger("saving.bs.modal");
+							console.log("Course of Study successfully updated.");
+							$('#moduleSection').modal('hide');
+						}
+						else {
+							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+								$("#alertMessage .moreinfo").html(data.Message);
+								$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+									$("#alertMessage").slideUp(500);
+								});
+							}
+						}
+					},
+					error: function (data) {
+						console.log("There was an error saving the Course of Study");
+					}
+				});
+			}
         });
 
         $(".transitionAssessment").not(':last-child').find(".panel-collapse.in").collapse("hide");
@@ -1801,9 +1804,10 @@
         cloneAssessment.find('[data-parent="assessmentDefault"]').attr("data-parent", "assessmentIndentity" + assessmentCount).prop("href", "#collapseAssessment" + assessmentCount);
         cloneAssessment.find(".panel-body").parent().prop("id", "collapseAssessment" + assessmentCount);
         cloneAssessment.find("#transitionAssessmentIdDefault").prop("id", "transitionAssessmentId" + assessmentCount).attr("name", "transitionAssessmentId" + assessmentCount);
-        cloneAssessment.find("#transitionAssessmentNarrativeDefault").prop("id", "transitionAssessmentNarrative" + assessmentCount).attr("name", "transitionAssessmentNarrative" + assessmentCount);
-        cloneAssessment.find("#transitionAssessmentCompletedDefault").prop("id", "transitionAssessmentCompleted" + assessmentCount).attr("name", "transitionAssessmentCompleted" + assessmentCount);
-        cloneAssessment.find("#transitionAssessmentPerformanceDefault").prop("id", "transitionAssessmentPerformance" + assessmentCount).attr("name", "transitionAssessmentPerformance" + assessmentCount);
+        cloneAssessment.find("#transitionAssessmentNarrativeDefault").prop("id", "transitionAssessmentNarrative" + assessmentCount).attr("name", "transitionAssessmentNarrative" + assessmentCount).attr("data-validate", "true");
+        //cloneAssessment.find("#transitionAssessmentCompletedDefault").prop("id", "transitionAssessmentCompleted" + assessmentCount).attr("name", "transitionAssessmentCompleted" + assessmentCount).attr("data-validate", "true");
+		cloneAssessment.find("input[name='transitionAssessmentCompletedDefault']").prop("id", "transitionAssessmentCompleted" + assessmentCount).attr("name", "transitionAssessmentCompleted" + assessmentCount).attr("data-validate", "true");
+        cloneAssessment.find("#transitionAssessmentPerformanceDefault").prop("id", "transitionAssessmentPerformance" + assessmentCount).attr("name", "transitionAssessmentPerformance" + assessmentCount).attr("data-validate", "true");
         cloneAssessment.find('.dtField').each(function () {
             $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
             $(this).datepicker({
@@ -1881,9 +1885,9 @@
         cloneEducation.find(".transitionGoalLabel").text("Education/Training Goal");
         cloneEducation.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionEducationIndentity" + educationCount).prop("href", "#collapseTransitionEducation" + educationCount);
         cloneEducation.find(".panel-body").parent().prop("id", "collapseTransitionEducation" + educationCount);
-        cloneEducation.find("#transitionGoalGraduation").prop("id", "transitionEducationGraduation" + educationCount).attr("name", "transitionEducationGraduation" + educationCount);
-        cloneEducation.find("#transitionGoalBehavior").prop("id", "transitionEducationBehavior" + educationCount).attr("name", "transitionEducationBehavior" + educationCount);
-        cloneEducation.find("#transitionGoalHow").prop("id", "transitionEducationCompleted" + educationCount).attr("name", "transitionEducationCompleted" + educationCount);
+        cloneEducation.find("#transitionGoalGraduation").prop("id", "transitionEducationGraduation" + educationCount).attr("name", "transitionEducationGraduation" + educationCount).attr("data-validate", "true");
+        cloneEducation.find("#transitionGoalBehavior").prop("id", "transitionEducationBehavior" + educationCount).attr("name", "transitionEducationBehavior" + educationCount).attr("data-validate", "true");
+        cloneEducation.find("#transitionGoalHow").prop("id", "transitionEducationCompleted" + educationCount).attr("name", "transitionEducationCompleted" + educationCount).attr("data-validate", "true");
 
 		cloneEducation.find('.textHow').on('blur', function(e) {			
 			var currentValue = $(this).val();
@@ -1962,9 +1966,9 @@
         cloneEmployment.find(".transitionGoalLabel").text("Employment Goal");
         cloneEmployment.find('[data-parent="transitionGoalDefault"]').attr("data-parent", "transitionEmploymentIndentity" + employmentCount).prop("href", "#collapseTransitionEmployment" + employmentCount);
         cloneEmployment.find(".panel-body").parent().prop("id", "collapseTransitionEmployment" + employmentCount);
-        cloneEmployment.find("#transitionGoalGraduation").prop("id", "transitionEmploymentGraduation" + employmentCount).attr("name", "transitionEmploymentGraduation" + employmentCount);
-        cloneEmployment.find("#transitionGoalBehavior").prop("id", "transitionEmploymentBehavior" + employmentCount).attr("name", "transitionEmploymentBehavior" + employmentCount);
-        cloneEmployment.find("#transitionGoalHow").prop("id", "transitionEmploymentCompleted" + employmentCount).attr("name", "transitionEmploymentCompleted" + employmentCount);
+        cloneEmployment.find("#transitionGoalGraduation").prop("id", "transitionEmploymentGraduation" + employmentCount).attr("name", "transitionEmploymentGraduation" + employmentCount).attr("data-validate", "true");
+        cloneEmployment.find("#transitionGoalBehavior").prop("id", "transitionEmploymentBehavior" + employmentCount).attr("name", "transitionEmploymentBehavior" + employmentCount).attr("data-validate", "true");
+        cloneEmployment.find("#transitionGoalHow").prop("id", "transitionEmploymentCompleted" + employmentCount).attr("name", "transitionEmploymentCompleted" + employmentCount).attr("data-validate", "true");
 
 		cloneEmployment.find('.textHow').on('blur', function(e) {			
 			var currentValue = $(this).val();
@@ -2125,12 +2129,12 @@
         cloneInstruction.find(".transitionServiceLabel").text("Instruction Service");
         cloneInstruction.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionInstructionIndentity" + instructionCount).prop("href", "#collapseTransitionInstruction" + instructionCount);
         cloneInstruction.find(".panel-body").parent().prop("id", "collapseTransitionInstruction" + instructionCount);
-        cloneInstruction.find("#transitionServiceDescription").prop("id", "transitionInstructionServiceDescription" + instructionCount).attr("name", "transitionInstructionServiceDescription" + instructionCount);
-        cloneInstruction.find("#transitionServiceFrequency").prop("id", "transitionInstructionServiceFrequency" + instructionCount).attr("name", "transitionInstructionServiceFrequency" + instructionCount);
-        cloneInstruction.find("#transitionServiceLocation").prop("id", "transitionInstructionServiceLocation" + instructionCount).attr("name", "transitionInstructionServiceLocation" + instructionCount);
-        cloneInstruction.find("#transitionServiceDuration").prop("id", "transitionInstructionServiceDuration" + instructionCount).attr("name", "transitionInstructionServiceDuration" + instructionCount);
-        var stDate = cloneInstruction.find("#transitionServiceStartDate").prop("id", "transitionInstructionServiceStartDate" + instructionCount).attr("name", "transitionInstructionServiceStartDate" + instructionCount);
-        var endDate = cloneInstruction.find("#transitionServiceEndDate").prop("id", "transitionInstructionServiceEndDate" + instructionCount).attr("name", "transitionInstructionServiceEndDate" + instructionCount);
+        cloneInstruction.find("#transitionServiceDescription").prop("id", "transitionInstructionServiceDescription" + instructionCount).attr("name", "transitionInstructionServiceDescription" + instructionCount).attr("data-validate", "true");
+        cloneInstruction.find("#transitionServiceFrequency").prop("id", "transitionInstructionServiceFrequency" + instructionCount).attr("name", "transitionInstructionServiceFrequency" + instructionCount).attr("data-validate", "true");
+        cloneInstruction.find("#transitionServiceLocation").prop("id", "transitionInstructionServiceLocation" + instructionCount).attr("name", "transitionInstructionServiceLocation" + instructionCount).attr("data-validate", "true");
+        cloneInstruction.find("#transitionServiceDuration").prop("id", "transitionInstructionServiceDuration" + instructionCount).attr("name", "transitionInstructionServiceDuration" + instructionCount).attr("data-validate", "true");
+        var stDate = cloneInstruction.find("#transitionServiceStartDate").prop("id", "transitionInstructionServiceStartDate" + instructionCount).attr("name", "transitionInstructionServiceStartDate" + instructionCount).attr("data-validate", "true");
+        var endDate = cloneInstruction.find("#transitionServiceEndDate").prop("id", "transitionInstructionServiceEndDate" + instructionCount).attr("name", "transitionInstructionServiceEndDate" + instructionCount).attr("data-validate", "true");
         stDate.datepicker({
             dateFormat: "mm/dd/yy",
 
@@ -2209,12 +2213,12 @@
         cloneRelated.find(".transitionServiceLabel").text("Related Service");
         cloneRelated.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionRelatedIndentity" + relatedCount).prop("href", "#collapseTransitionRelated" + relatedCount);
         cloneRelated.find(".panel-body").parent().prop("id", "collapseTransitionRelated" + relatedCount);
-        cloneRelated.find("#transitionServiceDescription").prop("id", "transitionRelatedServiceDescription" + relatedCount).attr("name", "transitionRelatedServiceDescription" + relatedCount);
-        cloneRelated.find("#transitionServiceFrequency").prop("id", "transitionRelatedServiceFrequency" + relatedCount).attr("name", "transitionRelatedServiceFrequency" + relatedCount);
-        cloneRelated.find("#transitionServiceLocation").prop("id", "transitionRelatedServiceLocation" + relatedCount).attr("name", "transitionRelatedServiceLocation" + relatedCount);
-        cloneRelated.find("#transitionServiceDuration").prop("id", "transitionRelatedServiceDuration" + relatedCount).attr("name", "transitionRelatedServiceDuration" + relatedCount);
-        var stDate = cloneRelated.find("#transitionServiceStartDate").prop("id", "transitionRelatedServiceStartDate" + relatedCount).attr("name", "transitionRelatedServiceStartDate" + relatedCount);
-        var endDate = cloneRelated.find("#transitionServiceEndDate").prop("id", "transitionRelatedServiceEndDate" + relatedCount).attr("name", "transitionRelatedServiceEndDate" + relatedCount);
+        cloneRelated.find("#transitionServiceDescription").prop("id", "transitionRelatedServiceDescription" + relatedCount).attr("name", "transitionRelatedServiceDescription" + relatedCount).attr("data-validate", "true");
+        cloneRelated.find("#transitionServiceFrequency").prop("id", "transitionRelatedServiceFrequency" + relatedCount).attr("name", "transitionRelatedServiceFrequency" + relatedCount).attr("data-validate", "true");
+        cloneRelated.find("#transitionServiceLocation").prop("id", "transitionRelatedServiceLocation" + relatedCount).attr("name", "transitionRelatedServiceLocation" + relatedCount).attr("data-validate", "true");
+        cloneRelated.find("#transitionServiceDuration").prop("id", "transitionRelatedServiceDuration" + relatedCount).attr("name", "transitionRelatedServiceDuration" + relatedCount).attr("data-validate", "true");
+        var stDate = cloneRelated.find("#transitionServiceStartDate").prop("id", "transitionRelatedServiceStartDate" + relatedCount).attr("name", "transitionRelatedServiceStartDate" + relatedCount).attr("data-validate", "true");
+        var endDate = cloneRelated.find("#transitionServiceEndDate").prop("id", "transitionRelatedServiceEndDate" + relatedCount).attr("name", "transitionRelatedServiceEndDate" + relatedCount).attr("data-validate", "true");
 
         stDate.datepicker({
             dateFormat: "mm/dd/yy",
@@ -2294,12 +2298,12 @@
         cloneDaily.find(".transitionServiceLabel").text("Daily Living Skills Service");
         cloneDaily.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionDailyIndentity" + dailyCount).prop("href", "#collapseTransitionDaily" + dailyCount);
         cloneDaily.find(".panel-body").parent().prop("id", "collapseTransitionDaily" + dailyCount);
-        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionDailyServiceDescription" + dailyCount).attr("name", "transitionDailyServiceDescription" + dailyCount);
-        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionDailyServiceFrequency" + dailyCount).attr("name", "transitionDailyServiceFrequency" + dailyCount);
-        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionDailyServiceLocation" + dailyCount).attr("name", "transitionDailyServiceLocation" + dailyCount);
-        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionDailyServiceDuration" + dailyCount).attr("name", "transitionDailyServiceDuration" + dailyCount);
-        var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionDailyServiceStartDate" + dailyCount).attr("name", "transitionDailyServiceStartDate" + dailyCount);
-        var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionDailyServiceEndDate" + dailyCount).attr("name", "transitionDailyServiceEndDate" + dailyCount);
+        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionDailyServiceDescription" + dailyCount).attr("name", "transitionDailyServiceDescription" + dailyCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionDailyServiceFrequency" + dailyCount).attr("name", "transitionDailyServiceFrequency" + dailyCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionDailyServiceLocation" + dailyCount).attr("name", "transitionDailyServiceLocation" + dailyCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionDailyServiceDuration" + dailyCount).attr("name", "transitionDailyServiceDuration" + dailyCount).attr("data-validate", "true");
+        var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionDailyServiceStartDate" + dailyCount).attr("name", "transitionDailyServiceStartDate" + dailyCount).attr("data-validate", "true");
+        var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionDailyServiceEndDate" + dailyCount).attr("name", "transitionDailyServiceEndDate" + dailyCount).attr("data-validate", "true");
         stDate.datepicker({
             dateFormat: "mm/dd/yy",
 
@@ -2378,12 +2382,12 @@
         cloneDaily.find(".transitionServiceLabel").text("Functional Vocational Service");
         cloneDaily.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionVocationalIndentity" + vocationalCount).prop("href", "#collapseTransitionVoctional" + vocationalCount);
         cloneDaily.find(".panel-body").parent().prop("id", "collapseTransitionVoctional" + vocationalCount);
-        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionVocationalServiceDescription" + vocationalCount).attr("name", "transitionVocationalServiceDescription" + vocationalCount);
-        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionVocationalServiceFrequency" + vocationalCount).attr("name", "transitionVocationalServiceFrequency" + vocationalCount);
-        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionVocationalServiceLocation" + vocationalCount).attr("name", "transitionVocationalServiceLocation" + vocationalCount);
-        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionVocationalServiceDuration" + vocationalCount).attr("name", "transitionVocationalServiceDuration" + vocationalCount);
-        var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionVocationalServiceStartDate" + vocationalCount).attr("name", "transitionVocationalServiceStartDate" + vocationalCount);
-        var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionVocationalServiceEndDate" + vocationalCount).attr("name", "transitionVocationalServiceEndDate" + vocationalCount);
+        cloneDaily.find("#transitionServiceDescription").prop("id", "transitionVocationalServiceDescription" + vocationalCount).attr("name", "transitionVocationalServiceDescription" + vocationalCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceFrequency").prop("id", "transitionVocationalServiceFrequency" + vocationalCount).attr("name", "transitionVocationalServiceFrequency" + vocationalCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceLocation").prop("id", "transitionVocationalServiceLocation" + vocationalCount).attr("name", "transitionVocationalServiceLocation" + vocationalCount).attr("data-validate", "true");
+        cloneDaily.find("#transitionServiceDuration").prop("id", "transitionVocationalServiceDuration" + vocationalCount).attr("name", "transitionVocationalServiceDuration" + vocationalCount).attr("data-validate", "true");
+        var stDate = cloneDaily.find("#transitionServiceStartDate").prop("id", "transitionVocationalServiceStartDate" + vocationalCount).attr("name", "transitionVocationalServiceStartDate" + vocationalCount).attr("data-validate", "true");
+        var endDate = cloneDaily.find("#transitionServiceEndDate").prop("id", "transitionVocationalServiceEndDate" + vocationalCount).attr("name", "transitionVocationalServiceEndDate" + vocationalCount).attr("data-validate", "true");
 
         stDate.datepicker({
             dateFormat: "mm/dd/yy",
@@ -2463,12 +2467,12 @@
         cloneLeisure.find(".transitionServiceLabel").text("Recreation and Leisure Service");
         cloneLeisure.find('[data-parent="transitionServiceDefault"]').attr("data-parent", "transitionLeisureIndentity" + leisureCount).prop("href", "#collapseTransitionLeisure" + leisureCount);
         cloneLeisure.find(".panel-body").parent().prop("id", "collapseTransitionLeisure" + leisureCount);
-        cloneLeisure.find("#transitionServiceDescription").prop("id", "transitionLeisureServiceDescription" + leisureCount).attr("name", "transitionLeisureServiceDescription" + leisureCount);
-        cloneLeisure.find("#transitionServiceFrequency").prop("id", "transitionLeisureServiceFrequency" + leisureCount).attr("name", "transitionLeisureServiceeFrequency" + leisureCount);
-        cloneLeisure.find("#transitionServiceLocation").prop("id", "transitionLeisureServiceLocation" + leisureCount).attr("name", "transitionLeisureServiceLocation" + leisureCount);
-        cloneLeisure.find("#transitionServiceDuration").prop("id", "transitionLeisureServiceDuration" + leisureCount).attr("name", "transitionLeisureServiceDuration" + leisureCount);
-        var stDate = cloneLeisure.find("#transitionServiceStartDate").prop("id", "transitionLeisureServiceStartDate" + leisureCount).attr("name", "transitionLeisureServiceStartDate" + leisureCount);
-        var endDate = cloneLeisure.find("#transitionServiceEndDate").prop("id", "transitionLeisureServiceEndDate" + leisureCount).attr("name", "transitionLeisureServiceEndDate" + leisureCount);
+        cloneLeisure.find("#transitionServiceDescription").prop("id", "transitionLeisureServiceDescription" + leisureCount).attr("name", "transitionLeisureServiceDescription" + leisureCount).attr("data-validate", "true");
+        cloneLeisure.find("#transitionServiceFrequency").prop("id", "transitionLeisureServiceFrequency" + leisureCount).attr("name", "transitionLeisureServiceeFrequency" + leisureCount).attr("data-validate", "true");
+        cloneLeisure.find("#transitionServiceLocation").prop("id", "transitionLeisureServiceLocation" + leisureCount).attr("name", "transitionLeisureServiceLocation" + leisureCount).attr("data-validate", "true");
+        cloneLeisure.find("#transitionServiceDuration").prop("id", "transitionLeisureServiceDuration" + leisureCount).attr("name", "transitionLeisureServiceDuration" + leisureCount).attr("data-validate", "true");
+        var stDate = cloneLeisure.find("#transitionServiceStartDate").prop("id", "transitionLeisureServiceStartDate" + leisureCount).attr("name", "transitionLeisureServiceStartDate" + leisureCount).attr("data-validate", "true");
+        var endDate = cloneLeisure.find("#transitionServiceEndDate").prop("id", "transitionLeisureServiceEndDate" + leisureCount).attr("name", "transitionLeisureServiceEndDate" + leisureCount).attr("data-validate", "true");
 
         stDate.datepicker({
             dateFormat: "mm/dd/yy",
@@ -2532,6 +2536,37 @@
 
             });
         });
-    }
+	}
+	
+	function tabValidates() {
+		var validates = true;
+		var stepId = $('.wizard .nav-pills li.active a').attr('href');
+		var $inputs = $(stepId + " :input[data-validate='true']");
+
+		$inputs.each(function () {
+			var input = $(this);
+			var is_valid = input.val();		
+			var inputName = input.attr("name");
+			//var skip = inputName.indexOf("Default") !== -1
+		
+			//if (!skip) {
+				if (is_valid === "" || is_valid === null) {
+					if (input.is("select")) {
+						$(this).next().addClass('contact-tooltip');
+						input.addClass('contact-tooltip');
+					}
+					else {
+						input.addClass('contact-tooltip');
+					}
+					validates = false;
+				}
+				else {
+					input.removeClass('contact-tooltip');
+				}
+			//}
+		});
+
+		return validates;
+}
 
 </script>

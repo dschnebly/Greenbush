@@ -1103,11 +1103,14 @@ namespace GreenBushIEP.Controllers
         {
             if (ValidateRequest)
             {
-                try
+				bool assessmentFound = false;
+
+				try
                 {
                     int studentId = Convert.ToInt32(collection["studentId"]);
                     int iedId = Convert.ToInt32(collection["IEPid"]);
                     int i = 2;
+					
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault() ?? new tblTransition();
                     transition.IEPid = iedId;
@@ -1146,7 +1149,10 @@ namespace GreenBushIEP.Controllers
                         }
 
                         db.SaveChanges();
-                    }
+
+						assessmentFound = true;
+
+					}
 					
 				}
                 catch (Exception e)
@@ -1154,8 +1160,11 @@ namespace GreenBushIEP.Controllers
                     throw new Exception("Unable to save changes to Transition Assessments: " + e.InnerException.ToString());
                 }
 
-                return Json(new { Result = "success", Message = "The Student Transition Assessment was updated." }, JsonRequestBehavior.AllowGet);
-            }
+				if(assessmentFound)
+					return Json(new { Result = "success", Message = "The Student Transition Assessment was updated." }, JsonRequestBehavior.AllowGet);
+				else
+					return Json(new { Result = "failure", Message = "At least one Transition Assessment is required." }, JsonRequestBehavior.AllowGet);
+			}
 
             return Json(new { Result = "failure", Message = "The Student Transition Assessment was not added." }, JsonRequestBehavior.AllowGet);
         }
@@ -1223,8 +1232,13 @@ namespace GreenBushIEP.Controllers
                     }
 
                     db.SaveChanges();
-                    if (hasEmploymentGoal && hasEducationalGoal)
-                        canComplete = true;
+					if (hasEmploymentGoal && hasEducationalGoal)
+						canComplete = true;
+					else
+					{
+						canComplete = false;
+						return Json(new { Result = "failure", Message = "At least one Education/Training Goal and one Employment Goal is required." }, JsonRequestBehavior.AllowGet);
+					}
 
                     return Json(new { Result = "success", Message = "The Student Transition Goals were added.", CanComplete = canComplete }, JsonRequestBehavior.AllowGet);
                 }
@@ -1259,6 +1273,8 @@ namespace GreenBushIEP.Controllers
         {
             if (ValidateRequest)
             {
+				bool serviceFound = false;
+
                 try
                 {
                     int studentId = Convert.ToInt32(collection["studentId"]);
@@ -1299,7 +1315,9 @@ namespace GreenBushIEP.Controllers
                         }
 
                         db.SaveChanges();
-                    }
+						serviceFound = true;
+
+					}
 
                     // for catching the Community Participation info at the end of the form.
                     if (i < collection.Count)
@@ -1310,8 +1328,11 @@ namespace GreenBushIEP.Controllers
                         db.SaveChanges();
                     }
 
-                    return Json(new { Result = "success", Message = "The Student Transition Services were added." }, JsonRequestBehavior.AllowGet);
-                }
+					if(serviceFound)					
+						return Json(new { Result = "success", Message = "The Student Transition Services were added." }, JsonRequestBehavior.AllowGet);
+					else
+						return Json(new { Result = "failure", Message = "At least one Service must be added." }, JsonRequestBehavior.AllowGet);
+				}
                 catch (Exception e)
                 {
                     throw new Exception("Unable to save changes to Transition Services: " + e.InnerException.ToString());
