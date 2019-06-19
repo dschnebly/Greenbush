@@ -2410,12 +2410,16 @@ namespace GreenbushIep.Controllers
 
         public ActionResult SpedProReport()
         {
-            return View("~/Reports/SpedPro/Index.cshtml");
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			var canReset =  (user != null && (user.RoleID == owner || user.RoleID == mis)) ? true : false;
+			ViewBag.canReset = canReset;
+			return View("~/Reports/SpedPro/Index.cshtml");
         }
 
 		[Authorize]
 		public ActionResult DownloadSpedPro(FormCollection collection)
 		{
+			bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
 			string fiscalYearStr = collection["fiscalYear"];
 			int fiscalYear = 0;
 			Int32.TryParse(fiscalYearStr, out fiscalYear);
@@ -2423,12 +2427,59 @@ namespace GreenbushIep.Controllers
 			tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 			if (MIS != null)
 			{
-								
+				var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+				ViewBag.canReset = canReset;
+
 				var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
 				List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
 				
 				string iepStatus = IEPStatus.ACTIVE;
 				var exportErrors = new List<ExportErrorView>();
+
+
+				if (isReset)
+				{
+					
+					try
+					{
+						var resetQuery = (from iep in db.tblIEPs
+										  join student in db.tblUsers
+											  on iep.UserID equals student.UserID
+										  join services in db.tblServices
+											  on iep.IEPid equals services.IEPid
+										  join building in db.tblBuildingMappings
+											  on student.UserID equals building.UserID
+										  where
+										  iep.IepStatus == iepStatus
+										  && services.SchoolYear == fiscalYear
+										  && (iep.FiledOn != null)
+										  && myBuildings.Contains(building.BuildingID)
+										  select iep).Distinct();
+
+						foreach (var item in resetQuery)
+						{
+							item.FiledOn = null;
+						}
+
+						db.SaveChanges();
+
+						ViewBag.message = "The IEPs were successfully reset!";
+					}
+					catch(Exception e)
+					{
+						exportErrors.Add(new ExportErrorView()
+						{
+							UserID = "",
+							Description = e.Message
+						});
+
+						ViewBag.errors = exportErrors;
+					}
+
+					return View("~/Reports/SpedPro/Index.cshtml");
+
+				}
+
 
 				var query = (from iep in db.tblIEPs
 							 join student in db.tblUsers
