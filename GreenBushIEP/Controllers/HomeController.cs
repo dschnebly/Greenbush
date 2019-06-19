@@ -1856,7 +1856,10 @@ namespace GreenbushIep.Controllers
                     //default value
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
-                }
+					model.Parental_CopyIEP_flag = true;
+					model.Parental_RightsBook_flag = true;
+
+				}
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
