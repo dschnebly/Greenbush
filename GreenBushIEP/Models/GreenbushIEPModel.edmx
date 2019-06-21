@@ -292,13 +292,22 @@
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
           <Property Name="isUpload" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblGoalBenchmarkMethods">
+          <Key>
+            <PropertyRef Name="goalBenchmarkID" />
+            <PropertyRef Name="EvaluationProcedureID" />
+          </Key>
+          <Property Name="goalBenchmarkID" Type="int" Nullable="false" />
+          <Property Name="EvaluationProcedureID" Type="int" Nullable="false" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="tblGoalBenchmarks">
           <Key>
             <PropertyRef Name="goalBenchmarkID" />
           </Key>
           <Property Name="goalBenchmarkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="goalID" Type="int" Nullable="false" />
-          <Property Name="Method" Type="int" Nullable="false" />
+          <Property Name="Method" Type="int" />
           <Property Name="ObjectiveBenchmark" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="TransitionActivity" Type="bit" Nullable="false" />
           <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" />
@@ -327,6 +336,7 @@
           <Property Name="evaluationProcedureID" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="OtherDescription" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblGoals">
           <Key>
@@ -1405,6 +1415,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEvaluationProcedures" EntityType="Self.tblEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGoalBenchmarkMethods" EntityType="Self.tblGoalBenchmarkMethods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="Self.tblGoalBenchmarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalEvaluationProcedures" EntityType="Self.tblGoalEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoals" EntityType="Self.tblGoals" Schema="dbo" store:Type="Tables" />
@@ -1785,6 +1796,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </AssociationSet>
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" />
           <EntitySet Name="vw_ModuleOtherFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleOtherFlags" />
+          <EntitySet Name="tblGoalBenchmarkMethods" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmarkMethod" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2168,7 +2180,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           </Key>
           <Property Name="goalBenchmarkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="goalID" Type="Int32" Nullable="false" />
-          <Property Name="Method" Type="Int32" Nullable="false" />
+          <Property Name="Method" Type="Int32" />
           <Property Name="ObjectiveBenchmark" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="TransitionActivity" Type="Boolean" Nullable="false" />
           <Property Name="Progress_Quarter1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2197,6 +2209,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="evaluationProcedureID" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblGoal">
           <Key>
@@ -3288,6 +3301,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="NeedMetByOtherDescription" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Module" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tblGoalBenchmarkMethod">
+          <Key>
+            <PropertyRef Name="goalBenchmarkID" />
+            <PropertyRef Name="EvaluationProcedureID" />
+          </Key>
+          <Property Name="goalBenchmarkID" Type="Int32" Nullable="false" />
+          <Property Name="EvaluationProcedureID" Type="Int32" Nullable="false" />
+          <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3691,6 +3713,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGoalEvaluationProcedures">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalEvaluationProcedure">
               <MappingFragment StoreEntitySet="tblGoalEvaluationProcedures">
+                <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="evaluationProcedureID" ColumnName="evaluationProcedureID" />
@@ -4697,6 +4720,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="NeedMetByOtherDescription" ColumnName="NeedMetByOtherDescription" />
                 <ScalarProperty Name="NeedMetByOther" ColumnName="NeedMetByOther" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGoalBenchmarkMethods">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGoalBenchmarkMethod">
+              <MappingFragment StoreEntitySet="tblGoalBenchmarkMethods">
+                <ScalarProperty Name="OtherDescription" ColumnName="OtherDescription" />
+                <ScalarProperty Name="EvaluationProcedureID" ColumnName="EvaluationProcedureID" />
+                <ScalarProperty Name="goalBenchmarkID" ColumnName="goalBenchmarkID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -11,8 +11,9 @@ namespace GreenBushIEP.Models
         public tblGoal goal { get; set; }
         public List<tblGoalBenchmark> benchmarks { get; set; } = new List<tblGoalBenchmark>();
         public List<tblGoalEvaluationProcedure> evaluationProcedures { get; set; } = new List<tblGoalEvaluationProcedure>();
+		public List<tblGoalBenchmarkMethod> shortTermBenchmarkMethods { get; set; } = new List<tblGoalBenchmarkMethod>();
 
-        public StudentGoal(int? goalId = null)
+		public StudentGoal(int? goalId = null)
         {  
             if (goalId != null && goalId != 0)
             {
@@ -88,7 +89,26 @@ namespace GreenBushIEP.Models
                 db.SaveChanges();
             }
 
-            if (!string.IsNullOrEmpty(evalProcedures))
+			foreach (tblGoalBenchmarkMethod benchmarkMethod in this.shortTermBenchmarkMethods)
+			{				
+				var currentMethods = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).ToList();
+				foreach (var cm in currentMethods)
+				{
+					db.tblGoalBenchmarkMethods.Remove(cm);
+				}
+			}
+			db.SaveChanges();
+
+			foreach (tblGoalBenchmarkMethod benchmarkMethod in this.shortTermBenchmarkMethods)
+			{
+				tblGoalBenchmarkMethod currentMethod = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).FirstOrDefault();
+				if (currentMethod == null)
+					db.tblGoalBenchmarkMethods.Add(benchmarkMethod);
+			
+			}
+			db.SaveChanges();
+
+			if (!string.IsNullOrEmpty(evalProcedures))
             {
                 var evalProceduresArray = evalProcedures.Split(',');
                 var currentList = db.tblGoalEvaluationProcedures.Where(o => o.goalID == this.goal.goalID);

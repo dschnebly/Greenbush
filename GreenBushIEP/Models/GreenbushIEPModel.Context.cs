@@ -96,6 +96,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblReferralRequest> tblReferralRequests { get; set; }
         public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
         public virtual DbSet<vw_ModuleOtherFlags> vw_ModuleOtherFlags { get; set; }
+        public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

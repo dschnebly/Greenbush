@@ -21,15 +21,16 @@
     {
         <div class="StudentGoalBenchmark">
             <input type="hidden" name="StudentGoalBenchmarkId@(benchmark.goalBenchmarkID)" value="@(benchmark.goalBenchmarkID)" />
-            <div class="form-group" style="margin-bottom: 0;">
+			
+            <div class="form-group" style="margin-bottom: 8px;padding:3px">
                 <div class="input-group" style="background-color: #F9F9F9;">
-                    <div class="input-group-btn bs-dropdown-to-select-group">
-                        <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
+                    @*<div class="input-group-btn bs-dropdown-to-select-group">*@
+                        @*<button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
                             <span data-bind="bs-drp-sel-label">Select Method...</span>
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <input type="hidden" name="StudentGoalBenchmarkMethod@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="@(benchmark.Method)">
+                        </button>*@
+                        @*<input type="hidden" name="StudentGoalBenchmarkMethod@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="@(benchmark.Method)">
                         <ul class="dropdown-menu" role="menu" style="font-size:16px;">
                             <li data-value="1" @if (isReadOnly) { @Html.Raw("class='disabled'")  ; }><a href="#">Written Observation</a></li>
                             <li data-value="2" @if (isReadOnly) { @Html.Raw("class='disabled'")  ; }><a href="#">Written Performance</a></li>
@@ -38,8 +39,11 @@
                             <li data-value="5" @if (isReadOnly) { @Html.Raw("class='disabled'")  ; }><a href="#">Time Sample</a></li>
                             <li data-value="6" @if (isReadOnly) { @Html.Raw("class='disabled'")  ; }><a href="#">Demonstration/Performance</a></li>
                             <li data-value="7" @if (isReadOnly) { @Html.Raw("class='disabled'")  ; }><a href="#">Other</a></li>
-                        </ul>
-                    </div>
+                        </ul>*@
+
+
+						
+                    @*</div>*@
                     <input type="text" value="@(benchmark.ObjectiveBenchmark.ToString())" name="StudentGoalBenchmarkTitle@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkTitle form-control" placeholder="Enter a new student benchmark" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; } />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; }>
@@ -51,8 +55,17 @@
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; }>
                             <i class="glyphicon glyphicon-trash"></i>
                         </button>
-                    </span>
+                    </span>					
                 </div>
+				<select name="StudentGoalShorttermBenchmarkMethods@(benchmark.goalBenchmarkID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple"  style="height: 40px; ">
+                    <option value="1" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
+                    <option value="2" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
+                    <option value="3" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
+                    <option value="4" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
+                    <option value="5" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
+                    <option value="6" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+                    <option value="7" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 7) ? "selected" : "")>Other</option>
+                </select>
             </div>
         </div>
     }

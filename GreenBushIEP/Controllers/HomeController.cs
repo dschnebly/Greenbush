@@ -1238,10 +1238,24 @@ namespace GreenbushIep.Controllers
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
-                    model.studentGoals.Add(new StudentGoal(goal.goalID));
-                }
+					var studentGoal = new StudentGoal(goal.goalID);
 
-                if (!isReadOnly)
+					model.studentGoals.Add(studentGoal);
+					var benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goal.goalID);
+
+					foreach (tblGoalBenchmark benchmark in benchmarks)
+					{
+						var shortBenchmarks = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID).ToList();
+						studentGoal.shortTermBenchmarkMethods.AddRange(shortBenchmarks);
+
+					}
+
+				}
+
+				
+
+
+				if (!isReadOnly)
                     return PartialView("_ModuleStudentGoals", model);
                 else
                     return PartialView("ActiveIEP/_StudentGoals", model);
