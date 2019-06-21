@@ -700,12 +700,6 @@
 									element.value = id;
 									element.classList.remove("newbenchmark");
 
-									//var bMethods = document.getElementsByName("StudentGoalBenchmarkMethod" + originalNum);
-									//for (m = 0; m < bMethods.length; m++) {
-									//	if(bMethods[m].classList.contains("newbenchmark"))
-									//		bMethods[m].name = "StudentGoalBenchmarkMethod" + id;	
-									//}
-
 									var bMethods = document.getElementsByName("StudentGoalShorttermBenchmarkMethods" + originalNum);
 									for (m = 0; m < bMethods.length; m++) {
 										if(bMethods[m].classList.contains("newbenchmark"))
@@ -811,20 +805,27 @@
 
             /* Binding */
             /* when the teacher clicks the Add Short Term Benchmark(s) button */
-            $(this).find('.newObjectiveBenchmark').on('click', function (event) {
-                var benchmarkCount = $('.StudentGoalBenchmark').not("#defaultObjective").length;
-                var cloneBenchmark = $('#defaultObjective').clone().removeClass('hidden').removeAttr('id').removeClass("bound");
-                cloneBenchmark.find("input[name='StudentGoalBenchmarkId0']").attr("name", "StudentGoalBenchmarkId" + benchmarkCount).addClass("newbenchmark");
-                //cloneBenchmark.find("input[name='StudentGoalBenchmarkMethod0']").attr("name", "StudentGoalBenchmarkMethod" + benchmarkCount).addClass("newbenchmark");
-                cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + benchmarkCount).addClass("newbenchmark");
-				cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + benchmarkCount).addClass("newbenchmark");
-				
-				var shortTermMethods = cloneBenchmark.find("select[name='StudentGoalShorttermBenchmarkMethods0']").attr("name", "StudentGoalShorttermBenchmarkMethods" + benchmarkCount).addClass("newbenchmark");
-				shortTermMethods.chosen({ width: "100%" });
+			$(this).find('.newObjectiveBenchmark').on('click', function (event) {
+				var studentGoalId = $(this).parent().parent().parent().find("input[name='StudentGoalId']").val();
+				if (studentGoalId == 0) {
 
-                $(this).parent().find('.StudentGoalBenchmarks').append(cloneBenchmark);
+					alert("The Student Goal must be saved before Short Term Benchmarks can be added. Please click 'Save as Draft' and then try adding a new Short Term Benchmark.");
+					
+				}
+				else {
+					var benchmarkCount = $('.StudentGoalBenchmark').not("#defaultObjective").length;
+					var cloneBenchmark = $('#defaultObjective').clone().removeClass('hidden').removeAttr('id').removeClass("bound");
+					cloneBenchmark.find("input[name='StudentGoalBenchmarkId0']").attr("name", "StudentGoalBenchmarkId" + benchmarkCount).addClass("newbenchmark");
+					cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + benchmarkCount).addClass("newbenchmark");
+					cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + benchmarkCount).addClass("newbenchmark");
 
-                initObjective();
+					var shortTermMethods = cloneBenchmark.find("select[name='StudentGoalShorttermBenchmarkMethods0']").attr("name", "StudentGoalShorttermBenchmarkMethods" + benchmarkCount).addClass("newbenchmark");
+					shortTermMethods.chosen({ width: "100%" });
+
+					$(this).parent().find('.StudentGoalBenchmarks').append(cloneBenchmark);
+
+					initObjective();
+				}
             });
         });
 
