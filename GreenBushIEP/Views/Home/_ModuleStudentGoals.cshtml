@@ -499,7 +499,7 @@
 </div>
 
 <script>
-	debugger;
+	
 	var _newBenchmarks;
 
     $(document).ready(function () {
@@ -700,10 +700,16 @@
 									element.value = id;
 									element.classList.remove("newbenchmark");
 
-									var bMethods = document.getElementsByName("StudentGoalBenchmarkMethod" + originalNum);
+									//var bMethods = document.getElementsByName("StudentGoalBenchmarkMethod" + originalNum);
+									//for (m = 0; m < bMethods.length; m++) {
+									//	if(bMethods[m].classList.contains("newbenchmark"))
+									//		bMethods[m].name = "StudentGoalBenchmarkMethod" + id;	
+									//}
+
+									var bMethods = document.getElementsByName("StudentGoalShorttermBenchmarkMethods" + originalNum);
 									for (m = 0; m < bMethods.length; m++) {
 										if(bMethods[m].classList.contains("newbenchmark"))
-											bMethods[m].name = "StudentGoalBenchmarkMethod" + id;	
+											bMethods[m].name = "StudentGoalBenchmarkMethods" + id;	
 									}
 
 
