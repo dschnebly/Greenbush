@@ -12,13 +12,10 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblGoalEvaluationProcedure
+    public partial class tblGoalBenchmarkMethod
     {
-        public int goalEvaluationProcedureID { get; set; }
-        public int goalID { get; set; }
-        public int evaluationProcedureID { get; set; }
-        public System.DateTime Create_Date { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
+        public int goalBenchmarkID { get; set; }
+        public int EvaluationProcedureID { get; set; }
         public string OtherDescription { get; set; }
     }
 }

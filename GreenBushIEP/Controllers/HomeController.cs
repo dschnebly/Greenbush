@@ -1238,10 +1238,24 @@ namespace GreenbushIep.Controllers
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
-                    model.studentGoals.Add(new StudentGoal(goal.goalID));
-                }
+					var studentGoal = new StudentGoal(goal.goalID);
 
-                if (!isReadOnly)
+					model.studentGoals.Add(studentGoal);
+					var benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goal.goalID);
+
+					foreach (tblGoalBenchmark benchmark in benchmarks)
+					{
+						var shortBenchmarks = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID).ToList();
+						studentGoal.shortTermBenchmarkMethods.AddRange(shortBenchmarks);
+
+					}
+
+				}
+
+				
+
+
+				if (!isReadOnly)
                     return PartialView("_ModuleStudentGoals", model);
                 else
                     return PartialView("ActiveIEP/_StudentGoals", model);
@@ -1678,7 +1692,35 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "Unknown Error Occured." }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
+		[HttpGet]
+		[Authorize]
+		public ActionResult GetLastFiscalDay(int studentId, string fyYear)
+		{
+			var lastDay = GetLastFiscalCalendarDay(studentId, fyYear);
+
+			if (lastDay != null)				
+				return Json(new { Result = "success", Value = lastDay.calendarDate.Value.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+			else
+				return Json(new { Result = "success", Value = "" }, JsonRequestBehavior.AllowGet);
+		}
+
+		private tblCalendar GetLastFiscalCalendarDay(int studentId, string fyYear)
+		{
+			tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+
+			int lastYear = 0;
+			Int32.TryParse(fyYear, out lastYear);
+
+			List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
+
+			var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+
+			return lastDay;
+
+		}
+
+		[HttpGet]
         [Authorize]
         public ActionResult StudentTransition(int studentId, int IEPid)
         {
@@ -1828,7 +1870,10 @@ namespace GreenbushIep.Controllers
                     //default value
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
-                }
+					model.Parental_CopyIEP_flag = true;
+					model.Parental_RightsBook_flag = true;
+
+				}
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
@@ -2379,12 +2424,16 @@ namespace GreenbushIep.Controllers
 
         public ActionResult SpedProReport()
         {
-            return View("~/Reports/SpedPro/Index.cshtml");
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			var canReset =  (user != null && (user.RoleID == owner || user.RoleID == mis)) ? true : false;
+			ViewBag.canReset = canReset;
+			return View("~/Reports/SpedPro/Index.cshtml");
         }
 
 		[Authorize]
 		public ActionResult DownloadSpedPro(FormCollection collection)
 		{
+			bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
 			string fiscalYearStr = collection["fiscalYear"];
 			int fiscalYear = 0;
 			Int32.TryParse(fiscalYearStr, out fiscalYear);
@@ -2392,12 +2441,59 @@ namespace GreenbushIep.Controllers
 			tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 			if (MIS != null)
 			{
-								
+				var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+				ViewBag.canReset = canReset;
+
 				var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
 				List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
 				
 				string iepStatus = IEPStatus.ACTIVE;
 				var exportErrors = new List<ExportErrorView>();
+
+
+				if (isReset)
+				{
+					
+					try
+					{
+						var resetQuery = (from iep in db.tblIEPs
+										  join student in db.tblUsers
+											  on iep.UserID equals student.UserID
+										  join services in db.tblServices
+											  on iep.IEPid equals services.IEPid
+										  join building in db.tblBuildingMappings
+											  on student.UserID equals building.UserID
+										  where
+										  iep.IepStatus == iepStatus
+										  && services.SchoolYear == fiscalYear
+										  && (iep.FiledOn != null)
+										  && myBuildings.Contains(building.BuildingID)
+										  select iep).Distinct();
+
+						foreach (var item in resetQuery)
+						{
+							item.FiledOn = null;
+						}
+
+						db.SaveChanges();
+
+						ViewBag.message = "The IEPs were successfully reset!";
+					}
+					catch(Exception e)
+					{
+						exportErrors.Add(new ExportErrorView()
+						{
+							UserID = "",
+							Description = e.Message
+						});
+
+						ViewBag.errors = exportErrors;
+					}
+
+					return View("~/Reports/SpedPro/Index.cshtml");
+
+				}
+
 
 				var query = (from iep in db.tblIEPs
 							 join student in db.tblUsers
@@ -2675,7 +2771,26 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
             }
 
-            int count = 1;
+			string serviceEndDateOverride = "";
+
+			//if exit data exists
+			if (studentIEP.studentDetails.student.ExitDate.HasValue)
+			{
+				//find last available calendar data before this date
+				var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
+
+				if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
+				{
+					serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
+				}
+				else
+				{
+					serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
+				}
+			}
+
+
+			int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
@@ -2733,7 +2848,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
 
                 //14 Service end Date
-                sb.AppendFormat("{0}\t", service.EndDate.ToShortDateString());
+                sb.AppendFormat("{0}\t", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString(): serviceEndDateOverride);
 
                 //15 minutes
                 sb.AppendFormat("{0}\t", service.Minutes);

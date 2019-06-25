@@ -16,7 +16,7 @@ namespace GreenBushIEP.Models
     {
         public int goalBenchmarkID { get; set; }
         public int goalID { get; set; }
-        public int Method { get; set; }
+        public Nullable<int> Method { get; set; }
         public string ObjectiveBenchmark { get; set; }
         public bool TransitionActivity { get; set; }
         public string Progress_Quarter1 { get; set; }

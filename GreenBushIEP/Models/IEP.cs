@@ -241,8 +241,10 @@ namespace GreenBushIEP.Models
             studentOtherConsiderations.IEPid = current.IEPid;
             studentOtherConsiderations.Completed = false;
             studentOtherConsiderations.Create_Date = DateTime.Now;
+			studentOtherConsiderations.Parental_CopyIEP_flag = true;
+			studentOtherConsiderations.Parental_RightsBook_flag = true;
 
-            try
+			try
             {
                 db.tblOtherConsiderations.Add(studentOtherConsiderations);
                 db.SaveChanges();
