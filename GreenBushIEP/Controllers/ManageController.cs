@@ -19,9 +19,15 @@ namespace GreenBushIEP.Controllers
     public class ManageController : Controller
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+		private const string owner = "1"; //level 5
+		private const string mis = "2"; //level 4
+		private const string admin = "3"; //level 3
+		private const string teacher = "4"; //level 2
+		private const string student = "5";
+		private const string nurse = "6"; //level 1
 
-        // GET: Manage
-        public ActionResult Index()
+		// GET: Manage
+		public ActionResult Index()
         {
             return View();
         }
@@ -183,11 +189,20 @@ namespace GreenBushIEP.Controllers
 		public ActionResult EditReferral(int id)
 		{
 			StudentDetailsViewModel model = new StudentDetailsViewModel();
-
+			bool isComplete = false;
 			model.student = new Student();
+
+			tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == id).FirstOrDefault();
+			if (referralReq != null)
+			{
+				isComplete = referralReq.Complete;
+
+			}
+
 			tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == id).FirstOrDefault();
 			if (student != null)
 			{
+			
 				model.referralId = student.ReferralID;
 				model.student.FirstName = student.FirstName;
 				model.student.MiddleName = student.MiddleInitial;
@@ -271,7 +286,7 @@ namespace GreenBushIEP.Controllers
 
 			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 			ViewBag.AllBuildings = (from b in db.tblBuildings where b.Active == 1 select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
-
+			ViewBag.ReferralComplete = isComplete;
 			return View("~/Views/Home/EditReferral.cshtml", model);
 		}
 
@@ -287,16 +302,25 @@ namespace GreenBushIEP.Controllers
 					
 					// check that the kidsIS doesn't already exsist in the system.
 					long kidsID = Convert.ToInt64(collection["kidsid"]);
-
+					int referralId = Convert.ToInt32(collection["referralId"]);
+					
 					if (kidsID == 0)
 					{
 						return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
 					}
 
 					tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+					tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == referralId).FirstOrDefault();
+
 					if (exsistingStudent != null)
 					{
-						return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+						if(referralReq != null && referralReq.Complete)
+							return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+
+						//student has been created but it is not complete - don't create new record
+						
+
+						return Json(new { Result = "success", Message = exsistingStudent.UserID });
 					}
 
 					// Create New User 
@@ -602,12 +626,16 @@ namespace GreenBushIEP.Controllers
 
 			
 			tblReferralRequest rr = db.tblReferralRequests.Where(o => o.ReferralID == referralID).FirstOrDefault();
-			rr.Complete = true;
-			rr.Update_Date = DateTime.Now;
-			db.SaveChanges();
+			if (rr != null)
+			{
+				rr.Complete = true;
+				rr.Update_Date = DateTime.Now;
+				db.SaveChanges();
 
+			}
 
-			return RedirectToAction("Portal", "Home");
+			return RedirectToAction("Referrals", "Manage");
+
 		}
 
 
@@ -2550,6 +2578,8 @@ namespace GreenBushIEP.Controllers
                     return "Student";
             }
         }
+
+		
 
         #endregion
     }

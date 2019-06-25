@@ -2,8 +2,13 @@
 @model GreenBushIEP.Models.StudentDetailsViewModel
 
 @{
-    ViewBag.Title = "Create Student from Referral";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Create Student from Referral";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	if (ViewBag.ReferralComplete != null && ViewBag.ReferralComplete)
+	{
+		ViewBag.Title = "Create Student from Referral (Completed)";
+	}
 }
 
 @section stylesheets {
@@ -905,7 +910,7 @@
                             </div>
                             <ul class="list-inline pull-right saveandcontinue">
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                                <li><button type="button" class="btn btn-info next-step" id="next5">Save and continue</button></li>
+                                <li><button type="button" class="btn btn-info next-step" id="next5" @(ViewBag.ReferralComplete != null && ViewBag.ReferralComplete ? "disabled" : "")>Save and continue</button></li>
                             </ul>
                         }
                     </div>
@@ -1675,6 +1680,6 @@
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/editreferral.js")
+    @Scripts.Render("~/Scripts/editreferral.js?v1.1")
 
 }
