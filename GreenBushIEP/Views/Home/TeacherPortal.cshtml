@@ -192,22 +192,21 @@
                 display: none;
             }
 
-    #mySettings, #add-system-user, #add-student-user, #reports {
+    #mySettings, #add-system-user, #add-student-user, #reports, #referrals {
         margin-left: 15px;
     }
 
-        #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover {
+        #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover {
             -webkit-animation: pulse 1s ease 0s;
             -o-animation: pulse 1s ease 0s;
             -moz-animation: pulse 1s ease 0s;
             animation: pulse 1s ease 0s;
         }
 
-        #mySettings i, #add-system-user i, #add-student-user i, #reports i {
+        #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
             vertical-align: -webkit-baseline-middle;
             padding-left: 0;
         }
-
 
     @@-webkit-keyframes pulse {
         0% {
@@ -335,7 +334,7 @@
     <div class="row">
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
-				<div class="user-toggle-item">
+                <div class="user-toggle-item">
                     <a id="add-referral-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateReferral"><i class="fa fa-address-book" title="Create a New Referral" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
@@ -382,8 +381,8 @@
                                         <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 }
-								
-								<a href="/Home/IEPFormModule?studentId=@(student.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
+
+                                <a href="/Home/IEPFormModule?studentId=@(student.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
                                     <span class="glyphicon glyphicon-folder-open"></span>
                                 </a>
                                 <a href="/Manage/EditStudent/@(student.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right" data-ftrans="slide" id="editStudent">
