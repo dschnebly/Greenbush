@@ -20,8 +20,16 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD);
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+
+				var sid =  Request.QueryString["sid"];
 				
+				if (!string.IsNullOrEmpty(sid))
+				{
+					int studentId = Convert.ToInt32(sid);
+
+				}
 			}
+			
 		}
 
 		protected void Button1_Click(object sender, EventArgs e)

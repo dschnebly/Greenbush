@@ -957,6 +957,7 @@
     <Content Include="Views\Home\CreateReferral.cshtml" />
     <Content Include="Views\Home\Referrals.cshtml" />
     <Content Include="Views\Home\EditReferral.cshtml" />
+    <Content Include="Views\Form\SummaryOfPerformance.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

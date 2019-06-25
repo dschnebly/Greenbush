@@ -2000,22 +2000,29 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            
-            var forms = GetForms();
+            tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+			var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
 			if (form != null)
 			{
 				viewModel.fileDesc = form.Text;				
-			}			
-            
-            StudentLegalView fileViewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList()
-            };
+			}
+
+			StudentLegalView fileViewModel = new StudentLegalView()
+			{
+				student = student,
+				teacher = teacher,
+				studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+				contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+				studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
+				transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
+				academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
+				socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
+				reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
+				math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
+			    written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
+		};
 
             if (fileViewModel.studentInfo != null)
             {
@@ -2028,7 +2035,10 @@ namespace GreenbushIep.Controllers
                     fileViewModel.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == fileViewModel.studentInfo.AssignedUSD select contact).FirstOrDefault();
                 }
 
-            }
+				fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
+
+
+			}
 
             var lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
             if (lastReEval != null)
@@ -2041,8 +2051,8 @@ namespace GreenbushIep.Controllers
 				var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
 				fileViewModel.districtName = district != null ? district.DistrictName : "";
 			}
-						
 
+			
 			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
@@ -2085,12 +2095,13 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "IEP Amendment Form", Value = "IEPAmendment" });
             forms.Add(new SelectListItem { Text = "Re-Evaluation Not Needed Agreement Form", Value = "IEPReEvalNotNeeded" });
             forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
-            forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
+            //forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
             forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
 			forms.Add(new SelectListItem { Text = "Team Evaluation Report", Value = "TeamEvaluation" });
 			forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
+			forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
 
 

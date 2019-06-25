@@ -317,6 +317,13 @@ namespace GreenBushIEP.Models
 			studentInfo = new tblStudentInfo();
 			contacts = new List<tblStudentRelationship>();
 			districtContact = new tblContact();
+			studentTransition = new tblTransition();
+			transitionGoals = new List<tblTransitionGoal>();
+			academicGoals = new tblIEPAcademic();
+			socialGoals = new tblIEPSocial();
+			reading = new tblIEPReading();
+			math = new tblIEPMath();
+			written = new tblIEPWritten();
 		}
 
 		public tblUser student { get; set; }
@@ -324,9 +331,17 @@ namespace GreenBushIEP.Models
 		public tblUser teacher { get; set; }
 		public List<tblStudentRelationship> contacts { get; set; }
 		public tblContact districtContact { get; set; }
+		public tblTransition studentTransition { get; set; }
+		public List<tblTransitionGoal> transitionGoals { get; set; }
+		public tblIEPAcademic academicGoals { get; set; }
+		public tblIEPSocial socialGoals { get; set; }
+		public tblIEPReading reading { get; set; }
+		public tblIEPMath math { get; set; }
+		public tblIEPWritten written { get; set; }
 		public string building { get; set; }
 		public string districtName { get; set; }
 		public string lastReEvalDate { get; set; }
+		public string studentLanguage { get; set; }
 	}
 
 	public class IEPFormViewModel
