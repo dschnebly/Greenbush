@@ -2476,6 +2476,7 @@ namespace GreenbushIep.Controllers
 											  on student.UserID equals building.UserID
 										  where
 										  iep.IepStatus == iepStatus
+										  && (student.Archive == null || student.Archive == false)
 										  && services.SchoolYear == fiscalYear
 										  && (iep.FiledOn != null)
 										  && myBuildings.Contains(building.BuildingID)
@@ -2515,6 +2516,7 @@ namespace GreenbushIep.Controllers
 							     on student.UserID equals building.UserID
 							 where
 							 iep.IepStatus == iepStatus
+							 && (student.Archive == null || student.Archive == false)
 							 && services.SchoolYear == fiscalYear
 							 && (services.FiledOn == null || iep.FiledOn == null)
 							 && myBuildings.Contains(building.BuildingID)
