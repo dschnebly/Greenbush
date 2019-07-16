@@ -220,7 +220,7 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
+                    student.hasIEP = theIEP.current == null ? false : theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
@@ -962,7 +962,7 @@ namespace GreenbushIep.Controllers
                 }
                 else
                 {
-                    new IEP(student.UserID);
+                    new IEP(student.UserID, null, 1);
 
                     theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;

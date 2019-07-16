@@ -1487,7 +1487,7 @@
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return false;" }))
+                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.Hidden("studentId", Model.student.UserID)
@@ -1514,7 +1514,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-md-offset-5">
                                             <ul class="list-inline">
-                                                <li><button type="button" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;">Save Changes</button></li>
+                                                <li><input type="submit" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;" value="Save Changes"/></li>
                                             </ul>
                                         </div>
                                     </div>
