@@ -2644,62 +2644,12 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-            var gradeCode = "";
-            switch (studentIEP.studentDetails.student.Grade)
-            {
-                case 0:
-                    gradeCode = "05";
-                    break;
+            
+			var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
 
-                case 1:
-                    gradeCode = "06";
-                    break;
-
-                case 2:
-                    gradeCode = "07";
-                    break;
-
-                case 3:
-                    gradeCode = "08";
-                    break;
-
-                case 4:
-                    gradeCode = "09";
-                    break;
-
-                case 5:
-                    gradeCode = "10";
-                    break;
-
-                case 6:
-                    gradeCode = "11";
-                    break;
-
-                case 7:
-                    gradeCode = "12";
-                    break;
-
-                case 8:
-                    gradeCode = "13";
-                    break;
-
-                case 9:
-                    gradeCode = "14";
-                    break;
-
-                case 10:
-                    gradeCode = "15";
-                    break;
-
-                case 11:
-                    gradeCode = "16";
-                    break;
-
-                case 12:
-                    gradeCode = "17";
-                    break;
-            }
-            if (gradeCode == "")
+			var gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
+						
+			if (gradeCode == "")
             {
                 errors.Add(new ExportErrorView()
                 {

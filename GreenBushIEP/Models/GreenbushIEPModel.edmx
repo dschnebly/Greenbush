@@ -376,6 +376,7 @@
           <Property Name="gradeID" Type="int" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="code" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="SpedCode" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="tblIEPAcademic">
           <Key>
@@ -2990,6 +2991,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="gradeID" Type="Int32" Nullable="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="SpedCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblCalendar">
           <Key>
@@ -4459,6 +4461,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblGrades">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblGrade">
               <MappingFragment StoreEntitySet="tblGrades">
+                <ScalarProperty Name="SpedCode" ColumnName="SpedCode" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="gradeID" ColumnName="gradeID" />

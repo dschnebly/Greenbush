@@ -17,5 +17,6 @@ namespace GreenBushIEP.Models
         public int gradeID { get; set; }
         public string description { get; set; }
         public string code { get; set; }
+        public string SpedCode { get; set; }
     }
 }
