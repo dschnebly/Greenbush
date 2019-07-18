@@ -1686,6 +1686,13 @@
 							$(window).trigger("saving.bs.modal");
 							console.log("Course of Study successfully updated.");
 							$('#moduleSection').modal('hide');
+							
+							if (data.IsComplete) {
+								$("#TransitionWidget .hero-widget").addClass("module-completed");
+							}
+							else {
+								$("#TransitionWidget .hero-widget").removeClass("module-completed");
+							}
 						}
 						else {
 							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {

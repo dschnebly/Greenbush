@@ -10,9 +10,9 @@ namespace GreenBushIEP.Controllers
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
-        // POST: ModuleSection/Edit/5
-        [HttpPost]
-        public ActionResult EditHealth(FormCollection collection)
+		// POST: ModuleSection/Edit/5    
+		[HttpPost]
+		public ActionResult EditHealth(FormCollection collection)
         {
             if (ValidateRequest)
             {
@@ -1422,7 +1422,7 @@ namespace GreenBushIEP.Controllers
 					transition.Completed = (collection["isComplete"] != null) ? true : false;
 					db.SaveChanges();
 
-                    return Json(new { Result = "success", Message = "The Student Transition Study was added." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", Message = "The Student Transition Study was added.", IsComplete = transition.Completed }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
