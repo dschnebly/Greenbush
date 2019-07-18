@@ -893,7 +893,10 @@
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
                     <ul class="navigation">
                         <li class="pull-right">
-                            <button type="button" class="btn btn-primary btn-lg @(Model.studentIEP.current.IepStatus != IEPStatus.DRAFT ? "hidden" : String.Empty)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            @if (ViewBag.UserRoleId != "5")
+                            {
+                                <button type="button" class="btn btn-primary btn-lg @(Model.studentIEP.current.IepStatus != IEPStatus.DRAFT ? "hidden" : String.Empty)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            }
                             <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
                             <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
