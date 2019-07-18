@@ -1,7 +1,7 @@
 ﻿$(function () {
 
 	
-	if ($('ul#iepStatusList li').length == 0) {
+	if ($('ul#iepStatusList li').length === 0) {
 		$('ul#iepStatusList').hide();
 	}
 
@@ -391,6 +391,16 @@
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
             });
+        }
+    });
+
+    $("#makeIEPAnnualActive").on("click", function () {
+        if ($("#makeIEPAnnualActive").hasClass("disabled")) { return false; } // the link is disabled
+
+        var answer = confirm("Are you sure you want to set this ANNUAL to active?");
+        if (answer) {
+            $('.ajax-loader').css("visibility", "visible");
+            $(".ajax-loader img").css("visibility", "visible");
         }
     });
 
@@ -948,7 +958,7 @@ $(".service-section").on('click', function (e) {
         data: { studentId: stId, IEPid: iepId },
         dataType: 'json',
         success: function (data) {
-            if (data.Result == "success") {
+            if (data.Result === "success") {
 
                 $.ajax({
                     type: 'GET',
