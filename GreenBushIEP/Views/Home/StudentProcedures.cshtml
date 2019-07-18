@@ -907,9 +907,9 @@
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment ? "ANNUAL" : string.Empty) @(Model.studentIEP.displayIEPStatus) @(Model.studentIEP.current.Amendment ? "DRAFT" : string.Empty) &nbsp;&nbsp;<b class="caret"></b>
+                            <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment ? "ANNUAL" : string.Empty) @(Model.studentIEP.displayIEPStatus) @(Model.studentIEP.current.Amendment && Model.studentIEP.displayIEPStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty) &nbsp;&nbsp;<b class="caret"></b>
                         </button>
-                        <ul class="dropdown-menu list-group">
+                        <ul class="dropdown-menu list-group" id="iepStatusList">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
                             {
                                 int currentIEPId = Model.studentIEP.current.IEPid;
@@ -918,7 +918,7 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !iep.Amendment ? "ANNUAL" : string.Empty) @(Model.GetIEPStatus(iep)) @(iep.Amendment ? "DRAFT" : string.Empty)</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !iep.Amendment ? "ANNUAL" : string.Empty) @(Model.GetIEPStatus(iep)) @(iep.Amendment && iep.IepStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty)</a></li>
                                     }
                                 }
                             }

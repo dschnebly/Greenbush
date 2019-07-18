@@ -384,5 +384,30 @@ namespace GreenBushIEP.Report
 			return buildingList;
 		}
 
+
+
+		//public static bool IsStudent(string userName)
+		//{
+		//	tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == userName);
+		//	if (MIS != null)
+		//	{
+				
+				
+		//		var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct();
+		//		var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct();
+		//		var students = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where ( ) lect new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).Any(m => m.RoleID == student && m.user);
+
+		//		foreach (var student in model.members.Where(m => m.RoleID == student))
+		//		{
+		//			student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
+		//		}
+
+		//		// show the latest updated version changes
+		//		ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
+
+		//		return View("MISPortal", model);
+		//	}
+		//}
+
 	}
 }

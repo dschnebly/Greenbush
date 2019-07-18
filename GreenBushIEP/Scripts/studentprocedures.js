@@ -1,5 +1,10 @@
 ﻿$(function () {
 
+	
+	if ($('ul#iepStatusList li').length == 0) {
+		$('ul#iepStatusList').hide();
+	}
+
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'

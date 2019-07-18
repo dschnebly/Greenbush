@@ -254,12 +254,17 @@ namespace GreenBushIEP.Models
 
                 if (studentHealth != null)
                 {
-                    if (this.HealthNoConcern)
-                    {
-                        this.HealthProgressTowardGenEd = false;
-                        this.HealthDiagnosis = false;
-                        studentHealth.Completed = true;
-                    }
+					if (this.HealthNoConcern)
+					{
+						this.HealthProgressTowardGenEd = false;
+						this.HealthDiagnosis = false;
+						studentHealth.Completed = true;
+					}
+					else
+					{
+						studentHealth.Completed = this.HealthNoConcern;
+						
+					}
 
                     studentHealth.Diagnosis = this.HealthDiagnosis;
                     studentHealth.HearingDate = this.HealthHearingDate;
@@ -277,7 +282,7 @@ namespace GreenBushIEP.Models
                     }
                     else
                     {
-                        studentHealth.NoConcerns = true;
+                        studentHealth.NoConcerns = this.HealthNoConcern;
                         studentHealth.ProgressTowardGenEd = false;
                         studentHealth.Diagnosis = false;
                     }

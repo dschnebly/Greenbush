@@ -220,7 +220,7 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
+                    student.hasIEP = theIEP.current == null ? false : theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
@@ -962,7 +962,7 @@ namespace GreenbushIep.Controllers
                 }
                 else
                 {
-                    new IEP(student.UserID);
+                    new IEP(student.UserID, null, 1);
 
                     theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;
@@ -2000,22 +2000,29 @@ namespace GreenbushIep.Controllers
 
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            
-            var forms = GetForms();
+            tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+			var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
 			if (form != null)
 			{
 				viewModel.fileDesc = form.Text;				
-			}			
-            
-            StudentLegalView fileViewModel = new StudentLegalView()
-            {
-                student = student,
-                teacher = teacher,
-                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList()
-            };
+			}
+
+			StudentLegalView fileViewModel = new StudentLegalView()
+			{
+				student = student,
+				teacher = teacher,
+				studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+				contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+				studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
+				transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
+				academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
+				socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
+				reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
+				math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
+			    written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
+		};
 
             if (fileViewModel.studentInfo != null)
             {
@@ -2028,7 +2035,10 @@ namespace GreenbushIep.Controllers
                     fileViewModel.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == fileViewModel.studentInfo.AssignedUSD select contact).FirstOrDefault();
                 }
 
-            }
+				fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
+
+
+			}
 
             var lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
             if (lastReEval != null)
@@ -2041,8 +2051,8 @@ namespace GreenbushIep.Controllers
 				var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
 				fileViewModel.districtName = district != null ? district.DistrictName : "";
 			}
-						
 
+			
 			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
@@ -2085,12 +2095,13 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "IEP Amendment Form", Value = "IEPAmendment" });
             forms.Add(new SelectListItem { Text = "Re-Evaluation Not Needed Agreement Form", Value = "IEPReEvalNotNeeded" });
             forms.Add(new SelectListItem { Text = "Manifestation Determination Review Form", Value = "ManiDetermReview" });
-            forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
+            //forms.Add(new SelectListItem { Text = "Summary of Performance Example", Value = "SOPExample" });
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
             forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
 			forms.Add(new SelectListItem { Text = "Team Evaluation Report", Value = "TeamEvaluation" });
 			forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
+			forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
 
 
@@ -2465,6 +2476,7 @@ namespace GreenbushIep.Controllers
 											  on student.UserID equals building.UserID
 										  where
 										  iep.IepStatus == iepStatus
+										  && (student.Archive == null || student.Archive == false)
 										  && services.SchoolYear == fiscalYear
 										  && (iep.FiledOn != null)
 										  && myBuildings.Contains(building.BuildingID)
@@ -2504,6 +2516,7 @@ namespace GreenbushIep.Controllers
 							     on student.UserID equals building.UserID
 							 where
 							 iep.IepStatus == iepStatus
+							 && (student.Archive == null || student.Archive == false)
 							 && services.SchoolYear == fiscalYear
 							 && (services.FiledOn == null || iep.FiledOn == null)
 							 && myBuildings.Contains(building.BuildingID)
@@ -2631,62 +2644,12 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-            var gradeCode = "";
-            switch (studentIEP.studentDetails.student.Grade)
-            {
-                case 0:
-                    gradeCode = "05";
-                    break;
+            
+			var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
 
-                case 1:
-                    gradeCode = "06";
-                    break;
-
-                case 2:
-                    gradeCode = "07";
-                    break;
-
-                case 3:
-                    gradeCode = "08";
-                    break;
-
-                case 4:
-                    gradeCode = "09";
-                    break;
-
-                case 5:
-                    gradeCode = "10";
-                    break;
-
-                case 6:
-                    gradeCode = "11";
-                    break;
-
-                case 7:
-                    gradeCode = "12";
-                    break;
-
-                case 8:
-                    gradeCode = "13";
-                    break;
-
-                case 9:
-                    gradeCode = "14";
-                    break;
-
-                case 10:
-                    gradeCode = "15";
-                    break;
-
-                case 11:
-                    gradeCode = "16";
-                    break;
-
-                case 12:
-                    gradeCode = "17";
-                    break;
-            }
-            if (gradeCode == "")
+			var gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
+						
+			if (gradeCode == "")
             {
                 errors.Add(new ExportErrorView()
                 {

@@ -64,9 +64,9 @@ function init() {
         width: "100%"
     });
 
-    $("#submitForm").on('click', function () {
-        document.forms[3].submit();
-    });
+    //$("#submitForm").on('click', function () {
+    //    document.forms[3].submit();
+    //});
 
     $('#buildingIds').hide();
     var link = document.createElement("a");

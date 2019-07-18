@@ -247,20 +247,20 @@ hr {
 		}
 
 #mySettings, #add-system-user, #add-student-user, #reports, #referrals {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
-	#mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover {
-		-webkit-animation: pulse 1s ease 0s;
-		-o-animation: pulse 1s ease 0s;
-		-moz-animation: pulse 1s ease 0s;
-		animation: pulse 1s ease 0s;
-	}
+    #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover {
+        -webkit-animation: pulse 1s ease 0s;
+        -o-animation: pulse 1s ease 0s;
+        -moz-animation: pulse 1s ease 0s;
+        animation: pulse 1s ease 0s;
+    }
 
-	#mySettings i, #add-system-user i, #add-student-user i, #reports i {
-		vertical-align: -webkit-baseline-middle;
-		padding-left: 0;
-	}
+    #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
+        vertical-align: -webkit-baseline-middle;
+        padding-left: 0;
+    }
 
 
 @@-webkit-keyframes pulse {
