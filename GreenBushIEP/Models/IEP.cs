@@ -232,7 +232,7 @@ namespace GreenBushIEP.Models
             studentHealth.VisionImpaired = false;
             studentHealth.HearingImpaired = false;
             studentHealth.HealthCarePlan = false;
-            studentHealth.Completed = true;
+            studentHealth.Completed = false;
 
             try
             {
@@ -276,7 +276,7 @@ namespace GreenBushIEP.Models
             studentMotor.ProgressTowardGenEd = false;
             studentMotor.Needs = false;
             studentMotor.Participation = -1;
-            studentMotor.Completed = true;
+            studentMotor.Completed = false;
 
             try
             {
@@ -299,7 +299,7 @@ namespace GreenBushIEP.Models
             studentCommunication.SpeechImpactPerformance = false;
             studentCommunication.Deaf = false;
             studentCommunication.LimitedEnglish = false;
-            studentCommunication.Completed = true;
+            studentCommunication.Completed = false;
 
             try
             {
@@ -324,7 +324,7 @@ namespace GreenBushIEP.Models
             studentSocial.SignificantBehaviors = false;
             studentSocial.BehaviorImepedeLearning = false;
             studentSocial.BehaviorInterventionPlan = false;
-            studentSocial.Completed = true;
+            studentSocial.Completed = false;
 
             try
             {
@@ -343,7 +343,7 @@ namespace GreenBushIEP.Models
             studentIntelligence = new tblIEPIntelligence();
             studentIntelligence.IEPid = current.IEPid;
             studentIntelligence.Concerns = false;
-            studentIntelligence.Completed = true;
+            studentIntelligence.Completed = false;
 
             try
             {
@@ -363,7 +363,7 @@ namespace GreenBushIEP.Models
             studentAcademic.IEPid = current.IEPid;
             studentAcademic.NoConcerns = true;
             studentAcademic.AreaOfNeed = false;
-            studentAcademic.Completed = true;
+            studentAcademic.Completed = false;
 
             try
             {

@@ -262,7 +262,11 @@ namespace GreenBushIEP.Models
 					}
 					else
 					{
-						studentHealth.Completed = this.HealthNoConcern;
+						if (studentHealth.Completed == false)
+						{
+							//only update if it hasn't already been marked as completed
+							studentHealth.Completed = this.HealthNoConcern;
+						}
 						
 					}
 
@@ -297,7 +301,9 @@ namespace GreenBushIEP.Models
                     studentMotor.NoConcerns = this.MotorNoConcern;
                     studentMotor.Participation = this.MotorParticipation;
                     studentMotor.ProgressTowardGenEd = this.MotorProgress;
-                    studentMotor.Completed = this.MotorNoConcern;
+
+					if(studentMotor.Completed == false)
+						studentMotor.Completed = this.MotorNoConcern;
                 }
                 db.SaveChanges();
 
@@ -310,7 +316,8 @@ namespace GreenBushIEP.Models
                     studentCommunication.NoConcerns = this.CommunicationNoConcern;
                     studentCommunication.AreaOfNeed = this.CommunicationAreaOfNeed;
                     studentCommunication.ProgressTowardGenEd = this.CommunicationProgressTowardGenEd;
-                    studentCommunication.Completed = this.CommunicationNoConcern;
+					if (studentCommunication.Completed == false)
+						studentCommunication.Completed = this.CommunicationNoConcern;
                 }
                 db.SaveChanges();
 
@@ -326,7 +333,8 @@ namespace GreenBushIEP.Models
                     studentSocial.ProgressTowardGenEd = this.SocialProgressTowardGenEd;
                     studentSocial.AreaOfNeed = this.SocialAreaOfNeed;
                     studentSocial.SkillDeficit = this.SocialSkillsDeficit;
-                    studentSocial.Completed = this.SocialNoConcern;
+					if (studentSocial.Completed == false)
+						studentSocial.Completed = this.SocialNoConcern;
                 }
                 db.SaveChanges();
 
@@ -337,7 +345,8 @@ namespace GreenBushIEP.Models
                     studentInt.Concerns = !this.IntelligenceNoConcern;
                     studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
                     studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
-                    studentInt.Completed = this.IntelligenceNoConcern;
+					if (studentInt.Completed == false)
+						studentInt.Completed = this.IntelligenceNoConcern;
                 }
                 db.SaveChanges();
 
@@ -348,7 +357,8 @@ namespace GreenBushIEP.Models
                     studentAcademic.AreaOfNeed = this.AcademicNeeds;
                     studentAcademic.NoConcerns = this.AcademicNoConcern;
                     studentAcademic.ProgressTowardGenEd = this.AcademicProgressTowardGenEd;
-                    studentAcademic.Completed = this.AcademicNoConcern;
+					if (studentAcademic.Completed == false)
+						studentAcademic.Completed = this.AcademicNoConcern;
                 }
                 db.SaveChanges();
 
@@ -383,10 +393,13 @@ namespace GreenBushIEP.Models
                 db.SaveChanges();
 
                 this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
-                if (!this.AcademicModuleNoConcern) // if any of the four types has a problem than the module is not completed
+						
+				if (!this.AcademicModuleNoConcern && !studentAcademic.Completed) // if any of the four types has a problem than the module is not completed
                 {
-                    studentAcademic.Completed = false;
-                    db.SaveChanges();
+
+					studentAcademic.Completed = false;
+					db.SaveChanges();
+					
                 }
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
