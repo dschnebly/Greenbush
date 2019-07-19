@@ -74,7 +74,7 @@
 	width: inherit;
 }
 
-.tooltip-help {
+.tooltip-help .print-module {
 	margin-right: 10px;
 	-webkit-appearance: none;
 	padding: 0;
@@ -91,6 +91,7 @@
 	opacity: .2;
 	margin-top: -2px;
 }
+
 
 .yesConsentOverlay {
 	display: none;
@@ -746,7 +747,7 @@ body.modal-open .modal {
 		display: none;
 	}
 
-	.close, .tooltip-help {
+	.close, .tooltip-help, .print-module {
 		display: none;
 	}
 
