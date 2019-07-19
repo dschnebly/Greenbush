@@ -2540,27 +2540,28 @@
 		<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 				{
-					var serviceCount = 1;
+				var serviceCount = 1;
 				<table style="text-align:left">
 					<tr>
-						<td><b>Ln#</b></td>
-						<td><b>Service</b></td>
-						<td><b>Setting</b></td>
-						@*<td><b>Provider</b></td>*@
-						<td><b>LEA</b></td>
-						<td><b>AttendBlg</b></td>
+						<td><b>Fiscal Year</b></td>
+						<td><b>Service Type</b></td>
+						@*<td><b>Setting</b></td>*@
+						<td><b>Provider</b></td>
+						@*<td><b>LEA</b></td>*@
+						<td><b>Attend Blg</b></td>
 						<td><b>Mins</b></td>
 						<td><b>Days</b></td>
-						<td><b>Start<br />Date</b></td>
+						<td><b>Initiation<br />Date</b></td>
 						<td><b>End<br />Date</b></td>
 						<td><b>Frequency</b></td>
 					</tr>
 
 					@foreach (var service in Model.studentServices)
 					{
+
 						<tr>
 							<td>
-								@serviceCount
+								@(service.SchoolYear-1) <text>-</text> @service.SchoolYear
 							</td>
 							<td>
 								@if (Model.serviceTypes.Count > 0)
@@ -2569,15 +2570,15 @@
 									{
 										if (serviceType.ServiceCode == service.ServiceCode)
 										{
-											<text>@serviceType.ServiceCode</text>
+											<text>(@serviceType.ServiceCode) @serviceType.Name</text>
 										}
 									}
 								}
 							</td>
-							<td>
-								@service.LocationCode
-							</td>
 							@*<td>
+								@service.LocationCode
+							</td>*@
+							<td>
 							   @if (Model.serviceProviders.Count > 0)
 							   {
 								   foreach (var serviceProvider in Model.serviceProviders)
@@ -2592,12 +2593,20 @@
 							  {
 									<text>&nbsp;&nbsp;&nbsp;</text>
 							  }
+							</td>
+							@*<td>
+								@Model.studentDetails.assignChildCount
 							</td>*@
 							<td>
-								@Model.studentDetails.assignChildCount
-							</td>
-							<td>
-								@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
+								@if (!string.IsNullOrEmpty(service.LocationCode))
+								{
+									var serviceLocationDesc = Model.locations.FirstOrDefault(i => i.LocationCode == service.LocationCode);
+									if (serviceLocationDesc != null)
+									{
+										<text>(@serviceLocationDesc.LocationCode) @serviceLocationDesc.Name</text>
+									}
+								}
+								
 							</td>
 							<td>
 								@service.Minutes

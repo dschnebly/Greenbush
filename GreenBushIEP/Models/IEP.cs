@@ -53,8 +53,8 @@ namespace GreenBushIEP.Models
         public List<tblServiceType> serviceTypes { get; set; }
         public List<tblProvider> serviceProviders { get; set; }
         public List<tblAccommodation> accommodations { get; set; }
-
-        public BehaviorViewModel studentBehavior { get; set; }
+				
+		public BehaviorViewModel studentBehavior { get; set; }
         public StudentTransitionViewModel studentTransition { get; set; }
 
         public string studentFirstName { get; set; }
