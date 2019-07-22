@@ -1074,8 +1074,58 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "Unknown Error. Unable to change the IEP status." }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Manage/UpdateIEPStatus/5
-        [HttpGet]
+
+		[HttpGet]
+		[Authorize(Roles = mis + "," + admin + "," + teacher)]
+		public ActionResult UpdateIEPAnnualToActive(int stId, int IEPid)
+		{
+
+			tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.ACTIVE).FirstOrDefault();
+			tblIEP studentAnnualIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IEPid).FirstOrDefault();
+
+			if(studentAnnualIEP == null)
+				return Json(new { Result = "error", Message = "No annual IEP found for this student."}, JsonRequestBehavior.AllowGet);
+			
+			if (studentActiveIEP == null)
+			{
+				
+				studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
+				studentAnnualIEP.IsActive = true;
+
+				try
+				{
+					db.SaveChanges();
+					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+				}
+			}
+			else
+			{
+				// find the current active iep and make it inactive and change its status to DELETED
+				studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
+				studentActiveIEP.IsActive = false;
+			
+				studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
+				studentAnnualIEP.IsActive = true;
+
+				try
+				{
+					db.SaveChanges();
+					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+				}
+			}
+		}
+
+
+		// GET: Manage/UpdateIEPStatus/5
+		[HttpGet]
         [Authorize(Roles = mis + ", " + admin + "," + teacher)]
         public ActionResult UpdateIEPStatusToActive(int stId, int IEPid)
         {

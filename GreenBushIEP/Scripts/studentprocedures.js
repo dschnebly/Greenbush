@@ -400,7 +400,32 @@
         var answer = confirm("Are you sure you want to set this ANNUAL to active?");
         if (answer) {
             $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
+			$(".ajax-loader img").css("visibility", "visible");
+
+			var stId = $("#stid").val();
+			var iepId = $("#studentIEPId").val();
+
+			$.ajax({
+				type: 'GET',
+				url: '/Home/UpdateIEPAnnualToActive',
+				data: { Stid: stId, IepId: iepId },
+				dataType: 'json',
+				success: function (data) {
+					if (data.Result === 'success') {
+						location.reload(true);
+					} else {
+						alert(data.Message);
+						location.reload(true);
+					}
+				},
+				error: function (data) {
+					alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+				},
+				complete: function () {
+					$('.ajax-loader').css("visibility", "hidden");
+					$(".ajax-loader img").css("visibility", "hidden");
+				}
+			});
         }
     });
 
