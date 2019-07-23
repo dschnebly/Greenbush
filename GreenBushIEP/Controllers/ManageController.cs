@@ -2352,14 +2352,18 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult GetAllStudentsInBuildings(int id)
+        public ActionResult GetAllStudentsInBuildings(int id, string filterStudentName)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
             try
             {
                 var teacherBuildings = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.BuildingID).Distinct().ToList();
-                var studentsInTheBuildings = (from bm in db.tblBuildingMappings join user in db.tblUsers on bm.UserID equals user.UserID where user.RoleID == "5" && teacherBuildings.Contains(bm.BuildingID) select bm.UserID).ToList();
+                var studentsInTheBuildings = (from bm in db.tblBuildingMappings join user in db.tblUsers on bm.UserID 
+											  equals user.UserID
+											  where user.RoleID == "5"
+											  && ((filterStudentName == null) || (user.FirstName.Contains(filterStudentName) || user.LastName.Contains(filterStudentName)))
+											  && teacherBuildings.Contains(bm.BuildingID) select bm.UserID).ToList();
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
@@ -2381,15 +2385,18 @@ namespace GreenBushIEP.Controllers
                                     LastName = u.LastName,
                                     ImageURL = u.ImageURL,
                                     BuildingName = b.BuildingName
-                                }).Distinct().ToList();
+                                }).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
-                return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
+
+				return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
 
         [HttpPost]
         [Authorize]

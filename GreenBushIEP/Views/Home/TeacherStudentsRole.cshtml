@@ -130,7 +130,10 @@
             padding-left: 0;
         }
 
-
+	.vertical-align {
+		display: flex;
+		align-items: center;
+	}
     @@-webkit-keyframes pulse {
         0% {
             -webkit-transform: scale(1);
@@ -260,6 +263,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="container" style="width: 100%;">
+						<div class="row"> 
+							<a href="#" id="searchStudents" title="Search Students" role="button" class="btn btn-info pull-right" style="position:relative;bottom: 6px; z-index: 1;"><span class="glyphicon glyphicon-search"></span></a>
+                            <div class="row vertical-align" id="searchAvailableStudents" style="display:none">                                
+                                <div class="col-md-1">
+                                    <div class="input-group c-student-search">
+                                        <label for="searchStudent">Search</label>                                        
+                                    </div>
+                                </div>
+								<div class="col-md-6">
+                                    <div class="input-group c-student-search" style="padding-left:3px;">                                        
+                                        <input id="searchStudent" type="text" class="form-control" style="height: 34px;">                                        
+										 <span class="input-group-btn">
+                                            <button id="search_muted" class="btn btn-default" type="button" style="margin-bottom: 1px;"><span class="glyphicon glyphicon-search text-muted"></span></button>
+                                        </span>
+                                    </div>
+                                </div>					
+								<div class="col-md-5">
+									<a href="#" id="searchClearBtn" title="Close Search" role="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+								</div>								
+                            </div>							
+                        </div>
                         <div class="row" style="overflow: auto; max-height: 400px;">
                             <ul id="studentList" class="listrap">
                                 <li id="loadingIcon">
