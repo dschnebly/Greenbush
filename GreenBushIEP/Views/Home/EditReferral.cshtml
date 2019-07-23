@@ -1007,7 +1007,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentCounty">County of Residence</label>
                                             <select name="studentCounty" id="studentCounty" class="form-control">
                                                 <option value="AL" selected=@(Model.info.County == "AL")>Allen</option>
@@ -1124,7 +1124,7 @@
                                                 <option value="OK" selected=@(Model.info.County == "OK")>Oklahoma</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentGrade">Student Grade</label>
                                             <select name="studentGrade" id="studentGrade" class="form-control">
                                                 @foreach (tblGrade grade in Model.grades)
@@ -1133,7 +1133,7 @@
                                                 }
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentRace">Student Race</label>
                                             <select name="studentRace" id="studentRace" class="form-control">
                                                 <option value="White" selected=@(Model.info.Race == "White")>White</option>
@@ -1143,15 +1143,17 @@
                                                 <option value="Native America" selected=@(Model.info.Race == "Native America")>American Indian or Alaska Native</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+										</div>
+                                    <div class="row voffset2">
+                                        <div class="col-md-4">
                                             <label for="studentEthnic">Hispanic Ethnicity</label>
                                             <select name="studentEthnic" id="studentEthnic" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Y" selected=@(Model.info.Ethicity == "Y")>Hispanic/Latino</option>
                                                 <option value="N" selected=@(Model.info.Ethicity == "N")>Not Hispanic/Latino</option>
                                             </select>
-                                        </div>
-                                        <div class="col-md-2">
+                                        </div>									 
+                                        <div class="col-md-4">
                                             <label for="studentLanguage">Student Language</label>
                                             <select name="studentLanguage" id="studentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.StudentLanguage == "EN")>EN - English</option>
@@ -1182,7 +1184,7 @@
                                                 <option value="ZH-WUU" selected=@(Model.info.StudentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="parentLanguage">Parents Language</label>
                                             <select name="parentLanguage" id="parentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.ParentLanguage == "EN")>EN - English</option>
