@@ -2053,12 +2053,22 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId)
+        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
             {
-                List<String> myDistricts = new List<string>();
+				int? searchUserId = null;
+
+				if (userId != null)
+				{
+					if (userId.Value > -1)
+					{
+						searchUserId = userId.Value;
+					}
+				}
+
+				List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
 
@@ -2092,7 +2102,14 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings
+							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+							   where myRoles.Contains(user.RoleID) 
+							   && !(user.Archive ?? false)
+								&& ((searchUserId == null) || (user.UserID == searchUserId.Value))
+							   && myDistricts.Contains(buildingMap.USD)
+							   && myBuildings.Contains(buildingMap.BuildingID)
+							   select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {
@@ -2114,11 +2131,20 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId)
+        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
             {
+				int? searchUserId = null;
+
+				if (userId != null)
+				{
+					if (userId.Value > -1)
+					{
+						searchUserId = userId.Value;
+					}
+				}
                 List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
@@ -2158,7 +2184,13 @@ namespace GreenBushIEP.Controllers
                     myRoles.Add("2");
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings
+							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+							   where myRoles.Contains(user.RoleID)
+							   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
+							   && !(user.Archive ?? false) 
+							   && (myDistricts.Contains(buildingMap.USD) 
+							   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {
@@ -2171,7 +2203,8 @@ namespace GreenBushIEP.Controllers
                     }
                 }
 
-                NewPortalObject.Add("members", members);
+				
+				NewPortalObject.Add("members", members);                
                 return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
             }
 
