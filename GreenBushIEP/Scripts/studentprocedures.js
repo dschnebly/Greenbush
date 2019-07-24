@@ -627,7 +627,8 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
     $('.ajax-loader').css("visibility", "visible");
-    var stId = $("#stid").val();
+	var stId = $("#stid").val();
+	var iepId = $("#studentIEPId").val();
     var form = $('#thePlan').serialize();
 
     $.ajax({
@@ -638,7 +639,7 @@ $('#saveplan').on('click', function () {
         async: false,
         success: function (data) {
             if (data.result === "success") {
-                window.location.href = "/Home/StudentProcedures?stid=" + stId;
+				window.location.href = "/Home/StudentProcedures?stid=" + stId + "&iepID=" + iepId;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');

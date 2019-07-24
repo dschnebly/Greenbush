@@ -72,6 +72,8 @@
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
+		<input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
+		<input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
         <input type="hidden" id="sid" value="@Model.studentId" />
 
         @if (Model.calendar.MaxJsonLength == 0)
@@ -99,7 +101,7 @@
                 <div class="panel-group" id="accordion[0]">
 
                     <form action="/Home/saveStudentService" method="post">
-                        <input type="hidden" name="StudentId" value="@Model.studentId" />
+                        <input type="hidden" name="StudentId" value="@Model.studentId" />						
                         <input type="hidden" name="StudentSerivceId" value="0" />
                         <input type="hidden" name="completed" value="false" />
                         <div class="panel panel-default">
@@ -475,7 +477,7 @@
 </div>
 </div> <!--end print-->
 <script>
-	
+	debugger;
     var holidays = '@Html.Raw(Json.Encode(@Model.calendar))';
     var disabledDays = JSON.parse(holidays).Data;
 
@@ -553,16 +555,15 @@
 
         panelCollapse.collapse('show');
 
-
-		var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
-		var endDateObject = cloneService.find("input[name='serviceEndDate']");
-		var serviceEndDate = endDateObject.val();
-		var splitDate = serviceEndDate.split('/');
-		if (splitDate[2] != fiscalYear) {
-			//update end date to match selected fiscal year
-			endDateObject.addClass("updateEndDateYear");
-			getLastDate(fiscalYear);
-		}
+		//var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
+		//var endDateObject = cloneService.find("input[name='serviceEndDate']");
+		//var serviceEndDate = endDateObject.val();
+		//var splitDate = serviceEndDate.split('/');
+		//if (splitDate[2] != fiscalYear) {
+		//	//update end date to match selected fiscal year
+		//	endDateObject.addClass("updateEndDateYear");
+		//	getLastDate(fiscalYear);
+		//}
 
         initService();
 
@@ -668,8 +669,13 @@
 
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
-
-            $(this).find("select[name='fiscalYear']").on("change", function (e) {
+						
+			//var endDate = $("#iepMeetingDate").val();
+			var endDateYear = $("#iepMeetingDateYear").val();			
+			var fiscalYearElement = $(this).find("select[name='fiscalYear']");			
+			fiscalYearElement.val(endDateYear);
+						
+            fiscalYearElement.on("change", function (e) {
                 var year = $(this).val();
 
                 var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
@@ -797,7 +803,12 @@
                 $(".ajax-loader img").css("visibility", "visible");
 
                 var studentService = $(this).closest('.oneStudentService');
-                var form = studentService.find('form').serialize();
+				var form = studentService.find('form').serialize();
+				var iepId = $("#studentIEPId").val();                        
+
+				if (iepId != undefined && iepId != "")
+					form += "&iepId=" + iepId;
+
                 var completedService = studentService.find("a i.thisServiceNotCompleted");
                 var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
