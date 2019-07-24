@@ -122,25 +122,7 @@
         <div class="StudentGoalBenchmark hidden" id="defaultObjective">
             <input type="hidden" name="StudentGoalBenchmarkId0" value="" />
             <div class="form-group" style="margin-bottom: 3px;margin-top:10px">
-                <div class="input-group" style="background-color: #F9F9F9;">
-                    @*<div class="input-group-btn bs-dropdown-to-select-group">*@
-                        @*<button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;">
-                            <span data-bind="bs-drp-sel-label">Select Method...</span>
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>*@
-                        @*<input type="hidden" name="StudentGoalBenchmarkMethod0" class="StudentGoalBenchmarkMethod" data-bind="bs-drp-sel-value" value="1">
-                        <ul class="dropdown-menu" role="menu" style="font-size:16px;">
-                            <li data-value="1"><a href="#">Written Observation</a></li>
-                            <li data-value="2"><a href="#">Written Performance</a></li>
-                            <li data-value="3"><a href="#">Oral Performance</a></li>
-                            <li data-value="4"><a href="#">Criterion-Referenced Test</a></li>
-                            <li data-value="5"><a href="#">Time Sample</a></li>
-                            <li data-value="6"><a href="#">Demonstration/Performance</a></li>
-                            <li data-value="7"><a href="#">Other</a></li>
-                        </ul>*@
-						
-                    @*@</div>*@
+                <div class="input-group" style="background-color: #F9F9F9;">                    
                     <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
@@ -163,6 +145,10 @@
                     <option value="6">Demonstration/Performance</option>
                     <option value="7">Other</option>
                 </select>
+				<div class="voffset1 divOther" style="display:none">
+					<label>Other Description</label>
+					<input type="text" value="" name="StudentGoalShorttermBenchmarkOther0" class="StudentGoalShorttermBenchmarkOther form-control" style="font-size:16px;" placeholder="Description" />
+				</div>
             </div>
             <div class="slideReportProgress" style="display: none;">
                 <table class="table table-bordered table-bordered table-responsive">
@@ -353,6 +339,10 @@
                                                 <option value="7">Other</option>
                                             </select>
                                         </div>
+										<div class="voffset1 divOther" style="display:none">
+											<label>Other Description</label>
+											<input type="text" value="" name="StudentGoalBenchmarkOther0" class="StudentGoalBenchmarkOther form-control" style="font-size:16px;" placeholder="Description" />
+										</div>										
                                     </div>
 
                                     <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
@@ -460,6 +450,10 @@
                                                     <option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
                                                     <option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
                                                 </select>
+												<div class="voffset1 divOther" style="display:@(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "block" : "none")">
+													<label>Other Description</label>
+													<input type="text" value="@(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.goalID == studentGoal.goal.goalID) ? studentGoal.evaluationProcedures.FirstOrDefault(o => o.goalID == studentGoal.goal.goalID).OtherDescription : "")" name="StudentGoalBenchmarkOther@(studentGoal.goal.goalID)" class="StudentGoalBenchmarkOther form-control" style="font-size:16px;" placeholder="Description" />													
+												</div>
                                             </div>
 
                                             @Html.Partial("~/Views/Home/_GoalsProgress.cshtml", studentGoal, new ViewDataDictionary { { "isReadOnly", Model.isReadOnly } })
@@ -500,7 +494,7 @@
 </div>
 </div> <!--end print-->
 <script>
-	
+	debugger;
 	var _newBenchmarks;
 
     $(document).ready(function () {
@@ -512,7 +506,7 @@
             }
         });
 
-        $(".chosen-select").chosen({ width: "100%" });
+        $(".chosen-select").chosen({ width: "100%", disable_search: true });
     });
 
     $('#newgoal').on('click', function () {
@@ -532,9 +526,19 @@
         cloneGoal.find("textarea[name='StudentGoalAnnualGoal0']").attr("name", "StudentGoalAnnualGoal" + goalCount);
         cloneGoal.find("input[name='StudentGoalBaseline0']").attr("name", "StudentGoalBaseline" + goalCount);
         cloneGoal.find("input[name='StudentGoalStateStandards0']").attr("name", "StudentGoalStateStandards" + goalCount);
-
+		cloneGoal.find("input[name='StudentGoalBenchmarkOther0']").attr("name", "StudentGoalBenchmarkOther" + goalCount);
+				
         var evals = cloneGoal.find("select[name='StudentGoalBenchmarkMethods0']").attr("id", "StudentGoalBenchmarkMethods" + goalCount);
-        evals.chosen({ width: "100%" });
+		evals.chosen({ width: "100%", disable_search: true });
+		evals.on('change', function (event) {
+			var selectedMethods = $(this).val();
+			if (selectedMethods.indexOf("7") > -1) {
+				$(this).parent().parent().find(".divOther").show();
+			}
+			else {
+				$(this).parent().parent().find(".divOther").hide();
+			}
+		});
 
         // reset the id values of the panel and accordian elements
         var goalAccordion = cloneGoal.find('[data-parent="#accordion0"]').attr('data-parent', '#accordion' + goalCount);
@@ -587,6 +591,19 @@
                     $(this).next().val("true");
                 }
             });
+
+
+			var evals = $(this).find(".StudentGoalBenchmarkMethods");			
+			evals.on('change', function (event) {
+				var selectedMethods = $(this).val();
+				if (selectedMethods.indexOf("7") > -1) {
+					$(this).parent().find(".divOther").show();
+				}
+				else {
+					$(this).parent().find(".divOther").hide();
+				}
+			});
+
 
             //* Binding */
             /* when the teacher clicks the trash can to delete a goal. */
@@ -720,6 +737,13 @@
 										if(bTransitions[tr].classList.contains("newbenchmark"))
 											bTransitions[tr].name = "StudentGoalBenchmarkHasTransition" + id;	
 									}
+
+									var bOther = document.getElementsByName("StudentGoalShorttermBenchmarkOther" + originalNum);									
+									for (t = 0; t < bOther.length; t++) {
+										if(bOther[t].classList.contains("newbenchmark"))
+											bOther[t].name = "StudentGoalShorttermBenchmarkOther" + id;	
+									}
+
 									break;
 								}
 							}
@@ -819,9 +843,20 @@
 					cloneBenchmark.find("input[name='StudentGoalBenchmarkId0']").attr("name", "StudentGoalBenchmarkId" + benchmarkCount).addClass("newbenchmark");
 					cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + benchmarkCount).addClass("newbenchmark");
 					cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + benchmarkCount).addClass("newbenchmark");
+					cloneBenchmark.find("input[name='StudentGoalShorttermBenchmarkOther0']").attr("name", "StudentGoalShorttermBenchmarkOther" + benchmarkCount).addClass("newbenchmark");
 
 					var shortTermMethods = cloneBenchmark.find("select[name='StudentGoalShorttermBenchmarkMethods0']").attr("name", "StudentGoalShorttermBenchmarkMethods" + benchmarkCount).addClass("newbenchmark");
-					shortTermMethods.chosen({ width: "100%" });
+					shortTermMethods.chosen({ width: "100%", disable_search: true });
+
+					shortTermMethods.on('change', function (event) {
+						var selectedMethods = $(this).val();
+						if (selectedMethods.indexOf("7") > -1) {
+							$(this).parent().find(".divOther").show();
+						}
+						else {
+							$(this).parent().find(".divOther").hide();
+						}
+					});
 
 					$(this).parent().find('.StudentGoalBenchmarks').append(cloneBenchmark);
 

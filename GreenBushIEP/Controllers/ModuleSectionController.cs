@@ -839,7 +839,9 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.Completed = Convert.ToBoolean(collection["completed"]);
 
                     var evalProcedures = "";
-                    if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
+					string evalProcOtherIndex = collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkOther")).FirstOrDefault();
+					string evalProcOtherStr = collection[evalProcOtherIndex];
+					if (collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).Any())
                     {
                         var evalProceduresStr = collection.AllKeys.Where(o => o.Contains("StudentGoalBenchmarkMethods")).FirstOrDefault();
                         evalProcedures = collection[evalProceduresStr];
@@ -848,9 +850,9 @@ namespace GreenBushIEP.Controllers
                             j++; //only increment when values are submitted otherwise it throws the count off for the rest
                         }
                     }
+					
 
-                    
-                    studentGoal.benchmarks.Clear();
+					studentGoal.benchmarks.Clear();
 					List<int> existingBenchmarks = new List<int>();
 
 					foreach (var key in collection.AllKeys)
@@ -879,16 +881,15 @@ namespace GreenBushIEP.Controllers
 							if (benchmark != null)
 							{
 								string transitionActivity = collection[string.Format("StudentGoalBenchmarkHasTransition{0}", benchmarkIDVal)];
+								
 
-								//string methodStr = collection[string.Format("StudentGoalBenchmarkMethod{0}", benchmarkIDVal)];
-																
 								benchmark.goalID = studentGoal.goal.goalID;
-								//benchmark.Method = methodStr != null && methodStr != "" ? Int32.TryParse(methodStr, out tempInt) ? tempInt : 0 : 0;
 								benchmark.ObjectiveBenchmark = collection[string.Format("StudentGoalBenchmarkTitle{0}", benchmarkIDVal)];
 								benchmark.TransitionActivity = transitionActivity != null && transitionActivity != "" ? (transitionActivity.ToLower() == "true") ? true : false : false;
 								
 								//allow multipel methods
 								string methodsStr = collection[string.Format("StudentGoalShorttermBenchmarkMethods{0}", benchmarkIDVal)];
+								string methodsOtherStr = collection[string.Format("StudentGoalShorttermBenchmarkOther{0}", benchmarkIDVal)];
 
 								var listTempShortTerms = new List<tblGoalBenchmarkMethod>();
 
@@ -906,6 +907,7 @@ namespace GreenBushIEP.Controllers
 										{											
 											tempShortTerm.goalBenchmarkID = benchmark.goalBenchmarkID;
 											tempShortTerm.EvaluationProcedureID = methodItemVal;
+											tempShortTerm.OtherDescription = methodsOtherStr;
 											listTempShortTerms.Add(tempShortTerm);
 										}
 									}
@@ -947,7 +949,7 @@ namespace GreenBushIEP.Controllers
 							}
 						}
 					}
-                    studentGoal.SaveGoal(evalProcedures);
+                    studentGoal.SaveGoal(evalProcedures, evalProcOtherStr);
                     goalId = studentGoal.goal.goalID;
 
 
@@ -1045,7 +1047,7 @@ namespace GreenBushIEP.Controllers
                         }
                     }
 
-                    studentGoal.SaveGoal(String.Empty);
+                    studentGoal.SaveGoal(String.Empty, String.Empty);
                     return Json(new { Result = "success", Message = "The Student Goal was added." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
