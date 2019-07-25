@@ -797,6 +797,7 @@
     <Content Include="Reports\IndividualizedEducationProgramDataSet1.xsc">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Reports\IndividualizedEducationProgramDataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>IndividualizedEducationProgramDataSet1.Designer.cs</LastGenOutput>
