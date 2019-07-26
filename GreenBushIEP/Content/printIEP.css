@@ -3,6 +3,15 @@ table.full {
 	width:100%;
 }
 
+table.fixed {
+	width: 600px;
+}
+
+	table.fixed td {
+		width: 150px;
+		text-align: left;
+	}
+
 table.printTable td {
 	padding: 1px;
 	text-align: left;

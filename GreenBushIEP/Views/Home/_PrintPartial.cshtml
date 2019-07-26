@@ -67,16 +67,14 @@
                    <td colspan="2"></td>
                 </tr>
             </table>
-
 			<hr />
+			<table class="full">
             @if (Model.studentDetails.contacts.Any(o => o.PrimaryContact == 1))
-			{
-
-                <table style="width:100%">
-					@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+			{               
+					foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
 					{
                     <tr>
-                        <td style="width:75px;"><label>Contact:</label></td>
+                        <td><label>Contact:</label></td>
                         <td>@primaryContact.FirstName @primaryContact.LastName</td>
                     
                         <td><label>Address:</label></td>
@@ -89,57 +87,51 @@
                         <td><label>Email:</label></td>
                         <td>@primaryContact.Email</td>
                     </tr>
-					}
-                </table>
+					}               
 			}
 			else
-			{
-				<table style="width:100%">					
+			{								
                     <tr>
-                        <td style="width:75px;"><label>Contact 1:</label></td><td></td>                    
+                        <td><label>Contact 1:</label></td><td></td>                    
                         <td><label>Address:</label></td><td></td>
                     </tr>
                     <tr>
                         <td><label>Phone:</label></td><td></td>                    
                         <td><label>Email:</label></td><td></td>
-                    </tr>					
-                </table>
+                    </tr>	                
 			}
-            <hr />
-            <table class="full">
+                <tr><td colspan="6"><hr/></td></tr>
                 <tr>
-                    <td style="width:150px;" ><label>Neighborhood School:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
-					<td style="width:150px;"><label>Responsible School:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
+                    <td ><label>Neighborhood School:</label></td>
+                    <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
+					<td><label>Responsible School:</label></td>
+                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
                 </tr>                
                 <tr>
-                    <td style="width:150px;"><label>Assign Child Count:</label></td>
-                    <td style="width:150px">@Model.studentDetails.assignChildCount</td>                    
-                    <td style="width:150px;"><label>County of Residence:</label></td>
-                    <td style="width:150px">@Model.studentDetails.studentCounty</td>					
+                    <td><label>Assign Child Count:</label></td>
+                    <td>@Model.studentDetails.assignChildCount</td>                    
+                    <td><label>County of Residence:</label></td>
+                    <td>@Model.studentDetails.studentCounty</td>					
                 </tr>
                 <tr>
-					<td style="width:150px;"><label>Grade:</label></td>
-                    <td style="width:150px">@(studentGrade)</td>                   
-                    <td style="width:150px;"><label>Fund Source:</label></td>
-                    <td style="width:150px">@Model.studentDetails.placementCodeDesc</td>
+					<td><label>Grade:</label></td>
+                    <td>@(studentGrade)</td>                   
+                    <td><label>Fund Source:</label></td>
+                    <td>@Model.studentDetails.placementCodeDesc</td>
 				</tr>                
 				 <tr>
-					<td style="width:150px;"><label>Primary Disability:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.primaryDisability)</td>                   
-                    <td style="width:150px;"><label>Secondary Disability:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.secondaryDisability)</td>
+					<td><label>Primary Disability:</label></td>
+                    <td>@(Model.studentDetails.primaryDisability)</td>                   
+                    <td><label>Secondary Disability:</label></td>
+                    <td>@(Model.studentDetails.secondaryDisability)</td>
 				</tr>                
 				 <tr>
-                    <td style="width:150px;"><label>Gifted:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
-					<td style="width:150px;"><label>KG Full Day:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
+                    <td><label>Gifted:</label></td>
+                    <td>@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
+					<td><label>KG Full Day:</label></td>
+                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
                 </tr>
-            </table>
-            <hr />
-            <table class="full">
+				<tr><td colspan="6"><hr/></td></tr>
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
                     <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>                
@@ -152,44 +144,45 @@
 						@foreach(var reevalDate in Model.studentDetails.reevalDates)
 						{
 							<span>@reevalDate.evalutationDate.ToShortDateString()</span><br/>
-						}
-					
+						}					
 					</td>
                     <td><label>3 Year Re-Eval:</label></td>
                     <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.AddYears(3).ToShortDateString() : "")</td>
 				</tr>
 				<tr>				
-                    <td></td>
-                    <td></td>
+                    <td></td><td></td>
 					<td><label>Initiation:</label></td>
                     <td>@Model.studentDetails.inititationDate</td>                
                 </tr>                
                 <tr>
-                    <td><label>Exit:</label></td>
-                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
-					 <td><label>Next Annual Meeting:</label></td>
+                    <td><label>Annual Meeting:</label></td>
+                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
+                    
+					<td><label>Next Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>					
                 </tr>          
                 <tr>
-                    <td><label>Annual Meeting:</label></td>
-                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
-                    <td><label>Next Vision:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
-                </tr>
+					<td><label>Exit:</label></td>
+                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>					
+                    <td><label>Ed Status:</label></td>
+					<td>
+					(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td> 				
+				</tr>
 				<tr>
 					<td><label>Vision Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
-                   <td><label>Next Hearing:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>                    
-                </tr>
-                <tr>
+                
+					<td><label>Next Vision:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>                
+					</tr>
+				<tr>
 					<td><label>Hearing Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.ToShortDateString() : string.Empty)</td>
                     
-                </tr>
-				<tr>                   
-                    <td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
-                </tr>
+				<td><label>Next Hearing:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>                    
+                </tr>               
+								
             </table>                            
         </div> <!--end student page-->
         <br/><br/>
@@ -202,11 +195,7 @@
 			 			<h5>@Model.studentDetails.building.Address_Physical</h5>
 			 		<h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 			 	<h5>@Model.studentDetails.building.Phone</h5>
-			 </td>
-			 @*<td style="text-align:right;vertical-align:top">
-		Printed:<br />@(DateTime.Now.ToShortDateString())<br />
-		Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
-	</td>*@
+			 </td>			
 			 </tr>
 			 </table>
 			 <table class="full voffset2">
