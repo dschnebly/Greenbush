@@ -356,12 +356,21 @@ namespace GreenBushIEP.Controllers
 
 
 					// Create New StudentInfo
+					DateTime dobDate = DateTime.MinValue;
+
+					DateTime.TryParse(collection["dob"], out dobDate);
+
+					if (dobDate == DateTime.MinValue)
+					{
+						return Json(new { Result = "error", Message = "The Birthdate supplied in not a valid date." });
+					}
+					
 					// tblStudentInfo
 					tblStudentInfo studentInfo = new tblStudentInfo()
 					{
 						UserID = student.UserID,
 						KIDSID = kidsID,
-						DateOfBirth = Convert.ToDateTime(collection["dob"]),
+						DateOfBirth = dobDate,
 						Primary_DisabilityCode = collection["primaryDisability"].ToString(),
 						Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
 						AssignedUSD = collection["assignChildCount"].ToString(),

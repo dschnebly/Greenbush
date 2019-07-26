@@ -808,7 +808,7 @@
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row voffset1">
                                     <div class="col-md-5">
                                         <label for="primaryDisability">Primary Disability</label>
                                         <select class="form-control" name="primaryDisability" id="primaryDisability">
@@ -816,7 +816,8 @@
                                             {
                                                 foreach (var primary in Model.primaryDisabilities)
                                                 {
-                                                    string selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected=selected" : "";
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Primary_DisabilityCode) ? "ND" : Model.info.Primary_DisabilityCode; 
+                                                    string selected = defaultDisability == primary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@primary.DisabilityCode" @selected>@primary.DisabilityDescription</option>
                                                 }
                                             }
@@ -829,7 +830,8 @@
                                             {
                                                 foreach (var secondary in Model.secondaryDisabilities)
                                                 {
-                                                    string selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected=selected" : "";
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode) ? "ND" : Model.info.Secondary_DisabilityCode; 
+                                                    string selected = defaultDisability == secondary.DisabilityCode ? "selected=selected" : "";                                                    
                                                     <option value="@secondary.DisabilityCode" @selected>@secondary.DisabilityDescription</option>
                                                 }
                                             }
