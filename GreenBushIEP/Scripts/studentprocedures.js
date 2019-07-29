@@ -629,7 +629,7 @@ $('#saveplan').on('click', function () {
     $('.ajax-loader').css("visibility", "visible");
 	var stId = $("#stid").val();
 	var iepId = $("#studentIEPId").val();
-    var form = $('#thePlan').serialize();
+	var form = $('#thePlan').serialize();
 
     $.ajax({
         type: 'POST',
@@ -674,7 +674,7 @@ $("#dismissIEPPlan").on("click", function () {
         async: false,
         success: function (data) {
             if (data.result === "success") {
-                window.location.href = "/Home/StudentProcedures?stid=" + data.message;
+				window.location.href = "/Home/StudentProcedures?stid=" + data.message + "&iepID=" + iepId;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
