@@ -93,7 +93,7 @@
         }
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
-			<span id='close' class="glyphicon glyphicon-remove pull-right" onclick='$(this).parent().hide();return false;' ></span>					
+			@*<span id='close' class="glyphicon glyphicon-remove pull-right" onclick='$(this).parent().hide();return false;' ></span>*@					
             <strong class="moreinfo">Oh snap!</strong>
         </div>
 
@@ -891,13 +891,13 @@
                     }
                 });
 
-                if (canSave) {
-                    $(window).trigger("saving.bs.modal");
+                //if (canSave) {
+                //    $(window).trigger("saving.bs.modal");
 
-                    setTimeout(function () {
-                        $('#moduleSection').modal('hide');
-                    }, 1200);
-                }
+                //    setTimeout(function () {
+                //        $('#moduleSection').modal('hide');
+                //    }, 1200);
+                //}
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -1026,9 +1026,10 @@
 			}
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-				$("#alertMessage .moreinfo").html(message);
-				$("#alertMessage").fadeTo(successFade, 500);
-               
+                $("#alertMessage .moreinfo").html(message);
+                $("#alertMessage").fadeTo(successFade, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
             }
         }
     }
