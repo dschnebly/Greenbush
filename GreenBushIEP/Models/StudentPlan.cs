@@ -113,11 +113,17 @@ namespace GreenBushIEP.Models
         }
 
         // Read the student's plan
-        public StudentPlan(int stid)
+        public StudentPlan(int stid, int? iepID = null)
         {
 
-            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
-            if (studentIEP != null)
+			tblIEP studentIEP = null;
+
+			if(iepID.HasValue)
+				studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IEPid == iepID.Value);
+			else
+				studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
+
+			if (studentIEP != null)
             {
 
                 if (studentIEP.IepStatus == IEPStatus.PLAN)
@@ -238,9 +244,9 @@ namespace GreenBushIEP.Models
         }
 
         // Update the student's plan.
-        public void Update(int stid)
+        public void Update(int stid, int iepId)
         {
-            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid);
+            tblIEP studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IEPid == iepId);
 
             if (studentIEP != null)
             {
@@ -283,7 +289,10 @@ namespace GreenBushIEP.Models
                     if (this.HealthProgressTowardGenEd || this.HealthDiagnosis)
                     {
                         studentHealth.NoConcerns = false;
-                    }
+						studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
+						studentHealth.Diagnosis = this.HealthDiagnosis;
+						studentHealth.Concerns = true;
+					}
                     else
                     {
                         studentHealth.NoConcerns = this.HealthNoConcern;

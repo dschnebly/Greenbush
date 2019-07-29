@@ -1003,7 +1003,7 @@ namespace GreenbushIep.Controllers
                 {
                     model.hasplan = theIEP.hasPlan;
                     model.studentIEP = theIEP;
-                    model.studentPlan = new StudentPlan(student.UserID);
+                    model.studentPlan = new StudentPlan(student.UserID, iepID);
                     model.hasAccommodations = theIEP.hasAccommodations;
                     model.needsBehaviorPlan = theIEP.hasBehavior;
                 }
@@ -1983,8 +1983,9 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentPlanning(FormCollection collection)
         {
             var studentId = Convert.ToInt32(collection["student.UserID"]);
+			int iepId =Convert.ToInt32(collection["iepId"]);
 
-            StudentPlan thePlan = new StudentPlan(studentId);
+			StudentPlan thePlan = new StudentPlan(studentId);
 
             // reset all the no concern flags
             thePlan.AcademicNoConcern = false;
@@ -2002,7 +2003,7 @@ namespace GreenbushIep.Controllers
             {
                 int intValue;
                 DateTime dateTimeValue;
-                foreach (var key in collection.AllKeys.Skip(2))
+                foreach (var key in collection.AllKeys.Skip(3))
                 {
                     var value = collection[key];
 
@@ -2016,7 +2017,7 @@ namespace GreenbushIep.Controllers
                         thePlan[key] = (value == "1");
                 }
 
-                thePlan.Update(studentId);
+                thePlan.Update(studentId, iepId);
             }
 
             return Json(new { result = "success", message = studentId }, JsonRequestBehavior.AllowGet);

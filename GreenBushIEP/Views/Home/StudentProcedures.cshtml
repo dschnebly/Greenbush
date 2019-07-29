@@ -1203,6 +1203,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
+						@Html.Hidden("iepId", Model.studentIEP.current.IEPid)
                         <div class="row">
                             <div class="col-md-4">
                                 <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>
