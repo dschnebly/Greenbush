@@ -2535,7 +2535,7 @@
 						<td><b>Fiscal Year</b></td>
 						<td><b>Service Type</b></td>
 						@*<td><b>Setting</b></td>*@
-						<td><b>Provider</b></td>
+						@*<td><b>Provider</b></td>*@
 						@*<td><b>LEA</b></td>*@
 						<td><b>Attend Blg</b></td>
 						<td><b>Mins</b></td>
@@ -2567,7 +2567,7 @@
 							@*<td>
 								@service.LocationCode
 							</td>*@
-							<td>
+							@*<td>
 							   @if (Model.serviceProviders.Count > 0)
 							   {
 								   foreach (var serviceProvider in Model.serviceProviders)
@@ -2582,7 +2582,7 @@
 							  {
 									<text>&nbsp;&nbsp;&nbsp;</text>
 							  }
-							</td>
+							</td>*@
 							@*<td>
 								@Model.studentDetails.assignChildCount
 							</td>*@

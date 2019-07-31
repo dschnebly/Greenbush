@@ -210,11 +210,11 @@
 							@switch (@service.SchoolYear)
 							{
 								case 2018:<text>2017 - 2018</text>; break;
-							case 2019: <text>2018 - 2019</text>; break;
-						case 2020: <text>2019 - 2020</text>; break;
-					case 2021: <text>2020 - 2021</text>; break;
-				case 2022: <text>2021 - 2022</text>; break;
-		}
+								case 2019: <text>2018 - 2019</text>; break;
+								case 2020: <text>2019 - 2020</text>; break;
+								case 2021: <text>2020 - 2021</text>; break;
+								case 2022: <text>2021 - 2022</text>; break;
+							}
 						</td>
 						<td>
 							@if (Model.serviceTypes.Count > 0)
@@ -272,16 +272,16 @@
 							@switch (@service.Frequency)
 							{
 								case 1:<text>Every week(1)</text>; break;
-							case 2: <text>Every 2 weeks(2)</text>; break;
-						case 3: <text>Every 3 weeks(3)</text>; break;
-					case 4: <text>Every 4 weeks(4)</text>; break;
-				case 8: <text>Every 8 weeks(8)</text>; break;
-			case 9: <text>Every 9 weeks(9)</text>; break;
-		case 12: <text>Every 12 weeks(12)</text>; break;
-	case 18: <text>Every 18 weeks(18)</text>; break;
-case 19: <text>3 out of 4 weeks(19)</text>; break;
-case 99: <text>1 day per year(99)</text>; break;
-}
+								case 2: <text>Every 2 weeks(2)</text>; break;
+								case 3:	<text>Every 3 weeks(3)</text>; break;
+								case 4: <text>Every 4 weeks(4)</text>; break;
+								case 8: <text>Every 8 weeks(8)</text>; break;
+								case 9: <text>Every 9 weeks(9)</text>; break;
+								case 12: <text>Every 12 weeks(12)</text>; break;
+								case 18: <text>Every 18 weeks(18)</text>; break;
+								case 19: <text>3 out of 4 weeks(19)</text>; break;
+								case 99: <text>1 day per year(99)</text>; break;
+							}
 						</td>
 					</tr>
 					serviceCount++;
