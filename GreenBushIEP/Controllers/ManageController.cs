@@ -2019,7 +2019,10 @@ namespace GreenBushIEP.Controllers
                         db.SaveChanges();
                     }
 
-                    db.tblUsers.Remove(user);
+                    // archive user
+                    user.Archive = true;
+
+                    //db.tblUsers.Remove(user);
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "<strong>Success!</strong> The user was successfully deleted from the system." });
                 }
