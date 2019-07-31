@@ -60,7 +60,7 @@
 					<div class="col-md-2">
 						<label for="fiscalYear">Fiscal Year</label>
 						<div class="form-group">
-							<select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;" required>
+							<select class="form-control" id="fiscalYear" name="fiscalYear" onchange="_getStudents();"  style="border-color: #ccc; display: inline-block;" required>
 								<option value="2018">2017 - 2018</option>
 								<option value="2019">2018 - 2019</option>
 								<option value="2020">2019 - 2020</option>
@@ -77,8 +77,15 @@
 				<div class="row">
 					<div class="col-md-12 voffset2">					
 						<div class="col-md-6">	
-								<input type="checkbox" name="cbReset" runat="server" /> Reset Previously Submitted IEPs
-							</div>
+								<input type="checkbox" id="cbReset" name="cbReset" runat="server" onclick="_getStudents();"/> Reset Previously Submitted IEPs
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-md-offset-1 voffset2">					
+						<div class="col-md-6" id="divStudents">	
+								
+						</div>
 					</div>
 				</div>
 			}
@@ -133,8 +140,50 @@
                 changeYear: true,
                 changeMonth: true
             });
-        });
+		});
 	});
+
+
+	function _getStudents() {
+		var isChecked = $('#cbReset').is(':checked'); 
+		var fiscalYear = $('#fiscalYear').val();
+		if (isChecked) {
+			$.ajax({
+				type: 'POST',
+				url: '/Home/GetSpedProStudentList',
+				data: { fiscalYear: fiscalYear },
+				dataType: "json",
+				success: function (data) {
+					if (data.result && data.students != undefined) {
+						$("#divStudents").html("");
+						var students = data.students;
+
+						if (students.length == 0) {
+							$("#divStudents").html("No IEPs found to reset.");
+							return false;
+						}
+
+						if (students != null && students != undefined) {
+							var i;
+
+							for (i = 0; i < students.length; i++) {
+								var student = students[i];
+
+								$("#divStudents").append('<input class="form-control" type="checkbox" name="studentReset" value="' + student.UserID + '" />&nbsp;' + student.LastName + ", " + student.FirstName + "<br/>");
+							}
+						}
+					}
+				},
+				error: function (data) {
+					console.log("Error getting baseline goal text.");
+				}
+			});
+		}
+		else {
+			$("#divStudents").html("");
+		}
+
+	}
 </script>
 
 }
