@@ -509,8 +509,9 @@ namespace GreenBushIEP.Controllers
 				model.Potential_HarmfulEffects_flag = collection["Potential_Harmful_Effects_flag"] == "on" ? true : false;
 				model.Potential_HarmfulEffects_desc = collection["Potential_Harmful_Effects_Desc"];
 				model.Completed = Convert.ToBoolean(collection["Completed"]);
+				model.ExtendedSchoolYear_Necessary = collection["ExtendYear"];
 
-                var dwa = collection["DistrictWideAssessments"];
+				var dwa = collection["DistrictWideAssessments"];
                 switch (dwa)
                 {
                     case "1":
@@ -619,6 +620,7 @@ namespace GreenBushIEP.Controllers
                     OC.Transporation_Other_flag = model.Transporation_Other_flag;
                     OC.Transporation_Other_desc = model.Transporation_NotEligible.HasValue && model.Transporation_NotEligible.Value ? "" : otherDesc;
                     OC.RegularEducation_NotParticipate = model.RegularEducation_NotParticipate;
+					OC.ExtendedSchoolYear_Necessary = model.ExtendedSchoolYear_Necessary;
                     OC.ExtendedSchoolYear_RegressionRisk = model.ExtendedSchoolYear_RegressionRisk;
                     OC.ExtendedSchoolYear_SeverityRisk = model.ExtendedSchoolYear_SeverityRisk;
                     OC.ExtendedSchoolYear_Justification = model.ExtendedSchoolYear_Justification;
