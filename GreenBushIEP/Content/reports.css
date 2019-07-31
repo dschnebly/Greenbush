@@ -84,7 +84,7 @@ hr {
 	width: inherit;
 }
 
-.tooltip-help {
+.tooltip-help .print-module {
 	margin-right: 10px;
 	-webkit-appearance: none;
 	padding: 0;
@@ -756,7 +756,7 @@ body.modal-open .modal {
 		display: none;
 	}
 
-	.close, .tooltip-help {
+	.close, .tooltip-help, .print-module {
 		display: none;
 	}
 

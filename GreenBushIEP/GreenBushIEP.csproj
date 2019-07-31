@@ -29,6 +29,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
+    <AssemblyVersion>2.2.2.2</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -797,6 +798,7 @@
     <Content Include="Reports\IndividualizedEducationProgramDataSet1.xsc">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Reports\IndividualizedEducationProgramDataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>IndividualizedEducationProgramDataSet1.Designer.cs</LastGenOutput>
@@ -957,6 +959,7 @@
     <Content Include="Views\Home\CreateReferral.cshtml" />
     <Content Include="Views\Home\Referrals.cshtml" />
     <Content Include="Views\Home\EditReferral.cshtml" />
+    <Content Include="Views\Form\SummaryOfPerformance.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

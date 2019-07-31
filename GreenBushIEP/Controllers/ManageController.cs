@@ -19,9 +19,15 @@ namespace GreenBushIEP.Controllers
     public class ManageController : Controller
     {
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+		private const string owner = "1"; //level 5
+		private const string mis = "2"; //level 4
+		private const string admin = "3"; //level 3
+		private const string teacher = "4"; //level 2
+		private const string student = "5";
+		private const string nurse = "6"; //level 1
 
-        // GET: Manage
-        public ActionResult Index()
+		// GET: Manage
+		public ActionResult Index()
         {
             return View();
         }
@@ -183,11 +189,20 @@ namespace GreenBushIEP.Controllers
 		public ActionResult EditReferral(int id)
 		{
 			StudentDetailsViewModel model = new StudentDetailsViewModel();
-
+			bool isComplete = false;
 			model.student = new Student();
+
+			tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == id).FirstOrDefault();
+			if (referralReq != null)
+			{
+				isComplete = referralReq.Complete;
+
+			}
+
 			tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == id).FirstOrDefault();
 			if (student != null)
 			{
+			
 				model.referralId = student.ReferralID;
 				model.student.FirstName = student.FirstName;
 				model.student.MiddleName = student.MiddleInitial;
@@ -271,7 +286,7 @@ namespace GreenBushIEP.Controllers
 
 			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 			ViewBag.AllBuildings = (from b in db.tblBuildings where b.Active == 1 select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
-
+			ViewBag.ReferralComplete = isComplete;
 			return View("~/Views/Home/EditReferral.cshtml", model);
 		}
 
@@ -287,16 +302,25 @@ namespace GreenBushIEP.Controllers
 					
 					// check that the kidsIS doesn't already exsist in the system.
 					long kidsID = Convert.ToInt64(collection["kidsid"]);
-
+					int referralId = Convert.ToInt32(collection["referralId"]);
+					
 					if (kidsID == 0)
 					{
 						return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
 					}
 
 					tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+					tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == referralId).FirstOrDefault();
+
 					if (exsistingStudent != null)
 					{
-						return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+						if(referralReq != null && referralReq.Complete)
+							return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+
+						//student has been created but it is not complete - don't create new record
+						
+
+						return Json(new { Result = "success", Message = exsistingStudent.UserID });
 					}
 
 					// Create New User 
@@ -332,12 +356,21 @@ namespace GreenBushIEP.Controllers
 
 
 					// Create New StudentInfo
+					DateTime dobDate = DateTime.MinValue;
+
+					DateTime.TryParse(collection["dob"], out dobDate);
+
+					if (dobDate == DateTime.MinValue)
+					{
+						return Json(new { Result = "error", Message = "The Birthdate supplied in not a valid date." });
+					}
+					
 					// tblStudentInfo
 					tblStudentInfo studentInfo = new tblStudentInfo()
 					{
 						UserID = student.UserID,
 						KIDSID = kidsID,
-						DateOfBirth = Convert.ToDateTime(collection["dob"]),
+						DateOfBirth = dobDate,
 						Primary_DisabilityCode = collection["primaryDisability"].ToString(),
 						Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
 						AssignedUSD = collection["assignChildCount"].ToString(),
@@ -602,12 +635,16 @@ namespace GreenBushIEP.Controllers
 
 			
 			tblReferralRequest rr = db.tblReferralRequests.Where(o => o.ReferralID == referralID).FirstOrDefault();
-			rr.Complete = true;
-			rr.Update_Date = DateTime.Now;
-			db.SaveChanges();
+			if (rr != null)
+			{
+				rr.Complete = true;
+				rr.Update_Date = DateTime.Now;
+				db.SaveChanges();
 
+			}
 
-			return RedirectToAction("Portal", "Home");
+			return RedirectToAction("Referrals", "Manage");
+
 		}
 
 
@@ -1982,7 +2019,10 @@ namespace GreenBushIEP.Controllers
                         db.SaveChanges();
                     }
 
-                    db.tblUsers.Remove(user);
+                    // archive user
+                    user.Archive = true;
+
+                    //db.tblUsers.Remove(user);
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "<strong>Success!</strong> The user was successfully deleted from the system." });
                 }
@@ -2025,12 +2065,22 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId)
+        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
             {
-                List<String> myDistricts = new List<string>();
+				int? searchUserId = null;
+
+				if (userId != null)
+				{
+					if (userId.Value > -1)
+					{
+						searchUserId = userId.Value;
+					}
+				}
+
+				List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
 
@@ -2064,7 +2114,14 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings
+							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+							   where myRoles.Contains(user.RoleID) 
+							   && !(user.Archive ?? false)
+								&& ((searchUserId == null) || (user.UserID == searchUserId.Value))
+							   && myDistricts.Contains(buildingMap.USD)
+							   && myBuildings.Contains(buildingMap.BuildingID)
+							   select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {
@@ -2086,11 +2143,20 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId)
+        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
             {
+				int? searchUserId = null;
+
+				if (userId != null)
+				{
+					if (userId.Value > -1)
+					{
+						searchUserId = userId.Value;
+					}
+				}
                 List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
@@ -2130,7 +2196,13 @@ namespace GreenBushIEP.Controllers
                     myRoles.Add("2");
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where myRoles.Contains(user.RoleID) && !(user.Archive ?? false) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                var members = (from buildingMap in db.tblBuildingMappings
+							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+							   where myRoles.Contains(user.RoleID)
+							   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
+							   && !(user.Archive ?? false) 
+							   && (myDistricts.Contains(buildingMap.USD) 
+							   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {
@@ -2143,7 +2215,8 @@ namespace GreenBushIEP.Controllers
                     }
                 }
 
-                NewPortalObject.Add("members", members);
+				
+				NewPortalObject.Add("members", members);                
                 return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
             }
 
@@ -2324,14 +2397,18 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult GetAllStudentsInBuildings(int id)
+        public ActionResult GetAllStudentsInBuildings(int id, string filterStudentName)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(u => u.UserID == id);
 
             try
             {
                 var teacherBuildings = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.BuildingID).Distinct().ToList();
-                var studentsInTheBuildings = (from bm in db.tblBuildingMappings join user in db.tblUsers on bm.UserID equals user.UserID where user.RoleID == "5" && teacherBuildings.Contains(bm.BuildingID) select bm.UserID).ToList();
+                var studentsInTheBuildings = (from bm in db.tblBuildingMappings join user in db.tblUsers on bm.UserID 
+											  equals user.UserID
+											  where user.RoleID == "5"
+											  && ((filterStudentName == null) || (user.FirstName.Contains(filterStudentName) || user.LastName.Contains(filterStudentName)))
+											  && teacherBuildings.Contains(bm.BuildingID) select bm.UserID).ToList();
                 var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
@@ -2353,15 +2430,18 @@ namespace GreenBushIEP.Controllers
                                     LastName = u.LastName,
                                     ImageURL = u.ImageURL,
                                     BuildingName = b.BuildingName
-                                }).Distinct().ToList();
+                                }).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
-                return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
+
+				return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
 
         [HttpPost]
         [Authorize]
@@ -2550,6 +2630,8 @@ namespace GreenBushIEP.Controllers
                     return "Student";
             }
         }
+
+		
 
         #endregion
     }

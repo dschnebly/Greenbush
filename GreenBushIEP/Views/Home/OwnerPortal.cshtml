@@ -8,6 +8,7 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
 	@Styles.Render("~/Content/ownerportal.css")
+	@Styles.Render("~/Content/chosen.css")
 }
 
 
@@ -42,7 +43,22 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-5 pull-left">
+		<div class="col-xs-12 col-md-3 pull-left">
+            <div class="form-group">
+                <label for="filterName">Filter by Name</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-search"></span></span>					
+					 <select class="form-control chosen-select" name="filterName" id="filterName">
+                        <option value="-1">All Users</option>
+						  @foreach (var user in Model.members)
+						  {
+							   <option value=@user.UserID>@user.LastName, @user.FirstName @user.MiddleName  </option>
+						  }
+					</select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3 pull-left">
             <div class="form-group">
                 <label for="userDistricts">Filter by District</label>
                 <div class="input-group">
@@ -64,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-5 pull-left">
+        <div class="col-xs-12 col-md-3 pull-left">
             <div class="form-group">
                 <label for="userBuildings">Filter by Building</label>
                 <div class="input-group">
@@ -86,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-2 pull-left">
+        <div class="col-xs-12 col-md-3 pull-left">
             <div class="form-group">
                 <label for="userRoles">Filter by Role</label>
                 <div class="input-group">

@@ -1,0 +1,859 @@
+﻿@using GreenBushIEP.Models
+@model StudentLegalView
+
+@{
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+	string studentSchool = Model.building;
+	string studentLanguage = Model.studentLanguage;
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string parents =  "";
+	string studentAddress = Model.student != null ? Model.student.Address1 + " " + Model.student.Address2 : "";
+	string studentCityStZip = Model.student != null ? studentAddress + " " + Model.student.City + ", " + Model.student.State + " " + Model.student.Zip : "";
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
+	string districtContactAddr = Model.districtContact != null ? string.Format("{0} {1} {2}, {3} {4}", Model.districtContact.Address1, Model.districtContact.Address2, Model.districtContact.City, Model.districtContact.State, Model.districtContact.Zip) : "";
+	string districtCity = Model.districtContact != null ? string.Format("{0}", Model.districtContact.City) : "";
+	string graduation = Model.studentTransition != null ? string.Format("{0}", Model.studentTransition.Planning_GraduationYear) : "";
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var learningGoal = Model.transitionGoals.Where(o => o.GoalType == "education").FirstOrDefault();
+	var workingGoal = Model.transitionGoals.Where(o => o.GoalType == "employment").FirstOrDefault();
+	var livingGoal = Model.transitionGoals.Where(o => o.GoalType == "independent").FirstOrDefault();
+	string currentDate = DateTime.Now.ToShortDateString();
+
+	 if (Model.contacts != null)
+	 {
+		  foreach (var contact in Model.contacts)
+		  {
+			  parents += string.Format("{0} {1} ", contact.FirstName, contact.LastName);
+		  }
+	 }	
+
+}
+
+<div class="module-page">
+	<p class=MsoNormal align=center style='text-align:center'><b>My Summary ofPerformance</b></p>
+
+	<p class=MsoNormal> </p>
+
+	<p class=MsoNormal>
+		Name:
+		<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentFormattedName.Length) > 103 ? studentFormattedName : String.Format(studentFormattedName).PadRight(103 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentFormattedName.Length) > 103 ? studentFormattedName : String.Format(studentFormattedName).PadRight(103 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+		Date of Birth: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((dobStr.Length) > 25 ? dobStr : String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((dobStr.Length) > 25 ? dobStr : String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</span></span> 
+	</p>
+
+	<p class=MsoNormal>
+		Address:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	</p>
+
+	<p class=MsoNormal>
+		Telephone Number:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span> Year of Graduation/Exit: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((graduation.Length) > 103 ? graduation : String.Format(graduation).PadRight(103 - String.Format(graduation).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((graduation.Length) > 103 ? graduation : String.Format(graduation).PadRight(103 - String.Format(graduation).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	</p>
+
+	<p class=MsoNormal>
+		Current School: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentSchool.Length) > 103 ? studentSchool : String.Format(studentSchool).PadRight(103 - String.Format(studentSchool).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentSchool.Length) > 103 ? studentSchool : String.Format(studentSchool).PadRight(103 - String.Format(studentSchool).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+		City:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((districtCity.Length) > 103 ? districtCity : String.Format(districtCity).PadRight(103 - String.Format(districtCity).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((districtCity.Length) > 103 ? districtCity : String.Format(districtCity).PadRight(103 - String.Format(districtCity).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	</p>
+
+	<p class=MsoNormal>
+		Primary Language or mode of communication:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentLanguage.Length) > 103 ? studentLanguage : String.Format(studentLanguage).PadRight(103 - String.Format(studentLanguage).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentLanguage.Length) > 103 ? studentLanguage : String.Format(studentLanguage).PadRight(103 - String.Format(studentLanguage).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	</p>
+
+	<p class=MsoNormal>
+		School Representative Contact: Name:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((districtContactName.Length) > 60 ? districtContactName : String.Format(districtContactName).PadRight(60 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((districtContactName.Length) > 60 ? districtContactName : String.Format(districtContactName).PadRight(60 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+		Title: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+	</p>
+
+	<p class=MsoNormal>
+		School: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((Model.districtName.Length) > 103 ? Model.districtName : String.Format(Model.districtName).PadRight(103 - String.Format(Model.districtName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((Model.districtName.Length) > 103 ? Model.districtName : String.Format(Model.districtName).PadRight(103 - String.Format(Model.districtName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+		E-mail: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span> Telephone Number: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+	</p>
+
+	<p class=MsoNormal style="margin-top:15px"><b>My Goals for one year after high school:</b> </p>
+
+	<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style=''>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'>Learning</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (learningGoal != null)
+					  {
+						  @(string.Format("{0} {1} {2}", learningGoal.CompletetionType, learningGoal.Behavior, learningGoal.WhereAndHow))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (learningGoal != null)
+					 {
+						  @(string.Format("{0} {1} {2}", learningGoal.CompletetionType, learningGoal.Behavior, learningGoal.WhereAndHow))
+					 }
+					
+					</span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>&nbsp;</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal'>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>Working</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (workingGoal != null)
+					  {
+						  @(string.Format("{0} {1} {2}", workingGoal.CompletetionType, workingGoal.Behavior, workingGoal.WhereAndHow))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (workingGoal != null)
+					 {
+						  @(string.Format("{0} {1} {2}", workingGoal.CompletetionType, workingGoal.Behavior, workingGoal.WhereAndHow))
+					 }					
+					</span>
+				</p>				
+			</td>
+		</tr>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>&nbsp;</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>Living</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (livingGoal != null)
+					  {
+						  @(string.Format("{0} {1} {2}", livingGoal.CompletetionType, livingGoal.Behavior, livingGoal.WhereAndHow))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (livingGoal != null)
+					 {
+						  @(string.Format("{0} {1} {2}", livingGoal.CompletetionType, livingGoal.Behavior, livingGoal.WhereAndHow))
+					 }
+					
+					</span>
+				</p>				
+			</td>
+		</tr>
+		<tr>
+			<td width=78 valign=top style='width:58.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>&nbsp;</p>
+			</td>
+			<td width=546 valign=top style='width:409.25pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+	<p class=MsoNormal style="margin-top:15px"><b>My performance in academic content areas: </b> </p>
+	<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style=''>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt; text-align:center;line-height:normal'><b><span style='font-size:10.0pt'>&nbsp;</span></b></p>
+				<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt; text-align:center;line-height:normal'>
+					<b>
+						<span style='font-size:10.0pt'>
+							Academic
+							Content Area
+						</span>
+					</b>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'>
+					<b>
+						<span style='font-size:10.0pt'>
+							Present
+							Level of Performance
+						</span>
+					</b>
+				</p>
+				<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'>
+					<b>
+						<span style='font-size:10.0pt'>
+							(grade
+							level, standard scores, strengths, needs)
+						</span>
+					</b>
+				</p>
+			</td>
+			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'>
+					<b>
+						<span style='font-size:10.0pt'>
+							Essential
+							accommodations, assistive technology, or modifications utilized in high
+							school, and why needed.
+						</span>
+					</b>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					<span style='font-size:10.0pt'>
+						Reading (Basic reading/decoding; reading
+						comprehension; reading speed)
+					</span>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (Model.reading != null)
+					  {
+						  @(string.Format("{0}", Model.reading.LevelOfPerformance))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (Model.reading != null)
+					 {
+						  @(string.Format("{0}", Model.reading.LevelOfPerformance))
+					 }					
+					</span>
+				</p>				
+			</td>
+			<td width=234 valign=top style='width:175.25pt;  padding:0in 5.4pt 0in 5.4pt'>
+				<textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span>
+			</td>
+		</tr>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					<span style='font-size:10.0pt'>
+						Math (Calculation skills, algebraic problem solving;
+						quantitative reasoning
+					</span>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt; padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (Model.math != null)
+					  {
+						  @(string.Format("{0}", Model.math.LevelOfPerformance))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (Model.math != null)
+					 {
+						  @(string.Format("{0}", Model.math.LevelOfPerformance))
+					 }					
+					</span>
+				</p>
+			</td>
+			<td width=234 valign=top style='width:175.25pt; padding:0in 5.4pt 0in 5.4pt'>
+				<textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span>
+			</td>
+		</tr>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					<span style='font-size:10.0pt'>Language (written expression, speaking, spelling</span>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (Model.written != null)
+					  {
+						  @(string.Format("{0}", Model.written.LevelOfPerformance))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (Model.written != null)
+					 {
+						  @(string.Format("{0}", Model.written.LevelOfPerformance))
+					 }					
+					</span>
+				</p>
+			</td>
+			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
+<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>			</td>
+		</tr>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					<span style='font-size:10.0pt'>
+						Learning Skills (class participation, note taking,
+						keyboarding, organization, homework management, time management, study
+						skills, test-taking skills
+					</span>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt;  padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span>
+				</p>
+			</td>
+			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td width=162 valign=top style='width:121.25pt;padding:0in 5.4pt 0in 5.4pt'>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
+					<span style='font-size:10.0pt'>Other Academic Areas (Science, social studies, etc.)</span>
+				</p>
+			</td>
+			<td width=228 valign=top style='width:171.0pt;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (Model.academicGoals != null)
+					  {
+						  @(string.Format("{0}", Model.academicGoals.LevelOfPerformance))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (Model.academicGoals != null)
+					 {
+						  @(string.Format("{0}", Model.academicGoals.LevelOfPerformance))
+					 }					
+					</span>
+				</p>
+			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>			</td>
+		</tr>
+	</table>
+
+<p class=MsoNormal>  <b>My performance in functional areas: </b></p>
+
+<p class=MsoNormal> </p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style=''>
+
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b>Functional Areas</b></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b>Present Level of Performance (grade level, standard scores,
+  strengths, needs)</b></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b>Essential accommodations, assistive technology, or modifications
+  utilized in high school, and why needed.</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Social Skills and Behavior
+  (Interactions with teachers/peers, level of initiation in asking for
+  assistance, responsiveness to services and accommodations, degree of
+  involvement in extracurricular activities, confidence and persistence as a
+  learner,)</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
+					Goal:
+					<textarea class="form-control">
+					  @if (Model.socialGoals != null)
+					  {
+						  @(string.Format("{0}", Model.socialGoals.LevelOfPerformance))
+					  }
+					</textarea><span style="display:none;font-size:9pt" class="input-value">
+					 @if (Model.academicGoals != null)
+					 {
+						  @(string.Format("{0}", Model.socialGoals.LevelOfPerformance))
+					 }					
+					</span>
+				</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'>	<textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span>
+</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Independent Living Skills (Self-care,
+  leisure skills, personal safety, transportation, banking, budgeting)</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span>
+</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Environmental Access/Mobility
+  (assistive technology, mobility, transportation</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Self-Determination/Self-Advocacy
+  Skills (Ability to identify and articulate postsecondary goals, learning
+  strengths and needs;</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Career-Vocational/Transition/
+  Employment (Career interests, career exploration, job training, employment
+  experiences and supports)</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'<textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=208 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt'>Additional important considerations
+  that can assist in making decisions about disability determination and needed
+  accommodations (e.g., medical problems, family concerns, sleep disturbance)</span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal>Date this Summary was completed: <textarea class="form-control">@currentDate</textarea><span style="display:none;font-size:9pt" class="input-value">@currentDate</span> </p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal><b>Team participants providing input into the Summary of Performance </b></p>
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style='text-align:left'>
+ <tr>
+  <td width="50%">
+  <p><b>Name/Title</b></p>
+  </td>
+  <td  width="50%">
+  <p ><b>Name/Title</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  <p><textarea class="form-control">@(studentFormattedName)</textarea><span style="display:none;" class="input-value">@(studentFormattedName)</span><span> (Student)</span></p>
+  </td>
+  <td >
+  <p><textarea class="form-control">@(string.IsNullOrEmpty(parents) ? "" : parents)</textarea><span style="display:none;" class="input-value">@(parents)</span><span> (Parent(s))</span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td>
+  <p><textarea class="form-control">@(string.IsNullOrEmpty(teacherFormattedName) ? "" : teacherFormattedName)</textarea><span style="display:none;" class="input-value">@(teacherFormattedName)</span><span> (Teacher)</span></p>       
+  </td>
+  <td >
+  <p><textarea class="form-control"></textarea><span style="display:none;" class="input-value"></span><span> (Teacher)</span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td>
+	 <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span><span> (Other Service Provider)</span></p>    
+  </td>
+  <td>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span><span> (Other Service Provider)</span></p>    
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal><b><u>OPTIONAL </u></b></p>
+
+<p class=MsoNormal><b>Documentation of special needs:  </b></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style='text-align:left'>
+ <tr>
+  <td width=641 colspan=3 valign=top style='width:467.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b>The most recent copy of assessment reports that diagnose and
+  clearly identify my special needs and/or that will assist in postsecondary
+  planning are identified and attached. </b></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b>&nbsp;</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'><b>Type of
+  Documentation</b></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;
+  line-height:normal'><b>Assessment Name</b></p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'><b>Dates Administered</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Psychological/Cognitive</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Neuropsychological</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Medical/Physical</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Communication</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Adaptive
+  Behavior</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Social/Interpersonal</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Communication/Speech/Language</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Mutli-Tiered
+  System of Supports (MTSS/RTI)</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Career/Vocational/Transition</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Community-based
+  assessments</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Self-determination
+  assessments</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Assistive
+  Technology</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Classroom
+  Observations</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:155.8pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Other</p>
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+  <td width=208 valign=top style='width:155.85pt;
+  
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span></p>  
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b>Additional information about my strengths, interests,
+preferences, or needs to support a successful transition to postsecondary
+services (e.g.:  work experiences, on-the-job experiences, school experiences
+such as extra-curricular activities, community experiences, etc). </b></p>
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span> </p> 
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>

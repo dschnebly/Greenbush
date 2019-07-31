@@ -235,16 +235,16 @@
         margin: 10px 0;
     }
 </style>
-
+<div id="printModuleDiv">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" id="headerClose"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+ 	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('printModuleDiv');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
+	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" style="font-size: 30px;">
         <i class="glyphicon glyphicon-random" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Transition
     </h4>
 </div>
 <div class="modal-body">
-
     <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
         <strong class="moreinfo">Oh snap!</strong>
     </div>
@@ -1434,6 +1434,7 @@
         </div>
     </div>
 </div>
+</div> <!--end print-->
 <script src="~/Scripts/editable.js"></script>
 <script>
 	debugger;
@@ -1686,6 +1687,13 @@
 							$(window).trigger("saving.bs.modal");
 							console.log("Course of Study successfully updated.");
 							$('#moduleSection').modal('hide');
+							
+							if (data.IsComplete) {
+								$("#TransitionWidget .hero-widget").addClass("module-completed");
+							}
+							else {
+								$("#TransitionWidget .hero-widget").removeClass("module-completed");
+							}
 						}
 						else {
 							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {

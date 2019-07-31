@@ -1,5 +1,10 @@
 ﻿$(function () {
 
+	
+	if ($('ul#iepStatusList li').length === 0) {
+		$('ul#iepStatusList').hide();
+	}
+
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
@@ -55,8 +60,8 @@
 
         $('.ajax-loader').css("visibility", "visible");
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
-    });
-
+	});
+	
     $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
         var stid = getUrlParameter('stid');
         var iepId = $("#studentIEPId").val();
@@ -389,6 +394,41 @@
         }
     });
 
+    $("#makeIEPAnnualActive").on("click", function () {
+        if ($("#makeIEPAnnualActive").hasClass("disabled")) { return false; } // the link is disabled
+
+        var answer = confirm("Are you sure you want to set this ANNUAL to active?");
+        if (answer) {
+            $('.ajax-loader').css("visibility", "visible");
+			$(".ajax-loader img").css("visibility", "visible");
+
+			var stId = $("#stid").val();
+			var iepId = $("#studentIEPId").val();
+
+			$.ajax({
+				type: 'GET',
+				url: '/Home/UpdateIEPAnnualToActive',
+				data: { Stid: stId, IepId: iepId },
+				dataType: 'json',
+				success: function (data) {
+					if (data.Result === 'success') {
+						location.reload(true);
+					} else {
+						alert(data.Message);
+						location.reload(true);
+					}
+				},
+				error: function (data) {
+					alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+				},
+				complete: function () {
+					$('.ajax-loader').css("visibility", "hidden");
+					$(".ajax-loader img").css("visibility", "hidden");
+				}
+			});
+        }
+    });
+
     // Attach Event
     // if the owner or mis reverts the draft back to active
     $("#revertToDraft").on("click", function () {
@@ -462,6 +502,28 @@ function getUrlParameter(sParam) {
         }
     }
 }
+
+
+function printModule(divOverride) {	
+	var header = "";
+	var divName = 'module-form-section'
+	if (divOverride != undefined) {
+		divName = divOverride;
+	}
+	var divToPrint = document.getElementById(divName);
+
+	var newWin = window.open('', 'Print-Window');
+	newWin.document.open();
+	
+	newWin.document.write("<style>.noPrint, .completed-loader, .close, .tooltip-help, .print-module, .formbtn {display: none!important;} .modal-header{display:inline; } .modal-title { padding:0; margin: 0; line-height: 1.42857143; } .module-user-name { margin-left:8px;margin-bottom:8px } label {display: inline-block;	max-width:100%;margin-bottom: 5px;font-weight:bold;}.funkyradio div { clear: both; overflow: hidden; } .funkyradio label { width: 100%; border-radius: 3px; border: 1px solid #D1D3D4; font-weight: normal; display: inline-block !important; padding-left: 50px !important; text-indent: 0px !important; line-height: 110% !important; padding-top: 8px; padding-bottom: 8px; } .funkyradio input[type='radio']:empty, .funkyradio input[type='checkbox']:empty { display: none; } .funkyradio input[type='radio']:empty ~ label, .funkyradio input[type='checkbox']:empty ~ label { position: relative; line-height: 2.5em; text-indent: 3.25em; /*margin-top: 2em;*/ cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .funkyradio input[type='radio']:empty ~ label:before, .funkyradio input[type='checkbox']:empty ~ label:before { position: absolute; display: block; top: 0; bottom: 0; left: 0; content: ''; width: 2.5em; background: #D1D3D4; border-radius: 3px 0 0 3px; } .funkyradio input[type='radio']:hover:not(:checked) ~ label, .funkyradio input[type='checkbox']:hover:not(:checked) ~ label { color: #888; } .funkyradio input[type='radio']:hover:not(:checked) ~ label:before, .funkyradio input[type='checkbox']:hover:not(:checked) ~ label:before { content: '\2714'; text-indent: .9em; color: #C2C2C2; padding-top: 8px; } .funkyradio input[type='radio']:checked ~ label, .funkyradio input[type='checkbox']:checked ~ label { color: #777; } .funkyradio input[type='radio']:checked ~ label:before, .funkyradio input[type='checkbox']:checked ~ label:before { content: '\u2714'; text-indent: .9em; color: #333; background-color: #ccc; line-height: 2; display: inline-block; vertical-align: middle; } .funkyradio input[type='radio']:focus ~ label:before, .funkyradio input[type='checkbox']:focus ~ label:before { box-shadow: 0 0 0 3px #999; } .funkyradio-default input[type='radio']:checked ~ label:before, .funkyradio-default input[type='checkbox']:checked ~ label:before { color: #333; background-color: #ccc; } .funkyradio-primary input[type='radio']:checked ~ label:before, .funkyradio-primary input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #337ab7; } .funkyradio-success input[type='radio']:checked ~ label:before, .funkyradio-success input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #5cb85c; } .funkyradio-danger input[type='radio']:checked ~ label:before, .funkyradio-danger input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #d9534f; } .funkyradio-warning input[type='radio']:checked ~ label:before, .funkyradio-warning input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #f0ad4e; } .funkyradio-info input[type='radio']:checked ~ label:before, .funkyradio-info input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #5bc0de; }.standard-font-size { font-size: 18px; } label { display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: bold; }.form-group { margin-bottom: 15px; } fieldset { display: table-cell; } fieldset { min-width: 0; padding: 0; margin: 0; margin-bottom: 0px; border: 0; }</style><html><body onload='window.print()'>" + header + divToPrint.innerHTML + '</body></html>');
+
+	newWin.document.close();
+
+	setTimeout(function () { newWin.close(); }, 10);
+
+	return false;
+}
+
 
 function createDateString(newDate) {
     var dateArr = newDate.split('-');
@@ -565,8 +627,9 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
 // Save Plan button clicked.
 $('#saveplan').on('click', function () {
     $('.ajax-loader').css("visibility", "visible");
-    var stId = $("#stid").val();
-    var form = $('#thePlan').serialize();
+	var stId = $("#stid").val();
+	var iepId = $("#studentIEPId").val();
+	var form = $('#thePlan').serialize();
 
     $.ajax({
         type: 'POST',
@@ -576,7 +639,7 @@ $('#saveplan').on('click', function () {
         async: false,
         success: function (data) {
             if (data.result === "success") {
-                window.location.href = "/Home/StudentProcedures?stid=" + stId;
+				window.location.href = "/Home/StudentProcedures?stid=" + stId + "&iepID=" + iepId;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
@@ -611,7 +674,7 @@ $("#dismissIEPPlan").on("click", function () {
         async: false,
         success: function (data) {
             if (data.result === "success") {
-                window.location.href = "/Home/StudentProcedures?stid=" + data.message;
+				window.location.href = "/Home/StudentProcedures?stid=" + data.message + "&iepID=" + iepId;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
@@ -943,7 +1006,7 @@ $(".service-section").on('click', function (e) {
         data: { studentId: stId, IEPid: iepId },
         dataType: 'json',
         success: function (data) {
-            if (data.Result == "success") {
+            if (data.Result === "success") {
 
                 $.ajax({
                     type: 'GET',

@@ -52,10 +52,11 @@
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
-
+<div id="printModuleDiv">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('printModuleDiv');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
+	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title pull-left" style="font-size: 30px;">
         <i class="fa fa-handshake-o" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Services
     </h4>
@@ -71,6 +72,8 @@
             </div>
         </div>
         <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
+		<input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
+		<input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
         <input type="hidden" id="sid" value="@Model.studentId" />
 
         @if (Model.calendar.MaxJsonLength == 0)
@@ -90,6 +93,7 @@
         }
 
         <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+			@*<span id='close' class="glyphicon glyphicon-remove pull-right" onclick='$(this).parent().hide();return false;' ></span>*@					
             <strong class="moreinfo">Oh snap!</strong>
         </div>
 
@@ -98,7 +102,7 @@
                 <div class="panel-group" id="accordion[0]">
 
                     <form action="/Home/saveStudentService" method="post">
-                        <input type="hidden" name="StudentId" value="@Model.studentId" />
+                        <input type="hidden" name="StudentId" value="@Model.studentId" />						
                         <input type="hidden" name="StudentSerivceId" value="0" />
                         <input type="hidden" name="completed" value="false" />
                         <div class="panel panel-default">
@@ -472,7 +476,7 @@
         <img src="~/Content/Images/copying-icon.gif" class="img-responsive" alt="copying services.." />
     </div>
 </div>
-
+</div> <!--end print-->
 <script>
 	
     var holidays = '@Html.Raw(Json.Encode(@Model.calendar))';
@@ -552,16 +556,15 @@
 
         panelCollapse.collapse('show');
 
-
-		var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
-		var endDateObject = cloneService.find("input[name='serviceEndDate']");
-		var serviceEndDate = endDateObject.val();
-		var splitDate = serviceEndDate.split('/');
-		if (splitDate[2] != fiscalYear) {
-			//update end date to match selected fiscal year
-			endDateObject.addClass("updateEndDateYear");
-			getLastDate(fiscalYear);
-		}
+		//var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
+		//var endDateObject = cloneService.find("input[name='serviceEndDate']");
+		//var serviceEndDate = endDateObject.val();
+		//var splitDate = serviceEndDate.split('/');
+		//if (splitDate[2] != fiscalYear) {
+		//	//update end date to match selected fiscal year
+		//	endDateObject.addClass("updateEndDateYear");
+		//	getLastDate(fiscalYear);
+		//}
 
         initService();
 
@@ -667,8 +670,17 @@
 
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
+						
+			//var endDate = $("#iepMeetingDate").val();
+			var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
+			var endDateYear = $("#iepMeetingDateYear").val();			
+			var fiscalYearElement = $(this).find("select[name='fiscalYear']");			
 
-            $(this).find("select[name='fiscalYear']").on("change", function (e) {
+			//don't adjust fy for existing services, only new services 
+			if (studentServiceId == 0)
+				fiscalYearElement.val(endDateYear);
+						
+            fiscalYearElement.on("change", function (e) {
                 var year = $(this).val();
 
                 var serviceDaysPerWeek = $(this).closest(".row").next().find("[name='serviceDaysPerWeek']");
@@ -796,7 +808,12 @@
                 $(".ajax-loader img").css("visibility", "visible");
 
                 var studentService = $(this).closest('.oneStudentService');
-                var form = studentService.find('form').serialize();
+				var form = studentService.find('form').serialize();
+				var iepId = $("#studentIEPId").val();                        
+
+				if (iepId != undefined && iepId != "")
+					form += "&iepId=" + iepId;
+
                 var completedService = studentService.find("a i.thisServiceNotCompleted");
                 var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
@@ -878,13 +895,13 @@
                     }
                 });
 
-                if (canSave) {
-                    $(window).trigger("saving.bs.modal");
+                //if (canSave) {
+                //    $(window).trigger("saving.bs.modal");
 
-                    setTimeout(function () {
-                        $('#moduleSection').modal('hide');
-                    }, 1200);
-                }
+                //    setTimeout(function () {
+                //        $('#moduleSection').modal('hide');
+                //    }, 1200);
+                //}
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -1005,8 +1022,12 @@
 
         var successFade = 3000;
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;}
-            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;}
+			if (positive) {
+				$("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
+			}
+			else {
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;
+			}
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
                 $("#alertMessage .moreinfo").html(message);

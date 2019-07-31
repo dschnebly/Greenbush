@@ -67,16 +67,14 @@
                    <td colspan="2"></td>
                 </tr>
             </table>
-
 			<hr />
+			<table class="full">
             @if (Model.studentDetails.contacts.Any(o => o.PrimaryContact == 1))
-			{
-
-                <table style="width:100%">
-					@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+			{               
+					foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
 					{
                     <tr>
-                        <td style="width:75px;"><label>Contact:</label></td>
+                        <td><label>Contact:</label></td>
                         <td>@primaryContact.FirstName @primaryContact.LastName</td>
                     
                         <td><label>Address:</label></td>
@@ -89,57 +87,51 @@
                         <td><label>Email:</label></td>
                         <td>@primaryContact.Email</td>
                     </tr>
-					}
-                </table>
+					}               
 			}
 			else
-			{
-				<table style="width:100%">					
+			{								
                     <tr>
-                        <td style="width:75px;"><label>Contact 1:</label></td><td></td>                    
+                        <td><label>Contact 1:</label></td><td></td>                    
                         <td><label>Address:</label></td><td></td>
                     </tr>
                     <tr>
                         <td><label>Phone:</label></td><td></td>                    
                         <td><label>Email:</label></td><td></td>
-                    </tr>					
-                </table>
+                    </tr>	                
 			}
-            <hr />
-            <table class="full">
+                <tr><td colspan="6"><hr/></td></tr>
                 <tr>
-                    <td style="width:150px;" ><label>Neighborhood School:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
-					<td style="width:150px;"><label>Responsible School:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
+                    <td ><label>Neighborhood School:</label></td>
+                    <td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>
+					<td><label>Responsible School:</label></td>
+                    <td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>					
                 </tr>                
                 <tr>
-                    <td style="width:150px;"><label>Assign Child Count:</label></td>
-                    <td style="width:150px">@Model.studentDetails.assignChildCount</td>                    
-                    <td style="width:150px;"><label>County of Residence:</label></td>
-                    <td style="width:150px">@Model.studentDetails.studentCounty</td>					
+                    <td><label>Assign Child Count:</label></td>
+                    <td>@Model.studentDetails.assignChildCount</td>                    
+                    <td><label>County of Residence:</label></td>
+                    <td>@Model.studentDetails.studentCounty</td>					
                 </tr>
                 <tr>
-					<td style="width:150px;"><label>Grade:</label></td>
-                    <td style="width:150px">@(studentGrade)</td>                   
-                    <td style="width:150px;"><label>Fund Source:</label></td>
-                    <td style="width:150px">@Model.studentDetails.placementCodeDesc</td>
+					<td><label>Grade:</label></td>
+                    <td>@(studentGrade)</td>                   
+                    <td><label>Fund Source:</label></td>
+                    <td>@Model.studentDetails.placementCodeDesc</td>
 				</tr>                
 				 <tr>
-					<td style="width:150px;"><label>Primary Disability:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.primaryDisability)</td>                   
-                    <td style="width:150px;"><label>Secondary Disability:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.secondaryDisability)</td>
+					<td><label>Primary Disability:</label></td>
+                    <td>@(Model.studentDetails.primaryDisability)</td>                   
+                    <td><label>Secondary Disability:</label></td>
+                    <td>@(Model.studentDetails.secondaryDisability)</td>
 				</tr>                
 				 <tr>
-                    <td style="width:150px;"><label>Gifted:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
-					<td style="width:150px;"><label>KG Full Day:</label></td>
-                    <td style="width:150px">@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
+                    <td><label>Gifted:</label></td>
+                    <td>@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
+					<td><label>KG Full Day:</label></td>
+                    <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
                 </tr>
-            </table>
-            <hr />
-            <table class="full">
+				<tr><td colspan="6"><hr/></td></tr>
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
                     <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>                
@@ -152,44 +144,45 @@
 						@foreach(var reevalDate in Model.studentDetails.reevalDates)
 						{
 							<span>@reevalDate.evalutationDate.ToShortDateString()</span><br/>
-						}
-					
+						}					
 					</td>
                     <td><label>3 Year Re-Eval:</label></td>
                     <td>@(Model.studentDetails.student.ReEvalConsentSigned.HasValue ? Model.studentDetails.student.ReEvalConsentSigned.Value.AddYears(3).ToShortDateString() : "")</td>
 				</tr>
 				<tr>				
-                    <td></td>
-                    <td></td>
+                    <td></td><td></td>
 					<td><label>Initiation:</label></td>
                     <td>@Model.studentDetails.inititationDate</td>                
                 </tr>                
                 <tr>
-                    <td><label>Exit:</label></td>
-                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
-					 <td><label>Next Annual Meeting:</label></td>
+                    <td><label>Annual Meeting:</label></td>
+                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
+                    
+					<td><label>Next Annual Meeting:</label></td>
                     <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>					
                 </tr>          
                 <tr>
-                    <td><label>Annual Meeting:</label></td>
-                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
-                    <td><label>Next Vision:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
-                </tr>
+					<td><label>Exit:</label></td>
+                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>					
+                    <td><label>Ed Status:</label></td>
+					<td>
+					(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td> 				
+				</tr>
 				<tr>
 					<td><label>Vision Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
-                   <td><label>Next Hearing:</label></td>
-                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>                    
-                </tr>
-                <tr>
+                
+					<td><label>Next Vision:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>                
+					</tr>
+				<tr>
 					<td><label>Hearing Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.ToShortDateString() : string.Empty)</td>
                     
-                </tr>
-				<tr>                   
-                    <td colspan="6"><label>Ed Status:</label>&nbsp;(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td>
-                </tr>
+				<td><label>Next Hearing:</label></td>
+                    <td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>                    
+                </tr>               
+								
             </table>                            
         </div> <!--end student page-->
         <br/><br/>
@@ -202,11 +195,7 @@
 			 			<h5>@Model.studentDetails.building.Address_Physical</h5>
 			 		<h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 			 	<h5>@Model.studentDetails.building.Phone</h5>
-			 </td>
-			 @*<td style="text-align:right;vertical-align:top">
-		Printed:<br />@(DateTime.Now.ToShortDateString())<br />
-		Printed By:<br /> @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))
-	</td>*@
+			 </td>			
 			 </tr>
 			 </table>
 			 <table class="full voffset2">
@@ -1753,7 +1742,7 @@
 			 <div class="col-xs-12">
 			 	<div>
 			 		<label>Instruction Service</label>
-			 		<p>Instruction is the use of formal techniques to impact knowledge.It is typically in schools through academic instruction, general education classes, tutoring, etc.Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.</p>
+			 		@*<p>Instruction is the use of formal techniques to impact knowledge.It is typically in schools through academic instruction, general education classes, tutoring, etc.Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.</p>*@
 			 	</div>
 			 	<div>
 			 		@if (Model.studentTransition.services.Count > 0)
@@ -1826,7 +1815,7 @@
 
 			 <div>
 			 	<label>Related Service</label>
-			 	<p>Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.</p>
+			 	@*<p>Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.</p>*@
 			 </div>
 			 <div class="row">
 			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
@@ -1900,7 +1889,7 @@
 			 </div>
 			 <div>
 			 	<label>Daily Living Skills Service</label>
-			 	<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>
+			 	@*<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>*@
 			 </div>
 			 <div class="row">
 			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
@@ -1974,7 +1963,7 @@
 			 </div>
 			 <div>
 			 	<label>Functional Vocational Service</label>
-			 	<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>
+			 	@*<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>*@
 			 </div>
 			 <div class="row">
 			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
@@ -2540,27 +2529,28 @@
 		<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 				{
-					var serviceCount = 1;
+				var serviceCount = 1;
 				<table style="text-align:left">
 					<tr>
-						<td><b>Ln#</b></td>
-						<td><b>Service</b></td>
-						<td><b>Setting</b></td>
+						<td><b>Fiscal Year</b></td>
+						<td><b>Service Type</b></td>
+						@*<td><b>Setting</b></td>*@
 						@*<td><b>Provider</b></td>*@
-						<td><b>LEA</b></td>
-						<td><b>AttendBlg</b></td>
+						@*<td><b>LEA</b></td>*@
+						<td><b>Attend Blg</b></td>
 						<td><b>Mins</b></td>
 						<td><b>Days</b></td>
-						<td><b>Start<br />Date</b></td>
+						<td><b>Initiation<br />Date</b></td>
 						<td><b>End<br />Date</b></td>
 						<td><b>Frequency</b></td>
 					</tr>
 
 					@foreach (var service in Model.studentServices)
 					{
+
 						<tr>
 							<td>
-								@serviceCount
+								@(service.SchoolYear-1) <text>-</text> @service.SchoolYear
 							</td>
 							<td>
 								@if (Model.serviceTypes.Count > 0)
@@ -2569,14 +2559,14 @@
 									{
 										if (serviceType.ServiceCode == service.ServiceCode)
 										{
-											<text>@serviceType.ServiceCode</text>
+											<text>(@serviceType.ServiceCode) @serviceType.Name</text>
 										}
 									}
 								}
 							</td>
-							<td>
+							@*<td>
 								@service.LocationCode
-							</td>
+							</td>*@
 							@*<td>
 							   @if (Model.serviceProviders.Count > 0)
 							   {
@@ -2593,11 +2583,19 @@
 									<text>&nbsp;&nbsp;&nbsp;</text>
 							  }
 							</td>*@
-							<td>
+							@*<td>
 								@Model.studentDetails.assignChildCount
-							</td>
+							</td>*@
 							<td>
-								@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")
+								@if (!string.IsNullOrEmpty(service.LocationCode))
+								{
+									var serviceLocationDesc = Model.locations.FirstOrDefault(i => i.LocationCode == service.LocationCode);
+									if (serviceLocationDesc != null)
+									{
+										<text>(@serviceLocationDesc.LocationCode) @serviceLocationDesc.Name</text>
+									}
+								}
+								
 							</td>
 							<td>
 								@service.Minutes

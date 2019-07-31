@@ -893,7 +893,23 @@
                 <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
                     <ul class="navigation">
                         <li class="pull-right">
-                            <button type="button" class="btn btn-primary btn-lg @(Model.studentIEP.current.IepStatus != IEPStatus.DRAFT ? "hidden" : String.Empty)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            @if (ViewBag.UserRoleId != "6")
+							{
+								string hideStudentPlanBtn = "";
+
+								if (Model.studentIEP.current.IepStatus != IEPStatus.DRAFT)
+								{
+									hideStudentPlanBtn = "hidden";
+								}
+
+								if (Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment) // Annual Draft
+								{
+									hideStudentPlanBtn = "";
+								}
+
+								<button type="button" class="btn btn-primary btn-lg @(hideStudentPlanBtn)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+
+							}
                             <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
                             <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
@@ -903,13 +919,13 @@
         </div>
         <div class="row" style="margin-top: 16px;">
             <div class="col-md-2">
-                @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now && Model.studentIEP.current.IepStatus == IEPStatus.DRAFT)
+                @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now)
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment ? "ANNUAL" : string.Empty) @(Model.studentIEP.displayIEPStatus) @(Model.studentIEP.current.Amendment && Model.studentIEP.displayIEPStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty) &nbsp;&nbsp;<b class="caret"></b>
                         </button>
-                        <ul class="dropdown-menu list-group">
+                        <ul class="dropdown-menu list-group" id="iepStatusList">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
                             {
                                 int currentIEPId = Model.studentIEP.current.IEPid;
@@ -922,9 +938,17 @@
                                     }
                                 }
                             }
-                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)
+                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
                             {
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                            }
+                            @if (Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
+                            {
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                            }
+                            @if (Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment) // Annual Draft
+                            {
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                             @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT)
                             {
@@ -938,10 +962,6 @@
                                 {
                                     <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
                                 }
-                            }
-                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.AMENDMENT)
-                            {
-                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                         </ul>
                     </div>
@@ -1183,6 +1203,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
+						@Html.Hidden("iepId", Model.studentIEP.current.IEPid)
                         <div class="row">
                             <div class="col-md-4">
                                 <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>

@@ -29,7 +29,7 @@ namespace GreenBushIEP.Models
             }
         }
 
-        public void SaveGoal(string evalProcedures)
+        public void SaveGoal(string evalProcedures, string otherDesc)
         {
             tblGoal ourGoal = db.tblGoals.Where(g => g.goalID == this.goal.goalID).FirstOrDefault();
             if (ourGoal == null)
@@ -127,7 +127,7 @@ namespace GreenBushIEP.Models
 
                     if (evalProcVal > 0)
                     {                        
-                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now });                        
+                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now, OtherDescription = otherDesc});                        
                     }
                 }
 

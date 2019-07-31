@@ -37,84 +37,56 @@ function init() {
 
     // attach event
     // fires off when you open up the Avaliable Students Modal
-    $('#addExistingStudentModal').on('show.bs.modal', function () {
-        var teacherId = $('#addExistingStudentModal').data('id');
-        $.ajax({
-            type: 'GET',
-            url: '/Manage/GetAllStudentsInBuildings',
-            dataType: 'json',
-            data: { id: teacherId },
-            async: false,
-            success: function (data) {
-                if (data.Result === "success") {
-                    // clear out the ul list
-                    $("ul#studentList").empty();
-
-                    // our array to user for appending
-                    var items = [];
-
-                    if (data.Message.length > 0) {
-
-                        // rebuild the list with the new data.
-                        $.each(data.Message, function (i, item) {
-                            var userImage = item.ImageURL !== null ? '/Avatar/' + item.ImageURL : '/Content/Images/newUser.png';
-							items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='school-name'>" + item.BuildingName.toProperCase() + "</div></div></li>");
-                        });
-
-                        $("ul#studentList").append.apply($("ul#studentList"), items);
-                        $(".listrap").listrap().getSelection();
-                    }
-                    else
-                    {
-                        $("ul#studentList").append("<li style='padding-left: 100px;'><b>No Students Found. Try Creating Some.</b></li>");
-                    }
-                }
-
-                $("#loadingIcon").hide();
-            },
-            error: function (data) {
-                console.log('error: ' + data);
-            }
-        });
+	$('#addExistingStudentModal').on('show.bs.modal', function () {
+		resetSearch();
+		getAllStudents();		
     });
 
     // attach event
     // fires when the "add" button is clicked on the Avaliable Students Modal.
     $('#addAvailableStudents').on('click', function (e) {
-        var teacherId = $('#addExistingStudentModal').data('id');
-        var activeStudents = $(".listrap").listrap().getSelection();
-        var studentIds = [];
+		var teacherId = $('#addExistingStudentModal').data('id');
+		var activeStudents = $(".listrap").listrap().getSelection();
+		var studentIds = [];
 
-        if (activeStudents.length > 0) {
-            $.each(activeStudents, function (index, value) {
-                studentIds.push($(activeStudents[index]).find('.ourStudent').data("id"));
-            });
+		if (activeStudents.length > 0) {
+			$.each(activeStudents, function (index, value) {
+				studentIds.push($(activeStudents[index]).find('.ourStudent').data("id"));
+			});
 
-            $.ajax({
-                type: 'POST',
-                url: '/Manage/AddStudentsToTeacher',
-                dataType: 'json',
-                data: { id: teacherId, students: studentIds },
-                async: false,
-                success: function (data) {
-                    location.reload(true); // force non-cache reload.
-                },
-                error: function (data) {
-                    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                        $("#alertMessage").slideUp(500);
-                    });
-                }
-            });
-        }
-
+			$.ajax({
+				type: 'POST',
+				url: '/Manage/AddStudentsToTeacher',
+				dataType: 'json',
+				data: { id: teacherId, students: studentIds },
+				async: false,
+				success: function (data) {
+					location.reload(true); // force non-cache reload.
+				},
+				error: function (data) {
+					$("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+					$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+						$("#alertMessage").slideUp(500);
+					});
+				}
+			});
+		}
         $('#addExistingStudentModal').modal('hide');
-    });
+	});
 
-    // attack event
-    // fires off when you click the search icon in the Avaliable Students Modal
-    $('#searchGreenBushStudents').on('click', function () {
-        $("#searchAvailableStudents").toggle();
+	
+	$('#searchStudents').on('click', function () {
+		$("#searchAvailableStudents").show();
+		$("#searchStudents").hide();		
+	});
+
+	$('#searchClearBtn').on('click', function () {
+		resetSearch();
+		getAllStudents();
+	});
+	    
+	$('#search_muted').on('click', function () {
+		getStudentBySearch();
     });
 
     // attach event
@@ -130,8 +102,94 @@ function init() {
             var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
             return !~text.indexOf(val);
         }).hide();
-    });
+	});
+
+
+	$('#searchStudent').keyup(function (e) {
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if (keycode == '13') {
+			var filterStudentName = $('#searchStudent').val();
+			if (filterStudentName != "") {
+				getStudentBySearch();
+			}
+		}
+	});
 }
+
+function getAllStudents() {
+	var teacherId = $('#addExistingStudentModal').data('id');
+
+	$.ajax({
+		type: 'GET',
+		url: '/Manage/GetAllStudentsInBuildings',
+		dataType: 'json',
+		data: { id: teacherId },
+		async: false,
+		success: function (data) {
+			if (data.Result === "success") {				
+				loadStudents(data);
+			}
+
+			$("#loadingIcon").hide();
+		},
+		error: function (data) {
+			console.log('error: ' + data);
+		}
+	});
+}
+
+function getStudentBySearch() {
+	var teacherId = $('#addExistingStudentModal').data('id');
+	var filterStudentName = $('#searchStudent').val();
+	$.ajax({
+		type: 'GET',
+		url: '/Manage/GetAllStudentsInBuildings',
+		dataType: 'json',
+		data: { id: teacherId, filterStudentName: filterStudentName },
+		async: false,
+		success: function (data) {
+			if (data.Result === "success") {
+				loadStudents(data);
+			}
+
+			$("#loadingIcon").hide();
+		},
+		error: function (data) {
+			console.log('error: ' + data);
+		}
+	});
+}
+
+function loadStudents(data)
+{
+	// clear out the ul list
+	$("ul#studentList").empty();
+
+	// our array to user for appending
+	var items = [];
+
+	if (data.Message.length > 0) {
+
+		// rebuild the list with the new data.
+		$.each(data.Message, function (i, item) {
+			var userImage = item.ImageURL !== null ? '/Avatar/' + item.ImageURL : '/Content/Images/newUser.png';
+			items.push("<li><div class='listrap-toggle pull-left'><span class='ourStudent' data-id='" + this.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + item.FirstName.toProperCase() + " " + item.LastName.toProperCase() + "</strong><div class='school-name'>" + item.BuildingName.toProperCase() + "</div></div></li>");
+		});
+
+		$("ul#studentList").append.apply($("ul#studentList"), items);
+		$(".listrap").listrap().getSelection();
+	}
+	else {
+		$("ul#studentList").append("<li style='padding-left: 100px;'><b>No Students Found. Try Creating Some.</b></li>");
+	}
+}
+
+function resetSearch() {
+	$("#searchStudents").show();
+	$("#searchAvailableStudents").hide();	
+	$('#searchStudent').val("");
+}
+
 
 jQuery.fn.extend({
     listrap: function () {

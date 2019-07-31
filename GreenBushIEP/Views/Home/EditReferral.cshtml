@@ -2,8 +2,13 @@
 @model GreenBushIEP.Models.StudentDetailsViewModel
 
 @{
-    ViewBag.Title = "Create Student from Referral";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Create Student from Referral";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	if (ViewBag.ReferralComplete != null && ViewBag.ReferralComplete)
+	{
+		ViewBag.Title = "Create Student from Referral (Completed)";
+	}
 }
 
 @section stylesheets {
@@ -803,7 +808,7 @@
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row voffset1">
                                     <div class="col-md-5">
                                         <label for="primaryDisability">Primary Disability</label>
                                         <select class="form-control" name="primaryDisability" id="primaryDisability">
@@ -811,7 +816,8 @@
                                             {
                                                 foreach (var primary in Model.primaryDisabilities)
                                                 {
-                                                    string selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected=selected" : "";
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Primary_DisabilityCode) ? "ND" : Model.info.Primary_DisabilityCode; 
+                                                    string selected = defaultDisability == primary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@primary.DisabilityCode" @selected>@primary.DisabilityDescription</option>
                                                 }
                                             }
@@ -824,7 +830,8 @@
                                             {
                                                 foreach (var secondary in Model.secondaryDisabilities)
                                                 {
-                                                    string selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected=selected" : "";
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode) ? "ND" : Model.info.Secondary_DisabilityCode; 
+                                                    string selected = defaultDisability == secondary.DisabilityCode ? "selected=selected" : "";                                                    
                                                     <option value="@secondary.DisabilityCode" @selected>@secondary.DisabilityDescription</option>
                                                 }
                                             }
@@ -905,7 +912,7 @@
                             </div>
                             <ul class="list-inline pull-right saveandcontinue">
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                                <li><button type="button" class="btn btn-info next-step" id="next5">Save and continue</button></li>
+                                <li><button type="button" class="btn btn-info next-step" id="next5" @(ViewBag.ReferralComplete != null && ViewBag.ReferralComplete ? "disabled" : "")>Save and continue</button></li>
                             </ul>
                         }
                     </div>
@@ -1002,7 +1009,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentCounty">County of Residence</label>
                                             <select name="studentCounty" id="studentCounty" class="form-control">
                                                 <option value="AL" selected=@(Model.info.County == "AL")>Allen</option>
@@ -1119,7 +1126,7 @@
                                                 <option value="OK" selected=@(Model.info.County == "OK")>Oklahoma</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentGrade">Student Grade</label>
                                             <select name="studentGrade" id="studentGrade" class="form-control">
                                                 @foreach (tblGrade grade in Model.grades)
@@ -1128,7 +1135,7 @@
                                                 }
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="studentRace">Student Race</label>
                                             <select name="studentRace" id="studentRace" class="form-control">
                                                 <option value="White" selected=@(Model.info.Race == "White")>White</option>
@@ -1138,15 +1145,17 @@
                                                 <option value="Native America" selected=@(Model.info.Race == "Native America")>American Indian or Alaska Native</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+										</div>
+                                    <div class="row voffset2">
+                                        <div class="col-md-4">
                                             <label for="studentEthnic">Hispanic Ethnicity</label>
                                             <select name="studentEthnic" id="studentEthnic" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Y" selected=@(Model.info.Ethicity == "Y")>Hispanic/Latino</option>
                                                 <option value="N" selected=@(Model.info.Ethicity == "N")>Not Hispanic/Latino</option>
                                             </select>
-                                        </div>
-                                        <div class="col-md-2">
+                                        </div>									 
+                                        <div class="col-md-4">
                                             <label for="studentLanguage">Student Language</label>
                                             <select name="studentLanguage" id="studentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.StudentLanguage == "EN")>EN - English</option>
@@ -1177,7 +1186,7 @@
                                                 <option value="ZH-WUU" selected=@(Model.info.StudentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <label for="parentLanguage">Parents Language</label>
                                             <select name="parentLanguage" id="parentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.ParentLanguage == "EN")>EN - English</option>
@@ -1482,7 +1491,7 @@
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return false;" }))
+                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.Hidden("studentId", Model.student.UserID)
@@ -1509,7 +1518,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-md-offset-5">
                                             <ul class="list-inline">
-                                                <li><button type="button" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;">Save Changes</button></li>
+                                                <li><input type="submit" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;" value="Save Changes"/></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1675,6 +1684,6 @@
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/editreferral.js")
+    @Scripts.Render("~/Scripts/editreferral.js?v1.1")
 
 }

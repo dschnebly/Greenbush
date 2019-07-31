@@ -23,10 +23,11 @@
         }
     }
 </style>
-
+<div id="printModuleDiv">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+  	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('printModuleDiv');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
+	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-university" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Academic Performance</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
 </div>
@@ -264,7 +265,7 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
                 <div class="form-group">
-                    <button type="submit" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="saveAcademicCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
@@ -286,11 +287,13 @@
         <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
     </div>
 </div>
+
+</div> <!--end print-->
 <br />
 <br />
 
 <script>
-
+	
     //**************************/
     //  Academic Attached Events
     /***************************/
@@ -515,7 +518,7 @@
             type: 'POST',
             url: '/ModuleSection/EditAcademic',
             data: form.serialize(),
-            dataType: 'json',
+            dataType: "json",
             success: function (data) {
                 if (data.Result == "success") {
 
@@ -530,7 +533,6 @@
                     }
 
                     $(window).trigger("saving.bs.modal");
-                    //window.location.href = '/Home/StudentProcedures?stid=' + stid + '&iepID=';
                     window.history.go(0);
                 } else {
                     $(".ajax-loader img").css("visibility", "hidden");
