@@ -964,7 +964,7 @@ namespace GreenbushIep.Controllers
                 {
                     new IEP(student.UserID, null, 1);
 
-                    theIEP = db.tblIEPs.Where(i => i.UserID == stid).FirstOrDefault();
+                    theIEP = db.tblIEPs.Where(i => i.UserID == stid).OrderByDescending(o => o.IEPid).FirstOrDefault();
                     theIEP.IepStatus = IEPStatus.PLAN;
                     db.SaveChanges();
                 }
@@ -1191,7 +1191,8 @@ namespace GreenbushIep.Controllers
             if (studehtIEP != null)
             {
                 studehtIEP.IsActive = false;
-                db.SaveChanges();
+				studehtIEP.IepStatus = IEPStatus.ARCHIVE;
+				db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "IEP is archived." }, JsonRequestBehavior.AllowGet);
             }
