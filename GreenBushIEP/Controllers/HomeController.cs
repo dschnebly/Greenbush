@@ -1589,7 +1589,9 @@ namespace GreenbushIep.Controllers
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
-            tblService service;
+			int iepId = Convert.ToInt32(collection["iepId"]);
+
+			tblService service;
 
             //check dates
             bool isValidStartDate = false;
@@ -1601,7 +1603,7 @@ namespace GreenbushIep.Controllers
             string errorMessage = "There was a problem saving the service";
 
             DateTime temp;
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
                 if (StudentSerivceId == 0) // new service
