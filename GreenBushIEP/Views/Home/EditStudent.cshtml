@@ -871,12 +871,32 @@
                                     <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
 
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building...">
-                                            @if (Model.buildings != null)
+                                            @if (ViewBag.SelectedDistrictBuildings != null)
                                             {
-                                                foreach (var building in ViewBag.AllBuildings)
+                                                foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
-                                                    string selected = Model.info.NeighborhoodBuildingID == building.BuildingID ? "selected=selected" : "";
-                                                    <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
+                                                    string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName (@selectedDistrictBuilding.BuildingID)</option>
+                                                }
+                                            }
+											
+											
+											@if (Model.buildings != null)
+                                            {
+                                                foreach (var districtBuilding in Model.buildings)
+                                                {
+                                                    string selected = Model.info.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName (@districtBuilding.BuildingID)</option>
+                                                }
+                                            }
+											
+											
+											@if (ViewBag.AllBuildings != null)
+                                            {
+                                                foreach (var allActiveBuilding in ViewBag.AllBuildings)
+                                                {
+                                                    string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName (@allActiveBuilding.BuildingID)</option>
                                                 }
                                             }
                                         </select>
@@ -889,12 +909,12 @@
                                     <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
 
                                         <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-validate="true" data-placeholder="Choose a building...">
-                                            @if (Model.buildings != null)
+                                            @if (ViewBag.SelectedDistrictBuildings != null)
                                             {
-                                                foreach (var building in Model.buildings)
+                                                foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
-                                                    string selected = Model.info.BuildingID == building.BuildingID ? "selected=selected" : "";
-                                                    <option value="@building.BuildingID" @selected>@building.BuildingName (@building.BuildingID)</option>
+                                                    string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName (@selectedDistrictBuilding.BuildingID)</option>
                                                 }
                                             }
                                         </select>

@@ -1467,18 +1467,60 @@ namespace GreenBushIEP.Controllers
             model.statusCode = db.tblStatusCodes.ToList();
             model.grades = db.tblGrades.ToList();
             model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+			var selectedDistrictUsd = "";
 
-            foreach (var d in model.districts)
-            {
-                var districtBuildings = (from b in db.tblBuildings
-                                         where b.Active == 1 && b.USD == d.USD
-                                         select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
+			string districtList = string.Join(", ", model.districts.Select(o => o.USD).Distinct());
+			
+			if (model.selectedDistrict != null)
+			{
+				var seletedDistrict = model.selectedDistrict.FirstOrDefault();
+				if (seletedDistrict != null)
+				{
+					selectedDistrictUsd = seletedDistrict.USD;					
+				}
+			}
 
-                model.buildings.AddRange(districtBuildings);
-            }
+			foreach (var d in model.districts)
+			{
+				if (d.USD == selectedDistrictUsd)
+				{
+					ViewBag.SelectedDistrictBuildings = (from b in db.tblBuildings
+												 where b.Active == 1 && b.USD == selectedDistrictUsd
+												 select new BuildingsViewModel
+												 {
+													 BuildingName = b.BuildingName,
+													 BuildingID = b.BuildingID,
+													 BuildingUSD = b.USD
+												 })
+											.Distinct().OrderBy(b => b.BuildingUSD).ThenBy(o => o.BuildingName).ToList();
+				}
+				else
+				{
 
-            ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
-            ViewBag.AllBuildings = (from b in db.tblBuildings where b.Active == 1 select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
+					var districtBuildings = (from b in db.tblBuildings
+											 where b.Active == 1 && b.USD == d.USD
+											 select new BuildingsViewModel
+											 {
+												 BuildingName = b.BuildingName,
+												 BuildingID = b.BuildingID,
+												 BuildingUSD = b.USD
+											 })
+											.Distinct().OrderBy(o => o.BuildingName).ToList();
+
+					model.buildings.AddRange(districtBuildings);
+				}
+			 }
+
+			
+			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+            ViewBag.AllBuildings = (from b in db.tblBuildings
+									where b.Active == 1 &&  !districtList.Contains(b.USD)
+									select new BuildingsViewModel
+									{   BuildingName = b.BuildingName,
+										BuildingID = b.BuildingID,
+										BuildingUSD = b.USD
+									})
+									.Distinct().OrderBy(b => b.BuildingName).ToList();
 
             return View("~/Views/Home/EditStudent.cshtml", model);
         }
