@@ -214,7 +214,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy
-                                }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+                                }).Distinct().ToList();
 
                 //get IEP Date
                 foreach (var student in students)
@@ -228,7 +228,7 @@ namespace GreenbushIep.Controllers
                 }
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
-                model.Students = students.ToList();
+                model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
@@ -288,7 +288,7 @@ namespace GreenbushIep.Controllers
                                     KidsID = i.KIDSID,
                                     DateOfBirth = i.DateOfBirth,
                                     CreatedBy = i.CreatedBy
-                                }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+                                }).Distinct().ToList();
 
                 //get IEP Date
                 foreach (var student in students)
@@ -302,7 +302,7 @@ namespace GreenbushIep.Controllers
 
                 var model = new StudentViewModel();
                 model.Teacher = nurse;
-                model.Students = students.ToList();
+                model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 return View(model);
             }
@@ -942,7 +942,7 @@ namespace GreenbushIep.Controllers
                                       LastName = u.LastName,
                                       Email = u.Email,
                                       BuildingName = b.BuildingName
-                                  }).Distinct().ToList();
+                                  }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
             }
 
             return View(model);
