@@ -2348,34 +2348,45 @@
 			 	<p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
 			 </div>
 			 </div>
-			 if (@showExtendYear)
-			 {
+			if (@showExtendYear)
+			{
 			 	<hr />
 			 	<div class="row voffset2 dont-break">
 			 		<div class="col-md-12">
 			 			<label>Extended School Year</label>
 			 			<p>The IEP team has enough information to determine that @Model.studentFirstName does require extended school term services.</p>
-			 	</div>
-			 </div>
-			 <div class="row voffset2">
-			 	<div class="col-md-12">
-			 		<div class="form-check">
-			 			@if (Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value)
-					  {
-			 			<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "" : "hidden")"> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
-				  }
-			 		@if (Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value)
-				   {
-			 		<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")"> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
-			   }
-			 </div>
-			 <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
-			 	<label>Severity Justification/Reasoning:</label>
-			 	<p>@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
-			 </div>
-			 </div>
-			 </div>
-		 }
+			 		</div>
+				</div>
+				 <div class="row voffset2">
+			 			<div class="col-md-12">
+			 				<div class="form-check">
+			 					@if (Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value)
+							{
+			 						<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "" : "hidden")"> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
+							}
+			 					@if (Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value)
+							{
+			 						<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")"> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
+							}
+							 </div>
+							 <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
+			 					<label>Severity Justification/Reasoning:</label>
+			 					<p>@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
+							 </div>
+					 </div>
+				</div>
+				}
+				else			
+				{
+					<hr />
+			 		<div class="row voffset2 dont-break">
+			 			<div class="col-md-12">
+			 				<label>Extended School Year</label>
+			 						<p>ESY services were considered and there is inadequate information at the time of this meeting to make an appropriate decision.  The team will reconvene later in the school year if necessary to determine if ESY services are needed.</p>
+			 			</div>
+					</div>
+				}
+
 
 		<hr />
         <div class="row voffset2">
