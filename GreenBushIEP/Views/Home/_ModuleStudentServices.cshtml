@@ -858,7 +858,13 @@
                                 }
                             }
 
-                            $(window).trigger("saving.bs.modal");
+							$(window).trigger("saving.bs.modal");
+
+							setTimeout(function () {
+						        $('#moduleSection').modal('hide');
+							}, 1200);
+
+
                         }
                         else {
                             _showAlert(data.Message, false);
