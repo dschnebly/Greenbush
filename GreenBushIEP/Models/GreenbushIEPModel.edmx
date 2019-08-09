@@ -1771,12 +1771,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="DELIMITER" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblFormArchives" EntityType="IndividualizedEducationProgramModel.tblFormArchive" />
-          <FunctionImport Name="up_ReportStudentsByBuilding" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result)">
-            <Parameter Name="Usd" Mode="In" Type="String" />
-            <Parameter Name="BuildingId" Mode="In" Type="String" />
-            <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="up_ReportProceduralDatesTracking" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDatesTracking_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
@@ -1798,6 +1792,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" />
           <EntitySet Name="vw_ModuleOtherFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleOtherFlags" />
           <EntitySet Name="tblGoalBenchmarkMethods" EntityType="IndividualizedEducationProgramModel.tblGoalBenchmarkMethod" />
+          <FunctionImport Name="up_ReportStudentsByBuilding" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result4)">
+            <Parameter Name="Usd" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3170,7 +3170,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="625" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="511" />
+          <Property Type="Int32" Name="UserID1" Nullable="false" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="up_ReportProceduralDatesTracking_Result">
           <Property Type="DateTime" Name="InitialEvalDetermination" Nullable="true" Precision="23" />
@@ -3312,6 +3317,73 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="EvaluationProcedureID" Type="Int32" Nullable="false" />
           <Property Name="OtherDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="up_ReportStudentsByBuilding_Result1">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID1" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="511" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="up_ReportStudentsByBuilding_Result2">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID1" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="511" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="up_ReportStudentsByBuilding_Result3">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID1" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="511" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="up_ReportStudentsByBuilding_Result4">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="AddressLine" Nullable="false" MaxLength="511" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4603,22 +4675,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="up_ReportStudentsByBuilding" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportStudentsByBuilding">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result">
-                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
-                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="up_ReportProceduralDatesTracking" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportProceduralDatesTracking">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportProceduralDatesTracking_Result">
@@ -4735,6 +4791,26 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportStudentsByBuilding" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportStudentsByBuilding">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result4">
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StudentState" ColumnName="StudentState" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

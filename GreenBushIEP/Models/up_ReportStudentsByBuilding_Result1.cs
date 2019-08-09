@@ -11,20 +11,20 @@ namespace GreenBushIEP.Models
 {
     using System;
     
-    public partial class up_ReportStudentsByBuilding_Result
+    public partial class up_ReportStudentsByBuilding_Result1
     {
         public string StudentFirstName { get; set; }
         public string StudentLastName { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public string BuildingID { get; set; }
         public int UserID { get; set; }
+        public string BuildingID { get; set; }
+        public int UserID1 { get; set; }
         public string BuildingName { get; set; }
         public string USD { get; set; }
+        public string DistrictName { get; set; }
         public string ContactName { get; set; }
         public string Email { get; set; }
         public string AddressLine { get; set; }
-        public int UserID1 { get; set; }
-        public string DistrictName { get; set; }
         public string City { get; set; }
         public string StudentState { get; set; }
         public string Zip { get; set; }

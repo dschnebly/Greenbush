@@ -89,9 +89,13 @@ namespace GreenBushIEP.Reports.Owner
 			dt.Columns.Add("UserID", typeof(int));
 			dt.Columns.Add("BuildingName", typeof(string));
 			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("DistrictName", typeof(string));
 			dt.Columns.Add("ContactName", typeof(string));
 			dt.Columns.Add("Email", typeof(string));
 			dt.Columns.Add("AddressLine", typeof(string));
+			dt.Columns.Add("City", typeof(string));
+			dt.Columns.Add("StudentState", typeof(string));
+			dt.Columns.Add("Zip", typeof(string));
 
 
 			using (var ctx = new IndividualizedEducationProgramEntities())
@@ -101,7 +105,8 @@ namespace GreenBushIEP.Reports.Owner
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.DateCreated, cs.BuildingID
-						, cs.UserID, cs.BuildingName, cs.USD, cs.ContactName, cs.Email, cs.AddressLine);
+						, cs.UserID, cs.BuildingName, cs.USD, cs.DistrictName, cs.ContactName, cs.Email, cs.AddressLine, 
+						cs.City, cs.StudentState, cs.Zip);
 			}
 
 			return dt;

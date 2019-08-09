@@ -539,6 +539,18 @@
     <Compile Include="Models\up_ReportStudentsByBuilding_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportStudentsByBuilding_Result1.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportStudentsByBuilding_Result2.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportStudentsByBuilding_Result3.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportStudentsByBuilding_Result4.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

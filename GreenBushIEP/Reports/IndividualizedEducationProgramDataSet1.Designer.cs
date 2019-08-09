@@ -4168,6 +4168,14 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnAddressLine;
             
+            private global::System.Data.DataColumn columnDistrictName;
+            
+            private global::System.Data.DataColumn columnCity;
+            
+            private global::System.Data.DataColumn columnStudentState;
+            
+            private global::System.Data.DataColumn columnZip;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportStudentsByBuildingDataTable() {
@@ -4283,6 +4291,38 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn DistrictNameColumn {
+                get {
+                    return this.columnDistrictName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CityColumn {
+                get {
+                    return this.columnCity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn StudentStateColumn {
+                get {
+                    return this.columnStudentState;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ZipColumn {
+                get {
+                    return this.columnZip;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4318,7 +4358,7 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD, string ContactName, string Email, string AddressLine) {
+            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD, string ContactName, string Email, string AddressLine, string DistrictName, string City, string StudentState, string Zip) {
                 up_ReportStudentsByBuildingRow rowup_ReportStudentsByBuildingRow = ((up_ReportStudentsByBuildingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StudentFirstName,
@@ -4330,10 +4370,21 @@ namespace GreenBushIEP.Reports {
                         USD,
                         ContactName,
                         Email,
-                        AddressLine};
+                        AddressLine,
+                        DistrictName,
+                        City,
+                        StudentState,
+                        Zip};
                 rowup_ReportStudentsByBuildingRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportStudentsByBuildingRow);
                 return rowup_ReportStudentsByBuildingRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public up_ReportStudentsByBuildingRow FindByUserID(int UserID) {
+                return ((up_ReportStudentsByBuildingRow)(this.Rows.Find(new object[] {
+                            UserID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4363,6 +4414,10 @@ namespace GreenBushIEP.Reports {
                 this.columnContactName = base.Columns["ContactName"];
                 this.columnEmail = base.Columns["Email"];
                 this.columnAddressLine = base.Columns["AddressLine"];
+                this.columnDistrictName = base.Columns["DistrictName"];
+                this.columnCity = base.Columns["City"];
+                this.columnStudentState = base.Columns["StudentState"];
+                this.columnZip = base.Columns["Zip"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4388,6 +4443,16 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnEmail);
                 this.columnAddressLine = new global::System.Data.DataColumn("AddressLine", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAddressLine);
+                this.columnDistrictName = new global::System.Data.DataColumn("DistrictName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDistrictName);
+                this.columnCity = new global::System.Data.DataColumn("City", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCity);
+                this.columnStudentState = new global::System.Data.DataColumn("StudentState", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStudentState);
+                this.columnZip = new global::System.Data.DataColumn("Zip", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnZip);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnUserID}, true));
                 this.columnStudentFirstName.MaxLength = 255;
                 this.columnStudentLastName.MaxLength = 255;
                 this.columnDateCreated.AllowDBNull = false;
@@ -4398,6 +4463,7 @@ namespace GreenBushIEP.Reports {
                 this.columnUserID.AutoIncrementStep = -1;
                 this.columnUserID.AllowDBNull = false;
                 this.columnUserID.ReadOnly = true;
+                this.columnUserID.Unique = true;
                 this.columnBuildingName.MaxLength = 255;
                 this.columnUSD.AllowDBNull = false;
                 this.columnUSD.MaxLength = 50;
@@ -4407,6 +4473,13 @@ namespace GreenBushIEP.Reports {
                 this.columnEmail.MaxLength = 255;
                 this.columnAddressLine.ReadOnly = true;
                 this.columnAddressLine.MaxLength = 625;
+                this.columnDistrictName.MaxLength = 255;
+                this.columnCity.ReadOnly = true;
+                this.columnCity.MaxLength = 50;
+                this.columnStudentState.ReadOnly = true;
+                this.columnStudentState.MaxLength = 50;
+                this.columnZip.ReadOnly = true;
+                this.columnZip.MaxLength = 10;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7605,6 +7678,72 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string DistrictName {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.DistrictNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DistrictName\' in table \'up_ReportStudentsByBuilding\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.DistrictNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string City {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.CityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'City\' in table \'up_ReportStudentsByBuilding\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.CityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string StudentState {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.StudentStateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StudentState\' in table \'up_ReportStudentsByBuilding\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.StudentStateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Zip {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.ZipColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Zip\' in table \'up_ReportStudentsByBuilding\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.ZipColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStudentFirstNameNull() {
                 return this.IsNull(this.tableup_ReportStudentsByBuilding.StudentFirstNameColumn);
             }
@@ -7673,6 +7812,54 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetAddressLineNull() {
                 this[this.tableup_ReportStudentsByBuilding.AddressLineColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsDistrictNameNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.DistrictNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetDistrictNameNull() {
+                this[this.tableup_ReportStudentsByBuilding.DistrictNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCityNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.CityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCityNull() {
+                this[this.tableup_ReportStudentsByBuilding.CityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsStudentStateNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.StudentStateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetStudentStateNull() {
+                this[this.tableup_ReportStudentsByBuilding.StudentStateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsZipNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.ZipColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetZipNull() {
+                this[this.tableup_ReportStudentsByBuilding.ZipColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -10307,6 +10494,10 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("ContactName", "ContactName");
             tableMapping.ColumnMappings.Add("Email", "Email");
             tableMapping.ColumnMappings.Add("AddressLine", "AddressLine");
+            tableMapping.ColumnMappings.Add("DistrictName", "DistrictName");
+            tableMapping.ColumnMappings.Add("City", "City");
+            tableMapping.ColumnMappings.Add("StudentState", "StudentState");
+            tableMapping.ColumnMappings.Add("Zip", "Zip");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
