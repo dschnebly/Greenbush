@@ -993,7 +993,6 @@ namespace GreenbushIep.Controllers
             {
                 model.student = student;
                 model.birthDate = info.DateOfBirth;
-                model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 model.isDoc = district.DOC;
                 model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
                 model.isCreator = currentUser.UserID == info.CreatedBy;
@@ -1015,7 +1014,20 @@ namespace GreenbushIep.Controllers
                     model.hasAccommodations = false;
                     model.needsBehaviorPlan = false;
                 }
-            }
+
+				
+				if (theIEP.current.MeetingDate != null && !model.isDoc)
+				{
+					//check student age for transition plan using the end date
+					model.studentAge = (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+				}
+				else
+				{
+					//use current date
+					model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+				}
+
+			}
 
             return View(model);
         }
