@@ -9,7 +9,6 @@
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/misportal.css")
 	@Styles.Render("~/Content/chosen.css")
-
 }
 
 <div class="container">
@@ -20,7 +19,6 @@
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
-
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"> - my current list of users</small>
     </h3>

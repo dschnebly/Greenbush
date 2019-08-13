@@ -776,6 +776,7 @@
                     }
                     this.initialDraw();
                     return null;
+
                 };
                 Calendar.prototype = {
                     addLeadingZero: function (num) {
@@ -1317,7 +1318,7 @@
         // When user select a year from the drop down.
         $('#selectYear ul li a').on('click', function () {
             var selectedYearElem = $(this);
-            var schoolYear = ((new Date()).getMonth() > 6) ? $(this).data("year") - 1 : $(this).data("year");
+            var schoolYear = ((new Date()).getMonth() < 6) ? $(this).data("year") - 1 : $(this).data("year");
             var nextYear = parseInt(schoolYear) - 1;
 
             $('#selectedYear').val(selectedYearElem.data("year"));
