@@ -2532,6 +2532,7 @@ namespace GreenbushIep.Controllers
 							 && (student.Archive == null || student.Archive == false)
 							 && services.SchoolYear == fiscalYear
 							 && (iep.FiledOn != null)
+							 && services.ServiceCode != "NS"
 							 && myBuildings.Contains(building.BuildingID)
 							 select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
 
@@ -2585,6 +2586,7 @@ namespace GreenbushIep.Controllers
 										  && (student.Archive == null || student.Archive == false)
 										  && services.SchoolYear == fiscalYear
 										  && (iep.FiledOn != null)
+										  && services.ServiceCode != "NS"
 										  && myBuildings.Contains(building.BuildingID)
 										  && userIds.Contains(student.UserID)
 										  select iep).Distinct();
@@ -2626,6 +2628,7 @@ namespace GreenbushIep.Controllers
 							 && (student.Archive == null || student.Archive == false)
 							 && services.SchoolYear == fiscalYear
 							 && (services.FiledOn == null || iep.FiledOn == null)
+							 && services.ServiceCode != "NS"
 							 && myBuildings.Contains(building.BuildingID)
 							 select new { iep, student }).Distinct().ToList();
 
@@ -2645,7 +2648,7 @@ namespace GreenbushIep.Controllers
 						if (theIEP != null && theIEP.current != null)
 						{
 							var studentDetails = new StudentDetailsPrintViewModel();
-							theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+							theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.ServiceCode != "NS").ToList(); //exclude servies marked as No Service
 							theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
 
 							tblStudentInfo info = null;
