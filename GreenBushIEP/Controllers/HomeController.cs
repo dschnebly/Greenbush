@@ -1296,7 +1296,7 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByGoal == 1 ? "Math " : string.Empty;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByGoal == 1 ? "Reading " : string.Empty;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal == 1 ? "Written&nbsp;Language " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic&nbsp;Performance" : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic/Functional" : string.Empty;
 
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
