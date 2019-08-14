@@ -1016,10 +1016,11 @@ namespace GreenbushIep.Controllers
                 }
 
 				
-				if (theIEP.current.MeetingDate != null && !model.isDoc)
+				if (theIEP.current.begin_date != null && !model.isDoc)
 				{
-					//check student age for transition plan using the end date
-					model.studentAge = (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+					//check student age for transition plan using the begin date plus one year
+					var endDate = theIEP.current.begin_date.Value.AddYears(1);
+					model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 				}
 				else
 				{
