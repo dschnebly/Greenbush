@@ -49,7 +49,11 @@
                         case 7: { evalText += "Other, "; break; }
                     } //end switch
                 }
-                evalText = evalText.Substring(0, evalText.Length - 2);
+
+                if (evalText.Length > 2)
+                {
+                    evalText = evalText.Substring(0, evalText.Length - 2);
+                }
 
                 <div class="row StudentGoal">
                     <div class="col-md-12">

@@ -2054,9 +2054,13 @@ namespace GreenBushIEP.Controllers
 
                 List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
-
-                List<string> districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                List<string> districts = new List<string>();
                 List<string> buildings = new List<string>();
+
+                if (collection["misDistrict"] != null)
+                {
+                    districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                }
 
                 if (collection["buildingIds"] != null)
                 {
