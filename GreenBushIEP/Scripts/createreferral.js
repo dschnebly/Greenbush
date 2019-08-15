@@ -274,10 +274,13 @@ $("#next4").on("click", function () {
     }
 });
 
-$("#submitForm").on("click", function () {
+$("#submitForm").on("click", function (e) {
+
+	e.preventDefault();
+	$(this).attr("disabled", true);
 
 	var theForm = document.getElementById("submitReferral");	
-		$.ajax({
+	$.ajax({
 			url: '/Manage/SubmitReferral',
 			type: 'POST',
 			data: $("#submitReferral").serialize(),
@@ -292,14 +295,17 @@ $("#submitForm").on("click", function () {
 					window.location = returnUrl;
 
 				} else {
-
+					$(this).attr("disabled", false);
 					alert(data.Message);
+
 				}
 			},
 			error: function (data) {
 				alert("There was an error when attempt to connect to the server.");
 			}
-		});	
+	});	
+
+	return false;
 });
 
 

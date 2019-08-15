@@ -15,8 +15,19 @@
     <strong class="moreinfo">Oh snap!</strong>
 </div>
 <div class="modal-body">  
-        <div style="padding-left:5px;padding-top:5px;">
-            <table class="table" style="width:90%" id="tblArchives">
+        <div style="padding-left:5px;padding-top:5px;" class="form-inline">
+			<div class="form-group">
+			<label>Filter Referrals:</label>
+			<select id="filterList" class="form-control">
+				<option value=0>All</option>
+				<option selected value=1>Not Complete</option>
+				<option value=2>Complete</option>
+			</select>
+			</div>
+		</div>
+		<div style="padding-left:5px;padding-top:5px;">
+		
+            <table class="table" id="tblRefferals">
                 <thead>
                     <tr>
                         <th class="date">Date</th>
@@ -26,6 +37,7 @@
 						<th>First Name</th>
 						<th>Additional Information</th>
                         <th>&nbsp;</th>
+						<th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,9 +62,11 @@
                                 <td class="name truncate">@referral.lastName</td>
 								<td class="name truncate">@referral.firstName</td>
 								<td class="name truncate">@referral.notes</td>
-                                <td class="date pull-right">
-								<a title="View" class="btn btn-info pull-right edit-btn" role="button" href="/Manage/EditReferral/@referral.referralId" data-toggle="tooltip" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-								
+                                <td style="vertical-align:top;">									
+										<a title="View" class="btn btn-info " role="button" href="/Manage/EditReferral/@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-pencil"></span></a>																										
+								</td>
+								<td style="vertical-align:top;">									
+									<a title="Delete" class="btn btn-info delReferral" role="button" data-val="@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-trash"></span></a>
 								</td>
                             </tr>							
 								}
@@ -61,12 +75,11 @@
                 </tbody>
             </table>
         </div>
-      
 
-    <!-- loading the file even though it's an ajax call -->
-    @*<var data-reload="true" data-src="/Scripts/studentForms.js"></var>*@
+		<!-- loading the file even though it's an ajax call -->
+		<var data-reload="true" data-src="/Scripts/managereferrals.js"></var>
 
-    @section scripts {
-        @*@Scripts.Render("~/Scripts/studentForms.js")*@
-    }
+		@section scripts { 
+			@Scripts.Render("~/Scripts/managereferrals.js")
+		}    
 </div>
