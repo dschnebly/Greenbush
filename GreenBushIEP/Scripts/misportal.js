@@ -1,6 +1,6 @@
 ﻿$(function () {
     function init() {
-		$(".chosen-select").chosen({ width: "100%" });
+        $(".chosen-select").chosen({ width: "100%" });
 
         // attach event
         // fires when an delete button is pressed on a MIS role.
@@ -78,75 +78,75 @@
                     }
                 });
             }
-		});
+        });
 
-		
-		// attach event
-		// fires when the user chooses a user
-		$('#filterName').change(function () {						
-			var userId = this.value;
-			var selectedDistrict = $("#userDistricts option:selected").val() + "";
-			var selectedBuilding = $("#userBuildings option:selected").val() + "";
-			var selectedRole = $("#userRoles option:selected").val() + "";
+        // attach event
+        // fires when the user chooses a user
+        $('#filterName').change(function () {
+            var userId = this.value;
+            var selectedDistrict = $("#userDistricts option:selected").val() + "";
+            var selectedBuilding = $("#userBuildings option:selected").val() + "";
+            var selectedRole = $("#userRoles option:selected").val() + "";
 
-			$(".ajax-loader").show();
-			$.ajax({
-				type: 'POST',
-				url: '/Manage/FilterUserList',
-				dataType: 'json',
-				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
-				async: false,
-				success: function (data) {
-					if (data.Result === "success") {
-						var results = data.Message;
+            $(".ajax-loader").show();
 
-						// blow away the building list 
-						$('#userBuildings').empty();
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/FilterUserList',
+                dataType: 'json',
+                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
+                        var results = data.Message;
 
-						// hide all the users in the list.
-						var filterCollection = $('.list-group-root').find('.list-group-item');
-						$.each(filterCollection, function (index, value) {
-							$(value).addClass('hidden');
-						});
+                        // blow away the building list 
+                        $('#userBuildings').empty();
 
-						$('#userBuildings').append('<option value="-1">All Buildings</option>');
-						if (results.buildings.length > 0) {
-							$.each(results.buildings, function (index, value) {
-								console.log(value);
-								$('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
-							});
-						}
+                        // hide all the users in the list.
+                        var filterCollection = $('.list-group-root').find('.list-group-item');
 
-						if (results.members.length > 0) {
-							$.each(filterCollection, function (filterIndex, filterValue) {
-								$.each(results.members, function (index, value) {
-									if ($(filterValue).data('id') === value.UserID) {
-										$(filterValue).removeClass('hidden');
-										return false;
-									}
-								});
-							});
-						}
+                        $.each(filterCollection, function (index, value) {
+                            $(value).addClass('hidden');
+                        });
 
-						initHref();
-					}
-					else {
-						alert('doh');
-					}
-				},
-				error: function (data) {
-					alert('Not connected to the network!');
+                        $('#userBuildings').append('<option value="-1">All Buildings</option>');
+                        if (results.buildings.length > 0) {
+                            $.each(results.buildings, function (index, value) {
+                                console.log(value);
+                                $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
+                            });
+                        }
 
-					console.log(data);
-				},
-				complete: function (data) {
-					$(".ajax-loader").hide();
-					//A function to be called when the request finishes 
-					// (after success and error callbacks are executed). 
-				}
-			});
+                        if (results.members.length > 0) {
+                            $.each(filterCollection, function (filterIndex, filterValue) {
+                                $.each(results.members, function (index, value) {
+                                    if ($(filterValue).data('id') === value.UserID) {
+                                        $(filterValue).removeClass('hidden');
+                                        return false;
+                                    }
+                                });
+                            });
+                        }
 
-		});
+                        initHref();
+                    }
+                    else {
+                        alert('doh');
+                    }
+                },
+                error: function (data) {
+                    alert('Not connected to the network!');
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
+                }
+            });
+        });
 
         // attach event
         // fires when the user chooses a district
@@ -156,6 +156,7 @@
             var selectedRole = $("#userRoles option:selected").val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterUserList',
@@ -221,6 +222,7 @@
             var selectedRole = $("#userRoles option:selected").val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterUserList',
@@ -276,6 +278,7 @@
             var selectedRole = $(this).val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterUserList',
@@ -287,21 +290,22 @@
 
                         // hide all the users in the list.
                         var filterCollection = $('.list-group-root').find('.list-group-item');
-                        $.each(filterCollection, function (index, value) {
-                            $(value).addClass('hidden');
-                        });
+
+                        var i = filterCollection.length;
+                        while (i >= 0) {
+                            $(filterCollection[i]).addClass('hidden');
+                            i--;
+                        }
 
                         var results = data.Message;
                         if (results.members.length > 0) {
 
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') === value.UserID) {
-                                        $(filterValue).removeClass('hidden');
-                                        return false;
-                                    }
-                                });
-                            });
+                            var j = results.members.length - 1;
+                            while (j >= 0) {
+                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+                                $(filterCollection[foundIndex]).removeClass('hidden');
+                                j--;
+                            }
                         }
 
                         initHref();

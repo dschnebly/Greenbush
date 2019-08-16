@@ -2068,7 +2068,7 @@ namespace GreenBushIEP.Controllers
                 }
 
                 // removes any buildings not in the current list of usd's.
-                List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD)).ToList();
+                List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD) && b.BuildingID != "0").ToList();
 
                 if (districts != null)
                 {

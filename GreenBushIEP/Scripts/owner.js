@@ -26,6 +26,7 @@
 			var selectedRole = $("#userRoles option:selected").val() + "";
 
 			$(".ajax-loader").show();
+
 			$.ajax({
 				type: 'POST',
 				url: '/Manage/FilterOwnerUserList',
@@ -41,27 +42,22 @@
 
 						// hide all the users in the list.
 						var filterCollection = $('.list-group-root').find('.list-group-item');
-						$.each(filterCollection, function (index, value) {
-							$(value).addClass('hidden');
-						});
 
-						$('#userBuildings').append('<option value="-1">All Buildings</option>');
-						if (results.buildings.length > 0) {
-							$.each(results.buildings, function (index, value) {
-								console.log(value);
-								$('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
-							});
+						var i = filterCollection.length;
+						while (i >= 0) {
+						    $(filterCollection[i]).addClass('hidden');
+						    i--;
 						}
 
+						var results = data.Message;
 						if (results.members.length > 0) {
-							$.each(filterCollection, function (filterIndex, filterValue) {
-								$.each(results.members, function (index, value) {
-									if ($(filterValue).data('id') === value.UserID) {
-										$(filterValue).removeClass('hidden');
-										return false;
-									}
-								});
-							});
+
+						    var j = results.members.length - 1;
+						    while (j >= 0) {
+						        var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+						        $(filterCollection[foundIndex]).removeClass('hidden');
+						        j--;
+						    }
 						}
 
 						initHref();
