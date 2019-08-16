@@ -1371,9 +1371,9 @@
             var districtId = $('#selectedDistrict').val();
             var buildingId = selectedBuilding.data('buildingid');
             var schoolYear = $('#selectedYear').val();
-
+            console.log(buildingId.length);
             // should never be fired but just in case.
-            if (districtId == "" || buildingId == "") { alert("You must selected a District and a Building"); return; }
+            if (districtId.length === 0 || buildingId.length === 0) { alert("You must selected a District and a Building"); return; }
 
             $('.child-ajax-loader').css('visibility', 'visible');
 
