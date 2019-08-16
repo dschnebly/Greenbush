@@ -1739,174 +1739,184 @@
 	 }
 			 </div>
 			 <label>Post Secondary Transition Services reviewed annually.</label>
-			 <div class="col-xs-12">
+			 
+			 	@if (Model.studentTransition.services.Count(s => s.ServiceType == "instruction") > 0)
+				{
 			 	<div>
 			 		<label>Instruction Service</label>
-			 		@*<p>Instruction is the use of formal techniques to impact knowledge.It is typically in schools through academic instruction, general education classes, tutoring, etc.Other instructional activities that could be provided by other entities or in other locations are: adult basic education, technical preparation programming, community colleges, universities, and vocational training centers.</p>*@
 			 	</div>
+
+				<div>
+					@if (Model.studentTransition.services.Count > 0)
+					{
+						foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
+						{
+							<label for="transitionServiceDescription">Description</label>
+							if (string.IsNullOrEmpty(service.ServiceDescription))
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.ServiceDescription </p>
+							}
+
+							<label for="transitionServiceFrequency">Frequency</label>
+
+							if (string.IsNullOrEmpty(service.Frequency))
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.Frequency </p>
+							}
+
+							<label for="transitionServiceLocation">Location</label>
+							if (string.IsNullOrEmpty(service.Location))
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.Location </p>
+							}
+
+							<label for="transitionServiceDuration">Duration</label>
+							if (string.IsNullOrEmpty(service.Duration))
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.Frequency </p>
+							}
+							<label for="transitionServiceDuration">Start Date</label>
+							if (!service.StartDate.HasValue)
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.StartDate.Value.ToShortDateString() </p>
+							}
+							<label for="transitionServiceDuration">End Date</label>
+							if (!service.EndDate.HasValue)
+							{
+								<br /><br />
+							}
+							else
+							{
+								<p>@service.EndDate.Value.ToShortDateString() </p>
+							}
+
+						}
+					}
+
+				</div>
+				}
+
+			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "related") > 0)
+			 {
 			 	<div>
-			 		@if (Model.studentTransition.services.Count > 0)
-				   {
-					   foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
-					   {
-			 			<label for="transitionServiceDescription">Description</label>
-					  if (string.IsNullOrEmpty(service.ServiceDescription))
+			 		<label>Related Service</label>
+			 	</div>
+
+				 <div class="row">
+				 <div class="col-md-12" id="transitionRelatedServiceContainer">
+				 	@if (Model.studentTransition.services.Count > 0)
+					{
+						foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
+						{
+
+				 					<label for="transitionServiceDescription">Description</label>
+								   if (string.IsNullOrEmpty(related.ServiceDescription))
+								   {
+				 					<br /><br />
+								   }
+								   else
+								   {
+				 					<p>@related.ServiceDescription </p>
+									}
+
+							 <label for="transitionServiceFrequency">Frequency</label>
+
+							 if (string.IsNullOrEmpty(related.Frequency))
+							 {
+				 				<br /><br />
+							}
+							else
+							{
+							 <p>@related.Frequency </p>
+							}
+
+							 <label for="transitionServiceLocation">Location</label>
+							 if (string.IsNullOrEmpty(related.Location))
+							 {
+				 				<br /><br />
+							}
+							else
+							{
+							 <p>@related.Location </p>
+							}
+
+							 <label for="transitionServiceDuration">Duration</label>
+							 if (string.IsNullOrEmpty(related.Duration))
+							 {
+				 				<br /><br />
+							}
+							else
+							{
+							 <p>@related.Frequency </p>
+							}
+							 <label for="transitionServiceDuration">Start Date</label>
+							 if (!related.StartDate.HasValue)
+							 {
+				 				<br /><br />
+							}
+							else
+							{
+							 <p>@related.StartDate.Value.ToShortDateString() </p>
+							}
+							 <label for="transitionServiceDuration">End Date</label>
+							 if (!related.EndDate.HasValue)
+							 {
+				 				<br /><br />
+							}
+							else
+							{
+							 <p>@related.EndDate.Value.ToShortDateString() </p>
+						 }
+
+					}
+				}
+				 </div>
+			 </div>
+			 }
+
+			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "daily") > 0)
+			 {
+			 	<div>
+			 		<label>Daily Living Skills Service</label>
+
+			 	</div>
+
+			 	<div class="row">
+			 		<div class="col-md-12" id="transitionRelatedServiceContainer">
+			 			@if (Model.studentTransition.services.Count > 0)
 					  {
-			 			<br /><br />
-				  }
-				  else
-				  {
-			 		<p>@service.ServiceDescription </p>
-			}
+						  foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
+						  {
 
-			 <label for="transitionServiceFrequency">Frequency</label>
-
-			 if (string.IsNullOrEmpty(service.Frequency))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@service.Frequency </p>
-		 }
-
-			 <label for="transitionServiceLocation">Location</label>
-			 if (string.IsNullOrEmpty(service.Location))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@service.Location </p>
-		 }
-
-			 <label for="transitionServiceDuration">Duration</label>
-			 if (string.IsNullOrEmpty(service.Duration))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@service.Frequency </p>
-		 }
-			 <label for="transitionServiceDuration">Start Date</label>
-			 if (!service.StartDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@service.StartDate.Value.ToShortDateString() </p>
-		 }
-			 <label for="transitionServiceDuration">End Date</label>
-			 if (!service.EndDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@service.EndDate.Value.ToShortDateString() </p>
-		 }
-
-	 }
- }
-
-			 </div>
-
-			 <div>
-			 	<label>Related Service</label>
-			 	@*<p>Considerations should include assistive technology, orientation and mobility training, speech and language pathology, audiology, psychological services, physical and occupational therapy, recreation, counseling services, including rehabilitation counseling, and medical services for diagnostic or evaluation purposes.</p>*@
-			 </div>
-			 <div class="row">
-			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
-			 		@if (Model.studentTransition.services.Count > 0)
-				   {
-					   foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
-					   {
-
-			 			<label for="transitionServiceDescription">Description</label>
-					  if (string.IsNullOrEmpty(related.ServiceDescription))
-					  {
-			 			<br /><br />
-				  }
-				  else
-				  {
-			 		<p>@related.ServiceDescription </p>
-			}
-
-			 <label for="transitionServiceFrequency">Frequency</label>
-
-			 if (string.IsNullOrEmpty(related.Frequency))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@related.Frequency </p>
-		 }
-
-			 <label for="transitionServiceLocation">Location</label>
-			 if (string.IsNullOrEmpty(related.Location))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@related.Location </p>
-		 }
-
-			 <label for="transitionServiceDuration">Duration</label>
-			 if (string.IsNullOrEmpty(related.Duration))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@related.Frequency </p>
-		 }
-			 <label for="transitionServiceDuration">Start Date</label>
-			 if (!related.StartDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@related.StartDate.Value.ToShortDateString() </p>
-		 }
-			 <label for="transitionServiceDuration">End Date</label>
-			 if (!related.EndDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@related.EndDate.Value.ToShortDateString() </p>
-		 }
-
-	 }
- }
-			 </div>
-			 </div>
-			 <div>
-			 	<label>Daily Living Skills Service</label>
-			 	@*<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>*@
-			 </div>
-			 <div class="row">
-			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
-			 		@if (Model.studentTransition.services.Count > 0)
-				   {
-					   foreach (var daily in Model.studentTransition.services.Where(s => s.ServiceType == "daily"))
-					   {
-
-			 			<label for="transitionServiceDescription">Description</label>
-					  if (string.IsNullOrEmpty(daily.ServiceDescription))
-					  {
-			 			<br /><br />
-				  }
-				  else
-				  {
-			 		<p>@daily.ServiceDescription </p>
-			}
+			 				<label for="transitionServiceDescription">Description</label>
+						 if (string.IsNullOrEmpty(daily.ServiceDescription))
+						 {
+			 				<br /><br />
+					 }
+					 else
+					 {
+			 			<p>@daily.ServiceDescription </p>
+			   }
 
 			 <label for="transitionServiceFrequency">Frequency</label>
 
@@ -1959,154 +1969,166 @@
 
 	 }
  }
+			 	</div>
 			 </div>
-			 </div>
+
+			 }
+
+		     @if (Model.studentTransition.services.Count(s => s.ServiceType == "vocational") > 0)
+			 {
 			 <div>
 			 	<label>Functional Vocational Service</label>
-			 	@*<p>Daily living skills are those activities that adults do every day(e.g.preparing meals, budgeting, maintaining a home, paying bills, caring for clothes, grooming, etc.)</p>*@
+			 	
 			 </div>
 			 <div class="row">
-			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
-			 		@if (Model.studentTransition.services.Count > 0)
-				   {
-					   foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
-					   {
+				 <div class="col-md-12" id="transitionRelatedServiceContainer">
+				 	@if (Model.studentTransition.services.Count > 0)
+							{
+								foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
+								{
 
-			 			<label for="transitionServiceDescription">Description</label>
-					  if (string.IsNullOrEmpty(vocational.ServiceDescription))
-					  {
-			 			<br /><br />
-				  }
-				  else
-				  {
-			 		<p>@vocational.ServiceDescription </p>
-			}
+				 				<label for="transitionServiceDescription">Description</label>
+								if (string.IsNullOrEmpty(vocational.ServiceDescription))
+								{
+				 				<br /><br />
+							}
+							else
+							{
+				 			<p>@vocational.ServiceDescription </p>
+							}
 
-			 <label for="transitionServiceFrequency">Frequency</label>
+							<label for="transitionServiceFrequency">Frequency</label>
 
-			 if (string.IsNullOrEmpty(vocational.Frequency))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@vocational.Frequency </p>
-		 }
+							if (string.IsNullOrEmpty(vocational.Frequency))
+							{
+				 			<br /><br />
+							}
+							else
+							{
+								<p>@vocational.Frequency </p>
+							}
 
-			 <label for="transitionServiceLocation">Location</label>
-			 if (string.IsNullOrEmpty(vocational.Location))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@vocational.Location </p>
-		 }
+							<label for="transitionServiceLocation">Location</label>
+							if (string.IsNullOrEmpty(vocational.Location))
+							{
+				 			<br /><br />
+							}
+							else
+							{
+								<p>@vocational.Location </p>
+							}
 
-			 <label for="transitionServiceDuration">Duration</label>
-			 if (string.IsNullOrEmpty(vocational.Duration))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@vocational.Frequency </p>
-		 }
-			 <label for="transitionServiceDuration">Start Date</label>
-			 if (!vocational.StartDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@vocational.StartDate.Value.ToShortDateString() </p>
-		 }
-			 <label for="transitionServiceDuration">End Date</label>
-			 if (!vocational.EndDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@vocational.EndDate.Value.ToShortDateString() </p>
-		 }
+							<label for="transitionServiceDuration">Duration</label>
+							if (string.IsNullOrEmpty(vocational.Duration))
+							{
+				 			<br /><br />
+							}
+							else
+							{
+								<p>@vocational.Frequency </p>
+							}
+							<label for="transitionServiceDuration">Start Date</label>
+							if (!vocational.StartDate.HasValue)
+							{
+				 			<br /><br />
+							}
+							else
+							{
+								<p>@vocational.StartDate.Value.ToShortDateString() </p>
+							}
+							<label for="transitionServiceDuration">End Date</label>
+							if (!vocational.EndDate.HasValue)
+							{
+				 			<br /><br />
+							}
+							else
+							{
+								<p>@vocational.EndDate.Value.ToShortDateString() </p>
+							}
 
-	 }
- }
+					}
+				}
+				 </div>
 			 </div>
-			 </div>
+
+			 }
+
+			@if (Model.studentTransition.services.Count(s => s.ServiceType == "leisure") > 0)
+			{
 			 <div>
 			 	<label>Recreation and Leisure Service</label>
 			 </div>
 			 <div class="row">
-			 	<div class="col-md-12" id="transitionRelatedServiceContainer">
-			 		@if (Model.studentTransition.services.Count > 0)
-				   {
-					   foreach (var leisure in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
-					   {
+				 <div class="col-md-12" id="transitionRelatedServiceContainer">
+				 @if (Model.studentTransition.services.Count > 0)
+				{
+						foreach (var leisure in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
+						{
 
-						   if (string.IsNullOrEmpty(leisure.ServiceDescription))
-						   {
-			 				<br /><br />
-					 }
-					 else
-					 {
-			 			<p>@leisure.ServiceDescription </p>
-			   }
+							if (string.IsNullOrEmpty(leisure.ServiceDescription))
+							{
+				 			<br /><br />
+							}
+							else
+							{
+				 				<p>@leisure.ServiceDescription </p>
+							}	
 
-			 <label for="transitionServiceFrequency">Frequency</label>
+						 <label for="transitionServiceFrequency">Frequency</label>
 
-			 if (string.IsNullOrEmpty(leisure.Frequency))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@leisure.Frequency </p>
-		 }
+						if (string.IsNullOrEmpty(leisure.Frequency))
+						{
+				 			<br /><br />
+						}
+						else
+						{
+						 <p>@leisure.Frequency </p>
+						}
 
-			 <label for="transitionServiceLocation">Location</label>
-			 if (string.IsNullOrEmpty(leisure.Location))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@leisure.Location </p>
-		 }
+						 <label for="transitionServiceLocation">Location</label>
+						 if (string.IsNullOrEmpty(leisure.Location))
+						 {
+				 			<br /><br />
+						 }
+						 else
+						 {
+						  <p>@leisure.Location </p>
+					     }
 
-			 <label for="transitionServiceDuration">Duration</label>
-			 if (string.IsNullOrEmpty(leisure.Duration))
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@leisure.Frequency </p>
-		 }
-			 <label for="transitionServiceDuration">Start Date</label>
-			 if (!leisure.StartDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@leisure.StartDate.Value.ToShortDateString() </p>
-		 }
-			 <label for="transitionServiceDuration">End Date</label>
-			 if (!leisure.EndDate.HasValue)
-			 {
-			 	<br /><br />
-			}
-			else
-			{
-			 <p>@leisure.EndDate.Value.ToShortDateString() </p>
-		 }
-
-	 }
- }
+						 <label for="transitionServiceDuration">Duration</label>
+						 if (string.IsNullOrEmpty(leisure.Duration))
+						 {
+				 			<br /><br />
+						}
+						else
+						{
+						 <p>@leisure.Frequency </p>
+						}
+						 <label for="transitionServiceDuration">Start Date</label>
+						 if (!leisure.StartDate.HasValue)
+						 {
+				 			<br /><br />
+						}
+						else
+						{
+						 <p>@leisure.StartDate.Value.ToShortDateString() </p>
+						}
+						 <label for="transitionServiceDuration">End Date</label>
+						if (!leisure.EndDate.HasValue)
+						{
+				 			<br /><br />
+						}
+						else
+						{
+						 <p>@leisure.EndDate.Value.ToShortDateString() </p>
+						}
+				 }
+			 }
+				 </div>
 			 </div>
-			 </div>
+			}
+			@if (Model.studentTransition.transition.CommunityParticipation)
+			{
 			 <div class="row @(Model.studentTransition.transition.CommunityParticipation ? String.Empty : "hidden")">
 			 	<div class="col-md-12">
 			 		<h4><b>Community Participation</b></h4>
@@ -2116,7 +2138,8 @@
 			 	</fieldset>
 			 </div>
 			 </div>
-			 <div class="row dont-break">
+			}
+			<div class="row dont-break">
 			 	<div class="col-md-12">
 			 		<h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
 			 		<p>
@@ -2212,7 +2235,7 @@
 			 </fieldset>
 			 </div>
 			 </div>
-			 </div>
+			 
 			 </div><!--end transition-->
 		 }
 			 <hr />
