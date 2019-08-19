@@ -3000,8 +3000,11 @@ namespace GreenbushIep.Controllers
                     studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
                 }
 
+				if (formName == "Parents Rights-English")
+					studentName = string.Empty;
 
-                bool isDraft = false;
+
+				bool isDraft = false;
 
                 var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
                 if (iepObj != null)
