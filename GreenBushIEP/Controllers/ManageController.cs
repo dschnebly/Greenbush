@@ -1016,82 +1016,9 @@ namespace GreenBushIEP.Controllers
 					}
 
 					//create summary
-					string neighborhoodBuilding = "";
-					if (student.NeighborhoodBuildingID != null)
-					{
-						var nb  = db.tblBuildings.Where(o => o.BuildingID == student.NeighborhoodBuildingID).FirstOrDefault();
-						neighborhoodBuilding = nb.BuildingName;
-					}
+					string summaryText = CreateSummary(student);
 
-					string responsibleBuilding = "";
-					if (student.ResponsibleBuildingID != null)
-					{
-						var nb = db.tblBuildings.Where(o => o.BuildingID == student.ResponsibleBuildingID).FirstOrDefault();
-						responsibleBuilding = nb.BuildingName;
-					}
-
-					string grade = "";
-					if (student.Grade != null)
-					{
-						var nb = db.tblGrades.Where(o => o.gradeID == student.Grade).FirstOrDefault();
-						grade = nb.description;
-					}
-
-					StringBuilder sb = new StringBuilder();
-					sb.AppendFormat("<h3>Student Information</h3>");					
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>KIDSID:</b> {0} ", student.KIDSID.HasValue && student.KIDSID.Value != 0 ? student.KIDSID.ToString() : "");
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Student Name:</b> {0} {1} {2}", student.FirstName, student.MiddleInitial, student.LastName);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Birthdate:</b> {0}", student.DateOfBirth.HasValue ? student.DateOfBirth.Value.ToShortDateString() : "");
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Gender:</b> {0}", student.Gender);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", student.Address1, student.Address2, student.City, student.State, student.Zip);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>County of Residence:</b> {0}", student.County);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Grade:</b> {0}", grade);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Race:</b> {0}", student.Race);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Hispanic Ethnicity:</b> {0}", student.Ethicity);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Student Language:</b> {0}", student.StudentLanguage);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Parents Language:</b> {0}", student.ParentLanguage);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Assign Child Count:</b> {0}", student.AssignedUSD);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Neighborhood School:</b> {0}", neighborhoodBuilding);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Responsible School:</b> {0}", responsibleBuilding);
-					sb.Append("<br/>");
-					sb.AppendFormat("<b>Initial Evaluation Consent Signed:</b> {0}", student.InitialEvalConsentSigned.HasValue ? student.InitialEvalConsentSigned.Value.ToShortDateString() : "");
-
-					sb.Append("<br/>");
-					sb.Append("<br/>");
-					sb.AppendFormat("<h3>Parent/Guardian Information</h3>");					
-					sb.Append("<br/>");
-					foreach (var pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
-					{
-						sb.AppendFormat("<b>Relationship:</b> {0}", pc.Realtionship);
-						sb.Append("<br/>");
-						sb.AppendFormat("<b>Parent/Guardian:</b> {0} {1}", pc.FirstName, pc.LastName);
-						sb.Append("<br/>");
-						sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", pc.Address1, pc.Address2, pc.City, pc.State, pc.Zip);
-						sb.Append("<br/>");
-						sb.AppendFormat("<b>Email:</b> {0}", pc.Email);
-						sb.Append("<br/>");
-						sb.Append("<br/>");
-					}
-					
-					sb.Append("<br/>");
-					sb.AppendFormat("<h3>Additional Information</h3>");					
-					sb.AppendFormat("{0}", student.ReferralNotes);
-
-					return Json(new { Result = "success", Message = student.ReferralID, Summary = sb.ToString() });
+					return Json(new { Result = "success", Message = student.ReferralID, Summary = summaryText });
 				}
 				catch (DbEntityValidationException ex)
 				{
@@ -1111,6 +1038,87 @@ namespace GreenBushIEP.Controllers
 			}
 			
 			return Json(new { Result = "error", Message = "There was an error while trying to create the referral's contacts. Please try again or contact your administrator." });
+		}
+
+		private string CreateSummary(tblReferralInfo student)
+		{
+			//create summary
+			string neighborhoodBuilding = "";
+			if (student.NeighborhoodBuildingID != null)
+			{
+				var nb = db.tblBuildings.Where(o => o.BuildingID == student.NeighborhoodBuildingID).FirstOrDefault();
+				neighborhoodBuilding = nb.BuildingName;
+			}
+
+			string responsibleBuilding = "";
+			if (student.ResponsibleBuildingID != null)
+			{
+				var nb = db.tblBuildings.Where(o => o.BuildingID == student.ResponsibleBuildingID).FirstOrDefault();
+				responsibleBuilding = nb.BuildingName;
+			}
+
+			string grade = "";
+			if (student.Grade != null)
+			{
+				var nb = db.tblGrades.Where(o => o.gradeID == student.Grade).FirstOrDefault();
+				grade = nb.description;
+			}
+
+			StringBuilder sb = new StringBuilder();
+			sb.AppendFormat("<h3>Student Information</h3>");
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>KIDSID:</b> {0} ", student.KIDSID.HasValue && student.KIDSID.Value != 0 ? student.KIDSID.ToString() : "");
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Student Name:</b> {0} {1} {2}", student.FirstName, student.MiddleInitial, student.LastName);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Birthdate:</b> {0}", student.DateOfBirth.HasValue ? student.DateOfBirth.Value.ToShortDateString() : "");
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Gender:</b> {0}", student.Gender);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", student.Address1, student.Address2, student.City, student.State, student.Zip);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>County of Residence:</b> {0}", student.County);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Grade:</b> {0}", grade);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Race:</b> {0}", student.Race);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Hispanic Ethnicity:</b> {0}", student.Ethicity);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Student Language:</b> {0}", student.StudentLanguage);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Parents Language:</b> {0}", student.ParentLanguage);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Assign Child Count:</b> {0}", student.AssignedUSD);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Neighborhood School:</b> {0}", neighborhoodBuilding);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Responsible School:</b> {0}", responsibleBuilding);
+			sb.Append("<br/>");
+			sb.AppendFormat("<b>Initial Evaluation Consent Signed:</b> {0}", student.InitialEvalConsentSigned.HasValue ? student.InitialEvalConsentSigned.Value.ToShortDateString() : "");
+
+			sb.Append("<br/>");
+			sb.Append("<br/>");
+			sb.AppendFormat("<h3>Parent/Guardian Information</h3>");
+			sb.Append("<br/>");
+			foreach (var pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
+			{
+				sb.AppendFormat("<b>Relationship:</b> {0}", pc.Realtionship);
+				sb.Append("<br/>");
+				sb.AppendFormat("<b>Parent/Guardian:</b> {0} {1}", pc.FirstName, pc.LastName);
+				sb.Append("<br/>");
+				sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", pc.Address1, pc.Address2, pc.City, pc.State, pc.Zip);
+				sb.Append("<br/>");
+				sb.AppendFormat("<b>Email:</b> {0}", pc.Email);
+				sb.Append("<br/>");
+				sb.Append("<br/>");
+			}
+
+			sb.Append("<br/>");
+			sb.AppendFormat("<h3>Additional Information</h3>");
+			sb.AppendFormat("{0}", student.ReferralNotes);
+
+			return sb.ToString();
 		}
 
 		[HttpPost]
@@ -1151,8 +1159,18 @@ namespace GreenBushIEP.Controllers
 								mailMessage.To.Add(misUser.Email);
 							}
 						}
+
+
+						//create summary
+						string summaryText = CreateSummary(student);
+						StringBuilder sb = new StringBuilder();
+						sb.Append("The following new Referral Request has been created. Please log into the IEP Backpack to review the details.<br/><br/>");
+						sb.AppendFormat("<b>Submitted by:</b> {0}, {1}<br/>", submitter.FirstName, submitter.LastName);
+						sb.Append(summaryText);						
+						sb.Append("<br/><br/>Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance.<br/>URL: https://greenbushbackpack.org ");
+						mailMessage.IsBodyHtml = true;
 						mailMessage.Subject = "Referral Request";
-						mailMessage.Body = "A new Referral Request has been created. Please log into the IEP Backpack to review the details. " + Environment.NewLine + Environment.NewLine + "Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance." + Environment.NewLine + Environment.NewLine + "URL: https://greenbushbackpack.org ";
+						mailMessage.Body = sb.ToString();
 
 						smtpClient.Send(mailMessage);
 
