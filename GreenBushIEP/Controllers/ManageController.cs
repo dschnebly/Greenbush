@@ -1757,8 +1757,10 @@ namespace GreenBushIEP.Controllers
                 info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];                				
                 info.Status = "PENDING";                
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
-                info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
-                info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
+				//info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
+				//info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
+				info.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+				info.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
                 info.PlacementCode = collection["studentPlacement"];
                 info.USD = collection["misDistrict"];
                 info.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
@@ -1806,11 +1808,15 @@ namespace GreenBushIEP.Controllers
             }
 
             tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
+			
+
             if (info != null)
             {
                 try
                 {
-                    info.County = collection["studentCounty"].ToString();
+					string currentStatusCode = info.StatusCode;
+
+					info.County = collection["studentCounty"].ToString();
                     info.Grade = Convert.ToInt32(collection["studentGrade"]);
                     info.Race = collection["studentRace"].ToString();
                     info.Ethicity = collection["studentEthnic"].ToString();
@@ -1849,6 +1855,22 @@ namespace GreenBushIEP.Controllers
 
                     if (info != null && info.ReEvalConsentSigned.HasValue)
                         CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
+
+
+
+					//check for exit code and send email if it was just changed to an exist code
+					if (currentStatusCode != info.StatusCode)
+					{
+						var statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
+
+						if(statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive")
+							SendExitEmail(info.AssignedUSD
+								, string.Format("{0}, {1}", student.LastName, student.FirstName)
+								, info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
+								, string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description));
+					}
+
+
 
                 }
                 catch (Exception e)
@@ -2792,6 +2814,55 @@ namespace GreenBushIEP.Controllers
 
             }
         }
+
+
+		protected void SendExitEmail(string assignedUSD, string studentName, string exitDate, string exitCode)
+		{
+			string misRole = "2"; //level 4
+			var list = (from org in db.tblOrganizationMappings
+					join user in db.tblUsers
+						on org.UserID equals user.UserID
+					where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == assignedUSD
+					select user).Distinct().ToList();
+
+			int userDistrictId = 0;
+			if (list != null && list.Any())
+			{
+
+				SmtpClient smtpClient = new SmtpClient();
+				MailMessage mailMessage = new MailMessage();
+				mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
+
+				foreach (var misUser in list)
+				{
+					if (userDistrictId == 0)
+						userDistrictId = misUser.UserID;
+
+					if (!string.IsNullOrEmpty(misUser.Email))
+					{
+						mailMessage.To.Add(misUser.Email);
+					}
+				}
+
+
+				StringBuilder sb = new StringBuilder();
+				sb.Append("The following student was updated with an Exit status: ");
+				sb.AppendFormat("\n\nStudent Name: {0}", studentName);
+				sb.AppendFormat("\nCode: {0}", exitCode);
+				sb.AppendFormat("\nExit Date: {0}", exitDate);
+				sb.Append("\n\nContact melanie.johnson@greenbush.org or(620) 724 - 6281 if you need any assistance.");
+				sb.Append("\n\nURL: https://greenbushbackpack.org");
+				
+				mailMessage.Subject = "Student Exit";
+
+				mailMessage.Body = sb.ToString();
+
+				smtpClient.Send(mailMessage);
+
+			}
+		}
+
+
         #region helpers
 
         [NonAction]
