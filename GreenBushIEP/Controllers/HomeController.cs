@@ -1423,7 +1423,7 @@ namespace GreenbushIep.Controllers
 
             if (calendar.Count == 0)
             {
-                return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you procede." }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you proceed." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "success",  Message = "Nicely Done" }, JsonRequestBehavior.AllowGet);
