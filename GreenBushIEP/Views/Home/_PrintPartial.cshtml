@@ -2548,30 +2548,18 @@
 								 <div class="form-group">
 			 						<label>Evaluation Procedure</label>
 			 						<p>@evalText.Trim().TrimEnd(',')</p>
-								 </div>
-							
+								 </div>							
 
                                     @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
 									{
 										foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
 										{
-											var isChecked = "glyphicon-unchecked";
-
-											if (gb.TransitionActivity)
-											{
-												isChecked = "glyphicon-check";
-											}
-
-                                            <label>Short Term Benchmark(s)</label>
-
+											<label>Short Term Benchmark(s)</label>
                                             <div class="StudentGoalBenchmarks">
-
                                                 <div class="form-group" style="padding:2px;">
-                                                    <span>@gb.ObjectiveBenchmark</span>
-                                                    <b>T.A.</b>                                                    
-													<span><i class="glyphicon @(isChecked)"></i></span>
+                                                    <span>@gb.ObjectiveBenchmark</span>                                                   
                                                 </div>
-                                            <div>
+                                                <div>
 												<label>Method(s)</label><br/>
 												@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
 												{
@@ -2596,12 +2584,10 @@
 													} //end switch
 													@ddlText2 <text>&nbsp;</text> @otherDesc<br/>
 												}
-											</div>
-
+											    </div>
                                             </div>
                                         }//end foreach short term bench
                                     }
-
 
 						</div> <!--end panel default-->
 					</div><!--end panel group-->
@@ -2611,8 +2597,8 @@
 	 else
 	 {
 			 <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
-		 }
-			 </div><!--end section break-->
+	 }
+	 </div><!--end section break-->
 	 <div class="dont-break">
 		<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
