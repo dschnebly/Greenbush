@@ -881,6 +881,7 @@
           <Property Name="ReEvalConsentSigned" Type="datetime" />
           <Property Name="isGifted" Type="bit" Nullable="false" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -2672,6 +2673,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="ReEvalConsentSigned" Type="DateTime" Precision="3" />
           <Property Name="isGifted" Type="Boolean" Nullable="false" />
           <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ExitNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -4249,6 +4251,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="ExitNotes" ColumnName="ExitNotes" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="isGifted" ColumnName="isGifted" />
                 <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />

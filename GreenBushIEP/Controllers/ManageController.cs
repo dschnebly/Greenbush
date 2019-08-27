@@ -1156,7 +1156,7 @@ namespace GreenBushIEP.Controllers
 
 							if (!string.IsNullOrEmpty(misUser.Email))
 							{
-								mailMessage.To.Add(misUser.Email);
+								mailMessage.To.Add(misUser.Email);								
 							}
 						}
 
@@ -1165,7 +1165,7 @@ namespace GreenBushIEP.Controllers
 						string summaryText = CreateSummary(student);
 						StringBuilder sb = new StringBuilder();
 						sb.Append("The following new Referral Request has been created. Please log into the IEP Backpack to review the details.<br/><br/>");
-						sb.AppendFormat("<b>Submitted by:</b> {0}, {1}<br/>", submitter.FirstName, submitter.LastName);
+						sb.AppendFormat("<b>Submitted by:</b> {0}, {1}<br/><br/>", submitter.FirstName, submitter.LastName);
 						sb.Append(summaryText);						
 						sb.Append("<br/><br/>Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance.<br/>URL: https://greenbushbackpack.org ");
 						mailMessage.IsBodyHtml = true;
@@ -1286,9 +1286,11 @@ namespace GreenBushIEP.Controllers
                         UserID = student.UserID,
                         KIDSID = kidsID,
                         DateOfBirth = Convert.ToDateTime(collection["dob"]),
-                        Primary_DisabilityCode = collection["primaryDisability"].ToString(),
-                        Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
-                        AssignedUSD = collection["assignChildCount"].ToString(),
+                        //Primary_DisabilityCode = collection["primaryDisability"].ToString(),
+                        //Secondary_DisabilityCode = collection["secondaryDisability"].ToString(),
+						Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "",
+					    Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "",
+					    AssignedUSD = collection["assignChildCount"].ToString(),
                         USD = collection["misDistrict"],
                         BuildingID = collection["AttendanceBuildingId"],
                         NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
@@ -1843,8 +1845,9 @@ namespace GreenBushIEP.Controllers
                     info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
                     info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
                     info.StatusCode = collection["statusCode"].ToString();
+					info.ExitNotes = !String.IsNullOrEmpty(collection["exitNotes"]) ?  collection["exitNotes"].ToString() : "";
 
-                    if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+					if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
                     {
                         info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
                     }
@@ -1885,7 +1888,9 @@ namespace GreenBushIEP.Controllers
 							SendExitEmail(info.AssignedUSD
 								, string.Format("{0}, {1}", student.LastName, student.FirstName)
 								, info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
-								, string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description));
+								, string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
+								, info.ExitNotes
+								);
 					}
 
 
@@ -2834,7 +2839,7 @@ namespace GreenBushIEP.Controllers
         }
 
 
-		protected void SendExitEmail(string assignedUSD, string studentName, string exitDate, string exitCode)
+		protected void SendExitEmail(string assignedUSD, string studentName, string exitDate, string exitCode, string exitNotes)
 		{
 			string misRole = "2"; //level 4
 			var list = (from org in db.tblOrganizationMappings
@@ -2859,6 +2864,7 @@ namespace GreenBushIEP.Controllers
 					if (!string.IsNullOrEmpty(misUser.Email))
 					{
 						mailMessage.To.Add(misUser.Email);
+						
 					}
 				}
 
@@ -2868,6 +2874,7 @@ namespace GreenBushIEP.Controllers
 				sb.AppendFormat("\n\nStudent Name: {0}", studentName);
 				sb.AppendFormat("\nCode: {0}", exitCode);
 				sb.AppendFormat("\nExit Date: {0}", exitDate);
+				sb.AppendFormat("\nExit Notes: {0}", exitNotes);
 				sb.Append("\n\nContact melanie.johnson@greenbush.org or(620) 724 - 6281 if you need any assistance.");
 				sb.Append("\n\nURL: https://greenbushbackpack.org");
 				

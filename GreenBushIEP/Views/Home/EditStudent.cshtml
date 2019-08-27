@@ -1281,16 +1281,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+										<div class="col-md-6">
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="exitDate" class="control-label">Exit Date</label>
-                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
+                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1307,8 +1307,8 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
-                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <label for="exitDate" class="control-label">Exit Date</label>
+                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1321,6 +1321,16 @@
                                                     <div class="row">
                                                         <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
                                                         <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										<div class="col-md-6">
+                                            <div class="bootstrap-iso">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <label for="exitNotes" class="control-label">Exit Notes</label>
+                                                        <input id="exitNotes" name="exitNotes" type="text" style="height:49px; z-index: 99999" class="form-control norequired" placeholder="" value="@(Model.info.ExitNotes)" />
                                                     </div>
                                                 </div>
                                             </div>
