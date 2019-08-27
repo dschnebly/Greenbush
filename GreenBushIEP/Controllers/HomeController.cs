@@ -1423,7 +1423,7 @@ namespace GreenbushIep.Controllers
 
             if (calendar.Count == 0)
             {
-                return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you procede." }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you proceed." }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { Result = "success",  Message = "Nicely Done" }, JsonRequestBehavior.AllowGet);
@@ -2273,7 +2273,14 @@ namespace GreenbushIep.Controllers
                     {
                         theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
                         theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
-                    }
+
+						if (theIEP.studentGoalBenchmarks.Any())
+						{
+							var benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
+							theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
+						}
+
+					}
 
                     theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.current.IEPid).ToList();

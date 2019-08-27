@@ -2525,40 +2525,94 @@
 			 		<div>
 			 			<div>
 			 				<div>
-			 					<div>
+			 					<div class="voffset2">
 			 						<label for="StudentGoalTitle">Student Goal</label>
 			 					</div>
 			 					<div class="form-group">
 			 						<div class="input-group">
 			 							<span data-bind="bs-drp-sel-label"><b>@ddlText</b></span><p>@sGoal.Title</p>
-			 				</div>
-			 			</div>
-			 			<div class="form-group">
-			 				<label>Measurable Annual Goal:</label>
-			 				<p>@sGoal.AnnualGoal</p>
-			 		</div>
-			 		<div class="form-group">
-			 			<label>Goal Baseline</label>
-			 			<p>@sGoal.Baseline</p>
-			 	</div>
-			 	<div class="form-group">
-			 		<label>State Standards</label>
-			 		<p>@sGoal.StateStandards</p>
-			 </div>
-			 <div class="form-group">
-			 	<label>Evaluation Procedure</label>
-			 	<p>@evalText.Trim().TrimEnd(',')</p>
-			 </div>
-			 </div> <!--end panel default-->
-			 </div><!--end panel group-->
+			 						</div>
+			 					</div>
+			 					<div class="form-group">
+			 						<label>Measurable Annual Goal:</label>
+			 						<p>@sGoal.AnnualGoal</p>
+			 					</div>
+			 					<div class="form-group">
+			 						<label>Goal Baseline</label>
+			 						<p>@sGoal.Baseline</p>
+			 					</div>
+			 					<div class="form-group">
+			 						<label>State Standards</label>
+			 						<p>@sGoal.StateStandards</p>
+								</div>
+								 <div class="form-group">
+			 						<label>Evaluation Procedure</label>
+			 						<p>@evalText.Trim().TrimEnd(',')</p>
+								 </div>
+							
+
+                                    @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
+									{
+										foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
+										{
+											var isChecked = "glyphicon-unchecked";
+
+											if (gb.TransitionActivity)
+											{
+												isChecked = "glyphicon-check";
+											}
+
+                                            <label>Short Term Benchmark(s)</label>
+
+                                            <div class="StudentGoalBenchmarks">
+
+                                                <div class="form-group" style="padding:2px;">
+                                                    <span>@gb.ObjectiveBenchmark</span>
+                                                    <b>T.A.</b>                                                    
+													<span><i class="glyphicon @(isChecked)"></i></span>
+                                                </div>
+                                            <div>
+												<label>Method(s)</label><br/>
+												@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
+												{
+													var ddlText2 = "";
+													var otherDesc = "";
+													switch (gbMethod.EvaluationProcedureID)
+													{
+														case 1: { ddlText2 = "Written Observation"; break; }
+														case 2: { ddlText2 = "Written Performance"; break; }
+														case 3: { ddlText2 = "Oral Performance"; break; }
+														case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+														case 5: { ddlText2 = "Time Sample"; break; }
+														case 6: { ddlText2 = "Demonstration/Performance"; break; }
+														case 7: {
+																ddlText2 = "Other";
+																if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
+																{
+																	ddlText2 = "Other:";
+																	otherDesc = gbMethod.OtherDescription;
+																}
+																break; }
+													} //end switch
+													@ddlText2 <text>&nbsp;</text> @otherDesc<br/>
+												}
+											</div>
+
+                                            </div>
+                                        }//end foreach short term bench
+                                    }
+
+
+						</div> <!--end panel default-->
+					</div><!--end panel group-->
 			 </div><!--end col md 12-->
 		 }//end for goals
 	 }
 	 else
 	 {
 			 <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
-	 }
-	 </div><!--end section break-->
+		 }
+			 </div><!--end section break-->
 	 <div class="dont-break">
 		<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)

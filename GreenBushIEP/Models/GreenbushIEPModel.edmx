@@ -3117,11 +3117,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Baseline" Nullable="false" MaxLength="2000" />
           <Property Type="Int32" Name="goalBenchmarkID" Nullable="true" />
           <Property Type="String" Name="ObjectiveBenchmark" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="Method" Nullable="false" MaxLength="25" />
-          <Property Type="DateTime" Name="BencharkDateQ1" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="BencharkDateQ2" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="BencharkDateQ3" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="BencharkDateQ4" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Method" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="BencharkDateQ1" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="BencharkDateQ2" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="BencharkDateQ3" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="BencharkDateQ4" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="ProgressNotes1" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="ProgressNotes2" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="ProgressNotes3" Nullable="true" MaxLength="500" />
@@ -3134,6 +3134,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="Progress_Quarter2" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="Progress_Quarter3" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="Progress_Quarter4" Nullable="false" MaxLength="30" />
+          <Property Type="Boolean" Name="Archive" Nullable="true" />
+          <Property Type="String" Name="GoalModule" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AnnualGoal" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IepStatus" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="BenchmarkNotes1" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="BenchmarkNotes2" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="BenchmarkNotes3" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="BenchmarkNotes4" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="BenchmarkProgress_Quarter1" Nullable="false" MaxLength="41" />
+          <Property Type="String" Name="BenchmarkProgress_Quarter2" Nullable="false" MaxLength="41" />
+          <Property Type="String" Name="BenchmarkProgress_Quarter3" Nullable="false" MaxLength="41" />
+          <Property Type="String" Name="BenchmarkProgress_Quarter4" Nullable="false" MaxLength="41" />
         </ComplexType>
         <EntityType Name="tblModule">
           <Key>
@@ -4649,6 +4661,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
                 <ScalarProperty Name="Progress_Quarter2" ColumnName="Progress_Quarter2" />
                 <ScalarProperty Name="Progress_Quarter3" ColumnName="Progress_Quarter3" />
                 <ScalarProperty Name="Progress_Quarter4" ColumnName="Progress_Quarter4" />
+                <ScalarProperty Name="Archive" ColumnName="Archive" />
+                <ScalarProperty Name="GoalModule" ColumnName="GoalModule" />
+                <ScalarProperty Name="AnnualGoal" ColumnName="AnnualGoal" />
+                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
+                <ScalarProperty Name="BenchmarkNotes1" ColumnName="BenchmarkNotes1" />
+                <ScalarProperty Name="BenchmarkNotes2" ColumnName="BenchmarkNotes2" />
+                <ScalarProperty Name="BenchmarkNotes3" ColumnName="BenchmarkNotes3" />
+                <ScalarProperty Name="BenchmarkNotes4" ColumnName="BenchmarkNotes4" />
+                <ScalarProperty Name="BenchmarkProgress_Quarter1" ColumnName="BenchmarkProgress_Quarter1" />
+                <ScalarProperty Name="BenchmarkProgress_Quarter2" ColumnName="BenchmarkProgress_Quarter2" />
+                <ScalarProperty Name="BenchmarkProgress_Quarter3" ColumnName="BenchmarkProgress_Quarter3" />
+                <ScalarProperty Name="BenchmarkProgress_Quarter4" ColumnName="BenchmarkProgress_Quarter4" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
