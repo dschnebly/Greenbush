@@ -173,6 +173,7 @@ namespace GreenBushIEP.Models
 				bool mathNeeds = (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value));
 
 				displayIEPStatus = (current.Amendment & current.IsActive & current.IepStatus.ToUpper() == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
+                if (displayIEPStatus == IEPStatus.AMENDMENT && current.IsActive) { isServiceCompleted = true; }
 				hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
 				hasBehavior = (studentSocial != null && (studentSocial.BehaviorInterventionPlan)) || db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null;
 			}
