@@ -1458,7 +1458,7 @@ namespace GreenbushIep.Controllers
                 var providers = (from p in db.tblProviders
                                  join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
                                  where d.USD != null && d.USD == studentInfo.AssignedUSD
-                                 select p).ToList();
+                                 select p).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
@@ -1483,7 +1483,7 @@ namespace GreenbushIep.Controllers
                     model.studentId = studentId;
                     model.studentServices.Add(new tblService() { IEPid = iep.IEPid });
                     model.serviceTypes = db.tblServiceTypes.ToList();
-                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList();
+                    model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.calendar = Holidays;
