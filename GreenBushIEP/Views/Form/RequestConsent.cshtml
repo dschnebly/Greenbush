@@ -1,794 +1,798 @@
 ﻿@{
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-	string studentAddress = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
-	string studentCityStZip = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip: "";
+	string studentAddress = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
+	string studentCityStZip = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
 
 <div class="module-page">
-    <div class=WordSection1>
+	<div class=WordSection1>
 
-        <div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;text-align:center'>
-           <p class=MsoNormal align=center style='text-align:center'>  
-                    <span style='font-size: 12pt; font-weight: bold;'>PRIOR WRITTEN NOTICE FOR EVALUATION OR REEVALUATION</span>
-               </p>
+		<div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;text-align:center'>
+			<p class=MsoNormal align=center style='text-align:center'>
+				<span style='font-size: 12pt; font-weight: bold;'>PRIOR WRITTEN NOTICE FOR EVALUATION OR REEVALUATION</span>
+			</p>
 
-               <p class=MsoNormal align=center style='text-align:center'>  
-                    <span style='font-size: 12pt; font-weight: bold;'>AND REQUEST FOR CONSENT</span>
-                </p>
-            </center>
-        </div>
+			<p class=MsoNormal align=center style='text-align:center'>
+				<span style='font-size: 12pt; font-weight: bold;'>AND REQUEST FOR CONSENT</span>
+			</p>
+			</center>
+		</div>
 
-        <p class=MsoNormal>&nbsp;</p>
+		<p class=MsoNormal>&nbsp;</p>
 
-        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
-               style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
-            <tr>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>To:</b>					
-					<span style="text-decoration:underline;font-weight:bold"><textarea  data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span>
-					
-					</span>
-                    <span style='font-size:11.0pt'><o:p></o:p></span>
-                </p>
-                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-                    <span style='font-size:10.0pt'>
-                        <span style='mso-tab-count:1'>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
-                    </span>
-                </p>
-                </td>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                     <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>Date:</b> <u>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(48, ' ').Replace(" ", "\u00A0"))</u></span>
-                    <span style='font-size:11.0pt'><o:p></o:p></span>
-                </p>
-                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-                    <span style='font-size:11.0pt'>
-                        <span style='mso-tab-count:1'>       </span>&nbsp;<o:p></o:p>
-                    </span>
-                </p>
-                </td>
-            </tr>
-            <tr>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
-                    </b>
-                </p>
-                <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:  11.0pt'>On behalf of:</span>
-                    </b><span style='font-size:11.0pt;mso-bidi-font-weight:
+		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
+			   style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
+			<tr>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<span style='font-size:  11.0pt'>
+							<b>To:</b>
+							<span style="text-decoration:underline;font-weight:bold"><textarea data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span>
+
+						</span>
+						<span style='font-size:11.0pt'><o:p></o:p></span>
+					</p>
+					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+						<span style='font-size:10.0pt'>
+							<span style='mso-tab-count:1'>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
+						</span>
+					</p>
+				</td>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<span style='font-size:  11.0pt'><b>Date:</b> <textarea data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;text-decoration:underline" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span></span>
+						<span style='font-size:11.0pt'><o:p></o:p></span>
+					</p>
+					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+						<span style='font-size:11.0pt'>
+							<span style='mso-tab-count:1'>       </span>&nbsp;<o:p></o:p>
+						</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<b>
+							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+						</b>
+					</p>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<b>
+							<span style='font-size:  11.0pt'>On behalf of:</span>
+						</b><span style='font-size:11.0pt;mso-bidi-font-weight:
   bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
-    <span style='font-size:10.0pt'>
-        <span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
-    </span>
+	<span style='font-size:10.0pt'>
+		<span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
+	</span>
 </p>
 <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-                </td>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-    <p class=MsoNormal>
-        <b style='mso-bidi-font-weight:normal'>
-            <span style='font-size:11.0pt'>Address:</span>
-        </b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
-    </p>
-    <p class=MsoNormal><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-    <p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(68 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
-                </td>
-            </tr>
-        </table>
+</td>
+<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+	<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
+	<p class=MsoNormal>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:11.0pt'>Address:</span>
+		</b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
+	</p>
+	<p class=MsoNormal><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
+	<p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(68 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
+</td>
+</tr>
+</table>
 
-        <p class="MsoNormal" style="text-align:left;">
-            The [LEA] has been requested, or proposes, to complete the
-            following action to consider your child's needs for special education
-            services.  Please review the items marked. If you have questions, please feel
-            free to discuss them with the [LEA] education staff.
-        </p>
+<p class="MsoNormal" style="text-align:left;">
+	The [LEA] has been requested, or proposes, to complete the
+	following action to consider your child's needs for special education
+	services.  Please review the items marked. If you have questions, please feel
+	free to discuss them with the [LEA] education staff.
+</p>
 
-        <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;margin-top:3px;'>
-            <b>
-                <span style='font-size:11.0pt'>
-                    A.<span style='font:7.0pt "Times New Roman"'>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                </span>
-            </b><b>
-                <span style='font-size:11pt'>
-                    SPECIAL EDUCATION ACTION
-                    PROPOSED
-                </span>:
-            </b>
-        </p>
+<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;margin-top:3px;'>
+	<b>
+		<span style='font-size:11.0pt'>
+			A.<span style='font:7.0pt "Times New Roman"'>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+			</span>
+		</span>
+	</b><b>
+		<span style='font-size:11pt'>
+			SPECIAL EDUCATION ACTION
+			PROPOSED
+		</span>:
+	</b>
+</p>
 
 
-        <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
-               style='border-collapse:collapse;border:solid;width:100%'>
-            <tr>
-                <td valign=top style='width:505.45pt;border: none windowtext 1.0pt;
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+	   style='border-collapse:collapse;border:solid;width:100%'>
+	<tr>
+		<td valign=top style='width:505.45pt;border: none windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <b>
-                            <span style='font-size: 14px; font-family: "Courier New"; position: relative; top: 2px;'>
-                                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;
-                            </span>1
-                        </b>. <b>
-                            The [ LEA ] proposes to conduct an initial evaluation.
-                            (Parental Consent Required)
-                        </b>
-                    </p>
-                    <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='margin-left:.25in'>
-                        Based upon a review of existing
-                        data (if appropriate), the IEP team (including the parent), is proposing to
-                        conduct an initial evaluation of your child.<s> </s>Information will be
-                        collected in the areas checked on the following page that provide relevant
-                        information that directly assists the team in determining:
-                    </p>
-                    <p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                              
-                            </span>
-                        </span>whether your child is a child with an exceptionality and the
-                        educational needs of your child;
-                    </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                              
-                            </span>
-                        </span>the present levels of academic achievement and related
-                        developmental needs of your child; and
-                    </p>
-                    <p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                               
-                            </span>
-                        </span>whether your child needs special education and related
-                        services. 
-                    </p>
-                    <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='text-indent:.25in'>
-                        <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>
-                        </b><b>
-                            <span style='font-family:"Courier New"'></span>&nbsp;No additional information is needed. 
-                        </b></p>
-						<p class=MsoNormal style='margin-left:.5in'>Based on a review of currently available information, it has
-                        been determined that no additional data are needed to conduct the initial
-                        evaluation as described above.  Existing information will be used that will
-                        provide relevant information that will directly assist the team in
-                        determining the educational needs of your child in the areas checked below.</p>
-                    
-                    
-                    <p class=MsoNormal style='margin-left:.5in'>
-                        However, you have the right to
-                        request that an assessment be completed.   If you want such an assessment to
-                        be conducted, please contact the following school representative indicated
-                        below within 10 school days.
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td valign=top style='width:505.45pt;border:none windowtext 1.0pt;
+			<p class=MsoNormal>
+				<b>
+					<span style='font-size: 14px; font-family: "Courier New"; position: relative; top: 2px;'>
+						<input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;
+					</span>1
+				</b>. <b>
+					The [ LEA ] proposes to conduct an initial evaluation.
+					(Parental Consent Required)
+				</b>
+			</p>
+			<p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
+			<p class=MsoNormal style='margin-left:.25in'>
+				Based upon a review of existing
+				data (if appropriate), the IEP team (including the parent), is proposing to
+				conduct an initial evaluation of your child.<s> </s>Information will be
+				collected in the areas checked on the following page that provide relevant
+				information that directly assists the team in determining:
+			</p>
+			<p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>whether your child is a child with an exceptionality and the
+				educational needs of your child;
+			</p>
+			<p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>the present levels of academic achievement and related
+				developmental needs of your child; and
+			</p>
+			<p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>whether your child needs special education and related
+				services. 
+			</p>
+			<p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
+			<p class=MsoNormal style='text-indent:.25in'>
+				<b>
+					<span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>
+				</b><b>
+					<span style='font-family:"Courier New"'></span>&nbsp;No additional information is needed. 
+				</b>
+			</p>
+			<p class=MsoNormal style='margin-left:.5in'>
+				Based on a review of currently available information, it has
+				been determined that no additional data are needed to conduct the initial
+				evaluation as described above.  Existing information will be used that will
+				provide relevant information that will directly assist the team in
+				determining the educational needs of your child in the areas checked below.
+			</p>
+
+
+			<p class=MsoNormal style='margin-left:.5in'>
+				However, you have the right to
+				request that an assessment be completed.   If you want such an assessment to
+				be conducted, please contact the following school representative indicated
+				below within 10 school days.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top style='width:505.45pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal>
-                        <b>
-                            <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;
-                            </span>2
-                        </b>. <b>
-                            The [ LEA ] proposes to conduct a reevaluation. (Parental
-                            consent required)
-                        </b>
-                    </p>
-                    <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='margin-left:.25in'>
-                        Based upon a review of existing
-                        data (if appropriate), the IEP team (including the parent), is proposing to
-                        conduct a reevaluation of your child. Information will be collected in the
-                        areas checked on the following page that provide relevant information that
-                        directly assists the team in determining:
-                    </p>
-                    <p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                             
-                            </span>
-                        </span>whether your child continues to be a child with an
-                        exceptionality and the educational needs of your child;
-                    </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                              
-                            </span>
-                        </span>the present levels of academic achievement and related
-                        developmental needs of your child;
-                    </p>
-                    <p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                               
-                            </span>
-                        </span>whether your child continues to need special education and
-                        related services; and
-                    </p>
-                    <p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
-                        <span style='font-family:Symbol'>
-                            ·<span style='font:7.0pt "Times New Roman"'>
-                               
-                            </span>
-                        </span>whether any additions or modifications to the special education
-                        and related services are needed to enable your child to meet the measurable
-                        annual goals set out in the IEP of your child and to participate, as
-                        appropriate, in the general education curriculum.
-                    </p>
-                    <p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
-                    <p class=MsoNormal style='margin-left:.5in;text-indent:.25in'>
-                        <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>&nbsp;No
-                            additional information is needed. 
-                        </b>Based on a review of currently
-                        available information, it has been determined that no additional data are
-                        needed to conduct the reevaluation as described above.  Existing information
-                        will be used that will provide relevant information that will directly assist
-                        the team in determining the educational needs of your child in the areas
-                        checked below.
-                    </p>
-                   
-                    <p class=MsoNormal style='margin-left:.5in'>
-                        However, you have the right to
-                        request that an assessment be completed.   If you want such an assessment to
-                        be conducted, please contact the following school representative indicated
-                        below within 10 school days.
-                    </p>
-                </td>
-            </tr>
-            <tr style='height:23.0pt'>
-                <td  style='width:505.45pt;border:none windowtext 1.0pt;border-top:
+			<p class=MsoNormal>
+				<b>
+					<span style='font-size:14.0pt;font-family:"Courier New"'>
+						<input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;
+					</span>2
+				</b>. <b>
+					The [ LEA ] proposes to conduct a reevaluation. (Parental
+					consent required)
+				</b>
+			</p>
+			<p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
+			<p class=MsoNormal style='margin-left:.25in'>
+				Based upon a review of existing
+				data (if appropriate), the IEP team (including the parent), is proposing to
+				conduct a reevaluation of your child. Information will be collected in the
+				areas checked on the following page that provide relevant information that
+				directly assists the team in determining:
+			</p>
+			<p class=MsoListParagraphCxSpFirst style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>whether your child continues to be a child with an
+				exceptionality and the educational needs of your child;
+			</p>
+			<p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>the present levels of academic achievement and related
+				developmental needs of your child;
+			</p>
+			<p class=MsoListParagraphCxSpMiddle style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>whether your child continues to need special education and
+				related services; and
+			</p>
+			<p class=MsoListParagraphCxSpLast style='text-indent:.25in'>
+				<span style='font-family:Symbol'>
+					·<span style='font:7.0pt "Times New Roman"'>
+
+					</span>
+				</span>whether any additions or modifications to the special education
+				and related services are needed to enable your child to meet the measurable
+				annual goals set out in the IEP of your child and to participate, as
+				appropriate, in the general education curriculum.
+			</p>
+			<p class=MsoNormal><span style='font-size:3.0pt'>&nbsp;</span></p>
+			<p class=MsoNormal style='margin-left:.5in;text-indent:.25in'>
+				<b>
+					<span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span>&nbsp;No
+					additional information is needed. 
+				</b>Based on a review of currently
+				available information, it has been determined that no additional data are
+				needed to conduct the reevaluation as described above.  Existing information
+				will be used that will provide relevant information that will directly assist
+				the team in determining the educational needs of your child in the areas
+				checked below.
+			</p>
+
+			<p class=MsoNormal style='margin-left:.5in'>
+				However, you have the right to
+				request that an assessment be completed.   If you want such an assessment to
+				be conducted, please contact the following school representative indicated
+				below within 10 school days.
+			</p>
+		</td>
+	</tr>
+	<tr style='height:23.0pt'>
+		<td style='width:505.45pt;border:none windowtext 1.0pt;border-top:
   none;padding:0in 5.4pt 0in 5.4pt;height:23.0pt'>
-                    <p class=MsoNormal>
-                        <b>
-                            <span style='font-size:14.0pt'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; </span>3.  The
-                            [LEA] refuses to conduct an initial evaluation. (Parental Consent Not
-                            Required)
-                        </b>
-                    </p>
-                </td>
-            </tr>
-            <tr style='height:21.65pt'>
-                <td  style='width:505.45pt;border:none windowtext 1.0pt;border-top:
+			<p class=MsoNormal>
+				<b>
+					<span style='font-size:14.0pt'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; </span>3.  The
+					[LEA] refuses to conduct an initial evaluation. (Parental Consent Not
+					Required)
+				</b>
+			</p>
+		</td>
+	</tr>
+	<tr style='height:21.65pt'>
+		<td style='width:505.45pt;border:none windowtext 1.0pt;border-top:
   none;padding:0in 5.4pt 0in 5.4pt;height:22pt'>
-                    <p class=MsoNormal>
-                        <b>
-                            <span style='font-size:14pt'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; </span>4.  The
-                            [LEA] refuses to conduct a reevaluation. (Parental Consent Not Required)
-                        </b>
-                    </p>
-                </td>
-            </tr>
-        </table>
-        <p style="padding-top:15px">
-			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
-		</p>
-        <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
-					   
-        <br clear='all' style='overflow:hidden;page-break-before:always;'>
-			   		 
-        <p class=MsoNormal><span style='font-size:5.0pt'>&nbsp;</span></p>
+			<p class=MsoNormal>
+				<b>
+					<span style='font-size:14pt'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; </span>4.  The
+					[LEA] refuses to conduct a reevaluation. (Parental Consent Not Required)
+				</b>
+			</p>
+		</td>
+	</tr>
+</table>
+<p style="padding-top:15px">
+	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
+</p>
+<p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
 
-        <div align=center>
+<br clear='all' style='overflow:hidden;'>
 
-            <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=5 
-                   style='width:100%;border-collapse:collapse'>
-                <tr style='page-break-inside:avoid;height:23.85pt'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+<p class=MsoNormal><span style='font-size:5.0pt'>&nbsp;</span></p>
+
+<div align=center>
+
+	<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=5
+		   style='width:100%;border-collapse:collapse'>
+		<tr style='page-break-inside:avoid;height:23.85pt'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:23.85pt'>
-                        <p class=MsoNormal><b>New Data</b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>New Data</b></p>
+			</td>
+			<td width=60 valign=top style='width:45.0pt;border:none windowtext 1.0pt;
   border-left:none;padding:0in .05in 0in .05in;height:23.85pt'>
-                        <p class=MsoNormal><b>Existing Data</b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453.5pt;border:none;border-bottom:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Existing Data</b></p>
+			</td>
+			<td width=605 valign=top style='width:453.5pt;border:none;border-bottom:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:23pt'>
-                        <p class=MsoNormal><b><span style='font-size:5.0pt'>&nbsp;</span></b></p>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b><span style='font-size:5.0pt'>&nbsp;</span></b></p>
+				<p class=MsoNormal><b><span style='font-size:14.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></p>
-                    </td>
-                    <td width=60 valign=top style='width:45.0pt;border-top:none;border-left:none;
+				<p class=MsoNormal><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></p>
+			</td>
+			<td width=60 valign=top style='width:45.0pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453.5pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453.5pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Health/Motor Ability -</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of gross and fine motor skills, and/or
-                            evidence of disease or injury.  Assessment may also include laterality,
-                            directionality, balance, kinesthetic skills, tactile skills, or ambulatory/postural
-                            problems.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Health/Motor Ability -</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of gross and fine motor skills, and/or
+					evidence of disease or injury.  Assessment may also include laterality,
+					directionality, balance, kinesthetic skills, tactile skills, or ambulatory/postural
+					problems.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Vision -</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of near and far point visual
-                            acuity, eye muscle control, depth perception, color blindness and
-                            orientation/mobility skills.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Vision -</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of near and far point visual
+					acuity, eye muscle control, depth perception, color blindness and
+					orientation/mobility skills.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Hearing -</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of acuity for pure-tones and
-                            speech, middle ear function, central auditory processing skills and the need
-                            for/use of amplification.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Hearing -</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of acuity for pure-tones and
+					speech, middle ear function, central auditory processing skills and the need
+					for/use of amplification.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Social/Emotional Status/Behavioral Status -</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of social/emotional/behavioral
-                            development in relation to the child’s learning, interpersonal relationships,
-                            feelings and/or physical symptoms.  May include a functional behavioral
-                            assessment or evaluation to determine appropriate positive behavioral
-                            supports.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Social/Emotional Status/Behavioral Status -</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of social/emotional/behavioral
+					development in relation to the child’s learning, interpersonal relationships,
+					feelings and/or physical symptoms.  May include a functional behavioral
+					assessment or evaluation to determine appropriate positive behavioral
+					supports.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none; border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt; padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none; border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt; padding:0in .05in 0in .05in'>
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>General Intelligence –</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of general cognitive abilities
-                            including the child’s rate of learning, problem solving skills, level of
-                            conceptual understanding, use of cognitive strategies and/or ability to
-                            reason and/or generalize.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>General Intelligence –</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of general cognitive abilities
+					including the child’s rate of learning, problem solving skills, level of
+					conceptual understanding, use of cognitive strategies and/or ability to
+					reason and/or generalize.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Academic Performance –</b></p>
-                        <p class=MsoNormal>&nbsp;</p>
-                        <p class=MsoNormal>
-                            May include assessment of academic or preacademic skills
-                            and achievement levels in relation to the general curriculum such as oral or
-                            written expression, reading skills or comprehension, mathematical calculation
-                            or reasoning.  For a child who is blind or visually impaired, the need for
-                            Braille instruction may be assessed.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Academic Performance –</b></p>
+				<p class=MsoNormal>&nbsp;</p>
+				<p class=MsoNormal>
+					May include assessment of academic or preacademic skills
+					and achievement levels in relation to the general curriculum such as oral or
+					written expression, reading skills or comprehension, mathematical calculation
+					or reasoning.  For a child who is blind or visually impaired, the need for
+					Braille instruction may be assessed.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Communicative Status –</b></p>
-                        <p class=MsoNormal><b>&nbsp;</b></p>
-                        <p class=MsoNormal>
-                            May include assessment of the child’s ability to convey
-                            and comprehend information and social intent, including skills such as
-                            expressive and receptive language, articulation, voice, fluency, or
-                            augmentative communication.  For a child who is deaf or hard of hearing,
-                            consideration of the child’s language and communication may be assessed.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Communicative Status –</b></p>
+				<p class=MsoNormal><b>&nbsp;</b></p>
+				<p class=MsoNormal>
+					May include assessment of the child’s ability to convey
+					and comprehend information and social intent, including skills such as
+					expressive and receptive language, articulation, voice, fluency, or
+					augmentative communication.  For a child who is deaf or hard of hearing,
+					consideration of the child’s language and communication may be assessed.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b>Transition Skills –</b></p>
-                        <p class=MsoNormal><b>&nbsp;</b></p>
-                        <p class=MsoNormal>
-                            May include appropriate transition assessment related to training,
-                            education, employment, courses of study, and where appropriate, independent
-                            living skills.
-                        </p>
-                        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
-                    </td>
-                </tr>
-                <tr style='page-break-inside:avoid;height:33.75pt'>
-                    <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
+				<p class=MsoNormal><b>Transition Skills –</b></p>
+				<p class=MsoNormal><b>&nbsp;</b></p>
+				<p class=MsoNormal>
+					May include appropriate transition assessment related to training,
+					education, employment, courses of study, and where appropriate, independent
+					living skills.
+				</p>
+				<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+			</td>
+		</tr>
+		<tr style='page-break-inside:avoid;height:33.75pt'>
+			<td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;
   border-top:none;padding:0in .05in 0in .05in;height:33pt'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
+				<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=60 valign=top style='width:45pt;border-top:none;border-left:none;
   border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:34pt'>
-                        <p class=MsoNormal><b><span style='font-size:14pt; font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
-                    </td>
-                    <td width=605 valign=top style='width:453pt;border-top:none;border-left:
+				<p class=MsoNormal><b><span style='font-size:14pt; font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b></p>
+			</td>
+			<td width=605 valign=top style='width:453pt;border-top:none;border-left:
   none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
   padding:0in .05in 0in .05in;height:33pt'>
-                        <p class=MsoNormal><b>Other Specify:</b></p>
-                        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
-                    </td>
-                </tr>
-            </table>
+				<p class=MsoNormal><b>Other Specify:</b></p>
+				<textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
+			</td>
+		</tr>
+	</table>
 
-        </div>
+</div>
 
-        <p class=MsoNormal><b><span style='font-size:11pt'>&nbsp;</span></b></p>
+<p class=MsoNormal><b><span style='font-size:11pt'>&nbsp;</span></b></p>
 
-        <p class=MsoNormal><b>&nbsp;</b></p>
+<p class=MsoNormal><b>&nbsp;</b></p>
 
-        <p class="MsoNormal" style="text-align:left;"><b>B.  EXPLANATION OF WHY THE ACTION IS PROPOSED OR REFUSED:</b></p>
+<p class="MsoNormal" style="text-align:left;"><b>B.  EXPLANATION OF WHY THE ACTION IS PROPOSED OR REFUSED:</b></p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
-
-
-        <br clear='all' style='overflow:hidden;page-break-before:always;'>
+<textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
 
 
-        <p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
+<br clear='all' style='overflow:hidden;'>
 
-        <p class="MsoNormal page-break" style="text-align:left;"><b>C.  OPTIONS CONSIDERED AND WHY THE OPTIONS WERE REJECTED:</b></p>
-        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
-        <br clear='all' style='overflow:hidden;page-break-before:always;'>
-        <p class="MsoNormal" style="text-align:left;">
-            <b>
-                D.  DESCRIPTION OF THE DATA USED AS BASIS FOR THE PROPOSED
-                OR REFUSED ACTION:
-            </b>
-        </p>
 
-        <p class=MsoNormal style='margin-left:.25in;text-indent:-.25in'>
-            (including each
-            evaluation procedure, assessment, record or report used as a basis for the
-            proposed or refused action<b>)</b>
-        </p>
+<p class=MsoNormal><b><span style='font-size:4.0pt'>&nbsp;</span></b></p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
-        <br clear='all' style='overflow:hidden;page-break-before:always;'>
-        <p class="MsoNormal" style="text-align:left;">
-            <b>
-                E.  OTHER FACTORS CONSIDERED RELEVENT TO THE PROPOSED OR
-                REFUSED ACTION:
-            </b>
-        </p>
+<p class="MsoNormal page-break" style="text-align:left;"><b>C.  OPTIONS CONSIDERED AND WHY THE OPTIONS WERE REJECTED:</b></p>
+<textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
+<br clear='all' style='overflow:hidden;'>
+<p class="MsoNormal" style="text-align:left;">
+	<b>
+		D.  DESCRIPTION OF THE DATA USED AS BASIS FOR THE PROPOSED
+		OR REFUSED ACTION:
+	</b>
+</p>
 
-        <textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
-        <br clear='all' style='overflow:hidden;page-break-before:always;'>
-        <div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 0in 14.0pt;
+<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in'>
+	(including each
+	evaluation procedure, assessment, record or report used as a basis for the
+	proposed or refused action<b>)</b>
+</p>
+
+<textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
+<br clear='all' style='overflow:hidden;'>
+<p class="MsoNormal" style="text-align:left;">
+	<b>
+		E.  OTHER FACTORS CONSIDERED RELEVENT TO THE PROPOSED OR
+		REFUSED ACTION:
+	</b>
+</p>
+
+<textarea class="form-control" cols="100" rows="4"></textarea><span style="display:none" class="input-value"></span>
+<br clear='all' style='overflow:hidden;'>
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 0in 14.0pt;
 margin-left:9.0pt;margin-right:0in'>
 
-            <p class=MsoNormal align=center style='text-align:center;border:none;
+	<p class=MsoNormal align=center style='text-align:center;border:none;
 padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
-            <p class="MsoNormal" style="text-align:left;border:none;padding:0in;">
-                Both state and federal laws
-                concerning the education of children with exceptionalities include many
-                parental rights.  Receiving notices of action the school wants to take in
-                regard to your child and being a part of your child's educational planning team
-                are examples of your rights. These laws also require that the school follow
-                certain procedures to make sure you know your rights and have an opportunity to
-                exercise those rights. The school is required to give you a copy of the rights
-                of a parent at least one time each school year.  You received a copy of your
-                rights when the initial referral for evaluation was made.  You should carefully
-                read them and, if you have any questions regarding your rights or if you wish
-                to receive an additional copy of your rights, you may contact the special
-                education director of the school or special education cooperative.
-            </p>
+	<p class="MsoNormal" style="text-align:left;border:none;padding:0in;">
+		Both state and federal laws
+		concerning the education of children with exceptionalities include many
+		parental rights.  Receiving notices of action the school wants to take in
+		regard to your child and being a part of your child's educational planning team
+		are examples of your rights. These laws also require that the school follow
+		certain procedures to make sure you know your rights and have an opportunity to
+		exercise those rights. The school is required to give you a copy of the rights
+		of a parent at least one time each school year.  You received a copy of your
+		rights when the initial referral for evaluation was made.  You should carefully
+		read them and, if you have any questions regarding your rights or if you wish
+		to receive an additional copy of your rights, you may contact the special
+		education director of the school or special education cooperative.
+	</p>
 
-        </div>
+</div>
 
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b>
-                <span style='font-size:11pt'>&nbsp;</span>
-            </b>
-        </p>
+<p class=MsoNormal align=center style='text-align:center'>
+	<b>
+		<span style='font-size:11pt'>&nbsp;</span>
+	</b>
+</p>
 
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b>
-                <span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
-            </b>
-        </p>
+<p class=MsoNormal align=center style='text-align:center'>
+	<b>
+		<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+	</b>
+</p>
 
-        <p class="MsoNormal" style="text-align:left;">
-            You may contact any of the following resources to help you
-            understand the federal and state laws for educating children with
-            exceptionalities and parental rights (procedural safeguards) granted by those
-            laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
-            Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
-            Networking  785-233-8732.
-        </p>
+<p class="MsoNormal" style="text-align:left;">
+	You may contact any of the following resources to help you
+	understand the federal and state laws for educating children with
+	exceptionalities and parental rights (procedural safeguards) granted by those
+	laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+	Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+	Networking  785-233-8732.
+</p>
 
-        <p class=MsoNormal>&nbsp;</p>
+<p class=MsoNormal>&nbsp;</p>
 
-        <div style='mso-element:para-border-div;border:none windowtext 1.0pt;
+<div style='mso-element:para-border-div;border:none windowtext 1.0pt;
     mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
     margin-left:27.0pt;margin-right:27.0pt'>
 
-            <p class=MsoNormal align=center style='text-align:center;border:none;
+	<p class=MsoNormal align=center style='text-align:center;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
-            </p>
+		<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
+	</p>
 
-            <p class=MsoNormal align=center style='text-align:center;border:none;
+	<p class=MsoNormal align=center style='text-align:center;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <span style='mso-bookmark:OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></b>
-                    </span>
-                </span>
-            </p>
+		<span style='mso-bookmark:OLE_LINK2'>
+			<span style='mso-bookmark:OLE_LINK1'>
+				<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></b>
+			</span>
+		</span>
+	</p>
 
-            <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
+	<p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <span style='mso-bookmark:
+		<span style='mso-bookmark:
     OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        I, <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>,<span style='mso-spacerun:yes'></span>
-                    </span>
-                </span><span style='mso-bookmark:OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
-                </span>
-            </p>
+			<span style='mso-bookmark:OLE_LINK1'>
+				I, <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>,<span style='mso-spacerun:yes'></span>
+			</span>
+		</span><span style='mso-bookmark:OLE_LINK2'>
+			<span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
+		</span>
+	</p>
 
-            <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
+	<p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <span style='mso-bookmark:
+		<span style='mso-bookmark:
     OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
-            </p>
+	</p>
 
-            <p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;
+	<p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <input type='checkbox' /> hand delivered,
-                </span><span style='mso-bookmark:OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        <span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
-                    </span>
-                </span><span style='mso-bookmark:OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        <input type='checkbox' /> mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
-                    </span>
-                </span><span style='mso-bookmark:
+		<input type='checkbox' /> hand delivered,
+		</span><span style='mso-bookmark:OLE_LINK2'>
+			<span style='mso-bookmark:OLE_LINK1'>
+				<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
+			</span>
+		</span><span style='mso-bookmark:OLE_LINK2'>
+			<span style='mso-bookmark:OLE_LINK1'>
+				<input type='checkbox' /> mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
+			</span>
+		</span><span style='mso-bookmark:
     OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        <input type='checkbox' /> other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
-                    </span>
-                </span>
-            </p>
+			<span style='mso-bookmark:OLE_LINK1'>
+				<input type='checkbox' /> other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
+			</span>
+		</span>
+	</p>
 
 
 
-            <p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;
+	<p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;
     padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <span style='mso-bookmark:
+		<span style='mso-bookmark:
     OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
-            </p>
+	</p>
 
-            <p class=MsoNormal style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:
+	<p class=MsoNormal style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:
     solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                <span style='mso-bookmark:OLE_LINK2'>
-                    <span style='mso-bookmark:OLE_LINK1'>
-                        this notice
-                        to <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span> 
-						<span>&nbsp;on&nbsp;</span> <textarea style="width:100px;height:20px"></textarea>&nbsp;<span style="display:none" class="input-value"></span>.
-                    </span>
-                </span>
-            </p>
+		<span style='mso-bookmark:OLE_LINK2'>
+			<span style='mso-bookmark:OLE_LINK1'>
+				this notice
+				to <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
+				<span>&nbsp;on&nbsp;</span> <textarea style="width:100px;height:20px"></textarea>&nbsp;<span style="display:none" class="input-value"></span>.
+			</span>
+		</span>
+	</p>
 
-            <p class=MsoNormal style='text-indent:.75in;tab-stops:351.0pt 401.25pt;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                (Name)<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>(Date)<span style='mso-tab-count:1'></span><o:p></o:p>
-
-
-            </p>
-
-        </div>
+	<p class=MsoNormal style='text-indent:.75in;tab-stops:351.0pt 401.25pt;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+		(Name)<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>(Date)<span style='mso-tab-count:1'></span><o:p></o:p>
 
 
+	</p>
+
+</div>
 
 
-        <h2 class="page-break" style="margin-top:15px">
-            <span style='font-size: 11pt;font-weight: bold;'>
-                REQUEST FOR CONSENT FOR SPECIAL
-                EDUCATION ACTION
-            </span>
-        </h2>
 
-        <p class=MsoNormal align=center style='text-align:center;'><i><u>(If Required)</u></i></p>
 
-        <p class=MsoNormal align=center style='text-align:center;'>&nbsp;</p>
+<h2 class="page-break" style="margin-top:15px">
+	<span style='font-size: 11pt;font-weight: bold;'>
+		REQUEST FOR CONSENT FOR SPECIAL
+		EDUCATION ACTION
+	</span>
+</h2>
 
-        <p class="MsoNormal" style="text-align:left;">
-            We ask that you give us consent to carry out the special
-            education action as indicated on the attached notice.  Any disagreement we have
-            regarding any of the above matters may be resolved by our mutual agreement,
-            through mediation or through due process proceedings.  An explanation of mediation
-            and due process proceedings is provided upon request.  The proposed action(s)
-            may begin immediately upon receiving your written permission.  If this is an
-            initial evaluation your consent initiates a 60 school day timeline that, if your
-            child is eligible, will conclude with your consent to implement special
-            education and related services according to an IEP.  If you have any questions
-            regarding this notice, you may contact the following school representative: 
-        </p>
+<p class=MsoNormal align=center style='text-align:center;'><i><u>(If Required)</u></i></p>
 
-        <p class=MsoNormal>&nbsp;</p>
+<p class=MsoNormal align=center style='text-align:center;'>&nbsp;</p>
 
-       <p style="padding-top:15px">
-			<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
-		</p>
-        <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
-		<br/><br/>
-        <p class="MsoNormal" style="text-align:left;">
-            <b>
-                If you wish to consent to the special education actions
-                specified in this notice, or if you do not give consent, please sign and date
-                this form (below) and return it to the school representative indicated above. 
-            </b>
-        </p>
+<p class="MsoNormal" style="text-align:left;">
+	We ask that you give us consent to carry out the special
+	education action as indicated on the attached notice.  Any disagreement we have
+	regarding any of the above matters may be resolved by our mutual agreement,
+	through mediation or through due process proceedings.  An explanation of mediation
+	and due process proceedings is provided upon request.  The proposed action(s)
+	may begin immediately upon receiving your written permission.  If this is an
+	initial evaluation your consent initiates a 60 school day timeline that, if your
+	child is eligible, will conclude with your consent to implement special
+	education and related services according to an IEP.  If you have any questions
+	regarding this notice, you may contact the following school representative: 
+</p>
 
-        <p class=MsoNormal>&nbsp;</p>
+<p class=MsoNormal>&nbsp;</p>
 
-        <div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+<p style="padding-top:15px">
+	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
+</p>
+<p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
+<br /><br />
+<p class="MsoNormal" style="text-align:left;">
+	<b>
+		If you wish to consent to the special education actions
+		specified in this notice, or if you do not give consent, please sign and date
+		this form (below) and return it to the school representative indicated above. 
+	</b>
+</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<div style='border:none windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
 margin-left:.25in;margin-right:-.7pt'>
 
 
 
-            <p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
 border:none;padding:0in'><b><i>GIVE CONSENT</i></b></p>
 
-            <p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
 border:none;padding:0in'>
-                <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b>
-                I <b><i>give consent</i></b><i>
-                    for the evaluation or reevaluation specified
-                    in this notice for my child.
-                </i>
-            </p>
+		<b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b>
+		I <b><i>give consent</i></b><i>
+			for the evaluation or reevaluation specified
+			in this notice for my child.
+		</i>
+	</p>
 
-            <p class=MsoNormal align=center style='text-align:center;border:none;
+	<p class=MsoNormal align=center style='text-align:center;border:none;
 padding:0in'>
-                <i>
-                    equest
-                    I understand this consent is voluntary and may be revoked at
-                    any time, but that revocation does not negate an action that occurs after
-                    consent is given and before consent is revoked.
-                </i>
-            </p>
+		<i>
+			equest
+			I understand this consent is voluntary and may be revoked at
+			any time, but that revocation does not negate an action that occurs after
+			consent is given and before consent is revoked.
+		</i>
+	</p>
 
-            <p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
 border:none;padding:0in'><u><span style='text-decoration:none;'>&nbsp;</span></u></p>
 
-            <p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
 border:none;padding:0in'><b><i>DO NOT GIVE CONSENT</i></b></p>
 
-            <p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
 border:none;padding:0in'>
-                <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b>
-                I <b><i>do not give consent</i></b><i>
-                    for the evaluation or reevaluation
-                    specified in this notice for my child.
-                </i>
-            </p>
+		<b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b>
+		I <b><i>do not give consent</i></b><i>
+			for the evaluation or reevaluation
+			specified in this notice for my child.
+		</i>
+	</p>
 
 
-            <p class=MsoNormal style='margin-top:6.0pt;border:none;padding:0in'>
-                <u>                                                                            </u>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date <u>                                                                       </u>
-            </p>
+	<p class=MsoNormal style='margin-top:6.0pt;border:none;padding:0in'>
+		<u>                                                                            </u>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date <u>                                                                       </u>
+	</p>
 
-            <p class=MsoNormal style='text-align: left; margin-left: 5px;'>
-                (Parent/Legal Education Decision Maker)
-            </p>
+	<p class=MsoNormal style='text-align: left; margin-left: 5px;'>
+		(Parent/Legal Education Decision Maker)
+	</p>
 
-            <p class=MsoNormal style='margin-bottom:6.0pt;border:none;padding:0in'>&nbsp;</p>
+	<p class=MsoNormal style='margin-bottom:6.0pt;border:none;padding:0in'>&nbsp;</p>
 
-        </div>
+</div>
 
-        <p class=MsoNormal>&nbsp;</p>
-    </div>
+<p class=MsoNormal>&nbsp;</p>
+</div>
 
 </div>

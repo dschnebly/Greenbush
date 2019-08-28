@@ -28,7 +28,7 @@
 
         <p class=MsoNormal style=''>
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                Date:&nbsp;<u><b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(50, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Student: <u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u><o:p></o:p>
+                Date:&nbsp;<textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;text-decoration:underline" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student: </span><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u><o:p></o:p>
             </span>
         </p>
         <p class=MsoNormal style='margin-top:10px;'>

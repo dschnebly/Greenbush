@@ -9,7 +9,6 @@
 
 <div class="module-page">
     <div class=WordSection1>
-
         <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;line-height:normal'>
             <b>
                 <u>
@@ -17,7 +16,6 @@
                 </u>
             </b>
         </p>
-
         <p class=MsoNormal align=center style='text-align:center;padding-bottom:25px'>
             <b>
                 <u>
@@ -28,9 +26,8 @@
                 </u>
             </b>
         </p>
-
         <p class=MsoNormal align=right style='margin-bottom:6.0pt;text-align:right;line-height:normal;'>
-            DATE: <u>&nbsp;&nbsp;<b>@(String.Format("{0:MM/dd/yyyy}", DateTime.Now).PadRight(60, ' ').Replace(" ", "\u00A0"))</b></u>
+            DATE: <textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;text-decoration:underline" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:150%'>
@@ -40,52 +37,41 @@
             SCHOOL DISTRICT:
             <u><b>@(String.Format("{0}", schoolDistrict).PadRight(100 - schoolDistrict.Length, ' ').Replace(" ", "\u00A0"))</b></u>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span style='font-size:7.0pt;line-height:115%'>&nbsp;</span>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             I, <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(districtContactName)</textarea><span style="display:none" class="input-value">@(districtContactName)</span></span>,
             having authority under the laws of the state of Kansas to make
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>        (Name)</span></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             educational decisions:  
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on behalf of the above named student  
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on my own behalf (adult student),
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span style='font-size:4.0pt;line-height:115%'>&nbsp;</span>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span class=GramE>hereby</span> revoke consent for <b><u>all special education and related services</u></b> for the above
             named student.
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;'>
             This revocation of consent is effective:<span style=''>
             <u><textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-left:2.15in'>
             <sup>
                 <span style='font-size:8.0pt;line-height:115%'>(Date)<o:p></o:p></span>
             </sup>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             I understand
             that by revoking consent for all special education and related services, the
@@ -100,85 +86,46 @@
             above.<span style=''>  </span>I also understand that revocation
             is not retroactive and does not negate an action that occurs after consent is
             given and before consent is revoked.
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        </p>       
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that the school district may not use mediation or a due process hearing to
             challenge my revocation of consent.<span style=''>  </span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        </p>      
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I also
             understand that I have the right to revoke consent and by revoking consent for
             all special education and related services the school district will no longer
             be legally required to convene an IEP meeting, to develop an IEP or to provide
             the above named student with special education and related services.<span style=''></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        </p>        
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I further
             understand that by revoking consent for all special education and related
             services, I will no longer have the procedural safeguards available to parents,
             and the student named above will no longer have the procedural protections
             (including protections regarding disciplinary actions) specified in federal and
             state special education laws and regulations.
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        </p>      
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that the school district is not required to amend the educational records of
             the above named student to remove any references to the student’s receipt of
             special education and related services because of the revocation of consent.
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        </p>      
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that for the above named student to be reenrolled in special education, an
             initial evaluation for special education and related services must be conducted
             to determine if the student qualifies for special education and related
             services.<span style=''>  </span>
         </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:5.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:6.0pt;line-height:115%'><o:p>&nbsp;</o:p></span>
-        </p>
-
-      
-
-        <table style="margin-top:5px;">
+        <table style="margin-top:10px;">
             <tr>
                 <td width="150">_______________________________________________________</td>
-                
-
             </tr>
             <tr>
-                <td width="150">(Signature)</td>
-                
+                <td width="150">(Signature)</td>                
             </tr>
         </table>
     </div>

@@ -28,10 +28,8 @@
 						@((studentFormattedName.Length) > 45 ? studentFormattedName : String.Format(studentFormattedName).PadRight(45 - String.Format(studentFormattedName).Length, '_').Replace(" ", "\u00A0"))
 					</span>
 				</td>
-				<td style="text-decoration:underline">
-					<span style='font-family:"Calibri",sans-serif'>
-						@((todaysDate.Length) > 45 ? todaysDate : String.Format(todaysDate).PadRight(45 - String.Format(todaysDate).Length, '_').Replace(" ", "\u00A0"))
-					</span>
+				<td style="text-decoration:underline;font-family:'Calibri',sans-serif;">
+					<textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span>
 				</td>
 			</tr>
 			<tr>
@@ -82,7 +80,7 @@
 			</tr>
 			<tr>
 				<td style='border-bottom:solid 1px black;font-size:10.0pt;font-family:"Calibri",sans-serif'>
-					<textarea style='width:100px;height:30px;'>@(" ")</textarea><span style='display:none;' class="input-value">@(" ")</span>				</td>
+					<textarea style='width:200px;height:30px;'>@(" ")</textarea><span style='display:none;' class="input-value">@(" ")</span></td>
 				<td></td>
 			</tr>
 			<tr>
