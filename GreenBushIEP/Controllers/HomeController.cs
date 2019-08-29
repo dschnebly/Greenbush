@@ -116,15 +116,50 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+				//model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-                foreach (var student in model.members.Where(m => m.RoleID == student))
-                {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-                }
+				//foreach (var student in model.members.Where(m => m.RoleID == student))
+				//{
+				//	student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
+				//}
 
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
+				//var count = model.members.Count(m => m.RoleID == student);
+
+				var users = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct();
+
+				var students = (from buildingMap in db.tblBuildingMappings
+								join user in db.tblUsers on buildingMap.UserID equals user.UserID
+								join iep in db.tblIEPs on user.UserID equals iep.UserID into iu
+								from sub in iu.DefaultIfEmpty()
+								where (user.RoleID == student)
+								&& ((user.Archive ?? false) != true)
+								&& (myDistricts.Contains(buildingMap.USD)
+								&& myBuildings.Contains(buildingMap.BuildingID))
+								select new StudentIEPViewModel()
+								{
+									UserID = user.UserID
+									,
+									FirstName = user.FirstName
+									,
+									hasIEP = sub != null && sub.IsActive && sub.IepStatus != IEPStatus.ARCHIVE
+									,
+									MiddleName = user.MiddleName
+									,
+									LastName = user.LastName
+									,
+									RoleID = user.RoleID
+								})
+									.Distinct();
+
+
+				List<StudentIEPViewModel> allMembers = users != null && users.Count() > 0 ? users.ToList() : new List<StudentIEPViewModel>();
+
+				allMembers.AddRange(students.ToList());
+
+				model.members = allMembers.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+
+				// show the latest updated version changes
+				ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
                 return View("MISPortal", model);
             }
