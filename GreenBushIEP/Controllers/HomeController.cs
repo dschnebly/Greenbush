@@ -85,15 +85,43 @@ namespace GreenbushIep.Controllers
                 model.user = OWNER;
                 model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
                 model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
-                model.members = (from user in db.tblUsers where user.RoleID != owner && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+				//model.members = (from user in db.tblUsers where user.RoleID != owner && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-                foreach (var student in model.members.Where(m => m.RoleID == student))
-                {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-                }
+				//foreach (var student in model.members.Where(m => m.RoleID == student))
+				//{
+				//	student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
+				//}
 
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
+				var users = (from user in db.tblUsers where user.RoleID != owner && user.RoleID != student && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
+
+				var students = (from user in db.tblUsers
+								join iep in db.tblIEPs on user.UserID equals iep.UserID into iu
+								from sub in iu.DefaultIfEmpty()
+								where user.RoleID == student
+								&& user.Archive != true
+								select new StudentIEPViewModel
+								{
+									UserID = user.UserID
+								,
+									FirstName = user.FirstName
+								,
+									hasIEP = sub != null && sub.IsActive && sub.IepStatus != IEPStatus.ARCHIVE
+								,
+									MiddleName = user.MiddleName
+								,
+									LastName = user.LastName
+								,
+									RoleID = user.RoleID
+								}).Distinct();
+
+				List<StudentIEPViewModel> allMembers = users != null && users.Count() > 0 ? users.ToList() : new List<StudentIEPViewModel>();
+
+				allMembers.AddRange(students.ToList());
+
+				model.members = allMembers.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+
+				// show the latest updated version changes
+				ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
 
                 return View("OwnerPortal", model);
             }

@@ -2841,14 +2841,19 @@ namespace GreenBushIEP.Controllers
 
 		protected void SendExitEmail(string assignedUSD, string studentName, string exitDate, string exitCode, string exitNotes)
 		{
+			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+			int userDistrictId = 0;
+			string usdName = assignedUSD;
 			string misRole = "2"; //level 4
+
 			var list = (from org in db.tblOrganizationMappings
 					join user in db.tblUsers
 						on org.UserID equals user.UserID
 					where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == assignedUSD
 					select user).Distinct().ToList();
 
-			int userDistrictId = 0;
+			var usd = db.tblDistricts.Where(o => o.USD == assignedUSD).FirstOrDefault();
+
 			if (list != null && list.Any())
 			{
 
@@ -2863,19 +2868,23 @@ namespace GreenBushIEP.Controllers
 
 					if (!string.IsNullOrEmpty(misUser.Email))
 					{
-						mailMessage.To.Add(misUser.Email);
-						
+						mailMessage.To.Add(misUser.Email);						
 					}
+
+					
 				}
 
 
 				StringBuilder sb = new StringBuilder();
 				sb.Append("The following student was updated with an Exit status: ");
 				sb.AppendFormat("\n\nStudent Name: {0}", studentName);
+				sb.AppendFormat("\nAssigned USD: {0}", usd == null ? assignedUSD : usd.DistrictName);
 				sb.AppendFormat("\nCode: {0}", exitCode);
 				sb.AppendFormat("\nExit Date: {0}", exitDate);
 				sb.AppendFormat("\nExit Notes: {0}", exitNotes);
-				sb.Append("\n\nContact melanie.johnson@greenbush.org or(620) 724 - 6281 if you need any assistance.");
+				sb.AppendFormat("\nSubmitted By: {0}", string.Format("{0} {1}",submitter.FirstName, submitter.LastName));
+
+				sb.Append("\n\nContact melanie.johnson@greenbush.org or (620) 724 - 6281 if you need any assistance.");
 				sb.Append("\n\nURL: https://greenbushbackpack.org");
 				
 				mailMessage.Subject = "Student Exit";
