@@ -1453,7 +1453,7 @@ namespace GreenbushIep.Controllers
                 int lastYear = DateTime.Now.AddYears(-1).Year;
                 int thirdYear = DateTime.Now.AddYears(2).Year;
 
-                List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
+                //List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
 
                 var providers = (from p in db.tblProviders
                                  join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
@@ -1462,9 +1462,9 @@ namespace GreenbushIep.Controllers
 
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
-                JsonResult Holidays = Json(calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
-                tblCalendar isPossibleLastFiscalDay = calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
-                ViewBag.LastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+                //JsonResult Holidays = Json(calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
+                //tblCalendar isPossibleLastFiscalDay = calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+                //ViewBag.LastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
                 if (services != null)
                 {
@@ -1474,7 +1474,7 @@ namespace GreenbushIep.Controllers
                     model.serviceProviders = providers;
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = Holidays;
+                    //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                 }
@@ -1486,7 +1486,7 @@ namespace GreenbushIep.Controllers
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.calendar = Holidays;
+                    //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                 }
