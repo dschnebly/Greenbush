@@ -234,6 +234,7 @@ namespace GreenBushIEP.Models
 			grades = new List<tblGrade>();
 			contacts = new List<tblStudentRelationship>();
 			districts = new List<tblDistrict>();
+            races = new List<tblRace>();
 			allDistricts = new List<tblDistrict>();
 			selectedDistrict = new List<tblDistrict>();
 			buildings = new List<BuildingsViewModel>();
@@ -251,6 +252,8 @@ namespace GreenBushIEP.Models
 		public tblStudentInfo info { get; set; }
 		public List<tblGrade> grades { get; set; }
 		public List<tblStudentRelationship> contacts { get; set; }
+        public List<tblRace> races { get; set; }
+        public tblRace selectedRace { get; set; }
 		public List<tblDistrict> districts { get; set; }
 		public List<tblDistrict> allDistricts { get; set; }
 		public List<tblDistrict> selectedDistrict { get; set; }

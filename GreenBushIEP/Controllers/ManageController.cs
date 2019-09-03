@@ -1614,6 +1614,8 @@ namespace GreenBushIEP.Controllers
             }
 
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            model.races = db.tblRaces.ToList();
+            model.selectedRace = db.tblRaces.Where(r => r.RaceCode == studentinfo.RaceCode).FirstOrDefault();
             model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
             model.allDistricts = db.tblDistricts.ToList();
             model.placementCode = db.tblPlacementCodes.ToList();
@@ -1754,7 +1756,6 @@ namespace GreenBushIEP.Controllers
                 // map the buildings in the building mapping table
                 try
                 {
-
                     db.tblBuildingMappings.Add(new tblBuildingMapping()
                     {
                         BuildingID = collection["AttendanceBuildingId"],
@@ -1777,8 +1778,6 @@ namespace GreenBushIEP.Controllers
                 info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];                				
                 info.Status = "PENDING";                
                 info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
-				//info.Primary_DisabilityCode = collection["primaryDisability"].ToString();
-				//info.Secondary_DisabilityCode = collection["secondaryDisability"].ToString();
 				info.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
 				info.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
                 info.PlacementCode = collection["studentPlacement"];
@@ -1838,7 +1837,8 @@ namespace GreenBushIEP.Controllers
 
 					info.County = collection["studentCounty"].ToString();
                     info.Grade = Convert.ToInt32(collection["studentGrade"]);
-                    info.Race = collection["studentRace"].ToString();
+                    info.RaceCode = collection["studentRace"].ToString();
+                    info.Race = db.tblRaces.Where(r => r.RaceCode == info.RaceCode).FirstOrDefault().RaceDescription;
                     info.Ethicity = collection["studentEthnic"].ToString();
                     info.StudentLanguage = collection["studentLanguage"].ToString();
                     info.ParentLanguage = collection["parentLanguage"].ToString();

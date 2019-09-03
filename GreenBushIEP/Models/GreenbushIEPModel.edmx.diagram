@@ -84,6 +84,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblGoalBenchmarkMethod" Width="1.5" PointX="26.375" PointY="9.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" Width="1.5" PointX="11.375" PointY="26.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="7.375" PointY="27.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblRace" Width="1.5" PointX="27.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

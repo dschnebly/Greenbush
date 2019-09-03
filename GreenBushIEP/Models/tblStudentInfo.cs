@@ -47,5 +47,6 @@ namespace GreenBushIEP.Models
         public bool isGifted { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public string ExitNotes { get; set; }
+        public string RaceCode { get; set; }
     }
 }

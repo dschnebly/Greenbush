@@ -716,6 +716,13 @@
           <Property Name="ProviderCode" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblRaces">
+          <Key>
+            <PropertyRef Name="RaceCode" />
+          </Key>
+          <Property Name="RaceCode" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RaceDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblReferralInfo">
           <Key>
             <PropertyRef Name="ReferralID" />
@@ -884,6 +891,7 @@
           <Property Name="isGifted" Type="bit" Nullable="false" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
+          <Property Name="RaceCode" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -1471,6 +1479,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblPlacementCodes" EntityType="Self.tblPlacementCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviderDistricts" EntityType="Self.tblProviderDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProviders" EntityType="Self.tblProviders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRaces" EntityType="Self.tblRaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferralInfo" EntityType="Self.tblReferralInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferralRelationships" EntityType="Self.tblReferralRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblReferralRequests" EntityType="Self.tblReferralRequests" Schema="dbo" store:Type="Tables" />
@@ -1852,6 +1861,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </FunctionImport>
           <EntitySet Name="vw_BuildingsForAttendance" EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" />
           <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
+          <EntitySet Name="tblRaces" EntityType="IndividualizedEducationProgramModel.tblRace" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2729,6 +2739,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGifted" Type="Boolean" Nullable="false" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ExitNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="RaceCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -3477,6 +3488,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblRace">
+          <Key>
+            <PropertyRef Name="RaceCode" />
+          </Key>
+          <Property Name="RaceCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RaceDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4333,6 +4351,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="RaceCode" ColumnName="RaceCode" />
                 <ScalarProperty Name="ExitNotes" ColumnName="ExitNotes" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="isGifted" ColumnName="isGifted" />
@@ -4941,6 +4960,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRaces">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblRace">
+              <MappingFragment StoreEntitySet="tblRaces">
+                <ScalarProperty Name="RaceDescription" ColumnName="RaceDescription" />
+                <ScalarProperty Name="RaceCode" ColumnName="RaceCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
