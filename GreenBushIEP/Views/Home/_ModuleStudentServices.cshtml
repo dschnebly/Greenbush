@@ -17,12 +17,25 @@
         margin-bottom: 12px;
     }
 
+    .collapsing .service-disabled {
+        position: absolute;
+        width: 98% !important;
+        top: 95px !important;
+        left: 15px !important;
+        right: 0px !important;
+        bottom: 0 !important;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 1000000 !important;
+    }
+
     .in .service-disabled {
         position: absolute;
-        top: 30%;
-        width: 100%;
+        top: 10em;
+        width: 96%;
+        left: 25px;
+        right: 25px;
         bottom: 25px;
-        background: rgba(255,255,255,0.6);
+        background: rgba(255, 255, 255, 0.75);
         z-index: 1000000 !important;
     }
 
@@ -58,16 +71,46 @@
     .thisServiceNotCompleted {
         visibility: hidden;
     }
+
+     .chosen-container.chosen-with-drop .chosen-drop {
+        z-index: 10000001 !important;
+    }
+
+     .glyphicon-print {
+         font-size: 27px;
+         padding-right:8px
+     }
+
+     .glyphicon-question-sign {
+         font-size: 30px;
+     }
+
+     h4.modal-title {
+         font-size: 30px;
+     }
+
+     h4.modal-title i {
+         font-size: smaller;
+     }
+
+     #alertMessage {
+         display: none;
+     }
+
+     .studentGoalLabel {
+         margin-left:5px;
+     }
+
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
 <div id="printModuleDiv">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('printModuleDiv');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
-        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-        <h4 class="modal-title pull-left" style="font-size: 30px;">
-            <i class="fa fa-handshake-o" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Services
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('printModuleDiv');"><span class="glyphicon glyphicon-print" title="Print Module"></span></button>
+        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign"></span></button>
+        <h4 class="modal-title pull-left">
+            <i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Student Services
         </h4>
         <div class="module-user-name">@(ViewBag.studentName)</div>
     </div>
@@ -75,37 +118,18 @@
         <div class="container serviceContainer">
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
-                    <button id="newService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateAllService" class="btn btn-default @(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="newService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateAllService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
             <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
             <input type="hidden" id="sid" value="@Model.studentId" />
-
-            @*@if (Model.calendar.MaxJsonLength == 0)
-                {
-                    if (ViewBag.isMIS)
-                    {
-                        <div class="alert alert-warning" role="alert">
-                            <strong class="moreinfo">Please check your calendar and make sure it is set up for this fiscal year, building and district before adding services.</strong>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert alert-warning" role="alert">
-                            <strong class="moreinfo">Please contact your level 4 to set their calendar for this fiscal year, district and building before adding services.</strong>
-                        </div>
-                    }
-                }*@
-
-            <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
-                @*<span id='close' class="glyphicon glyphicon-remove pull-right" onclick='$(this).parent().hide();return false;' ></span>*@
+            <div class="alert alert-danger" id="alertMessage" role="alert">
                 <strong class="moreinfo">Oh snap!</strong>
             </div>
-
             <div class="row oneStudentService hidden" id="defaultStudentService">
                 <div class="col-md-12">
                     <div class="panel-group" id="accordion[0]">
@@ -118,7 +142,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                            <span class="studentGoalLabel" style="margin-left:5px;">Student Service</span>
+                                            <span class="studentGoalLabel">Student Service</span>
                                             <i class="glyphicon glyphicon-ok isServiceCompleted thisServiceNotCompleted"></i>
                                             <span class="pull-right">
                                                 <i class="glyphicon glyphicon-trash deleteService"></i>
@@ -132,10 +156,17 @@
                                             <div class="col-md-6">
                                                 <label for="fiscalYear">Attendance Building</label>
                                                 <div class="form-group">
-                                                    <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
+                                                    <select class="form-control" name="attendaceBuilding" style="border-color: #ccc; display: inline-block;">
                                                         <option value="-1">- Select a Building -</option>
-                                                        <option>Fake Building #1</option>
-                                                        <option>Fake Building #2</option>
+
+                                                        @if(Model.attendanceBuildings.Count > 0)
+                                                        {
+                                                            foreach(var building in Model.attendanceBuildings)
+                                                            {
+                                                                <option value="@(building.BuildingID)">@(building.BuildingName)</option>
+                                                            }
+                                                        }
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -148,14 +179,14 @@
                                                         {
                                                             foreach (var goal in Model.studentGoals)
                                                             {
-                                                        <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
                                                             }
                                                         }
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="service-disabled"></div>
+                                        <div name="serviceDisabled" class="service-disabled"></div>
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label for="fiscalYear">Fiscal Year</label>
@@ -182,7 +213,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="Location">Location</label>
+                                                <label for="Location">Setting</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                     <div class="form-group">
@@ -283,6 +314,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </form>
 
                     </div>
@@ -353,7 +385,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label for="Location">Location</label>
+                                                    <label for="Location">Setting</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                         <div class="form-group">
@@ -577,19 +609,8 @@
 
         panelCollapse.collapse('show');
 
-        //var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
-        //var endDateObject = cloneService.find("input[name='serviceEndDate']");
-        //var serviceEndDate = endDateObject.val();
-        //var splitDate = serviceEndDate.split('/');
-        //if (splitDate[2] != fiscalYear) {
-        //	//update end date to match selected fiscal year
-        //	endDateObject.addClass("updateEndDateYear");
-        //	getLastDate(fiscalYear);
-        //}
-
         initService();
 
-        cloneService.find('.service-disabled').addClass('disabled');
         $(".duplication-loader").css('visibility', 'hidden');
     });
 
@@ -692,15 +713,16 @@
 
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
-
-            //var endDate = $("#iepMeetingDate").val();
+            
+            var panel = $(this);
             var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
             var endDateYear = $("#iepMeetingDateYear").val();
             var fiscalYearElement = $(this).find("select[name='fiscalYear']");
 
             //don't adjust for existing services, only new services
-            if (studentServiceId == 0)
+            if (studentServiceId == 0) {
                 fiscalYearElement.val(endDateYear);
+            }
 
             fiscalYearElement.on("change", function (e) {
                 var year = $(this).val();
@@ -940,6 +962,14 @@
             });
 
             $(this).find('.chosen-select').chosen({ width: "100%" });
+
+            $(this).find("select[name=attendaceBuilding]").on('change', function () {
+                if($(this).val() >= 0) {
+                    panel.find('[name="serviceDisabled"]').removeClass('service-disabled');
+                } else {
+                    panel.find('[name="serviceDisabled"]').removeClass('service-disabled');
+                }
+            });
         });
     }
     initService();
@@ -986,7 +1016,6 @@
         serviceA.attr('href', '#collapse' + serviceCount);
 
         var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
-
         $('.serviceContainer').append(cloneService);
 
         //have to remove the hasdatepicker before we can appy new datepicker to clone
@@ -1023,13 +1052,6 @@
             cloneService.closest('.oneStudentService').find(".studentGoalLabel").text(serviceType);
 
         panelCollapse.collapse("show");
-
-
-        //var fiscalYear = cloneService.find("select[name='fiscalYear']").val();
-        //var endDateObject = cloneService.find("input[name='serviceEndDate']");
-        ////update end date to match selected fiscal year
-        //endDateObject.addClass("updateEndDateYear");
-        //getLastDate(fiscalYear);
 
         initService();
     }

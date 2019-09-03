@@ -9,7 +9,7 @@
         });
 
         // attach event
-        // fires when an delete button is pressed.
+        // fires when a delete button is pressed.
         $('#deleteUser').on('show.bs.modal', function (e) {
 
             var user = $(e.relatedTarget).data('id');
@@ -18,7 +18,7 @@
         });
 
 		// attach event
-		// fires when the user chooses a user
+		// fires when the owner chooses a user
 		$('#filterName').change(function () {
 			var userId = this.value;
 			var selectedDistrict = $("#userDistricts option:selected").val() + "";
@@ -28,67 +28,70 @@
 			$(".ajax-loader").show();
 
 			$.ajax({
-				type: 'POST',
-				url: '/Manage/FilterOwnerUserList',
-				dataType: 'json',
-				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
-				async: false,
-				success: function (data) {
-					if (data.Result === "success") {
-						var results = data.Message;
+			    type: 'POST',
+			    url: '/Manage/FilterUserList',
+			    dataType: 'json',
+			    data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
+			    async: false,
+			    success: function (data) {
+			        if (data.Result === "success") {
+			            var results = data.Message;
 
-						// blow away the building list 
-						$('#userBuildings').empty();
+			            // blow away the building list 
+			            $('#userBuildings').empty();
 
-						// hide all the users in the list.
-						var filterCollection = $('.list-group-root').find('.list-group-item');
+			            // hide all the users in the list.
+			            var filterCollection = $('.list-group-root').find('.list-group-item');
 
-						var i = filterCollection.length;
-						while (i >= 0) {
-						    $(filterCollection[i]).addClass('hidden');
-						    i--;
-						}
+			            $.each(filterCollection, function (index, value) {
+			                $(value).addClass('hidden');
+			            });
 
-						var results = data.Message;
-						if (results.members.length > 0) {
+			            $('#userBuildings').append('<option value="-1">All Buildings</option>');
+			            if (results.buildings.length > 0) {
+			                $.each(results.buildings, function (index, value) {
+			                    console.log(value);
+			                    $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
+			                });
+			            }
 
-						    var j = results.members.length - 1;
-						    while (j >= 0) {
-						        var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-						        $(filterCollection[foundIndex]).removeClass('hidden');
-						        j--;
-						    }
-						}
+			            if (results.members.length > 0) {
+			                $.each(filterCollection, function (filterIndex, filterValue) {
+			                    $.each(results.members, function (index, value) {
+			                        if ($(filterValue).data('id') === value.UserID) {
+			                            $(filterValue).removeClass('hidden');
+			                            return false;
+			                        }
+			                    });
+			                });
+			            }
+			        }
+			        else {
+			            alert('doh');
+			        }
+			    },
+			    error: function (data) {
+			        alert('Not connected to the network!');
 
-						initHref();
-					}
-					else {
-						alert('doh');
-					}
-				},
-				error: function (data) {
-					alert('Not connected to the network!');
-
-					console.log(data);
-				},
-				complete: function (data) {
-					$(".ajax-loader").hide();
-					//A function to be called when the request finishes 
-					// (after success and error callbacks are executed). 
-				}
+			        console.log(data);
+			    },
+			    complete: function (data) {
+			        $(".ajax-loader").hide();
+			        //A function to be called when the request finishes 
+			        // (after success and error callbacks are executed). 
+			    }
 			});
-
 		});
 
-
         // attach event
-        // fires when the user chooses a district
+        // fires when the owner chooses a district
         $("#userDistricts").on('change', function () {
             var selectedDistrict = $(this).val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterOwnerUserList',
@@ -97,37 +100,26 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
-                        var results = data.Message;
-
-                        // blow away the building list 
-                        $('#userBuildings').empty();
 
                         // hide all the users in the list.
                         var filterCollection = $('.list-group-root').find('.list-group-item');
-                        $.each(filterCollection, function (index, value) {
-                            $(value).addClass('hidden');
-                        });
 
-                        $('#userBuildings').append('<option value="-1">All Buildings</option>');
-                        if (results.buildings.length > 0) {
-                            $.each(results.buildings, function (index, value) {
-                                console.log(value);
-                                $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
-                            });
+                        var i = filterCollection.length;
+                        while (i >= 0) {
+                            $(filterCollection[i]).addClass('hidden');
+                            i--;
                         }
 
+                        var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') === value.UserID) {
-                                        $(filterValue).removeClass('hidden');
-                                        return false;
-                                    }
-                                });
-                            });
-                        }
 
-                        initHref();
+                            var j = results.members.length - 1;
+                            while (j >= 0) {
+                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+                                $(filterCollection[foundIndex]).removeClass('hidden');
+                                j--;
+                            }
+                        }
                     }
                     else {
                         alert('doh');
@@ -147,13 +139,14 @@
         });
 
         // attach event
-        // fires when the user chooses a building
+        // fires when the owner chooses a building
         $("#userBuildings").on('change', function () {
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $(this).val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterOwnerUserList',
@@ -165,31 +158,30 @@
 
                         // hide all the users in the list.
                         var filterCollection = $('.list-group-root').find('.list-group-item');
-                        $.each(filterCollection, function (index, value) {
-                            $(value).addClass('hidden');
-                        });
+
+                        var i = filterCollection.length;
+                        while (i >= 0) {
+                            $(filterCollection[i]).addClass('hidden');
+                            i--;
+                        }
 
                         var results = data.Message;
                         if (results.members.length > 0) {
 
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') === value.UserID) {
-                                        $(filterValue).removeClass('hidden');
-                                        return false;
-                                    }
-                                });
-                            });
+                            var j = results.members.length - 1;
+                            while (j >= 0) {
+                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+                                $(filterCollection[foundIndex]).removeClass('hidden');
+                                j--;
+                            }
                         }
-
-                        initHref();
                     }
                     else {
                         alert('doh');
                     }
                 },
                 error: function (data) {
-                    alert('Not connected to the network!');
+                    alert('ERROR!!!');
 
                     console.log(data);
                 },
@@ -202,13 +194,14 @@
         });
 
         // attach event
-        // fires when the user chooses a role
+        // fires when the owner chooses a role
         $("#userRoles").on('change', function () {
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
 
             $(".ajax-loader").show();
+
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterOwnerUserList',
@@ -220,24 +213,23 @@
 
                         // hide all the users in the list.
                         var filterCollection = $('.list-group-root').find('.list-group-item');
-                        $.each(filterCollection, function (index, value) {
-                            $(value).addClass('hidden');
-                        });
+
+                        var i = filterCollection.length;
+                        while (i >= 0) {
+                            $(filterCollection[i]).addClass('hidden');
+                            i--;
+                        }
 
                         var results = data.Message;
                         if (results.members.length > 0) {
 
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') === value.UserID) {
-                                        $(filterValue).removeClass('hidden');
-                                        return false;
-                                    }
-                                });
-                            });
+                            var j = results.members.length - 1;
+                            while (j >= 0) {
+                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+                                $(filterCollection[foundIndex]).removeClass('hidden');
+                                j--;
+                            }
                         }
-
-                        initHref();
                     }
                     else {
                         alert('doh');

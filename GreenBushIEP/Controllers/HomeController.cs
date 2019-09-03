@@ -85,43 +85,11 @@ namespace GreenbushIep.Controllers
                 model.user = OWNER;
                 model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
                 model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
-				//model.members = (from user in db.tblUsers where user.RoleID != owner && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-				//foreach (var student in model.members.Where(m => m.RoleID == student))
-				//{
-				//	student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-				//}
+                model.members = db.vw_UserList.Where(ul => ul.RoleID != owner).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
-				var users = (from user in db.tblUsers where user.RoleID != owner && user.RoleID != student && user.Archive != true select new StudentIEPViewModel { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().ToList();
-
-				var students = (from user in db.tblUsers
-								join iep in db.tblIEPs on user.UserID equals iep.UserID into iu
-								from sub in iu.DefaultIfEmpty()
-								where user.RoleID == student
-								&& user.Archive != true
-								select new StudentIEPViewModel
-								{
-									UserID = user.UserID
-								,
-									FirstName = user.FirstName
-								,
-									hasIEP = sub != null && sub.IsActive && sub.IepStatus != IEPStatus.ARCHIVE
-								,
-									MiddleName = user.MiddleName
-								,
-									LastName = user.LastName
-								,
-									RoleID = user.RoleID
-								}).Distinct();
-
-				List<StudentIEPViewModel> allMembers = users != null && users.Count() > 0 ? users.ToList() : new List<StudentIEPViewModel>();
-
-				allMembers.AddRange(students.ToList());
-
-				model.members = allMembers.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
-
-				// show the latest updated version changes
-				ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
 
                 return View("OwnerPortal", model);
             }
@@ -144,50 +112,11 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-				//model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-				//foreach (var student in model.members.Where(m => m.RoleID == student))
-				//{
-				//	student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-				//}
+                model.members = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-				//var count = model.members.Count(m => m.RoleID == student);
-
-				var users = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == admin || user.RoleID == teacher || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct();
-
-				var students = (from buildingMap in db.tblBuildingMappings
-								join user in db.tblUsers on buildingMap.UserID equals user.UserID
-								join iep in db.tblIEPs on user.UserID equals iep.UserID into iu
-								from sub in iu.DefaultIfEmpty()
-								where (user.RoleID == student)
-								&& ((user.Archive ?? false) != true)
-								&& (myDistricts.Contains(buildingMap.USD)
-								&& myBuildings.Contains(buildingMap.BuildingID))
-								select new StudentIEPViewModel()
-								{
-									UserID = user.UserID
-									,
-									FirstName = user.FirstName
-									,
-									hasIEP = sub != null && sub.IsActive && sub.IepStatus != IEPStatus.ARCHIVE
-									,
-									MiddleName = user.MiddleName
-									,
-									LastName = user.LastName
-									,
-									RoleID = user.RoleID
-								})
-									.Distinct();
-
-
-				List<StudentIEPViewModel> allMembers = users != null && users.Count() > 0 ? users.ToList() : new List<StudentIEPViewModel>();
-
-				allMembers.AddRange(students.ToList());
-
-				model.members = allMembers.OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
-
-				// show the latest updated version changes
-				ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
                 return View("MISPortal", model);
             }
@@ -211,12 +140,8 @@ namespace GreenbushIep.Controllers
                 List<String> myDistricts = model.districts.Select(d => d.USD).ToList();
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
-                model.members = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where (user.RoleID == teacher || user.RoleID == student || user.RoleID == nurse) && ((user.Archive ?? false) != true) && (myDistricts.Contains(buildingMap.USD) && myBuildings.Contains(buildingMap.BuildingID)) select new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-                foreach (var student in model.members.Where(m => m.RoleID == student))
-                {
-                    student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-                }
+                model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
@@ -1513,10 +1438,6 @@ namespace GreenbushIep.Controllers
 
                 ViewBag.studentName = student.FirstName + " " + student.LastName;
                 ViewBag.isMIS = mis.UserID == teacher.UserID;
-                int lastYear = DateTime.Now.AddYears(-1).Year;
-                int thirdYear = DateTime.Now.AddYears(2).Year;
-
-                //List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
 
                 var providers = (from p in db.tblProviders
                                  join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
@@ -1525,6 +1446,9 @@ namespace GreenbushIep.Controllers
 
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
+                //int lastYear = DateTime.Now.AddYears(-1).Year;
+                //int thirdYear = DateTime.Now.AddYears(2).Year;
+                //List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
                 //JsonResult Holidays = Json(calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
                 //tblCalendar isPossibleLastFiscalDay = calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
                 //ViewBag.LastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
@@ -1536,6 +1460,7 @@ namespace GreenbushIep.Controllers
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = providers;
                     model.serviceLocations = db.tblLocations.ToList();
+                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
@@ -1548,6 +1473,7 @@ namespace GreenbushIep.Controllers
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
+                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;

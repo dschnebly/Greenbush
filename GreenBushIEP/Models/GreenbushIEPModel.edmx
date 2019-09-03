@@ -826,6 +826,8 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -950,7 +952,7 @@
           <Property Name="Planning_GraduationMonth" Type="int" />
           <Property Name="Planning_GraduationYear" Type="int" />
           <Property Name="Planning_Completion" Type="nvarchar" MaxLength="2000" />
-          <Property Name="Planning_Credits" Type="int" />
+          <Property Name="Planning_Credits" Type="decimal" Precision="19" Scale="4" />
           <Property Name="Planning_BenefitKRS" Type="bit" Nullable="false" />
           <Property Name="Planning_ParentIntials" Type="nvarchar" MaxLength="10" />
           <Property Name="Planning_ConsentPrior" Type="bit" Nullable="false" />
@@ -1020,6 +1022,18 @@
           <Property Name="UpdateText" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsForAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_BuildingsForAttendance">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="BuildingID" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="USD" Type="varchar" MaxLength="8000" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BuildingName" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1191,6 +1205,23 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="IEPEndDate" Type="datetime" />
           <Property Name="isTestDistrict" Type="bit" Nullable="false" />
           <Property Name="isTestUser" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_UserList">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="0..1" />
@@ -1457,6 +1488,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySet Name="tblTransitionServices" EntityType="Self.tblTransitionServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_BuildingsForAttendance" EntityType="Self.vw_BuildingsForAttendance" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_BuildingsForAttendance].[userID] AS [userID], 
+    [vw_BuildingsForAttendance].[USD] AS [USD], 
+    [vw_BuildingsForAttendance].[BuildingID] AS [BuildingID], 
+    [vw_BuildingsForAttendance].[BuildingName] AS [BuildingName]
+    FROM [dbo].[vw_BuildingsForAttendance] AS [vw_BuildingsForAttendance]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_GoalExport" EntityType="Self.vw_GoalExport" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_GoalExport].[ServiceID] AS [ServiceID], 
@@ -1564,6 +1603,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
     [vw_StudentExport].[isTestDistrict] AS [isTestDistrict], 
     [vw_StudentExport].[isTestUser] AS [isTestUser]
     FROM [dbo].[vw_StudentExport] AS [vw_StudentExport]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_UserList" EntityType="Self.vw_UserList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_UserList].[UserID] AS [UserID], 
+    [vw_UserList].[FirstName] AS [FirstName], 
+    [vw_UserList].[MiddleName] AS [MiddleName], 
+    [vw_UserList].[LastName] AS [LastName], 
+    [vw_UserList].[RoleID] AS [RoleID], 
+    [vw_UserList].[IsActive] AS [IsActive], 
+    [vw_UserList].[BuildingID] AS [BuildingID], 
+    [vw_UserList].[USD] AS [USD]
+    FROM [dbo].[vw_UserList] AS [vw_UserList]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
             <End Role="tblLocations" EntitySet="tblLocations" />
@@ -1799,6 +1850,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
             <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
             <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="vw_BuildingsForAttendance" EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" />
+          <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2618,6 +2671,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="USD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -3398,6 +3453,31 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Type="String" Name="StudentState" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Zip" Nullable="false" MaxLength="10" />
         </ComplexType>
+        <EntityType Name="vw_BuildingsForAttendance">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="BuildingID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_UserList">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4208,6 +4288,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
@@ -4838,6 +4920,30 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vw_BuildingsForAttendance">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingsForAttendance">
+              <MappingFragment StoreEntitySet="vw_BuildingsForAttendance">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_UserList">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_UserList">
+              <MappingFragment StoreEntitySet="vw_UserList">
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

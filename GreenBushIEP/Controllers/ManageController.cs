@@ -2340,27 +2340,28 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings
-							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
-							   where myRoles.Contains(user.RoleID) 
-							   && !(user.Archive ?? false)
-								&& ((searchUserId == null) || (user.UserID == searchUserId.Value))
-							   && myDistricts.Contains(buildingMap.USD)
-							   && myBuildings.Contains(buildingMap.BuildingID)
-							   select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
-
                 if (RoleId != "-1")
                 {
-                    foreach (var user in members.ToList())
-                    {
-                        if (user.RoleID != RoleId)
-                        {
-                            members.Remove(user);
-                        }
-                    }
-                }
+                    var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
 
-                NewPortalObject.Add("members", members);
+                    NewPortalObject.Add("members", members);
+                }
+                else
+                {
+                    var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+
+                    NewPortalObject.Add("members", members);
+                }
+                             // var members = (from buildingMap in db.tblBuildingMappings
+							 //  join user in db.tblUsers on buildingMap.UserID equals user.UserID
+							 //  where myRoles.Contains(user.RoleID) 
+							 //  && !(user.Archive ?? false)
+							 //  && ((searchUserId == null) || (user.UserID == searchUserId.Value))
+							 //  && myDistricts.Contains(buildingMap.USD)
+							 //  && myBuildings.Contains(buildingMap.BuildingID)
+							 //  select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+
+
                 return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
             }
 
@@ -2422,13 +2423,18 @@ namespace GreenBushIEP.Controllers
                     myRoles.Add("2");
                 }
 
-                var members = (from buildingMap in db.tblBuildingMappings
-							   join user in db.tblUsers on buildingMap.UserID equals user.UserID
-							   where myRoles.Contains(user.RoleID)
-							   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
-							   && !(user.Archive ?? false) 
-							   && (myDistricts.Contains(buildingMap.USD) 
-							   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+                //model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+
+
+                var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+
+                //var members = (from buildingMap in db.tblBuildingMappings
+				//			   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+				//			   where myRoles.Contains(user.RoleID)
+				//			   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
+				//			   && !(user.Archive ?? false) 
+				//			   && (myDistricts.Contains(buildingMap.USD) 
+				//			   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
 
                 if (RoleId != "-1")
                 {
