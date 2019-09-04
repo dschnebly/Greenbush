@@ -66,7 +66,7 @@
 										<a title="View" class="btn btn-info " role="button" href="/Manage/EditReferral/@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-pencil"></span></a>																										
 								</td>
 								<td style="vertical-align:top;">									
-									<a title="Delete" class="btn btn-info delReferral" role="button" data-val="@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-trash"></span></a>
+									<a title="Delete" class="btn btn-info delReferral" role="button" data-toggle="tooltip" onclick="deleteReferral(@referral.referralId, this);" ><span class="glyphicon glyphicon-trash"></span></a>
 								</td>
                             </tr>							
 								}
