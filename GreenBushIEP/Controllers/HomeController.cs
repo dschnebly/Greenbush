@@ -2927,7 +2927,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", service.Frequency);
 
                 //18 total days
-                sb.AppendFormat("{0}", "");
+                sb.AppendFormat("{0}\t", "");
 
                 count++;
             }

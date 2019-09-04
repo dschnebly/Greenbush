@@ -1651,8 +1651,6 @@
 
         $('#saveFinish, #saveFinishDraft').on('click', function (e) {
 
-			
-
             // make sure occupation is filled out before saving.
 			if (($("#inline-occupation").text() == "Enter occupation" || $("#inline-occupation").text() == "Empty") && !isDOC() && $("#isStudentBirthdayAgeOver21").prop("checked") == false)
 			{
@@ -1667,8 +1665,7 @@
 					e.stopPropagation();
 					$('#inline-occupation').editable('toggle');
 
-					return;
-				
+					return;				
             }
 
             ////can not mark complete unless educational goal and employement goal are filled out
