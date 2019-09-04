@@ -1432,7 +1432,13 @@ namespace GreenBushIEP.Controllers
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                         }
-                    }
+
+
+						if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+						{
+							info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
+						}
+					}
                     db.SaveChanges();
 
                     if (info != null && info.ReEvalConsentSigned.HasValue)
@@ -1878,7 +1884,12 @@ namespace GreenBushIEP.Controllers
                         info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                     }
 
-                    db.SaveChanges();
+					if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+					{
+						info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
+					}
+
+					db.SaveChanges();
 
                     if (info != null && info.ReEvalConsentSigned.HasValue)
                         CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
