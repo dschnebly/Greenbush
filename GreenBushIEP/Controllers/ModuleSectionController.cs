@@ -1419,7 +1419,7 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_GraduationMonth = graduationDate.Month;
                     transition.Planning_GraduationYear = graduationDate.Year;
                     transition.Planning_Completion = (collection["planningCompletion"] != null) ? collection["planningCompletion"].ToString() : String.Empty;
-                    transition.Planning_Credits = collection["totalcredits"] == null ? 0 : (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
+                    transition.Planning_Credits = collection["totalcredits"] == null ? 0 : (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToDecimal(collection["totalcredits"]) : 0;
                     transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == null ? false : collection["isVocationalRehabiltiation"] == "on" ? true : false;
                     transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == null ? false : collection["isConfidentailReleaseObtained"] == "on" ? true : false;
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;

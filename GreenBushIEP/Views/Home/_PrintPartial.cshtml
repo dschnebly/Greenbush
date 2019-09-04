@@ -2202,7 +2202,7 @@
 			 </div>
 			 <div class="col-md-3">
 			 	<fieldset class="form-group">
-			 		<span><b>Total # of Credits required by district</b></span><span> @(Model.studentTransition.transition.Planning_Credits)</span>
+			 		<span><b>Total # of Credits required by district</b></span><span> @(Model.studentTransition.transition.Planning_Credits != null ? Model.studentTransition.transition.Planning_Credits.Value.ToString("0.00") : "0.00")</span>
 			 </fieldset>
 			 </div>
 			 </div>

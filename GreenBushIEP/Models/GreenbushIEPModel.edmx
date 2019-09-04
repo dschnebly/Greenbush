@@ -2808,7 +2808,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Planning_GraduationMonth" Type="Int32" />
           <Property Name="Planning_GraduationYear" Type="Int32" />
           <Property Name="Planning_Completion" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Planning_Credits" Type="Int32" />
+          <Property Name="Planning_Credits" Type="Decimal" />
           <Property Name="Planning_BenefitKRS" Type="Boolean" Nullable="false" />
           <Property Name="Planning_ParentIntials" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Planning_ConsentPrior" Type="Boolean" Nullable="false" />

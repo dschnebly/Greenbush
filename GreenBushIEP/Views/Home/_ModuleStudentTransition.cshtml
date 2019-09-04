@@ -1356,7 +1356,7 @@
                                     <div class="col-md-3">
                                         <fieldset class="form-group">
                                             <label for="totalcredits">Total # of Credits required by district</label>
-                                            <input type="text" data-validate="true" name="totalcredits" id="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits)" />
+                                            <input type="text" data-validate="true" name="totalcredits" id="totalcredits" class="form-control" value="@(Model.transition.Planning_Credits != null ? Model.transition.Planning_Credits.Value.ToString("0.00") : "0.00") " />
                                         </fieldset>
                                     </div>
                                 </div>
