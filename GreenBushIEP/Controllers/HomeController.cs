@@ -2493,6 +2493,53 @@ namespace GreenbushIep.Controllers
             }
         }
 
+
+		[HttpPost]
+		public ActionResult SearchUserName(string username)
+		{
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			if (user != null && (!string.IsNullOrEmpty(username)))
+			{
+				string usernameVal = username.Trim();
+
+				if (user.RoleID == owner)
+				{
+					var districts = (from district in db.tblDistricts select district).Distinct().ToList();
+					var buildings = (from building in db.tblBuildings select building).Distinct().ToList();
+
+					var filterUsers = db.vw_UserList.Where(ul => ul.RoleID != owner)
+						.Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal)).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
+						.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+					
+					return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
+
+				}
+				else
+				{
+
+					var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
+					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == user.UserID select building).Distinct().ToList();
+
+					List<String> myDistricts = districts.Select(d => d.USD).ToList();
+					List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+					myBuildings.Add("0");
+
+					var filterUsers = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
+						.Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal))
+						.OrderBy(u => u.LastName)
+						.ThenBy(u => u.FirstName)
+						.ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+
+					return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
+				}
+
+			}
+			else
+			{
+				return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+			}
+		}
+
         public ActionResult SpedProReport()
         {
 			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);

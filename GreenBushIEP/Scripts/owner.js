@@ -2,6 +2,39 @@
     function init() {
 		$(".chosen-select").chosen({ width: "100%" });
 
+		$('.chosen-search input').autocomplete({
+			minLength: 3,
+			source: function (request, response) {
+				$.ajax({
+					type: 'POST',
+					url: "/Home/SearchUserName?username=" + request.term,
+					dataType: "json",
+					beforeSend: function () { $('ul.chzn-results').empty(); },
+					success: function (data) {
+
+						if (data.result) {
+
+							var options = $("#filterName");
+							options.empty(); //remove all child nodes
+							options.append($("<option />").val(-1).text("All Users"));
+							options.trigger("chosen:updated");
+
+							if (data.filterUsers.length > 0) {
+								response($.map(data.filterUsers, function (item) {
+									var username = item.LastName + ", " + item.FirstName;
+									if (item.MiddleName != null)
+										username += " " + item.MiddleName;
+									options.append($("<option />").val(item.UserID).text(username));
+								}));
+							}
+
+							options.trigger("chosen:updated");
+						}
+					}
+				});
+			}
+		});
+
         // attach Event
         // fires when a user clicks on the main new system user button
         $("#user-toggle .user-toggle-item button").on("click", function () {
@@ -29,7 +62,7 @@
 
 			$.ajax({
 			    type: 'POST',
-			    url: '/Manage/FilterUserList',
+				url: '/Manage/FilterOwnerUserList',
 			    dataType: 'json',
 			    data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
 			    async: false,

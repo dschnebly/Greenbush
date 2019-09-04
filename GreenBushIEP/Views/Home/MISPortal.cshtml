@@ -53,11 +53,7 @@
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-search"></span></span>					
 					 <select class="form-control chosen-select" name="filterName" id="filterName">
-                        <option value="-1">All Users</option>
-						  @foreach (var user in Model.members)
-						  {
-							   <option value=@user.UserID>@user.LastName, @user.FirstName @user.MiddleName  </option>
-						  }
+                        <option value="-1">All Users</option>						  
 					</select>
                 </div>
             </div>
