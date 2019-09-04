@@ -1151,7 +1151,7 @@
                                             <select name="studentRace" id="studentRace" class="form-control">
                                                 @foreach(tblRace race in Model.races)
                                                 {
-                                                    <option value="@(race.RaceCode)" selected="@(Model.selectedRace.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
+                                                    <option value="@(race.RaceCode)" selected="@(Model.selectedRace != null && Model.selectedRace.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
                                                 }
                                             </select>
                                         </div>

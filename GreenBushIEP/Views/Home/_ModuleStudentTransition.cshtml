@@ -249,6 +249,7 @@
         <strong class="moreinfo">Oh snap!</strong>
     </div>
     <input type="hidden" id="isRequired" value="@(Model.isRequired ? "Y" : "N")" />
+	<input type="hidden" id="isDOC" value="@(Model.isDOC ? "Y" : "N")" />
 
     <div class="row DOC @(!Model.isDOC ? "hidden" : String.Empty )">
 
@@ -1441,6 +1442,7 @@
 	$(document).ready(function () {
 		var canComplete = '@Model.canComplete' == "True" ? true : false;
 		var isReleaseBefore21 = '@isReleaseBefore21' == "True" ? true : false;
+		
 		var studentIEP
 		var navListItems = $('ul.setup-panel li a'),
 			allWells = $('.setup-content');
@@ -1648,21 +1650,25 @@
 	
 
         $('#saveFinish, #saveFinishDraft').on('click', function (e) {
+
 			
+
             // make sure occupation is filled out before saving.
-            if ($("#inline-occupation").text() == "Enter occupation" || $("#inline-occupation").text() == "Empty") {
-
-				if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-					$("#alertMessage .moreinfo").html('Please enter an occupation before saving.');
-					$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-						$("#alertMessage").slideUp(500);
-					});
-				}
+			if (($("#inline-occupation").text() == "Enter occupation" || $("#inline-occupation").text() == "Empty") && !isDOC() && $("#isStudentBirthdayAgeOver21").prop("checked") == false)
+			{
 				
-                e.stopPropagation();
-                $('#inline-occupation').editable('toggle');
+					if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+						$("#alertMessage .moreinfo").html('Please enter an occupation before saving.');
+						$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+							$("#alertMessage").slideUp(500);
+						});
+					}
 
-                return;
+					e.stopPropagation();
+					$('#inline-occupation').editable('toggle');
+
+					return;
+				
             }
 
             ////can not mark complete unless educational goal and employement goal are filled out
@@ -2547,17 +2553,18 @@
 	}
 	
 	function tabValidates() {
-		var validates = true;
-		var stepId = $('.wizard .nav-pills li.active a').attr('href');
-		var $inputs = $(stepId + " :input[data-validate='true']");
 
-		$inputs.each(function () {
-			var input = $(this);
-			var is_valid = input.val();		
-			var inputName = input.attr("name");
-			//var skip = inputName.indexOf("Default") !== -1
-		
-			//if (!skip) {
+		if (!isDOC() && $("#isStudentBirthdayAgeOver21").prop("checked") == false)
+		{
+			var validates = true;
+			var stepId = $('.wizard .nav-pills li.active a').attr('href');
+			var $inputs = $(stepId + " :input[data-validate='true']");
+
+			$inputs.each(function () {
+				var input = $(this);
+				var is_valid = input.val();
+				var inputName = input.attr("name");
+				
 				if (is_valid === "" || is_valid === null) {
 					if (input.is("select")) {
 						$(this).next().addClass('contact-tooltip');
@@ -2571,10 +2578,23 @@
 				else {
 					input.removeClass('contact-tooltip');
 				}
-			//}
-		});
+				
+			});
 
-		return validates;
-}
+			return validates;
+		}
+		else {
+			return true;
+		}
+	}
+
+	function isDOC() {
+		var isDocTransition = $("#isDOC").val();
+		var isDOC = false;
+
+		if (isDocTransition == "Y")
+			isDOC = true;
+		return isDOC;
+	}
 
 </script>

@@ -1408,15 +1408,20 @@ namespace GreenBushIEP.Controllers
 
                     tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
 
-                    transition.Planning_Facilitate = collection["isFocusFunctionalAchievement"] == "on" ? true : false;
-                    transition.Planning_Align = collection["isAlignStudentPostGoals"] == "on" ? true : false;
-                    DateTime graduationDate = (!string.IsNullOrEmpty(collection["graduationYear"])) ? Convert.ToDateTime(collection["graduationYear"]) : DateTime.Now;
+					if (transition == null)
+					{
+						transition = new tblTransition();
+					}
+
+					transition.Planning_Facilitate = collection["isFocusFunctionalAchievement"] == null ? false : collection["isFocusFunctionalAchievement"] == "on" ? true : false;
+					transition.Planning_Align = collection["isAlignStudentPostGoals"] == null ? false : collection["isAlignStudentPostGoals"] == "on" ? true : false;
+                    DateTime graduationDate = collection["graduationYear"] == null || collection["graduationYear"] == "0-00" ? DateTime.Now : (!string.IsNullOrEmpty(collection["graduationYear"])) ? Convert.ToDateTime(collection["graduationYear"]) : DateTime.Now;
                     transition.Planning_GraduationMonth = graduationDate.Month;
                     transition.Planning_GraduationYear = graduationDate.Year;
                     transition.Planning_Completion = (collection["planningCompletion"] != null) ? collection["planningCompletion"].ToString() : String.Empty;
-                    transition.Planning_Credits = (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
-                    transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == "on" ? true : false;
-                    transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == "on" ? true : false;
+                    transition.Planning_Credits = collection["totalcredits"] == null ? 0 : (!string.IsNullOrEmpty(collection["totalcredits"])) ? Convert.ToInt32(collection["totalcredits"]) : 0;
+                    transition.Planning_BenefitKRS = collection["isVocationalRehabiltiation"] == null ? false : collection["isVocationalRehabiltiation"] == "on" ? true : false;
+                    transition.Planning_ConsentPrior = collection["isConfidentailReleaseObtained"] == null ? false : collection["isConfidentailReleaseObtained"] == "on" ? true : false;
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : String.Empty;
                     transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;
                     transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
