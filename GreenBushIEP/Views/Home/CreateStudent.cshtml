@@ -1111,12 +1111,11 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="studentRace">Student Race</label>
-                                            <select name="studentRace" id="studentRace" class="form-control">
-                                                <option value="White">White</option>
-                                                <option value="Hawaiian">Native Hawaiian or Other Pacific Islander</option>
-                                                <option value="Asian">Asian</option>
-                                                <option value="African American">Black or African American</option>
-                                                <option value="Native America">American Indian or Alaska Native</option>
+											<select name="studentRace" id="studentRace" class="form-control">
+                                                @foreach(tblRace race in Model.races)
+                                                {
+                                                    <option value="@(race.RaceCode)">@(race.RaceDescription)</option>
+                                                }
                                             </select>
                                         </div>
                                         <div class="col-md-2">

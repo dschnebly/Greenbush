@@ -48,5 +48,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> ModifiedBy { get; set; }
         public string ExitNotes { get; set; }
         public string RaceCode { get; set; }
+        public Nullable<System.DateTime> ReEvalCompleted { get; set; }
     }
 }

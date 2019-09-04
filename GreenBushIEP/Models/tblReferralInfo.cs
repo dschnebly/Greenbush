@@ -49,6 +49,7 @@ namespace GreenBushIEP.Models
         public System.DateTime Update_Date { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
+        public string RaceCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblReferralRelationship> tblReferralRelationships { get; set; }

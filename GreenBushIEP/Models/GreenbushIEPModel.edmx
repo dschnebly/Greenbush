@@ -755,6 +755,7 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="RaceCode" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="tblReferralRelationships">
           <Key>
@@ -892,6 +893,7 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
           <Property Name="RaceCode" Type="char" MaxLength="1" />
+          <Property Name="ReEvalCompleted" Type="datetime" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -2740,6 +2742,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ExitNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="RaceCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ReEvalCompleted" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
@@ -2808,7 +2811,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Planning_GraduationMonth" Type="Int32" />
           <Property Name="Planning_GraduationYear" Type="Int32" />
           <Property Name="Planning_Completion" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Planning_Credits" Type="Decimal" />
+          <Property Name="Planning_Credits" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Planning_BenefitKRS" Type="Boolean" Nullable="false" />
           <Property Name="Planning_ParentIntials" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Planning_ConsentPrior" Type="Boolean" Nullable="false" />
@@ -3308,6 +3311,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ModifiedBy" Type="Int32" />
           <NavigationProperty Name="tblReferralRelationships" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRelationship" />
           <NavigationProperty Name="tblReferralRequests" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRequest" />
+          <Property Name="RaceCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblReferralRelationship">
           <Key>
@@ -4351,6 +4355,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblStudentInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentInfo">
               <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
                 <ScalarProperty Name="RaceCode" ColumnName="RaceCode" />
                 <ScalarProperty Name="ExitNotes" ColumnName="ExitNotes" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -4827,6 +4832,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblReferralInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralInfo">
               <MappingFragment StoreEntitySet="tblReferralInfo">
+                <ScalarProperty Name="RaceCode" ColumnName="RaceCode" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />

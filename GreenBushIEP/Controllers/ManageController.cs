@@ -306,7 +306,7 @@ namespace GreenBushIEP.Controllers
 				studentinfo.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
 				studentinfo.ParentLanguage = student.ParentLanguage;
 				studentinfo.StudentLanguage = student.StudentLanguage;
-				studentinfo.Race = student.Race;
+				studentinfo.RaceCode = student.RaceCode; //db.tblRaces.Where(r => r.RaceCode == student.RaceCode).FirstOrDefault().RaceDescription;
 				studentinfo.Ethicity = student.Ethicity;
 				studentinfo.Gender = student.Gender;
 				studentinfo.Grade = student.Grade;
@@ -352,6 +352,7 @@ namespace GreenBushIEP.Controllers
 			model.statusCode = db.tblStatusCodes.ToList();
 			model.grades = db.tblGrades.ToList();
 			model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where o.USD == student.AssignedUSD select d).Distinct().ToList();
+			model.races = db.tblRaces.ToList();
 
 			foreach (var d in model.districts)
 			{
@@ -590,8 +591,9 @@ namespace GreenBushIEP.Controllers
 					if (info != null)
 					{
 						info.County = collection["studentCounty"].ToString();
-						info.Grade = Convert.ToInt32(collection["studentGrade"]);
-						info.Race = collection["studentRace"].ToString();
+						info.Grade = Convert.ToInt32(collection["studentGrade"]);						
+						info.RaceCode = collection["studentRace"].ToString();
+						info.Race = db.tblRaces.Where(r => r.RaceCode == info.RaceCode).FirstOrDefault().RaceDescription;
 						info.Ethicity = collection["studentEthnic"].ToString();
 						info.StudentLanguage = collection["studentLanguage"].ToString();
 						info.ParentLanguage = collection["parentLanguage"].ToString();
@@ -798,6 +800,7 @@ namespace GreenBushIEP.Controllers
 			model.contacts.Add(new tblStudentRelationship() { Realtionship = "parent", State = "KS" });
 			model.statusCode = db.tblStatusCodes.ToList();
 			model.grades = db.tblGrades.ToList();
+			model.races = db.tblRaces.ToList();
 
 			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 		
@@ -828,7 +831,7 @@ namespace GreenBushIEP.Controllers
 						}
 					}
 
-					
+					string raceCodeVal = collection["studentRace"].ToString();
 					// Create New					
 					tblReferralInfo studentInfo = new tblReferralInfo()
 					{
@@ -845,8 +848,9 @@ namespace GreenBushIEP.Controllers
 						Zip = collection["studentZipCode"].ToString(),
 						County = collection["studentCounty"].ToString(),
 						Grade = Convert.ToInt32(collection["studentGrade"]),
-						Race = collection["studentRace"].ToString(),
-						Ethicity = collection["studentEthnic"].ToString(),
+						RaceCode = raceCodeVal,
+						Race = db.tblRaces.Where(r => r.RaceCode == raceCodeVal).FirstOrDefault().RaceDescription,
+					    Ethicity = collection["studentEthnic"].ToString(),
 						StudentLanguage = collection["studentLanguage"].ToString(),
 						ParentLanguage = collection["parentLanguage"].ToString(),						
 						CreatedBy = submitter.UserID,
@@ -1223,8 +1227,9 @@ namespace GreenBushIEP.Controllers
             model.contacts.Add(new tblStudentRelationship() { Realtionship = "parent", State = "KS" });
             model.statusCode = db.tblStatusCodes.ToList();
             model.grades = db.tblGrades.ToList();
+			model.races = db.tblRaces.ToList();
 
-            ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
             return View("~/Views/Home/CreateStudent.cshtml", model);
         }
@@ -1393,9 +1398,10 @@ namespace GreenBushIEP.Controllers
                     if (info != null)
                     {
                         info.County = collection["studentCounty"].ToString();
-                        info.Grade = Convert.ToInt32(collection["studentGrade"]);
-                        info.Race = collection["studentRace"].ToString();
-                        info.Ethicity = collection["studentEthnic"].ToString();
+                        info.Grade = Convert.ToInt32(collection["studentGrade"]);                        
+						info.RaceCode = collection["studentRace"].ToString();
+						info.Race = db.tblRaces.Where(r => r.RaceCode == info.RaceCode).FirstOrDefault().RaceDescription;
+						info.Ethicity = collection["studentEthnic"].ToString();
                         info.StudentLanguage = collection["studentLanguage"].ToString();
                         info.ParentLanguage = collection["parentLanguage"].ToString();
                         info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
