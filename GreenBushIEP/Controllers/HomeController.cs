@@ -1003,20 +1003,20 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
-				
-				if (theIEP.current.begin_date != null && !model.isDoc)
-				{
-					//check student age for transition plan using the begin date plus one year
-					var endDate = theIEP.current.begin_date.Value.AddYears(1);
-					model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-				}
-				else
-				{
-					//use current date
-					model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-				}
 
-			}
+                if (theIEP.current.begin_date != null && !model.isDoc)
+                {
+                    //check student age for transition plan using the begin date plus one year
+                    var endDate = theIEP.current.begin_date.Value.AddYears(1);
+                    model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                }
+                else
+                {
+                    //use current date
+                    model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                }
+
+            }
 
             return View(model);
         }
@@ -1076,57 +1076,57 @@ namespace GreenbushIep.Controllers
         }
 
 
-		[HttpGet]
-		[Authorize(Roles = mis + "," + admin + "," + teacher)]
-		public ActionResult UpdateIEPAnnualToActive(int stId, int IEPid)
-		{
+        [HttpGet]
+        [Authorize(Roles = mis + "," + admin + "," + teacher)]
+        public ActionResult UpdateIEPAnnualToActive(int stId, int IEPid)
+        {
 
-			tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.ACTIVE).FirstOrDefault();
-			tblIEP studentAnnualIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IEPid).FirstOrDefault();
+            tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IepStatus == IEPStatus.ACTIVE).FirstOrDefault();
+            tblIEP studentAnnualIEP = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IEPid).FirstOrDefault();
 
-			if(studentAnnualIEP == null)
-				return Json(new { Result = "error", Message = "No annual IEP found for this student."}, JsonRequestBehavior.AllowGet);
-			
-			if (studentActiveIEP == null)
-			{
-				
-				studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
-				studentAnnualIEP.IsActive = true;
+            if (studentAnnualIEP == null)
+                return Json(new { Result = "error", Message = "No annual IEP found for this student." }, JsonRequestBehavior.AllowGet);
 
-				try
-				{
-					db.SaveChanges();
-					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
-				}
-				catch (Exception e)
-				{
-					return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
-				}
-			}
-			else
-			{
-				// find the current active iep and make it inactive and change its status to DELETED
-				studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
-				studentActiveIEP.IsActive = false;
-			
-				studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
-				studentAnnualIEP.IsActive = true;
+            if (studentActiveIEP == null)
+            {
 
-				try
-				{
-					db.SaveChanges();
-					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
-				}
-				catch (Exception e)
-				{
-					return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
-				}
-			}
-		}
+                studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
+                studentAnnualIEP.IsActive = true;
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                // find the current active iep and make it inactive and change its status to DELETED
+                studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
+                studentActiveIEP.IsActive = false;
+
+                studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
+                studentAnnualIEP.IsActive = true;
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
-		// GET: Manage/UpdateIEPStatus/5
-		[HttpGet]
+        // GET: Manage/UpdateIEPStatus/5
+        [HttpGet]
         [Authorize(Roles = mis + ", " + admin + "," + teacher)]
         public ActionResult UpdateIEPStatusToActive(int stId, int IEPid)
         {
@@ -1192,8 +1192,8 @@ namespace GreenbushIep.Controllers
             if (studehtIEP != null)
             {
                 studehtIEP.IsActive = false;
-				studehtIEP.IepStatus = IEPStatus.ARCHIVE;
-				db.SaveChanges();
+                studehtIEP.IepStatus = IEPStatus.ARCHIVE;
+                db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "IEP is archived." }, JsonRequestBehavior.AllowGet);
             }
@@ -1290,21 +1290,21 @@ namespace GreenbushIep.Controllers
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 foreach (tblGoal goal in goals)
                 {
-					var studentGoal = new StudentGoal(goal.goalID);
+                    var studentGoal = new StudentGoal(goal.goalID);
 
-					model.studentGoals.Add(studentGoal);
-					var benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goal.goalID);
+                    model.studentGoals.Add(studentGoal);
+                    var benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goal.goalID);
 
-					foreach (tblGoalBenchmark benchmark in benchmarks)
-					{
-						var shortBenchmarks = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID).ToList();
-						studentGoal.shortTermBenchmarkMethods.AddRange(shortBenchmarks);
+                    foreach (tblGoalBenchmark benchmark in benchmarks)
+                    {
+                        var shortBenchmarks = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID).ToList();
+                        studentGoal.shortTermBenchmarkMethods.AddRange(shortBenchmarks);
 
-					}
+                    }
 
-				}
+                }
 
-				if (!isReadOnly)
+                if (!isReadOnly)
                     return PartialView("_ModuleStudentGoals", model);
                 else
                     return PartialView("ActiveIEP/_StudentGoals", model);
@@ -1414,7 +1414,7 @@ namespace GreenbushIep.Controllers
                 return Json(new { Result = "error", Message = "The calendar for this district has not been created. Please create the calendar before you proceed." }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { Result = "success",  Message = "Nicely Done" }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = "success", Message = "Nicely Done" }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1487,6 +1487,33 @@ namespace GreenbushIep.Controllers
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult BuildingHasCalendars(int UserID, string BuildingID)
+        {
+            int lastYear = DateTime.Now.AddYears(-1).Year;
+            int thirdYear = DateTime.Now.AddYears(2).Year;
+            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == UserID).FirstOrDefault();
+
+            if (studentInfo != null)
+            {
+                List<tblCalendar> Calendar = db.tblCalendars.Where(c => c.BuildingID == BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
+                if (Calendar.Count > 0)
+                {
+                    JsonResult Holidays = Json(Calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
+                    var whatever = Calendar.Where(c => c.Year != 0).Distinct().ToList();
+                    //var isPossibleLastFiscalDay = Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).ToList();
+                    //tblCalendar lastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+
+                    return Json(new { success = true, buildingCalendar = Calendar, holidays = Holidays, buildingFiscalYears = 0 }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = true, buildingCalendar = 0, holidays = 0, buildingFiscalYears = 0 }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -1589,9 +1616,9 @@ namespace GreenbushIep.Controllers
             int StudentSerivceId = Convert.ToInt32(collection["StudentSerivceId"]);
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
-			int iepId = Convert.ToInt32(collection["iepId"]);
+            int iepId = Convert.ToInt32(collection["iepId"]);
 
-			tblService service;
+            tblService service;
 
             //check dates
             bool isValidStartDate = false;
@@ -1744,35 +1771,35 @@ namespace GreenbushIep.Controllers
             return Json(new { Result = "error", Message = "Unknown Error Occured." }, JsonRequestBehavior.AllowGet);
         }
 
-		[HttpGet]
-		[Authorize]
-		public ActionResult GetLastFiscalDay(int studentId, string fyYear)
-		{
-			var lastDay = GetLastFiscalCalendarDay(studentId, fyYear);
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetLastFiscalDay(int studentId, string fyYear)
+        {
+            var lastDay = GetLastFiscalCalendarDay(studentId, fyYear);
 
-			if (lastDay != null)				
-				return Json(new { Result = "success", Value = lastDay.calendarDate.Value.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
-			else
-				return Json(new { Result = "success", Value = "" }, JsonRequestBehavior.AllowGet);
-		}
+            if (lastDay != null)
+                return Json(new { Result = "success", Value = lastDay.calendarDate.Value.ToString("MM/dd/yyyy") }, JsonRequestBehavior.AllowGet);
+            else
+                return Json(new { Result = "success", Value = "" }, JsonRequestBehavior.AllowGet);
+        }
 
-		private tblCalendar GetLastFiscalCalendarDay(int studentId, string fyYear)
-		{
-			tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
-			tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+        private tblCalendar GetLastFiscalCalendarDay(int studentId, string fyYear)
+        {
+            tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
-			int lastYear = 0;
-			Int32.TryParse(fyYear, out lastYear);
+            int lastYear = 0;
+            Int32.TryParse(fyYear, out lastYear);
 
-			List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
+            List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year == lastYear).OrderBy(c => c.Year).ToList();
 
-			var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+            var lastDay = calendar.Where(c => c.canHaveClass && c.Year == lastYear && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
-			return lastDay;
+            return lastDay;
 
-		}
+        }
 
-		[HttpGet]
+        [HttpGet]
         [Authorize]
         public ActionResult StudentTransition(int studentId, int IEPid)
         {
@@ -1922,10 +1949,10 @@ namespace GreenbushIep.Controllers
                     //default value
                     model.DistrictAssessment_GradeNotAssessed = true;
                     model.StateAssessment_RequiredCompleted = true;
-					model.Parental_CopyIEP_flag = true;
-					model.Parental_RightsBook_flag = true;
+                    model.Parental_CopyIEP_flag = true;
+                    model.Parental_RightsBook_flag = true;
 
-				}
+                }
             }
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
@@ -1985,9 +2012,9 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentPlanning(FormCollection collection)
         {
             var studentId = Convert.ToInt32(collection["student.UserID"]);
-			int iepId =Convert.ToInt32(collection["iepId"]);
+            int iepId = Convert.ToInt32(collection["iepId"]);
 
-			StudentPlan thePlan = new StudentPlan(studentId);
+            StudentPlan thePlan = new StudentPlan(studentId);
 
             // reset all the no concern flags
             thePlan.AcademicNoConcern = false;
@@ -2054,28 +2081,28 @@ namespace GreenbushIep.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
-			var forms = GetForms();
+            var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
-			if (form != null)
-			{
-				viewModel.fileDesc = form.Text;				
-			}
+            if (form != null)
+            {
+                viewModel.fileDesc = form.Text;
+            }
 
-			StudentLegalView fileViewModel = new StudentLegalView()
-			{
-				student = student,
-				teacher = teacher,
-				studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
-				contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-				studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
-				transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
-				academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
-				socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
-				reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
-				math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
-			    written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
-		};
+            StudentLegalView fileViewModel = new StudentLegalView()
+            {
+                student = student,
+                teacher = teacher,
+                studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
+                contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
+                studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
+                transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
+                academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
+                socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
+                reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
+                math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
+                written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
+            };
 
             if (fileViewModel.studentInfo != null)
             {
@@ -2088,10 +2115,10 @@ namespace GreenbushIep.Controllers
                     fileViewModel.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == fileViewModel.studentInfo.AssignedUSD select contact).FirstOrDefault();
                 }
 
-				fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
+                fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
 
 
-			}
+            }
 
             var lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
             if (lastReEval != null)
@@ -2099,14 +2126,14 @@ namespace GreenbushIep.Controllers
                 fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();
             }
 
-			if (fileViewModel.studentInfo != null && fileViewModel.studentInfo.AssignedUSD != null)
-			{
-				var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
-				fileViewModel.districtName = district != null ? district.DistrictName : "";
-			}
+            if (fileViewModel.studentInfo != null && fileViewModel.studentInfo.AssignedUSD != null)
+            {
+                var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
+                fileViewModel.districtName = district != null ? district.DistrictName : "";
+            }
 
-			
-			viewModel.fileModel = fileViewModel;
+
+            viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -2152,13 +2179,13 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "IEP Team Considerations", Value = "IEPTeamConsider" });
             forms.Add(new SelectListItem { Text = "Parent Consent for Release of Information and Medicaid Reimbursement", Value = "ParentConsentMedicaid" });
             forms.Add(new SelectListItem { Text = "Physician Script", Value = "PhysicianScript" });
-			forms.Add(new SelectListItem { Text = "Team Evaluation Report", Value = "TeamEvaluation" });
-			forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
-			forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
+            forms.Add(new SelectListItem { Text = "Team Evaluation Report", Value = "TeamEvaluation" });
+            forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
+            forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
 
 
-			return forms.OrderBy(x => x.Text).ToList();
+            return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]
@@ -2263,13 +2290,13 @@ namespace GreenbushIep.Controllers
                         theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
                         theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
 
-						if (theIEP.studentGoalBenchmarks.Any())
-						{
-							var benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
-							theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
-						}
+                        if (theIEP.studentGoalBenchmarks.Any())
+                        {
+                            var benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
+                            theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
+                        }
 
-					}
+                    }
 
                     theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
@@ -2401,8 +2428,8 @@ namespace GreenbushIep.Controllers
                 throw new EmailException("There was a problem when emailing the new user password.", e);
             }
 
-			return RedirectToAction("Portal", "Home");
-			
+            return RedirectToAction("Portal", "Home");
+
         }
 
         public ActionResult MySettings()
@@ -2494,277 +2521,277 @@ namespace GreenbushIep.Controllers
         }
 
 
-		[HttpPost]
-		public ActionResult SearchUserName(string username)
-		{
-			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-			if (user != null && (!string.IsNullOrEmpty(username)))
-			{
-				string usernameVal = username.Trim();
+        [HttpPost]
+        public ActionResult SearchUserName(string username)
+        {
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (user != null && (!string.IsNullOrEmpty(username)))
+            {
+                string usernameVal = username.Trim();
 
-				if (user.RoleID == owner)
-				{
-					var districts = (from district in db.tblDistricts select district).Distinct().ToList();
-					var buildings = (from building in db.tblBuildings select building).Distinct().ToList();
+                if (user.RoleID == owner)
+                {
+                    var districts = (from district in db.tblDistricts select district).Distinct().ToList();
+                    var buildings = (from building in db.tblBuildings select building).Distinct().ToList();
 
-					var filterUsers = db.vw_UserList.Where(ul => ul.RoleID != owner)
-						.Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal)).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
-						.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
-					
-					return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
+                    var filterUsers = db.vw_UserList.Where(ul => ul.RoleID != owner)
+                        .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal)).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
+                        .OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
-				}
-				else
-				{
+                    return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
 
-					var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
-					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == user.UserID select building).Distinct().ToList();
+                }
+                else
+                {
 
-					List<String> myDistricts = districts.Select(d => d.USD).ToList();
-					List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
-					myBuildings.Add("0");
+                    var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
+                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == user.UserID select building).Distinct().ToList();
 
-					var filterUsers = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
-						.Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal))
-						.OrderBy(u => u.LastName)
-						.ThenBy(u => u.FirstName)
-						.ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                    List<String> myDistricts = districts.Select(d => d.USD).ToList();
+                    List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+                    myBuildings.Add("0");
 
-					return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
-				}
+                    var filterUsers = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
+                        .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal))
+                        .OrderBy(u => u.LastName)
+                        .ThenBy(u => u.FirstName)
+                        .ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-			}
-			else
-			{
-				return Json(new { result = false }, JsonRequestBehavior.AllowGet);
-			}
-		}
+                    return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            else
+            {
+                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public ActionResult SpedProReport()
         {
-			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-			var canReset =  (user != null && (user.RoleID == owner || user.RoleID == mis)) ? true : false;
-			ViewBag.canReset = canReset;
-			return View("~/Reports/SpedPro/Index.cshtml");
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            var canReset = (user != null && (user.RoleID == owner || user.RoleID == mis)) ? true : false;
+            ViewBag.canReset = canReset;
+            return View("~/Reports/SpedPro/Index.cshtml");
         }
 
-		[HttpPost]
-		public ActionResult GetSpedProStudentList(int fiscalYear)
-		{
-			string iepStatus = IEPStatus.ACTIVE;
-			List<tblUser> studentsList = new List<tblUser>();
-			tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+        [HttpPost]
+        public ActionResult GetSpedProStudentList(int fiscalYear)
+        {
+            string iepStatus = IEPStatus.ACTIVE;
+            List<tblUser> studentsList = new List<tblUser>();
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-			if (MIS != null)
-			{
-				var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;			
-				var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
-				List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
-				
-				var query = (from iep in db.tblIEPs
-							 join student in db.tblUsers
-								 on iep.UserID equals student.UserID
-							 join services in db.tblServices
-								 on iep.IEPid equals services.IEPid
-							 join building in db.tblBuildingMappings
-								 on student.UserID equals building.UserID
-							 where
-							 iep.IepStatus == iepStatus
-							 && (student.Archive == null || student.Archive == false)
-							 && services.SchoolYear == fiscalYear
-							 && (iep.FiledOn != null)
-							 && services.ServiceCode != "NS"
-							 && myBuildings.Contains(building.BuildingID)
-							 select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
+            if (MIS != null)
+            {
+                var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+                var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
+                List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
 
-				if (query.Count() > 0)
-				{
-					studentsList.AddRange(query.Select(o => o.student));					
-				}
-			}
+                var query = (from iep in db.tblIEPs
+                             join student in db.tblUsers
+                                 on iep.UserID equals student.UserID
+                             join services in db.tblServices
+                                 on iep.IEPid equals services.IEPid
+                             join building in db.tblBuildingMappings
+                                 on student.UserID equals building.UserID
+                             where
+                             iep.IepStatus == iepStatus
+                             && (student.Archive == null || student.Archive == false)
+                             && services.SchoolYear == fiscalYear
+                             && (iep.FiledOn != null)
+                             && services.ServiceCode != "NS"
+                             && myBuildings.Contains(building.BuildingID)
+                             select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
 
-			return Json(new { result = true, students = studentsList }, JsonRequestBehavior.AllowGet);
-		}
+                if (query.Count() > 0)
+                {
+                    studentsList.AddRange(query.Select(o => o.student));
+                }
+            }
 
-		[Authorize]
-		public ActionResult DownloadSpedPro(FormCollection collection)
-		{
-			bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
-			string fiscalYearStr = collection["fiscalYear"];			
-			int fiscalYear = 0;
-			Int32.TryParse(fiscalYearStr, out fiscalYear);
-			string studentResetList = collection["studentReset"];
+            return Json(new { result = true, students = studentsList }, JsonRequestBehavior.AllowGet);
+        }
 
-			tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-			if (MIS != null)
-			{
-				var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
-				ViewBag.canReset = canReset;
+        [Authorize]
+        public ActionResult DownloadSpedPro(FormCollection collection)
+        {
+            bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
+            string fiscalYearStr = collection["fiscalYear"];
+            int fiscalYear = 0;
+            Int32.TryParse(fiscalYearStr, out fiscalYear);
+            string studentResetList = collection["studentReset"];
 
-				var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
-				List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
-				
-				string iepStatus = IEPStatus.ACTIVE;
-				var exportErrors = new List<ExportErrorView>();
+            tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (MIS != null)
+            {
+                var canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+                ViewBag.canReset = canReset;
 
+                var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
+                List<String> myBuildings = buildings.Select(b => b.BuildingID).ToList();
 
-				if (isReset && !string.IsNullOrEmpty(studentResetList))
-				{
-					
-					try
-					{
-						var userIds = Array.ConvertAll(studentResetList.Split(','), int.Parse).ToList();
-						
-						var resetQuery = (from iep in db.tblIEPs
-										  join student in db.tblUsers
-											  on iep.UserID equals student.UserID
-										  join services in db.tblServices
-											  on iep.IEPid equals services.IEPid
-										  join building in db.tblBuildingMappings
-											  on student.UserID equals building.UserID
-										  where
-										  iep.IepStatus == iepStatus
-										  && (student.Archive == null || student.Archive == false)
-										  && services.SchoolYear == fiscalYear
-										  && (iep.FiledOn != null)
-										  && services.ServiceCode != "NS"
-										  && myBuildings.Contains(building.BuildingID)
-										  && userIds.Contains(student.UserID)
-										  select iep).Distinct();
-
-						foreach (var item in resetQuery)
-						{
-							item.FiledOn = null;
-						}
-
-						db.SaveChanges();
-
-						ViewBag.message = "The IEPs were successfully reset!";
-					}
-					catch(Exception e)
-					{
-						exportErrors.Add(new ExportErrorView()
-						{
-							UserID = "",
-							Description = e.Message
-						});
-
-						ViewBag.errors = exportErrors;
-					}
-
-					return View("~/Reports/SpedPro/Index.cshtml");
-
-				}
+                string iepStatus = IEPStatus.ACTIVE;
+                var exportErrors = new List<ExportErrorView>();
 
 
-				var query = (from iep in db.tblIEPs
-							 join student in db.tblUsers
-								 on iep.UserID equals student.UserID
-							 join services in db.tblServices
-								 on iep.IEPid equals services.IEPid
-							 join building in db.tblBuildingMappings
-							     on student.UserID equals building.UserID
-							 where
-							 iep.IepStatus == iepStatus
-							 && (student.Archive == null || student.Archive == false)
-							 && services.SchoolYear == fiscalYear
-							 && (services.FiledOn == null || iep.FiledOn == null)
-							 && services.ServiceCode != "NS"
-							 && myBuildings.Contains(building.BuildingID)
-							 select new { iep, student }).Distinct().ToList();
+                if (isReset && !string.IsNullOrEmpty(studentResetList))
+                {
 
-				if (query.Count() > 0)
-				{
-					StringBuilder sb = new StringBuilder();
+                    try
+                    {
+                        var userIds = Array.ConvertAll(studentResetList.Split(','), int.Parse).ToList();
 
-					foreach (var item in query)
-					{
-						IEP theIEP = new IEP()
-						{
-							current = item.iep,
-							studentFirstName = string.Format("{0}", item.student.FirstName),
-							studentLastName = string.Format("{0}", item.student.LastName),
-						};
+                        var resetQuery = (from iep in db.tblIEPs
+                                          join student in db.tblUsers
+                                              on iep.UserID equals student.UserID
+                                          join services in db.tblServices
+                                              on iep.IEPid equals services.IEPid
+                                          join building in db.tblBuildingMappings
+                                              on student.UserID equals building.UserID
+                                          where
+                                          iep.IepStatus == iepStatus
+                                          && (student.Archive == null || student.Archive == false)
+                                          && services.SchoolYear == fiscalYear
+                                          && (iep.FiledOn != null)
+                                          && services.ServiceCode != "NS"
+                                          && myBuildings.Contains(building.BuildingID)
+                                          && userIds.Contains(student.UserID)
+                                          select iep).Distinct();
 
-						if (theIEP != null && theIEP.current != null)
-						{
-							var studentDetails = new StudentDetailsPrintViewModel();
-							theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.ServiceCode != "NS").ToList(); //exclude servies marked as No Service
-							theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
+                        foreach (var item in resetQuery)
+                        {
+                            item.FiledOn = null;
+                        }
 
-							tblStudentInfo info = null;
-							if (student != null)
-							{
-								info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
-								tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-								tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-							}
+                        db.SaveChanges();
 
-							if (info != null && theIEP.current != null)
-							{
-								var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-								var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-								var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-								var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+                        ViewBag.message = "The IEPs were successfully reset!";
+                    }
+                    catch (Exception e)
+                    {
+                        exportErrors.Add(new ExportErrorView()
+                        {
+                            UserID = "",
+                            Description = e.Message
+                        });
 
-								studentDetails.student = info;
-								studentDetails.gender = info.Gender;
-								studentDetails.building = studentBuilding;
-								studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-								studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
-								studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
-								studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode;
-								studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
-								studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-								studentDetails.assignChildCount = studentUSD.KSDECode;
-							}
+                        ViewBag.errors = exportErrors;
+                    }
 
-							theIEP.current.FiledOn = DateTime.Now;
-							theIEP.studentDetails = studentDetails;
-						}
+                    return View("~/Reports/SpedPro/Index.cshtml");
 
-						var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
-
-						if (errors.Count > 0)
-						{
-							exportErrors.AddRange(errors);
-
-						}
-
-					}//end foreach
+                }
 
 
-					if (exportErrors.Count == 0)
-					{
-						//on save if no errors
-						db.SaveChanges();
+                var query = (from iep in db.tblIEPs
+                             join student in db.tblUsers
+                                 on iep.UserID equals student.UserID
+                             join services in db.tblServices
+                                 on iep.IEPid equals services.IEPid
+                             join building in db.tblBuildingMappings
+                                 on student.UserID equals building.UserID
+                             where
+                             iep.IepStatus == iepStatus
+                             && (student.Archive == null || student.Archive == false)
+                             && services.SchoolYear == fiscalYear
+                             && (services.FiledOn == null || iep.FiledOn == null)
+                             && services.ServiceCode != "NS"
+                             && myBuildings.Contains(building.BuildingID)
+                             select new { iep, student }).Distinct().ToList();
 
-						Response.Clear();
-						Response.ClearHeaders();
+                if (query.Count() > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
 
-						Response.AppendHeader("Content-Length", sb.Length.ToString());
-						Response.ContentType = "text/plain";
-						Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
+                    foreach (var item in query)
+                    {
+                        IEP theIEP = new IEP()
+                        {
+                            current = item.iep,
+                            studentFirstName = string.Format("{0}", item.student.FirstName),
+                            studentLastName = string.Format("{0}", item.student.LastName),
+                        };
 
-						Response.Write(sb);
-						Response.End();
-					}
-					else
-					{
-						ViewBag.errors = exportErrors;
-					}
-				}
-				else
-				{
-					exportErrors.Add(new ExportErrorView()
-					{
-						UserID = "",
-						Description = "No data found to export."
-					});
+                        if (theIEP != null && theIEP.current != null)
+                        {
+                            var studentDetails = new StudentDetailsPrintViewModel();
+                            theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.ServiceCode != "NS").ToList(); //exclude servies marked as No Service
+                            theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
 
-					ViewBag.errors = exportErrors;
-				}
-			}
+                            tblStudentInfo info = null;
+                            if (student != null)
+                            {
+                                info = db.tblStudentInfoes.Where(i => i.UserID == item.iep.UserID).FirstOrDefault();
+                                tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+                                tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
+                            }
+
+                            if (info != null && theIEP.current != null)
+                            {
+                                var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+                                var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+                                var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+                                var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+
+                                studentDetails.student = info;
+                                studentDetails.gender = info.Gender;
+                                studentDetails.building = studentBuilding;
+                                studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+                                studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyCode : "";
+                                studentDetails.parentLang = (string.IsNullOrEmpty(info.ParentLanguage)) ? "EN" : info.ParentLanguage;
+                                studentDetails.primaryDisability = (info.Primary_DisabilityCode == "ND") ? string.Empty : info.Primary_DisabilityCode;
+                                studentDetails.secondaryDisability = (info.Secondary_DisabilityCode == "ND") ? string.Empty : info.Secondary_DisabilityCode;
+                                studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+                                studentDetails.assignChildCount = studentUSD.KSDECode;
+                            }
+
+                            theIEP.current.FiledOn = DateTime.Now;
+                            theIEP.studentDetails = studentDetails;
+                        }
+
+                        var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+
+                        if (errors.Count > 0)
+                        {
+                            exportErrors.AddRange(errors);
+
+                        }
+
+                    }//end foreach
+
+
+                    if (exportErrors.Count == 0)
+                    {
+                        //on save if no errors
+                        db.SaveChanges();
+
+                        Response.Clear();
+                        Response.ClearHeaders();
+
+                        Response.AppendHeader("Content-Length", sb.Length.ToString());
+                        Response.ContentType = "text/plain";
+                        Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
+
+                        Response.Write(sb);
+                        Response.End();
+                    }
+                    else
+                    {
+                        ViewBag.errors = exportErrors;
+                    }
+                }
+                else
+                {
+                    exportErrors.Add(new ExportErrorView()
+                    {
+                        UserID = "",
+                        Description = "No data found to export."
+                    });
+
+                    ViewBag.errors = exportErrors;
+                }
+            }
 
             return View("~/Reports/SpedPro/Index.cshtml");
         }
@@ -2795,12 +2822,12 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-            
-			var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
 
-			var gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
-						
-			if (gradeCode == "")
+            var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
+
+            var gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
+
+            if (gradeCode == "")
             {
                 errors.Add(new ExportErrorView()
                 {
@@ -2885,26 +2912,26 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
             }
 
-			string serviceEndDateOverride = "";
+            string serviceEndDateOverride = "";
 
-			//if exit data exists
-			if (studentIEP.studentDetails.student.ExitDate.HasValue)
-			{
-				//find last available calendar data before this date
-				var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
+            //if exit data exists
+            if (studentIEP.studentDetails.student.ExitDate.HasValue)
+            {
+                //find last available calendar data before this date
+                var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
 
-				if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
-				{
-					serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
-				}
-				else
-				{
-					serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
-				}
-			}
+                if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
+                {
+                    serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
+                }
+                else
+                {
+                    serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
+                }
+            }
 
 
-			int count = 1;
+            int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
@@ -2962,7 +2989,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
 
                 //14 Service end Date
-                sb.AppendFormat("{0}\t", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString(): serviceEndDateOverride);
+                sb.AppendFormat("{0}\t", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString() : serviceEndDateOverride);
 
                 //15 minutes
                 sb.AppendFormat("{0}\t", service.Minutes);
@@ -3043,11 +3070,11 @@ namespace GreenbushIep.Controllers
                     studentName = string.Format("{0} {1}", user.FirstName, user.LastName);
                 }
 
-				if (formName == "Parents Rights-English")
-					studentName = string.Empty;
+                if (formName == "Parents Rights-English")
+                    studentName = string.Empty;
 
 
-				bool isDraft = false;
+                bool isDraft = false;
 
                 var iepObj = db.tblIEPs.Where(o => o.IEPid == iepId).FirstOrDefault();
                 if (iepObj != null)
