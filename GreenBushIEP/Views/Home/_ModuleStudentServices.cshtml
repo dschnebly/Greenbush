@@ -112,8 +112,8 @@
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
                     <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
             <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
@@ -353,8 +353,6 @@
                                                     <label for="fiscalYear">Attendance Building</label>
                                                     <div class="form-group">
                                                         <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
-                                                            <option value="-1">- Select a Building -</option>
-
                                                             @if (Model.attendanceBuildings.Count > 0)
                                                             {
                                                                 foreach (var building in Model.attendanceBuildings)
@@ -891,9 +889,9 @@
 
                             $(window).trigger("saving.bs.modal");
 
-                            //setTimeout(function () {
-                            //    $('#moduleSection').modal('hide');
-                            //}, 1200);
+                            setTimeout(function () {
+                                $('#moduleSection').modal('hide');
+                            }, 1200);
                         }
                         else {
                             _showAlert(data.Message, false);
@@ -930,13 +928,13 @@
                     }
                 });
 
-                //if (canSave) {
-                //    $(window).trigger("saving.bs.modal");
+                if (canSave) {
+                    $(window).trigger("saving.bs.modal");
 
-                //    setTimeout(function () {
-                //        $('#moduleSection').modal('hide');
-                //    }, 1200);
-                //}
+                    setTimeout(function () {
+                        $('#moduleSection').modal('hide');
+                    }, 1200);
+                }
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -1010,14 +1008,14 @@
                                         $(this).fadeTo("slow", 0, null).hide();
                                     });
 
-                                    _showAlert("This building doesn't have a calendar. Would you like to create one?", false);
+                                    _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                                 }
                             } else {
                                 serviceContainer.find(".serviceFadeIn").each(function () {
                                     $(this).fadeTo("slow", 0, null).hide();
                                 });
 
-                                _showAlert("This building doesn't have a calendar. Would you like to create one?", false);
+                                _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                             }
                         },
                         error: function (data) {

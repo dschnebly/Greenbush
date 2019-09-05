@@ -1453,7 +1453,7 @@ namespace GreenbushIep.Controllers
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = providers;
                     model.serviceLocations = db.tblLocations.ToList();
-                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
+                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).Distinct().ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
@@ -1465,7 +1465,7 @@ namespace GreenbushIep.Controllers
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
                     model.serviceLocations = db.tblLocations.ToList();
-                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
+                    model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).Distinct().ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
@@ -1628,6 +1628,7 @@ namespace GreenbushIep.Controllers
                 {
                     service = new tblService();
                     service.IEPid = iep.IEPid;
+                    service.BuildingID = collection["attendanceBuilding"].ToString();
                     service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
                     service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
                     service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
@@ -1670,6 +1671,7 @@ namespace GreenbushIep.Controllers
                 else // exsisting service
                 {
                     service = db.tblServices.Where(s => s.ServiceID == StudentSerivceId).FirstOrDefault();
+                    service.BuildingID = collection["attendanceBuilding"].ToString();
                     service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
                     service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
                     service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
