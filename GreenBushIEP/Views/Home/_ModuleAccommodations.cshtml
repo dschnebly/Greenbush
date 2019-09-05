@@ -60,7 +60,7 @@
                 @Html.HiddenFor(model => model.AccommodationID)
                 @Html.HiddenFor(model => model.IEPid)
                 @Html.HiddenFor(model => model.StudentId)
-                @Html.HiddenFor(model => model.Completed)
+                @Html.HiddenFor(model => model.Completed, new { @class="isAccomComplete" })
                 @Html.AntiForgeryToken()
 
                 <div class="col-md-12">
@@ -183,6 +183,7 @@
 </div>
 </div> <!--end print-->
 <script>
+	
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -248,7 +249,7 @@
                 if (data.Result == "success") {
                     $(".completed-loader").fadeOut();
 
-                    $('.oneStudentGoal').not('#defaultGoal').each(function () {
+                    $('.oneStudentGoal').not('.hidden').each(function () {
                         $(this).find("a i.isGoalCompleted").addClass("thisGoalNotCompleted");
                         $(this).find("input[name=Completed]").val(false);
                     });
@@ -289,65 +290,120 @@
                     e.target.title = '';
                     e.target.parentNode.classList.remove('has-error');
                 }
-            });
+			});
+
             $(this).find(".panel-title a").on("click", function () {
                 $(".panel-collapse").each(function () {
                     $(this).collapse('hide');
                 });
-            });
-            $(this).find(".deleteGoal").on("click", function () {
-                var dataId = $(this).attr('accom-id');
+			});
 
-                if (confirm("Do you really want to delete this Accommodation/Modification?")) {
-                    var accommodation = $(this).parents('.oneStudentGoal');
-                    var accommodationId = accommodation.find('input:hidden:first').prop("value");
+			$(this).find(".deleteGoal").on("click", function () {
+				var dataId = $(this).attr('accom-id');
 
-                    if (accommodationId == 0) {
-                        return accommodation.remove();
-                    }
+				if (confirm("Do you really want to delete this Accommodation/Modification?")) {
+					var accommodation = $(this).parents('.oneStudentGoal');
+					var accommodationId = accommodation.find('input:hidden:first').prop("value");
 
-                    $.post('/Home/DeleteAccommodation', { accomId: dataId }, function (response) {
-                        if (response.result != undefined && response.result) {
+					if (accommodationId == 0) {
+						return accommodation.remove();
+					}
 
-                            accommodation.remove();
+					$.post('/Home/DeleteAccommodation', { accomId: dataId }, function (response) {
+						if (response.result != undefined && response.result) {
 
-                            $(window).trigger("deleting.bs.modal");
-                        }
-                        else {
-                            _showAlert("There was a problem deleting the Accommodation or Modification.", false);
-                        }
-                    });
-                }
-            })
-            $(this).find(".saveCompletedGoal").on('click', function (e) {
-                if ($(this).closest('.oneStudentGoal').find('.accommodationDescription').val().length == 0) {
-                    alert('The following field is required not to be empty: Description');
-                    return false;
-                }
+							accommodation.remove();
 
-                if ($(this).closest('.oneStudentGoal').find('.accommodationFrequency').val().length == 0) {
-                    alert('The following field is required not to be empty: Frequency');
-                    return false;
-                }
+							$(window).trigger("deleting.bs.modal");
+						}
+						else {
+							_showAlert("There was a problem deleting the Accommodation or Modification.", false);
+						}
+					});
+				}
+			});
 
-                if ($(this).closest('.oneStudentGoal').find('.accommodationLocation').val().length == 0) {
-                    alert('The following field is required not to be empty: Location');
-                    return false;
-                }
+			$(this).find(".saveCompletedGoal").on('click', function (e) {
 
-                if ($(this).closest('.oneStudentGoal').find('.accommodationDuration').val().length == 0) {
-                    alert('The following field is required not to be empty: Duration');
-                    return false;
-                }
+				var currentForm = $(this).closest("form").find('.panel-collapse');
+				var canSave = true;
+				//need to save and complete all 
+				$.each($(".oneStudentGoal").not(".hidden"), function () {
 
-                if ($(this).closest('.oneStudentGoal').find('input[name="AnticipatedEndDate"]').val().length == 0) {
-                    alert('The following field is required not to be empty: Anticipated End Date');
-                    return false;
-                }
+					var accommTitle = $(this).closest('.oneStudentGoal').find('.studentGoalLabel').text();
+					var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
 
-                $(this).closest("form").find("input[name='Completed']").val(true);
-                $(this).prev().trigger(event.type);
-            });
+					var desc = $(this).closest('.oneStudentGoal').find('.accommodationDescription');
+					var freq = $(this).closest('.oneStudentGoal').find('.accommodationFrequency');
+					var location = $(this).closest('.oneStudentGoal').find('.accommodationLocation');
+					var duration = $(this).closest('.oneStudentGoal').find('.accommodationDuration');
+					var endDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedEndDate"]');
+					var startDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedStartDate"]');
+					var isComplete = $(this).closest('.oneStudentGoal').find("input[name=Completed]");
+
+					if (desc.val().length == 0) {					
+						toggleButton.trigger('click');
+						desc.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Description');
+						return canSave = false;
+					}
+
+					if (freq.val().length == 0) {
+						toggleButton.trigger('click');
+						freq.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Frequency');
+						return canSave = false;
+					}
+
+					if (location.val().length == 0) {
+						toggleButton.trigger('click');
+						location.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Location');
+						return canSave = false;
+					}
+
+					if (duration.val().length == 0) {
+						toggleButton.trigger('click');
+						duration.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Duration');
+						return canSave = false;
+					}
+
+					if (startDate.val().length == 0) {
+						toggleButton.trigger('click');
+						startDate.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Anticipated Start Date');
+						return canSave = false;
+					}
+
+					if (endDate.val().length == 0) {
+						toggleButton.trigger('click');
+						endDate.focus();
+						alert(accommTitle + ': The following field is required not to be empty: Anticipated End Date');
+						return canSave = false;
+					}
+
+					if (canSave) {
+						isComplete.val(true);
+					}			
+				
+				});
+
+				if (canSave) {
+					$.each($(".oneStudentGoal").not(".hidden"), function () {
+						$(this).find(".SaveForm").trigger(event.type);
+					});
+
+					$(window).trigger("saving.bs.modal");
+					setTimeout(function () {
+						$("#AccommodationWidget .hero-widget").addClass("module-completed");
+						$('#moduleSection').modal('hide');
+					}, 1200);
+										
+				}
+				
+			});
+
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
                 $(".ajax-loader img").css("visibility", "visible");
@@ -355,7 +411,7 @@
                 var studentGoal = $(this).closest('.oneStudentGoal');
 
                 var studentGoalId = studentGoal.find("input[name='AccommodationID']").val();
-                var completedGoal = studentGoal.find("a i.isGoalCompleted");
+                var completedGoal = studentGoal.find(".isAccomComplete").val(); 
                 var accomType = studentGoal.find("input[name='AccomType']:checked").val();
                 var startDate = studentGoal.find("input[name='AnticipatedStartDate']").val();
                 var datastring = $(this).closest("form[name='frm']").serialize();
@@ -376,7 +432,7 @@
                                 completedGoal.removeClass("thisGoalNotCompleted");
 
                                 var allCompleted = true;
-                                $('.oneStudentGoal').not('#defaultgoal').each(function () {
+                                $('.oneStudentGoal').not('.hidden').each(function () {
                                     if ($(this).find("a i.isGoalCompleted").hasClass("thisGoalNotCompleted")) {
                                         allCompleted = false;
                                     }

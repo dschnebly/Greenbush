@@ -35,7 +35,7 @@
     {
         @Html.HiddenFor(model => model.AccommodationID)
         @Html.HiddenFor(model => model.IEPid)
-        @Html.HiddenFor(model => model.Completed)
+        @Html.HiddenFor(model => model.Completed, new { @class="isAccomComplete" })
 
         <div class="col-md-12">
             <div class="panel-group" id="accordion[@Model.AccommodationID]">
@@ -51,7 +51,7 @@
                             </a>
                         </h4>
                     </div>
-                    <div id=@(string.Format("collapse{0}", Model.AccommodationID)) class="panel-collapse collapse">
+                    <div id=@(string.Format("collapse{0}", Model.AccommodationID)) class="panel-collapse collapse" >
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
