@@ -41,7 +41,7 @@
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
     var modals = $(".modal").get(), element = null;
-
+	$(document).off('focusin.modal');
     for (var i = 0, length = modals.length; i < length; i++) {
         $(modals[i]).css("height", "0");
     }

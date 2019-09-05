@@ -27,7 +27,7 @@ namespace GreenBushIEP.Models
         public Nullable<int> Planning_GraduationMonth { get; set; }
         public Nullable<int> Planning_GraduationYear { get; set; }
         public string Planning_Completion { get; set; }
-        public Nullable<int> Planning_Credits { get; set; }
+        public Nullable<decimal> Planning_Credits { get; set; }
         public bool Planning_BenefitKRS { get; set; }
         public string Planning_ParentIntials { get; set; }
         public bool Planning_ConsentPrior { get; set; }

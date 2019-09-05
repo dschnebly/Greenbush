@@ -1137,13 +1137,14 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="studentRace">Student Race</label>
-                                            <select name="studentRace" id="studentRace" class="form-control">
-                                                <option value="White" selected=@(Model.info.Race == "White")>White</option>
-                                                <option value="Hawaiian" selected=@(Model.info.Race == "Hawaiian")>Native Hawaiian or Other Pacific Islander</option>
-                                                <option value="Asian" selected=@(Model.info.Race == "Asian")>Asian</option>
-                                                <option value="African American" selected=@(Model.info.Race == "African American")>Black or African American</option>
-                                                <option value="Native America" selected=@(Model.info.Race == "Native America")>American Indian or Alaska Native</option>
+
+											 <select name="studentRace" id="studentRace" class="form-control">
+                                                @foreach(tblRace race in Model.races)
+                                                {
+                                                    <option value="@(race.RaceCode)" selected="@(Model.info.RaceCode != null && Model.info.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
+                                                }
                                             </select>
+
                                         </div>
 										</div>
                                     <div class="row voffset2">

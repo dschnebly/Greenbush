@@ -1111,12 +1111,11 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="studentRace">Student Race</label>
-                                            <select name="studentRace" id="studentRace" class="form-control">
-                                                <option value="White">White</option>
-                                                <option value="Hawaiian">Native Hawaiian or Other Pacific Islander</option>
-                                                <option value="Asian">Asian</option>
-                                                <option value="African American">Black or African American</option>
-                                                <option value="Native America">American Indian or Alaska Native</option>
+											<select name="studentRace" id="studentRace" class="form-control">
+                                                @foreach(tblRace race in Model.races)
+                                                {
+                                                    <option value="@(race.RaceCode)">@(race.RaceDescription)</option>
+                                                }
                                             </select>
                                         </div>
                                         <div class="col-md-2">
@@ -1280,6 +1279,16 @@
                                                     <div class="row">
                                                         <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
                                                         <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										<div class="col-md-6">
+                                            <div class="bootstrap-iso">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
+                                                        <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
                                                     </div>
                                                 </div>
                                             </div>
