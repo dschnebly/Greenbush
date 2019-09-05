@@ -28,17 +28,6 @@
         z-index: 1000000 !important;
     }
 
-    .in .service-disabled {
-        position: absolute;
-        top: 10em;
-        width: 96%;
-        left: 25px;
-        right: 25px;
-        bottom: 25px;
-        background: rgba(255, 255, 255, 0.75);
-        z-index: 1000000 !important;
-    }
-
     .duplication-loader {
         visibility: hidden;
         background-color: rgba(255,255,255,0.7);
@@ -101,6 +90,10 @@
          margin-left:5px;
      }
 
+     .serviceFadeIn {
+         display: none;
+     }
+
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -118,9 +111,9 @@
         <div class="container serviceContainer">
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
-                    <button id="newService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateAllService" class="btn btn-default @*@(Model.calendar.MaxJsonLength == 0 ? "disabled" : string.Empty )*@">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
             <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
@@ -135,7 +128,7 @@
                     <div class="panel-group" id="accordion[0]">
 
                         <form action="/Home/saveStudentService" method="post">
-                            <input type="hidden" name="StudentId" value="@Model.studentId" />
+                            <input type="hidden" name="StudentId" value="@(Model.studentId)" />
                             <input type="hidden" name="StudentSerivceId" value="0" />
                             <input type="hidden" name="completed" value="false" />
                             <div class="panel panel-default">
@@ -153,15 +146,15 @@
                                 <div id="collapse0" class="collapse in">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <label for="fiscalYear">Attendance Building</label>
                                                 <div class="form-group">
-                                                    <select class="form-control" name="attendaceBuilding" style="border-color: #ccc; display: inline-block;">
+                                                    <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
                                                         <option value="-1">- Select a Building -</option>
 
-                                                        @if(Model.attendanceBuildings.Count > 0)
+                                                        @if (Model.attendanceBuildings.Count > 0)
                                                         {
-                                                            foreach(var building in Model.attendanceBuildings)
+                                                            foreach (var building in Model.attendanceBuildings)
                                                             {
                                                                 <option value="@(building.BuildingID)">@(building.BuildingName)</option>
                                                             }
@@ -170,25 +163,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label>Attach a Goal</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                    <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" name="studentGoalsSelect" multiple="multiple" data-validate="true">
-                                                        @if (Model.studentGoals.Count > 0)
-                                                        {
-                                                            foreach (var goal in Model.studentGoals)
-                                                            {
-                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div name="serviceDisabled" class="service-disabled"></div>
-                                        <div class="row">
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 serviceFadeIn">
                                                 <label for="fiscalYear">Fiscal Year</label>
                                                 <div class="form-group">
                                                     <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
@@ -198,41 +173,22 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 serviceFadeIn">
                                                 <label for="Frequency">Initiation Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 serviceFadeIn">
                                                 <label for="Frequency">End Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="Location">Setting</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                    <div class="form-group">
-                                                        <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
-
-                                                            @if (Model.serviceLocations.Count > 0)
-                                                            {
-                                                                foreach (var serviceLocation in Model.serviceLocations)
-                                                                {
-                                                                    <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
-                                                                }
-                                                            }
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row serviceFadeIn">
                                             <div class="col-md-2">
                                                 <label for="Frequency">Frequency</label>
                                                 <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
@@ -287,6 +243,27 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
+                                                <label for="Location">Setting</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                    <div class="form-group">
+                                                        <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
+
+                                                            @if (Model.serviceLocations.Count > 0)
+                                                            {
+                                                                foreach (var serviceLocation in Model.serviceLocations)
+                                                                {
+                                                                    <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                                }
+                                                            }
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row serviceFadeIn">
+                                            <div class="col-md-3">
                                                 <label for="serviceProvider">Provider</label>
                                                 <div class="form-group">
                                                     <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
@@ -301,8 +278,23 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <label>Attach a Goal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
+                                                    <select class="form-control chosen-select" data-placeholder="Choose a goal..." id="studentGoalsSelect" name="studentGoalsSelect" multiple="multiple" data-validate="true">
+                                                        @if (Model.studentGoals.Count > 0)
+                                                        {
+                                                            foreach (var goal in Model.studentGoals)
+                                                            {
+                                                                <option value="@goal.goalID" data-title="@goal.Title.ToString()">@goal.Title.ToString()</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row serviceFadeIn">
                                             <div class="col-md-12" style="text-align:center;">
                                                 <div class="form-group">
                                                     <br />
@@ -531,28 +523,6 @@
     </div>
 </div> <!--end print-->
 <script>
-
-    @*var holidays = '@Html.Raw(Json.Encode(@Model.calendar))';
-    var disabledDays = JSON.parse(holidays).Data;*@
-
-    $(document).ready(function () {
-        $(this).find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker');
-            $(".dtField").datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true,
-                yearRange: "-1:+2",
-                beforeShowDay: function (date) {
-                    var day = date.getDay();
-                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                    //var isDisabled = ($.inArray(string, disabledDays) != -1);
-                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
-                }
-            });
-        });
-    });
-
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -963,11 +933,76 @@
 
             $(this).find('.chosen-select').chosen({ width: "100%" });
 
-            $(this).find("select[name=attendaceBuilding]").on('change', function () {
-                if($(this).val() >= 0) {
-                    panel.find('[name="serviceDisabled"]').removeClass('service-disabled');
-                } else {
-                    panel.find('[name="serviceDisabled"]').removeClass('service-disabled');
+            $(this).find("select[name=attendanceBuilding]").on('change', function () {
+                if ($(this).val() >= 0) {
+
+                    $(this).find('[value="-1"]').remove(); // remove 'select a building'
+                    var holidays = null;  // set our holidays calendar.
+                    var disabledDays = null; // set our diabled days.
+
+                    var userid = $("#sid").val();
+                    var buildingid = $(this).val();
+                    var serviceContainer = $(this).closest(".panel-default");
+
+                    //check if the building has a calendar
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Home/BuildingHasCalendars',
+                        data: { UserId: userid, BuildingID: buildingid },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                holidays = data.buildingCalendar;
+                                disabledDays = data.holidays.Data;
+
+                                //fadeIn the ServiceFadeIn class
+                                if (holidays != null && holidays.length > 1) {
+                                    serviceContainer.find(".serviceFadeIn").each(function () {
+                                        $(this).fadeTo("slow", 1, null);
+                                    });
+
+                                    $("#duplicateService").removeClass("disabled");
+                                    $("#duplicateAllService").removeClass("disabled");
+
+                                    // init our calendar
+                                    serviceContainer.find('.dtField').each(function () {
+                                        $(this).removeAttr('id').removeClass('hasDatepicker');
+                                        $(".dtField").datepicker({
+                                            dateFormat: "mm/dd/yy",
+                                            changeYear: true,
+                                            changeMonth: true,
+                                            yearRange: "-1:+2",
+                                            beforeShowDay: function (date) {
+                                                var day = date.getDay();
+                                                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                                                var isDisabled = ($.inArray(string, disabledDays) != -1);
+                                                return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
+                                            }
+                                        });
+                                    });
+
+                                } else {
+                                    serviceContainer.find(".serviceFadeIn").each(function () {
+                                        $(this).fadeTo("slow", 0, null).hide();
+                                    });
+
+                                    alert("this building doesn't have a calendar. Would you like to create one?");
+                                }
+                            } else {
+                                serviceContainer.find(".serviceFadeIn").each(function () {
+                                    $(this).fadeTo("slow", 0, null).hide();
+                                });
+
+                                alert("this building doesn't have a calendar. Would you like to create one?");
+                            }
+                        },
+                        error: function (data) {
+                            alert("Error connecting to the database. Please try again or contact your administrator.");
+                        },
+                        complete: function (data) {
+                           //alert("yeah, I'm going to go now.");
+                        }
+                    });
                 }
             });
         });
@@ -1113,7 +1148,6 @@
                 }
             }
         });
-
     }
 
     function _validateDate(fiscalYear, calendarDay, e) {
@@ -1261,4 +1295,29 @@
         });
     });
 
+    ////////
+    // Extensions
+    ///////
+    // datepicker doesn't line up correctly. This fixes the problem.
+    $.extend($.datepicker, {
+        _checkOffset: function (inst, offset, isFixed) {
+            if (!isFixed) {
+                return checkOffset.apply(this, arguments);
+            }
+
+            let isRTL = this._get(inst, "isRTL");
+            let obj = inst.input[0];
+
+            while (obj && (obj.type === "hidden" || obj.nodeType !== 1 || $.expr.filters.hidden(obj))) {
+                obj = obj[isRTL ? "previousSibling" : "nextSibling"];
+            }
+
+            let rect = obj.getBoundingClientRect();
+
+            return {
+                top: rect.top + 40,
+                left: rect.left,
+            };
+        }
+    });
 </script>
