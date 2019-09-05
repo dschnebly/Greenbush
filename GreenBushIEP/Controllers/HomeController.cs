@@ -86,7 +86,7 @@ namespace GreenbushIep.Controllers
                 model.districts = (from district in db.tblDistricts select district).Distinct().ToList();
                 model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
 
-                model.members = db.vw_UserList.Where(ul => ul.RoleID != owner).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+                model.members = db.vw_UserList.Where(ul => ul.RoleID != owner).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);
@@ -113,7 +113,7 @@ namespace GreenbushIep.Controllers
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
 
-                model.members = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                model.members = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -141,7 +141,7 @@ namespace GreenbushIep.Controllers
                 List<String> myBuildings = model.buildings.Select(b => b.BuildingID).ToList();
                 myBuildings.Add("0");
 
-                model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+                model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
@@ -1446,13 +1446,6 @@ namespace GreenbushIep.Controllers
 
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
 
-                //int lastYear = DateTime.Now.AddYears(-1).Year;
-                //int thirdYear = DateTime.Now.AddYears(2).Year;
-                //List<tblCalendar> calendar = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
-                //JsonResult Holidays = Json(calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
-                //tblCalendar isPossibleLastFiscalDay = calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
-                //ViewBag.LastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
-
                 if (services != null)
                 {
                     model.studentId = studentId;
@@ -1462,7 +1455,6 @@ namespace GreenbushIep.Controllers
                     model.serviceLocations = db.tblLocations.ToList();
                     model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                 }
@@ -1475,7 +1467,6 @@ namespace GreenbushIep.Controllers
                     model.serviceLocations = db.tblLocations.ToList();
                     model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    //model.calendar = Holidays;
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                 }
@@ -1503,11 +1494,11 @@ namespace GreenbushIep.Controllers
                 if (Calendar.Count > 0)
                 {
                     JsonResult Holidays = Json(Calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);
-                    var whatever = Calendar.Where(c => c.Year != 0).Distinct().ToList();
-                    //var isPossibleLastFiscalDay = Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).ToList();
-                    //tblCalendar lastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+                    List<int> calendarYears = Calendar.Select(c => c.Year).Distinct().ToList();
+                    tblCalendar isPossibleLastFiscalDay = Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+                    tblCalendar LastFiscalDayofYear = (isPossibleLastFiscalDay.calendarDate > DateTime.Now) ? isPossibleLastFiscalDay : Calendar.Where(c => c.canHaveClass && c.Year == DateTime.Now.AddYears(1).Year && (c.Month == 6 || c.Month == 5)).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
-                    return Json(new { success = true, buildingCalendar = Calendar, holidays = Holidays, buildingFiscalYears = 0 }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, buildingCalendar = Calendar, holidays = Holidays, buildingFiscalYears = calendarYears, lastFiscalDayofYear = LastFiscalDayofYear }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { success = true, buildingCalendar = 0, holidays = 0, buildingFiscalYears = 0 }, JsonRequestBehavior.AllowGet);
