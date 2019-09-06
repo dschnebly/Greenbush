@@ -2202,7 +2202,7 @@
 			 </div>
 			 <div class="col-md-3">
 			 	<fieldset class="form-group">
-			 		<span><b>Total # of Credits required by district</b></span><span> @(Model.studentTransition.transition.Planning_Credits != null ? Model.studentTransition.transition.Planning_Credits.Value.ToString("0.00") : "0.00")</span>
+			 		<span><b>Total # of Credits required by district</b></span><span> @(Model.studentTransition.transition.Planning_Credits != null ? Model.studentTransition.transition.Planning_Credits.Value.ToString("G29") : "0")</span>
 			 </fieldset>
 			 </div>
 			 </div>
@@ -2464,6 +2464,7 @@
 						var progQ3 = "";
 						var progQ4 = "";
 						var evalText = "";
+
 						var ddlText = "";
 						switch (sGoal.Module)
 						{
@@ -2507,20 +2508,7 @@
 						} //end switch
 
 
-						foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
-						{
-							switch (ep.evaluationProcedureID)
-							{
-								case 1: { evalText += "Written Observation, "; break; }
-								case 2: { evalText += "Written Performance, "; break; }
-								case 3: { evalText += "Oral Performance, "; break; }
-								case 4: { evalText += "Criterion-Referenced Test, "; break; }
-								case 5: { evalText += "Time Sample, "; break; }
-								case 6: { evalText += "Demonstration/Performance, "; break; }
-								case 7: { evalText += "Other, "; break; }
-
-							} //end switch
-						}
+						
 
 			 		<div>
 			 			<div>
@@ -2546,8 +2534,34 @@
 			 						<p>@sGoal.StateStandards</p>
 								</div>
 								 <div class="form-group">
-			 						<label>Evaluation Procedure</label>
-			 						<p>@evalText.Trim().TrimEnd(',')</p>
+			 						<label>Evaluation Procedure</label><br/>
+									 @foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
+									 {
+										switch (ep.evaluationProcedureID)
+										{
+											case 1: { evalText = "Written Observation"; break; }
+											case 2: { evalText = "Written Performance"; break; }
+											case 3: { evalText = "Oral Performance"; break; }
+											case 4: { evalText = "Criterion-Referenced Test"; break; }
+											case 5: { evalText = "Time Sample"; break; }
+											case 6: { evalText = "Demonstration/Performance"; break; }
+											case 8: { evalText = "Progress Monitoring"; break; }
+											case 7:
+												{
+
+													if (!string.IsNullOrEmpty(ep.OtherDescription))
+													{
+														evalText = "Other: " + ep.OtherDescription;
+													}
+													else
+													{
+														evalText = "Other";
+													}
+													break;
+												}
+										} //end switch
+										 @evalText<br/>
+									}
 								 </div>							
 
                                     @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
@@ -2560,11 +2574,11 @@
                                                     <span>@gb.ObjectiveBenchmark</span>                                                   
                                                 </div>
                                                 <div>
-												<label>Method(s)</label><br/>
+												<label>Method(s)</label><br/>												
 												@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
 												{
 													var ddlText2 = "";
-													var otherDesc = "";
+
 													switch (gbMethod.EvaluationProcedureID)
 													{
 														case 1: { ddlText2 = "Written Observation"; break; }
@@ -2574,15 +2588,19 @@
 														case 5: { ddlText2 = "Time Sample"; break; }
 														case 6: { ddlText2 = "Demonstration/Performance"; break; }
 														case 7: {
-																ddlText2 = "Other";
+
 																if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
 																{
-																	ddlText2 = "Other:";
-																	otherDesc = gbMethod.OtherDescription;
+																	ddlText2 = "Other:" + gbMethod.OtherDescription + ", ";
 																}
-																break; }
+																else
+																{
+																	ddlText2 = "Other";
+																}
+																break;
+															}
 													} //end switch
-													@ddlText2 <text>&nbsp;</text> @otherDesc<br/>
+													@ddlText2.Trim().TrimEnd(',')<br/>
 												}
 											    </div>
                                             </div>

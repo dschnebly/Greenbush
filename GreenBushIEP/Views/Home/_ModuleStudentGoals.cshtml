@@ -142,7 +142,7 @@
                     <option value="3">Oral Performance</option>
                     <option value="4">Criterion-Referenced Test</option>
                     <option value="5">Time Sample</option>
-                    <option value="6">Demonstration/Performance</option>
+                    <option value="6">Demonstration/Performance</option>					
                     <option value="7">Other</option>
                 </select>
 				<div class="voffset1 divOther" style="display:none">
@@ -342,7 +342,8 @@
                                                 <option value="3">Oral Performance</option>
                                                 <option value="4">Criterion-Referenced Test</option>
                                                 <option value="5">Time Sample</option>
-                                                <option value="6">Demonstration/Performance</option>
+                                                <option value="6">Demonstration/Performance</option>													
+												<option value="8">Progress Monitoring</option>	
                                                 <option value="7">Other</option>
                                             </select>
                                         </div>
@@ -462,6 +463,7 @@
                                                     <option value="4" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
                                                     <option value="5" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
                                                     <option value="6" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+													<option value="8" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 8) ? "selected" : "")>Progress Monitoring</option>
                                                     <option value="7" @(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "selected" : "")>Other</option>
                                                 </select>
 												<div class="voffset1 divOther" style="display:@(studentGoal.evaluationProcedures != null && studentGoal.evaluationProcedures.Any(o => o.evaluationProcedureID == 7) ? "block" : "none")">
@@ -507,7 +509,8 @@
     </div>
 </div>
 </div> <!--end print-->
-<script>	
+<script>
+	debugger;
 	var _newBenchmarks;
 
     $(document).ready(function () {
