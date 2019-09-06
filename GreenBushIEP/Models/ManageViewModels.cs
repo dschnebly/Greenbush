@@ -510,9 +510,7 @@ namespace GreenBushIEP.Models
 		public List<tblLocation> serviceLocations { get; set; }
 		public List<tblGoal> studentGoals { get; set; }
         public List<vw_BuildingsForAttendance> attendanceBuildings { get; set; }
-		//public System.Web.Mvc.JsonResult calendar { get; set; }
-		//public List<tblCalendar> availableCalendarDays { get; set; }
-		//public List<tblCalendarReporting> calendarReportings { get; set; }
+        public vw_BuildingsForAttendance selectedAttendaneBuilding { get; set; }
 		public DateTime IEPStartDate { get; set; }
 		public DateTime MeetingDate { get; set; }
 
@@ -525,9 +523,6 @@ namespace GreenBushIEP.Models
 			serviceLocations = new List<tblLocation>();
 			studentGoals = new List<tblGoal>();
             attendanceBuildings = new List<vw_BuildingsForAttendance>();
-			//calendar = new System.Web.Mvc.JsonResult();
-			//availableCalendarDays = new List<tblCalendar>();
-			//calendarReportings = new List<tblCalendarReporting>();
 			IEPStartDate = new DateTime();
 			MeetingDate = new DateTime();
 		}

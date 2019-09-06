@@ -112,8 +112,8 @@
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
                     <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count == 0 ? "disabled" : string.Empty )">Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
             <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
@@ -306,7 +306,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </form>
 
                     </div>
@@ -335,7 +334,6 @@
                                 <input type="hidden" name="StudentId" value="@Model.studentId" />
                                 <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
                                 <input type="hidden" name="completed" value="@(service.Completed.ToString())" />
-
                                 <div class="panel panel-default panel-existing">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -351,6 +349,21 @@
                                     <div id="collapse@(service.ServiceID)" class="panel-collapse collapse @(needsIN)" data-val=@(service.ServiceID)>
                                         <div class="panel-body">
                                             <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="fiscalYear">Attendance Building</label>
+                                                    <div class="form-group">
+                                                        <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
+                                                            @if (Model.attendanceBuildings.Count > 0)
+                                                            {
+                                                                foreach (var building in Model.attendanceBuildings)
+                                                                {
+                                                                    <option value="@(building.BuildingID)">@(building.BuildingName)</option>
+                                                                }
+                                                            }
+
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-2">
                                                     <label for="fiscalYear">Fiscal Year</label>
                                                     <div class="form-group">
@@ -374,23 +387,6 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                         <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.EndDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="Location">Setting</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                                        <div class="form-group">
-                                                            <select class="form-control" name="Location" style="border-color: #ccc; display: inline-block;">
-                                                                @if (Model.serviceLocations.Count > 0)
-                                                                {
-                                                                    foreach (var serviceLocation in Model.serviceLocations)
-                                                                    {
-                                                                        <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
-                                                                    }
-                                                                }
-                                                            </select>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -453,6 +449,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
+                                                    <label for="Location">Setting</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                                        <div class="form-group">
+                                                            <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
+
+                                                                @if (Model.serviceLocations.Count > 0)
+                                                                {
+                                                                    foreach (var serviceLocation in Model.serviceLocations)
+                                                                    {
+                                                                        <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                                    }
+                                                                }
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
                                                     <label for="serviceProvider">Provider</label>
                                                     <div class="form-group">
                                                         <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
@@ -467,8 +484,6 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <label>Attach a Goal</label>
                                                     <div class="input-group">
@@ -536,7 +551,7 @@
     });
 
     /* Event */
-    /* when clicking on the New Student Goal button */
+    /* when clicking on the New Student Service button */
     $('#newService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
 
@@ -877,8 +892,6 @@
                             setTimeout(function () {
                                 $('#moduleSection').modal('hide');
                             }, 1200);
-
-
                         }
                         else {
                             _showAlert(data.Message, false);
@@ -915,13 +928,13 @@
                     }
                 });
 
-                //if (canSave) {
-                //    $(window).trigger("saving.bs.modal");
+                if (canSave) {
+                    $(window).trigger("saving.bs.modal");
 
-                //    setTimeout(function () {
-                //        $('#moduleSection').modal('hide');
-                //    }, 1200);
-                //}
+                    setTimeout(function () {
+                        $('#moduleSection').modal('hide');
+                    }, 1200);
+                }
             });
 
             $(this).find(".panel-title a").on("click", function () {
@@ -954,6 +967,8 @@
                             if (data.success) {
                                 holidays = data.buildingCalendar;
                                 disabledDays = data.holidays.Data;
+                                fiscalYears = data.buildingFiscalYears;
+                                lastFiscalDayofYear = data.lastFiscalDayofYear;
 
                                 //fadeIn the ServiceFadeIn class
                                 if (holidays != null && holidays.length > 1) {
@@ -961,8 +976,15 @@
                                         $(this).fadeTo("slow", 1, null);
                                     });
 
-                                    $("#duplicateService").removeClass("disabled");
-                                    $("#duplicateAllService").removeClass("disabled");
+                                    serviceContainer.find("select[name=fiscalYear]").find('option').remove(); //empty the fiscal year select
+                                    for (var i = 0; i < fiscalYears.length - 1; i++) //add the years back to the select
+                                    {
+                                        serviceContainer.find("select[name=fiscalYear]").append($("<option></option>").attr("value", fiscalYears[i + 1]).text(fiscalYears[i] + ' - ' + fiscalYears[i + 1]));
+                                    }
+                                    
+                                    // end date is predefined to the end of the school year for that calendar.
+                                    var fiscalEndDate = new Date(lastFiscalDayofYear.Year, lastFiscalDayofYear.Month - 1, lastFiscalDayofYear.Day)
+                                    serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('mm/d/yy', fiscalEndDate))
 
                                     // init our calendar
                                     serviceContainer.find('.dtField').each(function () {
@@ -986,14 +1008,14 @@
                                         $(this).fadeTo("slow", 0, null).hide();
                                     });
 
-                                    alert("this building doesn't have a calendar. Would you like to create one?");
+                                    _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                                 }
                             } else {
                                 serviceContainer.find(".serviceFadeIn").each(function () {
                                     $(this).fadeTo("slow", 0, null).hide();
                                 });
 
-                                alert("this building doesn't have a calendar. Would you like to create one?");
+                                _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                             }
                         },
                         error: function (data) {
@@ -1105,7 +1127,7 @@
 
     function _showAlert(message, positive) {
 
-        var successFade = 3000;
+        var successFade = 5000;
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
             if (positive) {
                 $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
