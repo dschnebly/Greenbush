@@ -510,7 +510,7 @@ namespace GreenBushIEP.Models
 		public List<tblLocation> serviceLocations { get; set; }
 		public List<tblGoal> studentGoals { get; set; }
         public List<vw_BuildingsForAttendance> attendanceBuildings { get; set; }
-        public vw_BuildingsForAttendance selectedAttendaneBuilding { get; set; }
+        public List<int> fiscalYears { get; set; }
 		public DateTime IEPStartDate { get; set; }
 		public DateTime MeetingDate { get; set; }
 
@@ -523,6 +523,7 @@ namespace GreenBushIEP.Models
 			serviceLocations = new List<tblLocation>();
 			studentGoals = new List<tblGoal>();
             attendanceBuildings = new List<vw_BuildingsForAttendance>();
+            fiscalYears = new List<int>();
 			IEPStartDate = new DateTime();
 			MeetingDate = new DateTime();
 		}

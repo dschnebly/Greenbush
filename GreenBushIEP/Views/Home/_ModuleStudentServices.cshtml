@@ -61,39 +61,38 @@
         visibility: hidden;
     }
 
-     .chosen-container.chosen-with-drop .chosen-drop {
+    .chosen-container.chosen-with-drop .chosen-drop {
         z-index: 10000001 !important;
     }
 
-     .glyphicon-print {
-         font-size: 27px;
-         padding-right:8px
-     }
+    .glyphicon-print {
+        font-size: 27px;
+        padding-right: 8px;
+    }
 
-     .glyphicon-question-sign {
-         font-size: 30px;
-     }
+    .glyphicon-question-sign {
+        font-size: 30px;
+    }
 
-     h4.modal-title {
-         font-size: 30px;
-     }
+    h4.modal-title {
+        font-size: 30px;
+    }
 
-     h4.modal-title i {
-         font-size: smaller;
-     }
+        h4.modal-title i {
+            font-size: smaller;
+        }
 
-     #alertMessage {
-         display: none;
-     }
+    #alertMessage {
+        display: none;
+    }
 
-     .studentGoalLabel {
-         margin-left:5px;
-     }
+    .studentGoalLabel {
+        margin-left: 5px;
+    }
 
-     .serviceFadeIn {
-         display: none;
-     }
-
+    .serviceFadeIn {
+        display: none;
+    }
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
@@ -166,11 +165,7 @@
                                             <div class="col-md-2 serviceFadeIn">
                                                 <label for="fiscalYear">Fiscal Year</label>
                                                 <div class="form-group">
-                                                    <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
-                                                        <option value="2019">2018 - 2019</option>
-                                                        <option value="2020">2019 - 2020</option>
-                                                        <option value="2021">2020 - 2021</option>
-                                                    </select>
+                                                    <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;"></select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 serviceFadeIn">
@@ -333,13 +328,13 @@
                             <form action="/Home/saveStudentService" method="post">
                                 <input type="hidden" name="StudentId" value="@Model.studentId" />
                                 <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
-                                <input type="hidden" name="completed" value="@(service.Completed.ToString())" />
+                                <input type="hidden" name="completed" value="@(service.Completed.ToString().ToLower())" />
                                 <div class="panel panel-default panel-existing">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
                                                 <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
-                                                <i class="glyphicon glyphicon-ok isServiceCompleted @( service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
+                                                <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
                                                 <span class="pull-right">
                                                     <i class="glyphicon glyphicon-trash deleteService"></i>
                                                 </span>
@@ -357,10 +352,9 @@
                                                             {
                                                                 foreach (var building in Model.attendanceBuildings)
                                                                 {
-                                                                    <option value="@(building.BuildingID)">@(building.BuildingName)</option>
+                                                                    <option value="@(building.BuildingID)" @(service.BuildingID == building.BuildingID ? "selected" : "" )>@(building.BuildingName)</option>
                                                                 }
                                                             }
-
                                                         </select>
                                                     </div>
                                                 </div>
@@ -698,7 +692,7 @@
 
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
-            
+
             var panel = $(this);
             var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
             var endDateYear = $("#iepMeetingDateYear").val();
@@ -838,12 +832,12 @@
 
                 var studentService = $(this).closest('.oneStudentService');
                 var form = studentService.find('form').serialize();
-                var iepId = $("#studentIEPId").val();
+                //var iepId = $("#studentIEPId").val();
 
-                if (iepId != undefined && iepId != "")
-                    form += "&iepId=" + iepId;
+                //if (iepId != undefined && iepId != "")
+                //    form += "&iepId=" + iepId;
 
-                var completedService = studentService.find("a i.thisServiceNotCompleted");
+                var completedService = studentService.find("form").find("input[name='completed']").val(false);
                 var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
                 if (serviceType != undefined && serviceType != "")
@@ -870,28 +864,9 @@
 
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
-
-                            // check if all of the services are completed
-                            if (studentService.find("input[name='completed']").val() == "true") {
-                                completedService.removeClass("thisServiceNotCompleted");
-
-                                var allCompleted = true;
-                                $('.oneStudentService').not('#defaultStudentService').each(function () {
-                                    if ($(this).find("a i.isServiceCompleted").hasClass("thisServiceNotCompleted")) {
-                                        allCompleted = false;
-                                    }
-                                });
-
-                                if (allCompleted) {
-                                    $("#ServiceWidget .hero-widget").addClass("module-completed");
-                                }
-                            }
+                            studentService.find("input[name=completed]").val(true);
 
                             $(window).trigger("saving.bs.modal");
-
-                            setTimeout(function () {
-                                $('#moduleSection').modal('hide');
-                            }, 1200);
                         }
                         else {
                             _showAlert(data.Message, false);
@@ -906,36 +881,47 @@
                 $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
                     $('.ajax-loader').css("visibility", "hidden");
                 });
+
             });
 
             $(this).find(".saveCompletedService").on('click', function (e) {
-                var canSave = true;
 
-                $.each($(".oneStudentService").not("#defaultStudentService"), function () {
+                var allCompleted = true;
+                $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
+                    var studentServiceStartDate = $(element).find("input[name='serviceStartDate']");
+                    var studentServiceEndDate = $(element).find("input[name='serviceEndDate']");
+                    var studentServiceFiscalYear = $(element).find("select[name='fiscalYear'] option:selected");
 
-                    var studentServiceStartDate = $(this).find("input[name='serviceStartDate']");
-                    var studentServiceEndDate = $(this).find("input[name='serviceEndDate']");
-                    var studentServiceFiscalYear = $(this).find("select[name='fiscalYear'] option:selected");
+                    var iepId = $("#studentIEPId").val();
+                    var isLastElement = index == ($(".oneStudentService").not("#defaultStudentService")).length - 1;
 
-                    if (!_dateCheck(studentServiceStartDate, studentServiceEndDate, studentServiceFiscalYear)) {
-                        canSave = false;
-                        alert('Unable to save the service because the dates are incorrect');
+                    if (isLastElement) {
+                        workdammit($(this).closest('.oneStudentService'), $(element).find('form').serialize(), workagain);
                     }
+                });
+            });
 
-                    if (canSave) {
-                        $(this).find("form").find("input[name='completed']").val(true);
-                        $(this).find(".saveService").trigger(event.type);
+            function workagain() {
+                // check if all of the services are completed
+                var allCompleted = true;
+                $.each($(".oneStudentService").not("#defaultStudentService"), function () {
+                    if (!$(this).find("input[name='completed']").val() !== true) {
+                        allCompleted = false;
+                    } else {
+                        //$(this).find("a i").removeClass("thisServiceNotCompleted");
+                        var whatever = $(this).closest("a");
+                        console.log(whatever);
                     }
                 });
 
-                if (canSave) {
-                    $(window).trigger("saving.bs.modal");
+                if (allCompleted) {
+                    $("#ServiceWidget .hero-widget").addClass("module-completed");
 
                     setTimeout(function () {
                         $('#moduleSection').modal('hide');
                     }, 1200);
                 }
-            });
+            }
 
             $(this).find(".panel-title a").on("click", function () {
                 /* Closes all the other panel groups except the one you clicked on */
@@ -981,7 +967,9 @@
                                     {
                                         serviceContainer.find("select[name=fiscalYear]").append($("<option></option>").attr("value", fiscalYears[i + 1]).text(fiscalYears[i] + ' - ' + fiscalYears[i + 1]));
                                     }
-                                    
+
+                                    serviceContainer.find("select[name=fiscalYear] option[value=" + lastFiscalDayofYear.Year + "]").prop("selected", true);
+
                                     // end date is predefined to the end of the school year for that calendar.
                                     var fiscalEndDate = new Date(lastFiscalDayofYear.Year, lastFiscalDayofYear.Month - 1, lastFiscalDayofYear.Day)
                                     serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('mm/d/yy', fiscalEndDate))
@@ -1022,7 +1010,7 @@
                             alert("Error connecting to the database. Please try again or contact your administrator.");
                         },
                         complete: function (data) {
-                           //alert("yeah, I'm going to go now.");
+                            //alert("yeah, I'm going to go now.");
                         }
                     });
                 }
@@ -1122,7 +1110,6 @@
         }
 
         return true;
-
     }
 
     function _showAlert(message, positive) {
@@ -1342,4 +1329,41 @@
             };
         }
     });
+
+    function workdammit(studentService, form, callback) {
+        console.log(studentService);
+        console.log(form);
+
+        var iepId = $("#studentIEPId").val();
+
+        if (iepId != undefined && iepId != "")
+            form += "&iepId=" + iepId;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SaveStudentService',
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result == "success") {
+
+                    _showAlert(data.Message, true);
+
+                    studentService.find("input[name='StudentSerivceId']").val(data.key);
+                    studentService.find(".collapse.in").attr("data-val", data.key);
+                    studentService.find("input[name=completed]").val(true);
+
+                    $(window).trigger("saving.bs.modal");
+
+                    if (callback) { callback(); }
+                }
+                else {
+                    _showAlert(data.Message, false);
+                }
+            },
+            error: function (data) {
+                _showAlert("There was an error while trying to save the data.", false);
+            }
+        });
+    }
 </script>
