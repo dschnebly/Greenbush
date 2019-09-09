@@ -831,13 +831,14 @@
                 $(".ajax-loader img").css("visibility", "visible");
 
                 var studentService = $(this).closest('.oneStudentService');
+                studentService.find("form").find("input[name='completed']").val(true);
+
                 var form = studentService.find('form').serialize();
-                //var iepId = $("#studentIEPId").val();
+                var iepId = $("#studentIEPId").val();
 
-                //if (iepId != undefined && iepId != "")
-                //    form += "&iepId=" + iepId;
+                if (iepId != undefined && iepId != "")
+                    form += "&iepId=" + iepId;
 
-                var completedService = studentService.find("form").find("input[name='completed']").val(false);
                 var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
 
                 if (serviceType != undefined && serviceType != "")
@@ -864,15 +865,17 @@
 
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
-                            studentService.find("input[name=completed]").val(true);
+                            studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
 
                             $(window).trigger("saving.bs.modal");
                         }
                         else {
+                            studentService.find("input[name=completed]").val(false);
                             _showAlert(data.Message, false);
                         }
                     },
                     error: function (data) {
+                        studentService.find("input[name=completed]").val(false);
                         _showAlert("There was an error while trying to save the data.", false);
                     }
                 });
@@ -886,31 +889,27 @@
 
             $(this).find(".saveCompletedService").on('click', function (e) {
 
-                var allCompleted = true;
                 $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
                     var studentServiceStartDate = $(element).find("input[name='serviceStartDate']");
                     var studentServiceEndDate = $(element).find("input[name='serviceEndDate']");
                     var studentServiceFiscalYear = $(element).find("select[name='fiscalYear'] option:selected");
 
                     var iepId = $("#studentIEPId").val();
-                    var isLastElement = index == ($(".oneStudentService").not("#defaultStudentService")).length - 1;
+                    var isLastIndex = index == ($(".oneStudentService").not("#defaultStudentService")).length - 1; // only fire the callback when it's our last index.
 
-                    if (isLastElement) {
-                        workdammit($(this).closest('.oneStudentService'), $(element).find('form').serialize(), workagain);
-                    }
+                    checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
                 });
             });
 
-            function workagain() {
+            function asyncCallBack() {
                 // check if all of the services are completed
+
                 var allCompleted = true;
                 $.each($(".oneStudentService").not("#defaultStudentService"), function () {
-                    if (!$(this).find("input[name='completed']").val() !== true) {
+                    if ($(this).find("input[name='completed']").val() !== "true") {
                         allCompleted = false;
                     } else {
-                        //$(this).find("a i").removeClass("thisServiceNotCompleted");
-                        var whatever = $(this).closest("a");
-                        console.log(whatever);
+                        $(this).find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
                     }
                 });
 
@@ -1330,14 +1329,29 @@
         }
     });
 
-    function workdammit(studentService, form, callback) {
-        console.log(studentService);
-        console.log(form);
+    function checkAlLCompleted(studentService, form, callback, lastIndex) {
 
+        studentService.find("form").find("input[name='completed']").val(true);
+
+        var form = studentService.find('form').serialize();
         var iepId = $("#studentIEPId").val();
 
         if (iepId != undefined && iepId != "")
             form += "&iepId=" + iepId;
+
+        var serviceType = studentService.find("select[name='ServiceType'] option:selected").text();
+
+        if (serviceType != undefined && serviceType != "")
+            studentService.find(".studentGoalLabel").text(serviceType);
+
+        //check dates are valid before saving
+        var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
+
+        //if isvalid, don't allow user to save
+        if (!isValid) {
+            _showAlert();
+            return false;
+        }
 
         $.ajax({
             type: 'POST',
@@ -1351,17 +1365,21 @@
 
                     studentService.find("input[name='StudentSerivceId']").val(data.key);
                     studentService.find(".collapse.in").attr("data-val", data.key);
-                    studentService.find("input[name=completed]").val(true);
+                    studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
 
                     $(window).trigger("saving.bs.modal");
 
-                    if (callback) { callback(); }
+                    if (lastIndex) {
+                        callback();
+                    }
                 }
                 else {
+                    studentService.find("input[name=completed]").val(false);
                     _showAlert(data.Message, false);
                 }
             },
             error: function (data) {
+                studentService.find("input[name=completed]").val(false);
                 _showAlert("There was an error while trying to save the data.", false);
             }
         });
