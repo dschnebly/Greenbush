@@ -858,7 +858,7 @@
 
                 //check dates are valid before saving
                 var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
-
+                   
                 //if isvalid, don't allow user to save
                 if (!isValid) {
                     _showAlert();
@@ -987,7 +987,7 @@
                                     serviceContainer.find(".serviceFadeIn").each(function () {
                                         $(this).fadeTo("slow", 0, null).hide();
                                     });
-
+                                                                    
                                     _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                                 }
                             } else {
@@ -1000,9 +1000,6 @@
                         },
                         error: function (data) {
                             alert("Error connecting to the database. Please try again or contact your administrator.");
-                        },
-                        complete: function (data) {
-                            //alert("yeah, I'm going to go now.");
                         }
                     });
                 }
