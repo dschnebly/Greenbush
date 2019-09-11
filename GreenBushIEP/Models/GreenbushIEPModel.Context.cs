@@ -100,6 +100,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
         public virtual DbSet<tblRace> tblRaces { get; set; }
+        public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

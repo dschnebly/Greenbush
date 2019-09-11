@@ -47,7 +47,7 @@ function PrintText() {
 
 	$("#printText").val(markup);
 	$("#studentText").val(markup2);
-	$("#isArchive").val(0);
+	$("#isArchive").val(0);	
 	x[0].submit();
 }
 
@@ -69,3 +69,4 @@ function ArchiveText() {
 	$("#isArchive").val(1);
 	x[0].submit();
 }
+

@@ -371,7 +371,7 @@ namespace GreenBushIEP.Models
 		public string fileDesc { get; set; }
 		public string fileDate { get; set; }
 		public StudentLegalView fileModel { get; set; }
-
+		public tblFormTeamEval teamEval { get; set; }
 
 		public IEPFormFileViewModel()
 		{
@@ -380,8 +380,8 @@ namespace GreenBushIEP.Models
 			fileModel = new StudentLegalView();
 			iepId = 0;
 			fileDesc = "";
-
-
+			teamEval = new tblFormTeamEval();
+			
 		}
 	}
 

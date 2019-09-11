@@ -12,12 +12,8 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
 }
-
 <style>
-     .imgCheck{
-        display:none
-
-    }
+    .imgCheck{ display:none }
 
     .fadeInToBackground {
         background: #525659;
@@ -287,9 +283,9 @@
     <div class="container" style="min-height: 1250px; width: 725px;">
         <div class="row" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
-                <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
-                    @*<button type="button" class="btn btn-info" id="printbutton" onclick="return window.print();">Print</button>*@
-                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />
+                <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
+                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" /><br/>
+					<input type="button" id="btnSave" value="Save" onclick="SaveText();" class="btn btn-info print" style="margin-top:5px;display:none"/>
                     <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />
                     <input type="hidden" id="printText" name="printText" />
                     <input type="hidden" id="isArchive" name="isArchive" />
@@ -298,6 +294,7 @@
                     <input type="hidden" id="iepID" name="iepID" value="@Model.iepId" />   
                     <input type="hidden" id="isIEP" name="isIEP" value="0" /> 
                     <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
+					<input type="hidden" id="isSave" name="isSave" />
                 </form>
             </div>
         </div>
@@ -310,17 +307,19 @@
             <div class="col-md-12">
                 <div align="left">
                     <div class="col-md-12 ">
-                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel)
+                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel, new ViewDataDictionary { { "teamEval", Model.teamEval } })
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-
-    // this is the equivalent to $(function(){ });
+<script>	
     document.addEventListener("DOMContentLoaded", function (event) {
+
+		if ( $( ".savdDraftAllowed" ).length ) {
+			$("#btnSave").show();
+		}
 
         var body = document.getElementsByTagName("body")[0];
         body.classList += ' ' + 'fadeInToBackground';
@@ -392,19 +391,28 @@
         var markup = document.getElementsByClassName("module-page")[0].innerHTML;
 		var markup = $(".module-page").html();
         $("#printText").val(markup);
-        $("#isArchive").val(0);
+		$("#isArchive").val(0);
+		$("#isSave").val(0);		
         x[0].submit();
     }
 
     function ArchiveText() {
-
         var x = document.getElementsByClassName("form-print");
         var markup = document.getElementsByClassName("module-page")[0].innerHTML;
         $("#printText").val(markup);
-        $("#isArchive").val(1);
+		$("#isArchive").val(1);
+		$("#isSave").val(0);
         x[0].submit();
-    }
+	}
 
+	function SaveText() {
+	 var x = document.getElementsByClassName("form-print");
+     var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+	 $("#printText").val(markup);	
+	 $("#isArchive").val(0);
+	 $("#isSave").val(1);
+	 x[0].submit();
+	}
 	
 	function clearContents(element) {
 		element.value = '';

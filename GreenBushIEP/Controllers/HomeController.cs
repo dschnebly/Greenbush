@@ -2072,6 +2072,7 @@ namespace GreenbushIep.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+
             var forms = GetForms();
 
             var form = forms.Where(o => o.Value == fileName).FirstOrDefault();
@@ -2122,6 +2123,11 @@ namespace GreenbushIep.Controllers
                 var district = db.tblDistricts.Where(c => c.USD == fileViewModel.studentInfo.AssignedUSD).FirstOrDefault();
                 fileViewModel.districtName = district != null ? district.DistrictName : "";
             }
+
+			if (fileName == "TeamEvaluation")
+			{
+				viewModel.teamEval = db.tblFormTeamEvals.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
             viewModel.fileModel = fileViewModel;
@@ -2315,8 +2321,26 @@ namespace GreenbushIep.Controllers
                         tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                         tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
-                        theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                        stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
+						bool isDOC = false;
+						if (theIEP.studentTransition != null)
+						{
+							isDOC = theIEP.studentTransition.isDOC;
+						}
+
+						if (theIEP.current.begin_date != null && !isDOC)
+						{
+							//check student age for transition plan using the begin date plus one year
+							var endDate = theIEP.current.begin_date.Value.AddYears(1);
+							theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+						}
+						else
+						{
+							//use current date
+							theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+						}
+
+
+						stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
                         stvw.isDOC = district.DOC;
                         studentDetails.isDOC = district.DOC;
 
@@ -2756,16 +2780,8 @@ namespace GreenbushIep.Controllers
                     {
                         //on save if no errors
                         db.SaveChanges();
-
-                        Response.Clear();
-                        Response.ClearHeaders();
-
-                        Response.AppendHeader("Content-Length", sb.Length.ToString());
-                        Response.ContentType = "text/plain";
-                        Response.AppendHeader("Content-Disposition", "attachment;filename=\"SpedProExport.txt\"");
-
-                        Response.Write(sb);
-                        Response.End();
+						var byteArray = System.Text.Encoding.UTF8.GetBytes(sb.ToString());						
+						OutputResponse(byteArray, "SpedProExport.txt", "text/plain");
                     }
                     else
                     {
@@ -3008,9 +3024,10 @@ namespace GreenbushIep.Controllers
             return documentName.Replace(',', ' ');
         }
 
-        [Authorize]
+
+		[Authorize]
         [ValidateInput(false)]
-        public FileResult DownloadPDF(FormCollection collection)
+        public ActionResult DownloadPDF(FormCollection collection)
         {
 
             string StudentHTMLContent = collection["studentText"];
@@ -3021,17 +3038,34 @@ namespace GreenbushIep.Controllers
             string iepIDStr = collection["iepID"];
             string isIEP = collection["isIEP"];
             string formName = collection["formName"];
+			string isSave = collection["isSave"];
 
-            var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
-            if (mergedFile != null)
-            {
-                string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
-                return File(mergedFile, "application/pdf", downloadFileName);
-            }
-            else
-                return null;
+			if (isSave == "1")
+			{
+				try
+				{
+					SaveFormValues(HTMLContent, formName, studentId);
+				}
+				catch (Exception ex)
+				{
+				}
 
-        }
+				return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
+			}
+			else
+			{
+				var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
+				if (mergedFile != null)
+				{
+					string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
+					OutputResponse(mergedFile, downloadFileName, "application/pdf");
+					
+				}
+			}
+
+			return null;
+
+		}
 
         private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string studentName, string studentId,
         string isArchive, string iepIDStr, string isIEP, string formName)
@@ -3425,5 +3459,129 @@ namespace GreenbushIep.Controllers
             return fullName;
 
         }
-    }
+
+		private void OutputResponse(byte[] memoryStream, string fileName, string contentType)
+		{
+			Response.Clear();
+
+			Response.ContentType = contentType; //"application/octet-stream";
+			Response.AddHeader("Content-Disposition", "attachment;filename=" + fileName);
+
+			Response.BinaryWrite(memoryStream);
+			Response.End();
+		}
+
+		#region FormPDFDownload
+		private void SaveFormValues(string HTMLContent, string formName, string studentId)
+		{
+			//capture data
+			int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
+
+			if (sid == 0)
+				return;
+
+			tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+
+			HtmlDocument htmlDocument = new HtmlDocument();
+			htmlDocument.OptionWriteEmptyNodes = true;
+			htmlDocument.OptionFixNestedTags = true;
+			htmlDocument.LoadHtml(HTMLContent);
+
+			var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
+			var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+
+			if (formName == "Team Evaluation Report")
+			{
+				var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
+
+				teamEval.StudentId = sid;
+				teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
+				teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
+				teamEval.Hearing = GetInputValue("txtHearing", spans);
+				teamEval.Vision = GetInputValue("txtVision", spans);
+				teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
+				teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
+				teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
+				teamEval.TestData = GetInputValue("txtTestData", spans);
+				teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
+				teamEval.Peformance = GetInputValue("txtPeformance", spans);
+				teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
+				teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
+				teamEval.Regulations = GetInputValue("txtRegulations", spans);
+				teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
+				teamEval.Strengths = GetInputValue("txtStrengths", spans);
+				teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
+				teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
+				teamEval.Tried = GetInputValue("txtTried", spans);
+				teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
+				teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
+				teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
+				teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
+				teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
+				teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
+				teamEval.ListSources = GetInputValue("txtListSources", spans);
+
+
+				teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
+				teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
+				teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
+
+				if (teamEval.FormTeamEvalId == 0)
+				{
+					teamEval.CreatedBy = currentUser.UserID;
+					teamEval.Create_Date = DateTime.Now;
+					teamEval.ModifiedBy = currentUser.UserID;
+					teamEval.Update_Date = DateTime.Now;
+					db.tblFormTeamEvals.Add(teamEval);
+				}
+				else
+				{
+					teamEval.ModifiedBy = currentUser.UserID;
+					teamEval.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+
+
+		}
+
+		private string GetInputValue(string inputName, List<HtmlNode> inputs)
+		{
+			var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
+			if (input != null)
+				return input.InnerHtml;
+			else
+				return "";
+		}
+
+		private bool? GetCheckboxInputValue(string inputName, string inputName2, List<HtmlNode> checkboxes)
+		{
+			bool? returnValue = null;
+			var valYes = "";
+			var valNo = "";
+
+			var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+			if (input != null)
+			{
+				valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+			}
+
+			var input2 = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+			if (input2 != null)
+			{
+				valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";
+			}
+
+			if (valYes == "Y")
+				returnValue = true;
+			else if (valNo == "Y")
+				returnValue = false;
+
+			return returnValue;
+
+		}
+
+		#endregion
+	}
 }
