@@ -55,17 +55,13 @@
     // fires when the user prints the IEP
     $('#printIEP').not('.bound').addClass('bound').on("click", function (e) {
         var stid = getUrlParameter('stid');
-        var iepId = $("#studentIEPId").val();
-
-        $('.ajax-loader').css("visibility", "visible");
+        var iepId = $("#studentIEPId").val();		        
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
     });
 	
     $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
         var stid = getUrlParameter('stid');
         var iepId = $("#studentIEPId").val();
-
-        $('.ajax-loader').css("visibility", "visible");
         window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
     });
 

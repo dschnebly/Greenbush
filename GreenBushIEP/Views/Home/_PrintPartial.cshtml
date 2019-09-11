@@ -214,8 +214,8 @@
 				 <tr>
 			 		<td><label>Grade:</label></td>
 			 		<td>@(studentGrade)</td>
-					<td><label>IEP Date:</label></td>
-					<td style="width:150px;">@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>			 
+					<td><label>IEP Meeting Date:</label></td>
+					<td style="width:150px;">@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>			 
 				 </tr>
 				 <tr>
 					<td><label>Initiation:</label></td>
