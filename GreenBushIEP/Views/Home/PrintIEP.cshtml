@@ -36,8 +36,8 @@
             <div class="col-md-11">
 
                 <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
-                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />
-                    <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />
+                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />					
+                    <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />					
                     <input type="hidden" id="printText" name="printText" />
                     <input type="hidden" id="studentText" name="studentText" />
                     <input type="hidden" id="isArchive" name="isArchive" />
@@ -45,6 +45,7 @@
                     <input type="hidden" id="studentId" name="studentId" value="@Model.current.UserID" />
                     <input type="hidden" id="iepID" name="iepID" value="@Model.current.IEPid" />
                     <input type="hidden" id="isIEP" name="isIEP" value="1" />       
+					
 					     
                 </form>
             </div>

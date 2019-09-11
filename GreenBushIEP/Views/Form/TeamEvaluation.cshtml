@@ -1,12 +1,13 @@
 ﻿
 @{
-
+	var formModel = ViewData["teamEval"] != null ? ViewData["teamEval"] as GreenBushIEP.Models.tblFormTeamEval : new GreenBushIEP.Models.tblFormTeamEval();
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
 	string dateStr = DateTime.Today.ToShortDateString();
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
 }
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
 	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in' class="voffset2">
 		<p class=MsoNormal align=center style='text-align:center'>
 			<span style='font-size: 16pt;'><b>Team Evaluation Report</b></span>
@@ -26,27 +27,24 @@
 			</span>
 		</span><![endif]>
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Reason for referral<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Reason for referral<br/><textarea class="form-control" cols="100" rows="4">@(formModel.ReasonReferral)</textarea><span id="txtReasonReferral" style='display:none' class="input-value timesfont">@(formModel.ReasonReferral)</span>		
 		</span>
 	</p>	
 	<p class=MsoNormal>
-		<span style='font-size:12.0pt;line-height:115%;font-family:
-"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
 	</p>
-
-	<p style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
+	<p style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				2.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Educationally relevant medical findings:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Educationally relevant medical findings:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.MedicalFindings)</textarea><span id="txtMedicalFindings" style='display:none' class="input-value timesfont">@(formModel.MedicalFindings)</span>		
 		</span>
 	</p>	
 	<p class=MsoNormal style='margin-left:.5in'><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			<span class="timesfont">Hearing: </span> <textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span> <br/>
-		    <span class="timesfont">Vision: </span> <textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			<span class="timesfont">Hearing: </span> <textarea class="form-control" cols="100" rows="4">@(formModel.Hearing)</textarea><span  id="txtHearing"  style='display:none' class="input-value timesfont">@(formModel.Hearing)</span> <br/>
+		    <span class="timesfont">Vision: </span> <textarea class="form-control" cols="100" rows="4">@(formModel.Vision)</textarea><span  id="txtVision" style='display:none' class="input-value timesfont">@(formModel.Vision)</span>
 		</span>
 	</p>
 	<p  style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'><![if !supportLists]>
@@ -56,82 +54,64 @@ text-indent:-.25in;mso-list:l7 level1 lfo1'>
 				</span>
 			</span>
 		<![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			<span style='mso-spacerun:yes'></span>Relevant behavior noted during the observation of the student AND the relationship of the observation to the student’s academic functioning:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			<span style='mso-spacerun:yes'></span>Relevant behavior noted during the observation of the student AND the relationship of the observation to the student’s academic functioning:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.RelevantBehavior)</textarea><span  id="txtRelevantBehavior" style='display:none' class="input-value timesfont">@(formModel.RelevantBehavior)</span>		
 		</span>
 	</p>
-
-	<p  style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	<p  style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				4.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Information	gathered from record review:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Information	gathered from record review:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.InfoReview)</textarea><span id="txtInfoReview" style='display:none' class="input-value timesfont">@(formModel.InfoReview)</span>		
 		</span>
 	</p>
-	<p CxSpFirst style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	<p CxSpFirst style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				5.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Parent and teacher report/interview:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Parent and teacher report/interview:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.ParentInterview)</textarea><span id="txtParentInterview" style='display:none' class="input-value timesfont">@(formModel.ParentInterview)</span>		
 		</span>
 	</p>
-
-	<p  style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	<p  style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				6.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Test data:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Test data:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.TestData)</textarea><span  id="txtTestData" style='display:none' class="input-value timesfont">@(formModel.TestData)</span>		
 		</span>
-	</p>
-		
-	<p CxSpFirst style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	</p>		
+	<p CxSpFirst style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				7.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Does the student exhibit a pattern of strengths and weaknesses in performance, achievement, or both, relative to age, KSDE grade level standards or	intellectual development?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Does the student exhibit a pattern of strengths and weaknesses in performance, achievement, or both, relative to age, KSDE grade level standards or	intellectual development?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.IntellectualDevelopment)</textarea><span id="txtIntellectualDevelopment" style='display:none' class="input-value timesfont">@(formModel.IntellectualDevelopment)</span>		
 		</span>
 	</p>
-
 	<p class="voffset2">
-		<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
 	</p>
-
-	<p class="voffset2" style='margin-left:.25in;mso-add-space:
-auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	<p class="voffset2" style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				8.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Does this pattern document a significant difference between the student and the	expected achievement/performance?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Does this pattern document a significant difference between the student and the	expected achievement/performance?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.Peformance)</textarea><span id="txtPeformance" style='display:none' class="input-value timesfont">@(formModel.Peformance)</span>		
 		</span>
 	</p>
-	<p CxSpLast style='margin-left:.25in;mso-add-space:auto;
-text-indent:-.25in;mso-list:l7 level1 lfo1'>
-		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;
-mso-fareast-font-family:"Times New Roman"'>
+	<p CxSpLast style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1'>
+		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				9.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Is the failure to learn attributable to the effects of environmental, cultural, or economic disadvantage?<br/><textarea  style="width:100px;height:25px"></textarea><span style='display:none' class="input-value timesfont"></span><br/><span class="timesfont" style="margin-top:8px">If so, explain.</span><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>		
+			Is the failure to learn attributable to the effects of environmental, cultural, or economic disadvantage?<br/><textarea  style="width:100px;height:25px">@(formModel.Disadvantage)</textarea><span id="txtDisadvantage" style='display:none' class="input-value timesfont">@(formModel.Disadvantage)</span><br/><span class="timesfont" style="margin-top:8px">If so, explain.</span><textarea class="form-control" cols="100" rows="4">@(formModel.DisadvantageExplain)</textarea><span id="txtDisadvantageExplain" style='display:none' class="input-value timesfont">@(formModel.DisadvantageExplain)</span>		
 		</span>
 	</p>
 	<p CxSpLast style='margin-left:.25in;mso-add-space:auto;text-indent:-.3in;mso-list:l7 level1 lfo1'>
@@ -140,16 +120,14 @@ mso-fareast-font-family:"Times New Roman"'>
 				10.
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Does the student have exceptionality as defined in Federal State statutes and regulations? <br/><textarea class="form-control" cols="100" rows="4"></textarea>
-		<span style='display:none' class="input-value timesfont"></span>
-		</span>
-		
-	</p>
-	
+			Does the student have exceptionality as defined in Federal State statutes and regulations? <br/><textarea class="form-control" cols="100" rows="4">@(formModel.Regulations)</textarea>
+		<span id="txtRegulations" style='display:none' class="input-value timesfont">@(formModel.Regulations)</span>
+		</span>	
+	</p>	
 	<p class=MsoNormal style='margin-left:1.5in'>
-		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>			
-			Yes <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>						
+			Yes <input type="checkbox" name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? "checked" : "")   /><img id="Regulation_flag_Yes" class='imgCheck' src="@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
+			No <input type="checkbox"  name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? "checked" : "")/><img id="Regulation_flag_No" class='imgCheck' src="@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;
 		</span>
 	</p>
 	<div class="section-break"></div>
@@ -160,57 +138,44 @@ mso-fareast-font-family:"Times New Roman"'>
 			</span>
 		</u>		
 	</p>
-
 	<p CxSpFirst style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
 		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
-			<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
+			<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					1.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>
-			Does the response of the presenting concern to general education interventions indicate the need for intense or sustained resources?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
+			Does the response of the presenting concern to general education interventions indicate the need for intense or sustained resources?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.SustainedResources)</textarea><span id="txtSustainedResources" style='display:none' class="input-value timesfont">@(formModel.SustainedResources)</span>
 		</span>
 	</p>
-
 	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
-		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Yes <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>			
+			Yes <input type="checkbox" @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? "checked" : "")   /><img id="SustainedResources_flag_Yes" class='imgCheck' src="@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
+			No <input type="checkbox"  @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? "checked" : "")/><img id="SustainedResources_flag_No" class='imgCheck' src="@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;			
 		</span>
 	</p>
-
-	<p class="voffset2" style='margin-left:1.0in;mso-add-space:
-auto;text-indent:.5in'>
-		<span style='font-size:12.0pt;line-height:115%;
-font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
 		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
-			<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
+			<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					2.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>Team considers:<o:p></o:p></span>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>Team considers:<o:p></o:p></span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l3 level2 lfo15'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				-<span style='font:12.0pt "Times New Roman"'>&nbsp;</span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Student	Strengths:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			Student	Strengths:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.Strengths)</textarea><span id="txtStrengths" style='display:none' class="input-value timesfont">@(formModel.Strengths)</span>
 		</span>
-	</p>
-
-	
+	</p>	
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l12 level2 lfo12'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
@@ -218,141 +183,110 @@ font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
 			Specific
-			Areas of Concern:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			Areas of Concern:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.AreaOfConcern)</textarea><span id="txtAreaOfConcern" style='display:none' class="input-value timesfont">@(formModel.AreaOfConcern)</span>
 		</span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l12 level2 lfo12'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				-<span style='font:12.0pt "Times New Roman"'>&nbsp;</span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			What the General Education Expectations are:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			What the General Education Expectations are:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.GeneralEducationExpectations)</textarea><span id="txtGeneralEducationExpectations" style='display:none' class="input-value timesfont">@(formModel.GeneralEducationExpectations)</span>
 		</span>
-	</p>
-		
+	</p>		
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l3 level2 lfo15'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				-<span style='font:12.0pt "Times New Roman"'>&nbsp;</span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			What has been tried:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			What has been tried:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.Tried)</textarea><span id="txtTried" style='display:none' class="input-value timesfont">@(formModel.Tried)</span>
 		</span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l12 level2 lfo12'>	<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				-<span style='font:12.0pt "Times New Roman"'>&nbsp;</span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			What has worked and not worked:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			What has worked and not worked:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.NotWorked)</textarea><span  id="txtNotWorked" style='display:none' class="input-value timesfont">@(formModel.NotWorked)</span>
 		</span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l12 level2 lfo12'>
 		<![if !supportLists]><span style='font-size:12.0pt;line-height:115%;'>
 			<span style='mso-list:Ignore' class='timesfont'>
 				-<span style='font:12.0pt "Times New Roman"'>&nbsp;</span>
 			</span>
 		</span><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			General	Directions for the next step(s):<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			General	Directions for the next step(s):<br/><textarea class="form-control" cols="100" rows="4">@(formModel.GeneralDirection)</textarea><span id="txtGeneralDirection" style='display:none' class="input-value timesfont">@(formModel.GeneralDirection)</span>
 		</span>
 	</p>
-
 	<p class="voffset2" style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
 		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
-			<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
+			<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					3.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>
-			Does the student meet the eligibility criteria for one of the areas identified by state and federal law?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
+			Does the student meet the eligibility criteria for one of the areas identified by state and federal law?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.MeetEligibility)</textarea><span id="txtMeetEligibility" style='display:none' class="input-value timesfont">@(formModel.MeetEligibility)</span>
 		</span>
 	</p>
-
-	<p class="voffset2" style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
-		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
-			<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
+	<p class="voffset2" style='text-indent:-.25in;mso-list:l9 level1 lfo7'><![if !supportLists]><b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					4.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
 			Are the resources needed to support
-			the student to participate and progress in the general education curriculum
-			beyond those available through general education or other resources? (Data
-			needed to answer this question include:<span style='mso-spacerun:yes'>
-			</span>Specific needs related to progressing in the general education
-			curriculum or participating in appropriate activities; resources needed to
-			improve or maintain learning; and intervention strategies).<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			the student to participate and progress in the general education curriculum	beyond those available through general education or other resources? (Data needed to answer this question include: Specific needs related to progressing in the general education curriculum or participating in appropriate activities; resources needed to
+			improve or maintain learning; and intervention strategies).<br/><textarea class="form-control" cols="100" rows="4">@(formModel.ResourcesNeeded)</textarea><span id="txtResourcesNeeded" style='display:none' class="input-value timesfont">@(formModel.ResourcesNeeded)</span>
 		</span>
 	</p>
-	
-
-	<p CxSpLast style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
-		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
-			<span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
+	<p style='text-indent:-.25in;mso-list:l9 level1 lfo7'>		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					5.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>
-			Does the student have specific needs
-			which are so unique as to require specially designed instruction in order to
-			access and progress in the general education curriculum?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
+			Does the student have specific needs which are so unique as to require specially designed instruction in order to access and progress in the general education curriculum?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.SpecificNeeds)</textarea><span id="txtSpecificNeeds" style='display:none' class="input-value timesfont">@(formModel.SpecificNeeds)</span>
 		</span>
 	</p>
-
 	<p class=MsoNormal>
-		<span style='font-size:12.0pt;line-height:115%;font-family:
-"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
+		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span>
 	</p>
-
-	<p CxSpFirst style='text-indent:-.25in;mso-list:l9 level1 lfo7'>
-		<![if !supportLists]><b style='mso-bidi-font-weight:normal'>
+	<p style='text-indent:-.25in;mso-list:l9 level1 lfo7'><![if !supportLists]><b style='mso-bidi-font-weight:normal'>
 			<span style='font-size:12.0pt;line-height:
 115%;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>
 				<span style='mso-list:Ignore' class='timesfont'>
 					6.
 				</span>
 			</span>
-		</b><![endif]><span style='font-size:12.0pt;line-height:
-115%;font-family:"Times New Roman",serif'>
-			<span style='mso-spacerun:yes'></span>Is the presence of an exceptionality
-			substantiated by convergent data from multiple sources?<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+		</b><![endif]><span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
+			<span style='mso-spacerun:yes'></span>Is the presence of an exceptionality substantiated by convergent data from multiple sources?<br/><textarea class="form-control" cols="100" rows="4">@(formModel.ConvergentData)</textarea><span id="txtConvergentData" style='display:none' class="input-value timesfont">@(formModel.ConvergentData)</span>
 		</span>
 	</p>
-
-	<p class="voffset2" style='margin-left:1.0in;mso-add-space:
-auto;text-indent:.5in'>
+	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Yes <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"/><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;
+			Yes <input type="checkbox" @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? "checked" : "")   /><img id="ConvergentData_flag_Yes" class='imgCheck' src="@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
+			No <input type="checkbox"  @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? "checked" : "")/><img id="ConvergentData_flag_No" class='imgCheck' src="@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;
 		</span>
 	</p>
 	<p style="margin-bottom:8px">
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>			
-			List sources:<br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value timesfont"></span>
+			List sources:<br/><textarea class="form-control" cols="100" rows="4">@(formModel.ListSources)</textarea><span id="txtListSources" style='display:none' class="input-value timesfont">@(formModel.ListSources)</span>
 		</span>
-	</p>
-	<div class="section-break"></div>	
-	<p>
+	</p>	
+	<p class="section-break">
 		<span style='font-size:12.0pt;line-height:120%;font-family:"Times New Roman",serif'>
-			<b>Student	Name:</b> <u>@(studentFormattedName)</u><br>
-			<b>DOB:</b> <u>@(dobStr)</u><br>
-			<b>Date:</b> <u><textarea style="width:100px;height:25px">@(dateStr)</textarea><span style="display:none" class="input-value">@(dateStr)</span></u>
+			<b>Student Name:</b> <u>@(studentFormattedName)</u><br>
+			<b>DOB:</b><u>@(dobStr)</u><br>
+			<b>Date:</b><u><textarea style="width:100px;height:25px">@(dateStr)</textarea><span style="display:none" class="input-value">@(dateStr)</span></u>
 		</span>
 	</p>
-	<table border=0 cellspacing=5 cellpadding=5 style='width:6.0in;border-collapse:collapse;' class="voffset3">
+	<table border=0 cellspacing=5 cellpadding=15 style='width:6.0in;border-collapse:collapse;' class="voffset3">
 		<tr><th>Name</th><th>Position</th><th>Date</th><th>Cirlce One</th></tr>
 		<tr><td>___________________________________</td><td>____________________________</td><td>__________________</td><td>Agree/Disagree</td></tr>
 		<tr><td>___________________________________</td><td>____________________________</td><td>__________________</td><td>Agree/Disagree</td></tr>
@@ -369,6 +303,5 @@ auto;text-indent:.5in'>
 		<tr><td>___________________________________</td><td>____________________________</td><td>__________________</td><td>Agree/Disagree</td></tr>
 		<tr><td>___________________________________</td><td>____________________________</td><td>__________________</td><td>Agree/Disagree</td></tr>
 		<tr><td>___________________________________</td><td>____________________________</td><td>__________________</td><td>Agree/Disagree</td></tr>
-	</table>
-	
+	</table>	
 </div> <!--end module-->
