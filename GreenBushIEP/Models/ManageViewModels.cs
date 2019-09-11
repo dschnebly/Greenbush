@@ -607,6 +607,7 @@ namespace GreenBushIEP.Models
 		public string StartDate { get; set; }
 		public string EndDate { get; set; }
 		public string ServiceCode { get; set; }
+        public string selectedAttendingBuilding { get; set; }
 		public int Frequency { get; set; }
 		public byte DaysPerWeek { get; set; }
 		public short Minutes { get; set; }

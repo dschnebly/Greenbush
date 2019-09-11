@@ -146,7 +146,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label for="fiscalYear">Attendance Building</label>
+                                                <label for="attendanceBuilding">Attendance Building</label>
                                                 <div class="form-group">
                                                     <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
                                                         <option value="-1">- Select a Building -</option>
@@ -345,7 +345,7 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="fiscalYear">Attendance Building</label>
+                                                    <label for="attendanceBuilding">Attendance Building</label>
                                                     <div class="form-group">
                                                         <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
                                                             @if (Model.attendanceBuildings.Count > 0)
@@ -569,23 +569,6 @@
 
         $('.serviceContainer').append(cloneService);
 
-        //have to remove the hasdatepicker before we can appy new datepicker to clone
-        cloneService.find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker');
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true,
-                yearRange: "-1:+2",
-                beforeShowDay: function (date) {
-                    var day = date.getDay();
-                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                    //var isDisabled = ($.inArray(string, disabledDays) != -1);
-                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
-                }
-            });
-        });
-
         panelCollapse.collapse('show');
 
         initService();
@@ -602,12 +585,13 @@
         if (parent != null) {
             var studentId = $("#sid").val();
             var serviceId = parent.data("val");
+            var iepId = $("#studentIEPId").val();
 
             if (studentId != undefined && serviceId != undefined) {
                 $.ajax({
                     type: 'GET',
                     url: '/Home/DuplicateStudentServicesNextYear',
-                    data: { studentId: studentId, serviceId: serviceId },
+                    data: { studentId: studentId, serviceId: serviceId, iepId: iepId },
                     dataType: "json",
                     success: function (data) {
                         if (data.Result == "success") {
@@ -623,8 +607,9 @@
                                 var dupStartDate = serviceObj.StartDate;
                                 var dupEndDate = null;
                                 var dupGoals = serviceObj.Goals;
+                                var dupAttendingBuilding = serviceObj.selectedAttendingBuilding;
 
-                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding);
                             });
                         }
                         else {
@@ -632,7 +617,7 @@
                         }
                     },
                     error: function (data) {
-                        console.log("Unable to duplicate the student services.");
+                        _showAlert("Unable to duplicate the student services.", false);
                     }
                 });
             }
@@ -648,43 +633,47 @@
     $('#duplicateAllService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
 
-        var studentId = $("#sid").val();
+        if ($('.oneStudentService').not('#defaultStudentService').length > 0) { // at least one service
+            var studentId = $("#sid").val();
+            var iepId = $("#studentIEPId").val();
 
-        if (studentId != undefined) {
-            $.ajax({
-                type: 'GET',
-                url: '/Home/DuplicateStudentServicesNextYear',
-                data: { studentId: studentId },
-                dataType: "json",
-                success: function (data) {
-                    if (data.Result == "success") {
-                        $.each(data.Data, function (index, serviceObj) {
+            if (studentId != undefined) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/DuplicateStudentServicesNextYear',
+                    data: { studentId: studentId, iepId: iepId },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Result == "success") {
+                            $.each(data.Data, function (index, serviceObj) {
 
-                            var dupFiscalYear = serviceObj.SchoolYear;
-                            var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
-                            var dupserviceMinutesPerDay = serviceObj.Minutes;
-                            var dupFrequency = serviceObj.Frequency;
-                            var dupLocation = serviceObj.LocationCode;
-                            var dupServiceType = serviceObj.ServiceCode;
-                            var dupServiceProvider = serviceObj.ProviderID;
-                            var dupStartDate = serviceObj.StartDate;
-                            var dupEndDate = null;
-                            var dupGoals = serviceObj.Goals;
+                                var dupFiscalYear = serviceObj.SchoolYear;
+                                var dupServiceDaysPerWeek = serviceObj.DaysPerWeek;
+                                var dupserviceMinutesPerDay = serviceObj.Minutes;
+                                var dupFrequency = serviceObj.Frequency;
+                                var dupLocation = serviceObj.LocationCode;
+                                var dupServiceType = serviceObj.ServiceCode;
+                                var dupServiceProvider = serviceObj.ProviderID;
+                                var dupStartDate = serviceObj.StartDate;
+                                var dupEndDate = null;
+                                var dupGoals = serviceObj.Goals;
+                                var dupAttendingBuilding = serviceObj.selectedAttendingBuilding;
 
-                            duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals);
-                        });
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding);
+                            });
+                        }
+                        else {
+                            _showAlert('There was a problem duplicating the Student Services.', false);
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Unable to duplicate the student services.");
                     }
-                    else {
-                        _showAlert('There was a problem duplicating the Student Services.', false);
-                    }
-                },
-                error: function (data) {
-                    console.log("Unable to duplicate the student services.");
-                }
-            });
-        }
-        else {
-            _showAlert('There was a problem duplicating the Student Services.', false);
+                });
+            }
+            else {
+                _showAlert('There was a problem duplicating the Student Services.', false);
+            }
         }
 
         $(".duplication-loader").css('visibility', 'hidden');
@@ -728,6 +717,23 @@
                 _validateDate(fiscalYear, selectedDate, e);
             });
 
+            //have to remove the hasdatepicker before we can appy new datepicker to clone
+            $(this).find('.dtField').each(function () {
+                $(this).removeAttr('id').removeClass('hasDatepicker');
+                $('.dtField').datepicker({
+                    dateFormat: "mm/dd/yy",
+                    changeYear: true,
+                    changeMonth: true,
+                    yearRange: "-1:+2",
+                    beforeShowDay: function (date) {
+                        var day = date.getDay();
+                        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                        //var isDisabled = ($.inArray(string, disabledDays) != -1);
+                        return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+                    }
+                });
+            });
+
             $(this).find("a i.deleteService").on("click", function (e) {
 
                 if ($(e.target).hasClass('deleteService')) {
@@ -750,6 +756,12 @@
                                         var previousService = oneStudentService.prev(".oneStudentService:visible").find(".collapse");
                                         oneStudentService.remove();
                                         previousService.collapse('show');
+
+                                        if($('.oneStudentService').not('#defaultStudentService').length == 0) {
+                                            $("#duplicateService").addClass("disabled").attr('disabled', 'disabled');;
+                                            $("#duplicateAllService").addClass("disabled").attr('disabled', 'disabled');;
+                                        }
+
                                         _showAlert('Student Service successfully deleted.', true)
 
                                         $(window).trigger("deleting.bs.modal");
@@ -866,6 +878,8 @@
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
                             studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+                            $("#duplicateService").removeClass("disabled").removeAttr("disabled");
+                            $("#duplicateAllService").removeClass("disabled").removeAttr("disabled");
 
                             $(window).trigger("saving.bs.modal");
                         }
@@ -900,27 +914,6 @@
                     checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
                 });
             });
-
-            function asyncCallBack() {
-                // check if all of the services are completed
-
-                var allCompleted = true;
-                $.each($(".oneStudentService").not("#defaultStudentService"), function () {
-                    if ($(this).find("input[name='completed']").val() !== "true") {
-                        allCompleted = false;
-                    } else {
-                        $(this).find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
-                    }
-                });
-
-                if (allCompleted) {
-                    $("#ServiceWidget .hero-widget").addClass("module-completed");
-
-                    setTimeout(function () {
-                        $('#moduleSection').modal('hide');
-                    }, 1200);
-                }
-            }
 
             $(this).find(".panel-title a").on("click", function () {
                 /* Closes all the other panel groups except the one you clicked on */
@@ -1040,7 +1033,9 @@
     }
     initGoalEvents();
 
-    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals) {
+    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding) {
+        var selectedStudentService = $("div:visible.collapse.in").closest(".oneStudentService ");
+
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
@@ -1062,34 +1057,34 @@
         var panelCollapse = cloneService.find("#collapse0").prop("id", "collapse" + serviceCount);
         $('.serviceContainer').append(cloneService);
 
-        //have to remove the hasdatepicker before we can appy new datepicker to clone
-        cloneService.find('.dtField').each(function () {
-            $(this).removeAttr('id').removeClass('hasDatepicker');
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true,
-                yearRange: "-1:+2",
-                beforeShowDay: function (date) {
-                    var day = date.getDay();
-                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                    var isDisabled = ($.inArray(string, disabledDays) != -1);
-                    return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
-                },
-            });
-        });
-        cloneService.find("select[name='fiscalYear']").val(nextYear);
         cloneService.find("input[name='completed']").val(true);
         cloneService.find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
         cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
+        cloneService.find("select[name='attendanceBuilding']").val(dupAttendingBuilding).prop('selected', true);
+
+        var dupFiscalYear = selectedStudentService.find("select[name='fiscalYear']").find('option');
+
+        //clones and copies the fiscal years to the new student service
+        dupFiscalYear.clone().appendTo(cloneService.find("select[name='fiscalYear']"));
+
+        cloneService.find("select[name='fiscalYear'] option").removeAttr("selected");
         cloneService.find("select[name='Frequency']").val(dupFrequency).prop('selected', true);
         cloneService.find("select[name='Location']").val(dupLocation).prop('selected', true);
         cloneService.find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
         cloneService.find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
         cloneService.find("input[name='serviceStartDate']").val(dupStartDate);
         cloneService.find("input[name='serviceEndDate']").val(dupEndDate);
-        cloneService.find("select[id='studentGoalsSelect']").val(dupGoals);
-        cloneService.find('.chosen-select').chosen({ width: "100%" });
+        if (dupGoals != null) {
+            var temp = dupGoals.split(",");
+            if (temp.length == 1) {
+                cloneService.find("select[id='studentGoalsSelect']").val(dupGoals);
+            } else {
+                cloneService.find("select[id='studentGoalsSelect']").val(temp);
+            }
+        }
+        cloneService.find(".serviceFadeIn").each(function () {
+            $(this).removeClass("serviceFadeIn");
+        });
 
         var serviceType = cloneService.closest('.oneStudentService').find("select[name='ServiceType'] option:selected").text();
         if (serviceType != undefined && serviceType != "")
@@ -1098,6 +1093,7 @@
         panelCollapse.collapse("show");
 
         initService();
+        cloneService.find("select[name='fiscalYear']").val(nextYear).prop('selected', true);
     }
 
     function _validateStartDate(dateVal) {
@@ -1276,6 +1272,27 @@
                 console.log("Unable get last day fiscal year.");
             }
         });
+    }
+
+    function asyncCallBack() {
+        // check if all of the services are completed
+
+        var allCompleted = true;
+        $.each($(".oneStudentService").not("#defaultStudentService"), function () {
+            if ($(this).find("input[name='completed']").val() !== "true") {
+                allCompleted = false;
+            } else {
+                $(this).find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+            }
+        });
+
+        if (allCompleted) {
+            $("#ServiceWidget .hero-widget").addClass("module-completed");
+
+            setTimeout(function () {
+                $('#moduleSection').modal('hide');
+            }, 1200);
+        }
     }
 
     $("#isCompletedModule").on("click", function () {
