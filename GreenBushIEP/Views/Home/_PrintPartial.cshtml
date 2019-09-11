@@ -2420,7 +2420,7 @@
         <div class="row voffset2">
             <div class="col-md-12">
                 <fieldset class="form-group">
-                    <label>Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student?</label>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag != null && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "Yes" : "No" )
+                    <label>Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student? </label><span>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag != null && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "Yes" : "No" )</span>
                     
                     <div class="form-check voffset2" id="Potential_HarmfulEffects_TextArea" style="display: @(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.HasValue && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "block;" : "none;")">
                         <div id="PC_Desc">
