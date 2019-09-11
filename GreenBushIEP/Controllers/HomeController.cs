@@ -1314,13 +1314,12 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = teacher)]
         [Authorize]
-        public ActionResult DuplicateStudentServicesNextYear(int studentId, int? serviceId)
+        public ActionResult DuplicateStudentServicesNextYear(int studentId, int? serviceId, int iepId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId).FirstOrDefault();
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
                 //get latest year
@@ -1345,10 +1344,8 @@ namespace GreenbushIep.Controllers
                     int endMonth = 6; //june
 
                     List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && c.canHaveClass == true && c.NoService == false && c.Year >= currentYear && c.Year <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
-                    var whatever = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day);
                     tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
                     tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
-
 
                     List<tblService> services = null;
                     if (serviceId.HasValue)
@@ -1360,8 +1357,7 @@ namespace GreenbushIep.Controllers
                     foreach (var service in services)
                     {
                         var item = new StudentServiceObject();
-                        var meetingDate =
-                        item.DaysPerWeek = service.DaysPerWeek;
+                        var meetingDate = item.DaysPerWeek = service.DaysPerWeek;
                         item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
 
                         if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
@@ -1380,6 +1376,8 @@ namespace GreenbushIep.Controllers
                         item.SchoolYear = service.SchoolYear;
                         item.ServiceCode = service.ServiceCode;
                         item.Frequency = service.Frequency;
+                        item.selectedAttendingBuilding = service.BuildingID;
+
                         if (service.tblGoals.Any())
                         {
                             foreach (var goal in service.tblGoals)
