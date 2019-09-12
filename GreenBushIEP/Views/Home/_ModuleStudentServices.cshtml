@@ -453,7 +453,7 @@
                                                                 {
                                                                     foreach (var serviceLocation in Model.serviceLocations)
                                                                     {
-                                                                        <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
+                                                                        <option value="@serviceLocation.LocationCode" @(service.LocationCode == serviceLocation.LocationCode ? "selected" : "")>(@serviceLocation.LocationCode) @serviceLocation.Name</option>
                                                                     }
                                                                 }
 
