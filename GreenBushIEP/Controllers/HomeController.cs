@@ -2731,7 +2731,7 @@ namespace GreenbushIep.Controllers
                         if (theIEP != null && theIEP.current != null)
                         {
                             var studentDetails = new StudentDetailsPrintViewModel();
-                            theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.ServiceCode != "NS").ToList(); //exclude servies marked as No Service
+                            theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid && g.ServiceCode != "NS" && g.SchoolYear == fiscalYear).ToList(); //exclude servies marked as No Service
                             theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
 
                             tblStudentInfo info = null;
