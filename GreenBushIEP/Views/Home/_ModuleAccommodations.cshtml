@@ -396,7 +396,8 @@
 
 					$(window).trigger("saving.bs.modal");
 					setTimeout(function () {
-						$("#AccommodationWidget .hero-widget").addClass("module-completed");
+					    $("#AccommodationWidget .hero-widget").addClass("module-completed");
+					    $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
 						$('#moduleSection').modal('hide');
 					}, 1200);
 										

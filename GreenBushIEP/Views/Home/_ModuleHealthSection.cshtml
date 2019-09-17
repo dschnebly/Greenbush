@@ -1,9 +1,9 @@
 ﻿@model GreenBushIEP.Models.tblIEPHealth
 
 <div class="modal-header">
-	
+
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule();"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule();"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
@@ -103,8 +103,6 @@
                 <textarea class="form-control standard-font-size" id="AreaOfNeedDescription" name="AreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
-
-
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
@@ -115,14 +113,14 @@
                 </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
-               
+
                 <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     <span class="standard-font-size"> *if other, please explain</span><br />
                     <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
-        <div class="row noPrint" >
+        <div class="row noPrint">
             <div class="col-md-12" style="text-align:center;">
                 <div class="form-group">
                     <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
@@ -143,7 +141,7 @@
     </div>
 </div>
 @*<br />
-<br />*@
+    <br />*@
 
 <script>
     // Attach Event
@@ -237,28 +235,23 @@
             return false;
         }
 
-        if (!$("input[name='HealthNoConcerns']").is(':checked'))
-        {
-            if($("#PLAAFP_Strengths").val().length == 0)
-            {
+        if (!$("input[name='HealthNoConcerns']").is(':checked')) {
+            if ($("#PLAAFP_Strengths").val().length == 0) {
                 alert('The following field is required not to be empty: Strengths');
                 return false;
             }
 
-            if($("#PLAAFP_Concerns").val().length == 0)
-            {
+            if ($("#PLAAFP_Concerns").val().length == 0) {
                 alert('The following field is required not to be empty: Concerns');
                 return false;
             }
 
-            if($("#AreaOfNeedDescription").val().length == 0)
-            {
+            if ($("#AreaOfNeedDescription").val().length == 0) {
                 alert('The following field is required not to be empty: Area of Need');
                 return false;
             }
 
-            if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3)
-            {
+            if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3) {
                 alert("At least one check mark under 'met by' should be checked");
                 return false;
             }
