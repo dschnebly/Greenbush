@@ -124,12 +124,12 @@
             <div class="form-group" style="margin-bottom: 3px;margin-top:10px">
                 <div class="input-group" style="background-color: #F9F9F9;">                    
                     <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
-                    <span class="input-group-btn">
+                    @*<span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
                             <span class="glyphicon glyphicon-unchecked"></span>
                         </button>
                         <input type="hidden" name="StudentGoalBenchmarkHasTransition0" value="false" />
-                    </span>
+                    </span>*@
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;">
                             <i class="glyphicon glyphicon-trash"></i>
@@ -938,17 +938,29 @@
 
             //* Binding */
             /* fires when the user clicks the check box */
-            $(this).find('.transition-activity').on('click', function (event) {
-                if ($(this).children('span').hasClass('glyphicon-unchecked')) {
-                    $(this).children('span').removeClass('glyphicon-unchecked');
-                    $(this).children('span').addClass('glyphicon-check');
-                    $(this).next().val("true");
-                } else {
-                    $(this).children('span').removeClass('glyphicon-check');
-                    $(this).children('span').addClass('glyphicon-unchecked');
-                    $(this).next().val("false");
-                }
-            });
+            //$(this).find('.transition-activity').on('click', function (event) {
+            //    if ($(this).children('span').hasClass('glyphicon-unchecked')) {
+            //        $(this).children('span').removeClass('glyphicon-unchecked');
+            //        $(this).children('span').addClass('glyphicon-check');
+            //        $(this).next().val("true");
+            //    } else {
+            //        $(this).children('span').removeClass('glyphicon-check');
+            //        $(this).children('span').addClass('glyphicon-unchecked');
+            //        $(this).next().val("false");
+            //    }
+            //});
+
+			//shortterm methods other trigger
+			$(this).find(".smethods").on('change', function (event) {
+					var selectedMethods = $(this).val();
+					if (selectedMethods.indexOf("7") > -1) {
+						$(this).parent().find(".divOther").show();
+					}
+					else {
+						$(this).parent().find(".divOther").hide();
+					}
+			}); //end shortterm methods
+
         });
     }
 
