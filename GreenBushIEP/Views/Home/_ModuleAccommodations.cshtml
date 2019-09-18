@@ -183,9 +183,7 @@
 </div>
 </div> <!--end print-->
 <script>
-	
-    /* Binding */
-    /* tooltips */
+
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -254,7 +252,9 @@
                         $(this).find("input[name=Completed]").val(false);
                     });
 
-                    $("#AccommodationWidget .hero-widget").removeClass("module-completed");
+					$("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
+					$("#AccommodationWidget").addClass("needsAttention");
+					
                     $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                 } else {
                     console.log("Error when updating the module.")
@@ -396,7 +396,8 @@
 
 					$(window).trigger("saving.bs.modal");
 					setTimeout(function () {
-					    $("#AccommodationWidget .hero-widget").addClass("module-completed");
+						$("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
+						$("#AccommodationWidget").removeClass("needsAttention");
 					    $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
 						$('#moduleSection').modal('hide');
 					}, 1200);
@@ -440,8 +441,9 @@
                                 });
 
                                 if (allCompleted) {
-                                    $("#AccommodationWidget .hero-widget").addClass("module-completed");
-                                    $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
+									$("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
+									$("#AccommodationWidget").addClass("module-completed").removeClass("needsAttention");
+                                    
 
                                     $(window).trigger("saving.bs.modal");
 
@@ -450,7 +452,8 @@
                                     }, 1200);
 
                                 } else {
-                                    $("#AccommodationWidget .hero-widget").removeClass("module-completed");
+									$("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
+									$("#AccommodationWidget").addClass("needsAttention");
                                     $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                                 }
                             }
