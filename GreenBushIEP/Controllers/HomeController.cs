@@ -361,7 +361,7 @@ namespace GreenbushIep.Controllers
                                    join districts in db.tblProviderDistricts
                                         on providers.ProviderID equals districts.ProviderID
                                    where listOfUSD.Contains(districts.USD)
-                                   select providers).Distinct().ToList();
+                                   select providers).Distinct().OrderBy(o =>o.LastName).ThenBy(o => o.FirstName).ToList();
 
                 model.listOfProviders = listOfProviders;
                 model.districts = MISDistrictList;
@@ -452,9 +452,29 @@ namespace GreenbushIep.Controllers
                         return Json(new { Result = "error", id = pk, errors = "Provider code already exists" }, JsonRequestBehavior.AllowGet);
                     }
 
-                    var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
+					//var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
 
-                    return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders.OrderBy(o => o.LastName).ThenBy(o => o.FirstName) }, JsonRequestBehavior.AllowGet);
+					var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+										   join districts in db.tblDistricts
+												on buildingMaps.USD equals districts.USD
+										   where buildingMaps.UserID == owner.UserID
+										   select districts).Distinct().ToList();
+
+					List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
+
+					List<ProviderViewModel> listOfProviders = new List<ProviderViewModel>();
+					listOfProviders = (from providers in db.tblProviders
+									   join districts in db.tblProviderDistricts
+											on providers.ProviderID equals districts.ProviderID
+									   where listOfUSD.Contains(districts.USD)
+									   select new ProviderViewModel {
+										   ProviderID = providers.ProviderID,
+										   ProviderCode = providers.ProviderCode,
+										   FirstName = providers.FirstName,
+										   LastName = providers.LastName }									   
+									   ).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
+
+					return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders }, JsonRequestBehavior.AllowGet);
                 }
             }
 

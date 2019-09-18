@@ -110,16 +110,16 @@
         <div class="container serviceContainer">
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
-                    <button id="newService" class="btn btn-default">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <button id="duplicateAllService" class="btn btn-default @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="newService" class="btn btn-default noPrint">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <button id="duplicateAllService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
             <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
             <input type="hidden" id="sid" value="@Model.studentId" />
-            <div class="alert alert-danger" id="alertMessage" role="alert">
+            <div class="alert alert-danger noPrint" id="alertMessage" role="alert">
                 <strong class="moreinfo">Oh snap!</strong>
             </div>
             <div class="row oneStudentService hidden" id="defaultStudentService">
@@ -526,7 +526,7 @@
                 </div>
             </div>
         </div>
-        <div class="duplication-loader">
+        <div class="duplication-loader noPrint">
             <img src="~/Content/Images/copying-icon.gif" class="img-responsive" alt="copying services.." />
         </div>
     </div>

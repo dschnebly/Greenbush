@@ -216,7 +216,7 @@
                     foreach (var provider in Model.listOfProviders)
                     {
                         <li class="list-group-item">
-                            <span>@provider.FirstName @provider.LastName : @provider.ProviderCode </span>
+                            <span>@provider.LastName, @provider.FirstName : @provider.ProviderCode </span>
                             <i class="glyphicon glyphicon-trash pull-right btn btn-default " onclick='deleteProvider(@provider.ProviderID)'></i>
                             <i class="glyphicon glyphicon-pencil pull-right btn btn-default" onclick='editProvider(@provider.ProviderID, "@provider.FirstName", "@provider.LastName", "@provider.ProviderCode");'></i>
                         </li>
@@ -261,9 +261,8 @@
     </div>
 </div>
 
-<script>
+<script>	
     var selectedDistricts = "";
-
     $(document).ready(function () {
         function init() {
             $('.child-ajax-loader').css('visibility', 'hidden');
@@ -431,7 +430,6 @@
                             $("#alertMessage").slideUp(500);
                         });
                 }
-
             }
         });
     }
@@ -444,7 +442,6 @@
         $("#providerCode").val("");
         $("#providerId").val(0);
     }
-
 
     function closeModal() {
         clearModal();
@@ -471,7 +468,7 @@
             if (provider.LastName != null && provider.LastName != undefined)
                 providerLastName = provider.LastName.replace(/'/g, '&#39;');
 
-            var listgroupitem = '<li class="list-group-item"><span>' + provider.FirstName + " " + provider.LastName + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerFirstName + "\", \"" + providerLastName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
+            var listgroupitem = '<li class="list-group-item"><span>' + provider.LastName + ", " + provider.FirstName + ": " + provider.ProviderCode + "</span><i class='glyphicon glyphicon-trash pull-right btn btn-default' onclick='deleteProvider(" + provider.ProviderID + ")'></i><i class='glyphicon glyphicon-pencil pull-right btn btn-default editProvider' onclick='editProvider(" + provider.ProviderID + ", \"" + providerFirstName + "\", \"" + providerLastName + "\", \"" + provider.ProviderCode + "\");' ></i></li>";
 
             $('ul.list-group').append(listgroupitem);
         });
