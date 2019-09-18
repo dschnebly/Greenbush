@@ -1,127 +1,87 @@
 ﻿@{
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
 	string building = Model.building;
-	
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 }
 
 <div class="module-page">
+	<p class=MsoNormal align=center style='text-align:center'>
+		<span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
+			Kansas<o:p></o:p>
+		</span>
+	</p>
 
-        <div class=WordSection1>
+	<p class=MsoNormal align=center style='text-align:center'>
+		<span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
+			Parent Consent for Release of Information and Medicaid Reimbursement<o:p></o:p>
+		</span>
+	</p>
 
-            <p class=MsoNormal align=center style='text-align:center'>
-                <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
-                    Kansas<o:p></o:p>
-                </span>
-            </p>
+	<p class=MsoNormal style='text-align:left;margin-top:15px'>
+		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Consent to Release Information</u></o:p></span>
+	</p>
 
-            <p class=MsoNormal align=center style='text-align:center'>
-                <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
-                    Parent Consent for Release of Information and Medicaid Reimbursement<o:p></o:p>
-                </span>
-            </p>
+	<p class=MsoNormal style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
+		I consent for <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((building.Length) > 103 ? building : String.Format(building).PadRight(103 - String.Format(building).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((building.Length) > 103 ? building : String.Format(building).PadRight(103 - String.Format(building).Length, ' ').Replace(" ", "\u00A0"))</span></span> (School) to release records or information about my child's participation in services to participating physicians, other health care providers, the Kansas Department of Health and Environment (KDHE), any KDHE billing agents, and any school billing agent, as necessary, to process claims for reimbursement by KDHE for covered health-related services, evaluations for these services and transportation, on the day the student receives any health-related service which are outlined inert the child's Individualized Education Program (IEP), including duration and frequency IEPs services.
 
-            <p class=MsoNormal style='text-align:left;margin-top:15px'>
-                <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Consent to Release Information</u></o:p></span>
-            </p>
+	</p>
 
-            <p class=MsoNormal style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
-                I consent for <span style="text-decoration:underline;"><textarea  onfocus="clearContents(this);" cols="30" style="height:30px;">@((building.Length) > 103 ? building : String.Format(building).PadRight(103 - String.Format(building).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((building.Length) > 103 ? building : String.Format(building).PadRight(103 - String.Format(building).Length, ' ').Replace(" ", "\u00A0"))</span></span> (School) to release records or information about my child's participation in services to participating physicians, other health care providers, the Kansas Department of Health and Environment (KDHE), any KDHE billing agents, and any school billing agent, as necessary, to process claims for reimbursement by KDHE for covered health-related services, evaluations for these services and transportation, on the day the student receives any health-related service which are outlined inert the child's Individualized Education Program (IEP), including duration and frequency IEPs services.
+	<p class=MsoNormal style='text-align:left;margin-top:8px'>
+		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Consent to Access Public Benefits</u></o:p></span>
+		<ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;'>
+			<li>I give consent for the school to access the child's or parent's public benefit or insurance to pay for services under 34 C.F.R part 300.</li>
+		</ul>
+	</p>
 
-            </p>
-
-            <p class=MsoNormal style='text-align:left;margin-top:8px'>
-                <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Consent to Access Public Benefits</u></o:p></span>
-                <ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;'>
-                    <li>I give consent for the school to access the child's or parent's public benefit or insurance to pay for services under 34 C.F.R part 300.</li>
-                </ul>
-            </p>
-
-            <p class=MsoNormal style='text-align:left;margin-top:8px'>
-                <span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Procedural Safeguards</u></o:p></span>
-                <ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;'>
-                    <li>I understand that the school may be required to provide certain health-related services to a student who has an IEP at no additional cost to the student's parent(s), and that my refusal to sign this form will not affect whether such services are provided at no cost to the student named above.</li>
-                    <li>
-                        I understand that I will not be required to incur an out-of-pocket expense such as the payment of a deductible or co-pay amount incurred in filing a claim for services. I understand that my child's Medicaid benefits will not be used if that use will:
-                        <span>(a) decrease available lifetime coverage or any other insured benefit; (b) result in your family paying for services that would otherwise be covered by a public benefit or insurance program and that are required for the child outside of the time the child is in school; (c) increase premiums or lead to the discontinuation of benefits of insurance; or (d) risk loss of legibility for home and community-based waivers, based on aggregate health-related expenditures. </span>
-                    </li>
-                    <li>I also understand that the granting of consent is voluntary and may be withdrawn at any time. If I later revoke consent, that revocation is not retroactive (i.e. it does not negate any action that has occurred after the consent was given and before the consent was revoked).</li>
-                </ul>
-            </p>
-
-            <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-                   style='margin-left:15px;border-collapse:collapse;'>
-                <tr>
-
-                    <td>
-                        <p class=MsoNormal>
-                            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px'>I give consent for the school to release Education Records or information and to access Public Benefits as described above in order to submit claims to the Kansas Department of Health and Environment (KDHE)</span>
-                        </p>
-
-                    </td>
-
-                </tr>
-                <tr>
-
-                    <td>
-
-                        <p class=MsoNormal style="margin-top:8px">
-                            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/>&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px'>I do not give consent</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
-                        </p>
-                    </td>
-
-                </tr>
-
-            </table>
-
-            <p class=MsoNormal>
-                <b style=''>
-                    <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-                </b>
-            </p>
-
-            <p class=MsoNormal>
-                <b style=''>
-                    <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-                </b>
-            </p>
-
-
-            <table>
-                <tr>
-                    <td><u>@studentFormattedName</u></td>
-                    <td><u><textarea maxlength="20" style="width:100px;height:20px">@dobStr</textarea><span style="display:none" class="input-value">@dobStr</span></u></td>
-                    <td><u><textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u></td>
-                </tr>
-                <tr>
-                    <td>Child's Name</td>
-                    <td>Date of Birth</td>
-                    <td>Begin Date</td>
-                </tr>
-            </table>
-
-
-            <table style="margin-top:15px">
-                <tr>
-                    <td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
-                    <td><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></u></td>
-
-                </tr>
-                <tr>
-                    <td>Parent/Guardian Signature</td>
-                    <td>Date</td>
-
-                </tr>
-            </table>
-
-
-
-
-        </div>
-
-
-
-
-
-    </div><!--end center-->
+	<p class=MsoNormal style='text-align:left;margin-top:8px'>
+		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><o:p><u>Procedural Safeguards</u></o:p></span>
+		<ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;'>
+			<li>I understand that the school may be required to provide certain health-related services to a student who has an IEP at no additional cost to the student's parent(s), and that my refusal to sign this form will not affect whether such services are provided at no cost to the student named above.</li>
+			<li>
+				I understand that I will not be required to incur an out-of-pocket expense such as the payment of a deductible or co-pay amount incurred in filing a claim for services. I understand that my child's Medicaid benefits will not be used if that use will:
+				<span>(a) decrease available lifetime coverage or any other insured benefit; (b) result in your family paying for services that would otherwise be covered by a public benefit or insurance program and that are required for the child outside of the time the child is in school; (c) increase premiums or lead to the discontinuation of benefits of insurance; or (d) risk loss of legibility for home and community-based waivers, based on aggregate health-related expenditures. </span>
+			</li>
+			<li>I also understand that the granting of consent is voluntary and may be withdrawn at any time. If I later revoke consent, that revocation is not retroactive (i.e. it does not negate any action that has occurred after the consent was given and before the consent was revoked).</li>
+		</ul>
+	</p>
+	<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0 style='margin-left:15px;border-collapse:collapse;'>
+		<tr>
+			<td>
+				<p class=MsoNormal>
+					<input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px'>I give consent for the school to release Education Records or information and to access Public Benefits as described above in order to submit claims to the Kansas Department of Health and Environment (KDHE)</span>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class=MsoNormal style="margin-top:8px">
+					<input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px'>I do not give consent</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<div style="padding-top:10px">
+		<span><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span><span>&nbsp;</span>
+		<u><textarea maxlength="20" style="width:75px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value">@dobStr</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+		<span>&nbsp;&nbsp;</span><u><textarea maxlength="20" style="width:85px;height:30px"></textarea><span style="display:none" class="input-value"></span><span>&nbsp;</span></u>
+	</div>
+	<div style="margin:0;padding:0">
+		<span>@(String.Format("Child's Name").PadRight(39, ' ').Replace(" ", "\u00A0"))</span>
+		<span>@(String.Format("Date of Birth").PadRight(5, ' ').Replace(" ", "\u00A0"))</span>
+		<span>&nbsp;</span><span>Begin Date</span>
+	</div>
+	<div style="margin:0;padding-top:65px">
+		<table cellpadding="1">
+			<tr>
+				<td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
+				<td><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
+			</tr>
+			<tr>
+				<td>Parent/Guardian Signature</td>
+				<td>Date</td>
+			</tr>
+		</table>
+	</div>
+</div><!--end center-->
