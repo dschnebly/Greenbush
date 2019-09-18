@@ -829,6 +829,13 @@ namespace GreenBushIEP.Controllers
 						{
 							return Json(new { Result = "error", Message = "The student is already in the system. Please contact Greenbush." });
 						}
+
+
+						tblReferralInfo exsistingReferral = db.tblReferralInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+						if (exsistingReferral != null)
+						{
+							return Json(new { Result = "error", Message = "A referral with the same KIDS ID has already been submitted. Please contact Greenbush if you need more information." });
+						}
 					}
 
 					string raceCodeVal = collection["studentRace"].ToString();
