@@ -2571,7 +2571,8 @@ namespace GreenbushIep.Controllers
 
                     var filterUsers = db.vw_UserList.Where(ul => ul.RoleID != owner)
                         .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal)).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
-                        .OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+                        .Distinct()
+						.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                     return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
 
@@ -2588,7 +2589,8 @@ namespace GreenbushIep.Controllers
 
                     var filterUsers = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
                         .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal))
-                        .OrderBy(u => u.LastName)
+						.Distinct()
+						.OrderBy(u => u.LastName)
                         .ThenBy(u => u.FirstName)
                         .ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
