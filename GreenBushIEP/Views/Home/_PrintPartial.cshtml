@@ -1612,22 +1612,20 @@
 			 	<div class="row">
 			 		@if (Model.studentTransition.assessments.Count > 0)
 				   {
-			 		<table>
-			 			<tr>
-			 				<th>Transition Assessment Date</th>
-			 				<th>Narrative</th>
-			 				<th>Completed On</th>
-			 				<th>Performance</th>
+			 		<table cellspacing="2">
+			 			<tr>			 				
+			 				<th style="padding:2px">Narrative</th>
+			 				<th style="padding:2px">Completed On</th>
+			 				<th style="padding:2px">Performance</th>
 			 			</tr>
 			 			@foreach (var assessment in Model.studentTransition.assessments)
-					  {
-			 			<tr>
-			 				<td>@(assessment.Create_Date.ToString("M/d/yyyy"))</td>
-			 			<td>@(assessment.Narrative)</td>
-			 		<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
-			 	<td>@(assessment.Performance)</td>
-			 </tr>
-		 }
+						{
+			 			<tr>			 			
+			 				<td>@(assessment.Narrative)</td>
+			 				<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
+			 				<td>@(assessment.Performance)</td>
+						</tr>
+						}
 			 	</table>
 			}
 			 </div>
@@ -1635,7 +1633,7 @@
 			 	<div class="col-md-12">
 			 		<div class="input-group">
 			 			<label>Transition Needs</label>
-			 			<p>@(Model.studentTransition.transition.Assessment_Needs) </p>
+			 			<p>@(Model.studentTransition.transition.Assessment_Needs)</p>
 			 	</div>
 			 </div>
 			 </div>
