@@ -16,6 +16,7 @@
 				case 4: { ddlText += "<li>Criterion-Referenced Test</li>"; break; }
 				case 5: { ddlText += "<li>Time Sample</li>"; break; }
 				case 6: { ddlText += "<li>Demonstration/Performance</li>"; break; }
+				case 8: { ddlText += "<li>Progress Monitoring</li>"; break; }					
 				case 7: { ddlText += string.Format("<li>Other: {0}</li>", evalProc.OtherDescription); break; }
 			} //end switch			
 		}
@@ -24,9 +25,9 @@
 
         <div class="StudentGoalBenchmark">
             <div class="form-group">
-				<span class="standard-font-size">@(benchmark.ObjectiveBenchmark.ToString())</span><br/>	<br/>	
-				<label>Method(s)</label><br/>	
-                <ul style="padding-left: 35px; font-size: 15px;margin-top:8px">
+				<span class="standard-font-size">@(benchmark.ObjectiveBenchmark.ToString())</span><br/><br/>	
+				<label class="standard-font-size">Method(s)</label><br/>	
+                <ul style="padding-left: 35px;font-size:15px;margin-top:8px">
                     @Html.Raw(ddlText)                    
                 </ul>			
             </div>

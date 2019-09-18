@@ -45,6 +45,7 @@
                     <option value="4" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
                     <option value="5" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
                     <option value="6" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+					<option value="8" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 8) ? "selected" : "")>Progress Monitoring</option>
                     <option value="7" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 7) ? "selected" : "")>Other</option>
                 </select>
 				<div class="voffset1 divOther" style="display:@(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 7) ? "block" : "none")">
