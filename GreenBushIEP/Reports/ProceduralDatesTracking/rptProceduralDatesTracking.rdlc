@@ -84,6 +84,10 @@
           <DataField>StudentMiddleName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ReEvalConsentSigned">
+          <DataField>ReEvalConsentSigned</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -118,10 +122,13 @@
                   <Width>0.86028in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.20833in</Width>
+                  <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.88445in</Width>
+                  <Width>0.95833in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.42612in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -279,6 +286,41 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox8">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Re-Eval Consent Signed</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -523,6 +565,39 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="ReEvalConsentSigned">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!ReEvalConsentSigned.Value = DateTime.MinValue,"", FormatDateTime(Fields!ReEvalConsentSigned.Value, DateFormat.ShortDate))</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ReEvalConsentSigned</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="DaysSinceSigned">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -596,6 +671,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -611,7 +687,7 @@
             <Top>0.13417in</Top>
             <Left>0.01042in</Left>
             <Height>0.67708in</Height>
-            <Width>8.04042in</Width>
+            <Width>8.33209in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -622,7 +698,7 @@
         <Height>0.90625in</Height>
         <Style />
       </Body>
-      <Width>8.05084in</Width>
+      <Width>8.40501in</Width>
       <Page>
         <PageHeader>
           <Height>0.95708in</Height>
@@ -684,7 +760,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox59</rd:DefaultName>
               <Top>0.0625in</Top>
-              <Left>6.19875in</Left>
+              <Left>6.51125in</Left>
               <Height>0.25in</Height>
               <Width>1.79167in</Width>
               <ZIndex>1</ZIndex>
@@ -718,7 +794,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox60</rd:DefaultName>
               <Top>0.30625in</Top>
-              <Left>6.19875in</Left>
+              <Left>6.51125in</Left>
               <Height>0.25in</Height>
               <Width>1.79167in</Width>
               <ZIndex>2</ZIndex>
@@ -831,7 +907,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox63</rd:DefaultName>
               <Top>0.28208in</Top>
-              <Left>6.39667in</Left>
+              <Left>6.68417in</Left>
               <Height>0.25in</Height>
               <Width>1.60625in</Width>
               <ZIndex>1</ZIndex>

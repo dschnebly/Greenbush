@@ -28,5 +28,6 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string Teachers { get; set; }
         public string StudentMiddleName { get; set; }
+        public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
     }
 }
