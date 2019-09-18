@@ -320,8 +320,8 @@
                                     </div>
                                     <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                     <div class="form-group">
-                                        <input type="text" value="" class="form-control standard-font-size aStudentBaseLine" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
-                                    </div>
+										<textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline"></textarea>
+									</div>
                                     <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
 									<a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
 									<a href="https://community.ksde.org/Default.aspx?tabid=5276" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Math&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
@@ -441,7 +441,7 @@
                                             </div>
                                             <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                             <div class="form-group">
-                                                <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size aStudentBaseLine" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
+												<textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline@(studentGoal.goal.goalID)"  placeholder="Add a Goal Baseline">@(studentGoal.goal.Baseline)</textarea>
                                             </div>
                                             <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
 											<a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>

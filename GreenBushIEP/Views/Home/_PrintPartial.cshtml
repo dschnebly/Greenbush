@@ -2526,8 +2526,8 @@
 			 						<p>@sGoal.AnnualGoal</p>
 			 					</div>
 			 					<div class="form-group">
-			 						<label>Goal Baseline</label>
-			 						<p>@sGoal.Baseline</p>
+			 						<label>Goal Baseline</label><br/>
+									 @(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))			 						
 			 					</div>
 			 					<div class="form-group">
 			 						<label>State Standards</label>
