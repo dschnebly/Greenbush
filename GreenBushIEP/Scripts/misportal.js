@@ -2,38 +2,38 @@
     function init() {
         $(".chosen-select").chosen({ width: "100%", });
 		
-		$('.chosen-search input').autocomplete({
-			minLength: 3,						
-			source: function (request, response) {
-				$.ajax({
-					type: 'POST',
-					url: "/Home/SearchUserName?username=" + request.term,
-					dataType: "json",
-					beforeSend: function () { $('ul.chzn-results').empty(); },
-					success: function (data) {
+		//$('.chosen-search input').autocomplete({
+		//	minLength: 3,						
+		//	source: function (request, response) {
+		//		$.ajax({
+		//			type: 'POST',
+		//			url: "/Home/SearchUserName?username=" + request.term,
+		//			dataType: "json",
+		//			beforeSend: function () { $('ul.chzn-results').empty(); },
+		//			success: function (data) {
 
-						if (data.result) {
+		//				if (data.result) {
 
-							var options = $("#filterName");
-							options.empty(); //remove all child nodes
-							options.append($("<option />").val(-1).text("All Users"));
-							options.trigger("chosen:updated");
+		//					var options = $("#filterName");
+		//					options.empty(); //remove all child nodes
+		//					options.append($("<option />").val(-1).text("All Users"));
+		//					options.trigger("chosen:updated");
 
-							if (data.filterUsers.length > 0) {
-								response($.map(data.filterUsers, function (item) {									
-									var username = item.LastName + ", " + item.FirstName;
-									if (item.MiddleName != null)
-										username += " " + item.MiddleName;
-									options.append($("<option />").val(item.UserID).text(username));
-								}));								
-							}
+		//					if (data.filterUsers.length > 0) {
+		//						response($.map(data.filterUsers, function (item) {									
+		//							var username = item.LastName + ", " + item.FirstName;
+		//							if (item.MiddleName != null)
+		//								username += " " + item.MiddleName;
+		//							options.append($("<option />").val(item.UserID).text(username));
+		//						}));								
+		//					}
 
-							options.trigger("chosen:updated");
-						}
-					}
-				});
-			}
-		});
+		//					options.trigger("chosen:updated");
+		//				}
+		//			}
+		//		});
+		//	}
+		//});
 
         // attach event
         // fires when an delete button is pressed on a MIS role.

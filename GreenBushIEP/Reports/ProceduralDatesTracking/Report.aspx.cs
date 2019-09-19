@@ -92,6 +92,7 @@ namespace GreenBushIEP.Reports.ProceduralDatesTracking
 		private DataTable GetData(string districtFilter, string teacherIds, string buildingID, DateTime startDate, DateTime endDate)
 		{
 			DataTable dt = new DataTable();
+			dt.Columns.Add("ReEvalConsentSigned", typeof(DateTime));
 			dt.Columns.Add("InitialEvalDetermination", typeof(DateTime));
 			dt.Columns.Add("InitialEvalConsentSigned", typeof(DateTime));
 			dt.Columns.Add("DaysSinceSigned", typeof(int));
@@ -113,7 +114,7 @@ namespace GreenBushIEP.Reports.ProceduralDatesTracking
 				var list = ctx.up_ReportProceduralDatesTracking(districtFilter, teacherIds, buildingID, startDate, endDate);
 
 				foreach (var cs in list)
-					dt.Rows.Add(cs.InitialEvalDetermination, cs.InitialEvalConsentSigned, cs.DaysSinceSigned
+					dt.Rows.Add(cs.ReEvalConsentSigned, cs.InitialEvalDetermination, cs.InitialEvalConsentSigned, cs.DaysSinceSigned
 						, cs.StudentFirstName, cs.StudentLastName, cs.StudentMiddleName, cs.TeacherFirstName, cs.TeacherLastName
 						, cs.TeacherID, cs.USD, cs.BuildingName, cs.Teachers);
 			}

@@ -2,29 +2,34 @@
 
 <label class="input-labels standard-font-size">Short Term Benchmark(s)</label>
 <div class="StudentGoalBenchmarks">
-    @foreach (var benchmark in @Model.benchmarks)
-    {
-        var ddlText = "";
-        switch (benchmark.Method)
-        {
-            case 1: { ddlText = "Written Observation"; break; }
-            case 2: { ddlText = "Written Performance"; break; }
-            case 3: { ddlText = "Oral Performance"; break; }
-            case 4: { ddlText = "Criterion-Referenced Test"; break; }
-            case 5: { ddlText = "Time Sample"; break; }
-            case 6: { ddlText = "Demonstration/Performance"; break; }
-            case 7: { ddlText = "Other"; break; }
-        } //end switch
 
-        var ta = benchmark.TransitionActivity ? "<li>This is a Transition Activity.</li>" : String.Empty;
+    @foreach (var benchmark in @Model.benchmarks)
+	{
+		var ddlText = "";		
+		foreach (var evalProc in Model.shortTermBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID))
+		{
+			switch (evalProc.EvaluationProcedureID)
+			{
+				case 1: { ddlText += "<li>Written Observation</li>"; break; }
+				case 2: { ddlText += "<li>Written Performance</li>"; break; }
+				case 3: { ddlText += "<li>Oral Performance</li>"; break; }
+				case 4: { ddlText += "<li>Criterion-Referenced Test</li>"; break; }
+				case 5: { ddlText += "<li>Time Sample</li>"; break; }
+				case 6: { ddlText += "<li>Demonstration/Performance</li>"; break; }
+				case 8: { ddlText += "<li>Progress Monitoring</li>"; break; }					
+				case 7: { ddlText += string.Format("<li>Other: {0}</li>", evalProc.OtherDescription); break; }
+			} //end switch			
+		}
+
+		//var ta = benchmark.TransitionActivity ? "<li>This is a Transition Activity.</li>" : String.Empty;
 
         <div class="StudentGoalBenchmark">
             <div class="form-group">
-                <ul style="padding-left: 35px; font-size: 15px;">
-                    <li><b>@ddlText</b></li>
-                    <li>@(benchmark.ObjectiveBenchmark.ToString())</li>
-                    @(Html.Raw(ta))
-                </ul>
+				<span class="standard-font-size">@(benchmark.ObjectiveBenchmark.ToString())</span><br/><br/>	
+				<label class="standard-font-size">Method(s)</label><br/>	
+                <ul style="padding-left: 35px;font-size:15px;margin-top:8px">
+                    @Html.Raw(ddlText)                    
+                </ul>			
             </div>
         </div>
     }

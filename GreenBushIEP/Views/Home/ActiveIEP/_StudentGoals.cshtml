@@ -46,6 +46,7 @@
                         case 4: { evalText += "Criterion-Referenced Test, "; break; }
                         case 5: { evalText += "Time Sample, "; break; }
                         case 6: { evalText += "Demonstration/Performance, "; break; }
+						case 8: { evalText += "Progress Monitoring, "; break; }
                         case 7: { evalText += "Other, "; break; }
                     } //end switch
                 }
@@ -78,7 +79,7 @@
                                             <p class="standard-font-size">@(studentGoal.goal.AnnualGoal)</p>                                        </div>
                                         <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                         <div class="form-group">
-                                            <p class="standard-font-size">@(studentGoal.goal.Baseline)</p>
+                                            @(Html.Raw(studentGoal.goal.Baseline.Replace(System.Environment.NewLine, "<br/>")))
                                         </div>
                                         <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;<a href="http://www.ksde.org/Teaching-Learning/Academic-Standards" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">KSDE website&nbsp;<i class="glyphicon glyphicon-new-window"></i></a><br />
                                         <div class="form-group">

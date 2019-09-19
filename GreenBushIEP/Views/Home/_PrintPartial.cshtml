@@ -1612,22 +1612,20 @@
 			 	<div class="row">
 			 		@if (Model.studentTransition.assessments.Count > 0)
 				   {
-			 		<table>
-			 			<tr>
-			 				<th>Transition Assessment Date</th>
-			 				<th>Narrative</th>
-			 				<th>Completed On</th>
-			 				<th>Performance</th>
+			 		<table cellspacing="2">
+			 			<tr>			 				
+			 				<th style="padding:2px">Narrative</th>
+			 				<th style="padding:2px">Completed On</th>
+			 				<th style="padding:2px">Performance</th>
 			 			</tr>
 			 			@foreach (var assessment in Model.studentTransition.assessments)
-					  {
-			 			<tr>
-			 				<td>@(assessment.Create_Date.ToString("M/d/yyyy"))</td>
-			 			<td>@(assessment.Narrative)</td>
-			 		<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
-			 	<td>@(assessment.Performance)</td>
-			 </tr>
-		 }
+						{
+			 			<tr>			 			
+			 				<td>@(assessment.Narrative)</td>
+			 				<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
+			 				<td>@(assessment.Performance)</td>
+						</tr>
+						}
 			 	</table>
 			}
 			 </div>
@@ -1635,7 +1633,7 @@
 			 	<div class="col-md-12">
 			 		<div class="input-group">
 			 			<label>Transition Needs</label>
-			 			<p>@(Model.studentTransition.transition.Assessment_Needs) </p>
+			 			<p>@(Model.studentTransition.transition.Assessment_Needs)</p>
 			 	</div>
 			 </div>
 			 </div>
@@ -2146,7 +2144,7 @@
 			 			@(@Model.studentTransition.student.FirstName)&nbsp;@(Model.studentTransition.student.LastName) will work with @(genderPronoun) counselor annually to enroll in courses needed for @(genderPronoun) course of study for the coming school year.
 			 		The IEP team has reviewed and updated this course of study and transcript during the IEP meeting. These courses will meet the requirements of the school
 			 		district and will be meaningful to @(genderPronoun) post secondary goal of working as <span class="underline">@(Model.studentTransition.transition.Planning_Occupation)</span>. The plan of study allows  @(genderPronoun) to explore areas of high interest and determine the level of education needed for different career fields.
-			 	The IEP team has review this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
+			 	The IEP team has reviewed this student's progress towards graduation. For high school students, a copy of the plan has been developed/updated and is
 			 	maintained in the counselor's office.
 			 </p>
 			 <fieldset class="form-group">
@@ -2526,8 +2524,8 @@
 			 						<p>@sGoal.AnnualGoal</p>
 			 					</div>
 			 					<div class="form-group">
-			 						<label>Goal Baseline</label>
-			 						<p>@sGoal.Baseline</p>
+			 						<label>Goal Baseline</label><br/>
+									 @(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))			 						
 			 					</div>
 			 					<div class="form-group">
 			 						<label>State Standards</label>
@@ -2587,11 +2585,12 @@
 														case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
 														case 5: { ddlText2 = "Time Sample"; break; }
 														case 6: { ddlText2 = "Demonstration/Performance"; break; }
+														case 8: { ddlText2 = "Progress Monitoring"; break; }					
 														case 7: {
 
 																if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
 																{
-																	ddlText2 = "Other:" + gbMethod.OtherDescription + ", ";
+																	ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
 																}
 																else
 																{

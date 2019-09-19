@@ -124,12 +124,12 @@
             <div class="form-group" style="margin-bottom: 3px;margin-top:10px">
                 <div class="input-group" style="background-color: #F9F9F9;">                    
                     <input type="text" value="" name="StudentGoalBenchmarkTitle0" class="StudentGoalBenchmarkTitle form-control" style="font-size:16px;" placeholder="Enter a new student benchmark" />
-                    <span class="input-group-btn">
+                    @*<span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;">
                             <span class="glyphicon glyphicon-unchecked"></span>
                         </button>
                         <input type="hidden" name="StudentGoalBenchmarkHasTransition0" value="false" />
-                    </span>
+                    </span>*@
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;">
                             <i class="glyphicon glyphicon-trash"></i>
@@ -143,6 +143,7 @@
                     <option value="4">Criterion-Referenced Test</option>
                     <option value="5">Time Sample</option>
                     <option value="6">Demonstration/Performance</option>					
+					<option value="8">Progress Monitoring</option>	
                     <option value="7">Other</option>
                 </select>
 				<div class="voffset1 divOther" style="display:none">
@@ -320,8 +321,8 @@
                                     </div>
                                     <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                     <div class="form-group">
-                                        <input type="text" value="" class="form-control standard-font-size aStudentBaseLine" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline" />
-                                    </div>
+										<textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline"></textarea>
+									</div>
                                     <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
 									<a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
 									<a href="https://community.ksde.org/Default.aspx?tabid=5276" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Math&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
@@ -441,7 +442,7 @@
                                             </div>
                                             <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
                                             <div class="form-group">
-                                                <input type="text" value="@(studentGoal.goal.Baseline)" class="form-control standard-font-size aStudentBaseLine" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline" />
+												<textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline@(studentGoal.goal.goalID)"  placeholder="Add a Goal Baseline">@(studentGoal.goal.Baseline)</textarea>
                                             </div>
                                             <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
 											<a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
@@ -938,17 +939,29 @@
 
             //* Binding */
             /* fires when the user clicks the check box */
-            $(this).find('.transition-activity').on('click', function (event) {
-                if ($(this).children('span').hasClass('glyphicon-unchecked')) {
-                    $(this).children('span').removeClass('glyphicon-unchecked');
-                    $(this).children('span').addClass('glyphicon-check');
-                    $(this).next().val("true");
-                } else {
-                    $(this).children('span').removeClass('glyphicon-check');
-                    $(this).children('span').addClass('glyphicon-unchecked');
-                    $(this).next().val("false");
-                }
-            });
+            //$(this).find('.transition-activity').on('click', function (event) {
+            //    if ($(this).children('span').hasClass('glyphicon-unchecked')) {
+            //        $(this).children('span').removeClass('glyphicon-unchecked');
+            //        $(this).children('span').addClass('glyphicon-check');
+            //        $(this).next().val("true");
+            //    } else {
+            //        $(this).children('span').removeClass('glyphicon-check');
+            //        $(this).children('span').addClass('glyphicon-unchecked');
+            //        $(this).next().val("false");
+            //    }
+            //});
+
+			//shortterm methods other trigger
+			$(this).find(".smethods").on('change', function (event) {
+					var selectedMethods = $(this).val();
+					if (selectedMethods.indexOf("7") > -1) {
+						$(this).parent().find(".divOther").show();
+					}
+					else {
+						$(this).parent().find(".divOther").hide();
+					}
+			}); //end shortterm methods
+
         });
     }
 

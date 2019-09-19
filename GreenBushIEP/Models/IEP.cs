@@ -160,7 +160,10 @@ namespace GreenBushIEP.Models
 				bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
 				isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : !studentHasGoals;
 				isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
-				isAccommodationsCompleted = accommodations != null ? accommodations.All(a => a.Completed) : false;
+				
+				bool studentHasAccommodations = (studentHealth != null && (studentHealth.NeedMetByAccommodation ?? false)) || (studentMotor.NeedMetByAccommodation ?? false) || (studentCommunication.NeedMetByAccommodation ?? false) || (studentSocial.NeedMetByAccommodation ?? false) || (studentAcademic.NeedMetByAccommodation ?? false) || (studentWritten.NeedMetByAccommodation ?? false) || (studentReading.NeedMetByAccommodation ?? false) || (studentMath.NeedMetByAccommodation ?? false);
+				isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : !studentHasAccommodations;
+				
 				isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
 				isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
 				isTransitionCompleted = transitions != null ? transitions.Any(o => o.Completed) : false;

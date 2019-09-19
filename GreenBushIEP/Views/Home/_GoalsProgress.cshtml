@@ -14,7 +14,7 @@
     <br />
 }
 <label class="input-labels" style="font-size:16px;margin-top: 15px;margin-left: 5px;">Short Term Benchmark(s)</label>
-<label class="input-labels pull-right" style="font-size:16px;margin-right: 45px; margin-top:15px;">T.A.</label>
+@*<label class="input-labels pull-right" style="font-size:16px;margin-right: 45px; margin-top:15px;">T.A.</label>*@
 
 <div class="StudentGoalBenchmarks">
     @foreach (var benchmark in @Model.benchmarks)
@@ -26,25 +26,26 @@
                 <div class="input-group" style="background-color: #F9F9F9;">
                   
                     <input type="text" value="@(benchmark.ObjectiveBenchmark.ToString())" name="StudentGoalBenchmarkTitle@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkTitle form-control" placeholder="Enter a new student benchmark" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; } />
-                    <span class="input-group-btn">
+                    @*<span class="input-group-btn">
                         <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; }>
                             <span class="glyphicon @(benchmark.TransitionActivity ? " glyphicon-check" : "glyphicon-unchecked" )"></span>
                         </button>
                         <input type="hidden" name="StudentGoalBenchmarkHasTransition@(benchmark.goalBenchmarkID)" value="@(benchmark.TransitionActivity.ToString())" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; } />
-                    </span>
+                    </span>*@
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; }>
                             <i class="glyphicon glyphicon-trash"></i>
                         </button>
                     </span>					
                 </div>
-				<select name="StudentGoalShorttermBenchmarkMethods@(benchmark.goalBenchmarkID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size" multiple="multiple"  style="height: 40px; ">
+				<select name="StudentGoalShorttermBenchmarkMethods@(benchmark.goalBenchmarkID)" data-placeholder="Choose Methods..." class="chosen-select standard-font-size smethods" multiple="multiple"  style="height: 40px; ">
                     <option value="1" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 1) ? "selected" : "")>Written Observation</option>
                     <option value="2" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 2) ? "selected" : "")>Written Performance</option>
                     <option value="3" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 3) ? "selected" : "")>Oral Performance</option>
                     <option value="4" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 4) ? "selected" : "")>Criterion-Referenced Test</option>
                     <option value="5" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 5) ? "selected" : "")>Time Sample</option>
                     <option value="6" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 6) ? "selected" : "")>Demonstration/Performance</option>
+					<option value="8" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 8) ? "selected" : "")>Progress Monitoring</option>
                     <option value="7" @(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 7) ? "selected" : "")>Other</option>
                 </select>
 				<div class="voffset1 divOther" style="display:@(Model.shortTermBenchmarkMethods != null && Model.shortTermBenchmarkMethods.Any(o => o.goalBenchmarkID == benchmark.goalBenchmarkID && o.EvaluationProcedureID == 7) ? "block" : "none")">

@@ -3317,6 +3317,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Teachers" Nullable="true" />
           <Property Type="String" Name="StudentMiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="ReEvalConsentSigned" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="tblReferralInfo">
           <Key>
@@ -4906,6 +4907,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="Teachers" ColumnName="Teachers" />
                 <ScalarProperty Name="StudentMiddleName" ColumnName="StudentMiddleName" />
+                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
