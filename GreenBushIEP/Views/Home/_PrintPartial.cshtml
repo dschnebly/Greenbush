@@ -195,49 +195,49 @@
 			 			<h5>@Model.studentDetails.building.Address_Physical</h5>
 			 		<h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 			 	<h5>@Model.studentDetails.building.Phone</h5>
-			 </td>			
+			 </td>
 			 </tr>
 			 </table>
 			 <table class="full voffset2">
 			 	<tr>
 			 		<td><label>Legal Name:</label></td>
 			 		<td>@(studentFullName)</td>
-			 		<td><label>KSDE KIDS ID:</label></td>
-			 		<td>@(Model.studentDetails.student.KIDSID)</td>
-				</tr>
-				 <tr>
-			 		<td><label>Birthdate:</label></td>
-			 		<td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
-			 		<td><label>Age on IEP Date:</label></td>
-			 		<td>@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
-				</tr>
-				 <tr>
-			 		<td><label>Grade:</label></td>
-			 		<td>@(studentGrade)</td>
-					<td><label>IEP Meeting Date:</label></td>
-					<td style="width:150px;">@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>			 
-				 </tr>
-				 <tr>
-					<td><label>Initiation:</label></td>
-					<td style="width:150px;">@Model.studentDetails.inititationDate</td>
-			 		<td></td>
-			 		<td></td>			
-				 </tr>
+			 	<td><label>KSDE KIDS ID:</label></td>
+			 	<td>@(Model.studentDetails.student.KIDSID)</td>
+			 </tr>
+			 <tr>
+			 	<td><label>Birthdate:</label></td>
+			 	<td style="width:150px;">@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>
+			 <td><label>Age on IEP Date:</label></td>
+			 <td>@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
+			 </tr>
+			 <tr>
+			 	<td><label>Grade:</label></td>
+			 	<td>@(studentGrade)</td>
+			 <td><label>IEP Meeting Date:</label></td>
+			 <td style="width:150px;">@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
+			 </tr>
+			 <tr>
+			 	<td><label>Initiation:</label></td>
+			 	<td style="width:150px;">@Model.studentDetails.inititationDate</td>
+			 <td></td>
+			 <td></td>
+			 </tr>
 			 @foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
 			 {
-				 <tr>
+			 	<tr>
 			 		<td><label>Contact 1:</label></td>
 			 		<td>@( primaryContact != null ? string.Format("{0} {1}", primaryContact.FirstName, primaryContact.LastName) : "")</td>
-					<td><label>Address:</label></td>
-			 		<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
-				 </tr>
-				 <tr>			 		
-				 	<td><label>Phone:</label></td>
-			 		<td>@( primaryContact != null ? primaryContact.Phone : "")</td>
-					 <td><label>Email:</label></td>
-			 		<td>@( primaryContact != null ? primaryContact.Email : "")</td>
-				 </tr>
-			 }									 
+			 	<td><label>Address:</label></td>
+			 	<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
+			 </tr>
+			 <tr>
+			 	<td><label>Phone:</label></td>
+			 	<td>@( primaryContact != null ? primaryContact.Phone : "")</td>
+			 <td><label>Email:</label></td>
+			 <td>@( primaryContact != null ? primaryContact.Email : "")</td>
+			 </tr>
+		 }
 			 <tr>
 			 	<td><label>Neighborhood School:</label></td>
 			 	<td>@Model.studentDetails.neighborhoodBuilding.BuildingName</td>
@@ -300,17 +300,17 @@
 			 		<td>________________________________</td>
 			 	</tr>
 			 	@*<tr>
-			 		<td>________________________________</td>
-			 		<td>________________________________</td>
-			 		<td>________________________________</td>
-			 	</tr>
-			 	<tr>
-			 		<td>________________________________</td>
-			 		<td>________________________________</td>
-			 		<td>________________________________</td>
-			 	</tr>*@
+			<td>________________________________</td>
+			<td>________________________________</td>
+			<td>________________________________</td>
+		</tr>
+		<tr>
+			<td>________________________________</td>
+			<td>________________________________</td>
+			<td>________________________________</td>
+		</tr>*@
 			 </table>
-		 <div class="row voffset2 dont-break">
+			 <div class="row voffset2 dont-break">
 			 	<div class="col-md-12">
 			 		<label>Parental Notifications</label>
 			 	</div>
@@ -319,27 +319,27 @@
 			 	<div class="col-md-12">
 			 		<fieldset class="form-group">
 			 			@if (Model.studentOtherConsiderations.Parental_RightsBook_flag)
-						{
-			 				<p>The parent(s)/legal education decision maker were given/offered a copy of the Parental Rights Booklet in their native language.</p>
-						}
-						else
-						{
-			 			    <p>The parent(s)/legal education decision maker were not given/offered a copy of the Parental Rights Booklet in their native language.</p>
-					    }
-						 <span style="font-size:9pt">_______  Initial Here</span>
+					  {
+			 			<p>The parent(s)/legal education decision maker were given/offered a copy of the Parental Rights Booklet in their native language.</p>
+				  }
+				  else
+				  {
+			 		<p>The parent(s)/legal education decision maker were not given/offered a copy of the Parental Rights Booklet in their native language.</p>
+			   }
+			 		<span style="font-size:9pt">_______  Initial Here</span>
 			 	</fieldset>
 			 </div>
 			 <div class="col-md-12">
 			 	<fieldset class="form-group">
 			 		@if (Model.studentOtherConsiderations.Parental_CopyIEP_flag)
-				    {
-			 			<p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>
-				   }
-				   else
 				   {
-			 			<p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
-				   }
-					 <span style="font-size:9pt">_______ Initial Here</span>
+			 		<p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>
+			   }
+			   else
+			   {
+			 	<p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
+			}
+			 	<span style="font-size:9pt">_______ Initial Here</span>
 			 </fieldset>
 			 </div>
 			 </div>
@@ -352,19 +352,19 @@
 			 	<div class="col-md-12">
 			 		<fieldset class="form-group">
 			 			@if (Model.studentOtherConsiderations.Parental_Concerns_flag.HasValue && Model.studentOtherConsiderations.Parental_Concerns_flag.Value)
-						{
-			 					<p>The parent(s)/legal education decision maker has concerns for enhancing the education of @(Model.studentFirstName).</p>
-			 					<p>Concerns: @(Model.studentOtherConsiderations.Parental_Concerns_Desc)</p>
-						}
-						else
-						{
-						 <p>The parent(s)/legal education decision maker does not have concerns for enhancing the education of @(Model.studentFirstName).</p>
-					    }
+					  {
+			 			<p>The parent(s)/legal education decision maker has concerns for enhancing the education of @(Model.studentFirstName).</p>
+			 		<p>Concerns: @(Model.studentOtherConsiderations.Parental_Concerns_Desc)</p>
+			}
+			else
+			{
+			 <p>The parent(s)/legal education decision maker does not have concerns for enhancing the education of @(Model.studentFirstName).</p>
+		 }
 			 	</fieldset>
 			 </div>
 			 </div>
-		
-			 <hr/>
+
+			 <hr />
 			 <h3 class="text-center">HEALTH</h3>
 
 			 @if (!Model.studentHealth.NoConcerns)
@@ -372,54 +372,45 @@
 				 if (Model.studentHealth.ProgressTowardGenEd)
 				 {
 			 		<p>The Team has concerns about @Model.studentFirstName in the area of Health; however,  progress is being made with general education supports.</p>
-			}
-			else if (Model.studentHealth.Diagnosis)
-			{
-			 <p>The Team has concerns about @Model.studentFirstName in the area of Health that impact the ability to learn or access the general curriculum.</p>
-		 }
+				 }
+				 else if (Model.studentHealth.Diagnosis)
+				 {
+					 <p>The Team has concerns about @Model.studentFirstName in the area of Health that impact the ability to learn or access the general curriculum.</p>
+				 }
 
-		 if (Model.studentHealth.HearingImpaired.HasValue && Model.studentHealth.HearingImpaired.Value)
-		 {
-			 <p>
-			 	@Model.studentFirstName has a hearing impairment.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.
-			 </p>
-		 }
-		 else
-		 {
-			 <p>
-			 	@Model.studentFirstName does not have a hearing impairment.
-			 </p>
-		 }
 
-			 <p><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</p>
-			 <p class="title">
+			    if (Model.studentHealth.HearingImpaired.HasValue && Model.studentHealth.HearingImpaired.Value)
+				{
+					<p>@Model.studentFirstName has a hearing impairment.  The IEP team considered the child’s language and communication needs, opportunities for direct communication with peers and professional personnel in the child’s language and communication mode.</p>
+				}
+				else
+				{
+					<p>@Model.studentFirstName does not have a hearing impairment. </p>
+				}
+
+				<p><label>Hearing Screening Date:</label> @(Model.studentHealth.HearingDate.ToString("MM/dd/yyyy"))</p>
+				<p class="title">
 			 	<label>Hearing Screening Result:</label>
-			 	@(Model.studentHealth.HearingResult == 1 ? "Pass" : "")
-			 @(Model.studentHealth.HearingResult == 0 ? "Fail" : "")
-			 @(Model.studentHealth.HearingResult == -1 ? "Unable to Test" : "")
-
+			 		@(Model.studentHealth.HearingResult == 1 ? "Pass" : "")
+					@(Model.studentHealth.HearingResult == 0 ? "Fail" : "")
+					@(Model.studentHealth.HearingResult == -1 ? "Unable to Test" : "")
 			 </p>
 
-			 if (Model.studentHealth.HearingImpaired.HasValue && Model.studentHealth.HearingImpaired.Value)
+			 if (Model.studentHealth.VisionImpaired)
 			 {
-			 	<p>
-			 		@Model.studentFirstName has a visual impairment.  The IEP team will provide instruction in Braille and the use of Braille unless determined, through an evaluation, to be inappropriate.
-			 </p>
-		 }
-		 else
-		 {
-			 <p>
-			 	@Model.studentFirstName does not have a visual impairment.
-			 </p>
-		 }
-
+			 	<p>@Model.studentFirstName has a visual impairment.  The IEP team will provide instruction in Braille and the use of Braille unless determined, through an evaluation, to be inappropriate.			 </p>
+			 }
+			 else
+			 {
+				 <p>@Model.studentFirstName does not have a visual impairment.</p>
+			 }
 
 			 <p><label>Vision Screening Date:</label> @(Model.studentHealth.VisionDate.ToString("MM/dd/yyyy"))</p>
 			 <p class="title">
 			 	<label>Vision Screening Result:</label>
 			 	@(Model.studentHealth.VisionResult == 1 ? "Pass" : "")
-			 @(Model.studentHealth.VisionResult == 0 ? "Fail" : "")
-			 @(Model.studentHealth.VisionResult == -1 ? "Unable to Test" : "")
+				@(Model.studentHealth.VisionResult == 0 ? "Fail" : "")
+				@(Model.studentHealth.VisionResult == -1 ? "Unable to Test" : "")
 			 </p>
 
 			 <div>
@@ -886,7 +877,7 @@
 		 }
 
 			 </div><hr />
-			<h3 class="text-center">ACADEMIC PEFORMANCE</h3>
+			 <h3 class="text-center">ACADEMIC PEFORMANCE</h3>
 			 <div>
 			 	<h3 class="text-center">READING</h3>
 
@@ -1156,10 +1147,10 @@
 
 		 }
 			 </div><hr />
-			 
-		 <div>			 	
-				<h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
-				 
+
+			 <div>
+			 	<h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
+
 			 	@if (!Model.studentAcademic.NoConcerns)
 				{
 
@@ -1167,13 +1158,13 @@
 					{
 
 			 		<p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; however,  progress is being made with general education supports.</p>
-				}
-				else if (Model.studentAcademic.AreaOfNeed)
-				{
+			}
+			else if (Model.studentAcademic.AreaOfNeed)
+			{
 
-				 <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance that impact the ability to learn or access the general curriculum.</p>
+			 <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance that impact the ability to learn or access the general curriculum.</p>
 
-				}
+		 }
 
 			 <fieldset class="form-group">
 			 	<div>
@@ -1245,7 +1236,7 @@
 
 		 }
 			 </div><hr />
-	<div>
+			 <div>
 			 	<h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
 			 	@if (Model.accommodations != null && Model.accommodations.Count() > 0)
 				{
@@ -1613,19 +1604,19 @@
 			 		@if (Model.studentTransition.assessments.Count > 0)
 				   {
 			 		<table cellspacing="2">
-			 			<tr>			 				
+			 			<tr>
 			 				<th style="padding:2px">Narrative</th>
 			 				<th style="padding:2px">Completed On</th>
 			 				<th style="padding:2px">Performance</th>
 			 			</tr>
 			 			@foreach (var assessment in Model.studentTransition.assessments)
-						{
-			 			<tr>			 			
+					  {
+			 			<tr>
 			 				<td>@(assessment.Narrative)</td>
-			 				<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
-			 				<td>@(assessment.Performance)</td>
-						</tr>
-						}
+			 			<td>@(assessment.CompletedOn.HasValue ? assessment.CompletedOn.Value.ToString("MM/dd/yyyy") : "")</td>
+			 		<td>@(assessment.Performance)</td>
+			 </tr>
+		 }
 			 	</table>
 			}
 			 </div>
@@ -1737,82 +1728,82 @@
 	 }
 			 </div>
 			 <label>Post Secondary Transition Services reviewed annually.</label>
-			 
-			 	@if (Model.studentTransition.services.Count(s => s.ServiceType == "instruction") > 0)
-				{
+
+			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "instruction") > 0)
+			 {
 			 	<div>
 			 		<label>Instruction Service</label>
 			 	</div>
 
-				<div>
-					@if (Model.studentTransition.services.Count > 0)
-					{
-						foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
-						{
-							<label for="transitionServiceDescription">Description</label>
-							if (string.IsNullOrEmpty(service.ServiceDescription))
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.ServiceDescription </p>
-							}
+			 	<div>
+			 		@if (Model.studentTransition.services.Count > 0)
+				   {
+					   foreach (var service in Model.studentTransition.services.Where(s => s.ServiceType == "instruction"))
+					   {
+			 			<label for="transitionServiceDescription">Description</label>
+					  if (string.IsNullOrEmpty(service.ServiceDescription))
+					  {
+			 			<br /><br />
+				  }
+				  else
+				  {
+			 		<p>@service.ServiceDescription </p>
+			}
 
-							<label for="transitionServiceFrequency">Frequency</label>
+			 <label for="transitionServiceFrequency">Frequency</label>
 
-							if (string.IsNullOrEmpty(service.Frequency))
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.Frequency </p>
-							}
+			 if (string.IsNullOrEmpty(service.Frequency))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@service.Frequency </p>
+		 }
 
-							<label for="transitionServiceLocation">Location</label>
-							if (string.IsNullOrEmpty(service.Location))
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.Location </p>
-							}
+			 <label for="transitionServiceLocation">Location</label>
+			 if (string.IsNullOrEmpty(service.Location))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@service.Location </p>
+		 }
 
-							<label for="transitionServiceDuration">Duration</label>
-							if (string.IsNullOrEmpty(service.Duration))
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.Frequency </p>
-							}
-							<label for="transitionServiceDuration">Start Date</label>
-							if (!service.StartDate.HasValue)
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.StartDate.Value.ToShortDateString() </p>
-							}
-							<label for="transitionServiceDuration">End Date</label>
-							if (!service.EndDate.HasValue)
-							{
-								<br /><br />
-							}
-							else
-							{
-								<p>@service.EndDate.Value.ToShortDateString() </p>
-							}
+			 <label for="transitionServiceDuration">Duration</label>
+			 if (string.IsNullOrEmpty(service.Duration))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@service.Frequency </p>
+		 }
+			 <label for="transitionServiceDuration">Start Date</label>
+			 if (!service.StartDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@service.StartDate.Value.ToShortDateString() </p>
+		 }
+			 <label for="transitionServiceDuration">End Date</label>
+			 if (!service.EndDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@service.EndDate.Value.ToShortDateString() </p>
+		 }
 
-						}
-					}
+	 }
+ }
 
-				</div>
-				}
+			 </div>
+		 }
 
 			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "related") > 0)
 			 {
@@ -1820,77 +1811,77 @@
 			 		<label>Related Service</label>
 			 	</div>
 
-				 <div class="row">
-				 <div class="col-md-12" id="transitionRelatedServiceContainer">
-				 	@if (Model.studentTransition.services.Count > 0)
-					{
-						foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
-						{
+			 	<div class="row">
+			 		<div class="col-md-12" id="transitionRelatedServiceContainer">
+			 			@if (Model.studentTransition.services.Count > 0)
+					  {
+						  foreach (var related in Model.studentTransition.services.Where(s => s.ServiceType == "related"))
+						  {
 
-				 					<label for="transitionServiceDescription">Description</label>
-								   if (string.IsNullOrEmpty(related.ServiceDescription))
-								   {
-				 					<br /><br />
-								   }
-								   else
-								   {
-				 					<p>@related.ServiceDescription </p>
-									}
+			 				<label for="transitionServiceDescription">Description</label>
+						 if (string.IsNullOrEmpty(related.ServiceDescription))
+						 {
+			 				<br /><br />
+					 }
+					 else
+					 {
+			 			<p>@related.ServiceDescription </p>
+			   }
 
-							 <label for="transitionServiceFrequency">Frequency</label>
+			 <label for="transitionServiceFrequency">Frequency</label>
 
-							 if (string.IsNullOrEmpty(related.Frequency))
-							 {
-				 				<br /><br />
-							}
-							else
-							{
-							 <p>@related.Frequency </p>
-							}
+			 if (string.IsNullOrEmpty(related.Frequency))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@related.Frequency </p>
+		 }
 
-							 <label for="transitionServiceLocation">Location</label>
-							 if (string.IsNullOrEmpty(related.Location))
-							 {
-				 				<br /><br />
-							}
-							else
-							{
-							 <p>@related.Location </p>
-							}
+			 <label for="transitionServiceLocation">Location</label>
+			 if (string.IsNullOrEmpty(related.Location))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@related.Location </p>
+		 }
 
-							 <label for="transitionServiceDuration">Duration</label>
-							 if (string.IsNullOrEmpty(related.Duration))
-							 {
-				 				<br /><br />
-							}
-							else
-							{
-							 <p>@related.Frequency </p>
-							}
-							 <label for="transitionServiceDuration">Start Date</label>
-							 if (!related.StartDate.HasValue)
-							 {
-				 				<br /><br />
-							}
-							else
-							{
-							 <p>@related.StartDate.Value.ToShortDateString() </p>
-							}
-							 <label for="transitionServiceDuration">End Date</label>
-							 if (!related.EndDate.HasValue)
-							 {
-				 				<br /><br />
-							}
-							else
-							{
-							 <p>@related.EndDate.Value.ToShortDateString() </p>
-						 }
+			 <label for="transitionServiceDuration">Duration</label>
+			 if (string.IsNullOrEmpty(related.Duration))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@related.Frequency </p>
+		 }
+			 <label for="transitionServiceDuration">Start Date</label>
+			 if (!related.StartDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@related.StartDate.Value.ToShortDateString() </p>
+		 }
+			 <label for="transitionServiceDuration">End Date</label>
+			 if (!related.EndDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@related.EndDate.Value.ToShortDateString() </p>
+		 }
 
-					}
-				}
-				 </div>
+	 }
+ }
+			 	</div>
 			 </div>
-			 }
+		 }
 
 			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "daily") > 0)
 			 {
@@ -1970,174 +1961,174 @@
 			 	</div>
 			 </div>
 
-			 }
+		 }
 
-		     @if (Model.studentTransition.services.Count(s => s.ServiceType == "vocational") > 0)
+			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "vocational") > 0)
 			 {
-			 <div>
-			 	<label>Functional Vocational Service</label>
-			 	
-			 </div>
-			 <div class="row">
-				 <div class="col-md-12" id="transitionRelatedServiceContainer">
-				 	@if (Model.studentTransition.services.Count > 0)
-							{
-								foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
-								{
+			 	<div>
+			 		<label>Functional Vocational Service</label>
 
-				 				<label for="transitionServiceDescription">Description</label>
-								if (string.IsNullOrEmpty(vocational.ServiceDescription))
-								{
-				 				<br /><br />
-							}
-							else
-							{
-				 			<p>@vocational.ServiceDescription </p>
-							}
+			 	</div>
+			 	<div class="row">
+			 		<div class="col-md-12" id="transitionRelatedServiceContainer">
+			 			@if (Model.studentTransition.services.Count > 0)
+					  {
+						  foreach (var vocational in Model.studentTransition.services.Where(s => s.ServiceType == "vocational"))
+						  {
 
-							<label for="transitionServiceFrequency">Frequency</label>
-
-							if (string.IsNullOrEmpty(vocational.Frequency))
-							{
-				 			<br /><br />
-							}
-							else
-							{
-								<p>@vocational.Frequency </p>
-							}
-
-							<label for="transitionServiceLocation">Location</label>
-							if (string.IsNullOrEmpty(vocational.Location))
-							{
-				 			<br /><br />
-							}
-							else
-							{
-								<p>@vocational.Location </p>
-							}
-
-							<label for="transitionServiceDuration">Duration</label>
-							if (string.IsNullOrEmpty(vocational.Duration))
-							{
-				 			<br /><br />
-							}
-							else
-							{
-								<p>@vocational.Frequency </p>
-							}
-							<label for="transitionServiceDuration">Start Date</label>
-							if (!vocational.StartDate.HasValue)
-							{
-				 			<br /><br />
-							}
-							else
-							{
-								<p>@vocational.StartDate.Value.ToShortDateString() </p>
-							}
-							<label for="transitionServiceDuration">End Date</label>
-							if (!vocational.EndDate.HasValue)
-							{
-				 			<br /><br />
-							}
-							else
-							{
-								<p>@vocational.EndDate.Value.ToShortDateString() </p>
-							}
-
-					}
-				}
-				 </div>
-			 </div>
-
-			 }
-
-			@if (Model.studentTransition.services.Count(s => s.ServiceType == "leisure") > 0)
-			{
-			 <div>
-			 	<label>Recreation and Leisure Service</label>
-			 </div>
-			 <div class="row">
-				 <div class="col-md-12" id="transitionRelatedServiceContainer">
-				 @if (Model.studentTransition.services.Count > 0)
-				{
-						foreach (var leisure in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
-						{
-
-							if (string.IsNullOrEmpty(leisure.ServiceDescription))
-							{
-				 			<br /><br />
-							}
-							else
-							{
-				 				<p>@leisure.ServiceDescription </p>
-							}	
-
-						 <label for="transitionServiceFrequency">Frequency</label>
-
-						if (string.IsNullOrEmpty(leisure.Frequency))
-						{
-				 			<br /><br />
-						}
-						else
-						{
-						 <p>@leisure.Frequency </p>
-						}
-
-						 <label for="transitionServiceLocation">Location</label>
-						 if (string.IsNullOrEmpty(leisure.Location))
+			 				<label for="transitionServiceDescription">Description</label>
+						 if (string.IsNullOrEmpty(vocational.ServiceDescription))
 						 {
-				 			<br /><br />
-						 }
-						 else
-						 {
-						  <p>@leisure.Location </p>
-					     }
+			 				<br /><br />
+					 }
+					 else
+					 {
+			 			<p>@vocational.ServiceDescription </p>
+			   }
 
-						 <label for="transitionServiceDuration">Duration</label>
-						 if (string.IsNullOrEmpty(leisure.Duration))
-						 {
-				 			<br /><br />
-						}
-						else
-						{
-						 <p>@leisure.Frequency </p>
-						}
-						 <label for="transitionServiceDuration">Start Date</label>
-						 if (!leisure.StartDate.HasValue)
-						 {
-				 			<br /><br />
-						}
-						else
-						{
-						 <p>@leisure.StartDate.Value.ToShortDateString() </p>
-						}
-						 <label for="transitionServiceDuration">End Date</label>
-						if (!leisure.EndDate.HasValue)
-						{
-				 			<br /><br />
-						}
-						else
-						{
-						 <p>@leisure.EndDate.Value.ToShortDateString() </p>
-						}
-				 }
-			 }
-				 </div>
-			 </div>
+			 <label for="transitionServiceFrequency">Frequency</label>
+
+			 if (string.IsNullOrEmpty(vocational.Frequency))
+			 {
+			 	<br /><br />
 			}
-			@if (Model.studentTransition.transition.CommunityParticipation)
+			else
 			{
-			 <div class="row @(Model.studentTransition.transition.CommunityParticipation ? String.Empty : "hidden")">
-			 	<div class="col-md-12">
-			 		<h4><b>Community Participation</b></h4>
-			 		<fieldset class="form-group">
-			 			<p> Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g.Girl Scouts or 4-H activities), community work experiences, and counseling services.</p>
-			 			<p style="width: 100%; margin: 25px 0 0 0;">@(Model.studentTransition.transition.CommunityParticipation_Description)</p>
-			 	</fieldset>
-			 </div>
-			 </div>
+			 <p>@vocational.Frequency </p>
+		 }
+
+			 <label for="transitionServiceLocation">Location</label>
+			 if (string.IsNullOrEmpty(vocational.Location))
+			 {
+			 	<br /><br />
 			}
-			<div class="row dont-break">
+			else
+			{
+			 <p>@vocational.Location </p>
+		 }
+
+			 <label for="transitionServiceDuration">Duration</label>
+			 if (string.IsNullOrEmpty(vocational.Duration))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@vocational.Frequency </p>
+		 }
+			 <label for="transitionServiceDuration">Start Date</label>
+			 if (!vocational.StartDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@vocational.StartDate.Value.ToShortDateString() </p>
+		 }
+			 <label for="transitionServiceDuration">End Date</label>
+			 if (!vocational.EndDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@vocational.EndDate.Value.ToShortDateString() </p>
+		 }
+
+	 }
+ }
+			 	</div>
+			 </div>
+
+		 }
+
+			 @if (Model.studentTransition.services.Count(s => s.ServiceType == "leisure") > 0)
+			 {
+			 	<div>
+			 		<label>Recreation and Leisure Service</label>
+			 	</div>
+			 	<div class="row">
+			 		<div class="col-md-12" id="transitionRelatedServiceContainer">
+			 			@if (Model.studentTransition.services.Count > 0)
+					  {
+						  foreach (var leisure in Model.studentTransition.services.Where(s => s.ServiceType == "leisure"))
+						  {
+
+							  if (string.IsNullOrEmpty(leisure.ServiceDescription))
+							  {
+			 					<br /><br />
+						}
+						else
+						{
+			 			<p>@leisure.ServiceDescription </p>
+			   }
+
+			 <label for="transitionServiceFrequency">Frequency</label>
+
+			 if (string.IsNullOrEmpty(leisure.Frequency))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@leisure.Frequency </p>
+		 }
+
+			 <label for="transitionServiceLocation">Location</label>
+			 if (string.IsNullOrEmpty(leisure.Location))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@leisure.Location </p>
+		 }
+
+			 <label for="transitionServiceDuration">Duration</label>
+			 if (string.IsNullOrEmpty(leisure.Duration))
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@leisure.Frequency </p>
+		 }
+			 <label for="transitionServiceDuration">Start Date</label>
+			 if (!leisure.StartDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@leisure.StartDate.Value.ToShortDateString() </p>
+		 }
+			 <label for="transitionServiceDuration">End Date</label>
+			 if (!leisure.EndDate.HasValue)
+			 {
+			 	<br /><br />
+			}
+			else
+			{
+			 <p>@leisure.EndDate.Value.ToShortDateString() </p>
+		 }
+	 }
+ }
+			 	</div>
+			 </div>
+		 }
+			 @if (Model.studentTransition.transition.CommunityParticipation)
+			 {
+			 	<div class="row @(Model.studentTransition.transition.CommunityParticipation ? String.Empty : "hidden")">
+			 		<div class="col-md-12">
+			 			<h4><b>Community Participation</b></h4>
+			 			<fieldset class="form-group">
+			 				<p> Community experiences are those activities provided outside the school building, in community settings, by families, schools, school-to-work internships and apprenticeships, and other agencies that may provide these experiences including JPTA, independent living centers, vocational rehabilitation, community developmental disabilities organizations, and mental health centers.These experiences may include activities such as school sponsored field trips, participation in community organizations and clubs (e.g.Girl Scouts or 4-H activities), community work experiences, and counseling services.</p>
+			 				<p style="width: 100%; margin: 25px 0 0 0;">@(Model.studentTransition.transition.CommunityParticipation_Description)</p>
+			 		</fieldset>
+			 	</div>
+			 </div>
+		 }
+			 <div class="row dont-break">
 			 	<div class="col-md-12">
 			 		<h3 class="courseOfStudyHeader">Statement of Courses of Study</h3>
 			 		<p>
@@ -2233,7 +2224,7 @@
 			 </fieldset>
 			 </div>
 			 </div>
-			 
+
 			 </div><!--end transition-->
 		 }
 			 <hr />
@@ -2278,40 +2269,40 @@
 			 		@if (Model.studentDetails != null && Model.studentDetails.isDOC)
 				   {
 			 		<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
-				   }
-				   else
+			   }
+			   else
+			   {
+			 	<div class="form-check" style="padding-top:5px;padding-right:5px">
+			 		@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
 				   {
-			 		<div class="form-check" style="padding-top:5px;padding-right:5px">
-			 			@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
-						{
-			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")">Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
-						}
-			 			@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-						{
-			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-						}
-						@if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-						{
-			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")">Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
-						}
-						@if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
-						{
-			 				<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
-						}
+			 		<p class="@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value ? "" : "hidden")">Student will participate in District-Wide Assessment(s) without accommodations in the follow curricular area(s):</p>
+			   }
+			 	@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+				{
+			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value ? "" : "hidden")">Student will participate in the District-Wide Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+			}
+			 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+			 {
+			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value ? "" : "hidden")">Student will participate in an alternative District assessment.  If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
+			}
+			 @if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
+			 {
+			 	<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
+			}
 			 </div>
 			 <div class="form-check voffset2" id="StateAssessment_TextArea">
 			 	@if (Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_flag.Value)
 				{
-			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
-				}
-				@if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
-				{
-			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
-				}
-				@if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
-				{
-			 		<p>@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
-				}
+			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_NoAccommodations_desc)</p>
+		 }
+			 @if (Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_flag.Value)
+			 {
+			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_WithAccommodations_desc)</p>
+		 }
+			 @if (Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.HasValue && Model.studentOtherConsiderations.DistrictAssessment_Alternative_flag.Value)
+			 {
+			 	<p>@(Model.studentOtherConsiderations.DistrictAssessment_Alternative_desc)</p>
+		 }
 			 </div>
 		 }
 			 </div>
@@ -2322,45 +2313,45 @@
 			 		@if (Model.studentDetails != null && Model.studentDetails.isDOC)
 				   {
 			 		<p>According to 34 C.F.R. 300.324(d) and K.A.R. 91 - 40 - 5(c)(2), requirements relating to students with disabilities taking state and district-wide assessments do not apply to students incarcerated in adult prisons. Students in local or state juvenile correctional facilities are not exempted from taking state and district-wide assessments</p>
-				   }
-				   else
+			   }
+			   else
+			   {
+			 	<div class="form-check" style="padding-top:5px;padding-right:5px">
+			 		@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
 				   {
-			 		<div class="form-check" style="padding-top:5px;padding-right:5px">
-			 			@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
-					   {
-			 				<p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
-						}
-			 			@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-						{
-			 				<p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
-						}
-						@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-						{
-			 				<p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
-						}
-						@if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
-						{
-			 				<p>Student has completed all required State Assessments.</p>
-						}
+			 		<p>Student will participate in State Assessment(s) without accommodations in the follow curricular area(s):</p>
+			   }
+			 	@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
+				{
+			 	<p>Student will participate in the State Assessment(s) with accommodations in the following curricular area(s): </p><p style="margin-top:8px"><i>Accommodations outlined within this IEP will be allowed based upon State guidelines given that the accommodation will not invalidate testing results.</i></p>
+			}
+			 @if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+			 {
+			 	<p>Student will participate in an alternative State Assessment. If the student is not participating in the regular assessment, explain why the child cannot participate in the regular assessment and why the alternate is appropriate:</p>
+			}
+			 @if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
+			 {
+			 	<p>Student has completed all required State Assessments.</p>
+			}
 			 </div>
 			 <div class="form-check voffset2" id="StateAssessment_TextArea">
 			 	@if (Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_NoAccommodations_flag.Value)
 				{
-			 		<p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
-				}
-				@if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
-				{
-			 		<p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
-				}
-				@if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
-				{
-			 		<p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>
-				}
+			 	<p>@(Model.studentOtherConsiderations.StateAssessment_NoAccommodations_desc)</p>
+		 }
+			 @if (Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.HasValue && Model.studentOtherConsiderations.StateAssessment_WithAccommodations_flag.Value)
+			 {
+			 	<p>@(Model.studentOtherConsiderations.StateAssessment_WithAccommodations_desc)</p>
+		 }
+			 @if (Model.studentOtherConsiderations.StateAssesment_Alternative_flag.HasValue && Model.studentOtherConsiderations.StateAssesment_Alternative_flag.Value)
+			 {
+			 	<p>@(Model.studentOtherConsiderations.StateAssesment_Alternative_Desc)</p>
+		 }
 			 </div>
 		 }
 			 </div>
 			 </div>
-	
+
 			 <hr />
 			 <div class="row voffset2 dont-break">
 			 	<div class="col-md-12">
@@ -2369,68 +2360,68 @@
 			 	<p>The IEP team has determined that for the student to have opportunities to participate with non-identified peers in extracurricular and nonacademic activities, regularly-scheduled special education and related services may not occur when their delivery would prevent the child from participating in field trips, assemblies, special events for the general education classroom or school, state or district-wide assessments and other such activities.</p>
 			 </div>
 			 </div>
-			if (@showExtendYear)
-			{
+			 if (@showExtendYear)
+			 {
 			 	<hr />
 			 	<div class="row voffset2 dont-break">
 			 		<div class="col-md-12">
 			 			<label>Extended School Year</label>
 			 			<p>The IEP team has enough information to determine that @Model.studentFirstName does require extended school term services.</p>
+			 	</div>
+			 </div>
+			 <div class="row voffset2">
+			 	<div class="col-md-12">
+			 		<div class="form-check">
+			 			@if (Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value)
+					  {
+			 			<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "" : "hidden")"> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
+				  }
+			 		@if (Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value)
+				   {
+			 		<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")"> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
+			   }
+			 </div>
+			 <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
+			 	<label>Severity Justification/Reasoning:</label>
+			 	<p>@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
+			 </div>
+			 </div>
+			 </div>
+		 }
+		 else
+		 {
+			 <hr />
+			 <div class="row voffset2 dont-break">
+			 	<div class="col-md-12">
+			 		<label>Extended School Year</label>
+			 		<p>ESY services were considered and there is inadequate information at the time of this meeting to make an appropriate decision.  The team will reconvene later in the school year if necessary to determine if ESY services are needed.</p>
+			 	</div>
+			 </div>
+		 }
+
+
+			 <hr />
+			 <div class="row voffset2">
+			 	<div class="col-md-12">
+			 		<label>Potential Harmful Effects</label>
+			 	</div>
+			 </div>
+			 <div class="row voffset2">
+			 	<div class="col-md-12">
+			 		<fieldset class="form-group">
+			 			<label>Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student? </label><span>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag != null && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "Yes" : "No" )</span>
+
+			 		<div class="form-check voffset2" id="Potential_HarmfulEffects_TextArea" style="display: @(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.HasValue && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "block;" : "none;")">
+			 			<div id="PC_Desc">
+			 				<label>Do the positive effects of the placement outweigh the potential harmful effects?</label>&nbsp;&nbsp;
+			 				<p>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_desc)</p>
 			 		</div>
-				</div>
-				 <div class="row voffset2">
-			 			<div class="col-md-12">
-			 				<div class="form-check">
-			 					@if (Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value)
-							{
-			 						<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_RegressionRisk.Value ? "" : "hidden")"> Significant regression is anticipated if ESY services are not provided.  This data should document regression/recoupment needs. It could be data taken over summer break, winter break, spring break, etc. To qualify the amount of time needed to recoup exceed the length of the break.</p>
-							}
-			 					@if (Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value)
-							{
-			 						<p class="@(Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.HasValue && Model.studentOtherConsiderations.ExtendedSchoolYear_SeverityRisk.Value ? "" : "hidden")"> The nature and severity of the disability(ies) necessitate ESY to ensure the provision of FAPE so that the student can make progress toward IEP goals that are crucial in moving toward self-sufficiency and independence (examples: self-help skills as dressing or eating, or students who need continued structure to develop behavior control).</p>
-							}
-							 </div>
-							 <div class="form-check voffset2" id="ExtendedSchoolYear_TextArea">
-			 					<label>Severity Justification/Reasoning:</label>
-			 					<p>@(Model.studentOtherConsiderations.ExtendedSchoolYear_Justification)</p>
-							 </div>
-					 </div>
-				</div>
-				}
-				else			
-				{
-					<hr />
-			 		<div class="row voffset2 dont-break">
-			 			<div class="col-md-12">
-			 				<label>Extended School Year</label>
-			 						<p>ESY services were considered and there is inadequate information at the time of this meeting to make an appropriate decision.  The team will reconvene later in the school year if necessary to determine if ESY services are needed.</p>
-			 			</div>
-					</div>
-				}
-
-
-		<hr />
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <label>Potential Harmful Effects</label>
-            </div>
-        </div>
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <fieldset class="form-group">
-                    <label>Are there any potential harmful effects of the recommended placement on the student and/or the quality of services for the student? </label><span>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag != null && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "Yes" : "No" )</span>
-                    
-                    <div class="form-check voffset2" id="Potential_HarmfulEffects_TextArea" style="display: @(Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.HasValue && Model.studentOtherConsiderations.Potential_HarmfulEffects_flag.Value ? "block;" : "none;")">
-                        <div id="PC_Desc">
-							<label>Do the positive effects of the placement outweigh the potential harmful effects?</label>&nbsp;&nbsp;
-                            <p>@(Model.studentOtherConsiderations.Potential_HarmfulEffects_desc)</p>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>			
-        </div>
-		<hr />
-		<div class="row voffset2">
+			 	</div>
+			 </fieldset>
+			 </div>
+			 </div>
+			 <hr />
+			 <div class="row voffset2">
 			 	<div class="col-md-12">
 			 		<label>Considerations</label>
 			 	</div>
@@ -2506,7 +2497,7 @@
 						} //end switch
 
 
-						
+
 
 			 		<div>
 			 			<div>
@@ -2517,205 +2508,206 @@
 			 					<div class="form-group">
 			 						<div class="input-group">
 			 							<span data-bind="bs-drp-sel-label"><b>@ddlText</b></span><p>@sGoal.Title</p>
-			 						</div>
-			 					</div>
-			 					<div class="form-group">
-			 						<label>Measurable Annual Goal:</label>
-			 						<p>@sGoal.AnnualGoal</p>
-			 					</div>
-			 					<div class="form-group">
-			 						<label>Goal Baseline</label><br/>
-									 @(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))			 						
-			 					</div>
-			 					<div class="form-group">
-			 						<label>State Standards</label>
-			 						<p>@sGoal.StateStandards</p>
-								</div>
-								 <div class="form-group">
-			 						<label>Evaluation Procedure</label><br/>
-									 @foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
-									 {
-										switch (ep.evaluationProcedureID)
-										{
-											case 1: { evalText = "Written Observation"; break; }
-											case 2: { evalText = "Written Performance"; break; }
-											case 3: { evalText = "Oral Performance"; break; }
-											case 4: { evalText = "Criterion-Referenced Test"; break; }
-											case 5: { evalText = "Time Sample"; break; }
-											case 6: { evalText = "Demonstration/Performance"; break; }
-											case 8: { evalText = "Progress Monitoring"; break; }
-											case 7:
-												{
+			 				</div>
+			 			</div>
+			 			<div class="form-group">
+			 				<label>Measurable Annual Goal:</label>
+			 				<p>@sGoal.AnnualGoal</p>
+			 		</div>
+			 		<div class="form-group">
+			 			<label>Goal Baseline</label><br />
+			 			@(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))
+			 	</div>
+			 	<div class="form-group">
+			 		<label>State Standards</label>
+			 		<p>@sGoal.StateStandards</p>
+			 </div>
+			 <div class="form-group">
+			 	<label>Evaluation Procedure</label><br />
+			 	@foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
+				{
+					switch (ep.evaluationProcedureID)
+					{
+						case 1: { evalText = "Written Observation"; break; }
+						case 2: { evalText = "Written Performance"; break; }
+						case 3: { evalText = "Oral Performance"; break; }
+						case 4: { evalText = "Criterion-Referenced Test"; break; }
+						case 5: { evalText = "Time Sample"; break; }
+						case 6: { evalText = "Demonstration/Performance"; break; }
+						case 8: { evalText = "Progress Monitoring"; break; }
+						case 7:
+							{
 
-													if (!string.IsNullOrEmpty(ep.OtherDescription))
-													{
-														evalText = "Other: " + ep.OtherDescription;
-													}
-													else
-													{
-														evalText = "Other";
-													}
-													break;
-												}
-										} //end switch
-										 @evalText<br/>
-									}
-								 </div>							
+								if (!string.IsNullOrEmpty(ep.OtherDescription))
+								{
+									evalText = "Other: " + ep.OtherDescription;
+								}
+								else
+								{
+									evalText = "Other";
+								}
+								break;
+							}
+					} //end switch
+			 	@evalText<br />
+		 }
+			 </div>
 
-                                    @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
-									{
-										foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
-										{
-											<label>Short Term Benchmark(s)</label>
-                                            <div class="StudentGoalBenchmarks">
-                                                <div class="form-group" style="padding:2px;">
-                                                    <span>@gb.ObjectiveBenchmark</span>                                                   
-                                                </div>
-                                                <div>
-												<label>Method(s)</label><br/>												
-												@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
-												{
-													var ddlText2 = "";
+			 @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
+			 {
+				 foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
+				 {
+			 		<label>Short Term Benchmark(s)</label>
+			 		<div class="StudentGoalBenchmarks">
+			 			<div class="form-group" style="padding:2px;">
+			 				<span>@gb.ObjectiveBenchmark</span>
+			 		</div>
+			 		<div>
+			 			<label>Method(s)</label><br />
+			 			@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
+					  {
+						  var ddlText2 = "";
 
-													switch (gbMethod.EvaluationProcedureID)
-													{
-														case 1: { ddlText2 = "Written Observation"; break; }
-														case 2: { ddlText2 = "Written Performance"; break; }
-														case 3: { ddlText2 = "Oral Performance"; break; }
-														case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-														case 5: { ddlText2 = "Time Sample"; break; }
-														case 6: { ddlText2 = "Demonstration/Performance"; break; }
-														case 8: { ddlText2 = "Progress Monitoring"; break; }					
-														case 7: {
+						  switch (gbMethod.EvaluationProcedureID)
+						  {
+							  case 1: { ddlText2 = "Written Observation"; break; }
+							  case 2: { ddlText2 = "Written Performance"; break; }
+							  case 3: { ddlText2 = "Oral Performance"; break; }
+							  case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+							  case 5: { ddlText2 = "Time Sample"; break; }
+							  case 6: { ddlText2 = "Demonstration/Performance"; break; }
+							  case 8: { ddlText2 = "Progress Monitoring"; break; }
+							  case 7:
+								  {
 
-																if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
-																{
-																	ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
-																}
-																else
-																{
-																	ddlText2 = "Other";
-																}
-																break;
-															}
-													} //end switch
-													@ddlText2.Trim().TrimEnd(',')<br/>
-												}
-											    </div>
-                                            </div>
-                                        }//end foreach short term bench
-                                    }
+									  if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
+									  {
+										  ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
+									  }
+									  else
+									  {
+										  ddlText2 = "Other";
+									  }
+									  break;
+								  }
+						  } //end switch
+			 			@ddlText2.Trim().TrimEnd(',')<br />
+			   }
+			 	</div>
+			 </div>
+		 }//end foreach short term bench
+	 }
 
-						</div> <!--end panel default-->
-					</div><!--end panel group-->
+			 </div> <!--end panel default-->
+			 </div><!--end panel group-->
 			 </div><!--end col md 12-->
 		 }//end for goals
 	 }
 	 else
 	 {
 			 <p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
-	 }
-	 </div><!--end section break-->
-	 <div class="dont-break">
-		<h3 class="text-center">SERVICES</h3>
+		 }
+			 </div><!--end section break-->
+			 <div class="dont-break">
+			 	<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 				{
-				var serviceCount = 1;
-				<table style="text-align:left">
-					<tr>
-						<td><b>Fiscal Year</b></td>
-						<td><b>Service Type</b></td>
-						@*<td><b>Setting</b></td>*@
-						@*<td><b>Provider</b></td>*@
-						@*<td><b>LEA</b></td>*@
-						<td><b>Attend Blg</b></td>
-						<td><b>Mins</b></td>
-						<td><b>Days</b></td>
-						<td><b>Initiation<br />Date</b></td>
-						<td><b>End<br />Date</b></td>
-						<td><b>Frequency</b></td>
-					</tr>
+					var serviceCount = 1;
+			 	<table style="text-align:left">
+			 		<tr>
+			 			<td><b>Fiscal Year</b></td>
+			 			<td><b>Service Type</b></td>
+			 			@*<td><b>Setting</b></td>*@
+			 		@*<td><b>Provider</b></td>*@
+			 	@*<td><b>LEA</b></td>*@
+			 <td><b>Attend Blg</b></td>
+			 <td><b>Mins</b></td>
+			 <td><b>Days</b></td>
+			 <td><b>Initiation<br />Date</b></td>
+			 <td><b>End<br />Date</b></td>
+			 <td><b>Frequency</b></td>
+			 </tr>
 
-					@foreach (var service in Model.studentServices)
+			 @foreach (var service in Model.studentServices)
+			 {
+
+			 	<tr>
+			 		<td>
+			 			@(service.SchoolYear - 1) <text>-</text> @service.SchoolYear
+			 	</td>
+			 	<td>
+			 		@if (Model.serviceTypes.Count > 0)
+				   {
+					   foreach (var serviceType in Model.serviceTypes)
+					   {
+						   if (serviceType.ServiceCode == service.ServiceCode)
+						   {
+			 				<text>(@serviceType.ServiceCode) @serviceType.Name</text>
+				  }
+			  }
+		  }
+			 </td>
+			 @*<td>
+		@service.LocationCode
+	</td>*@
+			 @*<td>
+	   @if (Model.serviceProviders.Count > 0)
+	   {
+		   foreach (var serviceProvider in Model.serviceProviders)
+		   {
+			   if (service.ProviderID == serviceProvider.ProviderID)
+			   {
+				   <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
+			   }
+		   }
+	  }
+	  else
+	  {
+			<text>&nbsp;&nbsp;&nbsp;</text>
+	  }
+	</td>*@
+			 @*<td>
+		@Model.studentDetails.assignChildCount
+	</td>*@
+			 <td>
+			 	@if (!string.IsNullOrEmpty(service.LocationCode))
+				{
+					var serviceLocationDesc = Model.locations.FirstOrDefault(i => i.LocationCode == service.LocationCode);
+					if (serviceLocationDesc != null)
 					{
+			 		<text>(@serviceLocationDesc.LocationCode) @serviceLocationDesc.Name</text>
+			}
+		}
 
-						<tr>
-							<td>
-								@(service.SchoolYear-1) <text>-</text> @service.SchoolYear
-							</td>
-							<td>
-								@if (Model.serviceTypes.Count > 0)
-								{
-									foreach (var serviceType in Model.serviceTypes)
-									{
-										if (serviceType.ServiceCode == service.ServiceCode)
-										{
-											<text>(@serviceType.ServiceCode) @serviceType.Name</text>
-										}
-									}
-								}
-							</td>
-							@*<td>
-								@service.LocationCode
-							</td>*@
-							@*<td>
-							   @if (Model.serviceProviders.Count > 0)
-							   {
-								   foreach (var serviceProvider in Model.serviceProviders)
-								   {
-									   if (service.ProviderID == serviceProvider.ProviderID)
-									   {
-										   <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
-									   }
-								   }
-							  }
-							  else
-							  {
-									<text>&nbsp;&nbsp;&nbsp;</text>
-							  }
-							</td>*@
-							@*<td>
-								@Model.studentDetails.assignChildCount
-							</td>*@
-							<td>
-								@if (!string.IsNullOrEmpty(service.LocationCode))
-								{
-									var serviceLocationDesc = Model.locations.FirstOrDefault(i => i.LocationCode == service.LocationCode);
-									if (serviceLocationDesc != null)
-									{
-										<text>(@serviceLocationDesc.LocationCode) @serviceLocationDesc.Name</text>
-									}
-								}
-								
-							</td>
-							<td>
-								@service.Minutes
-							</td>
-							<td>
-								@service.DaysPerWeek
-							</td>
-							<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-							<td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
-							<td>
-								@switch (@service.Frequency)
-								{
-									case 1:<text>Every week</text>; break;
-									case 2: <text>Every 2 weeks</text>; break;
-									case 3: <text>Every 3 weeks</text>; break;
-									case 4: <text>Every 4 weeks</text>; break;
-									case 8: <text>Every 8 weeks</text>; break;
-									case 9: <text>Every 9 weeks</text>; break;
-									case 12: <text>Every 12 weeks</text>; break;
-									case 18: <text>Every 18 weeks</text>; break;
-									case 19: <text>3 out of 4 weeks</text>; break;
-									case 99: <text>1 day per year</text>; break;
-								}
-							</td>
-						</tr>
-						serviceCount++;
-					}
-				</table>
-			 
+			 </td>
+			 <td>
+			 	@service.Minutes
+			 </td>
+			 <td>
+			 	@service.DaysPerWeek
+			 </td>
+			 <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
+			 <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
+			 <td>
+			 	@switch (@service.Frequency)
+				{
+					case 1:<text>Every week</text>; break;
+			case 2: <text>Every 2 weeks</text>; break;
+		 case 3: <text>Every 3 weeks</text>; break;
+		 case 4: <text>Every 4 weeks</text>; break;
+		 case 8: <text>Every 8 weeks</text>; break;
+		 case 9: <text>Every 9 weeks</text>; break;
+		 case 12: <text>Every 12 weeks</text>; break;
+		 case 18: <text>Every 18 weeks</text>; break;
+		 case 19: <text>3 out of 4 weeks</text>; break;
+		 case 99: <text>1 day per year</text>; break;
+	 }
+			 </td>
+			 </tr>
+			 serviceCount++;
+		 }
+			 </table>
+
 		 }
 		 else
 		 {
