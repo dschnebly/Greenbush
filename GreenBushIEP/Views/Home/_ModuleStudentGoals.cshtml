@@ -672,8 +672,8 @@
             var goalBaselineElement = $(this).find(".aStudentBaseLine");
 
             //* Binding */
-            //check if default selected type has a baseline goal
-            if (goalBaselineElement.attr("value") == "") {
+			//check if default selected type has a baseline goal
+			if (goalBaselineElement.html() == "") {
                 _checkGoal(1, goalBaselineElement);
             }
 
@@ -975,7 +975,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.Result) {
-                    goalBaselineElement.attr('value', data.Message);
+                    goalBaselineElement.html(data.Message);
                 }
             },
             error: function (data) {
