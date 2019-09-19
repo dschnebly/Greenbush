@@ -65,12 +65,12 @@
 	<div style="padding-top:10px">
 		<span><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span><span>&nbsp;</span>
 		<u><textarea maxlength="20" style="width:75px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value">@dobStr</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-		<span>&nbsp;&nbsp;</span><u><textarea maxlength="20" style="width:85px;height:30px"></textarea><span style="display:none" class="input-value"></span><span>&nbsp;</span></u>
+		<u><textarea maxlength="20" style="width:85px;height:30px"></textarea><span style="display:none" class="input-value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
 	</div>
 	<div style="margin:0;padding:0">
-		<span>@(String.Format("Child's Name").PadRight(39, ' ').Replace(" ", "\u00A0"))</span>
+		<span>@(String.Format("Child's Name").PadRight(37, ' ').Replace(" ", "\u00A0"))</span>
 		<span>@(String.Format("Date of Birth").PadRight(5, ' ').Replace(" ", "\u00A0"))</span>
-		<span>&nbsp;</span><span>Begin Date</span>
+		<span>Begin Date</span>
 	</div>
 	<div style="margin:0;padding-top:65px">
 		<table cellpadding="1">
