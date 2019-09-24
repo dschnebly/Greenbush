@@ -13,7 +13,7 @@
 
 <div class="module-page">
 
-	@foreach (var primaryContact in Model.contacts)
+	@foreach (var primaryContact in ((List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts).Where(o => o.PrimaryContact == 1))
 	{
 		string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
 		string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
@@ -24,7 +24,7 @@
 				<span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
 			</p>
 		</div>		
-		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=667 style='width:6.95in;margin-left:-.05in;border-collapse:collapse;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=667 style='width:6.95in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
 			<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
 				<td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal >						
@@ -398,7 +398,7 @@
 			</p>
 			<p class=MsoNormal style='border:none;mso-border-alt:solid windowtext .5pt;	padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><input type="text" width="100" /></p>
 			<p class=MsoNormal style='margin-left:.25in;text-indent:-.25in;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-				<input type="checkbox" /><img class='imgCheck' src="@(imageNotChecked)" />&nbsp;&nbsp;  I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my	child.
+				<input type="checkbox" /><img class='imgCheck' src="@(imageNotChecked)" />&nbsp; I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my	child.
 			</p>
 			<p class=MsoNormal style='tab-stops:1.25in;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
 				<span style='font-size:	5.0pt;mso-bidi-font-size:12.0pt'><o:p>&nbsp;</o:p></span>
