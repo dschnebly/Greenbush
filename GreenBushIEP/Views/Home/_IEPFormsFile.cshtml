@@ -287,7 +287,9 @@
                     <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" /><br/>
 					<input type="button" id="btnSave" value="Save" onclick="SaveText();" class="btn btn-info print" style="margin-top:5px;display:none"/>
                     <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />
-                    <input type="hidden" id="printText" name="printText" />
+                    <input type="hidden" id="printText" name="printText" />					
+					<input type="hidden" id="printText2" name="printText2" />	<!--used for more than one primary contact-->				
+					<input type="hidden" id="printText3" name="printText3" />	<!--used for more than one primary contact-->				
                     <input type="hidden" id="isArchive" name="isArchive" />
                     <input type="hidden" id="studentName" name="studentName" value="" />
                     <input type="hidden" id="studentId" name="studentId" value="@Model.studentId" />
@@ -295,7 +297,7 @@
                     <input type="hidden" id="isIEP" name="isIEP" value="0" /> 
                     <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
 					<input type="hidden" id="isSave" name="isSave" />
-                </form>
+                </form>				
             </div>
         </div>
         <div class="row">
@@ -387,31 +389,72 @@
     });
 
     function PrintText() {
-        var x = document.getElementsByClassName("form-print");
-        var markup = document.getElementsByClassName("module-page")[0].innerHTML;
-		var markup = $(".module-page").html();
-        $("#printText").val(markup);
-		$("#isArchive").val(0);
-		$("#isSave").val(0);		
-        x[0].submit();
+		var form1 = document.getElementById("frmPrint");		
+		var moduleElements = document.getElementsByClassName("module-page");
+
+		if (moduleElements.length == 1) {
+			var markup = moduleElements[0].innerHTML;
+			var markup = $(".module-page").html();
+			$("#printText").val(markup);
+			$("#isArchive").val(0);
+			$("#isSave").val(0);
+			form1.submit();
+		}
+		else {
+			//allow printing of multiple contacts
+			var markup = moduleElements[0].innerHTML;
+			var markup2 = moduleElements[1].innerHTML;
+			var markup3 = "";
+			if (moduleElements.length > 2) {
+				markup3 = moduleElements[2].innerHTML;
+				$("#printText3").val(markup3);
+			}
+			
+			$("#printText").val(markup);
+			$("#printText2").val(markup2);
+			$("#isArchive").val(0);
+			$("#isSave").val(0);
+			form1.submit();
+		}
     }
 
     function ArchiveText() {
-        var x = document.getElementsByClassName("form-print");
-        var markup = document.getElementsByClassName("module-page")[0].innerHTML;
-        $("#printText").val(markup);
-		$("#isArchive").val(1);
-		$("#isSave").val(0);
-        x[0].submit();
+		var form1 = document.getElementById("frmPrint");
+		var moduleElements = document.getElementsByClassName("module-page");
+
+		if (moduleElements.length == 1) {
+			var markup = moduleElements[0].innerHTML;
+			var markup = $(".module-page").html();
+			$("#printText").val(markup);
+			$("#isArchive").val(1);
+			$("#isSave").val(0);
+			form1.submit();
+		}
+		else {
+			//allow printing of multiple contacts
+			var markup = moduleElements[0].innerHTML;
+			var markup2 = moduleElements[1].innerHTML;
+			var markup3 = "";
+			if (moduleElements.length > 2) {
+				markup3 = moduleElements[2].innerHTML;
+				$("#printText3").val(markup3);
+			}
+			
+			$("#printText").val(markup);
+			$("#printText2").val(markup2);
+			$("#isArchive").val(1);
+			$("#isSave").val(0);
+			form1.submit();
+		}        
 	}
 
 	function SaveText() {
-	 var x = document.getElementsByClassName("form-print");
-     var markup = document.getElementsByClassName("module-page")[0].innerHTML;
-	 $("#printText").val(markup);	
-	 $("#isArchive").val(0);
-	 $("#isSave").val(1);
-	 x[0].submit();
+		 var form1 = document.getElementById("frmPrint");
+		 var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+		 $("#printText").val(markup);	
+		 $("#isArchive").val(0);
+		 $("#isSave").val(1);
+		 form1.submit();
 	}
 	
 	function clearContents(element) {

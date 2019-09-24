@@ -1170,7 +1170,7 @@ namespace GreenbushIep.Controllers
 
                         var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                         var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
+                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "",  "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
 
                     }
                     catch (Exception e)
@@ -3054,7 +3054,9 @@ namespace GreenbushIep.Controllers
 
             string StudentHTMLContent = collection["studentText"];
             string HTMLContent = collection["printText"];
-            string studentName = collection["studentName"];
+			string HTMLContent2 = collection["printText2"];
+			string HTMLContent3 = collection["printText3"];
+			string studentName = collection["studentName"];
             string studentId = collection["studentId"];
             string isArchive = collection["isArchive"];
             string iepIDStr = collection["iepID"];
@@ -3076,7 +3078,7 @@ namespace GreenbushIep.Controllers
 			}
 			else
 			{
-				var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
+				var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
 				if (mergedFile != null)
 				{
 					string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
@@ -3089,10 +3091,10 @@ namespace GreenbushIep.Controllers
 
 		}
 
-        private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string studentName, string studentId,
+        private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string HTMLContent2, string HTMLContent3, string studentName, string studentId,
         string isArchive, string iepIDStr, string isIEP, string formName)
         {
-            if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent))
+            if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent) || !string.IsNullOrEmpty(HTMLContent2) || !string.IsNullOrEmpty(HTMLContent3))
             {
                 string logoImage = Server.MapPath("../Content/IEPBackpacklogo_black2.png");
                 iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
@@ -3150,19 +3152,50 @@ namespace GreenbushIep.Controllers
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
-                byte[] iepFile = null;
+				byte[] secondaryPageFile = null;
+				if (!string.IsNullOrEmpty(HTMLContent2))
+				{
+					string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
+					secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"</?textarea>", "");
+					secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
+				}
+
+				byte[] thirdPageFile = null;
+				if (!string.IsNullOrEmpty(HTMLContent3))
+				{
+					string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
+					thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"</?textarea>", "");
+					thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
+				}
+
+				byte[] iepFile = null;
                 if (!string.IsNullOrEmpty(result))
                     iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft, true);
+								
 
-                List<byte[]> pdfByteContent = new List<byte[]>();
+				List<byte[]> pdfByteContent = new List<byte[]>();
 
                 if (studentFile != null)
                     pdfByteContent.Add(studentFile);
 
-                if (iepFile != null)
-                    pdfByteContent.Add(iepFile);
-                else
-                    formName = "Student Information";//this is just the student info page print
+				if (iepFile != null)
+				{
+					pdfByteContent.Add(iepFile);
+
+					//extra primary contacts
+					if (secondaryPageFile != null)
+					{
+						pdfByteContent.Add(secondaryPageFile);
+					}
+
+					if (thirdPageFile != null)
+					{
+						pdfByteContent.Add(thirdPageFile);
+					}
+
+				}
+				else
+					formName = "Student Information";//this is just the student info page print
 
                 var mergedFile = concatAndAddContent(pdfByteContent);
 
