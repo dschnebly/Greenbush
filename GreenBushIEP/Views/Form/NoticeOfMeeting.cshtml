@@ -5,12 +5,13 @@
 	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (Model.contacts != null && Model.contacts.Count == 0)
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
 	{
-		Model.contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
+		contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
 	}
 }
-	@foreach (var primaryContact in ((List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts).Where(o => o.PrimaryContact == 1))
+	@foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
 	{
 		<div class="module-page">
 			@{
