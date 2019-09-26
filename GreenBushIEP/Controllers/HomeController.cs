@@ -3139,7 +3139,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                    result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"</?textarea>", "");
+					result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
+					result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -3148,7 +3149,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"textarea", "p");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -3156,7 +3157,7 @@ namespace GreenbushIep.Controllers
 				if (!string.IsNullOrEmpty(HTMLContent2))
 				{
 					string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-					secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"</?textarea>", "");
+					secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
 					secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
 				}
 
@@ -3164,7 +3165,7 @@ namespace GreenbushIep.Controllers
 				if (!string.IsNullOrEmpty(HTMLContent3))
 				{
 					string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-					thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"</?textarea>", "");
+					thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
 					thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
 				}
 
