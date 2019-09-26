@@ -15,14 +15,8 @@
 text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 
         <p class=MsoNormal align=center style='text-align:center;padding-bottom:25px'>
-            <b>
-                <u>
-                    FOR PARTICULAR
-                    SPECIAL EDUCATION AND RELATED SERVICE(S) AND/OR PLACEMENT(S)
-                </u>
-            </b>
+            <b><u>FOR PARTICULAR SPECIAL EDUCATION AND RELATED SERVICE(S) AND/OR PLACEMENT(S)</u></b>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:150%'>
             STUDENT NAME:
             <u><b>@(String.Format(studentFormattedName).PadRight(100 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>
@@ -31,11 +25,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
             <u><b>@(String.Format("{0}", schoolDistrict).PadRight(100 - schoolDistrict.Length, ' ').Replace(" ", "\u00A0"))</b></u>
         </p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:7.0pt;line-height:115%'>&nbsp;</span>
-        </p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             Effective <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span></span>,
             I, <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(districtContactName)</textarea><span style="display:none" class="input-value">@(districtContactName)</span></span>,
             having authority under the laws of the state of Kansas to make educational decisions:  
@@ -47,22 +37,15 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on my own behalf (adult student),
         </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:4.0pt;line-height:115%'>&nbsp;</span>
-        </p>
+      
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             hereby
             revoke consent for the following special education and related service(s) and
             or placement(s) for the above named student:
         </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <u>
-                <textarea class="form-control"></textarea><span style="display:none" class="input-value"></span>
-            </u>
-        </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:8.0pt;line-height:115%'>&nbsp;</span>
-        </p>
+        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:10px'>
+            <u><textarea class="form-control"></textarea><span style="display:none" class="input-value"></span></u>
+        </p>        
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             If the IEP
             team certifies in writing that the above named student does not need the
@@ -75,81 +58,58 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
                 </u>
             </b>
         </p>
-
-
         <p class=MsoListParagraphCxSpFirst style='margin-bottom:0in;margin-bottom:.0001pt;text-indent:.25in'>
             (a)&nbsp;&nbsp;this revocation of consent will result in the school district discontinuing only the above specified service(s) and/or placement(s) and that all other provisions in the IEP will be continued;
         </p>
-
         <p class=MsoListParagraphCxSpFirst style='margin-bottom:0in;margin-bottom:.0001pt;text-indent:.25in'>
             (b)&nbsp;&nbsp;this revocation of consent does not negate an action that occurs after
             consent is given and before consent is revoked; and
         </p>
-
         <p class=MsoListParagraphCxSpFirst style='margin-bottom:0in;margin-bottom:.0001pt;text-indent:.25in'>
             (c)&nbsp;&nbsp;the school district will not be considered to be in violation of the
             requirement to make a FAPE in the least restrictive environment available to
             the student because of the discontinuation of the service(s) and/or
             placement(s) specified above. 
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <span style='font-size:8.0pt;line-height:115%'>&nbsp;</span>
         </p>
-
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             If the IEP
             team determines that the student needs the special education and related
             service(s) and/or placement(s) specified above to receive a FAPE, I understand
             that:
         </p>
-
         <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt'>
             (a) the service(s) and/or placement(s)
             specified above will continue;
         </p>
-
         <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt'>
             (b) I retain all of the procedural
             safeguards specified in federal and state special education laws and
             regulations; and
         </p>
-
         <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt'>
             (c) I may request mediation or
             initiate a due process hearing to challenge the IEP team’s decision that the
             special education service(s) and/or placement(s) specified above are needed in
             order for the student to receive a FAPE.
         </p>
-
-        <p class=MsoNormal style='margin-top:15pt;margin-right:0in;margin-bottom:0in;margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                      </u>&nbsp;<u>                                          </u></p>
+        <p class=MsoNormal style='margin-top:15pt;margin-right:0in;margin-bottom:0in;margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                     </u>&nbsp;<u>                                          </u></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>                                                                                                                       (Signature)                                             (Date)</span></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
-
 		 <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            As the
-            school representative on this student’s IEP team, I,<textarea style='width:200px;height:30px;'>@(districtContactName)</textarea><span style='display:none;' class="input-value">@(districtContactName)</span><span>, </span>
-      
-            certify, on
-            behalf of the IEP team, that this student’s IEP team considered the revocation
-            of consent described above and that the team determined that the student  <b>
-                <span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span>
-            </b> <i>
-                     <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;does
-            </i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b>
-                <span style='font-size:14.0pt;line-height:115%'></span>
-            </b><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><i>&nbsp;does not</i>  need the
-            special education and related service(s) and/or placement(s) specified above in
-            order to receive a free appropriate public education (FAPE).     
+            As the school representative on this student’s IEP team, I,<textarea style='width:200px;height:30px;'>@(districtContactName)</textarea><span style='display:none;' class="input-value">@(districtContactName)</span>
+			 <span>, certify, on behalf of the IEP team, that this student’s IEP team considered the revocation of consent described above and that the team determined that the student</span>
+			 <i><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;does</i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b><span style='font-size:14.0pt;line-height:115%'></span></b><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><i>&nbsp;does not</i><span>  need the
+            special education and related service(s) and/or placement(s) specified above in order to receive a free appropriate public education (FAPE).</span>
         </p>
-
         <p class=MsoNormal style='margin-top:15pt;margin-right:0in;margin-bottom:0in;
 margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                      </u>&nbsp;<u>                                          </u></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
 6.0pt'><span style='font-size:8.0pt'>                                                                                                                       (Signature)                                             (Date)</span></p>
-
     </div>
 </div>
