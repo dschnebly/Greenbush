@@ -1182,6 +1182,7 @@ namespace GreenbushIep.Controllers
 
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
+
                     //iepDraft.begin_date = DateTime.Now;
                     iepDraft.end_Date = (!iepDraft.Amendment) ? iepDraft.begin_date.Value.AddYears(1) : iepDraft.end_Date;
 
