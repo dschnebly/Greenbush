@@ -1160,10 +1160,12 @@ namespace GreenbushIep.Controllers
                     try
                     {
                         var theIEP = GetIEPPrint(stId, IEPid);
+						theIEP.isServerRender = true;
                         var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
 
                         string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
-                        HtmlDocument doc = new HtmlDocument();
+						result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+						HtmlDocument doc = new HtmlDocument();
                         doc.OptionWriteEmptyNodes = true;
                         doc.OptionFixNestedTags = true;
                         doc.LoadHtml(result);

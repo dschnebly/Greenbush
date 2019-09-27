@@ -61,9 +61,10 @@ namespace GreenBushIEP.Models
         public string studentFirstName { get; set; }
         public string studentLastName { get; set; }
         public int studentAge { get; set; }
+		public bool isServerRender { get; set; }
 
-        //for printing
-        public StudentDetailsPrintViewModel studentDetails { get; set; }
+		//for printing
+		public StudentDetailsPrintViewModel studentDetails { get; set; }
 
         public IEP()
         {
@@ -82,8 +83,9 @@ namespace GreenBushIEP.Models
             hasAccommodations = false;
             hasBehavior = false;
             hasPlan = false;
+			isServerRender = false;
 
-            listOfStudentsIEPs = new List<tblIEP>();
+			listOfStudentsIEPs = new List<tblIEP>();
             current = new tblIEP();
             anyStudentIEPActive = false;
             anyStudentIEPAmendment = false;
