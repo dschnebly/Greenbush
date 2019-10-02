@@ -308,8 +308,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div align="left">
-                    <div class="col-md-12 ">
-                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel, new ViewDataDictionary { { "teamEval", Model.teamEval } })
+                    <div class="col-md-12 ">						
+                        @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel
+					   , new ViewDataDictionary { { "teamEval", Model.teamEval }, { "summaryPerf", Model.summaryPerformance } })
                     </div>
                 </div>
             </div>

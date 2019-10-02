@@ -42,5 +42,6 @@ namespace GreenBushIEP.Models
         public string PLAAFP_Strengths { get; set; }
         public string PLAAFP_Concerns { get; set; }
         public bool Completed { get; set; }
+        public string Notes { get; set; }
     }
 }
