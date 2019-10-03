@@ -17,19 +17,15 @@
     <AssemblyName>GreenBushIEP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressSSLPort>51387</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
-    <AssemblyVersion>113.113.113.2</AssemblyVersion>
+    <AssemblyVersion>136.136.136.2</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -558,6 +554,9 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportStudentsByBuilding_Result4.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_BuildingList.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_BuildingsForAttendance.cs">
