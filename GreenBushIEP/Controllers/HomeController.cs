@@ -1508,10 +1508,11 @@ namespace GreenbushIep.Controllers
             int lastYear = DateTime.Now.AddYears(-1).Year;
             int thirdYear = DateTime.Now.AddYears(2).Year;
             tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == UserID).FirstOrDefault();
+            List<string> attendingDistrict = studentInfo.USD.Split(',').ToList();
 
             if (studentInfo != null)
             {
-                List<tblCalendar> Calendar = db.tblCalendars.Where(c => c.BuildingID == BuildingID && c.USD == studentInfo.USD && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
+                List<tblCalendar> Calendar = db.tblCalendars.Where(c => c.BuildingID == BuildingID && attendingDistrict.Contains(c.USD) && c.Year >= lastYear && c.Year <= thirdYear).OrderBy(c => c.Year).ToList();
                 if (Calendar.Count > 0)
                 {
                     JsonResult Holidays = Json(Calendar.Where(c => c.NoService || !c.canHaveClass).Select(c => c.calendarDate.Value.ToString("d-M-yyyy")).ToList(), JsonRequestBehavior.AllowGet);

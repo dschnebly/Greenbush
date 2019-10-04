@@ -1246,6 +1246,7 @@ namespace GreenBushIEP.Controllers
                                                  }).OrderBy(b => b.BuildingName).ToList();
 
             ViewBag.AllBuildings = (from b in db.vw_BuildingList
+                                    where b.isServiceOnly == false
                                     select new BuildingsViewModel
                                     {
                                         BuildingName = b.BuildingName,
@@ -1672,6 +1673,7 @@ namespace GreenBushIEP.Controllers
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
             ViewBag.AllBuildings = (from b in db.vw_BuildingList
+                                    where b.isServiceOnly == false
                                     select new BuildingsViewModel
                                     {
                                         BuildingName = b.BuildingName,
