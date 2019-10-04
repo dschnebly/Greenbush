@@ -663,6 +663,7 @@ namespace GreenBushIEP.Controllers
                     accommodation.Frequency = model.Frequency;
                     accommodation.Location = model.Location;
                     accommodation.IEPid = model.IEPid;
+					accommodation.Module = model.Module;
 
                     if (model.AnticipatedStartDate.HasValue)
                         accommodation.AnticipatedStartDate = model.AnticipatedStartDate;
@@ -685,6 +686,7 @@ namespace GreenBushIEP.Controllers
                     newAccomodation.Frequency = model.Frequency;
                     newAccomodation.Location = model.Location;
                     newAccomodation.IEPid = model.IEPid;
+					newAccomodation.Module = model.Module;
 
                     if (model.AnticipatedStartDate.HasValue)
                         newAccomodation.AnticipatedStartDate = model.AnticipatedStartDate;
@@ -797,7 +799,8 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = true, Message = baselineText }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
+	
+		[HttpPost]
         [Authorize]
         public ActionResult DeleteStudentBenchmark(int studentBenchmarkId)
         {

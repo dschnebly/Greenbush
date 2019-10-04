@@ -53,7 +53,32 @@
                     </div>
                     <div id=@(string.Format("collapse{0}", Model.AccommodationID)) class="panel-collapse collapse" >
                         <div class="panel-body">
-                            <div class="row">
+								<div class="row">
+                                        <div class="col-md-3">
+                                            <label style="font-size: 18px;" for="ModuleType">Module</label>
+											<div class="input-group">
+                                            <div class="input-group-btn bs-dropdown-to-select-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;width:100%;text-align:left">
+                                                    <span data-bind="bs-drp-sel-label">Select Module...</span>
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="@(Model.Module)">
+                                                <ul class="dropdown-menu" role="menu" style="font-size:16px;width:100%">
+                                                    <li data-value="1"><a href="#">Health</a></li>
+                                                    <li data-value="2"><a href="#">Motor</a></li>
+                                                    <li data-value="3"><a href="#">Communication</a></li>
+                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>                                                    
+                                                    <li data-value="7"><a href="#">Reading</a></li>
+                                                    <li data-value="8"><a href="#">Math</a></li>
+                                                    <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
+													<li data-value="6"><a href="#">Academic/Functional</a></li>
+                                                </ul>
+                                            </div>                                            
+                                        </div>										
+									</div>	
+							</div>
+                            <div class="row voffset3">
                                 <div class="col-md-12">
                                     <label style="font-size: 18px;" for="AccType">Type</label>
                                     <div class="form-check" style="margin-left:8px">
@@ -65,6 +90,7 @@
                                     </div>
                                 </div>
                             </div>
+						
                             <div class="row voffset2">
                                 <div class="col-md-12">
                                     <label style="font-size: 18px;">Description</label>

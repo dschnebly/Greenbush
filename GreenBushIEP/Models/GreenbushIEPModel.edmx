@@ -24,6 +24,7 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="Module" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -808,6 +809,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Potential_HarmfulEffects_flag" Type="bit" />
           <Property Name="Potential_HarmfulEffects_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Module" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -1161,7 +1163,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsFor
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="USD" Type="varchar" MaxLength="8000" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BuildingName" Type="nvarchar" MaxLength="255" />
+          <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2156,6 +2158,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -2746,6 +2749,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Potential_HarmfulEffects_flag" Type="Boolean" />
           <Property Name="Potential_HarmfulEffects_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -3609,7 +3613,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="USD" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_UserList">
           <Key>
@@ -3876,6 +3880,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
@@ -4469,6 +4474,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="Potential_HarmfulEffects_desc" ColumnName="Potential_HarmfulEffects_desc" />
                 <ScalarProperty Name="Potential_HarmfulEffects_flag" ColumnName="Potential_HarmfulEffects_flag" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

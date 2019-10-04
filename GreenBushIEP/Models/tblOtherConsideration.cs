@@ -53,5 +53,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<bool> Potential_HarmfulEffects_flag { get; set; }
         public string Potential_HarmfulEffects_desc { get; set; }
+        public string Module { get; set; }
     }
 }
