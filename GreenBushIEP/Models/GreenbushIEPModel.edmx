@@ -24,6 +24,7 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="Module" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -165,6 +166,16 @@
           <Property Name="Address_Physical" Type="nvarchar" MaxLength="250" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="isTest" Type="bit" Nullable="false" />
+          <Property Name="BuildingTypeID" Type="int" Nullable="false" />
+          <Property Name="isServiceOnly" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBuildingTypes">
+          <Key>
+            <PropertyRef Name="BuildingTypeID" />
+          </Key>
+          <Property Name="BuildingTypeID" Type="int" Nullable="false" />
+          <Property Name="BuildingType" Type="nvarchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendar">
           <Key>
@@ -808,6 +819,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Potential_HarmfulEffects_flag" Type="bit" />
           <Property Name="Potential_HarmfulEffects_desc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Module" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -954,6 +966,7 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProvidedFor" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -1158,10 +1171,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingList
             <PropertyRef Name="USD" />
             <PropertyRef Name="BuildingID" />
             <PropertyRef Name="CodeBuildingID" />
+            <PropertyRef Name="isServiceOnly" />
           </Key>
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CodeBuildingID" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="isServiceOnly" Type="bit" Nullable="false" />
           <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1174,7 +1189,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsFor
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="USD" Type="varchar" MaxLength="8000" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BuildingName" Type="nvarchar" MaxLength="255" />
+          <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1579,6 +1594,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblBehaviorTriggerTypes" EntityType="Self.tblBehaviorTriggerTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBuildingMapping" EntityType="Self.tblBuildingMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBuildings" EntityType="Self.tblBuildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBuildingTypes" EntityType="Self.tblBuildingTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendar" EntityType="Self.tblCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarReporting" EntityType="Self.tblCalendarReporting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
@@ -1637,6 +1653,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_BuildingList].[USD] AS [USD], 
     [vw_BuildingList].[BuildingID] AS [BuildingID], 
     [vw_BuildingList].[CodeBuildingID] AS [CodeBuildingID], 
+    [vw_BuildingList].[isServiceOnly] AS [isServiceOnly], 
     [vw_BuildingList].[BuildingName] AS [BuildingName]
     FROM [dbo].[vw_BuildingList] AS [vw_BuildingList]</DefiningQuery>
           </EntitySet>
@@ -1883,7 +1900,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblBehaviorTriggers" EntityType="IndividualizedEducationProgramModel.tblBehaviorTrigger" />
           <EntitySet Name="tblBehaviorTriggerTypes" EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" />
           <EntitySet Name="tblBuildingMappings" EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" />
-          <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
           <EntitySet Name="tblCalendarTemplates" EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" />
           <EntitySet Name="tblCareerPaths" EntityType="IndividualizedEducationProgramModel.tblCareerPath" />
           <EntitySet Name="tblContacts" EntityType="IndividualizedEducationProgramModel.tblContact" />
@@ -2007,7 +2023,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblRaces" EntityType="IndividualizedEducationProgramModel.tblRace" />
           <EntitySet Name="tblFormTeamEvals" EntityType="IndividualizedEducationProgramModel.tblFormTeamEval" />
           <EntitySet Name="tblFormSummaryPerformances" EntityType="IndividualizedEducationProgramModel.tblFormSummaryPerformance" />
+          <EntitySet Name="tblBuildingTypes" EntityType="IndividualizedEducationProgramModel.tblBuildingType" />
           <EntitySet Name="vw_BuildingList" EntityType="IndividualizedEducationProgramModel.vw_BuildingList" />
+          <EntitySet Name="tblBuildings" EntityType="IndividualizedEducationProgramModel.tblBuilding" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2178,6 +2196,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
@@ -2302,23 +2321,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="tblBuilding">
-          <Key>
-            <PropertyRef Name="BuildingID" />
-            <PropertyRef Name="USD" />
-          </Key>
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Int32" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Address_Mailing" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Address_Physical" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isTest" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblCalendarTemplate">
           <Key>
@@ -2768,6 +2770,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Potential_HarmfulEffects_flag" Type="Boolean" />
           <Property Name="Potential_HarmfulEffects_desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -2839,6 +2842,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="USD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProvidedFor" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -3631,7 +3635,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="USD" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vw_UserList">
           <Key>
@@ -3763,16 +3767,45 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="tblBuildingType">
+          <Key>
+            <PropertyRef Name="BuildingTypeID" />
+          </Key>
+          <Property Name="BuildingTypeID" Type="Int32" Nullable="false" />
+          <Property Name="BuildingType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="vw_BuildingList">
           <Key>
             <PropertyRef Name="USD" />
             <PropertyRef Name="BuildingID" />
             <PropertyRef Name="CodeBuildingID" />
+            <PropertyRef Name="isServiceOnly" />
           </Key>
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CodeBuildingID" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
           <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="isServiceOnly" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblBuilding">
+          <Key>
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address_Mailing" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address_Physical" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isTest" Type="Boolean" Nullable="false" />
+          <Property Name="BuildingTypeID" Type="Int32" Nullable="false" />
+          <Property Name="isServiceOnly" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3909,6 +3942,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblAccommodations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodation">
               <MappingFragment StoreEntitySet="tblAccommodations">
+                <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
@@ -4057,23 +4091,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblBuildings">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuilding">
-              <MappingFragment StoreEntitySet="tblBuildings">
-                <ScalarProperty Name="isTest" ColumnName="isTest" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Address_Physical" ColumnName="Address_Physical" />
-                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4502,6 +4519,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="Potential_HarmfulEffects_desc" ColumnName="Potential_HarmfulEffects_desc" />
                 <ScalarProperty Name="Potential_HarmfulEffects_flag" ColumnName="Potential_HarmfulEffects_flag" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -4594,6 +4612,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="ProvidedFor" ColumnName="ProvidedFor" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -5372,13 +5391,42 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblBuildingTypes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuildingType">
+              <MappingFragment StoreEntitySet="tblBuildingTypes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BuildingType" ColumnName="BuildingType" />
+                <ScalarProperty Name="BuildingTypeID" ColumnName="BuildingTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_BuildingList">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingList">
               <MappingFragment StoreEntitySet="vw_BuildingList">
+                <ScalarProperty Name="isServiceOnly" ColumnName="isServiceOnly" />
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="CodeBuildingID" ColumnName="CodeBuildingID" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBuildings">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblBuilding">
+              <MappingFragment StoreEntitySet="tblBuildings">
+                <ScalarProperty Name="isServiceOnly" ColumnName="isServiceOnly" />
+                <ScalarProperty Name="BuildingTypeID" ColumnName="BuildingTypeID" />
+                <ScalarProperty Name="isTest" ColumnName="isTest" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Address_Physical" ColumnName="Address_Physical" />
+                <ScalarProperty Name="Address_Mailing" ColumnName="Address_Mailing" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
