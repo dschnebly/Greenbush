@@ -518,8 +518,9 @@ namespace GreenBushIEP.Models
         public List<int> fiscalYears { get; set; }
 		public DateTime IEPStartDate { get; set; }
 		public DateTime MeetingDate { get; set; }
+        public string providedfor { get; set; }
 
-		public StudentServiceViewModel()
+        public StudentServiceViewModel()
 		{
 			studentId = 0;
 			studentServices = new List<tblService>();
@@ -531,6 +532,7 @@ namespace GreenBushIEP.Models
             fiscalYears = new List<int>();
 			IEPStartDate = new DateTime();
 			MeetingDate = new DateTime();
+            providedfor = "";
 		}
 	}
 

@@ -14,7 +14,6 @@
     <br />
 }
 <label class="input-labels" style="font-size:16px;margin-top: 15px;margin-left: 5px;">Short Term Benchmark(s)</label>
-@*<label class="input-labels pull-right" style="font-size:16px;margin-right: 45px; margin-top:15px;">T.A.</label>*@
 
 <div class="StudentGoalBenchmarks">
     @foreach (var benchmark in @Model.benchmarks)
@@ -26,12 +25,6 @@
                 <div class="input-group" style="background-color: #F9F9F9;">
                   
                     <input type="text" value="@(benchmark.ObjectiveBenchmark.ToString())" name="StudentGoalBenchmarkTitle@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkTitle form-control" placeholder="Enter a new student benchmark" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; } />
-                    @*<span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-number transition-activity" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; }>
-                            <span class="glyphicon @(benchmark.TransitionActivity ? " glyphicon-check" : "glyphicon-unchecked" )"></span>
-                        </button>
-                        <input type="hidden" name="StudentGoalBenchmarkHasTransition@(benchmark.goalBenchmarkID)" value="@(benchmark.TransitionActivity.ToString())" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; } />
-                    </span>*@
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; }>
                             <i class="glyphicon glyphicon-trash"></i>

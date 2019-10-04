@@ -26,14 +26,40 @@
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
 
-        var optionExists = $("#misDistrict option[value=" + valueSelected + "]").length > 0;
-        if (optionExists) {
-            var currentValues = $("#misDistrict").val();
-            currentValues.push(valueSelected);
-            $("#misDistrict").val(currentValues);
-            $("#misDistrict").trigger("change");
-            $("#misDistrict").trigger("chosen:updated");
-        }
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/GetBuildingsByDistrictId',
+            data: { districtId: valueSelected },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+                    // clear the select
+                    var responsibleBuildingElement = $('.districtOnly');
+                    $('#AttendanceBuildingId').find('option').remove().end();
+
+                    // add the new options to the select
+                    var responsibleBuilding = responsibleBuildingElement.html();
+                    $.each(data.DistrictBuildings, function (key, value) {
+                        responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+                    });
+
+                    // trigger chosen select to update.
+                    responsibleBuildingElement.html(responsibleBuilding);
+                    responsibleBuildingElement.trigger("change");
+                    responsibleBuildingElement.trigger("chosen:updated");
+                } else {
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error retrieving the building information.");
+                console.log(data);
+            },
+            complete: function (data) {
+                $(".info").hide();
+            }
+        });
     });
 
     $(".add-contact").on("click", function () {
@@ -52,7 +78,7 @@
 
 function init() {
 
-    $(".studentDOB").datepicker({
+    $(".sdob").datepicker({
         dateFormat: "mm/dd/yy",
         changeMonth: true,
         changeYear: true
@@ -91,84 +117,6 @@ function init() {
         prevTab($active);
     });
 
-    $('[name="SearchBuildingList"]').keyup(function (e) {
-        var code = e.keyCode || e.which;
-        if (code === '9') return;
-        if (code === '27') $(this).val(null);
-        var $rows = $(this).closest('.dual-list').find('.list-group li');
-        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-        $rows.show().filter(function () {
-            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-            return !~text.indexOf(val);
-        }).hide();
-    });
-
-    $('#misDistrict').change(function (e) {
-        var districtIds = '';
-        var districtNums = new Array();
-        var districtArr = $("#misDistrict").val();
-
-        if (districtArr.length > 0) {
-            for (i = 0; i < districtArr.length; i++) {
-                var districtAdd = districtArr[i];
-                districtNums.push(districtAdd);
-            }
-            districtIds = districtNums.join(',');
-        }
-
-        var args = { ids: districtIds };
-
-        $(".info").show();
-        // current options html
-        var responsibleBuildingElement = $('.districtOnly');
-        var neighborhoodBuildingElement = $('.allActive');
-
-        $.ajax({
-            type: 'GET',
-            url: '/Manage/GetBuildingsByDistrictId',
-            data: args,
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                if (data.Result === "success") {
-                    var buildings = data.DistrictBuildings;
-                    var activeBuildings = data.ActiveBuildings;
-                    $(".studentBuilding").find('option').remove().end();
-
-                    var responsibleBuilding = responsibleBuildingElement.html();
-                    var neighborhoodBuilding = neighborhoodBuildingElement.html();
-
-                    //district only
-                    $.each(buildings, function (key, value) {
-                        responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                    });
-
-                    //now add all active 
-                    $.each(activeBuildings, function (key, value) {
-                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                    });
-
-                    responsibleBuildingElement.html(responsibleBuilding);
-                    neighborhoodBuildingElement.html(neighborhoodBuilding);
-
-                    responsibleBuildingElement.trigger("change");
-                    responsibleBuildingElement.trigger("chosen:updated");
-
-                    neighborhoodBuildingElement.trigger("change");
-                    neighborhoodBuildingElement.trigger("chosen:updated");
-                }
-            },
-            error: function (data) {
-                alert("There was an error retrieving the building information.");
-                console.log(data);
-            },
-            complete: function (data) {
-                $(".info").hide();
-            }
-        });
-    });
-
     $('#Is_Gifted').click(function () {
         if ($(this).is(':checked')) {
             $('#claimingCode').prop('checked', false);
@@ -186,6 +134,17 @@ function init() {
     }
 }
 
+function initContacts() {
+
+    $('.student-contact:not(.bound)').addClass('bound').each(function (index) {
+        $(this).find('.remove-contact').on("click", function (e) {
+            $(this).parents(".student-contact").fadeOut(300, function () {
+                $(this).remove();
+            });
+        });
+    });
+
+}
 
 function tabValidates() {
     var validates = true;
@@ -214,24 +173,11 @@ function tabValidates() {
     return validates;
 }
 
-function initContacts() {
-
-    $('.student-contact:not(.bound)').addClass('bound').each(function (index) {
-        $(this).find('.remove-contact').on("click", function (e) {
-            $(this).parents(".student-contact").fadeOut(300, function () {
-                $(this).remove();
-            });
-        });
-    });
-
-}
-
 $("#next2").on("click", function () {
 
     var theForm = document.getElementById("createNewStudent");
 
     if (tabValidates()) {
-
         $.ajax({
             url: '/Manage/CreateStudent',
             type: 'POST',
@@ -256,7 +202,6 @@ $("#next2").on("click", function () {
                 alert("There was an error when attempt to connect to the server.");
             }
         });
-
     }
 });
 

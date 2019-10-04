@@ -259,6 +259,12 @@
                                         </div>
                                         <div class="row serviceFadeIn">
                                             <div class="col-md-3">
+                                                <label for="serviceInstruction">Instruction Provided For:</label>
+                                                <div class="form-group">
+                                                    <input type="text" value="" style="min-height: 48px !important; width: 100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <label for="serviceProvider">Provider</label>
                                                 <div class="form-group">
                                                     <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
@@ -464,6 +470,12 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
+                                                    <label for="serviceInstruction">Instruction Provided For:</label>
+                                                    <div class="form-group">
+                                                        <input type="text" value="@(Model.providedfor)" style="min-height: 48px !important; width: 100%;" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
                                                     <label for="serviceProvider">Provider</label>
                                                     <div class="form-group">
                                                         <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
@@ -532,7 +544,7 @@
     </div>
 </div> <!--end print-->
 <script>
-	
+
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -758,7 +770,7 @@
                                         oneStudentService.remove();
                                         previousService.collapse('show');
 
-                                        if($('.oneStudentService').not('#defaultStudentService').length == 0) {
+                                        if ($('.oneStudentService').not('#defaultStudentService').length == 0) {
                                             $("#duplicateService").addClass("disabled").attr('disabled', 'disabled');;
                                             $("#duplicateAllService").addClass("disabled").attr('disabled', 'disabled');;
                                         }
@@ -859,7 +871,7 @@
 
                 //check dates are valid before saving
                 var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
-                   
+
                 //if isvalid, don't allow user to save
                 if (!isValid) {
                     _showAlert();
@@ -911,13 +923,13 @@
 
                     var iepId = $("#studentIEPId").val();
                     var isLastIndex = index == ($(".oneStudentService").not("#defaultStudentService")).length - 1; // only fire the callback when it's our last index.
-										
-					var success = checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
 
-					if (success != undefined && !success) {
-						$(this).find(".collapse").collapse('show');
-						return false; // breaks
-					}
+                    var success = checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
+
+                    if (success != undefined && !success) {
+                        $(this).find(".collapse").collapse('show');
+                        return false; // breaks
+                    }
                 });
             });
 
@@ -993,7 +1005,7 @@
                                     serviceContainer.find(".serviceFadeIn").each(function () {
                                         $(this).fadeTo("slow", 0, null).hide();
                                     });
-                                                                    
+
                                     _showAlert("This building doesn't have a calendar. Contact your MIS to have one created.", false);
                                 }
                             } else {
@@ -1216,37 +1228,37 @@
         var startDateObj = new Date(sDate);
 
         if (!isDate(sDate)) {
-			_showAlert("The Student Service Initiation date must be a valid date.", false);
-			startDateElement.closest(".input-group").addClass("has-error");
+            _showAlert("The Student Service Initiation date must be a valid date.", false);
+            startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
         }
 
         if (!isDate(eDate)) {
-			_showAlert("The Student Service End date must be a valid date.", false);
-			endDateElement.closest(".input-group").addClass("has-error");
+            _showAlert("The Student Service End date must be a valid date.", false);
+            endDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
         }
 
         //start date must be after IEP start date
         var isAfterIEP = _validateStartDate(startDateObj);
-		if (!isAfterIEP) {
-			startDateElement.closest(".input-group").addClass("has-error");
+        if (!isAfterIEP) {
+            startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
         }
 
         ////end date must be after
         if (endDateObj < startDateObj) {
-			_showAlert("The End date must be after the Initiation date.", false);
-			endDateElement.closest(".input-group").addClass("has-error");
+            _showAlert("The End date must be after the Initiation date.", false);
+            endDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
-		}
+        }
 
-		startDateElement.closest(".input-group").removeClass("has-error");
-		endDateElement.closest(".input-group").removeClass("has-error");
+        startDateElement.closest(".input-group").removeClass("has-error");
+        endDateElement.closest(".input-group").removeClass("has-error");
 
         return isValid;
     }
@@ -1375,44 +1387,44 @@
         var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
 
         //if isvalid, don't allow user to save
-		if (!isValid) {
-			_showAlert();
-			return false;
-		}
-		else {
+        if (!isValid) {
+            _showAlert();
+            return false;
+        }
+        else {
 
-			$.ajax({
-				type: 'POST',
-				url: '/Home/SaveStudentService',
-				data: form,
-				dataType: 'json',
-				success: function (data) {
-					if (data.Result == "success") {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/SaveStudentService',
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result == "success") {
 
-						_showAlert(data.Message, true);
+                        _showAlert(data.Message, true);
 
-						studentService.find("input[name='StudentSerivceId']").val(data.key);
-						studentService.find(".collapse.in").attr("data-val", data.key);
-						studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+                        studentService.find("input[name='StudentSerivceId']").val(data.key);
+                        studentService.find(".collapse.in").attr("data-val", data.key);
+                        studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
 
-						$(window).trigger("saving.bs.modal");
+                        $(window).trigger("saving.bs.modal");
 
-						if (lastIndex) {
-							callback();
-						}
+                        if (lastIndex) {
+                            callback();
+                        }
 
-						return true;
-					}
-					else {
-						studentService.find("input[name=completed]").val(false);
-						_showAlert(data.Message, false);
-					}
-				},
-				error: function (data) {
-					studentService.find("input[name=completed]").val(false);
-					_showAlert("There was an error while trying to save the data.", false);
-				}
-			});
-		}
+                        return true;
+                    }
+                    else {
+                        studentService.find("input[name=completed]").val(false);
+                        _showAlert(data.Message, false);
+                    }
+                },
+                error: function (data) {
+                    studentService.find("input[name=completed]").val(false);
+                    _showAlert("There was an error while trying to save the data.", false);
+                }
+            });
+        }
     }
 </script>

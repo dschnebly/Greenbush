@@ -1154,6 +1154,19 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_BuildingList">
+          <Key>
+            <PropertyRef Name="USD" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="CodeBuildingID" />
+          </Key>
+          <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeBuildingID" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsForAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_BuildingsForAttendance">
           <Key>
@@ -1621,6 +1634,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblTransitionServices" EntityType="Self.tblTransitionServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_BuildingList" EntityType="Self.vw_BuildingList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_BuildingList].[USD] AS [USD], 
+    [vw_BuildingList].[BuildingID] AS [BuildingID], 
+    [vw_BuildingList].[CodeBuildingID] AS [CodeBuildingID], 
+    [vw_BuildingList].[BuildingName] AS [BuildingName]
+    FROM [dbo].[vw_BuildingList] AS [vw_BuildingList]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_BuildingsForAttendance" EntityType="Self.vw_BuildingsForAttendance" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_BuildingsForAttendance].[userID] AS [userID], 
@@ -1988,6 +2009,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblRaces" EntityType="IndividualizedEducationProgramModel.tblRace" />
           <EntitySet Name="tblFormTeamEvals" EntityType="IndividualizedEducationProgramModel.tblFormTeamEval" />
           <EntitySet Name="tblFormSummaryPerformances" EntityType="IndividualizedEducationProgramModel.tblFormSummaryPerformance" />
+          <EntitySet Name="vw_BuildingList" EntityType="IndividualizedEducationProgramModel.vw_BuildingList" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3745,6 +3767,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="vw_BuildingList">
+          <Key>
+            <PropertyRef Name="USD" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="CodeBuildingID" />
+          </Key>
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeBuildingID" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5342,6 +5375,16 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="Goal_Learning" ColumnName="Goal_Learning" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="FormSummaryPerformanceId" ColumnName="FormSummaryPerformanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_BuildingList">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingList">
+              <MappingFragment StoreEntitySet="vw_BuildingList">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="CodeBuildingID" ColumnName="CodeBuildingID" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

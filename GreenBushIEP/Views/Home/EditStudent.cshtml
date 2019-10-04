@@ -741,7 +741,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <label class="control-label required" for="dob">Birthdate</label>
-                                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
+                                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required sdob", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
                                                     @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -876,7 +876,7 @@
                                                 foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
                                                     string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
-                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName (@selectedDistrictBuilding.BuildingID)</option>
+                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
                                                 }
                                             }
 											
@@ -886,7 +886,7 @@
                                                 foreach (var districtBuilding in Model.buildings)
                                                 {
                                                     string selected = Model.info.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
-                                                    <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName (@districtBuilding.BuildingID)</option>
+                                                    <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName</option>
                                                 }
                                             }
 											
@@ -896,7 +896,7 @@
                                                 foreach (var allActiveBuilding in ViewBag.AllBuildings)
                                                 {
                                                     string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
-                                                    <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName (@allActiveBuilding.BuildingID)</option>
+                                                    <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName</option>
                                                 }
                                             }
                                         </select>
@@ -914,7 +914,7 @@
                                                 foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
                                                     string selected = Model.info.BuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
-                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName (@selectedDistrictBuilding.BuildingID)</option>
+                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
                                                 }
                                             }
                                         </select>
