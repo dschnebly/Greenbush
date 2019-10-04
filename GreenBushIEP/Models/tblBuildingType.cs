@@ -12,12 +12,10 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_BuildingList
+    public partial class tblBuildingType
     {
-        public string USD { get; set; }
-        public string BuildingID { get; set; }
-        public string CodeBuildingID { get; set; }
-        public string BuildingName { get; set; }
-        public bool isServiceOnly { get; set; }
+        public int BuildingTypeID { get; set; }
+        public string BuildingType { get; set; }
+        public bool Active { get; set; }
     }
 }

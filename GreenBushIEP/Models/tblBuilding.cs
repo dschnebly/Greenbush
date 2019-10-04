@@ -25,5 +25,7 @@ namespace GreenBushIEP.Models
         public string Address_Physical { get; set; }
         public string State { get; set; }
         public bool isTest { get; set; }
+        public int BuildingTypeID { get; set; }
+        public bool isServiceOnly { get; set; }
     }
 }

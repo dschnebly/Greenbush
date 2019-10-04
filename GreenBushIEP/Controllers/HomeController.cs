@@ -1659,6 +1659,7 @@ namespace GreenbushIep.Controllers
                     service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
+                    service.ProvidedFor = collection["serviceProvidedFor"];
                     service.Completed = isCompleted;
                     service.Create_Date = DateTime.Now;
                     service.Update_Date = DateTime.Now;
@@ -1702,6 +1703,7 @@ namespace GreenbushIep.Controllers
                     service.Minutes = Convert.ToInt16(collection["serviceMinutesPerDay"]);
                     service.ProviderID = Convert.ToInt32(collection["serviceProvider"]);
                     service.LocationCode = collection["location"];
+                    service.ProvidedFor = collection["serviceProvidedFor"];
                     service.Update_Date = DateTime.Now;
                     service.Completed = isCompleted;
                     service.FiledOn = null; //need to clear so it can be pickedup by spedpro export

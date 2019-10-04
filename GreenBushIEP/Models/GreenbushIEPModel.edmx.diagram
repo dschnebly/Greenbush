@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorTrigger" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorTriggerType" Width="1.5" PointX="12.75" PointY="3.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingMapping" Width="1.5" PointX="12.75" PointY="6.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="4.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCalendarTemplate" Width="1.5" PointX="11.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblCareerPath" Width="1.5" PointX="13.75" PointY="13.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContact" Width="1.5" PointX="8" PointY="6" />
@@ -87,7 +86,9 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblRace" Width="1.5" PointX="27.375" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormTeamEval" Width="1.5" PointX="27.375" PointY="23.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormSummaryPerformance" Width="1.5" PointX="28.375" PointY="3.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_BuildingList" Width="1.5" PointX="13.375" PointY="28.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuildingType" Width="1.5" PointX="15.375" PointY="28.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_BuildingList" Width="1.5" PointX="5.375" PointY="14.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBuilding" Width="1.5" PointX="17.375" PointY="28.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
