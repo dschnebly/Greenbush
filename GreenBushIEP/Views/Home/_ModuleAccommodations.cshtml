@@ -40,6 +40,7 @@
         </div>
     </div>
     <div class="container goalContainer">
+	 @Html.HiddenFor(m => m.modulesNeedingAccommodations)
         <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
@@ -79,6 +80,31 @@
                             </div>
                             <div id="collapse0" class="panel-collapse in">
                                 <div class="panel-body">
+									<div class="row">
+                                        <div class="col-md-3">                                          
+											<label style="font-size: 18px;" for="ModuleType">Module</label>
+											<div class="input-group">												
+                                            <div class="input-group-btn bs-dropdown-to-select-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;width:100%;text-align:left">
+                                                    <span data-bind="bs-drp-sel-label">Select Module...</span>
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="1">
+                                                <ul class="dropdown-menu" role="menu" style="font-size:16px;width:100%">
+                                                    <li data-value="1"><a href="#">Health</a></li>
+                                                    <li data-value="2"><a href="#">Motor</a></li>
+                                                    <li data-value="3"><a href="#">Communication</a></li>
+                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>                                                    
+                                                    <li data-value="7"><a href="#">Reading</a></li>
+                                                    <li data-value="8"><a href="#">Math</a></li>
+                                                    <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
+													<li data-value="6"><a href="#">Academic/Functional</a></li>
+                                                </ul>
+                                            </div>
+											</div>
+										</div>
+									</div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;" for="AccType">Type</label>
@@ -90,7 +116,7 @@
                                                 <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="5" style="position: relative; right: 5px;">Transportation</label><br />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>									
                                     <div class="row voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Description</label>
@@ -183,7 +209,7 @@
 </div>
 </div> <!--end print-->
 <script>
-
+	
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -292,6 +318,21 @@
                 }
 			});
 
+			 //* Binding */
+            /* When the user selects an option from the drop down. */
+            $(this).find('.bs-dropdown-to-select-group .dropdown-menu li').on('click', function (event) {
+                var $target = $(event.currentTarget);
+                var selectedVal = $target.attr('data-value');
+                $target.closest('.bs-dropdown-to-select-group')
+                    .find('[data-bind="bs-drp-sel-value"]').val(selectedVal)
+                    .end()
+                    .children('.dropdown-toggle').dropdown('toggle');
+                $target.closest('.bs-dropdown-to-select-group')
+                    .find('[data-bind="bs-drp-sel-label"]').text($target[0].innerText);
+				               
+                return false;
+            });
+
             $(this).find(".panel-title a").on("click", function () {
                 $(".panel-collapse").each(function () {
                     $(this).collapse('hide');
@@ -326,9 +367,14 @@
 			$(this).find(".saveCompletedGoal").on('click', function (e) {
 
 				var currentForm = $(this).closest("form").find('.panel-collapse');
+				var modulesNeedingAccommodations = $("#modulesNeedingAccommodations").val();
+				
 				var canSave = true;
 				//need to save and complete all 
 				$.each($(".oneStudentGoal").not(".hidden"), function () {
+
+					var accFor = $(this).find("[data-bind='bs-drp-sel-label']").html();				
+					modulesNeedingAccommodations = modulesNeedingAccommodations.replace(accFor, "");
 
 					var accommTitle = $(this).closest('.oneStudentGoal').find('.studentGoalLabel').text();
 					var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
@@ -381,13 +427,18 @@
 						endDate.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Anticipated End Date');
 						return canSave = false;
-					}
+					}				
 
 					if (canSave) {
 						isComplete.val(true);
 					}			
 				
 				});
+
+				if (canSave && modulesNeedingAccommodations.trim(' ', "").length != 0) {
+						alert('You need to make a Student Accommodation(s), Modification(s), and/or Supplemental Aid of type(s): ' + modulesNeedingAccommodations.trim().replace(RegExp(' ', 'g'), ', ').replace(RegExp('&nbsp;', 'g'), ' '));
+						return canSave = false;
+				}
 
 				if (canSave) {
 					$.each($(".oneStudentGoal").not(".hidden"), function () {
@@ -406,6 +457,7 @@
 				
 			});
 
+			
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
                 $(".ajax-loader img").css("visibility", "visible");
@@ -534,7 +586,7 @@
                 $("#alertMessage").slideUp(500);
             });
         }
-    }
+	}
 
     function _getTypeName(val) {
         var shortDesc = "Accommodation ";
@@ -558,7 +610,15 @@
         return shortDesc;
     }
 
-    $(document).ready(function () {
+	$(document).ready(function () {
+		$(".dropdown-menu").each(function (index) {
+            var menuValue = $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-value"]').val();
+            if (menuValue > 0) {
+                var menuText = $(this).find('[data-value="' + menuValue + '"]').find('a').get(0).innerText;
+                $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-label"]')[0].innerHTML = menuText;
+            }
+		});
+
         $(".oneStudentGoal").each(function () {
             initGoal($(this));
         });
