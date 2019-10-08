@@ -1345,77 +1345,75 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
-                //get latest year
-                int maxYear = DateTime.Now.AddYears(1).Year;
-                int currentYear = DateTime.Now.Year;
-                if (serviceId.HasValue)
-                {
-                    currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
-                    maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear) + 1;
-                }
-                else
-                {
-                    currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
-                    maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear) + 1;
-                }
+				//get latest year
+				int maxYear = DateTime.Now.AddYears(1).Year;
+				int currentYear = DateTime.Now.Year;
+				if (serviceId.HasValue)
+				{
+					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
+					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear) + 1;
+				}
+				else
+				{
+					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear) + 1;
+				}
 
-                if (maxYear > 0)
-                {
-                    tblUser mis = FindSupervisor.GetUSersMIS(teacher);
-                    tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-                    int startMonth = 7; //july
-                    int endMonth = 6; //june
+				if (maxYear > 0)
+				{
+					tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+					int startMonth = 7; //july
+					int endMonth = 6; //june
 
-                    List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && c.canHaveClass == true && c.NoService == false && c.Year >= currentYear && c.Year <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
-                    tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
-                    tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+					List<tblService> services = null;
+					if (serviceId.HasValue)
+						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear && s.ServiceID == serviceId).ToList();
+					else
+						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear).ToList();
 
-                    List<tblService> services = null;
-                    if (serviceId.HasValue)
-                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear && s.ServiceID == serviceId).ToList();
-                    else
-                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear).ToList();
+					List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
+					foreach (var service in services)
+					{
+						List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == service.BuildingID && c.canHaveClass == true && c.NoService == false && c.Year >= service.SchoolYear +1 && c.Year <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
+						tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
+						tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
-                    List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
-                    foreach (var service in services)
-                    {
-                        var item = new StudentServiceObject();
-                        var meetingDate = item.DaysPerWeek = service.DaysPerWeek;
-                        item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+						var item = new StudentServiceObject();
+						var meetingDate = item.DaysPerWeek = service.DaysPerWeek;
+						item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
 
-                        if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
-                        {
-                            item.EndDate = iep.MeetingDate.Value.ToShortDateString();
-                        }
-                        else
-                        {
-                            item.EndDate = lastDaySchoolYear.calendarDate.Value.ToShortDateString();
-                        }
+						if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
+						{
+							item.EndDate = iep.MeetingDate.Value.ToShortDateString();
+						}
+						else
+						{
+							item.EndDate = lastDaySchoolYear.calendarDate.Value.ToShortDateString();
+						}
 
-                        //item.EndDate = iep.MeetingDate.HasValue ? iep.MeetingDate.Value.ToShortDateString() : lastDaySchoolYear != null && lastDaySchoolYear.calendarDate.HasValue ? lastDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
-                        item.LocationCode = service.LocationCode;
-                        item.Minutes = service.Minutes;
-                        item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
-                        item.SchoolYear = service.SchoolYear;
-                        item.ServiceCode = service.ServiceCode;
-                        item.Frequency = service.Frequency;
-                        item.selectedAttendingBuilding = service.BuildingID;
+						item.LocationCode = service.LocationCode;
+						item.Minutes = service.Minutes;
+						item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
+						item.SchoolYear = service.SchoolYear;
+						item.ServiceCode = service.ServiceCode;
+						item.Frequency = service.Frequency;
+						item.selectedAttendingBuilding = service.BuildingID;
 
-                        if (service.tblGoals.Any())
-                        {
-                            foreach (var goal in service.tblGoals)
-                            {
-                                item.Goals += goal.goalID + ",";
-                            }
+						if (service.tblGoals.Any())
+						{
+							foreach (var goal in service.tblGoals)
+							{
+								item.Goals += goal.goalID + ",";
+							}
 
-                            item.Goals = item.Goals.Trim(',');
-                        }
+							item.Goals = item.Goals.Trim(',');
+						}
 
-                        serviceList.Add(item);
-                    }
+						serviceList.Add(item);
+					}
 
-                    return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
-                }
+					return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
+				}
             }
 
             return Json(new { Result = "fail" }, JsonRequestBehavior.AllowGet);

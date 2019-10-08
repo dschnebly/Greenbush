@@ -372,6 +372,9 @@
                                                             <option value="2019" @(service.SchoolYear == 2019 ? "selected" : "")>2018 - 2019</option>
                                                             <option value="2020" @(service.SchoolYear == 2020 ? "selected" : "")>2019 - 2020</option>
                                                             <option value="2021" @(service.SchoolYear == 2021 ? "selected" : "")>2020 - 2021</option>
+															<option value="2022" @(service.SchoolYear == 2021 ? "selected" : "")>2021 - 2022</option>
+															<option value="2023" @(service.SchoolYear == 2021 ? "selected" : "")>2022 - 2023</option>
+															<option value="2024" @(service.SchoolYear == 2021 ? "selected" : "")>2023 - 2024</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -729,23 +732,7 @@
 				var buildingId = $(this).closest(".row").find("select[name='attendanceBuilding']").val();
                 _validateDate(fiscalYear, selectedDate, e, buildingId);
             });
-
-            //have to remove the hasdatepicker before we can appy new datepicker to clone
-            $(this).find('.dtField').each(function () {
-                $(this).removeAttr('id').removeClass('hasDatepicker');
-                $('.dtField').datepicker({
-                    dateFormat: "mm/dd/yy",
-                    changeYear: true,
-                    changeMonth: true,
-                    yearRange: "-1:+2",
-                    beforeShowDay: function (date) {
-                        var day = date.getDay();
-                        var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                        //var isDisabled = ($.inArray(string, disabledDays) != -1);
-                        return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
-                    }
-                });
-            });
+			            
 
             $(this).find("a i.deleteService").on("click", function (e) {
 
@@ -984,14 +971,14 @@
                                     var fiscalEndDate = new Date(lastFiscalDayofYear.Year, lastFiscalDayofYear.Month - 1, lastFiscalDayofYear.Day)
                                     serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('mm/d/yy', fiscalEndDate))
 
-                                    // init our calendar
+                                   // init our calendar
                                     serviceContainer.find('.dtField').each(function () {
                                         $(this).removeAttr('id').removeClass('hasDatepicker');
                                         $(".dtField").datepicker({
                                             dateFormat: "mm/dd/yy",
                                             changeYear: true,
                                             changeMonth: true,
-                                            yearRange: "-1:+2",
+                                            yearRange: "-1:+5",
                                             beforeShowDay: function (date) {
                                                 var day = date.getDay();
                                                 var string = jQuery.datepicker.formatDate('d-m-yy', date);
@@ -1021,6 +1008,30 @@
                         }
                     });
                 }
+			});
+
+			//have to remove the hasdatepicker before we can appy new datepicker to clone
+            $(this).find('.dtField').each(function () {
+				$(this).removeAttr('id').removeClass('hasDatepicker').removeData('datepicker').unbind()
+				.datepicker({
+                    dateFormat: "mm/dd/yy",
+                    changeYear: true,
+                    changeMonth: true,
+					yearRange: "-1:+5",
+					showButtonPanel: false,
+					beforeShowDay: function (date) {
+                        var day = date.getDay();
+                        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                        //var isDisabled = ($.inArray(string, disabledDays) != -1);
+                        return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+					},
+					beforeShow: function () {
+						setTimeout(function (){
+						$('.ui-datepicker').css('z-index', 99999999999999);
+                
+						}, 0);
+					}
+                });
             });
         });
     }
@@ -1054,9 +1065,9 @@
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
-
-        var nextYear = parseInt(dupFiscalYear) + 1;
-
+		
+		var nextYear = parseInt(dupFiscalYear) + 1;
+						
         var cloneService = $("#defaultStudentService").clone();
         cloneService.removeClass("hidden");
         cloneService.removeAttr("id");
