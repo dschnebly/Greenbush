@@ -1530,12 +1530,12 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult ValidateServiceDate(int fiscalYear, string calendarDay, int studentId)
+        public ActionResult ValidateServiceDate(int fiscalYear, string calendarDay, string buildingId)
         {
             bool isValid = false;
             bool isService = true;
             string validDates = "";
-            IsValidDate(fiscalYear, calendarDay, studentId, out isValid, out isService, out validDates);
+            IsValidDate(fiscalYear, calendarDay, buildingId, out isValid, out isService, out validDates);
 
             return Json(new { IsValid = isValid, IsService = isService, ValidDates = validDates }, JsonRequestBehavior.AllowGet);
         }
@@ -1560,11 +1560,11 @@ namespace GreenbushIep.Controllers
             return Json(new { MinutesPerDay = minutesPerDay, DaysPerWeek = daysPerWeek }, JsonRequestBehavior.AllowGet);
         }
 
-        private void IsValidDate(int fiscalYear, string calendarDay, int studentId, out bool isValid, out bool isService, out string validDates)
+        private void IsValidDate(int fiscalYear, string calendarDay, string buildingId, out bool isValid, out bool isService, out string validDates)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
-            tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+            //tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
             int startMonth = 7; //july
             int endMonth = 6; //june
@@ -1575,7 +1575,7 @@ namespace GreenbushIep.Controllers
             validDates = "";
 
             //start date must be within the school year
-            var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == studentInfo.BuildingID && c.USD == studentInfo.AssignedUSD && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
+            var availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == buildingId && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
 
             if (availableCalendarDays != null)
             {
@@ -1688,8 +1688,8 @@ namespace GreenbushIep.Controllers
                     db.tblServices.Add(service);
 
                     //check dates
-                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), service.BuildingID, out isValidStartDate, out isValidServiceStartDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
                 else // exsisting service
                 {
@@ -1733,8 +1733,8 @@ namespace GreenbushIep.Controllers
                     }
 
                     //check dates
-                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), studentId, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), studentId, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), service.BuildingID, out isValidStartDate, out isValidServiceStartDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
 
 

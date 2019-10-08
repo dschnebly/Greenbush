@@ -544,7 +544,7 @@
     </div>
 </div> <!--end print-->
 <script>
-
+	
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -726,8 +726,8 @@
                 var selectedDate = e.target.value;
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
-
-                _validateDate(fiscalYear, selectedDate, e);
+				var buildingId = $(this).closest(".row").find("select[name='attendanceBuilding']").val();
+                _validateDate(fiscalYear, selectedDate, e, buildingId);
             });
 
             //have to remove the hasdatepicker before we can appy new datepicker to clone
@@ -1169,10 +1169,9 @@
         });
     }
 
-    function _validateDate(fiscalYear, calendarDay, e) {
-
-        var studentId = $("#sid").val();
-        var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, studentId: studentId };
+    function _validateDate(fiscalYear, calendarDay, e, buildingId) {
+		        
+        var args = { fiscalYear: fiscalYear, calendarDay: calendarDay, buildingId: buildingId };
 
         if (isDate(calendarDay)) {
             $.ajax({
