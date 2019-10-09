@@ -1,8 +1,51 @@
 ﻿$(document).ready(function () {
 
     init();
-    initContacts();
-	     
+	initContacts();
+
+	$("#assignChildCount").on('change', function (e) {
+		var optionSelected = $("option:selected", this);
+		var valueSelected = this.value;
+
+		$.ajax({
+			type: 'GET',
+			url: '/Manage/GetBuildingsByDistrictId',
+			data: { districtId: valueSelected },
+			dataType: "json",
+			async: false,
+			success: function (data) {
+				if (data.Result === "success") {
+					// clear the select
+					var responsibleBuildingElement = $('.districtOnly');
+					$('#AttendanceBuildingId').find('option').remove().end();
+
+					// add the new options to the select
+					var responsibleBuilding = responsibleBuildingElement.html();
+					$.each(data.DistrictBuildings, function (key, value) {
+						responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+					});
+
+					// trigger chosen select to update.
+					responsibleBuildingElement.html(responsibleBuilding);
+					responsibleBuildingElement.trigger("change");
+					responsibleBuildingElement.trigger("chosen:updated");
+				} else {
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error retrieving the building information.");
+				console.log(data);
+			},
+			complete: function (data) {
+				$(".info").hide();
+			}
+		});
+	});
+
+
+
+
     $(".add-contact").on("click", function () {
         // clone and unhide the contact template.
         var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
@@ -65,46 +108,7 @@ function init() {
         }).hide();
 	});
 
-	$("#assignChildCount").on('change', function (e) {
-		var optionSelected = $("option:selected", this);
-		var valueSelected = this.value;
-
-		$.ajax({
-			type: 'GET',
-			url: '/Manage/GetBuildingsByDistrictId',
-			data: { districtId: valueSelected },
-			dataType: "json",
-			async: false,
-			success: function (data) {
-				if (data.Result === "success") {
-					// clear the select
-					var responsibleBuildingElement = $('.districtOnly');
-					$('#AttendanceBuildingId').find('option').remove().end();
-
-					// add the new options to the select
-					var responsibleBuilding = responsibleBuildingElement.html();
-					$.each(data.DistrictBuildings, function (key, value) {
-						responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
-					});
-
-					// trigger chosen select to update.
-					responsibleBuildingElement.html(responsibleBuilding);
-					responsibleBuildingElement.trigger("change");
-					responsibleBuildingElement.trigger("chosen:updated");
-				} else {
-					alert(data.Message);
-				}
-			},
-			error: function (data) {
-				alert("There was an error retrieving the building information.");
-				console.log(data);
-			},
-			complete: function (data) {
-				$(".info").hide();
-			}
-		});
-	});
-  
+	
 
     function nextTab(elem) {
         $(elem).next().find('a[data-toggle="tab"]').click();
