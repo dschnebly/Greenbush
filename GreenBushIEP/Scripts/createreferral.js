@@ -63,63 +63,48 @@ function init() {
             var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
             return !~text.indexOf(val);
         }).hide();
-    });
+	});
 
-	$('#assignChildCount').change(function (e) {        
-		var districtId = $("#assignChildCount").val();
+	$("#assignChildCount").on('change', function (e) {
+		var optionSelected = $("option:selected", this);
+		var valueSelected = this.value;
 
-		var args = { ids: districtId };
+		$.ajax({
+			type: 'GET',
+			url: '/Manage/GetBuildingsByDistrictId',
+			data: { districtId: valueSelected },
+			dataType: "json",
+			async: false,
+			success: function (data) {
+				if (data.Result === "success") {
+					// clear the select
+					var responsibleBuildingElement = $('.districtOnly');
+					$('#AttendanceBuildingId').find('option').remove().end();
 
-        $(".info").show();
-        // current options html
-        var responsibleBuildingElement = $('.districtOnly');
-        var neighborhoodBuildingElement = $('.allActive');
+					// add the new options to the select
+					var responsibleBuilding = responsibleBuildingElement.html();
+					$.each(data.DistrictBuildings, function (key, value) {
+						responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+					});
 
-        $.ajax({
-            type: 'GET',
-            url: '/Manage/GetBuildingsByDistrictId',
-            data: args,
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                if (data.Result === "success") {
-                    var buildings = data.DistrictBuildings;
-                    var activeBuildings = data.ActiveBuildings;
-                    $(".studentBuilding").find('option').remove().end();
-
-                    var responsibleBuilding = responsibleBuildingElement.html();
-                    var neighborhoodBuilding = neighborhoodBuildingElement.html();
-
-                    //district only
-                    $.each(buildings, function (key, value) {
-                        responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                    });
-
-                    //now add all active 
-                    $.each(activeBuildings, function (key, value) {
-                        neighborhoodBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + " (" + value.BuildingID + ")" + "</option>";
-                    });
-
-                    responsibleBuildingElement.html(responsibleBuilding);
-                    neighborhoodBuildingElement.html(neighborhoodBuilding);
-
-                    responsibleBuildingElement.trigger("change");
-                    responsibleBuildingElement.trigger("chosen:updated");
-
-                    neighborhoodBuildingElement.trigger("change");
-                    neighborhoodBuildingElement.trigger("chosen:updated");
-                }
-            },
-            error: function (data) {
-                alert("There was an error retrieving the building information.");
-                console.log(data);
-            },
-            complete: function (data) {
-                $(".info").hide();
-            }
-        });
-    });	  
+					// trigger chosen select to update.
+					responsibleBuildingElement.html(responsibleBuilding);
+					responsibleBuildingElement.trigger("change");
+					responsibleBuildingElement.trigger("chosen:updated");
+				} else {
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error retrieving the building information.");
+				console.log(data);
+			},
+			complete: function (data) {
+				$(".info").hide();
+			}
+		});
+	});
+  
 
     function nextTab(elem) {
         $(elem).next().find('a[data-toggle="tab"]').click();

@@ -1096,27 +1096,32 @@
 													}
 												}
 											</select>
-										</div>
-										@*<div class="col-md-3">
-												<label class="control-label" for="misDistrict">Attending District</label>
-												<select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
-													@if (Model.districts != null)
-													{
-														foreach (var district in Model.districts)
-														{
-															string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
-															<option value="@district.USD" @selected>@district.DistrictName</option>
-														}
-													}
-												</select>
-											</div>*@
+										</div>										
 										<div class="col-md-3">
 											<label class="control-label">Neighborhood School</label>
-											<select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-placeholder="Choose a building..."></select>
+											<select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-placeholder="Choose a building...">
+											 @if (ViewBag.AllBuildings != null)
+                                            {
+                                                foreach (var allActiveBuilding in ViewBag.AllBuildings)
+                                                {
+                                                    string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName</option>
+                                                }
+                                            }
+											</select>
 										</div>
 										<div class="col-md-3">
 											<label class="control-label">Responsible School</label>
-											<select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-placeholder="Choose a building..."></select>
+											<select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-placeholder="Choose a building...">
+											 @if (ViewBag.SelectedDistrictBuildings != null)
+                                            {
+                                                foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
+                                                {
+                                                    string selected = Model.info.BuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+                                                    <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
+                                                }
+                                            }
+											</select>
 										</div>
 									</div>
 									<div class="row voffset3">

@@ -344,27 +344,40 @@ namespace GreenBushIEP.Controllers
             }
 
             model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
-            model.allDistricts = db.tblDistricts.ToList();
-            model.placementCode = db.tblPlacementCodes.ToList();
+			model.allDistricts = db.tblDistricts.ToList();
+			model.districts = model.submitter.RoleID == "1" ? model.allDistricts.Where(d => d.Active == 1).ToList() : (from d in model.allDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
+			model.placementCode = db.tblPlacementCodes.ToList();
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();
-            model.grades = db.tblGrades.ToList();
-            model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where o.USD == student.AssignedUSD select d).Distinct().ToList();
-            model.races = db.tblRaces.ToList();
+            model.grades = db.tblGrades.ToList();            
+			model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
 
-            foreach (var d in model.districts)
-            {
-                var districtBuildings = (from b in db.tblBuildings
-                                         where b.Active == 1 && b.USD == d.USD
-                                         select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
+			model.races = db.tblRaces.ToList();
 
-                model.buildings.AddRange(districtBuildings);
-            }
 
-            ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
-            ViewBag.AllBuildings = (from b in db.tblBuildings where b.Active == 1 select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().OrderBy(b => b.BuildingName).ToList();
+			ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
+												 where b.USD == student.AssignedUSD
+												 select new BuildingsViewModel
+												 {
+													 BuildingName = b.BuildingName,
+													 BuildingID = b.BuildingID,
+													 BuildingUSD = b.USD
+												 }).OrderBy(b => b.BuildingName).ToList();
+
+			
+			ViewBag.AllBuildings = (from b in db.vw_BuildingList
+									where b.isServiceOnly == false
+									select new BuildingsViewModel
+									{
+										BuildingName = b.BuildingName,
+										BuildingID = b.BuildingID,
+										BuildingUSD = b.USD
+									}).OrderBy(b => b.BuildingName).ToList();
+
+			
+
+			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
             ViewBag.ReferralComplete = isComplete;
             return View("~/Views/Home/EditReferral.cshtml", model);
         }
@@ -804,7 +817,25 @@ namespace GreenBushIEP.Controllers
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 
-            return View("~/Views/Home/CreateReferral.cshtml", model);
+			ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
+												 where b.USD == "101"
+												 select new BuildingsViewModel
+												 {
+													 BuildingName = b.BuildingName,
+													 BuildingID = b.BuildingID,
+													 BuildingUSD = b.USD
+												 }).OrderBy(b => b.BuildingName).ToList();
+
+			ViewBag.AllBuildings = (from b in db.vw_BuildingList
+									where b.isServiceOnly == false
+									select new BuildingsViewModel
+									{
+										BuildingName = b.BuildingName,
+										BuildingID = b.BuildingID,
+										BuildingUSD = b.USD
+									}).OrderBy(b => b.BuildingName).ToList();
+
+			return View("~/Views/Home/CreateReferral.cshtml", model);
         }
 
         // POST: Manage/CreateReferral
