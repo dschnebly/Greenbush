@@ -293,7 +293,7 @@
 <br />
 
 <script>
-	
+	debugger;
     //**************************/
     //  Academic Attached Events
     /***************************/
@@ -529,11 +529,11 @@
 
                     if (data.Completed)
                     {
-                        $("#AcademicWidget .hero-widget").addClass("module-completed");
+						$("#AcademicWidget .hero-widget").addClass("module-completed");
+						$(window).trigger("saving.bs.modal");
+						$('#moduleSection').modal('hide'); 						
                     }
-
-                    $(window).trigger("saving.bs.modal");
-                    window.history.go(0);
+                    
                 } else {
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
