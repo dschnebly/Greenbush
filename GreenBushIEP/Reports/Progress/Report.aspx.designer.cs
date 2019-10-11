@@ -49,6 +49,15 @@ namespace GreenBushIEP.Reports.ProgressReport {
         protected global::System.Web.UI.HtmlControls.HtmlSelect providerDD;
         
         /// <summary>
+        /// studentDD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect studentDD;
+        
+        /// <summary>
         /// cbPrintGoal control.
         /// </summary>
         /// <remarks>

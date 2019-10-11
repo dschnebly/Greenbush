@@ -46,7 +46,16 @@
 				</select>
 			</div>
 		</div>
-
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				<label for="student">Student</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="studentDD" runat="server" class="chosen-select" data-placeholder="Select Student">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2">
 				<label>Print Options</label>

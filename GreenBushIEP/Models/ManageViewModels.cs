@@ -191,6 +191,17 @@ namespace GreenBushIEP.Models
 		public string IEPDate { get; set; }
 		public bool hasIEP { get; set; }
 
+		public string FormattedName
+		{
+			get
+			{	if(UserID == -1)
+					return string.Format("{0}", FirstName);
+				else
+				return string.Format("{0}, {1} {2}", LastName, FirstName, MiddleName);
+			}
+		}
+
+
 	}
 
 	public class StudentViewModel

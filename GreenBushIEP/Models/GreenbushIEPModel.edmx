@@ -1555,6 +1555,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportProviderCaseload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -1986,6 +1987,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblModules" EntityType="IndividualizedEducationProgramModel.tblModule" />
           <FunctionImport Name="string_split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.string_split_Result)">
