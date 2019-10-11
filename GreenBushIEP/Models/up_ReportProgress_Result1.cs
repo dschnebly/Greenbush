@@ -55,5 +55,7 @@ namespace GreenBushIEP.Models
         public string BenchmarkProgress_Quarter2 { get; set; }
         public string BenchmarkProgress_Quarter3 { get; set; }
         public string BenchmarkProgress_Quarter4 { get; set; }
+        public string USD { get; set; }
+        public string BuildingName { get; set; }
     }
 }

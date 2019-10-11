@@ -973,6 +973,7 @@
 						});
 
 						if (isAllCompleted) {								
+							$(window).trigger("saving.bs.modal");	
 						    $("#GoalWidget .hero-widget").addClass("module-completed");
 							$('#moduleSection').modal('hide');                    
 						} else {

@@ -362,7 +362,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportProgress_Result1> up_ReportProgress(string districtId, string status, string buildingId, string providerId)
+        public virtual ObjectResult<up_ReportProgress_Result1> up_ReportProgress(string districtId, string status, string buildingId, string providerId, string teacherId)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -380,7 +380,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderId", providerId) :
                 new ObjectParameter("ProviderId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result1>("up_ReportProgress", districtIdParameter, statusParameter, buildingIdParameter, providerIdParameter);
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result1>("up_ReportProgress", districtIdParameter, statusParameter, buildingIdParameter, providerIdParameter, teacherIdParameter);
         }
     
         [DbFunction("IndividualizedEducationProgramEntities", "string_split")]

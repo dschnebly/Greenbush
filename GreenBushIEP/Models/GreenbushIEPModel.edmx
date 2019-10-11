@@ -1554,6 +1554,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="Status" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportProviderCaseload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -1984,6 +1985,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="Status" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblModules" EntityType="IndividualizedEducationProgramModel.tblModule" />
           <FunctionImport Name="string_split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.string_split_Result)">
@@ -3375,6 +3377,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="BenchmarkProgress_Quarter2" Nullable="false" MaxLength="41" />
           <Property Type="String" Name="BenchmarkProgress_Quarter3" Nullable="false" MaxLength="41" />
           <Property Type="String" Name="BenchmarkProgress_Quarter4" Nullable="false" MaxLength="41" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
         </ComplexType>
         <EntityType Name="tblModule">
           <Key>
@@ -5085,6 +5089,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="BenchmarkProgress_Quarter2" ColumnName="BenchmarkProgress_Quarter2" />
                 <ScalarProperty Name="BenchmarkProgress_Quarter3" ColumnName="BenchmarkProgress_Quarter3" />
                 <ScalarProperty Name="BenchmarkProgress_Quarter4" ColumnName="BenchmarkProgress_Quarter4" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

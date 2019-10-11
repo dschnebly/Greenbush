@@ -23,6 +23,7 @@ namespace GreenBushIEP.Report
 		public const string student = "5";
 		public const string nurse = "6";
 		public static IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+		protected string DisplayName { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -31,8 +32,10 @@ namespace GreenBushIEP.Report
 			{	
 				Server.Transfer("Error", true);
 			}
-			
+			this.DisplayName = string.Format("{0} {1}", user.FirstName, user.LastName);
 		}
+
+		
 
 		public static void StatusList(HtmlSelect statusDD)
 		{	
@@ -95,12 +98,10 @@ namespace GreenBushIEP.Report
 			List<tblUser> teachers = new List<tblUser>();
 			List<TeacherView> teacherList = new List<TeacherView>();
  			tblUser usr = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
-			if (usr.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			if (usr.RoleID == GreenBushIEP.Report.ReportMaster.teacher || usr.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				//teacher, get providers by students?
-				teachers = (from u in db.tblUsers
-							where u.UserID == usr.UserID && !u.Archive.HasValue
-							select u).Distinct().ToList();
+				//just add themselves to the list
+				teachers.Add(usr);
 			}
 			else
 			{
@@ -129,7 +130,7 @@ namespace GreenBushIEP.Report
 				var teachers = (from org in db.tblOrganizationMappings
 								join user in db.tblUsers
 									on org.UserID equals user.UserID
-								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == teacher || user.RoleID == admin) && (user.UserID != userId)
+								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == nurse || user.RoleID == teacher || user.RoleID == admin) && (user.UserID != userId)
 								select user).Distinct().ToList();
 
 				list.AddRange(teachers.Where(i => i.RoleID == teacher));

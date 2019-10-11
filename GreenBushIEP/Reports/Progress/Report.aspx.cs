@@ -73,7 +73,16 @@ namespace GreenBushIEP.Reports.ProgressReport
 				}
 			}
 
-			DataTable dt = GetData(districtFilter, providerIds, buildingFilter, status);
+			var teacherList = GreenBushIEP.Report.ReportMaster.GetTeachers(User.Identity.Name);
+			string teacherIds = "";
+
+			foreach (var teacher in teacherList)
+			{
+
+				teacherIds += string.Format("{0},", teacher.UserID);				
+			}
+
+			DataTable dt = GetData(districtFilter, providerIds, buildingFilter, status, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			
 			ReportParameter p1 = new ReportParameter("pPrintGoal", cbPrintGoal.ToString());
@@ -88,7 +97,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string providerIds, string buildingID, string status)
+		private DataTable GetData(string districtFilter, string providerIds, string buildingID, string status, string teacherIds)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("begin_date", typeof(string));
@@ -136,7 +145,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProgress(districtFilter, status, buildingID, providerIds);
+				var list = ctx.up_ReportProgress(districtFilter, status, buildingID, providerIds, teacherIds);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName
