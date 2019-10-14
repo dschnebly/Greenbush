@@ -21,7 +21,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
 				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD);
-				
+
 				var sid =  Request.QueryString["sid"];
 				
 				if (!string.IsNullOrEmpty(sid))
@@ -124,10 +124,10 @@ namespace GreenBushIEP.Reports.ProgressReport
 			dt.Columns.Add("BencharkDateQ2", typeof(string));
 			dt.Columns.Add("BencharkDateQ3", typeof(string));
 			dt.Columns.Add("BencharkDateQ4", typeof(string));
-			dt.Columns.Add("ProgressDateQ1", typeof(DateTime));
-			dt.Columns.Add("ProgressDateQ2", typeof(DateTime));
-			dt.Columns.Add("ProgressDateQ3", typeof(DateTime));
-			dt.Columns.Add("ProgressDateQ4", typeof(DateTime));
+			dt.Columns.Add("ProgressDateQ1", typeof(string));
+			dt.Columns.Add("ProgressDateQ2", typeof(string));
+			dt.Columns.Add("ProgressDateQ3", typeof(string));
+			dt.Columns.Add("ProgressDateQ4", typeof(string));
 			dt.Columns.Add("ProgressNotes1", typeof(string));
 			dt.Columns.Add("ProgressNotes2", typeof(string));
 			dt.Columns.Add("ProgressNotes3", typeof(string));
@@ -137,16 +137,6 @@ namespace GreenBushIEP.Reports.ProgressReport
 			dt.Columns.Add("Progress_Quarter3", typeof(string));
 			dt.Columns.Add("Progress_Quarter4", typeof(string));
 			dt.Columns.Add("StudentId", typeof(string));
-			dt.Columns.Add("GoalModule", typeof(string));
-			dt.Columns.Add("AnnualGoal", typeof(string));
-			dt.Columns.Add("BenchmarkNotes1", typeof(string));
-			dt.Columns.Add("BenchmarkNotes2", typeof(string));
-			dt.Columns.Add("BenchmarkNotes3", typeof(string));
-			dt.Columns.Add("BenchmarkNotes4", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter1", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter2", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter3", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter4", typeof(string));
 
 
 			using (var ctx = new IndividualizedEducationProgramEntities())
@@ -162,10 +152,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 						, cs.ProgressDateQ1, cs.ProgressDateQ3, cs.ProgressDateQ3, cs.ProgressDateQ4
 						, cs.ProgressNotes1, cs.ProgressNotes2, cs.ProgressNotes3, cs.ProgressNotes4
 						, cs.Progress_Quarter1, cs.Progress_Quarter2, cs.Progress_Quarter3, cs.Progress_Quarter4
-						, cs.StudentId, cs.GoalModule, cs.AnnualGoal
-						, cs.BenchmarkNotes1, cs.BenchmarkNotes2, cs.BenchmarkNotes3, cs.BenchmarkNotes4
-						, cs.BenchmarkProgress_Quarter1, cs.BenchmarkProgress_Quarter2, cs.BenchmarkProgress_Quarter3, cs.BenchmarkProgress_Quarter4
-						);
+						, cs.StudentId);
 			}
 
 			return dt;

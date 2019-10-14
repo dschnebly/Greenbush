@@ -258,6 +258,10 @@
               <Mapping SourceColumn="StudentId" DataSetColumn="StudentId" />
               <Mapping SourceColumn="Grade" DataSetColumn="Grade" />
               <Mapping SourceColumn="Method" DataSetColumn="Method1" />
+              <Mapping SourceColumn="BencharkDateQ1" DataSetColumn="BencharkDateQ1" />
+              <Mapping SourceColumn="BencharkDateQ2" DataSetColumn="BencharkDateQ2" />
+              <Mapping SourceColumn="BencharkDateQ3" DataSetColumn="BencharkDateQ3" />
+              <Mapping SourceColumn="BencharkDateQ4" DataSetColumn="BencharkDateQ4" />
               <Mapping SourceColumn="ProgressDateQ1" DataSetColumn="ProgressDateQ1" />
               <Mapping SourceColumn="ProgressDateQ2" DataSetColumn="ProgressDateQ2" />
               <Mapping SourceColumn="ProgressDateQ3" DataSetColumn="ProgressDateQ3" />
@@ -266,22 +270,6 @@
               <Mapping SourceColumn="Progress_Quarter2" DataSetColumn="Progress_Quarter2" />
               <Mapping SourceColumn="Progress_Quarter3" DataSetColumn="Progress_Quarter3" />
               <Mapping SourceColumn="Progress_Quarter4" DataSetColumn="Progress_Quarter4" />
-              <Mapping SourceColumn="Archive" DataSetColumn="Archive" />
-              <Mapping SourceColumn="GoalModule" DataSetColumn="GoalModule" />
-              <Mapping SourceColumn="AnnualGoal" DataSetColumn="AnnualGoal" />
-              <Mapping SourceColumn="IepStatus" DataSetColumn="IepStatus" />
-              <Mapping SourceColumn="BenchmarkNotes1" DataSetColumn="BenchmarkNotes1" />
-              <Mapping SourceColumn="BenchmarkNotes2" DataSetColumn="BenchmarkNotes2" />
-              <Mapping SourceColumn="BenchmarkNotes3" DataSetColumn="BenchmarkNotes3" />
-              <Mapping SourceColumn="BenchmarkNotes4" DataSetColumn="BenchmarkNotes4" />
-              <Mapping SourceColumn="BencharkDateQ1" DataSetColumn="BencharkDateQ11" />
-              <Mapping SourceColumn="BencharkDateQ2" DataSetColumn="BencharkDateQ21" />
-              <Mapping SourceColumn="BencharkDateQ3" DataSetColumn="BencharkDateQ31" />
-              <Mapping SourceColumn="BencharkDateQ4" DataSetColumn="BencharkDateQ41" />
-              <Mapping SourceColumn="BenchmarkProgress_Quarter1" DataSetColumn="BenchmarkProgress_Quarter1" />
-              <Mapping SourceColumn="BenchmarkProgress_Quarter2" DataSetColumn="BenchmarkProgress_Quarter2" />
-              <Mapping SourceColumn="BenchmarkProgress_Quarter3" DataSetColumn="BenchmarkProgress_Quarter3" />
-              <Mapping SourceColumn="BenchmarkProgress_Quarter4" DataSetColumn="BenchmarkProgress_Quarter4" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -736,7 +724,7 @@
               </xs:element>
               <xs:element name="begin_date" msprop:Generator_ColumnVarNameInTable="columnbegin_date" msprop:Generator_ColumnPropNameInRow="begin_date" msprop:Generator_ColumnPropNameInTable="begin_dateColumn" msprop:Generator_UserColumnName="begin_date" type="xs:dateTime" minOccurs="0" />
               <xs:element name="end_Date" msprop:Generator_ColumnVarNameInTable="columnend_Date" msprop:Generator_ColumnPropNameInRow="end_Date" msprop:Generator_ColumnPropNameInTable="end_DateColumn" msprop:Generator_UserColumnName="end_Date" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="goalID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columngoalID" msprop:Generator_ColumnPropNameInRow="goalID" msprop:Generator_ColumnPropNameInTable="goalIDColumn" msprop:Generator_UserColumnName="goalID" type="xs:int" minOccurs="0" />
+              <xs:element name="goalID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columngoalID" msprop:Generator_ColumnPropNameInRow="goalID" msprop:Generator_ColumnPropNameInTable="goalIDColumn" msprop:Generator_UserColumnName="goalID" type="xs:int" />
               <xs:element name="GoalDescription" msprop:Generator_ColumnVarNameInTable="columnGoalDescription" msprop:Generator_ColumnPropNameInRow="GoalDescription" msprop:Generator_ColumnPropNameInTable="GoalDescriptionColumn" msprop:Generator_UserColumnName="GoalDescription">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -837,112 +825,6 @@
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="30" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Archive" msprop:Generator_ColumnVarNameInTable="columnArchive" msprop:Generator_ColumnPropNameInRow="Archive" msprop:Generator_ColumnPropNameInTable="ArchiveColumn" msprop:Generator_UserColumnName="Archive" type="xs:boolean" minOccurs="0" />
-              <xs:element name="GoalModule" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGoalModule" msprop:Generator_ColumnPropNameInRow="GoalModule" msprop:Generator_ColumnPropNameInTable="GoalModuleColumn" msprop:Generator_UserColumnName="GoalModule" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="20" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="AnnualGoal" msprop:Generator_ColumnVarNameInTable="columnAnnualGoal" msprop:Generator_ColumnPropNameInRow="AnnualGoal" msprop:Generator_ColumnPropNameInTable="AnnualGoalColumn" msprop:Generator_UserColumnName="AnnualGoal">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="IepStatus" msprop:Generator_ColumnVarNameInTable="columnIepStatus" msprop:Generator_ColumnPropNameInRow="IepStatus" msprop:Generator_ColumnPropNameInTable="IepStatusColumn" msprop:Generator_UserColumnName="IepStatus">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="20" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkNotes1" msprop:Generator_ColumnVarNameInTable="columnBenchmarkNotes1" msprop:Generator_ColumnPropNameInRow="BenchmarkNotes1" msprop:Generator_ColumnPropNameInTable="BenchmarkNotes1Column" msprop:Generator_UserColumnName="BenchmarkNotes1" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkNotes2" msprop:Generator_ColumnVarNameInTable="columnBenchmarkNotes2" msprop:Generator_ColumnPropNameInRow="BenchmarkNotes2" msprop:Generator_ColumnPropNameInTable="BenchmarkNotes2Column" msprop:Generator_UserColumnName="BenchmarkNotes2" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkNotes3" msprop:Generator_ColumnVarNameInTable="columnBenchmarkNotes3" msprop:Generator_ColumnPropNameInRow="BenchmarkNotes3" msprop:Generator_ColumnPropNameInTable="BenchmarkNotes3Column" msprop:Generator_UserColumnName="BenchmarkNotes3" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkNotes4" msprop:Generator_ColumnVarNameInTable="columnBenchmarkNotes4" msprop:Generator_ColumnPropNameInRow="BenchmarkNotes4" msprop:Generator_ColumnPropNameInTable="BenchmarkNotes4Column" msprop:Generator_UserColumnName="BenchmarkNotes4" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BencharkDateQ11" msdata:ReadOnly="true" msdata:Caption="BencharkDateQ1" msprop:Generator_ColumnVarNameInTable="columnBencharkDateQ11" msprop:Generator_ColumnPropNameInRow="BencharkDateQ11" msprop:Generator_ColumnPropNameInTable="BencharkDateQ11Column" msprop:Generator_UserColumnName="BencharkDateQ11" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="30" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BencharkDateQ21" msdata:ReadOnly="true" msdata:Caption="BencharkDateQ2" msprop:Generator_ColumnVarNameInTable="columnBencharkDateQ21" msprop:Generator_ColumnPropNameInRow="BencharkDateQ21" msprop:Generator_ColumnPropNameInTable="BencharkDateQ21Column" msprop:Generator_UserColumnName="BencharkDateQ21" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="30" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BencharkDateQ31" msdata:ReadOnly="true" msdata:Caption="BencharkDateQ3" msprop:Generator_ColumnVarNameInTable="columnBencharkDateQ31" msprop:Generator_ColumnPropNameInRow="BencharkDateQ31" msprop:Generator_ColumnPropNameInTable="BencharkDateQ31Column" msprop:Generator_UserColumnName="BencharkDateQ31" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="30" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BencharkDateQ41" msdata:ReadOnly="true" msdata:Caption="BencharkDateQ4" msprop:Generator_ColumnVarNameInTable="columnBencharkDateQ41" msprop:Generator_ColumnPropNameInRow="BencharkDateQ41" msprop:Generator_ColumnPropNameInTable="BencharkDateQ41Column" msprop:Generator_UserColumnName="BencharkDateQ41" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="30" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkProgress_Quarter1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBenchmarkProgress_Quarter1" msprop:Generator_ColumnPropNameInRow="BenchmarkProgress_Quarter1" msprop:Generator_ColumnPropNameInTable="BenchmarkProgress_Quarter1Column" msprop:Generator_UserColumnName="BenchmarkProgress_Quarter1" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="41" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkProgress_Quarter2" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBenchmarkProgress_Quarter2" msprop:Generator_ColumnPropNameInRow="BenchmarkProgress_Quarter2" msprop:Generator_ColumnPropNameInTable="BenchmarkProgress_Quarter2Column" msprop:Generator_UserColumnName="BenchmarkProgress_Quarter2" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="41" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkProgress_Quarter3" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBenchmarkProgress_Quarter3" msprop:Generator_ColumnPropNameInRow="BenchmarkProgress_Quarter3" msprop:Generator_ColumnPropNameInTable="BenchmarkProgress_Quarter3Column" msprop:Generator_UserColumnName="BenchmarkProgress_Quarter3" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="41" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="BenchmarkProgress_Quarter4" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnBenchmarkProgress_Quarter4" msprop:Generator_ColumnPropNameInRow="BenchmarkProgress_Quarter4" msprop:Generator_ColumnPropNameInTable="BenchmarkProgress_Quarter4Column" msprop:Generator_UserColumnName="BenchmarkProgress_Quarter4" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="41" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

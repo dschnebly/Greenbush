@@ -59,7 +59,6 @@
 				</select>
 			</div>
 		</div>
-				
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="student">Student</label>

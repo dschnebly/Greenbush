@@ -165,7 +165,7 @@
                                             <div class="col-md-2 serviceFadeIn">
                                                 <label for="fiscalYear">Fiscal Year</label>
                                                 <div class="form-group">
-                                                    <select class="form-control nocopy" name="fiscalYear" style="border-color: #ccc; display: inline-block;"></select>
+                                                    <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;"></select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 serviceFadeIn">
@@ -547,7 +547,7 @@
     </div>
 </div> <!--end print-->
 <script>
-	debugger;
+	
     /* Binding */
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -1060,7 +1060,7 @@
     initGoalEvents();
 
     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding) {
-      
+        var selectedStudentService = $("div:visible.collapse.in").closest(".oneStudentService ");
 
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
@@ -1087,8 +1087,8 @@
         cloneService.find("input[name='serviceDaysPerWeek']").val(dupserviceDaysPerWeek);
         cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
         cloneService.find("select[name='attendanceBuilding']").val(dupAttendingBuilding).prop('selected', true);
-				
-        var dupFiscalYear = $("select[name='fiscalYear']:eq(2)").find('option');
+
+        var dupFiscalYear = selectedStudentService.find("select[name='fiscalYear']").find('option');
 
         //clones and copies the fiscal years to the new student service
         dupFiscalYear.clone().appendTo(cloneService.find("select[name='fiscalYear']"));
