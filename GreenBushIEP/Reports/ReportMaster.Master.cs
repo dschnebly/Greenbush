@@ -16,16 +16,14 @@ namespace GreenBushIEP.Report
 
 	public partial class ReportMaster : System.Web.UI.MasterPage
 	{
-
-		public const string owner = "1"; //level 5
-		public const string mis = "2"; //level 4
-		public const string admin = "3"; //level 3
-		public const string teacher = "4"; //level 2
+		public const string owner = "1";
+		public const string mis = "2";
+		public const string admin = "3";
+		public const string teacher = "4";
 		public const string student = "5";
-		public const string nurse = "6"; //level 1
+		public const string nurse = "6";
 		public static IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 		protected string DisplayName { get; set; }
-		protected string UserLevel { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -34,18 +32,10 @@ namespace GreenBushIEP.Report
 			{	
 				Server.Transfer("Error", true);
 			}
-			this.UserLevel = user.RoleID;
 			this.DisplayName = string.Format("{0} {1}", user.FirstName, user.LastName);
 		}
 
-		public string GetUserLevel
-		{
-			get
-			{
-				return UserLevel;
-			}
-			
-		}
+		
 
 		public static void StatusList(HtmlSelect statusDD)
 		{	
@@ -469,7 +459,7 @@ namespace GreenBushIEP.Report
 			return buildingList;
 		}
 
-		
+
 
 		//public static bool IsStudent(string userName)
 		//{

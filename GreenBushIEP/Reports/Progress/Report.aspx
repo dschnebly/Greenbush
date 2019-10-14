@@ -1,19 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master"  AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.ProgressReport.Report" %>
-<%@ MasterType virtualPath="~/Reports/ReportMaster.Master"%> 
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.ProgressReport.Report" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-	<% 
-		string toggleElement = "style ='margin-bottom: 12px;'";
-
-		if (this.Master.GetUserLevel == "4" || this.Master.GetUserLevel == "6" )
-		{
-			toggleElement = "style='display:none'";
-		}
-	%>
-
-
 		<div class="row"  style="margin-bottom: 15px;">
 		<h2>Progress Report</h2>
 	</div>
@@ -48,8 +36,7 @@
 				</select>
 			</div>
 		</div>
-		
-		<div class="col-md-12" <%=toggleElement %>>
+		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="providerDD">Provider</label>
 			</div>
@@ -59,7 +46,6 @@
 				</select>
 			</div>
 		</div>
-				
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="student">Student</label>
