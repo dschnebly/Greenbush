@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<% 
-		string toggleElement = "style ='margin-bottom: 12px;'";
+		string toggleElement = "style ='margin-bottom: 11px;'";
 
 		if (this.Master.GetUserLevel == "4" || this.Master.GetUserLevel == "6" )
 		{

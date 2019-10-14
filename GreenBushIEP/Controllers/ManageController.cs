@@ -518,7 +518,7 @@ namespace GreenBushIEP.Controllers
                     // map the buildings in the building mapping table
                     try
                     {
-                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.USD, UserID = studentInfo.UserID });
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID });
                         db.SaveChanges();
                     }
                     catch (Exception e)
