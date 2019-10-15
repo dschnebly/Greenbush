@@ -17,7 +17,7 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string BuildingID { get; set; }
         public string CodeBuildingID { get; set; }
-        public string BuildingName { get; set; }
         public bool isServiceOnly { get; set; }
+        public string BuildingName { get; set; }
     }
 }

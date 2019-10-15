@@ -11,13 +11,11 @@ namespace GreenBushIEP.Models
 {
     using System;
     
-    public partial class up_ReportBuildings1_Result
+    public partial class uspCopyIEP_Result
     {
-        public string BuildingName { get; set; }
-        public string Address_Mailing { get; set; }
-        public string Zip { get; set; }
-        public string City { get; set; }
-        public string Phone { get; set; }
-        public string StateName { get; set; }
+        public Nullable<int> ToIEP { get; set; }
+        public Nullable<int> FromIEP { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<bool> isAmmendmant { get; set; }
     }
 }

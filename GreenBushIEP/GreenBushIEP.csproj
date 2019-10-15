@@ -25,7 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
-    <AssemblyVersion>153.153.153.2</AssemblyVersion>
+    <AssemblyVersion>156.156.156.2</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -286,15 +286,6 @@
     <Compile Include="Helper\StringExtensions.cs" />
     <Compile Include="Helper\VersionCompare.cs" />
     <Compile Include="Models\PasswordHash.cs" />
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\string_split_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tblAccommodation.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -496,16 +487,7 @@
     <Compile Include="Models\uf_Split_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\up_ReportBuildings1_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\up_ReportBuildings_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportBuildings_Result1.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportBuildings_Result2.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportDraftIEPS_Result.cs">
@@ -523,40 +505,19 @@
     <Compile Include="Models\up_ReportProceduralDates_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\up_ReportProceduralDates_Result1.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\up_ReportProgress_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportProgress_Result1.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportProviderCaseload_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\up_ReportServices1_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\up_ReportServices_Result.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportServices_Result1.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportStudentsByBuilding_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\up_ReportStudentsByBuilding_Result1.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportStudentsByBuilding_Result2.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportStudentsByBuilding_Result3.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\up_ReportStudentsByBuilding_Result4.cs">
+    <Compile Include="Models\uspCopyIEP_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_BuildingList.cs">

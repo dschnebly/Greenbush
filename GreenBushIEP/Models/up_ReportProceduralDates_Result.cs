@@ -13,11 +13,18 @@ namespace GreenBushIEP.Models
     
     public partial class up_ReportProceduralDates_Result
     {
+        public Nullable<System.DateTime> AnnualDate { get; set; }
+        public Nullable<System.DateTime> ReEvalDate { get; set; }
         public string DateType { get; set; }
         public Nullable<System.DateTime> EvalDate { get; set; }
         public string StudentFirstName { get; set; }
         public string StudentLastName { get; set; }
         public string TeacherFirstName { get; set; }
         public string TeacherLastName { get; set; }
+        public int TeacherID { get; set; }
+        public string BuildingID { get; set; }
+        public int UserID { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
     }
 }

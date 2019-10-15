@@ -27,8 +27,8 @@ namespace GreenBushIEP.Models
         public Nullable<int> Active { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
     
         public virtual tblDistrict tblDistrict { get; set; }
     }

@@ -13,28 +13,36 @@ namespace GreenBushIEP.Models
     
     public partial class up_ReportProgress_Result
     {
+        public string IepStatus { get; set; }
         public int StudentId { get; set; }
         public string StudentLastName { get; set; }
         public string StudentFirstName { get; set; }
+        public Nullable<bool> Archive { get; set; }
         public string ProviderName { get; set; }
         public Nullable<System.DateTime> begin_date { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
         public Nullable<int> Grade { get; set; }
+        public string GoalModule { get; set; }
         public int goalID { get; set; }
         public string GoalDescription { get; set; }
+        public string AnnualGoal { get; set; }
         public string StateStandards { get; set; }
         public string Baseline { get; set; }
         public Nullable<int> goalBenchmarkID { get; set; }
         public string ObjectiveBenchmark { get; set; }
         public string Method { get; set; }
+        public string BencharkDateQ1 { get; set; }
+        public string BencharkDateQ2 { get; set; }
+        public string BencharkDateQ3 { get; set; }
+        public string BencharkDateQ4 { get; set; }
+        public string BenchmarkNotes1 { get; set; }
+        public string BenchmarkNotes2 { get; set; }
+        public string BenchmarkNotes3 { get; set; }
+        public string BenchmarkNotes4 { get; set; }
         public string ProgressNotes1 { get; set; }
         public string ProgressNotes2 { get; set; }
         public string ProgressNotes3 { get; set; }
         public string ProgressNotes4 { get; set; }
-        public Nullable<System.DateTime> BencharkDateQ1 { get; set; }
-        public Nullable<System.DateTime> BencharkDateQ2 { get; set; }
-        public Nullable<System.DateTime> BencharkDateQ3 { get; set; }
-        public Nullable<System.DateTime> BencharkDateQ4 { get; set; }
         public System.DateTime ProgressDateQ1 { get; set; }
         public System.DateTime ProgressDateQ2 { get; set; }
         public System.DateTime ProgressDateQ3 { get; set; }
@@ -43,5 +51,11 @@ namespace GreenBushIEP.Models
         public string Progress_Quarter2 { get; set; }
         public string Progress_Quarter3 { get; set; }
         public string Progress_Quarter4 { get; set; }
+        public string BenchmarkProgress_Quarter1 { get; set; }
+        public string BenchmarkProgress_Quarter2 { get; set; }
+        public string BenchmarkProgress_Quarter3 { get; set; }
+        public string BenchmarkProgress_Quarter4 { get; set; }
+        public string USD { get; set; }
+        public string BuildingName { get; set; }
     }
 }

@@ -18,5 +18,6 @@ namespace GreenBushIEP.Models
         public string Zip { get; set; }
         public string City { get; set; }
         public string Phone { get; set; }
+        public string StateName { get; set; }
     }
 }

@@ -39,15 +39,25 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBehaviorTrigger> tblBehaviorTriggers { get; set; }
         public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
+        public virtual DbSet<tblBuilding> tblBuildings { get; set; }
+        public virtual DbSet<tblBuildingType> tblBuildingTypes { get; set; }
+        public virtual DbSet<tblCalendar> tblCalendars { get; set; }
+        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCareerPath> tblCareerPaths { get; set; }
         public virtual DbSet<tblContact> tblContacts { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
+        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
+        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
+        public virtual DbSet<tblFormSummaryPerformance> tblFormSummaryPerformances { get; set; }
+        public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
+        public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
         public virtual DbSet<tblGoal> tblGoals { get; set; }
+        public virtual DbSet<tblGrade> tblGrades { get; set; }
         public virtual DbSet<tblIEPAcademic> tblIEPAcademics { get; set; }
         public virtual DbSet<tblIEPCommunication> tblIEPCommunications { get; set; }
         public virtual DbSet<tblIEPHealth> tblIEPHealths { get; set; }
@@ -60,11 +70,16 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblIEPWritten> tblIEPWrittens { get; set; }
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
+        public virtual DbSet<tblModule> tblModules { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
         public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
         public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
+        public virtual DbSet<tblRace> tblRaces { get; set; }
+        public virtual DbSet<tblReferralInfo> tblReferralInfoes { get; set; }
+        public virtual DbSet<tblReferralRelationship> tblReferralRelationships { get; set; }
+        public virtual DbSet<tblReferralRequest> tblReferralRequests { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
@@ -76,179 +91,19 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
+        public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
+        public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
+        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
+        public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
+        public virtual DbSet<vw_ModuleOtherFlags> vw_ModuleOtherFlags { get; set; }
         public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
-        public virtual DbSet<tblUser> tblUsers { get; set; }
-        public virtual DbSet<tblGrade> tblGrades { get; set; }
-        public virtual DbSet<tblCalendar> tblCalendars { get; set; }
-        public virtual DbSet<tblCalendarReporting> tblCalendarReportings { get; set; }
-        public virtual DbSet<tblDistrict> tblDistricts { get; set; }
-        public virtual DbSet<tblModule> tblModules { get; set; }
-        public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
-        public virtual DbSet<tblReferralInfo> tblReferralInfoes { get; set; }
-        public virtual DbSet<tblReferralRelationship> tblReferralRelationships { get; set; }
-        public virtual DbSet<tblReferralRequest> tblReferralRequests { get; set; }
-        public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
-        public virtual DbSet<vw_ModuleOtherFlags> vw_ModuleOtherFlags { get; set; }
-        public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
-        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
-        public virtual DbSet<tblRace> tblRaces { get; set; }
-        public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
-        public virtual DbSet<tblFormSummaryPerformance> tblFormSummaryPerformances { get; set; }
-        public virtual DbSet<tblBuildingType> tblBuildingTypes { get; set; }
-        public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
-        public virtual DbSet<tblBuilding> tblBuildings { get; set; }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual ObjectResult<up_ReportProviderCaseload_Result> up_ReportProviderCaseload(string districtId, string providerId, string fiscalYear, string teacherId, string buildingId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var providerIdParameter = providerId != null ?
-                new ObjectParameter("ProviderId", providerId) :
-                new ObjectParameter("ProviderId", typeof(string));
-    
-            var fiscalYearParameter = fiscalYear != null ?
-                new ObjectParameter("FiscalYear", fiscalYear) :
-                new ObjectParameter("FiscalYear", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", districtIdParameter, providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportProceduralDates_Result1> up_ReportProceduralDates(string districtId, string teacherId, string buildingId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result1>("up_ReportProceduralDates", districtIdParameter, teacherIdParameter, buildingIdParameter);
-        }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -264,68 +119,13 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
         }
     
-        public virtual ObjectResult<up_ReportBuildings_Result2> up_ReportBuildings(Nullable<int> buildingID)
+        public virtual ObjectResult<up_ReportBuildings_Result> up_ReportBuildings(Nullable<int> buildingID)
         {
             var buildingIDParameter = buildingID.HasValue ?
                 new ObjectParameter("BuildingID", buildingID) :
                 new ObjectParameter("BuildingID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result2>("up_ReportBuildings", buildingIDParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportServices_Result1> up_ReportServices(string districtId, string serviceId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var serviceIdParameter = serviceId != null ?
-                new ObjectParameter("ServiceId", serviceId) :
-                new ObjectParameter("ServiceId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            var reportStartDateParameter = reportStartDate.HasValue ?
-                new ObjectParameter("ReportStartDate", reportStartDate) :
-                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
-    
-            var reportEndDateParameter = reportEndDate.HasValue ?
-                new ObjectParameter("ReportEndDate", reportEndDate) :
-                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result1>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportExcessCost_Result> up_ReportExcessCost(string districtId, string buildingId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", districtIdParameter, buildingIdParameter);
-        }
-    
-        public virtual int uspCopyIEP(Nullable<int> fromIEP, Nullable<int> byUserID, Nullable<bool> ammend)
-        {
-            var fromIEPParameter = fromIEP.HasValue ?
-                new ObjectParameter("fromIEP", fromIEP) :
-                new ObjectParameter("fromIEP", typeof(int));
-    
-            var byUserIDParameter = byUserID.HasValue ?
-                new ObjectParameter("byUserID", byUserID) :
-                new ObjectParameter("byUserID", typeof(int));
-    
-            var ammendParameter = ammend.HasValue ?
-                new ObjectParameter("ammend", ammend) :
-                new ObjectParameter("ammend", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result>("up_ReportBuildings", buildingIDParameter);
         }
     
         public virtual ObjectResult<up_ReportDraftIEPS_Result> up_ReportDraftIEPS(string districtId, string teacherId, string buildingId)
@@ -345,6 +145,19 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportDraftIEPS_Result>("up_ReportDraftIEPS", districtIdParameter, teacherIdParameter, buildingIdParameter);
         }
     
+        public virtual ObjectResult<up_ReportExcessCost_Result> up_ReportExcessCost(string districtId, string buildingId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", districtIdParameter, buildingIdParameter);
+        }
+    
         public virtual ObjectResult<up_ReportIEPSDue_Result> up_ReportIEPSDue(string districtId, string teacherId, string buildingId)
         {
             var districtIdParameter = districtId != null ?
@@ -362,47 +175,21 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportProgress_Result1> up_ReportProgress(string districtId, string status, string buildingId, string providerId, string teacherId, string studentId)
+        public virtual ObjectResult<up_ReportProceduralDates_Result> up_ReportProceduralDates(string districtId, string teacherId, string buildingId)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
                 new ObjectParameter("DistrictId", typeof(string));
     
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
     
             var buildingIdParameter = buildingId != null ?
                 new ObjectParameter("BuildingId", buildingId) :
                 new ObjectParameter("BuildingId", typeof(string));
     
-            var providerIdParameter = providerId != null ?
-                new ObjectParameter("ProviderId", providerId) :
-                new ObjectParameter("ProviderId", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            var studentIdParameter = studentId != null ?
-                new ObjectParameter("StudentId", studentId) :
-                new ObjectParameter("StudentId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result1>("up_ReportProgress", districtIdParameter, statusParameter, buildingIdParameter, providerIdParameter, teacherIdParameter, studentIdParameter);
-        }
-    
-        [DbFunction("IndividualizedEducationProgramEntities", "string_split")]
-        public virtual IQueryable<string_split_Result> string_split(string mYSTR, string dELIMITER)
-        {
-            var mYSTRParameter = mYSTR != null ?
-                new ObjectParameter("MYSTR", mYSTR) :
-                new ObjectParameter("MYSTR", typeof(string));
-    
-            var dELIMITERParameter = dELIMITER != null ?
-                new ObjectParameter("DELIMITER", dELIMITER) :
-                new ObjectParameter("DELIMITER", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string_split_Result>("[IndividualizedEducationProgramEntities].[string_split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result>("up_ReportProceduralDates", districtIdParameter, teacherIdParameter, buildingIdParameter);
         }
     
         public virtual ObjectResult<up_ReportProceduralDatesTracking_Result> up_ReportProceduralDatesTracking(string districtId, string teacherId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
@@ -430,7 +217,86 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDatesTracking_Result>("up_ReportProceduralDatesTracking", districtIdParameter, teacherIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
         }
     
-        public virtual ObjectResult<up_ReportStudentsByBuilding_Result4> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
+        public virtual ObjectResult<up_ReportProgress_Result> up_ReportProgress(string districtId, string status, string buildingId, string providerId, string teacherId, string studentId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var studentIdParameter = studentId != null ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProgress_Result>("up_ReportProgress", districtIdParameter, statusParameter, buildingIdParameter, providerIdParameter, teacherIdParameter, studentIdParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportProviderCaseload_Result> up_ReportProviderCaseload(string districtId, string providerId, string fiscalYear, string teacherId, string buildingId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", districtIdParameter, providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportServices_Result> up_ReportServices(string districtId, string serviceId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var serviceIdParameter = serviceId != null ?
+                new ObjectParameter("ServiceId", serviceId) :
+                new ObjectParameter("ServiceId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var reportStartDateParameter = reportStartDate.HasValue ?
+                new ObjectParameter("ReportStartDate", reportStartDate) :
+                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
+    
+            var reportEndDateParameter = reportEndDate.HasValue ?
+                new ObjectParameter("ReportEndDate", reportEndDate) :
+                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportStudentsByBuilding_Result> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
         {
             var usdParameter = usd != null ?
                 new ObjectParameter("Usd", usd) :
@@ -448,7 +314,24 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ReportEndDate", reportEndDate) :
                 new ObjectParameter("ReportEndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentsByBuilding_Result4>("up_ReportStudentsByBuilding", usdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentsByBuilding_Result>("up_ReportStudentsByBuilding", usdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter);
+        }
+    
+        public virtual ObjectResult<uspCopyIEP_Result> uspCopyIEP(Nullable<int> fromIEP, Nullable<int> byUserID, Nullable<bool> ammend)
+        {
+            var fromIEPParameter = fromIEP.HasValue ?
+                new ObjectParameter("fromIEP", fromIEP) :
+                new ObjectParameter("fromIEP", typeof(int));
+    
+            var byUserIDParameter = byUserID.HasValue ?
+                new ObjectParameter("byUserID", byUserID) :
+                new ObjectParameter("byUserID", typeof(int));
+    
+            var ammendParameter = ammend.HasValue ?
+                new ObjectParameter("ammend", ammend) :
+                new ObjectParameter("ammend", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     }
 }

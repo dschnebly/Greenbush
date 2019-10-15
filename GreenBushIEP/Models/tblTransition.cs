@@ -38,7 +38,7 @@ namespace GreenBushIEP.Models
         public string Planning_BenefitKRS_OtherAgencies { get; set; }
         public Nullable<int> CareerPathID { get; set; }
         public Nullable<bool> isReleaseBefore21 { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
     }
 }
