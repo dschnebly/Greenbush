@@ -388,42 +388,48 @@
 					var isComplete = $(this).closest('.oneStudentGoal').find("input[name=Completed]");
 
 					if (desc.val().length == 0) {					
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						desc.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Description');
 						return canSave = false;
 					}
 
 					if (freq.val().length == 0) {
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						freq.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Frequency');
 						return canSave = false;
 					}
 
 					if (location.val().length == 0) {
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						location.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Location');
 						return canSave = false;
 					}
 
 					if (duration.val().length == 0) {
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						duration.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Duration');
 						return canSave = false;
 					}
 
 					if (startDate.val().length == 0) {
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						startDate.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Anticipated Start Date');
 						return canSave = false;
 					}
 
 					if (endDate.val().length == 0) {
-						toggleButton.trigger('click');
+						if (toggleButton.hasClass("collapsed"))
+							toggleButton.trigger('click');
 						endDate.focus();
 						alert(accommTitle + ': The following field is required not to be empty: Anticipated End Date');
 						return canSave = false;
