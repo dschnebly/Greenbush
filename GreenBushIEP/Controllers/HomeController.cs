@@ -2870,7 +2870,6 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-
             var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
 
             var gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
@@ -2906,8 +2905,8 @@ namespace GreenbushIep.Controllers
             //14 extended school year
             sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
 
-            //15 sped transportation
-            sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.Transporation_Required.HasValue && studentIEP.studentOtherConsiderations.Transporation_Required.Value ? "1" : "0" : "");
+            //15 sped transportation		
+			sb.AppendFormat("{0}\t", studentIEP.studentServices != null && studentIEP.studentServices.Count(o => o.ServiceCode == "ST") > 0 ? "1" : "");
 
             //16 All Day Kindergarten
             sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
