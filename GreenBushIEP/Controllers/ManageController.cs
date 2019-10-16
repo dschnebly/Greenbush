@@ -1880,37 +1880,61 @@ namespace GreenBushIEP.Controllers
                     info.StatusCode = collection["statusCode"].ToString();
                     info.ExitNotes = !String.IsNullOrEmpty(collection["exitNotes"]) ? collection["exitNotes"].ToString() : "";
 
-                    if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
-                    {
-                        info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+					{
+						info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
+					}
+					else
+					{
+						info.InitialIEPDate = null;
+					}
 
-                    if (!String.IsNullOrEmpty(collection["exitDate"]))
-                    {
-                        info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["exitDate"]))
+					{
+						info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
+					}
+					else
+					{
+						info.ExitDate = null;
+					}
 
-                    if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
-                    {
-                        info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+					{
+						info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
+					}
+					else
+					{
+						info.InitialEvalConsentSigned = null;
+					}
 
-                    if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
-                    {
-                        info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+					{
+						info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
+					}
+					else
+					{
+						info.InitialEvalDetermination = null;
+					}
 
-                    if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
-                    {
-                        info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+					{
+						info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+					}
+					else
+					{
+						info.ReEvalConsentSigned = null;
+					}
 
-                    if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
-                    {
-                        info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
-                    }
+					if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+					{
+						info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
+					}
+					else
+					{
+						info.ReEvalCompleted = null;
+					}
 
-                    db.SaveChanges();
+					db.SaveChanges();
 
                     if (info != null && info.ReEvalConsentSigned.HasValue)
                         CreateReevalArchive(studentId, info.ReEvalConsentSigned.Value);
