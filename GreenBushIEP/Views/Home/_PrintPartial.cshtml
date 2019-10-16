@@ -2475,45 +2475,29 @@
 			 	<h3 class="text-center">SERVICES</h3>
 			 	@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 				{
-					var serviceCount = 1;
-				<table style="text-align:left">
-					<tr>
-						<td><b>Fiscal Year</b></td>
-						<td><b>Service Type</b></td>
-						<td><b>Attend Blg</b></td>
-						<td><b>Mins</b></td>
-						<td><b>Days</b></td>
-						<td><b>Initiation<br />Date</b></td>
-						<td><b>End<br />Date</b></td>
-						<td><b>Frequency</b></td>
-					</tr>
+				var serviceCount = 1;
+				<table style="text-align:left" border="1">					
 					@foreach (var service in Model.studentServices)
 					{
 						<tr>
-							<td>
-								@(service.SchoolYear - 1) <text>-</text> @service.SchoolYear
-							</td>
+							<td style="width:150px"><b>Service</b></td>
+							<td style="width:300px"><b>Instruction Provided For:</b></td>
+							<td style="width:75px"><b>Minutes</b></td>						
+							<td style="width:75px"><b>Days</b></td>						
+						</tr>
+						<tr>
 							<td>
 								@if (Model.serviceTypes.Count > 0)
 								{
-									foreach (var serviceType in Model.serviceTypes)
+									var serviceObj = Model.serviceTypes.FirstOrDefault(o => o.ServiceCode == service.ServiceCode);
+									if (serviceObj != null)
 									{
-										if (serviceType.ServiceCode == service.ServiceCode)
-										{
-											<text>(@serviceType.ServiceCode) @serviceType.Name</text>
-										}
+										<text>@serviceObj.Name</text>
 									}
 								}
 							</td>
 							<td>
-								@if (!string.IsNullOrEmpty(service.LocationCode))
-								{
-									var serviceLocationDesc = Model.locations.FirstOrDefault(i => i.LocationCode == service.LocationCode);
-									if (serviceLocationDesc != null)
-									{
-										<text>(@serviceLocationDesc.LocationCode) @serviceLocationDesc.Name</text>
-									}
-								}
+								@service.ProvidedFor
 							</td>
 							<td>
 								@service.Minutes
@@ -2521,8 +2505,25 @@
 							<td>
 								@service.DaysPerWeek
 							</td>
+						</tr>
+						<tr>
+							<td><b>Location</b></td>
+							<td><b>Anticipated Start Date</b></td>
+							<td><b>Anticipated End Date</b></td>						
+							<td><b>Frequency</b></td>						
+						</tr>
+						<tr>
+							<td>
+							@{
+								var locObj = Model.locations.FirstOrDefault(o => o.LocationCode == service.LocationCode);
+								if (locObj != null)
+								{
+										<text>@locObj.Name</text>
+								}
+							}
+							</td>
 							<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-							<td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
+							<td>@(service.EndDate.ToString("MM/dd/yyyy"))</td>
 							<td>
 								@switch (@service.Frequency)
 								{
@@ -2539,6 +2540,7 @@
 								}
 							</td>
 						</tr>
+						
 						serviceCount++;
 					}
 				</table>
@@ -2548,7 +2550,7 @@
 			 <p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>
 		 }
 		 </div>
-			 <div>
+			 <div class="voffset2">
 			 	<label>NOTICE OF DESTRUCTION OF SPECIAL EDUCATION RECORDS: </label>
 			 	<p>Special education records for each child with an exceptionality are maintained by the school district until no longer needed to provide educational services to the child. This notice is to inform you that the special education records for this student will be destroyed after five (5) years following program completion or graduation from high school, unless the student (or the student’s legal guardian) has taken possession of the records prior to that time.</p>
 			 </div>

@@ -1136,21 +1136,21 @@
     function _showAlert(message, positive) {
 
         var successFade = 5000;
-        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-            if (positive) {
-                $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
-            }
-            else {
-                $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;
-            }
+		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+			if (positive) {
+				$("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
+			}
+			else {
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;
+			}
 
-            if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-                $("#alertMessage .moreinfo").html(message);
-                $("#alertMessage").fadeTo(successFade, 500).slideUp(500, function () {
-                    $("#alertMessage").slideUp(500);
-                });
-            }
-        }
+			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+				$("#alertMessage .moreinfo").html(message);
+				$("#alertMessage").fadeTo(successFade, 500).slideUp(500, function () {
+					$("#alertMessage").slideUp(500);
+				});
+			}
+		}		
     }
 
     function _checkCalendarReporting(fiscalYear, minutesElement, daysPerWeekElement) {
@@ -1411,7 +1411,7 @@
                 success: function (data) {
                     if (data.Result == "success") {
 
-                        _showAlert(data.Message, true);
+                        //_showAlert(data.Message, true);
 
                         studentService.find("input[name='StudentSerivceId']").val(data.key);
                         studentService.find(".collapse.in").attr("data-val", data.key);
