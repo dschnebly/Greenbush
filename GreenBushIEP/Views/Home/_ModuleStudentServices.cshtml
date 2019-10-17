@@ -596,6 +596,7 @@
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
 
+        //$("div:visible.collapse.in").closest(".oneStudentService ");
         var parent = $('div:visible.collapse.in');
 
         if (parent != null) {
@@ -1060,7 +1061,6 @@
     initGoalEvents();
 
     function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding) {
-      
 
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
@@ -1088,7 +1088,8 @@
         cloneService.find("input[name='serviceMinutesPerDay']").val(dupserviceMinutesPerDay);
         cloneService.find("select[name='attendanceBuilding']").val(dupAttendingBuilding).prop('selected', true);
 				
-        var dupFiscalYear = $("select[name='fiscalYear']:eq(2)").find('option');
+        var dupFiscalYear = $("select[name='fiscalYear']").find('option');
+        //var dupFiscalYear = selectedStudentService.find("select[name='fiscalYear']").find('option');
 
         //clones and copies the fiscal years to the new student service
         dupFiscalYear.clone().appendTo(cloneService.find("select[name='fiscalYear']"));
