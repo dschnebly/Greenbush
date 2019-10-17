@@ -885,12 +885,12 @@ namespace GreenBushIEP.Controllers
 														
 							if (benchmark != null)
 							{
-								string transitionActivity = collection[string.Format("StudentGoalBenchmarkHasTransition{0}", benchmarkIDVal)];
+								//string transitionActivity = collection[string.Format("StudentGoalBenchmarkHasTransition{0}", benchmarkIDVal)];
 								
 
 								benchmark.goalID = studentGoal.goal.goalID;
 								benchmark.ObjectiveBenchmark = collection[string.Format("StudentGoalBenchmarkTitle{0}", benchmarkIDVal)];
-								benchmark.TransitionActivity = transitionActivity != null && transitionActivity != "" ? (transitionActivity.ToLower() == "true") ? true : false : false;
+								//benchmark.TransitionActivity = transitionActivity != null && transitionActivity != "" ? (transitionActivity.ToLower() == "true") ? true : false : false;
 								
 								//allow multipel methods
 								string methodsStr = collection[string.Format("StudentGoalShorttermBenchmarkMethods{0}", benchmarkIDVal)];
@@ -921,7 +921,8 @@ namespace GreenBushIEP.Controllers
 								}
 
 								if (isTemp)
-								{
+								{	
+
 									//need to save new benchmark to allow for saving mulitple short term benchmarks with it
 									benchmark.ProgressDate_Quarter1 = DateTime.Now;
 									benchmark.ProgressDate_Quarter2 = DateTime.Now;
@@ -961,8 +962,17 @@ namespace GreenBushIEP.Controllers
 
 
 					var newGoalBenchmarks = db.tblGoalBenchmarks.Where(b => b.goalID == goalId && !(existingBenchmarks.Contains(b.goalBenchmarkID))).ToList();
-					
-					return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId, GoalBenchmarks = newGoalBenchmarks }, JsonRequestBehavior.AllowGet);
+
+					var newBenchmarkMethods = new List<tblGoalBenchmarkMethod>();
+
+					foreach (var newGoalBenchark in newGoalBenchmarks)
+					{
+						var newMethod = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == newGoalBenchark.goalBenchmarkID).ToList();
+
+						newBenchmarkMethods.AddRange(newMethod);
+					}
+
+					return Json(new { Result = "success", Message = "The Student Goal was added.", GoalId = goalId, GoalBenchmarks = newGoalBenchmarks, BenchmarkMethods = newBenchmarkMethods }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
