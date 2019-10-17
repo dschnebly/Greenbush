@@ -6,6 +6,7 @@
 	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
+	var iepType =  string.Format("{0}", Model.anyStudentIEPActive && !Model.current.Amendment ? "ANNUAL" : Model.anyStudentIEPActive && Model.current.Amendment ? "AMENDMENT" : string.Empty);
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 	var studentGrade = "";
 
@@ -182,6 +183,10 @@
 			 <tr>
 			 	<td>
 			 		<h4><b>Individualized Education Plan</b></h4>
+					 @if (!string.IsNullOrEmpty(iepType))
+					 {
+						<h5>@iepType</h5>
+					 }
 			 		<h5>@Model.studentDetails.building.BuildingName</h5>
 			 		<h5>@Model.studentDetails.building.Address_Physical @Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 			 		<h5>@Model.studentDetails.building.Phone</h5>
