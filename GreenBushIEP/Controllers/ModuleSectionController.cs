@@ -909,8 +909,10 @@ namespace GreenBushIEP.Controllers
 										var tempShortTerm = new tblGoalBenchmarkMethod();
 
 										if (methodItemVal > 0)
-										{											
-											tempShortTerm.goalBenchmarkID = benchmark.goalBenchmarkID;
+										{		
+											if(benchmark.goalBenchmarkID > 0)
+												tempShortTerm.goalBenchmarkID = benchmark.goalBenchmarkID;
+
 											tempShortTerm.EvaluationProcedureID = methodItemVal;
 											tempShortTerm.OtherDescription = methodsOtherStr;
 											listTempShortTerms.Add(tempShortTerm);

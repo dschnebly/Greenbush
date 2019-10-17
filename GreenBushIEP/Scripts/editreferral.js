@@ -1,9 +1,8 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function () {	
 
     init();
     initContacts();
 
-    // attach event
     // fires when an avatar is uploaded
     $("#adminpersona").on('change', function (e) {
         var oFReader = new FileReader();
@@ -78,6 +77,9 @@
 
 function init() {
 
+	if ($("#alertMessage").text() == "")
+		$("#alertMessage").hide();
+
     $(".studentDOB").datepicker({
         dateFormat: "mm/dd/yy",
         changeMonth: true,
@@ -88,11 +90,11 @@ function init() {
         disable_search_threshold: 10,
         no_results_text: "Oops, nothing found!",
         width: "100%"
-    });
+	});
 
-    //$("#submitForm").on('click', function () {
-    //    document.forms[3].submit();
-    //});
+	$('#misDistrict').change(function () {
+		$(this).trigger("chosen:updated");		
+	});
 
     $('#buildingIds').hide();
     var link = document.createElement("a");
@@ -149,13 +151,23 @@ function init() {
 
 
 function tabValidates() {
+	
+	if ($('#alertMessage').css('display') == 'block') {
+		$('#alertMessage').html("");		
+		$('#alertMessage').hide();		
+	}
+
     var validates = true;
     var stepId = $('.wizard .nav-tabs li.active a').attr('href');
     var $inputs = $(stepId + " :input[data-validate='true']");
 
     $inputs.each(function () {
         var input = $(this);
-        var is_valid = input.val();
+		var is_valid = input.val();
+
+		if (input.is("select") && input[0] != undefined && input[0].id =="misDistrict" && is_valid.length == 0) {
+			is_valid = "";
+		}
 
         if (is_valid === "" || is_valid === null) {
             if (input.is("select")) {
@@ -187,196 +199,113 @@ function initContacts() {
 
 }
 
-$("#next2").on("click", function () {
+$("#next2").on("click", function (e) {
 
-    var theForm = document.getElementById("createNewStudent");
+	var theForm = document.getElementById("createNewStudent");
+	e.preventDefault();
 
     if (tabValidates()) {
 
-        $.ajax({
-			url: '/Manage/EditReferral',
-            type: 'POST',
-            data: $("#createNewStudent").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();       
+	}
+	else {
+		
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
 
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.addClass('disabled');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-
-                    // create a new student id and add it to the contacts form here.
-                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
-                    $("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+	}
 });
 
-$("#next3").on("click", function () {
+$("#next3").on("click", function (e) {
 
-    var theForm = document.getElementById("createStudentContacts");
+	var theForm = document.getElementById("createStudentContacts");
+	e.preventDefault();
 
-    if (tabValidates()) {
+	if (tabValidates()) {
 
-        $.ajax({
-			url: '/Manage/EditReferralOptions',
-            type: 'POST',
-            data: $("#createStudentOptions").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-
-                    // add student id to the avatar form here.
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();        
+	} else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
+	}
 });
 
-$("#next4").on("click", function () {
+$("#next4").on("click", function (e) {
 
-    var theForm = document.getElementById("editStudentContacts");
+	var theForm = document.getElementById("editStudentContacts");
+	e.preventDefault();
 
-    if (tabValidates()) {
-        $.ajax({
-			url: '/Manage/EditReferralContacts',
-            type: 'POST',
-            data: $("#createStudentContacts").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
+	if (tabValidates()) {
 
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();
 
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+	} else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
+	}
 });
 
-$("#next5").on("click", function () {
+$("#next5").on("click", function (e) {
 
-    var theForm = document.getElementById("editStudent");
-    if (tabValidates()) {
+	var theForm = document.getElementById("editStudent");
+	e.preventDefault();
 
-        $.ajax({
-            url: '/Manage/EditReferral',
-            type: 'POST',
-            data: $("#editStudent").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
+	//check attending district
+	var attendingDistrictSelected = true;
+	var val = $("#misDistrict").val();
+	if (val != undefined && val.length ==0 ) {
+		attendingDistrictSelected = false;
+		
+	}
 
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
+	if (tabValidates() && attendingDistrictSelected) {
 
-    }
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();
+	}
+	else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
+	}
 });
 
-$("#next6").on("click", function () {
+$("#next6").on("click", function (e) {
 
-    var theForm = document.getElementById("editStudentOptions");
+	var theForm = document.getElementById("editStudentOptions");
+	e.preventDefault();
 
     if (tabValidates()) {
 
-        $.ajax({
-			url: '/Manage/EditReferralOptions',
-            type: 'POST',
-            data: $("#editStudentOptions").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();      
 
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+	} else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
+	}
 });
 
-$("#next7").on("click", function () {
+$("#next7").on("click", function (e) {
 
-    var theForm = document.getElementById("editStudentContacts");
+	var theForm = document.getElementById("editStudentContacts");
+	e.preventDefault();
 
-    if (tabValidates()) {
+	if (tabValidates()) {
 
-        $.ajax({
-			url: '/Manage/EditReferralContacts',
-            type: 'POST',
-            data: $("#editStudentContacts").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();
+	}
+	else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();	
+	}
 });

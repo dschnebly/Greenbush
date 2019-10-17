@@ -2419,9 +2419,9 @@
 			 @if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
 			 {
 				 foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
-				 {
-			 		<label>Short Term Benchmark(s)</label>
+				 {			 		
 			 		<div class="StudentGoalBenchmarks">
+						 <label style="margin-top:5px">Short Term Benchmark(s)</label>
 			 			<div class="form-group" style="padding:2px;">
 			 				<span>@gb.ObjectiveBenchmark</span>
 			 		</div>

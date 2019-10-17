@@ -691,6 +691,8 @@
             @Html.ActionLink(" ", "Referrals", "Manage", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
         </div>
     </div>
+	
+	<div class="alert alert-danger noPrint" id="alertMessage" role="alert">@Html.Raw(ViewBag.Error != null && ViewBag.Error != "" ? ViewBag.Error : "")</div>
     <div class="row">
         <section>
             <div class="wizard">
@@ -727,14 +729,13 @@
                         </li>
                     </ul>
                 </div>
+		@using (Html.BeginForm("EditReferral", "Manage", null, FormMethod.Post, new { id = "editStudent", @class = "editstudent" }))
+		{
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.Hidden("referralId", Model.referralId)
                 <div class="tab-content">
                     <div id="step1" class="tab-pane active" role="tabpanel">
-                        @using (Html.BeginForm("EditReferral", "Manage", null, FormMethod.Post, new { id = "editStudent", @class = "editstudent", onsubmit = "return false;" }))
-                        {
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.Hidden("referralId", Model.referralId)
-							@Html.Hidden("studentId", Model.student.UserID)
-
+                       
                             <div class="step11">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -761,23 +762,22 @@
 												foreach (var code in Model.placementCode)
 												{
 													string selected = @code.PlacementCode == "L" ? "selected=selected" : "";
-													//string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
                                                     <option value="@code.PlacementCode" @selected>@code.PlacementDescription</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="control-label required" for="assignChildCount">Assign Child Count</label>
                                         <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a district...">
                                             @if (Model.allDistricts != null)
-                                            {
-                                                foreach (var district in Model.allDistricts)
-                                                {
-                                                    string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
+											{
+												foreach (var district in Model.allDistricts)
+												{
+													string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
                                                     <option value="@district.USD" @selected>@district.DistrictName</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -813,28 +813,28 @@
                                         <label for="primaryDisability">Primary Disability</label>
                                         <select class="form-control" name="primaryDisability" id="primaryDisability">
                                             @if (Model.primaryDisabilities != null)
-                                            {
-                                                foreach (var primary in Model.primaryDisabilities)
-                                                {
-													string defaultDisability = string.IsNullOrEmpty(Model.info.Primary_DisabilityCode) ? "ND" : Model.info.Primary_DisabilityCode; 
-                                                    string selected = defaultDisability == primary.DisabilityCode ? "selected=selected" : "";
+											{
+												foreach (var primary in Model.primaryDisabilities)
+												{
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Primary_DisabilityCode) ? "ND" : Model.info.Primary_DisabilityCode;
+													string selected = defaultDisability == primary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@primary.DisabilityCode" @selected>@primary.DisabilityDescription</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="secondaryDisability">Secondary Disability</label>
                                         <select class="form-control" name="secondaryDisability" id="secondaryDisability">
                                             @if (Model.secondaryDisabilities != null)
-                                            {
-                                                foreach (var secondary in Model.secondaryDisabilities)
-                                                {
-													string defaultDisability = string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode) ? "ND" : Model.info.Secondary_DisabilityCode; 
-                                                    string selected = defaultDisability == secondary.DisabilityCode ? "selected=selected" : "";                                                    
+											{
+												foreach (var secondary in Model.secondaryDisabilities)
+												{
+													string defaultDisability = string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode) ? "ND" : Model.info.Secondary_DisabilityCode;
+													string selected = defaultDisability == secondary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@secondary.DisabilityCode" @selected>@secondary.DisabilityDescription</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -856,15 +856,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="control-label required" for="misDistrict">Attending District</label>
-                                        <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
+                                        <select name="misDistrict" class="form-control chosen-select required" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true">
                                             @if (Model.districts != null)
-                                            {
-                                                foreach (var district in Model.districts)
-                                                {
-                                                    string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
+											{
+												foreach (var district in Model.districts)
+												{
+													string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
                                                     <option value="@district.USD" @selected>@district.DistrictName</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                 </div>
@@ -881,33 +881,33 @@
 
                                         <select id="NeighborhoodBuildingID" name="NeighborhoodBuildingID" class="list-group form-control studentBuilding allActive chosen-select" data-validate="true" required data-placeholder="Choose a building...">
                                             @if (ViewBag.SelectedDistrictBuildings != null)
-                                            {
-                                                foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
-                                                {
-                                                    string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+											{
+												foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
+												{
+													string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
-                                                }
-                                            }
+												}
+											}
 											
 											
 											@if (Model.buildings != null)
-                                            {
-                                                foreach (var districtBuilding in Model.buildings)
-                                                {
-                                                    string selected = Model.info.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
+											{
+												foreach (var districtBuilding in Model.buildings)
+												{
+													string selected = Model.info.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName</option>
-                                                }
-                                            }
+												}
+											}
 											
 											
 											@if (ViewBag.AllBuildings != null)
-                                            {
-                                                foreach (var allActiveBuilding in ViewBag.AllBuildings)
-                                                {
-                                                    string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
+											{
+												foreach (var allActiveBuilding in ViewBag.AllBuildings)
+												{
+													string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName</option>
-                                                }
-                                            }
+												}
+											}
                                         </select>
                                     </div>
                                 </div>
@@ -919,13 +919,13 @@
 
                                         <select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-validate="true" data-placeholder="Choose a building...">
                                            @if (ViewBag.SelectedDistrictBuildings != null)
-                                            {
-                                                foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
-                                                {
-                                                    string selected = Model.info.BuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+										   {
+											   foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
+											   {
+												   string selected = Model.info.BuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
-                                                }
-                                            }
+											   }
+										   }
                                         </select>
                                     </div>
                                 </div>
@@ -934,21 +934,19 @@
                                 <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                 <li><button type="button" class="btn btn-info next-step" id="next5" @(ViewBag.ReferralComplete != null && ViewBag.ReferralComplete ? "disabled" : "")>Save and continue</button></li>
                             </ul>
-                        }
+
                     </div>
                     <div id="step2" class="tab-pane" role="tabpanel">
                         <div id="step2" class="tab-pane active" role="tabpanel">
-                            @using (Html.BeginForm("EditStudentOptions", "Manage", null, FormMethod.Post, new { id = "editStudentOptions", @class = "studentOptions" }))
-                            {
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.Hidden("studentId", Model.student.UserID)
-								@Html.Hidden("referralId", Model.referralId)
+                            
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })                             
+							
                                 <div class="step22">
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="studentStreetAddress1" class="required">Student's Street Address</label>
-                                                <input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text" value="@(Model.student.Address1)" />
+                                                <input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control required" placeholder="Street Address" type="text" value="@(Model.student.Address1)" data-validate='true' />
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -960,13 +958,13 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="studentCity" class="required">City</label>
-                                                <input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" value="@(Model.student.City)" />
+                                                <input name="studentCity" id="studentCity" class="form-control required" placeholder="Contact City" type="text" value="@(Model.student.City)" data-validate='true'/>
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="studentState" class="required">State</label>
-                                                <select name="studentState" id="studentState" class="form-control norequired" data-validate="true">
+                                                <select name="studentState" id="studentState" class="form-control required" data-validate="true">
                                                     <option value="AL" selected=@(Model.student.State == "AL")>AL</option>
                                                     <option value="AK" selected=@(Model.student.State == "AK")>AK</option>
                                                     <option value="AZ" selected=@(Model.student.State == "AZ")>AZ</option>
@@ -1024,7 +1022,7 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="required" for="studentZipCode">Zip Code</label>
-                                                <input name="studentZipCode" id="studentZipCode" class="form-control norequired" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" value="@(Model.student.Zip)" />
+                                                <input name="studentZipCode" id="studentZipCode" class="form-control required" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" value="@(Model.student.Zip)" />
                                             </div>
                                         </div>
                                     </div>
@@ -1150,19 +1148,19 @@
                                             <label for="studentGrade">Student Grade</label>
                                             <select name="studentGrade" id="studentGrade" class="form-control">
                                                 @foreach (tblGrade grade in Model.grades)
-                                                {
+												{
                                                     <option value="@(grade.gradeID)" selected=@(Model.info.Grade == grade.gradeID)>@(grade.description)</option>
-                                                }
+												}
                                             </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="studentRace">Student Race</label>
 
 											 <select name="studentRace" id="studentRace" class="form-control">
-                                                @foreach(tblRace race in Model.races)
-                                                {
+                                                @foreach (tblRace race in Model.races)
+												{
                                                     <option value="@(race.RaceCode)" selected="@(Model.info.RaceCode != null && Model.info.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
-                                                }
+												}
                                             </select>
 
                                         </div>
@@ -1261,22 +1259,22 @@
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
                                                         @if (Model.statusCode != null)
-                                                        {
+														{
                                                             <optgroup label="Active">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
-                                                                {
-                                                                    string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+																{
+																	string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                     <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
-                                                                }
+																}
                                                             </optgroup>
                                                             <optgroup label="Inactive">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
-                                                                {
-                                                                    string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+																{
+																	string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                     <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
-                                                                }
+																}
                                                             </optgroup>
-                                                        }
+														}
                                                     </select>
                                                 </div>
                                             </div>
@@ -1342,23 +1340,21 @@
                                 <ul class="list-inline pull-right saveandcontinue">
                                     <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                     <li><button type="button" class="btn btn-info next-step" id="next6">Save and continue</button></li>
-                                </ul>
-                            }
+                                </ul>                            
                         </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step3">
                         <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Student Relationships</h4>
-                        @using (Html.BeginForm("EditStudentContacts", "Manage", null, FormMethod.Post, new { id = "editStudentContacts", @class = "editstudent", onsubmit = "return false;" }))
-                        {
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-							@Html.Hidden("studentId", Model.student.UserID)
-							@Html.Hidden("referralId", Model.referralId)
-                            if (Model.contacts != null)
-                            {
+                        
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })	
+                            @if (Model.contacts != null)
+							{
 
                                 <div class="step22" id="student-contacts">
                                     @foreach (var contact in Model.contacts)
-                                    {
+									{
+                                        <input id="contact[@(contact.RealtionshipID.ToString())].RealtionshipID" name="contact[@(contact.RealtionshipID.ToString())].RealtionshipID" type="hidden" value="@(contact.RealtionshipID)" >
+
                                         <div class="student-contact">
                                             <div class="row">
                                                 <div class="col-sm-4 nopadding">
@@ -1497,7 +1493,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    }
+									}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-pull-10">
@@ -1508,17 +1504,14 @@
                                     <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                     <li><button type="button" class="btn btn-info next-step" id="next7">Save and continue</button></li>
                                 </ul>
-                            }
-                        }
+							}
+                       
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.Hidden("studentId", Model.student.UserID)
-							@Html.Hidden("referralId", Model.referralId)
-                            if (Model.contacts != null)
-                            {
+                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                          
+                            @if (Model.contacts != null)
+							{
 
                                 <div class="step44">
                                     <div class="row">
@@ -1545,12 +1538,14 @@
                                     </div>
                                 </div>
 
-                            }
-                        }
+							}
+                        
 
                     </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>						
                 </div>
+
+		}
             </div>
         </section>
     </div>
@@ -1705,6 +1700,6 @@
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/editreferral.js?v1.2")
+    @Scripts.Render("~/Scripts/editreferral.js?v1.4")
 
 }
