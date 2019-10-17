@@ -261,20 +261,13 @@ namespace GreenBushIEP.Controllers
 
         }
 
-        // GET: Manage/EditReferral
-        [HttpGet]
-        public ActionResult EditReferral(int id)
-        {
-            StudentDetailsViewModel model = GetReferralModel(id);
-         
-            return View("~/Views/Home/EditReferral.cshtml", model);
-        }
-
-		private StudentDetailsViewModel GetReferralModel(int id)
+		// GET: Manage/EditReferral
+		[HttpGet]
+		public ActionResult EditReferral(int id)
 		{
-			StudentDetailsViewModel model = new StudentDetailsViewModel();
-			model.student = new Student();
+			ReferralDetailsViewModel model = new ReferralDetailsViewModel();
 			bool isComplete = false;
+			model.student = new tblReferralInfo();
 
 			tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == id).FirstOrDefault();
 			if (referralReq != null)
@@ -286,25 +279,13 @@ namespace GreenBushIEP.Controllers
 			tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == id).FirstOrDefault();
 			if (student != null)
 			{
-
-				model.referralId = student.ReferralID;
-				model.student.FirstName = student.FirstName;
-				model.student.MiddleName = student.MiddleInitial;
-				model.student.LastName = student.LastName;
-				model.student.City = student.City;
-				model.student.State = student.State;
-				model.student.RoleID = "5";
-				model.student.Address1 = student.Address1;
-				model.student.Address2 = student.Address2;
-				model.student.Zip = student.Zip;
-				model.student.KidsID = student.KIDSID;
-				model.student.DateOfBirth = student.DateOfBirth.HasValue ? student.DateOfBirth.Value : DateTime.MinValue;
-				model.student.USD = student.AssignedUSD;
-				model.student.BuildingID = student.ResponsibleBuildingID;
-				model.student.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
-				model.student.County = student.County;
-				model.student.USD = student.AssignedUSD;
-
+				model.student = student;
+				
+				if (!string.IsNullOrEmpty(model.student.AttendingUSD))
+				{
+					var attendingUSDs = model.student.AttendingUSD.Split(',');
+					model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where attendingUSDs.Contains(o.USD) select d).Distinct().ToList();
+				}
 				tblStudentInfo studentinfo = new tblStudentInfo();
 				studentinfo.County = student.County;
 				studentinfo.AssignedUSD = student.AssignedUSD;
@@ -313,14 +294,26 @@ namespace GreenBushIEP.Controllers
 				studentinfo.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
 				studentinfo.ParentLanguage = student.ParentLanguage;
 				studentinfo.StudentLanguage = student.StudentLanguage;
-				studentinfo.RaceCode = student.RaceCode; 
+				studentinfo.RaceCode = student.RaceCode; //db.tblRaces.Where(r => r.RaceCode == student.RaceCode).FirstOrDefault().RaceDescription;
 				studentinfo.Ethicity = student.Ethicity;
 				studentinfo.Gender = student.Gender;
 				studentinfo.Grade = student.Grade;
-
-
-				if (student.InitialEvalConsentSigned != null)
-					studentinfo.InitialEvalConsentSigned = student.InitialEvalConsentSigned;
+				studentinfo.InitialEvalConsentSigned = student.InitialEvalConsentSigned;
+				studentinfo.InitialEvalDetermination = student.InitialEvalDetermination;
+				studentinfo.ReEvalCompleted = student.ReEvalCompleted;
+				studentinfo.ExitDate = student.ExitDate;
+				studentinfo.ExitNotes = student.ExitNotes;
+				studentinfo.InitialIEPDate = student.InitialIEPDate;
+				studentinfo.ReEvalConsentSigned = student.ReEvalConsentSigned;
+				studentinfo.ReEvalCompleted = student.ReEvalCompleted;
+				studentinfo.FullDayKG = student.FullDayKG;
+				studentinfo.StatusCode = student.StatusCode;
+				studentinfo.PlacementCode = student.PlacementCode;
+				studentinfo.Primary_DisabilityCode = student.Primary_DisabilityCode;
+				studentinfo.Secondary_DisabilityCode = student.Secondary_DisabilityCode;
+				studentinfo.FundSource = student.FundSource;
+				studentinfo.ClaimingCode = student.ClaimingCode.HasValue && student.ClaimingCode.Value ? true : false;
+				studentinfo.isGifted = student.isGifted.HasValue && student.isGifted.Value ? true : false;
 
 				model.info = studentinfo;
 			}
@@ -358,12 +351,14 @@ namespace GreenBushIEP.Controllers
 			model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
 			model.statusCode = db.tblStatusCodes.ToList();
 			model.grades = db.tblGrades.ToList();
-			model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+			//model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+			
 
 			model.races = db.tblRaces.ToList();
 
+
 			ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
-												 where b.USD == model.student.USD
+												 where b.USD == student.AssignedUSD
 												 select new BuildingsViewModel
 												 {
 													 BuildingName = b.BuildingName,
@@ -385,329 +380,545 @@ namespace GreenBushIEP.Controllers
 
 			ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
 			ViewBag.ReferralComplete = isComplete;
-
-			return model;
+			
+			return View("~/Views/Home/EditReferral.cshtml", model);
 		}
 
 
 		[HttpPost]
-        public JsonResult DeleteReferral(int referralId)
-        {
-            try
-            {
-                List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(r => r.ReferralID == referralId).ToList();
-                if (relationships != null && relationships.Count > 0)
-                {
-                    db.tblReferralRelationships.RemoveRange(relationships);
-                }
-
-                var referral = db.tblReferralInfoes.Where(r => r.ReferralID == referralId).FirstOrDefault();
-                if (referral != null)
-                {
-                    db.tblReferralInfoes.Remove(referral);
-                }
-
-                var referralReq = db.tblReferralRequests.Where(r => r.ReferralID == referralId).FirstOrDefault();
-                if (referralReq != null)
-                {
-                    db.tblReferralRequests.Remove(referralReq);
-                }
-
-                db.SaveChanges();
-
-            }
-            catch (Exception e)
-            {
-                return Json(new { Result = "error", Message = "There was an error while trying to delete the Referral. \n\n" + e.InnerException.ToString() });
-            }
-
-            return Json(new { Result = "success", Message = "The student was successfully deleted." });
-
-
-        }
-
-        [HttpPost]
-		public ActionResult EditReferral(HttpPostedFileBase adminpersona, FormCollection collection, StudentDetailsViewModel model)
+		public JsonResult DeleteReferral(int referralId)
 		{
-			ViewBag.Success = true;
-			int referralId = 0;
-
-
 			try
 			{
-				tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-				// check that the kidsIS doesn't already exsist in the system.
-				long kidsID = Convert.ToInt64(collection["kidsid"]);
-				referralId = Convert.ToInt32(collection["referralId"]);
-
-				if (kidsID == 0)
+				List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(r => r.ReferralID == referralId).ToList();
+				if (relationships != null && relationships.Count > 0)
 				{
-					ViewBag.Error = "The KIDS ID is invalid. Please enter another KIDS ID.";
-					ViewBag.Success = false;
-					model = GetReferralModel(referralId);
-					return View("~/Views/Home/EditReferral.cshtml", model);
+					db.tblReferralRelationships.RemoveRange(relationships);
 				}
 
-				tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
-
-				if (exsistingStudent != null)
+				var referral = db.tblReferralInfoes.Where(r => r.ReferralID == referralId).FirstOrDefault();
+				if (referral != null)
 				{
-
-					ViewBag.Error = "The student is already in the Greenbush system. Please contact Greenbush.";
-					ViewBag.Success = false;
-					model = GetReferralModel(referralId);
-					return View("~/Views/Home/EditReferral.cshtml", model);
+					db.tblReferralInfoes.Remove(referral);
 				}
 
-				//validate 
-				DateTime dobDate = DateTime.MinValue;
-
-				DateTime.TryParse(collection["dob"], out dobDate);
-
-				if (dobDate == DateTime.MinValue)
+				var referralReq = db.tblReferralRequests.Where(r => r.ReferralID == referralId).FirstOrDefault();
+				if (referralReq != null)
 				{
-					return Json(new { Result = "error", Message = "The Birthdate supplied in not a valid date." });
-				}
-
-				if (collection["misDistrict"] == null)
-				{
-					return Json(new { Result = "error", Message = "The Assigned USD is required." });
-				}
-
-				if (collection["AttendanceBuildingId"] == null)
-				{
-					return Json(new { Result = "error", Message = "The AttendanceBuildingId is required." });
-				}
-
-				if (collection["AttendanceBuildingId"] == null)
-				{
-					return Json(new { Result = "error", Message = "The Attendance Building is required." });
-				}
-
-				if (collection["NeighborhoodBuildingID"] == null)
-				{
-					return Json(new { Result = "error", Message = "The Neighborhood Building is required." });
-				}
-
-				if (collection["assignChildCount"] == null)
-				{
-					return Json(new { Result = "error", Message = "Assign Child Count." });
-				}
-
-				// Create New User 
-				tblUser newStudent = new tblUser()
-				{
-					RoleID = "5",
-					FirstName = collection["firstname"],
-					MiddleName = collection["middlename"],
-					LastName = collection["lastname"],
-					Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
-					Create_Date = DateTime.Now,
-					Update_Date = DateTime.Now,
-					Address1 = collection["studentStreetAddress1"].ToString(),
-					Address2 = collection["studentStreetAddress2"].ToString(),
-					City = collection["studentCity"].ToString(),
-					State = collection["studentState"].ToString(),
-					Zip = collection["studentZipCode"].ToString()
-				};
-
-
-				if (!String.IsNullOrEmpty(newStudent.Email) && db.tblUsers.Any(o => o.Email == newStudent.Email))
-				{
-					ViewBag.Error = "The email address is already in use, please use a different email address.";
-					ViewBag.Success = false;
-					model = GetReferralModel(referralId);
-					return View("~/Views/Home/EditReferral.cshtml", model);
-				}
-				else
-				{
-					db.tblUsers.Add(newStudent);
-					db.SaveChanges();
-				}
-
-
-				if (newStudent != null)
-				{
-					//// UPLOAD the image
-					if (adminpersona != null && adminpersona.ContentLength > 0)
-					{
-						var fileName = Path.GetFileName(adminpersona.FileName);
-						var random = Guid.NewGuid() + fileName;
-						var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
-						if (!Directory.Exists(Server.MapPath("~/Avatar/")))
-						{
-							Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
-						}
-
-						newStudent.ImageURL = random;
-						adminpersona.SaveAs(path);
-
-						db.SaveChanges();
-					}
-				}
-
-				// Create New StudentInfo                   
-
-				tblStudentInfo info = new tblStudentInfo()
-				{
-					UserID = newStudent.UserID,
-					KIDSID = kidsID,
-					DateOfBirth = dobDate,
-					Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "",
-					Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "",
-					AssignedUSD = collection["assignChildCount"] != null ? collection["assignChildCount"].ToString() : "",
-					USD = collection["misDistrict"],
-					BuildingID = collection["AttendanceBuildingId"],
-					NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
-					Status = "PENDING",
-					Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
-					CreatedBy = submitter.UserID,
-					Create_Date = DateTime.Now,
-					Update_Date = DateTime.Now,
-					PlacementCode = collection["studentPlacement"],
-					isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false,
-					County = collection["studentCounty"].ToString(),
-					Grade = Convert.ToInt32(collection["studentGrade"]),
-					RaceCode = collection["studentRace"].ToString(),
-					Ethicity = collection["studentEthnic"].ToString(),
-					StudentLanguage = collection["studentLanguage"].ToString(),
-					ParentLanguage = collection["parentLanguage"].ToString(),
-					ClaimingCode = collection["claimingCode"] == "on" ? true : false,
-					FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false,
-					StatusCode = collection["statusCode"].ToString(),
-				};
-
-
-				if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
-				{
-					info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
-				}
-
-				if (!String.IsNullOrEmpty(collection["exitDate"]))
-				{
-					info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
-				}
-
-				if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
-				{
-					info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
-				}
-
-				if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
-				{
-					info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
-				}
-
-				if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
-				{
-					info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+					db.tblReferralRequests.Remove(referralReq);
 				}
 
 				db.SaveChanges();
 
-				// map the buildings in the building mapping table					
-				if (db.tblBuildingMappings.Count(o => o.BuildingID == info.BuildingID && o.USD == info.AssignedUSD && o.UserID == info.UserID) == 0)
-				{
-					db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = info.BuildingID, USD = info.AssignedUSD, UserID = info.UserID });					
-				}
-
-				db.tblStudentInfoes.Add(info);
-
-				// save to organization chart
-				// save the user to all the districts that was selected.
-				// tblOrganizationMapping and tblBuildingMapping
-				var districtValues = collection["misDistrict"];
-
-				if (!string.IsNullOrEmpty(districtValues))
-				{
-					string[] districtArray = districtValues.Split(','); ;
-
-					foreach (string usd in districtArray)
-					{
-						tblOrganizationMapping org = new tblOrganizationMapping();
-						org.AdminID = submitter.UserID;
-						org.UserID = newStudent.UserID;
-						org.USD = usd;
-
-						db.tblOrganizationMappings.Add(org);
-
-					}
-				}
-
-				var contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
-				foreach (var contact in contacts)
-				{
-					string labelName = string.Format("contact[{0}].", contact.RealtionshipID);
-
-					tblStudentRelationship studentContact = new tblStudentRelationship();
-					studentContact.UserID = newStudent.UserID;
-					studentContact.FirstName = collection[string.Format("{0}FirstName", labelName)].ToString();
-					studentContact.LastName = collection[string.Format("{0}LastName", labelName)].ToString();
-					studentContact.Realtionship = collection[string.Format("{0}Realtionship", labelName)].ToString();
-					studentContact.Address1 = collection[string.Format("{0}Address1", labelName)].ToString();
-					studentContact.Address2 = collection[string.Format("{0}Address2", labelName)].ToString();
-					studentContact.City = collection[string.Format("{0}City", labelName)].ToString();
-					studentContact.State = collection[string.Format("{0}ContactState", labelName)].ToString();
-					studentContact.Zip = collection[string.Format("{0}Zip", labelName)].ToString();
-					studentContact.Phone = collection[string.Format("{0}Phone", labelName)].ToString();
-					studentContact.Email = collection[string.Format("{0}Email", labelName)].ToString();
-
-					if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
-						studentContact.PrimaryContact = 1;
-
-
-					db.tblStudentRelationships.Add(studentContact);
-
-				}
-
-				var rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralId);
-				if (rrList != null)
-				{
-					foreach (var rr in rrList)
-					{
-						rr.Complete = true;
-						rr.Update_Date = DateTime.Now;
-					}
-
-				}
-
-				db.SaveChanges();
-				
-			}
-			catch (DbEntityValidationException ex)
-			{
-				// Retrieve the error messages as a list of strings.
-				var errorMessages = ex.EntityValidationErrors
-						.SelectMany(x => x.ValidationErrors)
-						.Select(x => x.ErrorMessage);
-
-				// Join the list to a single string.
-				var fullErrorMessage = string.Join("; ", errorMessages);
-
-				// Combine the original exception message with the new one.
-				var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
-
-				ViewBag.Error = exceptionMessage;
-				ViewBag.Success = false;
-				model = GetReferralModel(referralId);
-				return View("~/Views/Home/EditReferral.cshtml", model);
 			}
 			catch (Exception e)
 			{
-
-				ViewBag.Error = "There was an error while trying to add the student's contacts. \n\n" + e.InnerException.ToString();
-				ViewBag.Success = false;
-				model = GetReferralModel(referralId);
-				return View("~/Views/Home/EditReferral.cshtml", model);				
+				return Json(new { Result = "error", Message = "There was an error while trying to delete the Referral. \n\n" + e.InnerException.ToString() });
 			}
 
-			ViewBag.Error = "";
+			return Json(new { Result = "success", Message = "The student was successfully deleted." });
+
+
+		}
+
+		[HttpPost]
+		public JsonResult EditReferral(HttpPostedFileBase adminpersona, FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					// check that the kidsIS doesn't already exsist in the system.
+					long kidsID = Convert.ToInt64(collection["kidsid"]);
+					int referralId = Convert.ToInt32(collection["referralId"]);
+
+					if (kidsID == 0)
+					{
+						return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
+					}
+
+					tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+					tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == referralId).FirstOrDefault();
+
+					if (exsistingStudent != null)
+					{
+						if (referralReq != null && referralReq.Complete)
+							return Json(new { Result = "error", Message = "This Referral was already completed and the student has been created. Please contact Greenbush." });
+
+						//student has been created but it is not complete - don't create new record
+						return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+					}
+
+
+					if (!String.IsNullOrEmpty(collection["email"]) && db.tblUsers.Any(o => o.Email == collection["email"].ToString()))
+					{
+						return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+					}
+
+					// Create New StudentInfo
+					DateTime dobDate = DateTime.MinValue;
+
+					DateTime.TryParse(collection["dob"], out dobDate);
+
+					if (dobDate == DateTime.MinValue)
+					{
+						return Json(new { Result = "error", Message = "The Birthdate supplied in not a valid date." });
+					}
+
+					if (collection["misDistrict"] == null)
+					{
+						return Json(new { Result = "error", Message = "The Assigned USD is required." });
+					}
+
+					if (collection["AttendanceBuildingId"] == null)
+					{
+						return Json(new { Result = "error", Message = "The AttendanceBuildingId is required." });
+					}
+
+					if (collection["AttendanceBuildingId"] == null)
+					{
+						return Json(new { Result = "error", Message = "The Attendance Building is required." });
+					}
+
+					if (collection["NeighborhoodBuildingID"] == null)
+					{
+						return Json(new { Result = "error", Message = "The Neighborhood Building is required." });
+					}
+
+					if (collection["assignChildCount"] == null)
+					{
+						return Json(new { Result = "error", Message = "Assign Child Count is required." });
+					}
+
+					// tblStudentInfo
+					tblReferralInfo referInfo = db.tblReferralInfoes.Where(o => o.ReferralID == referralId).FirstOrDefault();
+
+					//UserID = student.UserID,
+					referInfo.FirstName = collection["firstname"];
+					referInfo.MiddleInitial = collection["middlename"];
+					referInfo.LastName = collection["lastname"];
+					referInfo.KIDSID = kidsID;
+					referInfo.DateOfBirth = dobDate;
+					referInfo.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+					referInfo.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
+					referInfo.AssignedUSD = collection["assignChildCount"] != null ? collection["assignChildCount"].ToString() : "";
+					referInfo.AttendingUSD = collection["misDistrict"];
+					referInfo.ResponsibleBuildingID = collection["AttendanceBuildingId"];
+					referInfo.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
+					referInfo.Status = "PENDING";
+					referInfo.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+					referInfo.Update_Date = DateTime.Now;
+					referInfo.PlacementCode = collection["studentPlacement"];
+					referInfo.ClaimingCode = collection["claimingCode"] != null && collection["claimingCode"] == "on" ? true : false;
+					referInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
+
+
+					try
+					{
+					
+						db.SaveChanges();
+					}
+					catch (DbEntityValidationException ex)
+					{
+						// Retrieve the error messages as a list of strings.
+						var errorMessages = ex.EntityValidationErrors
+								.SelectMany(x => x.ValidationErrors)
+								.Select(x => x.ErrorMessage);
+
+						// Join the list to a single string.
+						var fullErrorMessage = string.Join("; ", errorMessages);
+
+						// Combine the original exception message with the new one.
+						var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+						return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + exceptionMessage });
+					}
+					catch (Exception e)
+					{
+						return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+					}
+
+					return Json(new { Result = "success", Message = referralId });
+				}
+				catch (DbEntityValidationException ex)
+				{
+					// Retrieve the error messages as a list of strings.
+					var errorMessages = ex.EntityValidationErrors
+							.SelectMany(x => x.ValidationErrors)
+							.Select(x => x.ErrorMessage);
+
+					// Join the list to a single string.
+					var fullErrorMessage = string.Join("; ", errorMessages);
+
+					// Combine the original exception message with the new one.
+					var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+					Console.Write(exceptionMessage);
+				}
+
+			}
+
+			return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
+		}
+
+		[HttpPost]
+		public JsonResult EditReferralOptions(FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					if (collection["referralId"] == null)
+					{
+						return Json(new { Result = "error", Message = "The referralId ID is missing. Please contact a system administrator to review the problem." });
+					}
+
+					int referralId = Convert.ToInt32(collection["referralId"]);
+
+
+					tblReferralInfo info = db.tblReferralInfoes.Where(i => i.ReferralID == referralId).FirstOrDefault();
+					if (info != null)
+					{
+						info.Address1 = collection["studentStreetAddress1"].ToString();
+						info.Address2 = collection["studentStreetAddress2"].ToString();
+						info.City = collection["studentCity"].ToString();
+						info.State = collection["studentState"].ToString();
+						info.Zip = collection["studentZipCode"].ToString();
+
+						info.County = collection["studentCounty"].ToString();
+						info.Grade = Convert.ToInt32(collection["studentGrade"]);
+						info.RaceCode = collection["studentRace"].ToString();
+						info.Race = db.tblRaces.Where(r => r.RaceCode == info.RaceCode).FirstOrDefault().RaceDescription;
+						info.Ethicity = collection["studentEthnic"].ToString();
+						info.StudentLanguage = collection["studentLanguage"].ToString();
+						info.ParentLanguage = collection["parentLanguage"].ToString();
+						info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
+						info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
+						info.StatusCode = collection["statusCode"].ToString();
+						info.ExitNotes = collection["exitNotes"];
+											   					
+
+						if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+						{
+							info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
+						}
+						else
+						{
+							info.InitialIEPDate = null;
+						}
+
+						if (!String.IsNullOrEmpty(collection["exitDate"]))
+						{
+							info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
+						}
+						else
+						{
+							info.ExitDate = null;
+						}
+
+						if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+						{
+							info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
+						}
+						else
+						{
+							info.InitialEvalConsentSigned = null;
+						}
+
+						if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+						{
+							info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
+						}
+						else
+						{
+							info.InitialEvalDetermination = null;
+						}
+
+						if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+						{
+							info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
+						}
+						else
+						{
+							info.ReEvalConsentSigned = null;
+						}
+
+						if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+						{
+							info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
+						}
+						else
+						{
+							info.ReEvalCompleted = null;
+						}
+					}
+					db.SaveChanges();
+
+
+
+					return Json(new { Result = "success", Message = referralId });
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "There was an error while trying to add the student information. \n\n" + e.InnerException.ToString() });
+				}
+			}
+
+			return Json(new { Result = "error", Message = "There was an error while trying to update the students options. Please try again or contact your administrator." });
+		}
+
+		[HttpPost]
+		public JsonResult EditReferralContacts(FormCollection collection)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+
+					if (collection["referralId"] == null)
+					{
+						return Json(new { Result = "error", Message = "The referralId ID is missing. Please contact a system administrator to review the problem." });
+					}
+
+					int referralId = Convert.ToInt32(collection["referralId"]);
+
+					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					var contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
+					foreach (var contact in contacts)
+					{
+						string labelName = string.Format("contact[{0}].", contact.RealtionshipID);
+
+						contact.FirstName = collection[string.Format("{0}FirstName", labelName)].ToString();
+						contact.LastName = collection[string.Format("{0}LastName", labelName)].ToString();
+						contact.Realtionship = collection[string.Format("{0}Realtionship", labelName)].ToString();
+						contact.Address1 = collection[string.Format("{0}Address1", labelName)].ToString();
+						contact.Address2 = collection[string.Format("{0}Address2", labelName)].ToString();
+						contact.City = collection[string.Format("{0}City", labelName)].ToString();
+						contact.State = collection[string.Format("{0}ContactState", labelName)].ToString();
+						contact.Zip = collection[string.Format("{0}Zip", labelName)].ToString();
+						contact.Phone = collection[string.Format("{0}Phone", labelName)].ToString();
+						contact.Email = collection[string.Format("{0}Email", labelName)].ToString();
+
+						if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
+							contact.PrimaryContact = 1;
+						
+					}
+
+					db.SaveChanges();
+					
+
+					return Json(new { Result = "success", Message = referralId });
+				}
+				catch (DbEntityValidationException ex)
+				{
+					// Retrieve the error messages as a list of strings.
+					var errorMessages = ex.EntityValidationErrors
+							.SelectMany(x => x.ValidationErrors)
+							.Select(x => x.ErrorMessage);
+
+					// Join the list to a single string.
+					var fullErrorMessage = string.Join("; ", errorMessages);
+
+					// Combine the original exception message with the new one.
+					var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+					Console.Write(exceptionMessage);
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "There was an error while trying to add the student contacts. \n\n" + e.InnerException.ToString() });
+				}
+			}
+
+			return Json(new { Result = "error", Message = "There was an error while trying to create the student's contacts. Please try again or contact your administrator." });
+		}
+
+		[HttpPost]
+		public ActionResult EditReferralAvatar(HttpPostedFileBase adminpersona, FormCollection collection)
+		{
+
+			int referralID = Convert.ToInt32(collection["referralId"]);
+			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+			int studentId = CreateStudentFromReferral(referralID, submitter.UserID);
+
+			tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+			if (student != null)
+			{
+				//// UPLOAD the image
+				if (adminpersona != null && adminpersona.ContentLength > 0)
+				{
+					var fileName = Path.GetFileName(adminpersona.FileName);
+					var random = Guid.NewGuid() + fileName;
+					var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+					if (!Directory.Exists(Server.MapPath("~/Avatar/")))
+					{
+						Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
+					}
+
+					student.ImageURL = random;
+					adminpersona.SaveAs(path);
+
+					db.SaveChanges();
+				}
+			}
+
+
+			var rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralID);
+			if (rrList != null)
+			{
+				foreach (var rr in rrList)
+				{
+					rr.Complete = true;
+					rr.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+
+			}
+
 			return RedirectToAction("Referrals", "Manage");
 
 		}
-	
-        [HttpGet]
+
+
+		private int CreateStudentFromReferral(int referralId, int submitterId)
+		{
+			try
+			{
+
+				var referral = db.tblReferralInfoes.Where(o => o.ReferralID == referralId).FirstOrDefault();
+				if (referral != null)
+				{
+					
+					// Create New User 
+					tblUser newStudent = new tblUser()
+					{
+						RoleID = "5",
+						FirstName = referral.FirstName,
+						MiddleName = referral.MiddleInitial,
+						LastName = referral.LastName,						
+						Address1 = referral.Address1,
+						Address2 = referral.Address2,
+						City = referral.City,
+						State = referral.State,
+						Zip = referral.Zip,
+						CreatedBy = submitterId,						 
+						Create_Date = DateTime.Now,
+						Update_Date = DateTime.Now
+					};
+
+
+					db.tblUsers.Add(newStudent);
+					db.SaveChanges();
+
+					// Create New StudentInfo				
+					tblStudentInfo studentInfo = new tblStudentInfo()
+					{
+						UserID = newStudent.UserID,
+						KIDSID = referral.KIDSID.HasValue ? referral.KIDSID.Value : 0,
+						DateOfBirth = referral.DateOfBirth.Value,
+						Primary_DisabilityCode = referral.Primary_DisabilityCode,
+						Secondary_DisabilityCode = referral.Secondary_DisabilityCode,
+						AssignedUSD = referral.AssignedUSD,
+						USD = referral.AttendingUSD,
+						BuildingID = referral.ResponsibleBuildingID,
+						NeighborhoodBuildingID = referral.NeighborhoodBuildingID,
+						Status = "PENDING",
+						Gender = referral.Gender,
+						CreatedBy = submitterId,
+						Create_Date = DateTime.Now,
+						Update_Date = DateTime.Now,
+						PlacementCode = referral.PlacementCode,
+						ClaimingCode = referral.ClaimingCode.HasValue && referral.ClaimingCode.Value ? true : false,
+						isGifted = referral.isGifted.HasValue && referral.isGifted.Value ? true : false,
+						InitialIEPDate = referral.InitialIEPDate,
+						InitialEvalConsentSigned = referral.InitialEvalConsentSigned,
+						ReEvalCompleted = referral.ReEvalCompleted,					
+						ReEvalConsentSigned = referral.ReEvalConsentSigned,
+						InitialEvalDetermination = referral.InitialEvalDetermination,
+						ExitDate = referral.ExitDate,
+						ExitNotes = referral.ExitNotes,
+						County = referral.County,
+						Grade = referral.Grade,
+						Race = referral.Race,
+						RaceCode = referral.RaceCode,
+						Ethicity = referral.Ethicity,
+						ParentLanguage = referral.ParentLanguage,
+						StudentLanguage = referral.StudentLanguage,	
+						StatusCode = referral.StatusCode,
+						FullDayKG = referral.FullDayKG,
+						FundSource = referral.FundSource
+					
+						
+					};
+
+					db.tblStudentInfoes.Add(studentInfo);
+					
+					var contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
+					foreach (var contact in contacts)
+					{
+						
+						tblStudentRelationship newRelationship = new tblStudentRelationship();
+
+						newRelationship.UserID = newStudent.UserID;
+						newRelationship.FirstName = contact.FirstName;
+						newRelationship.LastName = contact.LastName;
+						newRelationship.Realtionship = contact.Realtionship;
+						newRelationship.Address1 = contact.Address1;
+						newRelationship.Address2 = contact.Address2;
+						newRelationship.City = contact.City;
+						newRelationship.State = contact.State;
+						newRelationship.Zip = contact.Zip;
+						newRelationship.Phone = contact.Phone;
+						newRelationship.Email = contact.Email;
+						newRelationship.PrimaryContact = contact.PrimaryContact.HasValue && contact.PrimaryContact.Value == 1 ? 1 : 0;
+						db.tblStudentRelationships.Add(newRelationship);
+
+					}
+					db.SaveChanges();
+
+					// map the buildings in the building mapping table
+					db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID });
+					db.SaveChanges();
+
+					// save to organization chart
+					// save the user to all the districts that was selected.
+					// tblOrganizationMapping and tblBuildingMapping
+
+					var districtValues = referral.AttendingUSD;
+
+					if (!string.IsNullOrEmpty(districtValues))
+					{
+						string[] districtArray = districtValues.Split(','); ;
+
+						foreach (string usd in districtArray)
+						{
+							tblOrganizationMapping org = new tblOrganizationMapping();
+							org.AdminID = submitterId;
+							org.UserID = newStudent.UserID;
+							org.USD = usd;
+
+							db.tblOrganizationMappings.Add(org);
+							db.SaveChanges();
+						}
+					}
+
+					return newStudent.UserID;
+				}
+			}
+			catch (Exception e)
+			{
+				return -1;
+			}
+
+
+			return -1;
+		}
+		[HttpGet]
         public ActionResult CreateReferral()
         {
             StudentDetailsViewModel model = new StudentDetailsViewModel();

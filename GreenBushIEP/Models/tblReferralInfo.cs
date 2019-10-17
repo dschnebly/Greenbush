@@ -50,6 +50,22 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public string RaceCode { get; set; }
+        public string AttendingUSD { get; set; }
+        public string Status { get; set; }
+        public string FundSource { get; set; }
+        public Nullable<bool> FullDayKG { get; set; }
+        public string Primary_DisabilityCode { get; set; }
+        public string Secondary_DisabilityCode { get; set; }
+        public Nullable<bool> ClaimingCode { get; set; }
+        public string PlacementCode { get; set; }
+        public string StatusCode { get; set; }
+        public Nullable<System.DateTime> ExitDate { get; set; }
+        public Nullable<System.DateTime> InitialIEPDate { get; set; }
+        public Nullable<System.DateTime> InitialEvalDetermination { get; set; }
+        public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
+        public Nullable<bool> isGifted { get; set; }
+        public string ExitNotes { get; set; }
+        public Nullable<System.DateTime> ReEvalCompleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblReferralRelationship> tblReferralRelationships { get; set; }
