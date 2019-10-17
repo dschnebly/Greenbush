@@ -1323,10 +1323,13 @@ namespace GreenBushIEP.Controllers
                     // try catch. If the email is the same as another student show error gracefully.
                     try
                     {
-
                         if (!String.IsNullOrEmpty(student.Email) && db.tblUsers.Any(o => o.Email == student.Email))
                         {
                             return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                        }
+                        else if (collection["misDistrict"] == null)
+                        {
+                            return Json(new { Result = "error", Message = "Please choose an attending district." });
                         }
                         else
                         {

@@ -177,6 +177,14 @@ $("#next2").on("click", function () {
 
     var theForm = document.getElementById("createNewStudent");
 
+    if ($("#misDistrict").val() == "" || $("#misDistrict").val() == null) {
+        $("#misDistrict_chosen").addClass('contact-tooltip');
+
+        return alert("Attending District is required.");
+    } else {
+        $("#misDistrict_chosen").removeClass('contact-tooltip');
+    }
+
     if (tabValidates()) {
         $.ajax({
             url: '/Manage/CreateStudent',
