@@ -2320,7 +2320,15 @@ namespace GreenbushIep.Controllers
                 //student goalds
                 if (theIEP != null && theIEP.current != null)
                 {
-                    theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+					//status of iep
+					var listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
+					theIEP.anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive); ;
+					theIEP.anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.Amendment && i.IsActive);
+					theIEP.anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && !i.Amendment && i.IsActive); ;
+					theIEP.anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ANNUAL && i.IsActive);
+
+
+					theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     foreach (var goal in theIEP.studentGoals)
                     {
                         theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());

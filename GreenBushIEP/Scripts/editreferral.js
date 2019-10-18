@@ -199,113 +199,228 @@ function initContacts() {
 
 }
 
-$("#next2").on("click", function (e) {
+$("#next2").on("click", function () {
 
 	var theForm = document.getElementById("createNewStudent");
-	e.preventDefault();
 
-    if (tabValidates()) {
+	if (tabValidates()) {
 
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();       
+		$.ajax({
+			url: '/Manage/EditReferral',
+			type: 'POST',
+			data: $("#createNewStudent").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.addClass('disabled');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					// create a new student id and add it to the contacts form here.
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
+
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+					
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
 	}
 	else {
-		
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
-
+		$('#alertMessage').show();
 	}
 });
 
-$("#next3").on("click", function (e) {
+$("#next3").on("click", function () {
 
 	var theForm = document.getElementById("createStudentContacts");
-	e.preventDefault();
 
 	if (tabValidates()) {
 
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();        
-	} else {
+		$.ajax({
+			url: '/Manage/EditReferralOptions',
+			type: 'POST',
+			data: $("#createStudentOptions").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					// add student id to the avatar form here.
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
+
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
+	}
+	else {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
+		$('#alertMessage').show();
 	}
 });
 
-$("#next4").on("click", function (e) {
+$("#next4").on("click", function () {
 
 	var theForm = document.getElementById("editStudentContacts");
-	e.preventDefault();
 
 	if (tabValidates()) {
+		$.ajax({
+			url: '/Manage/EditReferralContacts',
+			type: 'POST',
+			data: $("#createStudentContacts").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
 
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
 
-	} else {
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
+
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
+	}
+	else {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
+		$('#alertMessage').show();
 	}
 });
 
-$("#next5").on("click", function (e) {
+$("#next5").on("click", function () {
 
 	var theForm = document.getElementById("editStudent");
-	e.preventDefault();
+	if (tabValidates()) {
 
-	//check attending district
-	var attendingDistrictSelected = true;
-	var val = $("#misDistrict").val();
-	if (val != undefined && val.length ==0 ) {
-		attendingDistrictSelected = false;
-		
-	}
+		$.ajax({
+			url: '/Manage/EditReferral',
+			type: 'POST',
+			data: $("#editStudent").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
 
-	if (tabValidates() && attendingDistrictSelected) {
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
 
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();
 	}
 	else {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
+		$('#alertMessage').show();
 	}
 });
 
-$("#next6").on("click", function (e) {
+$("#next6").on("click", function () {
 
 	var theForm = document.getElementById("editStudentOptions");
-	e.preventDefault();
-
-    if (tabValidates()) {
-
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();      
-
-	} else {
-		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
-	}
-});
-
-$("#next7").on("click", function (e) {
-
-	var theForm = document.getElementById("editStudentContacts");
-	e.preventDefault();
 
 	if (tabValidates()) {
 
-		var $active = $('.wizard .nav-tabs li.active');
-		$active.next().removeClass('disabled');
-		$($active).next().find('a[data-toggle="tab"]').click();
+		$.ajax({
+			url: '/Manage/EditReferralOptions',
+			type: 'POST',
+			data: $("#editStudentOptions").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
+
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
 	}
 	else {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();	
+		$('#alertMessage').show();
 	}
 });
+
+$("#next7").on("click", function () {
+
+	var theForm = document.getElementById("editStudentContacts");
+
+	if (tabValidates()) {
+
+		$.ajax({
+			url: '/Manage/EditReferralContacts',
+			type: 'POST',
+			data: $("#editStudentContacts").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
+					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
+				} else {
+
+					$('#alertMessage').html(data.Message);
+					$('#alertMessage').show();
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
+	}
+	else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();
+	}
+});
+

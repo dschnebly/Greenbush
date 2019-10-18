@@ -257,7 +257,7 @@ namespace GreenBushIEP.Models
 			statusCodes = new List<tblStatusCode>();
 		}
 
-		public int referralId { get; set; }
+		
 		public tblUser submitter { get; set; }
 		public Student student { get; set; }
 		public tblStudentInfo info { get; set; }
@@ -265,6 +265,48 @@ namespace GreenBushIEP.Models
 		public List<tblStudentRelationship> contacts { get; set; }
         public List<tblRace> races { get; set; }
         public tblRace selectedRace { get; set; }
+		public List<tblDistrict> districts { get; set; }
+		public List<tblDistrict> allDistricts { get; set; }
+		public List<tblDistrict> selectedDistrict { get; set; }
+		public List<BuildingsViewModel> buildings { get; set; }
+		public List<tblStatusCode> statusCode { get; set; }
+		public List<tblPlacementCode> placementCode { get; set; }
+		public List<tblCounty> counties { get; set; }
+		public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
+		public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
+		public List<tblStatusCode> statusCodes { get; set; }
+	}
+
+	public class ReferralDetailsViewModel
+	{
+		public ReferralDetailsViewModel()
+		{
+			submitter = new tblUser();
+			student = new tblReferralInfo();
+			info = new tblStudentInfo();
+			grades = new List<tblGrade>();
+			contacts = new List<tblStudentRelationship>();
+			districts = new List<tblDistrict>();
+			races = new List<tblRace>();
+			allDistricts = new List<tblDistrict>();
+			selectedDistrict = new List<tblDistrict>();
+			buildings = new List<BuildingsViewModel>();
+			statusCode = new List<tblStatusCode>();
+			placementCode = new List<tblPlacementCode>();
+			counties = new List<tblCounty>();
+			primaryDisabilities = new List<vw_PrimaryDisabilities>();
+			secondaryDisabilities = new List<vw_SecondaryDisabilities>();
+			statusCodes = new List<tblStatusCode>();
+		}
+
+		public int referralId { get; set; }
+		public tblUser submitter { get; set; }
+		public tblReferralInfo student { get; set; }
+		public tblStudentInfo info { get; set; }
+		public List<tblGrade> grades { get; set; }
+		public List<tblStudentRelationship> contacts { get; set; }
+		public List<tblRace> races { get; set; }
+		public tblRace selectedRace { get; set; }
 		public List<tblDistrict> districts { get; set; }
 		public List<tblDistrict> allDistricts { get; set; }
 		public List<tblDistrict> selectedDistrict { get; set; }
