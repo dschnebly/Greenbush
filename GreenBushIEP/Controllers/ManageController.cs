@@ -2314,7 +2314,16 @@ namespace GreenBushIEP.Controllers
                     // Save new file
                     string filename = Guid.NewGuid() + Path.GetFileName(adminpersona.FileName);
                     string path = Path.Combine(Server.MapPath("~/Avatar/"), filename);
-                    adminpersona.SaveAs(path);
+
+                    try
+                    {
+                        adminpersona.SaveAs(path);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.Write("Avatar file can't be save. Exception:" + e.InnerException.ToString());
+                    }
+
                     user.ImageURL = filename;
                 }
 

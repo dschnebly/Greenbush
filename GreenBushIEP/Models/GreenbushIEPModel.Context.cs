@@ -105,20 +105,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
     
-        [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
-        public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
-        {
-            var mYSTRParameter = mYSTR != null ?
-                new ObjectParameter("MYSTR", mYSTR) :
-                new ObjectParameter("MYSTR", typeof(string));
-    
-            var dELIMITERParameter = dELIMITER != null ?
-                new ObjectParameter("DELIMITER", dELIMITER) :
-                new ObjectParameter("DELIMITER", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
-        }
-    
         public virtual ObjectResult<up_ReportBuildings_Result> up_ReportBuildings(Nullable<int> buildingID)
         {
             var buildingIDParameter = buildingID.HasValue ?

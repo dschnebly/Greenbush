@@ -241,6 +241,9 @@ namespace GreenBushIEP.Models
             studentHealth.HearingImpaired = false;
             studentHealth.HealthCarePlan = false;
             studentHealth.Completed = false;
+            studentHealth.Notes = string.Empty;
+            studentHealth.Update_Date = DateTime.Now;
+            studentHealth.Create_Date = DateTime.Now;
 
             try
             {
@@ -249,7 +252,7 @@ namespace GreenBushIEP.Models
 
                 HealthID = studentHealth.IEPHealthID;
             }
-            catch
+            catch(Exception e)
             {
                 current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Health table");
@@ -262,6 +265,7 @@ namespace GreenBushIEP.Models
             studentOtherConsiderations.Create_Date = DateTime.Now;
 			studentOtherConsiderations.Parental_CopyIEP_flag = true;
 			studentOtherConsiderations.Parental_RightsBook_flag = true;
+            studentOtherConsiderations.Create_Date = DateTime.Now;
 
 			try
             {
@@ -285,6 +289,8 @@ namespace GreenBushIEP.Models
             studentMotor.Needs = false;
             studentMotor.Participation = -1;
             studentMotor.Completed = false;
+            studentMotor.Create_Date = DateTime.Now;
+            studentMotor.Update_Date = DateTime.Now;
 
             try
             {
@@ -308,6 +314,8 @@ namespace GreenBushIEP.Models
             studentCommunication.Deaf = false;
             studentCommunication.LimitedEnglish = false;
             studentCommunication.Completed = false;
+            studentCommunication.Create_Date = DateTime.Now;
+            studentCommunication.Update_Date = DateTime.Now;
 
             try
             {
@@ -333,6 +341,8 @@ namespace GreenBushIEP.Models
             studentSocial.BehaviorImepedeLearning = false;
             studentSocial.BehaviorInterventionPlan = false;
             studentSocial.Completed = false;
+            studentSocial.Create_Date = DateTime.Now;
+            studentSocial.Update_Date = DateTime.Now;
 
             try
             {
@@ -352,6 +362,8 @@ namespace GreenBushIEP.Models
             studentIntelligence.IEPid = current.IEPid;
             studentIntelligence.Concerns = false;
             studentIntelligence.Completed = false;
+            studentIntelligence.Create_Date = DateTime.Now;
+            studentIntelligence.Update_Date = DateTime.Now;
 
             try
             {
@@ -372,6 +384,8 @@ namespace GreenBushIEP.Models
             studentAcademic.NoConcerns = true;
             studentAcademic.AreaOfNeed = false;
             studentAcademic.Completed = false;
+            studentAcademic.Create_Date = DateTime.Now;
+            studentAcademic.Update_Date = DateTime.Now;
 
             try
             {
@@ -395,6 +409,8 @@ namespace GreenBushIEP.Models
             studentReading.InstructionalTier2 = false;
             studentReading.InstructionalTier3 = false;
             studentReading.AreaOfNeed = false;
+            studentReading.Create_Date = DateTime.Now;
+            studentReading.Update_Date = DateTime.Now;
 
             try
             {
@@ -418,6 +434,8 @@ namespace GreenBushIEP.Models
             studentMath.InstructionalTier2 = false;
             studentMath.InstructionalTier3 = false;
             studentMath.AreaOfNeed = false;
+            studentMath.Create_Date = DateTime.Now;
+            studentMath.Update_Date = DateTime.Now;
 
             try
             {
@@ -441,6 +459,8 @@ namespace GreenBushIEP.Models
             studentWritten.InstructionalTier2 = false;
             studentWritten.InstructionalTier3 = false;
             studentWritten.AreaOfNeed = false;
+            studentWritten.Create_Date = DateTime.Now;
+            studentWritten.Update_Date = DateTime.Now;
 
             try
             {
@@ -465,6 +485,8 @@ namespace GreenBushIEP.Models
             current.IEPReadingID = ReadingID;
             current.IEPSocialID = SocialID;
             current.IEPWrittenID = WrittenID;
+            current.Create_Date = DateTime.Now;
+            current.Update_Date = DateTime.Now;
 
             db.SaveChanges();
 

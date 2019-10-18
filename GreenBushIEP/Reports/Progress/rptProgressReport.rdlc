@@ -141,6 +141,78 @@
           <DataField>Progress_Quarter4</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="IepStatus">
+          <DataField>IepStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Archive">
+          <DataField>Archive</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="GoalModule">
+          <DataField>GoalModule</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AnnualGoal">
+          <DataField>AnnualGoal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BencharkDateQ11">
+          <DataField>BencharkDateQ1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BencharkDateQ21">
+          <DataField>BencharkDateQ2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BencharkDateQ31">
+          <DataField>BencharkDateQ3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BencharkDateQ41">
+          <DataField>BencharkDateQ4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkNotes1">
+          <DataField>BenchmarkNotes1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkNotes2">
+          <DataField>BenchmarkNotes2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkNotes3">
+          <DataField>BenchmarkNotes3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkNotes4">
+          <DataField>BenchmarkNotes4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkProgress_Quarter1">
+          <DataField>BenchmarkProgress_Quarter1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkProgress_Quarter2">
+          <DataField>BenchmarkProgress_Quarter2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkProgress_Quarter3">
+          <DataField>BenchmarkProgress_Quarter3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BenchmarkProgress_Quarter4">
+          <DataField>BenchmarkProgress_Quarter4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="USD">
+          <DataField>USD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BuildingName">
+          <DataField>BuildingName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -160,12 +232,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>7.74305in</Width>
+                  <Width>7.72014in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>4.38542in</Height>
+                  <Height>4.96875in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -396,7 +468,7 @@
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>2.95833in</Height>
+                                    <Height>3.52084in</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -635,7 +707,7 @@
                                                   </TablixMembers>
                                                 </TablixRowHierarchy>
                                                 <DataSetName>DataSet1</DataSetName>
-                                                <Top>0.97917in</Top>
+                                                <Top>1.47917in</Top>
                                                 <Height>0.5in</Height>
                                                 <Width>7.61666in</Width>
                                                 <Visibility>
@@ -1214,7 +1286,7 @@
                                                   </TablixMembers>
                                                 </TablixRowHierarchy>
                                                 <DataSetName>DataSet1</DataSetName>
-                                                <Top>1.60417in</Top>
+                                                <Top>2.10417in</Top>
                                                 <Height>1.25in</Height>
                                                 <Width>7.61666in</Width>
                                                 <ZIndex>1</ZIndex>
@@ -1273,10 +1345,10 @@
                                                       </Paragraph>
                                                     </Paragraphs>
                                                     <rd:DefaultName>Textbox5</rd:DefaultName>
-                                                    <Top>0.25694in</Top>
+                                                    <Top>0.60694in</Top>
                                                     <Left>0.01875in</Left>
                                                     <Height>0.25in</Height>
-                                                    <Width>0.875in</Width>
+                                                    <Width>1.76042in</Width>
                                                     <ZIndex>1</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1305,10 +1377,10 @@
                                                       </Paragraph>
                                                     </Paragraphs>
                                                     <rd:DefaultName>Textbox6</rd:DefaultName>
-                                                    <Top>0.51111in</Top>
+                                                    <Top>0.92361in</Top>
                                                     <Left>0.03125in</Left>
                                                     <Height>0.25in</Height>
-                                                    <Width>0.875in</Width>
+                                                    <Width>1.76042in</Width>
                                                     <ZIndex>2</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1366,10 +1438,10 @@
                                                       </Paragraph>
                                                     </Paragraphs>
                                                     <rd:DefaultName>StateStandards</rd:DefaultName>
-                                                    <Top>0.2632in</Top>
-                                                    <Left>1.31736in</Left>
+                                                    <Top>0.6132in</Top>
+                                                    <Left>1.86944in</Left>
                                                     <Height>0.25in</Height>
-                                                    <Width>6.31805in</Width>
+                                                    <Width>5.76597in</Width>
                                                     <ZIndex>4</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1396,11 +1468,73 @@
                                                       </Paragraph>
                                                     </Paragraphs>
                                                     <rd:DefaultName>Baseline</rd:DefaultName>
-                                                    <Top>0.52361in</Top>
-                                                    <Left>1.31736in</Left>
+                                                    <Top>0.93611in</Top>
+                                                    <Left>1.86944in</Left>
                                                     <Height>0.25in</Height>
-                                                    <Width>6.31805in</Width>
+                                                    <Width>5.76597in</Width>
                                                     <ZIndex>5</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <PaddingLeft>2pt</PaddingLeft>
+                                                      <PaddingRight>2pt</PaddingRight>
+                                                      <PaddingTop>2pt</PaddingTop>
+                                                      <PaddingBottom>2pt</PaddingBottom>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="Textbox8">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>Measurable Annual Goal:</Value>
+                                                            <Style>
+                                                              <FontWeight>Bold</FontWeight>
+                                                            </Style>
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style />
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                                                    <Top>0.29167in</Top>
+                                                    <Left>0.01875in</Left>
+                                                    <Height>0.25in</Height>
+                                                    <Width>1.76042in</Width>
+                                                    <ZIndex>6</ZIndex>
+                                                    <Style>
+                                                      <Border>
+                                                        <Style>None</Style>
+                                                      </Border>
+                                                      <PaddingLeft>2pt</PaddingLeft>
+                                                      <PaddingRight>2pt</PaddingRight>
+                                                      <PaddingTop>2pt</PaddingTop>
+                                                      <PaddingBottom>2pt</PaddingBottom>
+                                                    </Style>
+                                                  </Textbox>
+                                                  <Textbox Name="AnnualGoal">
+                                                    <CanGrow>true</CanGrow>
+                                                    <KeepTogether>true</KeepTogether>
+                                                    <Paragraphs>
+                                                      <Paragraph>
+                                                        <TextRuns>
+                                                          <TextRun>
+                                                            <Value>=Fields!AnnualGoal.Value</Value>
+                                                            <Style />
+                                                          </TextRun>
+                                                        </TextRuns>
+                                                        <Style />
+                                                      </Paragraph>
+                                                    </Paragraphs>
+                                                    <rd:DefaultName>AnnualGoal</rd:DefaultName>
+                                                    <Top>0.29167in</Top>
+                                                    <Left>1.86944in</Left>
+                                                    <Height>0.25in</Height>
+                                                    <Width>5.7041in</Width>
+                                                    <ZIndex>7</ZIndex>
                                                     <Style>
                                                       <Border>
                                                         <Style>None</Style>
@@ -1415,7 +1549,7 @@
                                                 <KeepTogether>true</KeepTogether>
                                                 <Top>0.02778in</Top>
                                                 <Left>0.00417in</Left>
-                                                <Height>0.9375in</Height>
+                                                <Height>1.27083in</Height>
                                                 <Width>7.63541in</Width>
                                                 <ZIndex>2</ZIndex>
                                                 <Visibility>
@@ -1463,7 +1597,7 @@
                               <DataSetName>DataSet1</DataSetName>
                               <Top>1.375in</Top>
                               <Left>0.01389in</Left>
-                              <Height>2.95833in</Height>
+                              <Height>3.52084in</Height>
                               <Width>7.70625in</Width>
                               <ZIndex>7</ZIndex>
                               <Style>
@@ -1509,9 +1643,9 @@
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
             <Top>0.11333in</Top>
-            <Left>0.11333in</Left>
-            <Height>4.38542in</Height>
-            <Width>7.74305in</Width>
+            <Left>0.13624in</Left>
+            <Height>4.96875in</Height>
+            <Width>7.72014in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1519,7 +1653,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.64583in</Height>
+        <Height>5.17708in</Height>
         <Style />
       </Body>
       <Width>7.85986in</Width>
