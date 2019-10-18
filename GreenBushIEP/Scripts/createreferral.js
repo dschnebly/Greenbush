@@ -289,8 +289,10 @@ $("#submitForm").on("click", function (e) {
 
 				}
 			},
-			error: function (data) {
+		error: function (data) {
+			$(this).attr("disabled", false);
 				alert("There was an error when attempt to connect to the server.");
+				
 			}
 	});	
 

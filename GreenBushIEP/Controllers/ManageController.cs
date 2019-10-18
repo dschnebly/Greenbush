@@ -273,7 +273,6 @@ namespace GreenBushIEP.Controllers
 			if (referralReq != null)
 			{
 				isComplete = referralReq.Complete;
-
 			}
 
 			tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == id).FirstOrDefault();
@@ -286,38 +285,7 @@ namespace GreenBushIEP.Controllers
 					var attendingUSDs = model.student.AttendingUSD.Split(',');
 					model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where attendingUSDs.Contains(o.USD) select d).Distinct().ToList();
 				}
-				tblStudentInfo studentinfo = new tblStudentInfo();
-				studentinfo.County = student.County;
-				studentinfo.AssignedUSD = student.AssignedUSD;
-
-				studentinfo.BuildingID = student.ResponsibleBuildingID;
-				studentinfo.NeighborhoodBuildingID = student.NeighborhoodBuildingID;
-				studentinfo.ParentLanguage = student.ParentLanguage;
-				studentinfo.StudentLanguage = student.StudentLanguage;
-				studentinfo.RaceCode = student.RaceCode; //db.tblRaces.Where(r => r.RaceCode == student.RaceCode).FirstOrDefault().RaceDescription;
-				studentinfo.Ethicity = student.Ethicity;
-				studentinfo.Gender = student.Gender;
-				studentinfo.Grade = student.Grade;
-				studentinfo.InitialEvalConsentSigned = student.InitialEvalConsentSigned;
-				studentinfo.InitialEvalDetermination = student.InitialEvalDetermination;
-				studentinfo.ReEvalCompleted = student.ReEvalCompleted;
-				studentinfo.ExitDate = student.ExitDate;
-				studentinfo.ExitNotes = student.ExitNotes;
-				studentinfo.InitialIEPDate = student.InitialIEPDate;
-				studentinfo.ReEvalConsentSigned = student.ReEvalConsentSigned;
-				studentinfo.ReEvalCompleted = student.ReEvalCompleted;
-				studentinfo.FullDayKG = student.FullDayKG;
-				studentinfo.StatusCode = student.StatusCode;
-				studentinfo.PlacementCode = student.PlacementCode;
-				studentinfo.Primary_DisabilityCode = student.Primary_DisabilityCode;
-				studentinfo.Secondary_DisabilityCode = student.Secondary_DisabilityCode;
-				studentinfo.FundSource = student.FundSource;
-				studentinfo.ClaimingCode = student.ClaimingCode.HasValue && student.ClaimingCode.Value ? true : false;
-				studentinfo.isGifted = student.isGifted.HasValue && student.isGifted.Value ? true : false;
-
-				model.info = studentinfo;
 			}
-
 
 			List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(r => r.ReferralID == id).ToList();
 			if (relationships != null)
@@ -351,11 +319,7 @@ namespace GreenBushIEP.Controllers
 			model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
 			model.statusCode = db.tblStatusCodes.ToList();
 			model.grades = db.tblGrades.ToList();
-			//model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
-			
-
 			model.races = db.tblRaces.ToList();
-
 
 			ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
 												 where b.USD == student.AssignedUSD
@@ -452,9 +416,11 @@ namespace GreenBushIEP.Controllers
 					}
 
 
-					if (!String.IsNullOrEmpty(collection["email"]) && db.tblUsers.Any(o => o.Email == collection["email"].ToString()))
+					if (!String.IsNullOrEmpty(collection["email"]))
 					{
-						return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+						var email = collection["email"].ToString();
+						if(db.tblUsers.Any(o => o.Email == email))
+							return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
 					}
 
 					// Create New StudentInfo
@@ -513,7 +479,8 @@ namespace GreenBushIEP.Controllers
 					referInfo.PlacementCode = collection["studentPlacement"];
 					referInfo.ClaimingCode = collection["claimingCode"] != null && collection["claimingCode"] == "on" ? true : false;
 					referInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
-
+					referInfo.Email = collection["email"];
+					referInfo.ImageURL = collection["adminpersona"];
 
 					try
 					{
@@ -585,8 +552,7 @@ namespace GreenBushIEP.Controllers
 						info.Address2 = collection["studentStreetAddress2"].ToString();
 						info.City = collection["studentCity"].ToString();
 						info.State = collection["studentState"].ToString();
-						info.Zip = collection["studentZipCode"].ToString();
-
+						info.Zip = collection["studentZipCode"].ToString();						
 						info.County = collection["studentCounty"].ToString();
 						info.Grade = Convert.ToInt32(collection["studentGrade"]);
 						info.RaceCode = collection["studentRace"].ToString();
@@ -598,7 +564,7 @@ namespace GreenBushIEP.Controllers
 						info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
 						info.StatusCode = collection["statusCode"].ToString();
 						info.ExitNotes = collection["exitNotes"];
-											   					
+						info.Update_Date = DateTime.Now;					   					
 
 						if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
 						{
@@ -684,31 +650,64 @@ namespace GreenBushIEP.Controllers
 
 					int referralId = Convert.ToInt32(collection["referralId"]);
 
-					tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-					var contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
-					foreach (var contact in contacts)
+					//delete old
+					var relationships = db.tblReferralRelationships.Where(o => o.ReferralID == referralId).ToList();
+					if (relationships.Any())
 					{
-						string labelName = string.Format("contact[{0}].", contact.RealtionshipID);
+						foreach (var existingRelationship in relationships)
+						{
+							db.tblReferralRelationships.Remove(existingRelationship);
 
-						contact.FirstName = collection[string.Format("{0}FirstName", labelName)].ToString();
-						contact.LastName = collection[string.Format("{0}LastName", labelName)].ToString();
-						contact.Realtionship = collection[string.Format("{0}Realtionship", labelName)].ToString();
-						contact.Address1 = collection[string.Format("{0}Address1", labelName)].ToString();
-						contact.Address2 = collection[string.Format("{0}Address2", labelName)].ToString();
-						contact.City = collection[string.Format("{0}City", labelName)].ToString();
+						}
+						db.SaveChanges();
+					}
+
+					
+					List<string> uniqueKeys = new List<string>();
+					int i = 0;
+					string num = "-1";
+					while (++i < collection.AllKeys.Length)
+					{
+						
+						var nameColl = collection.AllKeys[i];
+						int start = nameColl.IndexOf('[');
+						int end = nameColl.IndexOf(']');
+						var val = nameColl.Substring(start+1, (end -1) -  start);
+						
+						if(num != val)
+							uniqueKeys.Add(val);
+
+						num = val;
+
+						i++;
+					}
+
+					
+					foreach (var keyVal in uniqueKeys)
+					{
+						string labelName = string.Format("contact[{0}].", keyVal);
+						tblReferralRelationship contact = new tblReferralRelationship();
+
+						contact.ReferralID = referralId;
+						contact.FirstName = collection[string.Format("{0}ContactFirstName", labelName)].ToString();
+						contact.LastName = collection[string.Format("{0}ContactLastName", labelName)].ToString();
+						contact.Realtionship = collection[string.Format("{0}ContactRelationship", labelName)].ToString();
+						contact.Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString();
+						contact.Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString();
+						contact.City = collection[string.Format("{0}ContactCity", labelName)].ToString();
 						contact.State = collection[string.Format("{0}ContactState", labelName)].ToString();
-						contact.Zip = collection[string.Format("{0}Zip", labelName)].ToString();
-						contact.Phone = collection[string.Format("{0}Phone", labelName)].ToString();
-						contact.Email = collection[string.Format("{0}Email", labelName)].ToString();
+						contact.Zip = collection[string.Format("{0}ContactZipCode", labelName)].ToString();
+						contact.Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString();
+						contact.Email = collection[string.Format("{0}ContactEmail", labelName)].ToString();
 
 						if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
 							contact.PrimaryContact = 1;
-						
+
+						db.tblReferralRelationships.Add(contact);
 					}
 
 					db.SaveChanges();
-					
+
 
 					return Json(new { Result = "success", Message = referralId });
 				}
@@ -737,47 +736,86 @@ namespace GreenBushIEP.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult EditReferralAvatar(HttpPostedFileBase adminpersona, FormCollection collection)
+		public ActionResult SubmitStudentReferral(HttpPostedFileBase adminpersona, FormCollection collection)
 		{
 
+			int isDraft = Convert.ToInt32(collection["IsDraftSubmit"]);			
 			int referralID = Convert.ToInt32(collection["referralId"]);
-			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-			int studentId = CreateStudentFromReferral(referralID, submitter.UserID);
-
-			tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-
-			if (student != null)
+			
+			if (isDraft == 1)
 			{
-				//// UPLOAD the image
-				if (adminpersona != null && adminpersona.ContentLength > 0)
+				if (adminpersona != null)
 				{
-					var fileName = Path.GetFileName(adminpersona.FileName);
-					var random = Guid.NewGuid() + fileName;
-					var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
-					if (!Directory.Exists(Server.MapPath("~/Avatar/")))
+					try
 					{
-						Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
+
+						if (adminpersona.ContentLength > 0)
+						{
+							var refer = db.tblReferralInfoes.Where(o => o.ReferralID == referralID).FirstOrDefault();
+
+							var fileName = Path.GetFileName(adminpersona.FileName);
+							var random = Guid.NewGuid() + fileName;
+							var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+							if (!Directory.Exists(Server.MapPath("~/Avatar/")))
+							{
+								Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
+							}
+
+							refer.ImageURL = random;
+							refer.Update_Date = DateTime.Now;
+							adminpersona.SaveAs(path);
+
+							db.SaveChanges();
+						}
+
 					}
+					catch (Exception e)
+					{
 
-					student.ImageURL = random;
-					adminpersona.SaveAs(path);
-
-					db.SaveChanges();
+					}
 				}
 			}
-
-
-			var rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralID);
-			if (rrList != null)
+			else
 			{
-				foreach (var rr in rrList)
+				tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+				int studentId = CreateStudentFromReferral(referralID, submitter.UserID);
+
+				tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+
+				if (student != null)
 				{
-					rr.Complete = true;
-					rr.Update_Date = DateTime.Now;
+					//// UPLOAD the image
+					if (adminpersona != null && adminpersona.ContentLength > 0)
+					{
+						var fileName = Path.GetFileName(adminpersona.FileName);
+						var random = Guid.NewGuid() + fileName;
+						var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+						if (!Directory.Exists(Server.MapPath("~/Avatar/")))
+						{
+							Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
+						}
+
+						student.ImageURL = random;
+						student.Update_Date = DateTime.Now;
+						adminpersona.SaveAs(path);
+
+						db.SaveChanges();
+					}
 				}
 
-				db.SaveChanges();
+				var rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralID);
+				if (rrList != null)
+				{
+					foreach (var rr in rrList)
+					{
+						rr.Complete = true;
+						rr.Update_Date = DateTime.Now;					
+					}
 
+					db.SaveChanges();
+
+				}
 			}
 
 			return RedirectToAction("Referrals", "Manage");

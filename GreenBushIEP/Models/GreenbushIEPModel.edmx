@@ -939,6 +939,8 @@
           <Property Name="isGifted" Type="bit" />
           <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
           <Property Name="ReEvalCompleted" Type="datetime" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblReferralRelationships">
           <Key>
@@ -2962,6 +2964,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGifted" Type="Boolean" />
           <Property Name="ExitNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ReEvalCompleted" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblReferralRelationship">
           <Key>
@@ -4620,6 +4624,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblReferralInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralInfo">
               <MappingFragment StoreEntitySet="tblReferralInfo">
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
                 <ScalarProperty Name="ExitNotes" ColumnName="ExitNotes" />
                 <ScalarProperty Name="isGifted" ColumnName="isGifted" />

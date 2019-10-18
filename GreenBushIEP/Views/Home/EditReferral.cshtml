@@ -728,7 +728,7 @@
                     </ul>
                 </div>
                 <div class="tab-content">
-					<div class="alert alert-danger noPrint" id="alertMessage" role="alert">@Html.Raw(ViewBag.Error != null && ViewBag.Error != "" ? ViewBag.Error : "")</div>
+					<div class="alert alert-danger noPrint" id="alertMessage" role="alert" style="display:none">@Html.Raw(ViewBag.Error != null && ViewBag.Error != "" ? ViewBag.Error : "")</div>
                     <div id="step1" class="tab-pane active" role="tabpanel">
                         @using (Html.BeginForm("EditReferral", "Manage", null, FormMethod.Post, new { id = "editStudent", @class = "editstudent", onsubmit = "return false;" }))
                         {
@@ -760,7 +760,7 @@
 												foreach (var code in Model.placementCode)
 												{
 													string selected = @code.PlacementCode == "L" ? "selected=selected" : "";
-													//string selected = Model.info.PlacementCode == code.PlacementCode ? "selected=selected" : "";
+													//string selected = Model.student.PlacementCode == code.PlacementCode ? "selected=selected" : "";
                                                     <option value="@code.PlacementCode" @selected>@code.PlacementDescription</option>
                                                 }
                                             }
@@ -773,7 +773,7 @@
                                             {
                                                 foreach (var district in Model.allDistricts)
                                                 {
-                                                    string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
+                                                    string selected = Model.student.AssignedUSD == district.USD ? "selected=selected" : "";
                                                     <option value="@district.USD" @selected>@district.DistrictName</option>
                                                 }
                                             }
@@ -782,7 +782,7 @@
                                     <div class="col-md-2">
                                         <label>Gender</label>
                                         <div class="onoffswitch1">
-                                            <input type="checkbox" name="gender" class="onoffswitch1-checkbox" id="gender" @Html.Raw((Model.info.Gender == "F") ? "checked" : "")>
+                                            <input type="checkbox" name="gender" class="onoffswitch1-checkbox" id="gender" @Html.Raw((Model.student.Gender == "F") ? "checked" : "")>
                                             <label class="onoffswitch1-label" for="gender">
                                                 <span class="onoffswitch1-inner"></span>
                                                 <span class="onoffswitch1-switch"></span>
@@ -815,7 +815,7 @@
                                             {
                                                 foreach (var primary in Model.primaryDisabilities)
                                                 {
-													string defaultDisability = string.IsNullOrEmpty(Model.info.Primary_DisabilityCode) ? "ND" : Model.info.Primary_DisabilityCode; 
+													string defaultDisability = string.IsNullOrEmpty(Model.student.Primary_DisabilityCode) ? "ND" : Model.student.Primary_DisabilityCode; 
                                                     string selected = defaultDisability == primary.DisabilityCode ? "selected=selected" : "";
                                                     <option value="@primary.DisabilityCode" @selected>@primary.DisabilityDescription</option>
                                                 }
@@ -829,7 +829,7 @@
                                             {
                                                 foreach (var secondary in Model.secondaryDisabilities)
                                                 {
-													string defaultDisability = string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode) ? "ND" : Model.info.Secondary_DisabilityCode; 
+													string defaultDisability = string.IsNullOrEmpty(Model.student.Secondary_DisabilityCode) ? "ND" : Model.student.Secondary_DisabilityCode; 
                                                     string selected = defaultDisability == secondary.DisabilityCode ? "selected=selected" : "";                                                    
                                                     <option value="@secondary.DisabilityCode" @selected>@secondary.DisabilityDescription</option>
                                                 }
@@ -839,7 +839,7 @@
                                     <div class="col-md-2">
                                         <label for="Is_Gifted">Gifted</label>
                                         <div class="onoffswitch2">
-                                            <input type="checkbox" name="Is_Gifted" id="Is_Gifted" class="onoffswitch2-checkbox" @(Model.info.isGifted ? "checked" : String.Empty ) />
+                                            <input type="checkbox" name="Is_Gifted" id="Is_Gifted" class="onoffswitch2-checkbox" @(Model.student.isGifted.HasValue && Model.student.isGifted.Value ? "checked" : String.Empty ) />
                                             <label class="onoffswitch2-label" for="Is_Gifted">
                                                 <span class="onoffswitch2-inner"></span>
                                                 <span class="onoffswitch2-switch"></span>
@@ -850,7 +850,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="email">Student Email</label>
-                                        @Html.Editor("email", new { htmlAttributes = new { @class = "form-control norequired", id = "email", Name = "email", placeholder = "User email" } })
+                                        @Html.EditorFor(model => model.student.Email, new { htmlAttributes = new { @class = "form-control norequired", id = "email", Name = "email", placeholder = "Student email" } })
                                         
                                     </div>
                                     <div class="col-md-6">
@@ -883,7 +883,7 @@
                                             {
                                                 foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
-                                                    string selected = Model.info.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+                                                    string selected = Model.student.NeighborhoodBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
                                                 }
                                             }
@@ -893,7 +893,7 @@
                                             {
                                                 foreach (var districtBuilding in Model.buildings)
                                                 {
-                                                    string selected = Model.info.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
+                                                    string selected = Model.student.NeighborhoodBuildingID == districtBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName</option>
                                                 }
                                             }
@@ -903,7 +903,7 @@
                                             {
                                                 foreach (var allActiveBuilding in ViewBag.AllBuildings)
                                                 {
-                                                    string selected = Model.info.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
+                                                    string selected = Model.student.NeighborhoodBuildingID == allActiveBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@allActiveBuilding.BuildingID" @selected>@allActiveBuilding.BuildingName</option>
                                                 }
                                             }
@@ -921,7 +921,7 @@
                                             {
                                                 foreach (var selectedDistrictBuilding in ViewBag.SelectedDistrictBuildings)
                                                 {
-                                                    string selected = Model.info.BuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
+                                                    string selected = Model.student.ResponsibleBuildingID == selectedDistrictBuilding.BuildingID ? "selected=selected" : "";
                                                     <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
                                                 }
                                             }
@@ -1030,118 +1030,118 @@
                                         <div class="col-md-4">
                                             <label for="studentCounty">County of Residence</label>
                                             <select name="studentCounty" id="studentCounty" class="form-control">
-                                                <option value="AL" selected=@(Model.info.County == "AL")>Allen</option>
-                                                <option value="AN" selected=@(Model.info.County == "AN")>Anderson</option>
-                                                <option value="AT" selected=@(Model.info.County == "AT")>Atchison</option>
-                                                <option value="BA" selected=@(Model.info.County == "BA")>Barber</option>
-                                                <option value="BT" selected=@(Model.info.County == "BT")>Barton</option>
-                                                <option value="BR" selected=@(Model.info.County == "BR")>Brown</option>
-                                                <option value="BU" selected=@(Model.info.County == "BU")>Butler</option>
-                                                <option value="BB" selected=@(Model.info.County == "BB")>Bourbon</option>
-                                                <option value="CS" selected=@(Model.info.County == "CS")>Chase</option>
-                                                <option value="CQ" selected=@(Model.info.County == "CQ")>Chautauqua</option>
-                                                <option value="CK" selected=@(Model.info.County == "CK")>Cherokee</option>
-                                                <option value="CN" selected=@(Model.info.County == "CN")>Cheyenne</option>
-                                                <option value="CA" selected=@(Model.info.County == "CA")>Clark</option>
-                                                <option value="CY" selected=@(Model.info.County == "CY")>Clay</option>
-                                                <option value="CD" selected=@(Model.info.County == "CD")>Cloud</option>
-                                                <option value="CF" selected=@(Model.info.County == "CF")>Coffey</option>
-                                                <option value="CL" selected=@(Model.info.County == "CL")>Cowley</option>
-                                                <option value="CM" selected=@(Model.info.County == "CM")>Comanche</option>
-                                                <option value="CR" selected=@(Model.info.County == "CR")>Crawford</option>
-                                                <option value="DC" selected=@(Model.info.County == "DC")>Decatur</option>
-                                                <option value="DK" selected=@(Model.info.County == "DK")>Dickinson</option>
-                                                <option value="DP" selected=@(Model.info.County == "DP")>Doniphan</option>
-                                                <option value="DG" selected=@(Model.info.County == "DG")>Douglas</option>
-                                                <option value="ED" selected=@(Model.info.County == "ED")>Edwards</option>
-                                                <option value="EK" selected=@(Model.info.County == "EK")>Elk</option>
-                                                <option value="EL" selected=@(Model.info.County == "EL")>Ellis</option>
-                                                <option value="EW" selected=@(Model.info.County == "EW")>Ellsworth</option>
-                                                <option value="FI" selected=@(Model.info.County == "FI")>Finney</option>
-                                                <option value="FO" selected=@(Model.info.County == "FO")>Ford</option>
-                                                <option value="FR" selected=@(Model.info.County == "FR")>Franklin</option>
-                                                <option value="GE" selected=@(Model.info.County == "GE")>Geary</option>
-                                                <option value="GO" selected=@(Model.info.County == "GO")>Gove</option>
-                                                <option value="GH" selected=@(Model.info.County == "GH")>Graham</option>
-                                                <option value="GT" selected=@(Model.info.County == "GT")>Grant</option>
-                                                <option value="GY" selected=@(Model.info.County == "GY")>Gray</option>
-                                                <option value="GL" selected=@(Model.info.County == "GL")>Greeley</option>
-                                                <option value="GW" selected=@(Model.info.County == "GW")>Greenwood</option>
-                                                <option value="HM" selected=@(Model.info.County == "HM")>Hamilton</option>
-                                                <option value="HP" selected=@(Model.info.County == "HP")>Harper</option>
-                                                <option value="HV" selected=@(Model.info.County == "HV")>Harvey</option>
-                                                <option value="HS" selected=@(Model.info.County == "HS")>Haskell</option>
-                                                <option value="HG" selected=@(Model.info.County == "HG")>Hodgeman</option>
-                                                <option value="JA" selected=@(Model.info.County == "JA")>Jackson</option>
-                                                <option value="JF" selected=@(Model.info.County == "JF")>Jefferson</option>
-                                                <option value="JW" selected=@(Model.info.County == "JW")>Jewell</option>
-                                                <option value="JO" selected=@(Model.info.County == "JO")>Johnson</option>
-                                                <option value="KE" selected=@(Model.info.County == "KE")>Kearny</option>
-                                                <option value="KM" selected=@(Model.info.County == "KM")>Kingman</option>
-                                                <option value="KW" selected=@(Model.info.County == "KW")>Kiowa</option>
-                                                <option value="LB" selected=@(Model.info.County == "LB")>Labette</option>
-                                                <option value="LE" selected=@(Model.info.County == "LE")>Lane</option>
-                                                <option value="LV" selected=@(Model.info.County == "LV")>Leavenworth</option>
-                                                <option value="LC" selected=@(Model.info.County == "LC")>Lincoln</option>
-                                                <option value="LN" selected=@(Model.info.County == "LN")>Linn</option>
-                                                <option value="LG" selected=@(Model.info.County == "LG")>Logan</option>
-                                                <option value="LY" selected=@(Model.info.County == "LY")>Lyon</option>
-                                                <option value="MN" selected=@(Model.info.County == "MN")>Marion</option>
-                                                <option value="MS" selected=@(Model.info.County == "MS")>Marshall</option>
-                                                <option value="MP" selected=@(Model.info.County == "MP")>McPherson</option>
-                                                <option value="ME" selected=@(Model.info.County == "ME")>Meade</option>
-                                                <option value="MI" selected=@(Model.info.County == "MI")>Miami</option>
-                                                <option value="MC" selected=@(Model.info.County == "MC")>Mitchell</option>
-                                                <option value="MG" selected=@(Model.info.County == "MG")>Montgomery</option>
-                                                <option value="MR" selected=@(Model.info.County == "MR")>Morris</option>
-                                                <option value="MT" selected=@(Model.info.County == "MT")>Morton</option>
-                                                <option value="NM" selected=@(Model.info.County == "NM")>Nemaha</option>
-                                                <option value="NO" selected=@(Model.info.County == "NO")>Neosho</option>
-                                                <option value="NS" selected=@(Model.info.County == "NS")>Ness</option>
-                                                <option value="NT" selected=@(Model.info.County == "NT")>Norton</option>
-                                                <option value="OS" selected=@(Model.info.County == "OS")>Osage</option>
-                                                <option value="OB" selected=@(Model.info.County == "OB")>Osborne</option>
-                                                <option value="OT" selected=@(Model.info.County == "OT")>Ottawa</option>
-                                                <option value="PN" selected=@(Model.info.County == "PN")>Pawnee</option>
-                                                <option value="PL" selected=@(Model.info.County == "PL")>Phillips</option>
-                                                <option value="PT" selected=@(Model.info.County == "PT")>Pottawatomie</option>
-                                                <option value="PR" selected=@(Model.info.County == "PR")>Pratt</option>
-                                                <option value="RA" selected=@(Model.info.County == "RA")>Rawlins</option>
-                                                <option value="RN" selected=@(Model.info.County == "RN")>Reno</option>
-                                                <option value="RP" selected=@(Model.info.County == "RP")>Republic</option>
-                                                <option value="RC" selected=@(Model.info.County == "RC")>Rice</option>
-                                                <option value="RL" selected=@(Model.info.County == "RL")>Riley</option>
-                                                <option value="RO" selected=@(Model.info.County == "RO")>Rooks</option>
-                                                <option value="RH" selected=@(Model.info.County == "RH")>Rush</option>
-                                                <option value="RS" selected=@(Model.info.County == "RS")>Russell</option>
-                                                <option value="SA" selected=@(Model.info.County == "SA")>Saline</option>
-                                                <option value="SC" selected=@(Model.info.County == "SC")>Scott</option>
-                                                <option value="SG" selected=@(Model.info.County == "SG")>Sedgwick</option>
-                                                <option value="SW" selected=@(Model.info.County == "SW")>Seward</option>
-                                                <option value="SN" selected=@(Model.info.County == "SN")>Shawnee</option>
-                                                <option value="SD" selected=@(Model.info.County == "SD")>Sheridan</option>
-                                                <option value="SH" selected=@(Model.info.County == "SH")>Sherman</option>
-                                                <option value="SM" selected=@(Model.info.County == "SM")>Smith</option>
-                                                <option value="SF" selected=@(Model.info.County == "SF")>Stafford</option>
-                                                <option value="ST" selected=@(Model.info.County == "ST")>Stanton</option>
-                                                <option value="SV" selected=@(Model.info.County == "SV")>Stevens</option>
-                                                <option value="SU" selected=@(Model.info.County == "SU")>Sumner</option>
-                                                <option value="TH" selected=@(Model.info.County == "TH")>Thomas</option>
-                                                <option value="TR" selected=@(Model.info.County == "TR")>Trego</option>
-                                                <option value="WB" selected=@(Model.info.County == "WB")>Wabaunsee</option>
-                                                <option value="WA" selected=@(Model.info.County == "WA")>Wallace</option>
-                                                <option value="WS" selected=@(Model.info.County == "WS")>Washington</option>
-                                                <option value="WH" selected=@(Model.info.County == "WH")>Wichita</option>
-                                                <option value="WL" selected=@(Model.info.County == "WL")>Wilson</option>
-                                                <option value="WO" selected=@(Model.info.County == "WO")>Woodson</option>
-                                                <option value="WY" selected=@(Model.info.County == "WY")>Wyandotte</option>
-                                                <option value="OC" selected=@(Model.info.County == "OC")>Other Country</option>
-                                                <option value="UU" selected=@(Model.info.County == "UU")>Unknown</option>
-                                                <option value="ZZ" selected=@(Model.info.County == "ZZ")>Other States</option>
-                                                <option value="CO" selected=@(Model.info.County == "CO")>Colorado</option>
-                                                <option value="MO" selected=@(Model.info.County == "MO")>Missouri</option>
-                                                <option value="NE" selected=@(Model.info.County == "NE")>Nebraska</option>
-                                                <option value="OK" selected=@(Model.info.County == "OK")>Oklahoma</option>
+                                                <option value="AL" selected=@(Model.student.County == "AL")>Allen</option>
+                                                <option value="AN" selected=@(Model.student.County == "AN")>Anderson</option>
+                                                <option value="AT" selected=@(Model.student.County == "AT")>Atchison</option>
+                                                <option value="BA" selected=@(Model.student.County == "BA")>Barber</option>
+                                                <option value="BT" selected=@(Model.student.County == "BT")>Barton</option>
+                                                <option value="BR" selected=@(Model.student.County == "BR")>Brown</option>
+                                                <option value="BU" selected=@(Model.student.County == "BU")>Butler</option>
+                                                <option value="BB" selected=@(Model.student.County == "BB")>Bourbon</option>
+                                                <option value="CS" selected=@(Model.student.County == "CS")>Chase</option>
+                                                <option value="CQ" selected=@(Model.student.County == "CQ")>Chautauqua</option>
+                                                <option value="CK" selected=@(Model.student.County == "CK")>Cherokee</option>
+                                                <option value="CN" selected=@(Model.student.County == "CN")>Cheyenne</option>
+                                                <option value="CA" selected=@(Model.student.County == "CA")>Clark</option>
+                                                <option value="CY" selected=@(Model.student.County == "CY")>Clay</option>
+                                                <option value="CD" selected=@(Model.student.County == "CD")>Cloud</option>
+                                                <option value="CF" selected=@(Model.student.County == "CF")>Coffey</option>
+                                                <option value="CL" selected=@(Model.student.County == "CL")>Cowley</option>
+                                                <option value="CM" selected=@(Model.student.County == "CM")>Comanche</option>
+                                                <option value="CR" selected=@(Model.student.County == "CR")>Crawford</option>
+                                                <option value="DC" selected=@(Model.student.County == "DC")>Decatur</option>
+                                                <option value="DK" selected=@(Model.student.County == "DK")>Dickinson</option>
+                                                <option value="DP" selected=@(Model.student.County == "DP")>Doniphan</option>
+                                                <option value="DG" selected=@(Model.student.County == "DG")>Douglas</option>
+                                                <option value="ED" selected=@(Model.student.County == "ED")>Edwards</option>
+                                                <option value="EK" selected=@(Model.student.County == "EK")>Elk</option>
+                                                <option value="EL" selected=@(Model.student.County == "EL")>Ellis</option>
+                                                <option value="EW" selected=@(Model.student.County == "EW")>Ellsworth</option>
+                                                <option value="FI" selected=@(Model.student.County == "FI")>Finney</option>
+                                                <option value="FO" selected=@(Model.student.County == "FO")>Ford</option>
+                                                <option value="FR" selected=@(Model.student.County == "FR")>Franklin</option>
+                                                <option value="GE" selected=@(Model.student.County == "GE")>Geary</option>
+                                                <option value="GO" selected=@(Model.student.County == "GO")>Gove</option>
+                                                <option value="GH" selected=@(Model.student.County == "GH")>Graham</option>
+                                                <option value="GT" selected=@(Model.student.County == "GT")>Grant</option>
+                                                <option value="GY" selected=@(Model.student.County == "GY")>Gray</option>
+                                                <option value="GL" selected=@(Model.student.County == "GL")>Greeley</option>
+                                                <option value="GW" selected=@(Model.student.County == "GW")>Greenwood</option>
+                                                <option value="HM" selected=@(Model.student.County == "HM")>Hamilton</option>
+                                                <option value="HP" selected=@(Model.student.County == "HP")>Harper</option>
+                                                <option value="HV" selected=@(Model.student.County == "HV")>Harvey</option>
+                                                <option value="HS" selected=@(Model.student.County == "HS")>Haskell</option>
+                                                <option value="HG" selected=@(Model.student.County == "HG")>Hodgeman</option>
+                                                <option value="JA" selected=@(Model.student.County == "JA")>Jackson</option>
+                                                <option value="JF" selected=@(Model.student.County == "JF")>Jefferson</option>
+                                                <option value="JW" selected=@(Model.student.County == "JW")>Jewell</option>
+                                                <option value="JO" selected=@(Model.student.County == "JO")>Johnson</option>
+                                                <option value="KE" selected=@(Model.student.County == "KE")>Kearny</option>
+                                                <option value="KM" selected=@(Model.student.County == "KM")>Kingman</option>
+                                                <option value="KW" selected=@(Model.student.County == "KW")>Kiowa</option>
+                                                <option value="LB" selected=@(Model.student.County == "LB")>Labette</option>
+                                                <option value="LE" selected=@(Model.student.County == "LE")>Lane</option>
+                                                <option value="LV" selected=@(Model.student.County == "LV")>Leavenworth</option>
+                                                <option value="LC" selected=@(Model.student.County == "LC")>Lincoln</option>
+                                                <option value="LN" selected=@(Model.student.County == "LN")>Linn</option>
+                                                <option value="LG" selected=@(Model.student.County == "LG")>Logan</option>
+                                                <option value="LY" selected=@(Model.student.County == "LY")>Lyon</option>
+                                                <option value="MN" selected=@(Model.student.County == "MN")>Marion</option>
+                                                <option value="MS" selected=@(Model.student.County == "MS")>Marshall</option>
+                                                <option value="MP" selected=@(Model.student.County == "MP")>McPherson</option>
+                                                <option value="ME" selected=@(Model.student.County == "ME")>Meade</option>
+                                                <option value="MI" selected=@(Model.student.County == "MI")>Miami</option>
+                                                <option value="MC" selected=@(Model.student.County == "MC")>Mitchell</option>
+                                                <option value="MG" selected=@(Model.student.County == "MG")>Montgomery</option>
+                                                <option value="MR" selected=@(Model.student.County == "MR")>Morris</option>
+                                                <option value="MT" selected=@(Model.student.County == "MT")>Morton</option>
+                                                <option value="NM" selected=@(Model.student.County == "NM")>Nemaha</option>
+                                                <option value="NO" selected=@(Model.student.County == "NO")>Neosho</option>
+                                                <option value="NS" selected=@(Model.student.County == "NS")>Ness</option>
+                                                <option value="NT" selected=@(Model.student.County == "NT")>Norton</option>
+                                                <option value="OS" selected=@(Model.student.County == "OS")>Osage</option>
+                                                <option value="OB" selected=@(Model.student.County == "OB")>Osborne</option>
+                                                <option value="OT" selected=@(Model.student.County == "OT")>Ottawa</option>
+                                                <option value="PN" selected=@(Model.student.County == "PN")>Pawnee</option>
+                                                <option value="PL" selected=@(Model.student.County == "PL")>Phillips</option>
+                                                <option value="PT" selected=@(Model.student.County == "PT")>Pottawatomie</option>
+                                                <option value="PR" selected=@(Model.student.County == "PR")>Pratt</option>
+                                                <option value="RA" selected=@(Model.student.County == "RA")>Rawlins</option>
+                                                <option value="RN" selected=@(Model.student.County == "RN")>Reno</option>
+                                                <option value="RP" selected=@(Model.student.County == "RP")>Republic</option>
+                                                <option value="RC" selected=@(Model.student.County == "RC")>Rice</option>
+                                                <option value="RL" selected=@(Model.student.County == "RL")>Riley</option>
+                                                <option value="RO" selected=@(Model.student.County == "RO")>Rooks</option>
+                                                <option value="RH" selected=@(Model.student.County == "RH")>Rush</option>
+                                                <option value="RS" selected=@(Model.student.County == "RS")>Russell</option>
+                                                <option value="SA" selected=@(Model.student.County == "SA")>Saline</option>
+                                                <option value="SC" selected=@(Model.student.County == "SC")>Scott</option>
+                                                <option value="SG" selected=@(Model.student.County == "SG")>Sedgwick</option>
+                                                <option value="SW" selected=@(Model.student.County == "SW")>Seward</option>
+                                                <option value="SN" selected=@(Model.student.County == "SN")>Shawnee</option>
+                                                <option value="SD" selected=@(Model.student.County == "SD")>Sheridan</option>
+                                                <option value="SH" selected=@(Model.student.County == "SH")>Sherman</option>
+                                                <option value="SM" selected=@(Model.student.County == "SM")>Smith</option>
+                                                <option value="SF" selected=@(Model.student.County == "SF")>Stafford</option>
+                                                <option value="ST" selected=@(Model.student.County == "ST")>Stanton</option>
+                                                <option value="SV" selected=@(Model.student.County == "SV")>Stevens</option>
+                                                <option value="SU" selected=@(Model.student.County == "SU")>Sumner</option>
+                                                <option value="TH" selected=@(Model.student.County == "TH")>Thomas</option>
+                                                <option value="TR" selected=@(Model.student.County == "TR")>Trego</option>
+                                                <option value="WB" selected=@(Model.student.County == "WB")>Wabaunsee</option>
+                                                <option value="WA" selected=@(Model.student.County == "WA")>Wallace</option>
+                                                <option value="WS" selected=@(Model.student.County == "WS")>Washington</option>
+                                                <option value="WH" selected=@(Model.student.County == "WH")>Wichita</option>
+                                                <option value="WL" selected=@(Model.student.County == "WL")>Wilson</option>
+                                                <option value="WO" selected=@(Model.student.County == "WO")>Woodson</option>
+                                                <option value="WY" selected=@(Model.student.County == "WY")>Wyandotte</option>
+                                                <option value="OC" selected=@(Model.student.County == "OC")>Other Country</option>
+                                                <option value="UU" selected=@(Model.student.County == "UU")>Unknown</option>
+                                                <option value="ZZ" selected=@(Model.student.County == "ZZ")>Other States</option>
+                                                <option value="CO" selected=@(Model.student.County == "CO")>Colorado</option>
+                                                <option value="MO" selected=@(Model.student.County == "MO")>Missouri</option>
+                                                <option value="NE" selected=@(Model.student.County == "NE")>Nebraska</option>
+                                                <option value="OK" selected=@(Model.student.County == "OK")>Oklahoma</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -1149,7 +1149,7 @@
                                             <select name="studentGrade" id="studentGrade" class="form-control">
                                                 @foreach (tblGrade grade in Model.grades)
                                                 {
-                                                    <option value="@(grade.gradeID)" selected=@(Model.info.Grade == grade.gradeID)>@(grade.description)</option>
+                                                    <option value="@(grade.gradeID)" selected=@(Model.student.Grade == grade.gradeID)>@(grade.description)</option>
                                                 }
                                             </select>
                                         </div>
@@ -1159,7 +1159,7 @@
 											 <select name="studentRace" id="studentRace" class="form-control">
                                                 @foreach(tblRace race in Model.races)
                                                 {
-                                                    <option value="@(race.RaceCode)" selected="@(Model.info.RaceCode != null && Model.info.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
+                                                    <option value="@(race.RaceCode)" selected="@(Model.student.RaceCode != null && Model.student.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
                                                 }
                                             </select>
 
@@ -1170,70 +1170,70 @@
                                             <label for="studentEthnic">Hispanic Ethnicity</label>
                                             <select name="studentEthnic" id="studentEthnic" class="form-control">
                                                 <option value="">Select</option>
-                                                <option value="Y" selected=@(Model.info.Ethicity == "Y")>Hispanic/Latino</option>
-                                                <option value="N" selected=@(Model.info.Ethicity == "N")>Not Hispanic/Latino</option>
+                                                <option value="Y" selected=@(Model.student.Ethicity == "Y")>Hispanic/Latino</option>
+                                                <option value="N" selected=@(Model.student.Ethicity == "N")>Not Hispanic/Latino</option>
                                             </select>
                                         </div>									 
                                         <div class="col-md-4">
                                             <label for="studentLanguage">Student Language</label>
                                             <select name="studentLanguage" id="studentLanguage" class="form-control">
-                                                <option value="EN" selected=@(Model.info.StudentLanguage == "EN")>EN - English</option>
-                                                <option value="ES" selected=@(Model.info.StudentLanguage == "ES")>ES - Spanish</option>
-                                                <option value="CHK" selected=@(Model.info.StudentLanguage == "CHK")>CHK - Chuukeese Marshall Islands / Micronesian</option>
-                                                <option value="DE" selected=@(Model.info.StudentLanguage == "DE")>DE - German</option>
-                                                <option value="FR" selected=@(Model.info.StudentLanguage == "FR")>FR - French</option>
-                                                <option value="RU" selected=@(Model.info.StudentLanguage == "RU")>RU - Russian</option>
-                                                <option value="A" selected=@(Model.info.StudentLanguage == "A")>A - Augmentative Communication</option>
-                                                <option value="AR" selected=@(Model.info.StudentLanguage == "AR")>AR - Arabic</option>
-                                                <option value="DIN" selected=@(Model.info.StudentLanguage == "DIN")>DIN - Dinka (Sudanese)</option>
-                                                <option value="HMN" selected=@(Model.info.StudentLanguage == "HMN")>HMN - Hmong</option>
-                                                <option value="IRA" selected=@(Model.info.StudentLanguage == "IRA")>IRA - Farsi(Iranian)</option>
-                                                <option value="KHMR" selected=@(Model.info.StudentLanguage == "KHMR")>KHMR - Khmen / Cambodian</option>
-                                                <option value="KO" selected=@(Model.info.StudentLanguage == "KO")>KO - Korean</option>
-                                                <option value="LO" selected=@(Model.info.StudentLanguage == "LO")>LO - Lao</option>
-                                                <option value="M" selected=@(Model.info.StudentLanguage == "M")>M - Mode of Communication</option>
-                                                <option value="NAT-AM" selected=@(Model.info.StudentLanguage == "NAT-AM")>NAT-AM - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
-                                                <option value="N" selected=@(Model.info.StudentLanguage == "N")>N - Non-Verbal and Non-Sign</option>
-                                                <option value="O" selected=@(Model.info.StudentLanguage == "O")>O - Other</option>
-                                                <option value="PH" selected=@(Model.info.StudentLanguage == "PH")>PH - Phllippine - Tagalog</option>
-                                                <option value="SO" selected=@(Model.info.StudentLanguage == "SO")>SO - Somali</option>
-                                                <option value="TH" selected=@(Model.info.StudentLanguage == "TH")>TH - Thai</option>
-                                                <option value="VI" selected=@(Model.info.StudentLanguage == "VI")>VI - Vietnamese</option>
-                                                <option value="YU" selected=@(Model.info.StudentLanguage == "YU")>YU - Yugoslavian, Croatian, Bosnian, Serb</option>
-                                                <option value="ZH-ZH-CMN" selected=@(Model.info.StudentLanguage == "ZH-ZH-CMN")>ZH-ZH-CMN - Mandarin</option>
-                                                <option value="ZH-YUE" selected=@(Model.info.StudentLanguage == "ZH-YUE")>ZH-YUE - Cantonese</option>
-                                                <option value="ZH-WUU" selected=@(Model.info.StudentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
+                                                <option value="EN" selected=@(Model.student.StudentLanguage == "EN")>EN - English</option>
+                                                <option value="ES" selected=@(Model.student.StudentLanguage == "ES")>ES - Spanish</option>
+                                                <option value="CHK" selected=@(Model.student.StudentLanguage == "CHK")>CHK - Chuukeese Marshall Islands / Micronesian</option>
+                                                <option value="DE" selected=@(Model.student.StudentLanguage == "DE")>DE - German</option>
+                                                <option value="FR" selected=@(Model.student.StudentLanguage == "FR")>FR - French</option>
+                                                <option value="RU" selected=@(Model.student.StudentLanguage == "RU")>RU - Russian</option>
+                                                <option value="A" selected=@(Model.student.StudentLanguage == "A")>A - Augmentative Communication</option>
+                                                <option value="AR" selected=@(Model.student.StudentLanguage == "AR")>AR - Arabic</option>
+                                                <option value="DIN" selected=@(Model.student.StudentLanguage == "DIN")>DIN - Dinka (Sudanese)</option>
+                                                <option value="HMN" selected=@(Model.student.StudentLanguage == "HMN")>HMN - Hmong</option>
+                                                <option value="IRA" selected=@(Model.student.StudentLanguage == "IRA")>IRA - Farsi(Iranian)</option>
+                                                <option value="KHMR" selected=@(Model.student.StudentLanguage == "KHMR")>KHMR - Khmen / Cambodian</option>
+                                                <option value="KO" selected=@(Model.student.StudentLanguage == "KO")>KO - Korean</option>
+                                                <option value="LO" selected=@(Model.student.StudentLanguage == "LO")>LO - Lao</option>
+                                                <option value="M" selected=@(Model.student.StudentLanguage == "M")>M - Mode of Communication</option>
+                                                <option value="NAT-AM" selected=@(Model.student.StudentLanguage == "NAT-AM")>NAT-AM - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
+                                                <option value="N" selected=@(Model.student.StudentLanguage == "N")>N - Non-Verbal and Non-Sign</option>
+                                                <option value="O" selected=@(Model.student.StudentLanguage == "O")>O - Other</option>
+                                                <option value="PH" selected=@(Model.student.StudentLanguage == "PH")>PH - Phllippine - Tagalog</option>
+                                                <option value="SO" selected=@(Model.student.StudentLanguage == "SO")>SO - Somali</option>
+                                                <option value="TH" selected=@(Model.student.StudentLanguage == "TH")>TH - Thai</option>
+                                                <option value="VI" selected=@(Model.student.StudentLanguage == "VI")>VI - Vietnamese</option>
+                                                <option value="YU" selected=@(Model.student.StudentLanguage == "YU")>YU - Yugoslavian, Croatian, Bosnian, Serb</option>
+                                                <option value="ZH-ZH-CMN" selected=@(Model.student.StudentLanguage == "ZH-ZH-CMN")>ZH-ZH-CMN - Mandarin</option>
+                                                <option value="ZH-YUE" selected=@(Model.student.StudentLanguage == "ZH-YUE")>ZH-YUE - Cantonese</option>
+                                                <option value="ZH-WUU" selected=@(Model.student.StudentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="parentLanguage">Parents Language</label>
                                             <select name="parentLanguage" id="parentLanguage" class="form-control">
-                                                <option value="EN" selected=@(Model.info.ParentLanguage == "EN")>EN - English</option>
-                                                <option value="ES" selected=@(Model.info.ParentLanguage == "ES")>ES - Spanish</option>
-                                                <option value="CHK" selected=@(Model.info.ParentLanguage == "CHK")>CHK - Chuukeese Marshall Islands / Micronesian</option>
-                                                <option value="DE" selected=@(Model.info.ParentLanguage == "DE")>DE - German</option>
-                                                <option value="FR" selected=@(Model.info.ParentLanguage == "FR")>FR - French</option>
-                                                <option value="RU" selected=@(Model.info.ParentLanguage == "RU")>RU - Russian</option>
-                                                <option value="A" selected=@(Model.info.ParentLanguage == "A")>A - Augmentative Communication</option>
-                                                <option value="AR" selected=@(Model.info.ParentLanguage == "AR")>AR - Arabic</option>
-                                                <option value="DIN" selected=@(Model.info.ParentLanguage == "DIN")>DIN - Dinka (Sudanese)</option>
-                                                <option value="HMN" selected=@(Model.info.ParentLanguage == "HMN")>HMN - Hmong</option>
-                                                <option value="IRA" selected=@(Model.info.ParentLanguage == "IRA")>IRA - Farsi(Iranian)</option>
-                                                <option value="KHMR" selected=@(Model.info.ParentLanguage == "KHMR")>KHMR - Khmen / Cambodian</option>
-                                                <option value="KO" selected=@(Model.info.ParentLanguage == "KO")>KO - Korean</option>
-                                                <option value="LO" selected=@(Model.info.ParentLanguage == "LO")>LO - Lao</option>
-                                                <option value="M" selected=@(Model.info.ParentLanguage == "M")>M - Mode of Communication</option>
-                                                <option value="NAT-AM" selected=@(Model.info.ParentLanguage == "NAT-AM")>NAT-AM - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
-                                                <option value="N" selected=@(Model.info.ParentLanguage == "N")>N - Non-Verbal and Non-Sign</option>
-                                                <option value="O" selected=@(Model.info.ParentLanguage == "O")>O - Other</option>
-                                                <option value="PH" selected=@(Model.info.ParentLanguage == "PH")>PH - Phllippine - Tagalog</option>
-                                                <option value="SO" selected=@(Model.info.ParentLanguage == "SO")>SO - Somali</option>
-                                                <option value="TH" selected=@(Model.info.ParentLanguage == "TH")>TH - Thai</option>
-                                                <option value="VI" selected=@(Model.info.ParentLanguage == "VI")>VI - Vietnamese</option>
-                                                <option value="YU" selected=@(Model.info.ParentLanguage == "YU")>YU - Yugoslavian, Croatian, Bosnian, Serb</option>
-                                                <option value="ZH-ZH-CMN" selected=@(Model.info.ParentLanguage == "ZH-ZH-CMN")>ZH-ZH-CMN - Mandarin</option>
-                                                <option value="ZH-YUE" selected=@(Model.info.ParentLanguage == "ZH-YUE")>ZH-YUE - Cantonese</option>
-                                                <option value="ZH-WUU" selected=@(Model.info.ParentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
+                                                <option value="EN" selected=@(Model.student.ParentLanguage == "EN")>EN - English</option>
+                                                <option value="ES" selected=@(Model.student.ParentLanguage == "ES")>ES - Spanish</option>
+                                                <option value="CHK" selected=@(Model.student.ParentLanguage == "CHK")>CHK - Chuukeese Marshall Islands / Micronesian</option>
+                                                <option value="DE" selected=@(Model.student.ParentLanguage == "DE")>DE - German</option>
+                                                <option value="FR" selected=@(Model.student.ParentLanguage == "FR")>FR - French</option>
+                                                <option value="RU" selected=@(Model.student.ParentLanguage == "RU")>RU - Russian</option>
+                                                <option value="A" selected=@(Model.student.ParentLanguage == "A")>A - Augmentative Communication</option>
+                                                <option value="AR" selected=@(Model.student.ParentLanguage == "AR")>AR - Arabic</option>
+                                                <option value="DIN" selected=@(Model.student.ParentLanguage == "DIN")>DIN - Dinka (Sudanese)</option>
+                                                <option value="HMN" selected=@(Model.student.ParentLanguage == "HMN")>HMN - Hmong</option>
+                                                <option value="IRA" selected=@(Model.student.ParentLanguage == "IRA")>IRA - Farsi(Iranian)</option>
+                                                <option value="KHMR" selected=@(Model.student.ParentLanguage == "KHMR")>KHMR - Khmen / Cambodian</option>
+                                                <option value="KO" selected=@(Model.student.ParentLanguage == "KO")>KO - Korean</option>
+                                                <option value="LO" selected=@(Model.student.ParentLanguage == "LO")>LO - Lao</option>
+                                                <option value="M" selected=@(Model.student.ParentLanguage == "M")>M - Mode of Communication</option>
+                                                <option value="NAT-AM" selected=@(Model.student.ParentLanguage == "NAT-AM")>NAT-AM - Navtive America (Kickapoo, Pottawatomie, etc.)</option>
+                                                <option value="N" selected=@(Model.student.ParentLanguage == "N")>N - Non-Verbal and Non-Sign</option>
+                                                <option value="O" selected=@(Model.student.ParentLanguage == "O")>O - Other</option>
+                                                <option value="PH" selected=@(Model.student.ParentLanguage == "PH")>PH - Phllippine - Tagalog</option>
+                                                <option value="SO" selected=@(Model.student.ParentLanguage == "SO")>SO - Somali</option>
+                                                <option value="TH" selected=@(Model.student.ParentLanguage == "TH")>TH - Thai</option>
+                                                <option value="VI" selected=@(Model.student.ParentLanguage == "VI")>VI - Vietnamese</option>
+                                                <option value="YU" selected=@(Model.student.ParentLanguage == "YU")>YU - Yugoslavian, Croatian, Bosnian, Serb</option>
+                                                <option value="ZH-ZH-CMN" selected=@(Model.student.ParentLanguage == "ZH-ZH-CMN")>ZH-ZH-CMN - Mandarin</option>
+                                                <option value="ZH-YUE" selected=@(Model.student.ParentLanguage == "ZH-YUE")>ZH-YUE - Cantonese</option>
+                                                <option value="ZH-WUU" selected=@(Model.student.ParentLanguage == "ZH-WUU")>ZH-WUU - Wu</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1246,7 +1246,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(Model.info.FullDayKG == true ? "checked" : "")>
+                                                <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(Model.student.FullDayKG == true ? "checked" : "")>
                                                 <label for="fullDayKindergarten" style="float: left; position: relative; bottom: 16px; left: 20%;">Full Day Kindergarten</label>
                                             </div>
                                         </div>
@@ -1263,14 +1263,14 @@
                                                             <optgroup label="Active">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
                                                                 {
-                                                                    string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+                                                                    string selected = Model.student.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                     <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                                 }
                                                             </optgroup>
                                                             <optgroup label="Inactive">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
                                                                 {
-                                                                    string selected = Model.info.StatusCode == code.StatusCode ? "selected=selected" : "";
+                                                                    string selected = Model.student.StatusCode == code.StatusCode ? "selected=selected" : "";
                                                                     <option value="@code.StatusCode" @selected>@code.StatusCode - @code.Description</option>
                                                                 }
                                                             </optgroup>
@@ -1286,7 +1286,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="initialIEPDate" class="control-label">Initial IEP Date</label>
-                                                        <input id="initialIEPDate" name="initialIEPDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialIEPDate.HasValue ? Model.info.InitialIEPDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="initialIEPDate" name="initialIEPDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.InitialIEPDate.HasValue ? Model.student.InitialIEPDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1296,7 +1296,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="exitDate" class="control-label">Exit Date</label>
-                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.ExitDate.HasValue ? Model.student.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1308,7 +1308,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="initialConsentSignature" class="control-label">Initial Evaluation Consent Signed</label>
-                                                        <input id="initialConsentSignature" name="initialConsentSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalConsentSigned.HasValue ? Model.info.InitialEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="initialConsentSignature" name="initialConsentSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.InitialEvalConsentSigned.HasValue ? Model.student.InitialEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1318,7 +1318,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
-                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.InitialEvalDetermination.HasValue ? Model.student.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1330,7 +1330,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
-                                                        <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.ReEvalConsentSigned.HasValue ? Model.student.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1340,7 +1340,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="exitNotes" class="control-label">Exit Notes</label>
-                                                        <input id="exitNotes" name="exitNotes" type="text" style="height:49px; z-index: 99999" class="form-control norequired" placeholder="" value="@(Model.info.ExitNotes)" />
+                                                        <input id="exitNotes" name="exitNotes" type="text" style="height:49px; z-index: 99999" class="form-control norequired" placeholder="" value="@(Model.student.ExitNotes)" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1352,7 +1352,7 @@
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
-                                                        <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.student.ReEvalCompleted.HasValue ? Model.student.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1383,19 +1383,19 @@
                                                 <div class="col-sm-4 nopadding">
                                                     <div class="form-group">
                                                         <label for="contactFirstName">First Name</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].FirstName" name="contact[@(contact.RealtionshipID.ToString())].FirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactFirstName" name="contact[@(contact.RealtionshipID.ToString())].ContactFirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-5 nopadding">
                                                     <div class="form-group">
                                                         <label>Last Name</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].LastName" name="contact[@(contact.RealtionshipID.ToString())].LastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactLastName" name="contact[@(contact.RealtionshipID.ToString())].ContactLastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 nopadding">
                                                     <div class="form-group">
                                                         <label>Relationship</label>
-                                                        <select name="contact[@(contact.RealtionshipID.ToString())].Realtionship" class="form-control text-box single-line" data-validate="true">
+                                                        <select name="contact[@(contact.RealtionshipID.ToString())].ContactRelationship" class="form-control text-box single-line" data-validate="true">
                                                             <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
                                                             <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
                                                             <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
@@ -1410,19 +1410,19 @@
                                                 <div class="col-sm-4 nopadding">
                                                     <div class="form-group">
                                                         <label>Street Address</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Address1" name="contact[@(contact.RealtionshipID.ToString())].Address1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress1" name="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 nopadding">
                                                     <div class="form-group">
                                                         <label>Apt/Ste/Rm</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Address2" name="contact[@(contact.RealtionshipID.ToString())].Address2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress2" name="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label>City</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].City" name="contact[@(contact.RealtionshipID.ToString())].City" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactCity" name="contact[@(contact.RealtionshipID.ToString())].ContactCity" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-1 nopadding">
@@ -1486,7 +1486,7 @@
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label >Zip Code</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false" >
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactZipCode" name="contact[@(contact.RealtionshipID.ToString())].ContactZipCode" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -1494,19 +1494,19 @@
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label>Phone Number</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Phone" name="contact[@(contact.RealtionshipID.ToString())].Phone" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactPhoneNumber" name="contact[@(contact.RealtionshipID.ToString())].ContactPhoneNumber" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4 nopadding">
                                                     <div class="form-group">
                                                         <label>Email</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Email" name="contact[@(contact.RealtionshipID.ToString())].Email" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactEmail" name="contact[@(contact.RealtionshipID.ToString())].ContactEmail" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
-                                                        <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
+														<label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4 nopadding">
@@ -1531,7 +1531,7 @@
                         }
                     </div>
                     <div class="tab-pane" role="tabpanel" id="complete">
-                        @using (Html.BeginForm("EditReferralAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("SubmitStudentReferral", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", id="avatarForm" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })                            
 							@Html.Hidden("referralId", Model.student.ReferralID)
@@ -1546,7 +1546,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-md-offset-4">
-                                            <img src="@(string.IsNullOrEmpty("") ? "/Content/Images/newUser.png" : "/Avatar/")" alt="Student's Avatar" title="Student's Avatar if desired.'" class="img-circle pull-left avatar" height="100" width="100" id="avatarImage" />
+											<input type="hidden" name="IsDraftSubmit" id="IsDraftSubmit" value="0" />
+                                            <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="Student's Avatar" title="Student's Avatar if desired.'" class="img-circle pull-left avatar" height="100" width="100" id="avatarImage" />
                                             <div class="input-group">
                                                 <span class="btn btn-default btn-file" style="top: 30px; left: 15px;">
                                                     Browse <input type="file" name="adminpersona" id="adminpersona" accept="image/gif, image/jpeg, image/png">
@@ -1557,7 +1558,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-md-offset-4">
                                             <ul class="list-inline">
-												<li>@Html.ActionLink("Save Referral", "Referrals", "Manage", null, new { role = "button", @class = "btn btn-info btn-info-full standard-font-size", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+												<li><button  type="button" class="btn btn-info next-step standard-font-size" id="next8">Save Referral</button></li>
                                                 <li><input type="submit" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;" value="Complete Referral"/></li>
                                             </ul>
                                         </div>
@@ -1705,7 +1706,7 @@
         </div>
         <div class="col-sm-2 nopadding">
             <div class="form-group">
-                <input name="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" />
+                <input name="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" />				
                 <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
             </div>
         </div>
@@ -1718,12 +1719,12 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/editreferral.js"></var>
+<var data-reload="true" data-src="/Scripts/editreferral.js?v1.5"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/editreferral.js?v1.4")
+    @Scripts.Render("~/Scripts/editreferral.js?v1.5")
 
 }

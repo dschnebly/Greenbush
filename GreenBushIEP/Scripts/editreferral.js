@@ -424,3 +424,15 @@ $("#next7").on("click", function () {
 	}
 });
 
+$("#next8").on("click", function () {
+
+	if (tabValidates()) {
+		$("#IsDraftSubmit").val(1);
+		$("#avatarForm").submit();
+	}
+	else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();
+	}
+});
+
