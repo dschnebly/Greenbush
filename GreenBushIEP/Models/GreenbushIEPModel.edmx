@@ -939,6 +939,8 @@
           <Property Name="isGifted" Type="bit" />
           <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
           <Property Name="ReEvalCompleted" Type="datetime" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblReferralRelationships">
           <Key>
@@ -1529,18 +1531,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="uf_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
-          <Parameter Name="DELIMITER" Type="char" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="idx" Type="smallint" />
-                <Property Name="value" Type="varchar" MaxLength="8000" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
@@ -1951,12 +1941,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
-          <FunctionImport Name="uf_Split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.uf_Split_Result)">
-            <Parameter Name="MYSTR" Mode="In" Type="String" />
-            <Parameter Name="DELIMITER" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
-          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2944,8 +2930,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="RaceCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tblReferralRelationships" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRelationship" />
-          <NavigationProperty Name="tblReferralRequests" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRequest" />
           <Property Name="AttendingUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="FundSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2962,6 +2946,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGifted" Type="Boolean" />
           <Property Name="ExitNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ReEvalCompleted" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblReferralRelationships" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRelationship" />
+          <NavigationProperty Name="tblReferralRequests" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralInfo" ToRole="tblReferralRequest" />
         </EntityType>
         <EntityType Name="tblReferralRelationship">
           <Key>
@@ -3504,10 +3492,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
-        <ComplexType Name="uf_Split_Result">
-          <Property Type="Int16" Name="idx" Nullable="true" />
-          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
-        </ComplexType>
         <ComplexType Name="up_ReportBuildings_Result">
           <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
@@ -4620,6 +4604,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblReferralInfoes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralInfo">
               <MappingFragment StoreEntitySet="tblReferralInfo">
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
                 <ScalarProperty Name="ExitNotes" ColumnName="ExitNotes" />
                 <ScalarProperty Name="isGifted" ColumnName="isGifted" />
@@ -5119,14 +5105,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="uf_Split" FunctionName="IndividualizedEducationProgramModel.Store.uf_Split">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uf_Split_Result">
-                <ScalarProperty Name="idx" ColumnName="idx" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="up_ReportBuildings" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportBuildings">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportBuildings_Result">
