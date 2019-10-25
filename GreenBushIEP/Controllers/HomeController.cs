@@ -2857,25 +2857,25 @@ namespace GreenbushIep.Controllers
             var errors = new List<ExportErrorView>();
 
             //1 KidsID Req
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.KIDSID);
+            sb.AppendFormat("{0}", studentIEP.studentDetails.student.KIDSID);
 
             //2 Last Name, Student’s Legal Req less < 60 characters
-            sb.AppendFormat("{0}\t", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
+            sb.AppendFormat("\t{0}", studentIEP.studentLastName.Length > 60 ? studentIEP.studentLastName.Substring(0, 60) : studentIEP.studentLastName);
 
             //3 Student’s Gender
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.Gender == "M" ? 1 : 0);
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.Gender == "M" ? 1 : 0);
 
             //4 DOB MM/DD/YYYY
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.DateOfBirth.ToShortDateString());
 
             //5 School Year YYYY Req
-            sb.AppendFormat("{0}\t", schoolYear);
+            sb.AppendFormat("\t{0}", schoolYear);
 
             //6 Assign Child Count Req
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.assignChildCount);
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.assignChildCount);
 
             //7 Neighborhood Building Identifier Req
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
             var grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
@@ -2892,38 +2892,38 @@ namespace GreenbushIep.Controllers
             }
             else
             {
-                sb.AppendFormat("{0}\t", gradeCode);
+                sb.AppendFormat("\t{0}", gradeCode);
             }
 
             //9 status code req
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.StatusCode);
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.StatusCode);
 
             //10 exit date
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
 
             //11 School Psychologist Provider ID
-            sb.AppendFormat("{0}\t", "");
+            sb.AppendFormat("\t{0}", "");
 
             //12 slp provider id
-            sb.AppendFormat("{0}\t", "");
+            sb.AppendFormat("\t{0}", "");
 
             //13 case manager provider id
-            sb.AppendFormat("{0}\t", "");
+            sb.AppendFormat("\t{0}", "");
 
             //14 extended school year
-            sb.AppendFormat("{0}\t", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
 
             //15 sped transportation		
-			sb.AppendFormat("{0}\t", studentIEP.studentServices != null && studentIEP.studentServices.Count(o => o.ServiceCode == "ST") > 0 ? "1" : "");
+			sb.AppendFormat("\t{0}", studentIEP.studentServices != null && studentIEP.studentServices.Count(o => o.ServiceCode == "ST") > 0 ? "1" : "");
 
             //16 All Day Kindergarten
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
 
             //17 Behavior Intervention Plan - BIP BehaviorInterventionPlan
-            sb.AppendFormat("{0}\t", studentIEP.studentSocial != null && studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentSocial != null && studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
 
             //18 Claiming Code req
-            sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
 
             //19 Placed By KDCF/JJA/LEA/Parent req
             if (string.IsNullOrEmpty(studentIEP.studentDetails.student.PlacementCode))
@@ -2936,7 +2936,7 @@ namespace GreenbushIep.Controllers
             }
             else
             {
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.PlacementCode);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.PlacementCode);
             }
 
             //20 County of Residence  req
@@ -2950,7 +2950,7 @@ namespace GreenbushIep.Controllers
             }
             else
             {
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.studentCounty);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.studentCounty);
             }
 
             //21 Language of Parent  req
@@ -2964,7 +2964,7 @@ namespace GreenbushIep.Controllers
             }
             else
             {
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.parentLang);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.parentLang);
             }
 
             string serviceEndDateOverride = "";
@@ -3004,59 +3004,59 @@ namespace GreenbushIep.Controllers
                 }
                 else
                 {
-                    sb.AppendFormat("{0}\t", studentIEP.current.begin_date.Value.ToShortDateString());
+                    sb.AppendFormat("\t{0}", studentIEP.current.begin_date.Value.ToShortDateString());
                 }
 
                 //2 gap allow
-                sb.AppendFormat("{0}\t", "");
+                sb.AppendFormat("\t{0}", "");
 
                 //3 Responsible School req
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
                 //4 primary disablity
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.primaryDisability);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.primaryDisability);
 
                 //5 secondary disablity
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.secondaryDisability);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.secondaryDisability);
 
                 //6 gifted
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.student.isGifted ? "1" : "0");
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.isGifted ? "1" : "0");
 
                 //7 service location
-                sb.AppendFormat("{0}\t", studentIEP.studentDetails.building.BuildingID);
+                sb.AppendFormat("\t{0}", studentIEP.studentDetails.building.BuildingID);
 
                 //8 Primary Service Location Indicator
-                sb.AppendFormat("{0}\t", "");
+                sb.AppendFormat("\t{0}", "");
 
                 //9 setting code
-                sb.AppendFormat("{0}\t", service.LocationCode);
+                sb.AppendFormat("\t{0}", service.LocationCode);
 
                 //10 service code
-                sb.AppendFormat("{0}\t", service.ServiceCode);
+                sb.AppendFormat("\t{0}", service.ServiceCode);
 
                 //11 provider id
-                sb.AppendFormat("{0}\t", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0, 10) : service.tblProvider.ProviderCode : "");
+                sb.AppendFormat("\t{0}", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0, 10) : service.tblProvider.ProviderCode : "");
 
                 //12 Primary Provider Indicator
-                sb.AppendFormat("{0}\t", "");
+                sb.AppendFormat("\t{0}", "");
 
                 //13 Service Start Date
-                sb.AppendFormat("{0}\t", service.StartDate.ToShortDateString());
+                sb.AppendFormat("\t{0}", service.StartDate.ToShortDateString());
 
                 //14 Service end Date
-                sb.AppendFormat("{0}\t", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString() : serviceEndDateOverride);
+                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString() : serviceEndDateOverride);
 
                 //15 minutes
-                sb.AppendFormat("{0}\t", service.Minutes);
+                sb.AppendFormat("\t{0}", service.Minutes);
 
                 //16 days per
-                sb.AppendFormat("{0}\t", service.DaysPerWeek);
+                sb.AppendFormat("\t{0}", service.DaysPerWeek);
 
                 //17 freq
-                sb.AppendFormat("{0}\t", service.Frequency);
+                sb.AppendFormat("\t{0}", service.Frequency);
 
                 //18 total days
-                sb.AppendFormat("{0}\t", "");
+                sb.AppendFormat("\t{0}", "");
 
                 count++;
             }
