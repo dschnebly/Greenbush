@@ -1767,15 +1767,18 @@
 		<hr />
 		<div>
 			<h3 class="text-center">TRANSITION PLAN</h3>
-			<div class="row DOC @(!Model.studentTransition.isDOC ? "hidden" : String.Empty )">
-				@if (Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value)
-				{
-					<fieldset class="form-group">
-						<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label>&nbsp;&nbsp;<span>@(Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value ? "Yes" : "No")</span>
-					</fieldset>
-					<p>For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).</p>
-				}
-			</div>
+			@if (Model.studentTransition.isDOC)
+			{
+				<div class="row DOC">
+					@if (Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value)
+					{
+						<fieldset class="form-group">
+							<label>Is the adult learner's Anticipated Release Date prior to their 21st birthday?</label><span>&nbsp; @(Model.studentTransition.transition.isReleaseBefore21.HasValue && Model.studentTransition.transition.isReleaseBefore21.Value ? "Yes" : "No")</span>
+						</fieldset>
+						<p>For students incarcerated in an adult correctional facility whose eligibility under IDEA will end because they will turn 21 years old before they will be eligible to be released from prison, the requirements relating to transition planning and transition services do not apply (K.A.R. 91-40-5(c)(2)(B); 34 C.F.R. 300.324(d)).</p>
+					}
+				</div>
+			}
 			<div class="row">
 				@if (Model.studentTransition.assessments.Count > 0)
 				{
