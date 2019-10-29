@@ -1,7 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.ProviderCaseload.Report1" %>
+<%@ MasterType virtualPath="~/Reports/ReportMaster.Master"%> 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+	<% 
+		string toggleElement = "style ='margin-bottom: 11px;'";
+
+		if (this.Master.GetUserLevel == "4" || this.Master.GetUserLevel == "6" )
+		{
+			toggleElement = "style='display:none'";
+		}
+	%>
 	<div class="row"  style="margin-bottom: 15px;">
 		<h2>Caseloads by Provider</h2>
 	</div>
@@ -26,12 +35,22 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-md-12" style="margin-bottom: 12px;">
+		<div class="col-md-12" <%=toggleElement %>>
 			<div class="col-md-2" >
-				<label for="fiscalYear">Provider</label>
+				<label for="providerDD">Provider</label>
 			</div>
 			<div class="col-md-6" >
 				<select id="providerDD" runat="server" multiple="true" class="chosen-select" data-placeholder="All Providers">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				<label for="student">Student</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="studentDD" runat="server" class="chosen-select" data-placeholder="Select Student">
 					<option value="">Select</option>
 				</select>
 			</div>

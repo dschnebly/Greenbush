@@ -40,6 +40,15 @@ namespace GreenBushIEP.Reports.ProviderCaseload {
         protected global::System.Web.UI.HtmlControls.HtmlSelect providerDD;
         
         /// <summary>
+        /// studentDD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect studentDD;
+        
+        /// <summary>
         /// fiscalYear control.
         /// </summary>
         /// <remarks>
@@ -56,5 +65,17 @@ namespace GreenBushIEP.Reports.ProviderCaseload {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new GreenBushIEP.Report.ReportMaster Master {
+            get {
+                return ((GreenBushIEP.Report.ReportMaster)(base.Master));
+            }
+        }
     }
 }

@@ -66,8 +66,8 @@ namespace GreenBushIEP.Reports.IEPDue
 				var providerList = GreenBushIEP.Report.ReportMaster.GetTeachers(User.Identity.Name);
 				teacherIds = string.Join(",", providerList.Select(o => o.UserID));
 			}
-
-			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+						
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				teacher = user.UserID.ToString();
 			}

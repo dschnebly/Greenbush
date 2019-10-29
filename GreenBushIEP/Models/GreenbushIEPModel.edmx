@@ -45,8 +45,8 @@
           <Property Name="ColumnName" Type="nvarchar" MaxLength="100" />
           <Property Name="UserID" Type="int" />
           <Property Name="IEPid" Type="int" />
-          <Property Name="Value" Type="nvarchar(max)" />
-          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="SessionID" Type="nvarchar" MaxLength="2000" />
@@ -1574,6 +1574,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportServices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -1942,7 +1943,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
-            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -1984,6 +1985,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="FiscalYear" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportServices" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportServices_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2045,8 +2047,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ColumnName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="IEPid" Type="Int32" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SessionID" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />

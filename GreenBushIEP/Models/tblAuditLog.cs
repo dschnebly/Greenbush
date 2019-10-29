@@ -20,7 +20,7 @@ namespace GreenBushIEP.Models
         public Nullable<int> UserID { get; set; }
         public Nullable<int> IEPid { get; set; }
         public string Value { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public string SessionID { get; set; }

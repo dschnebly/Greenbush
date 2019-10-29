@@ -18,7 +18,8 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			{
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD);
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);			
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD);
 			}
 		}
 
@@ -44,6 +45,8 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+
+			string studentFilter = this.studentDD.Value == "-1" ? "" : studentDD.Value;
 
 			foreach (ListItem li in providerDD.Items)
 			{
@@ -85,13 +88,13 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 				providerIds = string.Join(",", providerList.Select(o => o.ProviderID));
 			}
 
-			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				teacher = user.UserID.ToString();
 			}
 						
 
-			DataTable dt = GetData(districtFilter, providerIds, fiscalYears, teacher, buildingFilter);
+			DataTable dt = GetData(districtFilter, providerIds, fiscalYears, teacher, buildingFilter, studentFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -115,7 +118,7 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string providerId, string fiscalYear, string teacher, string buildingID)
+		private DataTable GetData(string districtFilter, string providerId, string fiscalYear, string teacher, string buildingID, string studentIds)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("LastName", typeof(string));
@@ -133,7 +136,7 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProviderCaseload(districtFilter,providerId, fiscalYear, teacher, buildingID);
+				var list = ctx.up_ReportProviderCaseload(districtFilter,providerId, fiscalYear, teacher, buildingID, studentIds);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle
