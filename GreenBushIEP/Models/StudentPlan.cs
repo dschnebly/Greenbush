@@ -365,9 +365,7 @@ namespace GreenBushIEP.Models
                 {
                     studentAcademic.AreaOfNeed = this.AcademicNeeds;
                     studentAcademic.NoConcerns = this.AcademicNoConcern;
-                    studentAcademic.ProgressTowardGenEd = this.AcademicProgressTowardGenEd;
-					if (studentAcademic.Completed == false)
-						studentAcademic.Completed = this.AcademicNoConcern;
+                    studentAcademic.ProgressTowardGenEd = this.AcademicProgressTowardGenEd;					
                 }
                 db.SaveChanges();
 
@@ -378,7 +376,7 @@ namespace GreenBushIEP.Models
                     studentReading.AreaOfNeed = this.ReadingNeed;
                     studentReading.NoConcerns = this.ReadingNoConcern;
                     studentReading.ProgressTowardGenEd = this.ReadingProgress;
-                }
+				}
                 db.SaveChanges();
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
@@ -402,14 +400,22 @@ namespace GreenBushIEP.Models
                 db.SaveChanges();
 
                 this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
-						
-				if (!this.AcademicModuleNoConcern && !studentAcademic.Completed) // if any of the four types has a problem than the module is not completed
-                {
 
-					studentAcademic.Completed = false;
-					db.SaveChanges();
+
+				if (!studentAcademic.Completed)
+				{
 					
-                }
+					if (!this.AcademicModuleNoConcern) // if any of the four types has a problem than the module is not completed
+					{						
+						studentAcademic.Completed = false;				
+					}
+					else
+					{					
+						studentAcademic.Completed = true;				
+					}
+
+					db.SaveChanges();
+				}
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
 
