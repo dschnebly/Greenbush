@@ -160,11 +160,12 @@ namespace GreenBushIEP.Models
 				isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
 				isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
 				bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
-				isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : !studentHasGoals;
+				bool allModulesCompleted = isHealthCompleted && isMotorCompleted && isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted;
+				isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) && allModulesCompleted : studentHasGoals ? false : allModulesCompleted;
 				isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
 				
 				bool studentHasAccommodations = (studentHealth != null && (studentHealth.NeedMetByAccommodation ?? false)) || (studentMotor.NeedMetByAccommodation ?? false) || (studentCommunication.NeedMetByAccommodation ?? false) || (studentSocial.NeedMetByAccommodation ?? false) || (studentAcademic.NeedMetByAccommodation ?? false) || (studentWritten.NeedMetByAccommodation ?? false) || (studentReading.NeedMetByAccommodation ?? false) || (studentMath.NeedMetByAccommodation ?? false);
-				isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : !studentHasAccommodations;
+				isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) && allModulesCompleted : studentHasAccommodations ? false : allModulesCompleted;
 				
 				isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
 				isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
