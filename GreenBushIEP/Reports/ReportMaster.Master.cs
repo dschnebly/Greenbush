@@ -301,7 +301,7 @@ namespace GreenBushIEP.Report
 
 				var teachers = (from u in db.tblUsers
 								join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								where o.AdminID == teacherObj.UserID && (u.RoleID == teacher || u.RoleID == nurse)
+								where o.AdminID == teacherObj.UserID && (u.RoleID != student)
 								select new TeacherView()
 								{
 									UserID = u.UserID,									
@@ -312,7 +312,7 @@ namespace GreenBushIEP.Report
 
 				var list = (from u in db.tblUsers
 								join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								where (teacherIds.Contains(o.AdminID)) && u.RoleID == student
+								where (teacherIds.Contains(o.AdminID) || o.AdminID == teacherObj.UserID) && u.RoleID == student && (!u.Archive.HasValue || u.Archive.Value)
 								select new Student()
 								{
 									UserID = u.UserID,
