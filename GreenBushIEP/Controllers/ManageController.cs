@@ -1004,9 +1004,10 @@ namespace GreenBushIEP.Controllers
                 try
                 {
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+					int studentId = Convert.ToInt32(collection["studentId"]);
 
-                    // check that the kidsIS doesn't already exsist in the system.
-                    string kidsIdStr = collection["kidsid"].ToString();
+					// check that the kidsIS doesn't already exsist in the system.
+					string kidsIdStr = collection["kidsid"].ToString();
                     long kidsID = 0;
 
                     if (!string.IsNullOrEmpty(kidsIdStr))
@@ -1027,51 +1028,94 @@ namespace GreenBushIEP.Controllers
                     }
 
                     string raceCodeVal = collection["studentRace"].ToString();
-                    // Create New					
-                    tblReferralInfo studentInfo = new tblReferralInfo()
-                    {
-                        //UserID = student.UserID,
-                        FirstName = collection["firstname"],
-                        MiddleInitial = collection["middlename"],
-                        LastName = collection["lastname"],
-                        KIDSID = kidsID,
-                        Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
-                        Address1 = collection["studentStreetAddress1"].ToString(),
-                        Address2 = collection["studentStreetAddress2"].ToString(),
-                        City = collection["studentCity"].ToString(),
-                        State = collection["studentState"].ToString(),
-                        Zip = collection["studentZipCode"].ToString(),
-                        County = collection["studentCounty"].ToString(),
-                        Grade = Convert.ToInt32(collection["studentGrade"]),
-                        RaceCode = raceCodeVal,
-                        Race = db.tblRaces.Where(r => r.RaceCode == raceCodeVal).FirstOrDefault().RaceDescription,
-                        Ethicity = collection["studentEthnic"].ToString(),
-                        StudentLanguage = collection["studentLanguage"].ToString(),
-                        ParentLanguage = collection["parentLanguage"].ToString(),
-                        CreatedBy = submitter.UserID,
-                        Create_Date = DateTime.Now,
-                        Update_Date = DateTime.Now
-                    };
+					tblReferralInfo existingReferral = db.tblReferralInfoes.Where(o => o.ReferralID == studentId).FirstOrDefault();
 
+					if (studentId == 0 || existingReferral == null)
+					{
+						// Create New					
+						tblReferralInfo studentInfo = new tblReferralInfo()
+						{
+							//UserID = submitter.UserID,
+							FirstName = collection["firstname"],
+							MiddleInitial = collection["middlename"],
+							LastName = collection["lastname"],
+							KIDSID = kidsID,
+							Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+							Address1 = collection["studentStreetAddress1"].ToString(),
+							Address2 = collection["studentStreetAddress2"].ToString(),
+							City = collection["studentCity"].ToString(),
+							State = collection["studentState"].ToString(),
+							Zip = collection["studentZipCode"].ToString(),
+							County = collection["studentCounty"].ToString(),
+							Grade = Convert.ToInt32(collection["studentGrade"]),
+							RaceCode = raceCodeVal,
+							Race = db.tblRaces.Where(r => r.RaceCode == raceCodeVal).FirstOrDefault().RaceDescription,
+							Ethicity = collection["studentEthnic"].ToString(),
+							StudentLanguage = collection["studentLanguage"].ToString(),
+							ParentLanguage = collection["parentLanguage"].ToString(),
+							CreatedBy = submitter.UserID,
+							Create_Date = DateTime.Now,
+							Update_Date = DateTime.Now
+						};
+						
+						if (!String.IsNullOrEmpty(collection["dob"]))
+						{
+							studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+						}
 
+						try
+						{
+							db.tblReferralInfoes.Add(studentInfo);
+							db.SaveChanges();
+						}
+						catch (Exception e)
+						{
+							return Json(new { Result = "error", Message = "There was an error while trying to create the referral. \n\n" + e.InnerException.ToString() });
+						}
 
-                    if (!String.IsNullOrEmpty(collection["dob"]))
-                    {
-                        studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
-                    }
+						return Json(new { Result = "success", Message = studentInfo.ReferralID });
 
+					}
+					else
+					{
+						
+						if(existingReferral != null)
+						{
+							//UserID = submitter.UserID,
+							existingReferral.FirstName = collection["firstname"];
+							existingReferral.MiddleInitial = collection["middlename"];
+							existingReferral.LastName = collection["lastname"];
+							existingReferral.KIDSID = kidsID;
+							existingReferral.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+							existingReferral.Address1 = collection["studentStreetAddress1"].ToString();
+							existingReferral.Address2 = collection["studentStreetAddress2"].ToString();
+							existingReferral.City = collection["studentCity"].ToString();
+							existingReferral.State = collection["studentState"].ToString();
+							existingReferral.Zip = collection["studentZipCode"].ToString();
+							existingReferral.County = collection["studentCounty"].ToString();
+							existingReferral.Grade = Convert.ToInt32(collection["studentGrade"]);
+							existingReferral.RaceCode = raceCodeVal;
+							existingReferral.Race = db.tblRaces.Where(r => r.RaceCode == raceCodeVal).FirstOrDefault().RaceDescription;
+							existingReferral.Ethicity = collection["studentEthnic"].ToString();
+							existingReferral.StudentLanguage = collection["studentLanguage"].ToString();
+							existingReferral.ParentLanguage = collection["parentLanguage"].ToString();
+							existingReferral.CreatedBy = submitter.UserID;
+							existingReferral.Create_Date = DateTime.Now;
+							existingReferral.Update_Date = DateTime.Now;
+						};
 
-                    try
-                    {
-                        db.tblReferralInfoes.Add(studentInfo);
-                        db.SaveChanges();
-                    }
-                    catch (Exception e)
-                    {
-                        return Json(new { Result = "error", Message = "There was an error while trying to create the referral. \n\n" + e.InnerException.ToString() });
-                    }
+						if (!String.IsNullOrEmpty(collection["dob"]))
+						{
+							existingReferral.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+						}
 
-                    return Json(new { Result = "success", Message = studentInfo.ReferralID });
+						db.SaveChanges();
+
+						return Json(new { Result = "success", Message = existingReferral.ReferralID });
+					}
+                    
+
+                    
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -1102,7 +1146,7 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-                    //tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                  
                     int studentId = Convert.ToInt32(collection["studentId"]);
 
                     tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == studentId).FirstOrDefault();

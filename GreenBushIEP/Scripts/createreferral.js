@@ -173,12 +173,13 @@ $("#next2").on("click", function () {
 					$active.removeClass('disabled');
                     $active.next().removeClass('disabled');
                     $($active).next().find('a[data-toggle="tab"]').click();
-
-                    // create a new student id and add it to the contacts form here.
+					
+					// create a new student id and add it to the contacts form here.
+					$("form:eq(0)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
 					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(4)").find("input[name='studentId']").val(data.Message);
+					//$("form:eq(4)").find("input[name='studentId']").val(data.Message);
                 } else {
 
                     alert(data.Message);

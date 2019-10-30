@@ -688,7 +688,7 @@
 		</div>
 	</div>
 	<div class="row">
-
+		
 		<section>
 			<div class="wizard">
 				<div class="wizard-inner">
@@ -729,7 +729,8 @@
 						@using (Html.BeginForm("CreateReferral", "Manage", null, FormMethod.Post, new { id = "createNewReferral", @class = "newstudent" }))
 						{
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+							<input type="hidden" id="studentId" name="studentId" value=0 />
+							
 							<div class="step11">
 								<div class="row">
 									<div class="col-md-3">
@@ -1081,7 +1082,7 @@
 							@using (Html.BeginForm("CreateReferralOptions", "Manage", null, FormMethod.Post, new { id = "createReferralData", @class = "newstudent" }))
 							{
 								@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-								@Html.Hidden("studentId", 0)
+								<input type="hidden" id="studentId" name="studentId" value=0 />
 								<div class="step11">
 
 									<div class="row voffset3">
@@ -1156,7 +1157,7 @@
 						@using (Html.BeginForm("CreateReferralContacts", "Manage", null, FormMethod.Post, new { id = "createReferralContacts", @class = "newstudent" }))
 						{
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-							@Html.Hidden("studentId", 0)
+							<input type="hidden" id="studentId" name="studentId" value=0 />
 
 							if (Model.contacts != null)
 							{
@@ -1180,15 +1181,15 @@
 						@using (Html.BeginForm("SubmitReferral", "Manage", null, FormMethod.Post, new { id = "submitReferral", onsubmit = "return false;" }))
 						{
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-							@Html.Hidden("studentId", 0)
+							<input type="hidden" id="studentId" name="studentId" value=0 />
 
 							<p id="pSummary"></p>							
 						}
 
-								<ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
-									<li><button type="button" class="btn btn-default prev-step">Previous</button></li>									
-                                    <li><button type="button" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;">Submit Referral</button></li>
-								</ul>
+						<ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+							<li><button type="button" class="btn btn-default prev-step">Previous</button></li>									
+                            <li><button type="button" id="submitForm" class="btn btn-info btn-info-full" , data_ftrans="slide reverse" data_ajax="false" style="font-size: 18px;">Submit Referral</button></li>
+						</ul>
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -1343,11 +1344,11 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createreferral.js"></var>
+<var data-reload="true" data-src="/Scripts/createreferral.js?v1.2"></var>
 
 @section scripts {
 	@Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
 	@Scripts.Render("~/Scripts/fasw.transitions.js")
 	@Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-	@Scripts.Render("~/Scripts/createreferral.js?v1.1")
+	@Scripts.Render("~/Scripts/createreferral.js?v1.2")
 }
