@@ -1160,7 +1160,29 @@ namespace GreenbushIep.Controllers
                     try
                     {
                         var theIEP = GetIEPPrint(stId, IEPid);
-						theIEP.isServerRender = true;
+
+						if (theIEP != null)
+						{
+							theIEP.studentDetails.printStudentInfo = true;
+							theIEP.studentDetails.printIEPDetails = true;
+							theIEP.studentDetails.printHealth = true;
+							theIEP.studentDetails.printMotor = true;
+							theIEP.studentDetails.printComm = true;
+							theIEP.studentDetails.printSocial = true;
+							theIEP.studentDetails.printGeneral = true;
+							theIEP.studentDetails.printAcademic = true;
+							theIEP.studentDetails.printAcc = true;
+							theIEP.studentDetails.printBehavior = true;
+							theIEP.studentDetails.printTrans = true;
+							theIEP.studentDetails.printOther = true;
+							theIEP.studentDetails.printGoals = true;
+							theIEP.studentDetails.printServices = true;
+							theIEP.studentDetails.printNotice = true;
+							theIEP.studentDetails.printProgressReport = false;
+
+							theIEP.isServerRender = true;
+						}
+						
                         var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
 
                         string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
@@ -1177,7 +1199,7 @@ namespace GreenbushIep.Controllers
                     }
                     catch (Exception e)
                     {
-                        return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive: " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
                     }
 
                     // start switching the flag.
