@@ -16,7 +16,7 @@ namespace GreenBushIEP.Models
     {
         public int ReferalRequestID { get; set; }
         public int UserID_Requster { get; set; }
-        public int UserID_District { get; set; }
+        public string UserID_District { get; set; }
         public int ReferralID { get; set; }
         public bool Complete { get; set; }
         public System.DateTime Create_Date { get; set; }

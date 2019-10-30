@@ -967,7 +967,7 @@
           </Key>
           <Property Name="ReferalRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID_Requster" Type="int" Nullable="false" />
-          <Property Name="UserID_District" Type="int" Nullable="false" />
+          <Property Name="UserID_District" Type="nvarchar" MaxLength="50" />
           <Property Name="ReferralID" Type="int" Nullable="false" />
           <Property Name="Complete" Type="bit" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
@@ -2979,7 +2979,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </Key>
           <Property Name="ReferalRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID_Requster" Type="Int32" Nullable="false" />
-          <Property Name="UserID_District" Type="Int32" Nullable="false" />
+          <Property Name="UserID_District" Type="String" />
           <Property Name="ReferralID" Type="Int32" Nullable="false" />
           <Property Name="Complete" Type="Boolean" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />

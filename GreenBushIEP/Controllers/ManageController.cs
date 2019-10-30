@@ -1384,7 +1384,7 @@ namespace GreenBushIEP.Controllers
                             where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == student.AssignedUSD
                             select user).Distinct().ToList();
 
-                    int userDistrictId = 0;
+                   
                     if (list != null && list.Any())
                     {
 
@@ -1394,9 +1394,6 @@ namespace GreenBushIEP.Controllers
 
                         foreach (var misUser in list)
                         {
-                            if (userDistrictId == 0)
-                                userDistrictId = misUser.UserID;
-
                             if (!string.IsNullOrEmpty(misUser.Email))
                             {
                                 mailMessage.To.Add(misUser.Email);
@@ -1419,10 +1416,17 @@ namespace GreenBushIEP.Controllers
 
                     }
 
-                    tblReferralRequest request = new tblReferralRequest();
+					var submitterDistrict = (from org in db.tblOrganizationMappings
+							join user in db.tblUsers
+								on org.UserID equals user.UserID
+							where user.UserID == submitter.UserID
+							select org).Distinct().FirstOrDefault();
+
+
+					tblReferralRequest request = new tblReferralRequest();
                     request.UserID_Requster = submitter.UserID;
-                    request.UserID_District = userDistrictId;
-                    request.ReferralID = student.ReferralID;
+					request.UserID_District = submitterDistrict.USD;
+					request.ReferralID = student.ReferralID;
                     request.Create_Date = DateTime.Now;
                     request.Update_Date = DateTime.Now;
                     db.tblReferralRequests.Add(request);
