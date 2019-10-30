@@ -16,12 +16,10 @@
     var isDraft =Model.current != null &&  Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
     var draftImage = "";
 	
-
     if (isDraft)
     {
         draftImage = "/Content/Images/draft-watermark-printing.png";
     }
-	
 	
 }
 
@@ -36,8 +34,11 @@
             <div class="col-md-11">
 
                 <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">
-                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />					
-                    <input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />					
+                    <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" />	
+					@if (Model.studentDetails.printIEPDetails)
+					{
+						<input type="button" value="Archive" onclick="ArchiveText();" class="btn btn-info print" style="margin-top:5px" />					
+					}
                     <input type="hidden" id="printText" name="printText" />
                     <input type="hidden" id="studentText" name="studentText" />
                     <input type="hidden" id="isArchive" name="isArchive" />

@@ -633,6 +633,22 @@ namespace GreenBushIEP.Models
 			teacherBuilding = new tblBuilding();
 			neighborhoodBuilding = new tblBuilding();
 			reevalDates = new List<tblArchiveEvaluationDate>();
+			printStudentInfo = false;
+			printIEPDetails = false;
+			printHealth = false;
+			printMotor = false;
+			printComm = false;
+			printSocial = false;
+			printGeneral = false;
+			printAcademic = false;
+			printAcc = false;
+			printBehavior = false;
+			printTrans = false;
+			printOther = false;
+			printGoals = false;
+			printServices = false;
+			printNotice = false;
+			printProgressReport = false;
 		}
 
 		public tblUser teacher { get; set; }
@@ -657,6 +673,23 @@ namespace GreenBushIEP.Models
 		public string placementCodeDesc { get; set; }
 		public string edStatusCodeDesc { get; set; }
 		public bool isDOC { get; set; }
+
+		public bool printStudentInfo { get; set; }
+		public bool printIEPDetails { get; set; }
+		public bool printHealth { get; set; }
+		public bool printMotor { get; set; }
+		public bool printComm { get; set; }
+		public bool printSocial { get; set; }
+		public bool printGeneral { get; set; }
+		public bool printAcademic { get; set; }
+		public bool printAcc { get; set; }
+		public bool printBehavior { get; set; }
+		public bool printTrans { get; set; }
+		public bool printOther { get; set; }
+		public bool printGoals { get; set; }
+		public bool printServices { get; set; }
+		public bool printNotice { get; set; }
+		public bool printProgressReport { get; set; }		
 	}
 
 	public class StudentServiceObject

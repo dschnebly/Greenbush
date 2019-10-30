@@ -2237,14 +2237,118 @@ namespace GreenbushIep.Controllers
             var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
             {
-                return View("PrintIEP", theIEP);
+				theIEP.studentDetails.printStudentInfo = true;
+				theIEP.studentDetails.printIEPDetails = true;
+				theIEP.studentDetails.printHealth = true;
+				theIEP.studentDetails.printMotor = true;
+				theIEP.studentDetails.printComm = true;
+				theIEP.studentDetails.printSocial = true;
+				theIEP.studentDetails.printGeneral = true;
+				theIEP.studentDetails.printAcademic = true;
+				theIEP.studentDetails.printAcc = true;
+				theIEP.studentDetails.printBehavior = true;
+				theIEP.studentDetails.printTrans = true;
+				theIEP.studentDetails.printOther = true;
+				theIEP.studentDetails.printGoals = true;
+				theIEP.studentDetails.printServices = true;
+				theIEP.studentDetails.printNotice = true;
+				theIEP.studentDetails.printProgressReport = false;
+				
+				return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
 
-        [HttpGet]
+		[HttpGet]
+		[Authorize]
+		public ActionResult PrintIEPSection(int stid, int iepId, string section)
+		{
+			var theIEP = GetIEPPrint(stid, iepId);
+			if (theIEP != null)
+			{
+				switch(section)
+				{
+					case "Health":
+						{
+							theIEP.studentDetails.printHealth= true;
+							break;
+						}
+
+					case "Motor":
+						{
+							theIEP.studentDetails.printMotor= true;
+							break;
+						}
+					case "Comm":
+						{
+							theIEP.studentDetails.printComm= true;
+							break;
+						}
+					case "Social":
+						{
+							theIEP.studentDetails.printSocial= true;
+							break;
+						}
+					case "General":
+						{
+							theIEP.studentDetails.printGeneral= true;
+							break;
+						}
+					case "Academic":
+						{
+							theIEP.studentDetails.printAcademic= true;
+							break;
+						}
+					case "Acc":
+						{
+							theIEP.studentDetails.printAcc= true;
+							break;
+						}
+					case "Behavior":
+						{
+							theIEP.studentDetails.printBehavior= true;
+							break;
+						}
+					case "Trans":
+						{
+							theIEP.studentDetails.printTrans= true;
+							break;
+						}
+
+					case "Other":
+						{
+							theIEP.studentDetails.printOther= true;
+							break;
+						}
+					case "Goals":
+						{
+							theIEP.studentDetails.printGoals= true;
+							break;
+						}
+					case "Services":
+						{
+							theIEP.studentDetails.printServices= true;
+							break;
+						}
+					case "Progress":
+						{
+							theIEP.studentDetails.printProgressReport = true;
+							break;
+						}
+
+
+				}
+
+				return View("PrintIEP", theIEP);
+			}
+
+			// Unknow error happened.
+			return RedirectToAction("Index", "Home", null);
+		}
+
+		[HttpGet]
         [Authorize]
         public ActionResult PrintStudentInfo(int stid, int iepId)
         {
@@ -2252,7 +2356,24 @@ namespace GreenbushIep.Controllers
             ViewBag.IsStudentInfo = 1;
             if (theIEP != null)
             {
-                return View("PrintIEP", theIEP);
+				theIEP.studentDetails.printStudentInfo = true;
+				theIEP.studentDetails.printIEPDetails = true;
+				theIEP.studentDetails.printHealth = true;
+				theIEP.studentDetails.printMotor = true;
+				theIEP.studentDetails.printComm = true;
+				theIEP.studentDetails.printSocial = true;
+				theIEP.studentDetails.printGeneral = true;
+				theIEP.studentDetails.printAcademic = true;
+				theIEP.studentDetails.printAcc = true;
+				theIEP.studentDetails.printBehavior = true;
+				theIEP.studentDetails.printTrans = true;
+				theIEP.studentDetails.printOther = true;
+				theIEP.studentDetails.printGoals = true;
+				theIEP.studentDetails.printServices = true;
+				theIEP.studentDetails.printNotice = true;
+				theIEP.studentDetails.printProgressReport = false;
+
+				return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.

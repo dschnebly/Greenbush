@@ -500,23 +500,9 @@ function getUrlParameter(sParam) {
 
 
 function printModule(divOverride) {	
-    var header = "";
-    var divName = 'module-form-section'
-    if (divOverride != undefined) {
-        divName = divOverride;
-    }
-    var divToPrint = document.getElementById(divName);
-
-    var newWin = window.open('', 'Print-Window');
-    newWin.document.open();
-	
-    newWin.document.write("<style>.noPrint, .completed-loader, .close, .tooltip-help, .print-module, .formbtn {display: none!important;} .modal-header{display:inline; } .modal-title { padding:0; margin: 0; line-height: 1.42857143; } .module-user-name { margin-left:8px;margin-bottom:8px } label {display: inline-block;	max-width:100%;margin-bottom: 5px;font-weight:bold;}.funkyradio div { clear: both; overflow: hidden; } .funkyradio label { width: 100%; border-radius: 3px; border: 1px solid #D1D3D4; font-weight: normal; display: inline-block !important; padding-left: 50px !important; text-indent: 0px !important; line-height: 110% !important; padding-top: 8px; padding-bottom: 8px; } .funkyradio input[type='radio']:empty, .funkyradio input[type='checkbox']:empty { display: none; } .funkyradio input[type='radio']:empty ~ label, .funkyradio input[type='checkbox']:empty ~ label { position: relative; line-height: 2.5em; text-indent: 3.25em; /*margin-top: 2em;*/ cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .funkyradio input[type='radio']:empty ~ label:before, .funkyradio input[type='checkbox']:empty ~ label:before { position: absolute; display: block; top: 0; bottom: 0; left: 0; content: ''; width: 2.5em; background: #D1D3D4; border-radius: 3px 0 0 3px; } .funkyradio input[type='radio']:hover:not(:checked) ~ label, .funkyradio input[type='checkbox']:hover:not(:checked) ~ label { color: #888; } .funkyradio input[type='radio']:hover:not(:checked) ~ label:before, .funkyradio input[type='checkbox']:hover:not(:checked) ~ label:before { content: '\2714'; text-indent: .9em; color: #C2C2C2; padding-top: 8px; } .funkyradio input[type='radio']:checked ~ label, .funkyradio input[type='checkbox']:checked ~ label { color: #777; } .funkyradio input[type='radio']:checked ~ label:before, .funkyradio input[type='checkbox']:checked ~ label:before { content: '\u2714'; text-indent: .9em; color: #333; background-color: #ccc; line-height: 2; display: inline-block; vertical-align: middle; } .funkyradio input[type='radio']:focus ~ label:before, .funkyradio input[type='checkbox']:focus ~ label:before { box-shadow: 0 0 0 3px #999; } .funkyradio-default input[type='radio']:checked ~ label:before, .funkyradio-default input[type='checkbox']:checked ~ label:before { color: #333; background-color: #ccc; } .funkyradio-primary input[type='radio']:checked ~ label:before, .funkyradio-primary input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #337ab7; } .funkyradio-success input[type='radio']:checked ~ label:before, .funkyradio-success input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #5cb85c; } .funkyradio-danger input[type='radio']:checked ~ label:before, .funkyradio-danger input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #d9534f; } .funkyradio-warning input[type='radio']:checked ~ label:before, .funkyradio-warning input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #f0ad4e; } .funkyradio-info input[type='radio']:checked ~ label:before, .funkyradio-info input[type='checkbox']:checked ~ label:before { color: #fff; background-color: #5bc0de; }.standard-font-size { font-size: 18px; } label { display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: bold; }.form-group { margin-bottom: 15px; } fieldset { display: table-cell; } fieldset { min-width: 0; padding: 0; margin: 0; margin-bottom: 0px; border: 0; }</style><html><body onload='window.print()'>" + header + divToPrint.innerHTML + '</body></html>');
-
-    newWin.document.close();
-
-    setTimeout(function () { newWin.close(); }, 10);
-
-    return false;
+	var stid = getUrlParameter('stid');
+	var iepId = $("#studentIEPId").val();
+	window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride;		   	
 }
 
 
