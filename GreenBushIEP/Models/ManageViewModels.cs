@@ -716,6 +716,15 @@ namespace GreenBushIEP.Models
 		public string Name { get; set; }
 	}
 
+	public class UserView
+	{
+		public int UserID { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string RoleID { get; set; }
+		public bool IsActive { get; set; }
+	}
+
 	public class ExportErrorView
 	{
 		public string UserID { get; set; }

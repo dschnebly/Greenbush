@@ -2,6 +2,16 @@
     function init() {
 		$(".chosen-select").chosen({ width: "100%" });
 
+		// filter to only active students
+		var filterCollection = $('.list-group-root').find('.list-group-item');
+
+		$.each(filterCollection, function (index, value) {
+			if ($(value).attr("data-isActive") == 2) {
+				$(value).addClass('hidden');
+			}
+		});
+
+
 		//$('.chosen-search input').autocomplete({
 		//	minLength: 3,
 		//	source: function (request, response) {
@@ -49,6 +59,74 @@
             $(e.currentTarget).find('input[name="id"]').val(user);
             $('#confirmDeletion').val('');
         });
+
+		// attach event
+		// fires when the MIS chooses active/inactive
+		$('#filterActive').change(function () {
+
+			var selectedDistrict = $("#userDistricts option:selected").val() + "";
+			var selectedBuilding = $("#userBuildings option:selected").val() + "";
+			var selectedRole = $("#userRoles option:selected").val() + "";
+			var selectedActive = this.value;
+
+			$(".ajax-loader").show();
+
+			$.ajax({
+				type: 'POST',
+				url: '/Manage/FilterOwnerActiveList',
+				dataType: 'json',
+				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, activeType: selectedActive },
+				async: false,
+				success: function (data) {
+					if (data.Result === "success") {
+						var results = data.Message;
+
+						// blow away the building list 
+						$('#userBuildings').empty();
+
+						// hide all the users in the list.
+						var filterCollection = $('.list-group-root').find('.list-group-item');
+
+						$.each(filterCollection, function (index, value) {
+							$(value).addClass('hidden');
+						});
+
+						$('#userBuildings').append('<option value="-1">All Buildings</option>');
+						if (results.buildings.length > 0) {
+							$.each(results.buildings, function (index, value) {
+								console.log(value);
+								$('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
+							});
+						}
+
+						if (results.members.length > 0) {
+							$.each(filterCollection, function (filterIndex, filterValue) {
+								$.each(results.members, function (index, value) {
+									if ($(filterValue).data('id') === value.UserID) {
+										$(filterValue).removeClass('hidden');
+										return false;
+									}
+								});
+							});
+						}
+					}
+					else {
+						alert('doh');
+					}
+				},
+				error: function (data) {
+					alert('Not connected to the network!');
+
+					console.log(data);
+				},
+				complete: function (data) {
+					$(".ajax-loader").hide();
+					//A function to be called when the request finishes 
+					// (after success and error callbacks are executed). 
+				}
+			});
+		});
+
 
 		// attach event
 		// fires when the owner chooses a user
