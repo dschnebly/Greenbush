@@ -214,12 +214,17 @@ namespace GreenbushIep.Controllers
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
 
                 }
+
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
                 model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
-                // show the latest updated version changes
-                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
+				model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList();
+				model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList();
+
+
+				// show the latest updated version changes
+				ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
 
                 return View(model);
             }
@@ -291,8 +296,11 @@ namespace GreenbushIep.Controllers
                 var model = new StudentViewModel();
                 model.Teacher = nurse;
                 model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+				model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList();
+				model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList();
 
-                return View(model);
+
+				return View(model);
             }
 
             // Unknow error happened.

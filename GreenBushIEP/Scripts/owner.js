@@ -73,7 +73,7 @@
 
 			$.ajax({
 				type: 'POST',
-				url: '/Manage/FilterOwnerActiveList',
+				url: '/Manage/FilterOwnerUserList',
 				dataType: 'json',
 				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, activeType: selectedActive },
 				async: false,

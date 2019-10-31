@@ -2571,7 +2571,7 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
+        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
@@ -2586,11 +2586,23 @@ namespace GreenBushIEP.Controllers
                     }
                 }
 
-                List<String> myDistricts = new List<string>();
+				bool? searchActiveType = null;
+
+				if (activeType.HasValue && activeType == 1)
+				{
+					searchActiveType = true;
+				}
+				else if (activeType.HasValue && activeType == 2)
+				{
+					searchActiveType = false;
+				}
+
+				List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
+				List<String> nonStudentRoles = new List<string>() { "2", "3", "4", "6" };
 
-                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
+				Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
                 NewPortalObject.Add("selectedBuilding", BuildingId);
                 NewPortalObject.Add("selectedRole", RoleId);
@@ -2620,17 +2632,53 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
-                if (RoleId != "-1")
-                {
-                    var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+				var members = new List<UserView>();
 
-                    NewPortalObject.Add("members", members);
+				if (RoleId != "-1")
+                {
+					//var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+					if (searchActiveType == null)
+					{
+						members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
+					}
+					else
+					{
+
+						var students = RoleId == student ? db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList() : null;
+						var nonStudents = db.vw_UserList.Where(ul => ul.RoleID == RoleId && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+
+						if (students != null)
+							members.AddRange(students);
+
+						if (nonStudents != null)
+							members.AddRange(nonStudents);
+
+					}
+
+					NewPortalObject.Add("members", members);
                 }
                 else
                 {
-                    var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+					//var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
+					if (searchActiveType == null)
+					{
+						members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
+					}
+					else
+					{
 
-                    NewPortalObject.Add("members", members);
+						var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+						var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+
+						if (students != null)
+							members.AddRange(students);
+
+						if (nonStudents != null)
+							members.AddRange(nonStudents);
+
+					}
+
+					NewPortalObject.Add("members", members);
                 }
                 // var members = (from buildingMap in db.tblBuildingMappings
                 //  join user in db.tblUsers on buildingMap.UserID equals user.UserID
@@ -2650,7 +2698,7 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId)
+        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
@@ -2664,11 +2712,25 @@ namespace GreenBushIEP.Controllers
                         searchUserId = userId.Value;
                     }
                 }
-                List<String> myDistricts = new List<string>();
+
+				bool? searchActiveType = null;
+
+				if (activeType.HasValue && activeType == 1)
+				{
+					searchActiveType = true;
+				}
+				else if (activeType.HasValue && activeType == 2)
+				{
+					searchActiveType = false;
+				}
+
+
+				List<String> myDistricts = new List<string>();
                 List<String> myBuildings = new List<string>();
                 List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
+				List<String> nonStudentRoles = new List<string>() { "3", "4", "6" };
 
-                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
+				Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
                 NewPortalObject.Add("selectedBuilding", BuildingId);
                 NewPortalObject.Add("selectedRole", RoleId);
@@ -2701,22 +2763,43 @@ namespace GreenBushIEP.Controllers
                 if (submitter.RoleID == "2" || submitter.RoleID == "1")
                 {
                     myRoles.Add("2");
-                }
+					nonStudentRoles.Add("2");
+				}
+				
 
-                //model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+				//model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
+				var members = new List<UserView>();
 
-                var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+				if (searchActiveType == null)
+				{
+				
+					members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+				}
+				else
+				{
 
-                //var members = (from buildingMap in db.tblBuildingMappings
-                //			   join user in db.tblUsers on buildingMap.UserID equals user.UserID
-                //			   where myRoles.Contains(user.RoleID)
-                //			   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
-                //			   && !(user.Archive ?? false) 
-                //			   && (myDistricts.Contains(buildingMap.USD) 
-                //			   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+					var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+					var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
+					
+					if (students != null)
+						members.AddRange(students);
+										
+					if(nonStudents != null)
+						members.AddRange(nonStudents);
+					
 
-                if (RoleId != "-1")
+				}
+
+				//var members = (from buildingMap in db.tblBuildingMappings
+				//			   join user in db.tblUsers on buildingMap.UserID equals user.UserID
+				//			   where myRoles.Contains(user.RoleID)
+				//			   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
+				//			   && !(user.Archive ?? false) 
+				//			   && (myDistricts.Contains(buildingMap.USD) 
+				//			   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
+
+				if (RoleId != "-1")
                 {
                     foreach (var user in members.ToList())
                     {
@@ -2735,139 +2818,41 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
         }
 
-		// POST: Manage/FilterUserList
-		[HttpPost]
-		public ActionResult FilterOwnerActiveList(string DistrictId, string BuildingId, string RoleId, int activeType)
+		public ActionResult FilterStudentList(string DistrictId, string BuildingId, int? userId, int? activeType)
 		{
 			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 			if (submitter != null)
 			{
+				int? searchUserId = null;
+
+				if (userId != null)
+				{
+					if (userId.Value > -1)
+					{
+						searchUserId = userId.Value;
+					}
+				}
+
 				bool? searchActiveType = null;
 
-				if (activeType == 1)
+				if (activeType.HasValue && activeType == 1)
 				{
 					searchActiveType = true;
 				}
-				else if (activeType == 2)
+				else if (activeType.HasValue && activeType == 2)
 				{
 					searchActiveType = false;
 				}
 
-				List<String> myDistricts = new List<string>();
-				List<String> myBuildings = new List<string>();
-				List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
-				List<String> nonStudentRoles = new List<string>() { "2", "3", "4", "6" };
-
-				Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
-				NewPortalObject.Add("selectedDistrict", DistrictId);
-				NewPortalObject.Add("selectedBuilding", BuildingId);
-				NewPortalObject.Add("selectedRole", RoleId);
-
-				if (DistrictId == "-1")
-				{
-					var districts = (from district in db.tblDistricts select new { district.USD, district.DistrictName }).Distinct().ToList();
-					myDistricts = districts.Select(d => d.USD).ToList();
-				}
-				else
-				{
-					var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.USD == DistrictId select new { district.USD, district.DistrictName }).Distinct().ToList();
-					myDistricts = districts.Select(d => d.USD).ToList();
-				}
-
-				if (BuildingId == "-1")
-				{
-					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
-					NewPortalObject.Add("buildings", buildings);
-					myBuildings = buildings.Select(b => b.BuildingID).ToList();
-					myBuildings.Add("0");
-				}
-				else
-				{
-					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
-					NewPortalObject.Add("buildings", buildings);
-					myBuildings = buildings.Select(b => b.BuildingID).ToList();
-				}
-
-				if (RoleId != "-1")
-				{
-					
-					//var members2 = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
-					var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)  && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-					var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-
-					var members = new List<UserView>();
-
-					if (students != null)
-						members.AddRange(students);
-
-					if (nonStudents != null)
-						members.AddRange(nonStudents);
-
-
-					NewPortalObject.Add("members", members);
-				}
-				else
-				{
-
-					//var members2 = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
-					var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-					var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-
-					var members = new List<UserView>();
-
-					if (students != null)
-						members.AddRange(students);
-
-					if (nonStudents != null)
-						members.AddRange(nonStudents);
-
-
-					NewPortalObject.Add("members", members);
-				}
-
-				// var members = (from buildingMap in db.tblBuildingMappings
-				//  join user in db.tblUsers on buildingMap.UserID equals user.UserID
-				//  where myRoles.Contains(user.RoleID) 
-				//  && !(user.Archive ?? false)
-				//  && ((searchUserId == null) || (user.UserID == searchUserId.Value))
-				//  && myDistricts.Contains(buildingMap.USD)
-				//  && myBuildings.Contains(buildingMap.BuildingID)
-				//  select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
-
-
-				return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
-			}
-
-			return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
-		}
-
-		// POST: Manage/FilterUserList
-		[HttpPost]
-		public ActionResult FilterActiveList(string DistrictId, string BuildingId, string RoleId, int activeType)
-		{
-			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-			if (submitter != null)
-			{
-				bool? searchActiveType = null;
-
-				if (activeType == 1)
-				{
-					searchActiveType = true;
-				}
-				else if (activeType == 2)
-				{
-					searchActiveType = false;
-				}
 
 				List<String> myDistricts = new List<string>();
 				List<String> myBuildings = new List<string>();
-				List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
-				List<String> nonStudentRoles = new List<string>() { "3", "4", "6" };
-
+				List<String> myRoles = new List<string>() { "5" };
+				
 				Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
 				NewPortalObject.Add("selectedDistrict", DistrictId);
 				NewPortalObject.Add("selectedBuilding", BuildingId);
-				NewPortalObject.Add("selectedRole", RoleId);
+				
 
 				if (DistrictId == "-1")
 				{
@@ -2894,43 +2879,55 @@ namespace GreenBushIEP.Controllers
 					myBuildings = buildings.Select(b => b.BuildingID).ToList();
 				}
 
-				if (submitter.RoleID == "2" || submitter.RoleID == "1")
-				{
-					myRoles.Add("2");
-					nonStudentRoles.Add("2");
-				}
-
-				//var members2 = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-
-				var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID= u.UserID, FirstName = u.FirstName, LastName= u.LastName, RoleID= u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-				var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) ).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-
-				var members = new List<UserView>();
-
-				if(students != null)
-					members.AddRange(students);
-
-				if (nonStudents != null)
-					members.AddRange(nonStudents);
 								
-				if (RoleId != "-1")
+				var members = new List<UserView>();
+				
+				if (searchActiveType == null)
 				{
-					foreach (var user in members)
-					{
-						if (user.RoleID != RoleId)
-						{
-							members.Remove(user);
-						}
-					}
+
+					var userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
+					
+					members = (from u in userMembers
+								 join o in db.tblOrganizationMappings on u.UserID equals o.UserID								
+								 where o.AdminID == submitter.UserID
+								 
+								 select new UserView()
+								 {
+									 UserID = u.UserID,
+									 FirstName = u.FirstName,					
+									 LastName = u.LastName,
+					                 RoleID = u.RoleID
+								 }).Distinct().ToList();
+
+
 				}
+				else
+				{
 
+					var userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
 
+					members = (from u in userMembers
+							   join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+							   where o.AdminID == submitter.UserID
+
+							   select new UserView()
+							   {
+								   UserID = u.UserID,
+								   FirstName = u.FirstName,
+								   LastName = u.LastName,
+								   RoleID = u.RoleID
+							   }).Distinct().ToList();
+
+					
+				}
+								
 				NewPortalObject.Add("members", members);
 				return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
 			}
 
 			return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
 		}
+			   	
 
 		// POST: Manage/RemoveFromTeacherList
 		[HttpPost]

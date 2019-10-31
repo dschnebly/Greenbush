@@ -8,6 +8,7 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
+	@Styles.Render("~/Content/chosen.css")
 }
 
 <style>
@@ -348,7 +349,82 @@
             </div>
         </div>
     </div>
+	<div class="row">
+		<div class="col-xs-12 col-md-2 pull-left">
+            <div class="form-group">
+                <label for="filterActive">Filter Student by Active</label>
+                <div class="input-group">
 
+                    <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
+                    <select class="form-control" name="filterActive" id="filterActive">
+                        <option value="0">All</option>
+						<option value="1" selected>Active</option>
+						<option value="2">Inactive</option>                        
+                    </select>
+                </div>
+            </div>
+        </div>
+		<div class="col-xs-12 col-md-2 pull-left">
+            <div class="form-group">
+                <label for="filterName">Filter by Name</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-search"></span></span>					
+					 <select class="form-control chosen-select" name="filterName" id="filterName">
+                        <option value="-1">All Users</option>
+						  @foreach (var user in Model.Students)
+						  {
+							   <option value=@user.UserID>@user.LastName, @user.FirstName @user.MiddleName  </option>
+						  }
+					</select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3 pull-left">
+            <div class="form-group">
+                <label for="userDistricts">Filter by District</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
+                    <select class="form-control" name="userDistricts" id="userDistricts">
+                        <option value="-1">All District</option>
+                        @if (Model.districts.Count > 0)
+                        {
+                            foreach (var district in Model.districts)
+                            {
+                                <option value="@(district.USD)">@(district.DistrictName)</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>This user is not assigned to any districts.</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3 pull-left">
+            <div class="form-group">
+                <label for="userBuildings">Filter by Building</label>
+                <div class="input-group">
+                    <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
+                    <select class="form-control" name="userBuildings" id="userBuildings">
+                        <option value="-1">All Buildings</option>
+                        @if (Model.buildings.Count > 0)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>This user is not assigned to any buildings.</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+       
+    </div>
     <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
@@ -357,7 +433,7 @@
     @{
         if (Model.Students.Count > 0)
         {
-            <table class="table table-hover">
+            <table id="studentTable" class="table table-hover" style="margin-bottom:100px;">
                 <thead>
                     <tr>
                         <th>Kids #</th>
@@ -372,7 +448,7 @@
                 <tbody>
                     @foreach (var student in Model.Students)
                     {
-                        <tr data-id="@(student.UserID)">
+                        <tr data-id="@(student.UserID)" data-isActive="@(student.RoleID == "5" ? student.hasIEP ? 1: 2 : 0)">
                             <td>@student.KidsID</td>
                             <td>@student.FirstName</td>
                             <td>@student.MiddleName</td>
@@ -435,6 +511,6 @@
 </div>
 
 @section scripts {
-    @Scripts.Render("~/Scripts/portal.js")
+    @Scripts.Render("~/Scripts/portal.js?v1.1")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
 }

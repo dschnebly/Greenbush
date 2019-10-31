@@ -208,6 +208,14 @@ namespace GreenBushIEP.Models
 	{
 		public tblUser Teacher { get; set; }
 		public ICollection<Student> Students { get; set; }
+		public List<tblDistrict> districts { get; set; }
+		public List<tblBuilding> buildings { get; set; }
+
+		public StudentViewModel()
+		{
+			districts = new List<tblDistrict>();
+			buildings = new List<tblBuilding>();
+		}
 	}
 
 	public class BuildingsViewModel

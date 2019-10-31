@@ -135,7 +135,7 @@
 
 			$.ajax({
 				type: 'POST',
-				url: '/Manage/FilterActiveList',
+				url: '/Manage/FilterUserList',
 				dataType: 'json',
 				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, activeType: selectedActive },
 				async: false,
@@ -196,14 +196,14 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
-
+			
             $(".ajax-loader").show();
 
             $.ajax({
                 type: 'POST',
                 url: '/Manage/FilterUserList',
                 dataType: 'json',
-                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
+				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
@@ -261,6 +261,7 @@
             var selectedDistrict = $(this).val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
+			
 
             $(".ajax-loader").show();
 
@@ -316,7 +317,7 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $(this).val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
-
+			
             $(".ajax-loader").show();
 
             $.ajax({
@@ -371,7 +372,7 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
-
+			
             $(".ajax-loader").show();
 
             $.ajax({
