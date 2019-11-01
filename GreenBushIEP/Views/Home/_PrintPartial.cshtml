@@ -480,7 +480,7 @@
 				}
 				if (Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value)
 				{
-					textNeedMetBy = Model.studentHealth.NeedMetByOtherDescription;
+					textNeedMetBy = "by Other.<p>Other Description: " + Model.studentHealth.NeedMetByOtherDescription + "</p>";
 				}
 
 				if ((Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value)
@@ -492,25 +492,25 @@
 				if ((Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value)
 					&& (Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value))
 				{
-					textNeedMetBy = "by goal(s) and " + Model.studentHealth.NeedMetByOtherDescription;
+					textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentHealth.NeedMetByOtherDescription + "</p>";
 				}
 				if ((Model.studentHealth.NeedMetByGoal.HasValue && Model.studentHealth.NeedMetByGoal.Value)
 						   && (Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value)
 						   && (Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value))
 				{
-					textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentHealth.NeedMetByOtherDescription;
+					textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentHealth.NeedMetByOtherDescription + "</p>";
 				}
 				if ((Model.studentHealth.NeedMetByOther.HasValue && Model.studentHealth.NeedMetByOther.Value)
 						   && (Model.studentHealth.NeedMetByAccommodation.HasValue && Model.studentHealth.NeedMetByAccommodation.Value))
 				{
-					textNeedMetBy = " with accommodations or modifications and " + Model.studentHealth.NeedMetByOtherDescription;
+					textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentHealth.NeedMetByOtherDescription + "</p>";
 				}
 
 			}
 			@if (!string.IsNullOrEmpty(textNeedMetBy))
 			{
 				<div class="form-check form-group-label">
-					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 				</div>
 			}
 		</fieldset>
@@ -607,6 +607,7 @@
 			<fieldset class="form-group">
 				@{
 					var textNeedMetBy = "";
+					
 					if (Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
 					{
 						textNeedMetBy = "by goal(s)";
@@ -617,7 +618,7 @@
 					}
 					if (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentMotor.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentMotor.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
@@ -629,27 +630,28 @@
 					if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
 						&& (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentMotor.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentMotor.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentMotor.NeedMetByGoal.HasValue && Model.studentMotor.NeedMetByGoal.Value)
 						&& (Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
 						&& (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentMotor.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentMotor.NeedMetByOther.HasValue && Model.studentMotor.NeedMetByOther.Value)
 						   && (Model.studentMotor.NeedMetByAccommodation.HasValue && Model.studentMotor.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentMotor.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentMotor.NeedMetByOtherDescription + "</p>";
 					}
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy) </p>
+												
+						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy)) </p>
 					</div>
 				}
 			</fieldset>
@@ -748,7 +750,7 @@
 				}
 				if (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
 				{
-					textNeedMetBy = Model.studentCommunication.NeedMetByOtherDescription;
+					textNeedMetBy = "by Other.<p>Other Description: " + Model.studentCommunication.NeedMetByOtherDescription + "</p>";
 				}
 
 				if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
@@ -760,19 +762,19 @@
 				if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
 					&& (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value))
 				{
-					textNeedMetBy = "by goal(s) and " + Model.studentCommunication.NeedMetByOtherDescription;
+					textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentCommunication.NeedMetByOtherDescription + "</p>";
 				}
 				if ((Model.studentCommunication.NeedMetByGoal.HasValue && Model.studentCommunication.NeedMetByGoal.Value)
 						   && (Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
 						   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
 				{
-					textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
+					textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentCommunication.NeedMetByOtherDescription + "</p>";
 				}
 
 				if ((Model.studentCommunication.NeedMetByOther.HasValue && Model.studentCommunication.NeedMetByOther.Value)
 						   && (Model.studentCommunication.NeedMetByAccommodation.HasValue && Model.studentCommunication.NeedMetByAccommodation.Value))
 				{
-					textNeedMetBy = " with accommodations or modifications and " + Model.studentCommunication.NeedMetByOtherDescription;
+					textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentCommunication.NeedMetByOtherDescription + "</p>";
 				}
 
 
@@ -780,7 +782,7 @@
 			@if (!string.IsNullOrEmpty(textNeedMetBy))
 			{
 				<div class="form-check form-group-label">
-					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 				</div>
 			}
 		</fieldset>
@@ -876,7 +878,7 @@
 					}
 					if (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentSocial.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentSocial.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value)
@@ -888,25 +890,25 @@
 					if ((Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value)
 						&& (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentSocial.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentSocial.NeedMetByOtherDescription + "</p>";
 					}
 					if ((Model.studentSocial.NeedMetByGoal.HasValue && Model.studentSocial.NeedMetByGoal.Value)
 							   && (Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value)
 							   && (Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentSocial.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentSocial.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentSocial.NeedMetByOther.HasValue && Model.studentSocial.NeedMetByOther.Value)
 						   && (Model.studentSocial.NeedMetByAccommodation.HasValue && Model.studentSocial.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentSocial.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentSocial.NeedMetByOtherDescription + "</p>";
 					}
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 					</div>
 				}
 			</fieldset>
@@ -1059,7 +1061,7 @@
 					}
 					if (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentReading.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentReading.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
@@ -1071,26 +1073,26 @@
 					if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
 						&& (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentReading.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentReading.NeedMetByOtherDescription + "</p>";
 					}
 					if ((Model.studentReading.NeedMetByGoal.HasValue && Model.studentReading.NeedMetByGoal.Value)
 							   && (Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
 							   && (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentReading.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentReading.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentReading.NeedMetByOther.HasValue && Model.studentReading.NeedMetByOther.Value)
 						   && (Model.studentReading.NeedMetByAccommodation.HasValue && Model.studentReading.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentReading.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentReading.NeedMetByOtherDescription + "</p>";
 					}
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 					</div>
 				}
 			</fieldset>
@@ -1169,7 +1171,7 @@
 					}
 					if (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentMath.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentMath.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
@@ -1181,26 +1183,26 @@
 					if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
 						&& (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentMath.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentMath.NeedMetByOtherDescription + "</p>";
 					}
 					if ((Model.studentMath.NeedMetByGoal.HasValue && Model.studentMath.NeedMetByGoal.Value)
 							   && (Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
 							   && (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentMath.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentMath.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentMath.NeedMetByOther.HasValue && Model.studentMath.NeedMetByOther.Value)
 						   && (Model.studentMath.NeedMetByAccommodation.HasValue && Model.studentMath.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentMath.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentMath.NeedMetByOtherDescription + "</p>";
 					}
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 					</div>
 				}
 			</fieldset>
@@ -1283,7 +1285,7 @@
 					}
 					if (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentWritten.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentWritten.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
@@ -1295,26 +1297,26 @@
 					if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
 						&& (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentWritten.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentWritten.NeedMetByOtherDescription + "</p>";
 					}
 					if ((Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
 							   && (Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
 							   && (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentWritten.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentWritten.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentWritten.NeedMetByOther.HasValue && Model.studentWritten.NeedMetByOther.Value)
 						   && (Model.studentWritten.NeedMetByAccommodation.HasValue && Model.studentWritten.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentWritten.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentWritten.NeedMetByOtherDescription + "</p>";
 					}
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<span style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</span>
+						<span style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))
 					</div>
 				}
 			</fieldset>
@@ -1393,7 +1395,7 @@
 					}
 					if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
 					{
-						textNeedMetBy = Model.studentAcademic.NeedMetByOtherDescription;
+						textNeedMetBy = "by Other.<p>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
@@ -1405,26 +1407,26 @@
 					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
 						&& (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value))
 					{
-						textNeedMetBy = "by goal(s) and " + Model.studentAcademic.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and by Other.<p>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription + "</p>";
 					}
 					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
 							   && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
 							   && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and " + Model.studentAcademic.NeedMetByOtherDescription;
+						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<p>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription + "</p>";
 					}
 
 					if ((Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
 						   && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
 					{
-						textNeedMetBy = " with accommodations or modifications and " + Model.studentAcademic.NeedMetByOtherDescription;
+						textNeedMetBy = " with accommodations or modifications and by Other.<p>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription + "</p>";
 					}
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
 					<div class="form-check form-group-label">
-						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? string.Format("{0}.", textNeedMetBy) : textNeedMetBy)</p>
+						<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>
 					</div>
 				}
 			</fieldset>
