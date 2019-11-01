@@ -935,7 +935,12 @@
                                 @Html.Hidden("studentId", Model.student.UserID)
 
                                 <div class="step22">
-                                    <div class="row">
+									 <div class="row">
+										<div class="col-md-12">
+											<h3 class="control-label studentNameLabel"></h3>										
+										</div>                                    
+									</div>
+                                    <div class="row voffset2">
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="studentStreetAddress1" class="required">Student's Street Address</label>
@@ -1356,6 +1361,11 @@
                         </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step3">
+						<div class="row">
+							<div class="col-md-12">
+									<h3 class="control-label studentNameLabel"></h3>										
+							</div>                                    
+						</div>
                         <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Student Relationships</h4>
                         @using (Html.BeginForm("EditStudentContacts", "Manage", null, FormMethod.Post, new { id = "editStudentContacts", @class = "editstudent", onsubmit = "return false;" }))
                         {
@@ -1707,12 +1717,12 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createstudent.js"></var>
+<var data-reload="true" data-src="/Scripts/createstudent.js?v1.1"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/createstudent.js")
+    @Scripts.Render("~/Scripts/createstudent.js?v1.1")
 
 }

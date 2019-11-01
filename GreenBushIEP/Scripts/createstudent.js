@@ -170,6 +170,21 @@ function tabValidates() {
         }
     });
 
+	//copy student name
+	var firstName = $("#firstname").val();
+	var middleName = $("#middlename").val();
+	var lastname = $("#lastname").val();
+	var studentName = "";
+
+	if (middleName == "") {
+		studentName = firstName + " " + lastname;
+	}
+	else {
+		studentName = firstName + " " + middleName + " " + lastname;
+	}
+	
+	$(".studentNameLabel").html(studentName);
+
     return validates;
 }
 
@@ -183,7 +198,8 @@ $("#next2").on("click", function () {
         return alert("Attending District is required.");
     } else {
         $("#misDistrict_chosen").removeClass('contact-tooltip');
-    }
+	}
+
 
     if (tabValidates()) {
         $.ajax({
