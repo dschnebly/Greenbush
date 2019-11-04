@@ -469,7 +469,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="AnnualGoal" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="hasSerivce" Type="bit" Nullable="false" />
-          <Property Name="Baseline" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Baseline" Type="nvarchar(max)" Nullable="false" />
           <Property Name="StateStandards" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="Progress_Quarter1" Type="nvarchar" MaxLength="50" />
           <Property Name="Progress_Quarter2" Type="nvarchar" MaxLength="50" />
@@ -2473,7 +2473,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="AnnualGoal" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="hasSerivce" Type="Boolean" Nullable="false" />
-          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Baseline" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StateStandards" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Progress_Quarter2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2979,7 +2979,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </Key>
           <Property Name="ReferalRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID_Requster" Type="Int32" Nullable="false" />
-          <Property Name="UserID_District" Type="String" />
+          <Property Name="UserID_District" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="ReferralID" Type="Int32" Nullable="false" />
           <Property Name="Complete" Type="Boolean" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
