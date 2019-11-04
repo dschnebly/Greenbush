@@ -7,6 +7,9 @@
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-stats" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Progress Report</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
 </div>
+<div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+    <strong class="moreinfo">Oh snap!</strong>
+ </div>
 <div class="modal-body">
     @if (Model.studentGoals.Count > 0)
     {
@@ -137,10 +140,10 @@
 
                                                         <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
                                                         <div class="form-group shortTermComments">
-                                                            <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter1)</textarea>
-                                                            <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter2)</textarea>
-                                                            <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter3)</textarea>
-                                                            <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(studentGoal.goal.ProgressDescription_Quarter4)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(studentGoal.goal.ProgressDescription_Quarter1)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments20" placeholder="Enter your comment about the 2nd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(studentGoal.goal.ProgressDescription_Quarter2)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments30" placeholder="Enter your comment about the 3rd annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(studentGoal.goal.ProgressDescription_Quarter3)</textarea>
+                                                            <textarea name="reportOfAnnualGoalComments40" placeholder="Enter your comment about the 4th annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(studentGoal.goal.ProgressDescription_Quarter4)</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -269,10 +272,10 @@
                                                                 <td colspan="4">
                                                                     <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
                                                                     <div class="form-group shortTermComments">
-                                                                        <textarea name="reportOfProgressShortTermComments1@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter1)</textarea>
-                                                                        <textarea name="reportOfProgressShortTermComments2@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter2)</textarea>
-                                                                        <textarea name="reportOfProgressShortTermComments3@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter3)</textarea>
-                                                                        <textarea name="reportOfProgressShortTermComments4@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden">@(benchmark.ProgressDescription_Quarter4)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments1@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(benchmark.ProgressDescription_Quarter1)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments2@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(benchmark.ProgressDescription_Quarter2)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments3@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(benchmark.ProgressDescription_Quarter3)</textarea>
+                                                                        <textarea name="reportOfProgressShortTermComments4@(benchmark.goalBenchmarkID)" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="500">@(benchmark.ProgressDescription_Quarter4)</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -301,8 +304,8 @@
 <div class="completed-loader completed-loader-hidden"></div>
 <div class="ajax-loader">
     <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-    <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
-    <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
+    @*<strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
+    <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>*@
 </div>
 <script>
     function initProgressReport() {
@@ -322,8 +325,13 @@
                 $.post('/ModuleSection/' + postMethod, data)
                 .done(function (results) {
                     $(".ajax-loader img").css("visibility", "hidden");
-                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-                        $('.ajax-loader').css("visibility", "hidden");
+					$(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+						$('.ajax-loader').css("visibility", "hidden");
+						$("#alertMessage").addClass('alert-success').removeClass('alert-danger');
+						$("#alertMessage .moreinfo").html('The report was successfully saved.');
+                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                            $("#alertMessage").slideUp(500);
+                        });
                     });
 
                     $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
@@ -332,7 +340,8 @@
                 .fail(function (error) {
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
-                        $('.ajax-loader').css("visibility", "hidden");
+						$('.ajax-loader').css("visibility", "hidden");
+						$("#alertMessage").addClass('alert-danger').removeClass('alert-success');
                         $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
                         $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                             $("#alertMessage").slideUp(500);
