@@ -219,27 +219,21 @@
 						<td>
 							@if (Model.serviceTypes.Count > 0)
 							{
-								foreach (var serviceType in Model.serviceTypes)
-								{
-									if (serviceType.ServiceCode == service.ServiceCode)
-									{
-										<text>(@serviceType.ServiceCode) @serviceType.Name</text>
-									}
-								}
+								var serviceName = Model.serviceTypes.Where(o => o.ServiceCode == service.ServiceCode).FirstOrDefault();
+								<text>(@service.ServiceCode) @(serviceName != null ? serviceName.Name : "")</text>
 							}
+							else
+							{
+								<text>@service.ServiceCode</text>
+							}
+
 						</td>
 
 						<td>
-							@if (Model.serviceProviders.Count > 0)
+							@if (service.tblProvider != null)
 							{
-								foreach (var serviceProvider in Model.serviceProviders)
-								{
-									if (service.ProviderID == serviceProvider.ProviderID)
-									{
-										<text>@serviceProvider.FirstName @serviceProvider.LastName</text>
-									}
-								}
-							}
+									<text>@service.tblProvider.FirstName @service.tblProvider.LastName</text>
+							}							
 							else
 							{
 								<text>&nbsp;&nbsp;&nbsp;</text>
