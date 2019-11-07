@@ -450,7 +450,7 @@
                             <td>@student.FirstName</td>
                             <td>@student.MiddleName</td>
                             <td>@student.LastName</td>
-                            <td>@DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy")</td>
+                            <td>@(student.IEPDate == null ? "No Active IEP" : DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy"))</td>
                             <td>@student.DateOfBirth.ToString("MM/dd/yyyy")</td>
                             <td>
                                 @if (student.hasIEP)

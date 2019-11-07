@@ -125,7 +125,8 @@ namespace GreenBushIEP.Models
 				}
 				else
 				{
-					iepStarted = false;
+                    current = new tblIEP();
+                    iepStarted = false;
 				}
 			}
 
