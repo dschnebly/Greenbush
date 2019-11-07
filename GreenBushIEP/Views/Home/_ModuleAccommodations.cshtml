@@ -80,7 +80,7 @@
                             </div>
                             <div id="collapse0" class="panel-collapse in">
                                 <div class="panel-body">
-									<div class="row">
+									<div class="row form-group">
                                         <div class="col-md-3">                                          
 											<label style="font-size: 18px;" for="ModuleType">Module</label>
 											<div class="input-group">												
@@ -100,12 +100,13 @@
                                                     <li data-value="8"><a href="#">Math</a></li>
                                                     <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
 													<li data-value="6"><a href="#">Academic/Functional</a></li>
+                                                    <li data-value="10"><a href="#">None</a></li>
                                                 </ul>
                                             </div>
 											</div>
 										</div>
 									</div>
-                                    <div class="row">
+                                    <div class="row form-group">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;" for="AccType">Type</label>
                                             <div class="form-check" style="margin-left:8px">
@@ -117,7 +118,7 @@
                                             </div>
                                         </div>
                                     </div>									
-                                    <div class="row voffset2">
+                                    <div class="row form-group voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Description</label>
                                             <div>
@@ -125,7 +126,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row voffset2">
+                                    <div class="row form-group voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Frequency</label>
                                             <div>
@@ -133,7 +134,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row voffset2">
+                                    <div class="row form-group voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Location</label>
                                             <div>
@@ -141,7 +142,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row voffset2">
+                                    <div class="row form-group voffset2">
                                         <div class="col-md-12">
                                             <label style="font-size: 18px;">Duration</label>
                                             <div>
@@ -149,7 +150,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row form-group">
                                         <div class="col-md-12">
                                             <div class="row voffset4">
 
@@ -463,7 +464,6 @@
 				
 			});
 
-			
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
                 $(".ajax-loader img").css("visibility", "visible");
