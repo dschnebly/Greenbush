@@ -3134,21 +3134,10 @@ namespace GreenbushIep.Controllers
             //if exit data exists
             if (studentIEP.studentDetails.student.ExitDate.HasValue)
             {
-                //find last available calendar data before this date
-                var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
-
-                if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
-                {
-                    serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
-                }
-                else
-                {
-                    serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
-                }
+				serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
             }
 
-
-            int count = 1;
+			int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
