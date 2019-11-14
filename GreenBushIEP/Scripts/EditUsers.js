@@ -77,22 +77,26 @@
         });
     });
 
-    $("#UserForm").on("submit", function (e) {
-
-        var action = $(this).closest("form").attr("action");
-        var districtCount = $("li.search-choice").length;
+    //$(".chosen-choices").chosen().change(function () {
+    $(".chosen-select").chosen().change(function () {
+        var item = $(this).val();
 
         // must have a district selected.
-        if (districtCount === 0) {
+        if (item/length === 0) {
             $("#alertMessage .moreinfo").html("The user must be assigned to a district. Please choose a district.");
             $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                 $("#alertMessage").slideUp(500);
             });
-        }
 
-        if ($("input.input-validation-error").length > 0) {
-            return false;
+            $("#submitForm").prop('disabled', true);
         }
+        else
+        {
+            $("#submitForm").prop('disabled', false);
+        }
+    });
+
+    $("#UserForm").on("submit", function (e) {
 
         $(".ajax-loader").css("visibility", "visible");
 

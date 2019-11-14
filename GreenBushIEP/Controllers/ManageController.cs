@@ -2320,10 +2320,16 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                //tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);				
+                tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);				
                 tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
                 tblUser misUser = FindSupervisor.GetUSersMIS(user);
-                if (user.UserID == misUser.UserID)
+
+                if(misUser == null)
+                {
+                    misUser = FindSupervisor.GetUSersMIS(submitter);
+                }
+
+                if (misUser == null || user.UserID == misUser.UserID)
                 {  // I'm my own grandpapa 
                     misUser = db.tblUsers.Where(u => u.UserID == 1).FirstOrDefault();
                 }
