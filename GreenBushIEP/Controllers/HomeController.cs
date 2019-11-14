@@ -618,16 +618,28 @@ namespace GreenbushIep.Controllers
                 string district = collection["district"];
                 string building = collection["building"];
 
-                var selectedDistricts = collection["selectedDistrict[]"].Split(',');
+                var selectedDistricts = collection["selectedDistrict[]"].Split(',').Distinct().ToArray();
                 var selectedBuildings = collection["selectedBuilding[]"].Split(',');
 
                 for (int i = 0; i < selectedDistricts.Length; i++)
                 {
-                    using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
-                    {
-                        if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
+										
+					foreach (var selectedBuilding in selectedBuildings)
+					{
+						var districtUSD = selectedDistricts[i].ToString();
+						var calendarExists = db.tblCalendars.Count(c => c.USD == districtUSD && c.BuildingID == selectedBuilding);
 
-                        String saveStuff = @"UPDATE Cal_Upd 
+						if (calendarExists == 0)
+						{
+							//if calendar does not exist, first create calendar from template, the update
+							CopyCalendar(districtUSD, selectedBuilding, MIS);
+						}
+
+						using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
+						{
+							if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
+
+							String saveStuff = @"UPDATE Cal_Upd 
 											SET 
 											  Cal_Upd.[NoService] = Cal_Orig.[NoService]
 											, Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] 
@@ -639,19 +651,19 @@ namespace GreenbushIep.Controllers
 											AND Cal_Upd.USD = @USD_Upd 
 											AND Cal_Upd.BuildingID = @BuildingID_Upd 
 											AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
-                        using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
-                        {
-                            querySaveStuff.Connection = SQLConn;
-                            querySaveStuff.Parameters.Clear();
-                            querySaveStuff.CommandTimeout = 180;
-                            querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
-                            querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-                            querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-                            querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
-                            querySaveStuff.ExecuteNonQuery();
-                        }
+							using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
+							{
+								querySaveStuff.Connection = SQLConn;
+								querySaveStuff.Parameters.Clear();
+								querySaveStuff.CommandTimeout = 180;
+								querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
+								querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+								querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+								querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+								querySaveStuff.ExecuteNonQuery();
+							}
 
-                        String saveMoreStuff = @"UPDATE CalR_Upd 
+							String saveMoreStuff = @"UPDATE CalR_Upd 
 											SET CalR_Upd.DaysPerWeek = CalR_Orig.DaysPerWeek
 											, CalR_Upd.TotalDays = CalR_Orig.TotalDays
 											, CalR_Upd.TotalWeeks = CalR_Orig.TotalWeeks
@@ -662,18 +674,19 @@ namespace GreenbushIep.Controllers
 											AND CalR_Orig.USD = @USD_Orig
 											AND CalR_Orig.BuildingID = @BuildingID_Orig
 											AND CalR_Upd.USD = @USD_Upd AND CalR_Upd.BuildingID = @BuildingID_Upd";
-                        using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
-                        {
-                            querySaveMoreStuff.Connection = SQLConn;
-                            querySaveMoreStuff.Parameters.Clear();
-                            querySaveMoreStuff.CommandTimeout = 180;
-                            querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
-                            querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-                            querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-                            querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuildings[i]);
-                            querySaveMoreStuff.ExecuteNonQuery();
-                        }
-                    }
+							using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
+							{
+								querySaveMoreStuff.Connection = SQLConn;
+								querySaveMoreStuff.Parameters.Clear();
+								querySaveMoreStuff.CommandTimeout = 180;
+								querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
+								querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+								querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+								querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+								querySaveMoreStuff.ExecuteNonQuery();
+							}
+						}
+					}
                 }
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);
@@ -3121,21 +3134,10 @@ namespace GreenbushIep.Controllers
             //if exit data exists
             if (studentIEP.studentDetails.student.ExitDate.HasValue)
             {
-                //find last available calendar data before this date
-                var lastDay = GetLastFiscalCalendarDay(studentIEP.studentDetails.student.UserID, studentIEP.studentDetails.student.ExitDate.Value.Year.ToString());
-
-                if (lastDay != null && lastDay.calendarDate.Value < studentIEP.studentDetails.student.ExitDate.Value)
-                {
-                    serviceEndDateOverride = lastDay.calendarDate.Value.ToShortDateString();
-                }
-                else
-                {
-                    serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
-                }
+				serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
             }
 
-
-            int count = 1;
+			int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
