@@ -16,6 +16,11 @@ namespace GreenBushIEP.Helper
 
         public static tblUser GetUSersMIS(tblUser user)
         {
+            if(user == null)
+            {
+                return null;
+            }
+
             if (user.RoleID == mis || user.RoleID == owner)
             {
                 return user;

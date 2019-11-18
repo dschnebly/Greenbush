@@ -1256,7 +1256,10 @@ namespace GreenbushIep.Controllers
             if (studehtIEP != null)
             {
                 studehtIEP.IsActive = false;
-                studehtIEP.IepStatus = IEPStatus.ARCHIVE;
+                if (studehtIEP.AmendingIEPid != null)
+                {
+                    studehtIEP.IepStatus = IEPStatus.ARCHIVE;
+                }
                 db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "IEP is archived." }, JsonRequestBehavior.AllowGet);
