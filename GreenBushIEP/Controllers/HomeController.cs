@@ -3175,8 +3175,8 @@ namespace GreenbushIep.Controllers
                 //6 gifted
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.isGifted ? "1" : "0");
 
-                //7 service location
-                sb.AppendFormat("\t{0}", studentIEP.studentDetails.building.BuildingID);
+				//7 service location req
+				sb.AppendFormat("\t{0}", string.IsNullOrEmpty(service.BuildingID) ? studentIEP.studentDetails.building.BuildingID : service.BuildingID);
 
                 //8 Primary Service Location Indicator
                 sb.AppendFormat("\t{0}", "");
