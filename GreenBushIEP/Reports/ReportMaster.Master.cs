@@ -115,59 +115,78 @@ namespace GreenBushIEP.Report
 
 		public static List<TeacherView> GetTeachers(string userName)
 		{
-			List<tblUser> teachers = new List<tblUser>();
+			//List<tblUser> teachers = new List<tblUser>();
 			List<TeacherView> teacherList = new List<TeacherView>();
  			tblUser usr = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 			if (usr.RoleID == GreenBushIEP.Report.ReportMaster.teacher || usr.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				//just add themselves to the list
-				teachers.Add(usr);
+				
+				TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", usr.LastName, usr.FirstName), UserID = usr.UserID };
+				teacherList.Add(tv);
+				
 			}
 			else
 			{
-				teachers = GetTeacherRecursive(null, usr.UserID);
-
-				//add person running report, if admin, can an admin have students?
-				if((usr.RoleID == admin || usr.RoleID == mis) && !teachers.Contains(usr))
-					teachers.Add(usr);
+				teacherList = GetTeacherByRole(usr.UserID, usr.RoleID);				
 			}
-
-			foreach (var item in teachers)
-			{
-				TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", item.LastName, item.FirstName), UserID = item.UserID };
-				teacherList.Add(tv);
-			}
+						
 
 			return teacherList.OrderBy(o => o.Name).ToList();
 		}
 
-		private static List<tblUser> GetTeacherRecursive(List<tblUser> children, int userId)
+		private static List<TeacherView> GetTeacherByRole(int userId, string userRoleId)
 		{
-			List<tblUser> list = new List<tblUser>();
+			List<TeacherView> list = new List<TeacherView>();
 
 			try
 			{
-				var teachers = (from org in db.tblOrganizationMappings
-								join user in db.tblUsers
-									on org.UserID equals user.UserID
-								where (org.AdminID == userId) && !(user.Archive ?? false) && (user.RoleID == nurse || user.RoleID == teacher || user.RoleID == admin) && (user.UserID != userId)
-								select user).Distinct().ToList();
 
-				list.AddRange(teachers.Where(i => i.RoleID == teacher));
-				foreach (tblUser teach in teachers)
+				List<String> myDistricts = new List<string>();
+				List<String> myBuildings = new List<string>();
+				List<String> myRoles = new List<string>() { "3", "4", "6" };
+				List<vw_UserList> teachers = new List<vw_UserList>();
+
+				var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == userId select new { district.USD, district.DistrictName }).Distinct().ToList();
+				myDistricts = districts.Select(d => d.USD).ToList();
+				
+				if (userRoleId == "2" || userRoleId == "1")
 				{
-					var childList = GetTeacherRecursive(teachers, teach.UserID);
-					list.AddRange(childList);
+					myRoles.Add("2");
+					teachers = db.vw_UserList
+								.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD))
+								.GroupBy(u => u.UserID)
+								.Select(u => u.FirstOrDefault()).ToList();
 
 				}
+				else
+				{
+					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == userId && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
+					myBuildings = buildings.Select(b => b.BuildingID).ToList();
+					myBuildings.Add("0");
+					
+					teachers = db.vw_UserList
+							.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID))
+							.GroupBy(u => u.UserID)
+							.Select(u => u.FirstOrDefault()).ToList();
+				}
+
+				if (teachers != null && teachers.Count > 0)
+				{
+					foreach (var teacher in teachers)
+					{
+						TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", teacher.LastName, teacher.FirstName), UserID = teacher.UserID };
+						list.Add(tv);
+					}
+				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				string error = ex.ToString();
 			}
 
 			return list;
 
-			
 		}
 
 		public static List<SelectListItem> GetIEPStatuses()
