@@ -1694,6 +1694,7 @@ namespace GreenbushIep.Controllers
                     service = new tblService();
                     service.IEPid = iep.IEPid;
                     service.BuildingID = collection["attendanceBuilding"].ToString();
+                    service.USD = db.vw_BuildingsForAttendance.Where(b => b.BuildingID == service.BuildingID && b.userID == studentId).FirstOrDefault().USD;
                     service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
                     service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
                     service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
