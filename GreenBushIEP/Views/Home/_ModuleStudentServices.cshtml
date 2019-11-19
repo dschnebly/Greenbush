@@ -844,7 +844,7 @@
                 $(".ajax-loader img").css("visibility", "visible");
 
                 var studentService = $(this).closest('.oneStudentService');
-                studentService.find("form").find("input[name='completed']").val(true);
+                studentService.find("form").find("input[name='completed']").val();
 
                 var form = studentService.find('form').serialize();
                 var iepId = $("#studentIEPId").val();
@@ -878,7 +878,7 @@
 
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
-                            studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+                            //studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
                             $("#duplicateService").removeClass("disabled").removeAttr("disabled");
                             $("#duplicateAllService").removeClass("disabled").removeAttr("disabled");
 
