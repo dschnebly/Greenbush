@@ -90,8 +90,9 @@ function init() {
         width: "100%"
     });
 
-    $("#submitForm").on('click', function () {
-        document.forms[3].submit();
+	$("#submitForm").on('click', function () {
+		var numForms = document.forms.length;
+		document.forms[numForms-1].submit();
     });
 
     $('#buildingIds').hide();
@@ -215,8 +216,12 @@ $("#next2").on("click", function () {
                     $($active).next().find('a[data-toggle="tab"]').click();
 
                     // create a new student id and add it to the contacts form here.
-                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
-                    $("form:eq(3)").find("input[name='studentId']").val(data.Message);
+
+					$('*[name*=studentId]').each(function () {
+						$(this).val(data.Message);
+					});
+
+					
                 } else {
 
                     alert(data.Message);
@@ -246,8 +251,11 @@ $("#next3").on("click", function () {
                     $active.next().removeClass('disabled');
                     $($active).next().find('a[data-toggle="tab"]').click();
 
-                    // add student id to the avatar form here.
-                    $("form:eq(2)").find("input[name='studentId']").val(data.Message);
+					$('*[name*=studentId]').each(function () {
+						$(this).val(data.Message);
+					});
+					
+
                 } else {
 
                     alert(data.Message);
@@ -275,7 +283,27 @@ $("#next4").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					
+					// clear out the ul list
+					$("ul#studentList").empty();
+
+					// our array to user for appending
+					var items = [];
+
+					if (!$.isEmptyObject(data.teacherList)) {
+
+						$.each(data.teacherList, function (key, value) {
+							var userImage = '/Content/Images/newUser.png';
+							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+						});
+
+						$("ul#teacherList").append.apply($("ul#teacherList"), items);
+						$(".listrap").listrap().getSelection();
+					}
+
+
                 } else {
 
                     alert(data.Message);
@@ -374,3 +402,61 @@ $("#next7").on("click", function () {
 
     }
 });
+
+$("#next8").on("click", function () {
+
+
+	var activeTeachers = $(".listrap").listrap().getSelection();
+	var teacherIds = [];
+	var studentId = $("#createStudentAssignments").find("input[name='studentId']").val();
+	
+	if (activeTeachers.length > 0) {
+		$.each(activeTeachers, function (index, value) {
+			teacherIds.push($(activeTeachers[index]).find('.ourTeacher').data("id"));
+		});
+
+		$.ajax({
+			type: 'POST',
+			url: '/Manage/CreateStudentAssignments',
+			dataType: 'json',
+			data: { studentId: studentId, teachers: teacherIds },
+			async: false,
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+				} else {
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+	}
+
+});
+
+jQuery.fn.extend({
+	listrap: function () {
+		var listrap = this;
+		listrap.getSelection = function () {
+			var selection = new Array();
+			listrap.children("li.active").each(function (ix, el) {
+				selection.push($(el)[0]);
+			});
+			return selection;
+		};
+		var toggle = "li.listrap-toggle";
+		var selectionChanged = function () {
+			$(this).closest("li").toggleClass("active");
+			$(this).find("img").toggleClass('img-selection-correction');
+			listrap.trigger("selection-changed", [listrap.getSelection()]);
+		};
+		$("#teacherList li").on("click", selectionChanged);
+		return listrap;
+	}
+});
+
