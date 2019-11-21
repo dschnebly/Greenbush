@@ -112,6 +112,7 @@ namespace GreenBushIEP.Controllers
                     org.AdminID = submitter.UserID;
                     org.UserID = user.UserID;
                     org.USD = usd;
+                    org.Create_Date = DateTime.Now;
 
                     db.tblOrganizationMappings.Add(org);
                     db.SaveChanges();
@@ -642,7 +643,6 @@ namespace GreenBushIEP.Controllers
 			{
 				try
 				{
-
 					if (collection["referralId"] == null)
 					{
 						return Json(new { Result = "error", Message = "The referralId ID is missing. Please contact a system administrator to review the problem." });
@@ -939,6 +939,7 @@ namespace GreenBushIEP.Controllers
 							org.AdminID = submitterId;
 							org.UserID = newStudent.UserID;
 							org.USD = usd;
+                            org.Create_Date = DateTime.Now;
 
 							db.tblOrganizationMappings.Add(org);
 							db.SaveChanges();
@@ -1575,7 +1576,7 @@ namespace GreenBushIEP.Controllers
                     // map the buildings in the building mapping table
                     try
                     {
-                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID });
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = studentInfo.BuildingID, USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID, Create_Date = DateTime.Now });
                         db.SaveChanges();
                     }
                     catch (Exception e)
@@ -1607,6 +1608,7 @@ namespace GreenBushIEP.Controllers
                             tblOrganizationMapping org = new tblOrganizationMapping();
                             org.AdminID = submitter.UserID;
                             org.UserID = student.UserID;
+                            org.Create_Date = DateTime.Now;
                             org.USD = usd;
 
                             db.tblOrganizationMappings.Add(org);
@@ -1833,6 +1835,7 @@ namespace GreenBushIEP.Controllers
 					{
 						AdminID = teacher,
 						UserID = studentUser.UserID,
+                        Create_Date = DateTime.Now,
 						USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault()
 						
 					};
@@ -2030,7 +2033,8 @@ namespace GreenBushIEP.Controllers
                                     {
                                         AdminID = submitter.UserID,
                                         UserID = student.UserID,
-                                        USD = usd
+                                        USD = usd,
+                                        Create_Date = DateTime.Now,
                                     });
 
                                     db.SaveChanges();
@@ -2459,7 +2463,8 @@ namespace GreenBushIEP.Controllers
                         {
                             AdminID = misUser.UserID,
                             UserID = id,
-                            USD = district
+                            USD = district,
+                            Create_Date = DateTime.Now,
                         });
 
                         buildingMappings.Add(new tblBuildingMapping()
@@ -2467,6 +2472,7 @@ namespace GreenBushIEP.Controllers
                             BuildingID = "0",
                             UserID = id,
                             USD = district,
+                            Create_Date = DateTime.Now,
                         });
                     }
                 }
@@ -2612,7 +2618,8 @@ namespace GreenBushIEP.Controllers
                     {
                         AdminID = boss.AdminID,
                         UserID = id,
-                        USD = userToRemove.USD
+                        USD = userToRemove.USD,
+                        Create_Date = DateTime.Now,
                     });
                 db.SaveChanges();
 
@@ -3221,7 +3228,8 @@ namespace GreenBushIEP.Controllers
                     {
                         AdminID = teacher.UserID,
                         UserID = student,
-                        USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault()
+                        USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
+                        Create_Date = DateTime.Now,
                     };
                     db.tblOrganizationMappings.Add(newRelation);
                     db.SaveChanges();
