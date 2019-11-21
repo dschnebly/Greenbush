@@ -2484,7 +2484,8 @@ namespace GreenBushIEP.Controllers
                         {
                             BuildingID = building.BuildingID,
                             UserID = id,
-                            USD = building.USD
+                            USD = building.USD,
+                            Create_Date = DateTime.Now,
                         });
                     }
                 }
