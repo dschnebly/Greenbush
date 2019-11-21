@@ -1836,8 +1836,7 @@ namespace GreenBushIEP.Controllers
 						AdminID = teacher,
 						UserID = studentUser.UserID,
                         Create_Date = DateTime.Now,
-						USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault()
-						
+						USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
 					};
 					db.tblOrganizationMappings.Add(newRelation);
 					db.SaveChanges();
@@ -3325,7 +3324,7 @@ namespace GreenBushIEP.Controllers
             {
                 foreach (string building in buildings)
                 {
-                    tblBuildingMapping mapping = new tblBuildingMapping() { USD = USD, UserID = userId, BuildingID = building };
+                    tblBuildingMapping mapping = new tblBuildingMapping() { USD = USD, UserID = userId, BuildingID = building, Create_Date = DateTime.Now };
                     db.tblBuildingMappings.Add(mapping);
                     db.SaveChanges();
                 }
