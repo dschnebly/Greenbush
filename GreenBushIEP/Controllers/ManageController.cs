@@ -1491,8 +1491,9 @@ namespace GreenBushIEP.Controllers
                                     }).OrderBy(b => b.BuildingName).ToList();
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+			ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
 
-            return View("~/Views/Home/CreateStudent.cshtml", model);
+			return View("~/Views/Home/CreateStudent.cshtml", model);
         }
 
         // POST: Manage/CreateStudent
@@ -1776,7 +1777,16 @@ namespace GreenBushIEP.Controllers
                         loopCounter++;
                     }
 
-                    return Json(new { Result = "success", Message = student.UserID });
+					//get teachers list
+					tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+					List<TeacherView> teachers = new List<TeacherView>();
+
+					if (info != null)
+					{
+						teachers = GetTeacherByBuilding(info.BuildingID, info.AssignedUSD);
+					}
+
+					return Json(new { Result = "success", Message = student.UserID, teacherList = teachers});
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -1798,7 +1808,47 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "There was an error while trying to create the student's contacts. Please try again or contact your administrator." });
         }
 
-        [HttpPost]
+		[HttpPost]
+		public JsonResult CreateStudentAssignments(int studentId, int[] teachers)
+		{
+			try
+			{
+				tblUser studentUser = db.tblUsers.Where(u => u.UserID == studentId).SingleOrDefault();
+				tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+				var existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == studentId).ToList();
+
+				if (existingAssignments.Any())
+				{
+					foreach(var existing in existingAssignments)
+					{
+						db.tblOrganizationMappings.Remove(existing);
+						db.SaveChanges();
+					}
+				}
+
+				foreach (int teacher in teachers)
+				{					
+					tblOrganizationMapping newRelation = new tblOrganizationMapping()
+					{
+						AdminID = teacher,
+						UserID = studentUser.UserID,
+						USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault()
+						
+					};
+					db.tblOrganizationMappings.Add(newRelation);
+					db.SaveChanges();
+				}
+
+				return Json(new { Result = "success", Message = "" }, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+		}
+
+		[HttpPost]
         public ActionResult CreateStudentAvatar(HttpPostedFileBase adminpersona, FormCollection collection)
         {
             int studentId = Convert.ToInt32(collection["studentId"]);
@@ -3362,9 +3412,43 @@ namespace GreenBushIEP.Controllers
         }
 
 
-        #region helpers
+		protected List<TeacherView> GetTeacherByBuilding(string buildingId, string usd)
+		{
+			List<TeacherView> list = new List<TeacherView>();
 
-        [NonAction]
+			try
+			{
+
+				List<String> myRoles = new List<string>() { "2","3", "4", "6" };
+				List<vw_UserList> teachers = new List<vw_UserList>();
+								
+				teachers = db.vw_UserList
+						.Where(ul => myRoles.Contains(ul.RoleID) && ul.BuildingID == buildingId && ul.USD.Contains(usd))
+						.GroupBy(u => u.UserID)
+						.Select(u => u.FirstOrDefault()).ToList();
+
+				if (teachers != null && teachers.Count > 0)
+				{
+					foreach (var teacher in teachers)
+					{
+						TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", teacher.LastName, teacher.FirstName), UserID = teacher.UserID };
+						list.Add(tv);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				string error = ex.ToString();
+			}
+
+			return list;
+
+		}
+
+
+		#region helpers
+
+		[NonAction]
         public string ConvertToRoleName(string roleId)
         {
             switch (roleId)
