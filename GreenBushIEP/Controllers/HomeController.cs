@@ -3249,9 +3249,10 @@ namespace GreenbushIep.Controllers
 				{
 					SaveFormValues(HTMLContent, formName, studentId);
 				}
-				catch (Exception ex)
-				{
-				}
+                catch
+                {
+
+                }
 
 				return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
 			}

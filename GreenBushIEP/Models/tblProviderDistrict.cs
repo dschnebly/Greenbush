@@ -17,6 +17,8 @@ namespace GreenBushIEP.Models
         public int ProviderDistrictID { get; set; }
         public int ProviderID { get; set; }
         public string USD { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime Create_Date { get; set; }
     
         public virtual tblProvider tblProvider { get; set; }
     }

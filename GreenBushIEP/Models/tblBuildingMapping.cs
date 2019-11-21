@@ -18,5 +18,7 @@ namespace GreenBushIEP.Models
         public string BuildingID { get; set; }
         public int UserID { get; set; }
         public int ID { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime Create_Date { get; set; }
     }
 }

@@ -254,7 +254,7 @@ namespace GreenBushIEP.Models
 
                 HealthID = studentHealth.IEPHealthID;
             }
-            catch(Exception e)
+            catch
             {
                 current.IepStatus = IEPStatus.DELETED;
                 throw new System.ArgumentException("Failed to create the Health table");

@@ -127,7 +127,7 @@ namespace GreenBushIEP.Models
 
                     if (evalProcVal > 0)
                     {                        
-                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now, OtherDescription = otherDesc});                        
+                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });                        
                     }
                 }
 

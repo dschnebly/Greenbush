@@ -17,5 +17,9 @@ namespace GreenBushIEP.Models
         public int goalBenchmarkID { get; set; }
         public int EvaluationProcedureID { get; set; }
         public string OtherDescription { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }

@@ -17,5 +17,7 @@ namespace GreenBushIEP.Models
         public int AdminID { get; set; }
         public int UserID { get; set; }
         public string USD { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime Create_Date { get; set; }
     }
 }

@@ -54,5 +54,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> Potential_HarmfulEffects_flag { get; set; }
         public string Potential_HarmfulEffects_desc { get; set; }
         public string Module { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }

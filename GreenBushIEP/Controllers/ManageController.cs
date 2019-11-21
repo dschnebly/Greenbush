@@ -769,10 +769,10 @@ namespace GreenBushIEP.Controllers
 						}
 
 					}
-					catch (Exception e)
-					{
+                    catch
+                    {
 
-					}
+                    }
 				}
 			}
 			else
@@ -948,7 +948,7 @@ namespace GreenBushIEP.Controllers
 					return newStudent.UserID;
 				}
 			}
-			catch (Exception e)
+			catch
 			{
 				return -1;
 			}
