@@ -281,7 +281,7 @@ $("#submitForm").on("click", function (e) {
 					$active.next().removeClass('disabled');
 					$($active).next().find('a[data-toggle="tab"]').click();
 					
-					var returnUrl = '/Home/Portal';
+					var returnUrl = '/Manage/Referrals';
 					window.location = returnUrl;
 
 				} else {

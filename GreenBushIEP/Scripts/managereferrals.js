@@ -10,7 +10,14 @@ function init() {
 		var selectedVal = parseInt($("#filterList").val());
 		getData(selectedVal);
 	});	 
-	
+
+	//$(".add-referral-user").on("click", function () {
+	//	var returnUrl = '/Manage/CreateReferral';
+	//	window.location = returnUrl;
+	//	return;
+	//});	 
+
+		
 }
 
 function deleteReferral(rid,element) {
