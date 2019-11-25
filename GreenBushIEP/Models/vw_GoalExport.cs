@@ -14,7 +14,6 @@ namespace GreenBushIEP.Models
     
     public partial class vw_GoalExport
     {
-        public int ServiceID { get; set; }
         public string KIDSID { get; set; }
         public string AssignedUSD { get; set; }
         public string ServiceCode { get; set; }

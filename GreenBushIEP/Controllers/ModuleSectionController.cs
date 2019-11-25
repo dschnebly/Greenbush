@@ -47,6 +47,7 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.NeedMetByOtherDescription = collection["MeetNeedByOtherDescription"].ToString();
                         HealthIEP.Completed = Convert.ToBoolean(collection["Completed"]);
                         HealthIEP.ModifiedBy = ModifiedBy;
+                        HealthIEP.Update_Date = DateTime.Now;
 
                         db.SaveChanges();
 
@@ -927,8 +928,7 @@ namespace GreenBushIEP.Controllers
 
 								benchmark.goalID = studentGoal.goal.goalID;
 								benchmark.ObjectiveBenchmark = collection[string.Format("StudentGoalBenchmarkTitle{0}", benchmarkIDVal)];
-								//benchmark.TransitionActivity = transitionActivity != null && transitionActivity != "" ? (transitionActivity.ToLower() == "true") ? true : false : false;
-								
+							
 								//allow multipel methods
 								string methodsStr = collection[string.Format("StudentGoalShorttermBenchmarkMethods{0}", benchmarkIDVal)];
 								string methodsOtherStr = collection[string.Format("StudentGoalShorttermBenchmarkOther{0}", benchmarkIDVal)];

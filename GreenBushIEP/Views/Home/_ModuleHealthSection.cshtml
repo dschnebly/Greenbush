@@ -113,13 +113,17 @@
                 </div>
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
-
                 <p style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     <span class="standard-font-size"> *if other, please explain</span><br />
                     <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="pull-left" style="opacity: 0.65;">last updated on __________ by ___________</h5>
+            </div>
+        </div>
         <div class="row noPrint">
             <div class="col-md-12" style="text-align:center;">
                 <div class="form-group">
@@ -140,8 +144,6 @@
         </div>
     </div>
 </div>
-@*<br />
-    <br />*@
 
 <script>
     // Attach Event

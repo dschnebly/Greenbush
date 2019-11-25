@@ -998,6 +998,7 @@
           <Property Name="Complete" Type="bit" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Submit_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="tblRoles">
           <Key>
@@ -1023,8 +1024,6 @@
           </Key>
           <Property Name="GoalID" Type="int" Nullable="false" />
           <Property Name="ServiceID" Type="int" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="Create_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="tblServices">
           <Key>
@@ -1282,7 +1281,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsFor
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_GoalExport">
           <Key>
-            <PropertyRef Name="ServiceID" />
             <PropertyRef Name="ServiceCode" />
             <PropertyRef Name="goalID" />
             <PropertyRef Name="IepStatus" />
@@ -1293,7 +1291,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
             <PropertyRef Name="isTestDistrict" />
             <PropertyRef Name="isTestUser" />
           </Key>
-          <Property Name="ServiceID" Type="int" Nullable="false" />
           <Property Name="KIDSID" Type="nvarchar" MaxLength="4000" />
           <Property Name="AssignedUSD" Type="nvarchar" MaxLength="50" />
           <Property Name="ServiceCode" Type="char" MaxLength="2" Nullable="false" />
@@ -1563,6 +1560,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="uf_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MYSTR" Type="varchar(max)" Mode="In" />
+          <Parameter Name="DELIMITER" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="idx" Type="smallint" />
+                <Property Name="value" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
@@ -1713,7 +1722,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </EntitySet>
           <EntitySet Name="vw_GoalExport" EntityType="Self.vw_GoalExport" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vw_GoalExport].[ServiceID] AS [ServiceID], 
     [vw_GoalExport].[KIDSID] AS [KIDSID], 
     [vw_GoalExport].[AssignedUSD] AS [AssignedUSD], 
     [vw_GoalExport].[ServiceCode] AS [ServiceCode], 
@@ -1974,8 +1982,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <FunctionImport Name="uf_Split" IsComposable="true" ReturnType="Collection(IndividualizedEducationProgramModel.uf_Split_Result)">
+            <Parameter Name="MYSTR" Mode="In" Type="String" />
+            <Parameter Name="DELIMITER" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
-          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2079,7 +2091,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ColumnName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="IEPid" Type="Int32" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -2930,9 +2942,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ProviderDistrictID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProviderID" Type="Int32" Nullable="false" />
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProviderDistrict" ToRole="tblProvider" />
         </EntityType>
         <EntityType Name="tblProvider">
           <Key>
@@ -2943,12 +2955,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProviderCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
-          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblProviderDistricts" Relationship="IndividualizedEducationProgramModel.FK_tblProviderDistricts_ProviderID" FromRole="tblProvider" ToRole="tblProviderDistrict" />
+          <NavigationProperty Name="tblServices" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblProvider" ToRole="tblService" />
         </EntityType>
         <EntityType Name="tblRace">
           <Key>
@@ -3037,11 +3049,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </Key>
           <Property Name="ReferalRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID_Requster" Type="Int32" Nullable="false" />
-          <Property Name="UserID_District" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserID_District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ReferralID" Type="Int32" Nullable="false" />
           <Property Name="Complete" Type="Boolean" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Submit_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralRequest" ToRole="tblReferralInfo" />
         </EntityType>
         <EntityType Name="tblRole">
@@ -3313,7 +3326,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
         </EntityType>
         <EntityType Name="vw_GoalExport">
           <Key>
-            <PropertyRef Name="ServiceID" />
             <PropertyRef Name="ServiceCode" />
             <PropertyRef Name="goalID" />
             <PropertyRef Name="IepStatus" />
@@ -3324,7 +3336,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <PropertyRef Name="isTestDistrict" />
             <PropertyRef Name="isTestUser" />
           </Key>
-          <Property Name="ServiceID" Type="Int32" Nullable="false" />
           <Property Name="KIDSID" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="AssignedUSD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ServiceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
@@ -3556,6 +3567,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <ComplexType Name="uf_Split_Result">
+          <Property Type="Int16" Name="idx" Nullable="true" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
         <ComplexType Name="up_ReportBuildings_Result">
           <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="Address_Mailing" Nullable="true" MaxLength="250" />
@@ -3612,8 +3627,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="StudentMiddleName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="TeacherFirstName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="TeacherLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="TeacherFirstName" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TeacherLastName" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="TeacherID" Nullable="false" />
           <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -3636,7 +3651,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="GoalDescription" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="AnnualGoal" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="StateStandards" Nullable="false" MaxLength="2000" />
-          <Property Type="String" Name="Baseline" Nullable="false" MaxLength="2000" />
+          <Property Type="String" Name="Baseline" Nullable="false" />
           <Property Type="Int32" Name="goalBenchmarkID" Nullable="true" />
           <Property Type="String" Name="ObjectiveBenchmark" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Method" Nullable="true" />
@@ -4767,6 +4782,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblReferralRequests">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralRequest">
               <MappingFragment StoreEntitySet="tblReferralRequests">
+                <ScalarProperty Name="Submit_Date" ColumnName="Submit_Date" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Complete" ColumnName="Complete" />
@@ -5070,7 +5086,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
                 <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
                 <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5199,6 +5214,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="uf_Split" FunctionName="IndividualizedEducationProgramModel.Store.uf_Split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uf_Split_Result">
+                <ScalarProperty Name="idx" ColumnName="idx" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="up_ReportBuildings" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportBuildings">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportBuildings_Result">
