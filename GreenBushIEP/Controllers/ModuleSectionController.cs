@@ -345,6 +345,8 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult EditBehvior(BehaviorViewModel model, FormCollection collection)
         {
+            tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             if (ModelState.IsValid)
             {
                 tblBehavior BehaviorIEP = db.tblBehaviors.Where(c => c.BehaviorID == model.BehaviorID).FirstOrDefault();
@@ -399,7 +401,7 @@ namespace GreenBushIEP.Controllers
                     {
                         otherDesc = model.TriggerOther;
                     }
-                    db.tblBehaviorTriggers.Add(new tblBehaviorTrigger { IEPid = iepId, BehaviorID = behaviorId, BehaviorTriggerTypeID = trigger, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });
+                    db.tblBehaviorTriggers.Add(new tblBehaviorTrigger { IEPid = iepId, BehaviorID = behaviorId, BehaviorTriggerTypeID = trigger, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now, CreatedBy = submitter.UserID, ModifiedBy = submitter.UserID });
                 }
                 db.SaveChanges();
 
@@ -420,7 +422,7 @@ namespace GreenBushIEP.Controllers
                     {
                         otherDesc = model.HypothesisOther;
                     }
-                    db.tblBehaviorHypothesis.Add(new tblBehaviorHypothesi { IEPid = iepId, BehaviorID = behaviorId, BehaviorHypothesisTypeID = hypothesis, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });
+                    db.tblBehaviorHypothesis.Add(new tblBehaviorHypothesi { IEPid = iepId, BehaviorID = behaviorId, BehaviorHypothesisTypeID = hypothesis, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now, CreatedBy = submitter.UserID, ModifiedBy = submitter.UserID });
                 }
                 db.SaveChanges();
 
@@ -440,7 +442,7 @@ namespace GreenBushIEP.Controllers
                     {
                         otherDesc = model.StrategiesOther;
                     }
-                    db.tblBehaviorStrategies.Add(new tblBehaviorStrategy { IEPid = iepId, BehaviorID = behaviorId, BehaviorStrategyTypeID = strategy, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });
+                    db.tblBehaviorStrategies.Add(new tblBehaviorStrategy { IEPid = iepId, BehaviorID = behaviorId, BehaviorStrategyTypeID = strategy, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now, CreatedBy = submitter.UserID, ModifiedBy = submitter.UserID });
                 }
                 db.SaveChanges();
 
@@ -453,7 +455,7 @@ namespace GreenBushIEP.Controllers
                 if (tbid == "0")
                 {
                     //new tbl
-                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now });
+                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now, CreatedBy = submitter.UserID, ModifiedBy = submitter.UserID });
                 }
                 else
                 {
@@ -474,7 +476,7 @@ namespace GreenBushIEP.Controllers
                 if (tbid == "0")
                 {
                     //new tbl
-                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now });
+                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now, CreatedBy = submitter.UserID, ModifiedBy = submitter.UserID });
                 }
                 else
                 {
@@ -495,7 +497,7 @@ namespace GreenBushIEP.Controllers
                 if (tbid == "0")
                 {
                     //new tbl
-                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now });
+                    db.tblBehaviorBaselines.Add(new tblBehaviorBaseline { IEPid = iepId, BehaviorID = behaviorId, Behavior = tbBehavior, Baseline = tbBaseline, Create_Date = DateTime.Now, Update_Date = DateTime.Now, ModifiedBy = submitter.UserID, CreatedBy = submitter.UserID });
                 }
                 else
                 {
@@ -966,6 +968,8 @@ namespace GreenBushIEP.Controllers
 									benchmark.TransitionActivity = benchmark.TransitionActivity;
 									benchmark.Create_Date = DateTime.Now;
 									benchmark.Update_Date = DateTime.Now;
+                                    benchmark.CreatedBy = ModifiedBy;
+                                    benchmark.ModifiedBy = ModifiedBy;
 
 									db.tblGoalBenchmarks.Add(benchmark);
 
@@ -976,7 +980,7 @@ namespace GreenBushIEP.Controllers
 									foreach (var stb in listTempShortTerms)
 									{
 										stb.goalBenchmarkID = id;
-										db.tblGoalBenchmarkMethods.Add(stb);
+                                        db.tblGoalBenchmarkMethods.Add(stb);
 									}
 
 									db.SaveChanges();
