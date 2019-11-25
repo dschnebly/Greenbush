@@ -6,7 +6,227 @@
 @section stylesheets {
 
 }
+<style>
 
+ /*//////////////////////////////////////
+    ///  User Toggle Buttons Starts Here
+    //////////////////////////////////////*/
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+
+        .btn-circle:focus {
+            outline: none;
+        }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 10px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+            margin-bottom: 10px;
+        }
+
+    #add-student-user i {
+        padding: 0;
+    }
+
+    #user-toggle {
+        margin-right: 20px;
+    }
+
+        #user-toggle .user-toggle-item {
+            display: inline-block;
+        }
+
+        #user-toggle button:first-child {
+            margin-left: 15px;
+        }
+
+        #user-toggle .user-toggle-item button:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #user-toggle .user-toggle-item ul {
+            display: inline-block;
+            list-style-type: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            top: 10px;
+            padding-right: 12px;
+        }
+
+            #user-toggle .user-toggle-item ul li {
+                display: inline-block;
+                float: left;
+                padding-left: 15px;
+            }
+
+            #user-toggle .user-toggle-item ul.show-buttons {
+                display: inline-block;
+                -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: fadein 1s; /* Firefox < 16 */
+                -ms-animation: fadein 1s; /* Internet Explorer */
+                -o-animation: fadein 1s; /* Opera < 12.1 */
+                animation: fadein 1s;
+            }
+
+            #user-toggle .user-toggle-item ul.hide-buttons {
+                display: none;
+            }
+
+    #add-referral-user i {
+        vertical-align: -webkit-baseline-middle;
+        padding-left: 0;
+    }
+
+        #add-referral-user:hover {
+            -webkit-animation: pulse 1s ease 0s;
+            -o-animation: pulse 1s ease 0s;
+            -moz-animation: pulse 1s ease 0s;
+            animation: pulse 1s ease 0s;
+        }
+
+        #add-referral-user i {
+            vertical-align: -webkit-baseline-middle;
+            padding-left: 0;
+        }
+
+
+    @@-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
+        }
+
+        50% {
+            -webkit-transform: scale(1.2);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@-o-keyframes pulse {
+        0% {
+            -o-transform: scale(1);
+        }
+
+        50% {
+            -o-transform: scale(1.2);
+        }
+
+        100% {
+            -o-transform: scale(1);
+        }
+    }
+
+    @@-moz-keyframes pulse {
+        0% {
+            -moz-transform: scale(1);
+        }
+
+        50% {
+            -moz-transform: scale(1.2);
+        }
+
+        100% {
+            -moz-transform: scale(1);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @@keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Firefox < 16 */
+    @@-moz-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Safari, Chrome and Opera > 12.1 */
+    @@-webkit-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Internet Explorer */
+    @@-ms-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Opera < 12.1 */
+    @@-o-keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>
 <div class="modal-header">
     <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-address-book" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Referrals</h4>
@@ -14,7 +234,26 @@
 <div class="alert alert-danger" id="alertMessage" role="alert" style="display:none;">
     <strong class="moreinfo">Oh snap!</strong>
 </div>
+
+@if (ViewBag.CanCreate)
+{
+
+
+ <div class="row voffset2">
+        <div class="col-md-12">
+            <div id="user-toggle" class="pull-right">
+                <div class="user-toggle-item">
+                    <a id="add-referral-user" class="btn btn-primary btn-circle btn-lg" data-ftrans="slide" href="/Manage/CreateReferral"><i class="glyphicon glyphicon-plus" title="Create a New Referral" data-toggle="tooltip"></i></a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+
 <div class="modal-body">  
+	@if (!ViewBag.CanCreate)
+	{
         <div style="padding-left:5px;padding-top:5px;" class="form-inline">
 			<div class="form-group">
 			<label>Filter Referrals:</label>
@@ -25,6 +264,7 @@
 			</select>
 			</div>
 		</div>
+	}
 		<div style="padding-left:5px;padding-top:5px;">
 		
             <table class="table" id="tblRefferals">
@@ -63,7 +303,14 @@
 								<td class="name truncate">@referral.firstName</td>
 								<td class="name truncate">@referral.notes</td>
                                 <td style="vertical-align:top;">									
+									@if (ViewBag.CanCreate)
+									{
+										<a title="View" class="btn btn-info " role="button" href="/Manage/CreateReferral/@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-pencil"></span></a>																										
+									}
+									else
+									{
 										<a title="View" class="btn btn-info " role="button" href="/Manage/EditReferral/@referral.referralId"  data-toggle="tooltip" ><span class="glyphicon glyphicon-pencil"></span></a>																										
+									}
 								</td>
 								<td style="vertical-align:top;">									
 									<a title="Delete" class="btn btn-info delReferral" role="button" data-toggle="tooltip" onclick="deleteReferral(@referral.referralId, this);" ><span class="glyphicon glyphicon-trash"></span></a>
@@ -77,7 +324,7 @@
         </div>
 
 		<!-- loading the file even though it's an ajax call -->
-		<var data-reload="true" data-src="/Scripts/managereferrals.js"></var>
+		<var data-reload="true" data-src="/Scripts/managereferrals.js?v1.1"></var>
 
 		@section scripts { 
 			@Scripts.Render("~/Scripts/managereferrals.js")
