@@ -268,6 +268,7 @@ namespace GreenBushIEP.Models
 			studentOtherConsiderations.Parental_CopyIEP_flag = true;
 			studentOtherConsiderations.Parental_RightsBook_flag = true;
             studentOtherConsiderations.Create_Date = DateTime.Now;
+            studentOtherConsiderations.Update_Date = DateTime.Now;
 
 			try
             {
