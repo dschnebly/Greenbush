@@ -414,7 +414,7 @@ namespace GreenbushIep.Controllers
 
                     foreach (var district in providerDistrict)
                     {
-                        db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district });
+                        db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = provider.ProviderID, USD = district, CreatedBy = owner.UserID, Create_Date = DateTime.Now });
                         db.SaveChanges();
                     }
 
@@ -445,7 +445,7 @@ namespace GreenbushIep.Controllers
                         {
                             foreach (var district in providerDistrict)
                             {
-                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString() });
+                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString(), CreatedBy = owner.UserID, Create_Date = DateTime.Now });
                                 db.SaveChanges();
                             }
                         }
