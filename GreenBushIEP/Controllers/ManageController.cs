@@ -220,6 +220,7 @@ namespace GreenBushIEP.Controllers
 								 refInfo.UserID == currentUser.UserID
 								 && rr.UserID_Requster == 0
 								 && rr.Complete == false
+								 && rr.Submit_Date == null
 								 select refInfo).Distinct();
 
 				foreach (var referral in referrals)
@@ -1635,7 +1636,7 @@ namespace GreenBushIEP.Controllers
 						request.ReferralID = student.ReferralID;
 						request.Create_Date = DateTime.Now;
 						request.Update_Date = DateTime.Now;
-						//request.Submit_Date = DateTime.Now;
+						request.Submit_Date = DateTime.Now;
 						db.tblReferralRequests.Add(request);
 					}
 					else
@@ -1643,7 +1644,7 @@ namespace GreenBushIEP.Controllers
 						existingReferalReq.Update_Date = DateTime.Now;
 						existingReferalReq.UserID_Requster = submitter.UserID;
 						existingReferalReq.UserID_District = submitterDistrict.USD;
-						//existingReferalReq.Submit_Date = DateTime.Now;
+						existingReferalReq.Submit_Date = DateTime.Now;
 					}
 
 					db.SaveChanges();
