@@ -5,11 +5,11 @@
 		// filter to only active students
 		var filterCollection = $('.list-group-root').find('.list-group-item');
 
-		$.each(filterCollection, function (index, value) {
-			if ($(value).attr("data-isActive") == 2) {
-				$(value).addClass('hidden');
-			}
-		});
+		//$.each(filterCollection, function (index, value) {
+		//	if ($(value).attr("data-isActive") == 2) {
+		//		$(value).addClass('hidden');
+		//	}
+		//});
 		
 		//$('.chosen-search input').autocomplete({
 		//	minLength: 3,						

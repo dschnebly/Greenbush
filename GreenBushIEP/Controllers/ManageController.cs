@@ -2343,8 +2343,6 @@ namespace GreenBushIEP.Controllers
             }
 
             tblStudentInfo info = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
-
-
             if (info != null)
             {
                 try
@@ -2783,12 +2781,13 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //delete studentInfo table if the userid is there.
-                    var info = db.tblStudentInfoes.FirstOrDefault(u => u.UserID == id);
-                    if (info != null)
-                    {
-                        db.tblStudentInfoes.Remove(info);
-                        db.SaveChanges();
-                    }
+                    //WE CAN NO LONGER DELETE STUDENT INFO. EVER!!!!!. 11/25/2019
+                    //var info = db.tblStudentInfoes.FirstOrDefault(u => u.UserID == id);
+                    //if (info != null)
+                    //{
+                    //    db.tblStudentInfoes.Remove(info);
+                    //    db.SaveChanges();
+                    //}
 
                     //delete from tlbOrganizationMapping all userId references.
                     var mappings = db.tblOrganizationMappings.Where(u => u.UserID == user.UserID).ToList();
@@ -2807,12 +2806,13 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //delete from tblStudentRelationships all userId references.
-                    var relatioships = db.tblStudentRelationships.Where(r => r.UserID == user.UserID).ToList();
-                    if (relatioships.Count > 0)
-                    {
-                        db.tblStudentRelationships.RemoveRange(relatioships);
-                        db.SaveChanges();
-                    }
+                    //WE CAN NO LONGER DELETE STUDENT RELATIONSHIPS. EVER!!!!!. 11/25/2019
+                    //var relatioships = db.tblStudentRelationships.Where(r => r.UserID == user.UserID).ToList();
+                    //if (relatioships.Count > 0)
+                    //{
+                    //    db.tblStudentRelationships.RemoveRange(relatioships);
+                    //    db.SaveChanges();
+                    //}
 
                     // archive user
                     user.Archive = true;
