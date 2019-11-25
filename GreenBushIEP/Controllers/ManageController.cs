@@ -1751,6 +1751,10 @@ namespace GreenBushIEP.Controllers
                             Zip = collection[++j].ToString(),
                             Phone = collection[++j].ToString(),
                             Email = collection[++j].ToString(),
+                            Create_Date = DateTime.Now,
+                            CreatedBy = submitter.UserID,
+                            ModifiedBy = submitter.UserID,
+                            Update_Date = DateTime.Now,
                         };
 
                         /////////////////////////////
@@ -2034,6 +2038,7 @@ namespace GreenBushIEP.Controllers
                                         UserID = student.UserID,
                                         USD = usd,
                                         Create_Date = DateTime.Now,
+                                        CreatedBy = submitter.UserID,
                                     });
 
                                     db.SaveChanges();
@@ -2054,7 +2059,9 @@ namespace GreenBushIEP.Controllers
                     {
                         BuildingID = collection["AttendanceBuildingId"],
                         USD = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).Select(b => b.USD).FirstOrDefault(), //info.USD,
-                        UserID = info.UserID
+                        UserID = info.UserID,
+                        CreatedBy = submitter.UserID,
+                        Create_Date = DateTime.Now,
                     });
 
                     db.SaveChanges();
@@ -2236,6 +2243,7 @@ namespace GreenBushIEP.Controllers
         public JsonResult EditStudentContacts(FormCollection collection)
         {
             int studentId = Convert.ToInt32(collection["id"]);
+            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
 
             if (student != null)
@@ -2271,6 +2279,10 @@ namespace GreenBushIEP.Controllers
                             Zip = collection[++j].ToString(),
                             Phone = collection[++j].ToString(),
                             Email = collection[++j].ToString(),
+                            CreatedBy = submitter.UserID,
+                            Create_Date = DateTime.Now,
+                            Update_Date = DateTime.Now,
+                            ModifiedBy = submitter.UserID,
                         };
 
                         /////////////////////////////
