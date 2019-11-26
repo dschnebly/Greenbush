@@ -952,6 +952,10 @@ namespace GreenBushIEP.Controllers
 
 											tempShortTerm.EvaluationProcedureID = methodItemVal;
 											tempShortTerm.OtherDescription = methodsOtherStr;
+											tempShortTerm.Create_Date = DateTime.Now;
+											tempShortTerm.Update_Date = DateTime.Now;
+											tempShortTerm.CreatedBy = ModifiedBy;
+											tempShortTerm.ModifiedBy = ModifiedBy;
 											listTempShortTerms.Add(tempShortTerm);
 										}
 									}
