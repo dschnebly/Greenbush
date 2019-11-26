@@ -2,8 +2,8 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Motor');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
-	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Motor');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-cogs" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Motor</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
 </div>
@@ -19,7 +19,7 @@
         <div class="funkyradio">
             <div class="funkyradio-success">
                 <input type="checkbox" id="ModuleMotorNoConcerns" name="ModuleMotorNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) />
-                <label for="ModuleMotorNoConcerns"  class="standard-font-size">No Concerns</label>
+                <label for="ModuleMotorNoConcerns" class="standard-font-size">No Concerns</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
@@ -52,13 +52,13 @@
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label  class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control standard-font-size" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleMotorAreaOfNeedDescription" id="ModuleMotorAreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label  class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
                 <div class="checkbox needsCheckbox">
                     <label class="standard-font-size"><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
@@ -68,9 +68,9 @@
             </div>
             <div class="form-check" id="MeetByOtherTextArea">
                 <br />
-                <p  class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                <p class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
@@ -80,6 +80,14 @@
                     <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="motorSaveComplete"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewData["ModifiedByFullName"] != null)
+                {
+                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewData["ModifiedByFullName"])</h6>
+                }
             </div>
         </div>
     }
@@ -102,8 +110,7 @@
     // Attach Event
     //reset the form to default database/brand new values.
     $("input[name='ModuleMotorNoConcerns']").on('click', function (event) {
-        if ($("input[name='ModuleMotorNoConcerns']:checked").length)
-        {
+        if ($("input[name='ModuleMotorNoConcerns']:checked").length) {
             $("input[name='ModuleMotorProgressTowardGenEd']").prop('checked', false);
             $("input[name='ModuleMotorNeeds']").prop('checked', false);
 
@@ -139,71 +146,71 @@
 
     // Attach Event
     // reset the form because jquery does not have built in reset functionality.
-	$("#resetModuleMotorForm").trigger("reset");
+    $("#resetModuleMotorForm").trigger("reset");
 
-	/* Binding */
-	/* tooltips */
-	$('[data-toggle="tooltip"]').tooltip({
-		trigger: 'manual'
-	});
+    /* Binding */
+    /* tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'manual'
+    });
 
-	///* Event */
-	///* When a user clicks on the question mark icon we turn on tooltips */
-	$('.tooltip-help').on('click', function () {
-		$('[data-toggle="tooltip"]').tooltip('toggle');
-	});
+    ///* Event */
+    ///* When a user clicks on the question mark icon we turn on tooltips */
+    $('.tooltip-help').on('click', function () {
+        $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
 
     ///// Save and Complete /////
-	$("#motorSaveComplete").on("click", function (e) {
+    $("#motorSaveComplete").on("click", function (e) {
 
-	    if (!$("input[name='ModuleMotorNoConcerns']").is(':checked')) {
-	        if ($("#PLAAFP_Strengths").val().length == 0) {
-	            alert('The following field is required not to be empty: Strengths');
-	            return false;
-	        }
+        if (!$("input[name='ModuleMotorNoConcerns']").is(':checked')) {
+            if ($("#PLAAFP_Strengths").val().length == 0) {
+                alert('The following field is required not to be empty: Strengths');
+                return false;
+            }
 
-	        if ($("#PLAAFP_Concerns").val().length == 0) {
-	            alert('The following field is required not to be empty: Concerns');
-	            return false;
-	        }
+            if ($("#PLAAFP_Concerns").val().length == 0) {
+                alert('The following field is required not to be empty: Concerns');
+                return false;
+            }
 
-	        if ($("#ModuleMotorAreaOfNeedDescription").val().length == 0) {
-	            alert('The following field is required not to be empty: Area of Need');
-	            return false;
-	        }
+            if ($("#ModuleMotorAreaOfNeedDescription").val().length == 0) {
+                alert('The following field is required not to be empty: Area of Need');
+                return false;
+            }
 
-	        if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3) {
-	            alert("At least one check mark under 'met by' should be checked");
-	            return false;
-	        }
-	    }
+            if ($(".needsCheckbox input[type='checkbox']").not(":checked").length == 3) {
+                alert("At least one check mark under 'met by' should be checked");
+                return false;
+            }
+        }
 
 
-	    $("#Completed").val(true);
-	    $(".modal-body form").submit();
-	});
+        $("#Completed").val(true);
+        $(".modal-body form").submit();
+    });
 
-	$("#isCompletedModule").on("click", function () {
-	    var IEPId = $("#studentIEPId").val();
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("#studentIEPId").val();
 
-	    $.ajax({
-	        type: 'GET',
-	        url: '/ModuleSection/ModuleCompleted',
-	        data: { stdIEPId: IEPId, module: "Motor" },
-	        dataType: "json",
-	        success: function (data) {
-	            if (data.Result == "success") {
-	                $(".completed-loader").fadeOut();
-	                $("#Completed").val(false);
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Motor" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+                    $("#Completed").val(false);
 
-	                $("#MotorWidget .hero-widget").removeClass("module-completed");
-	            } else {
-	                console.log("Error when updating the module.")
-	            }
-	        },
-	        error: function (data) {
-	            console.log("Unable to mark Health Module as complete.");
-	        }
-	    });
-	});
+                    $("#MotorWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Health Module as complete.");
+            }
+        });
+    });
 </script>

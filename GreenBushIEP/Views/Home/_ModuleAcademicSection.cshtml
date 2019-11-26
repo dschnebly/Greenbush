@@ -101,6 +101,14 @@
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset class="row">
+                        <div class="col-md-12">
+                            @if (!String.IsNullOrEmpty(ViewBag.academicModifiedByFullName))
+                            {
+                                <h6 class="pull-right modified">last updated on @(Model.Academic.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Academic.Update_Date.ToString("tt").ToLower()) by @(ViewData["academicModifiedByFullName"])</h6>
+                            }
+                        </div>
+                    </fieldset>
                 </div>
                 <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="reading">
                     <div class="funkyradio">
@@ -151,6 +159,14 @@
                                     <textarea class="form-control standard-font-size" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Reading.NeedMetByOtherDescription)</textarea>
                                 </p>
                             </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="row">
+                        <div class="col-md-12">
+                            @if (!String.IsNullOrEmpty(ViewBag.readingModifiedByFullName))
+                            {
+                                <h6 class="pull-right modified">last updated on @(Model.Reading.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Reading.Update_Date.ToString("tt").ToLower()) by @(ViewData["readingModifiedByFullName"])</h6>
+                            }
                         </div>
                     </fieldset>
                 </div>
@@ -206,6 +222,14 @@
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset class="row">
+                        <div class="col-md-12">
+                            @if (!String.IsNullOrEmpty(ViewBag.mathModifiedByFullName))
+                            {
+                                <h6 class="pull-right modified">last updated on @(Model.Math.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Math.Update_Date.ToString("tt").ToLower()) by @(ViewData["mathModifiedByFullName"])</h6>
+                            }
+                        </div>
+                    </fieldset>
                 </div>
                 <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="written">
                     <div class="funkyradio">
@@ -256,6 +280,14 @@
                                     <textarea class="form-control standard-font-size" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Written.NeedMetByOtherDescription)</textarea>
                                 </p>
                             </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="row">
+                        <div class="col-md-12">
+                            @if (!String.IsNullOrEmpty(ViewBag.writtenModifiedByFullName))
+                            {
+                                <h6 class="pull-right modified">last updated on @(Model.Written.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Written.Update_Date.ToString("tt").ToLower()) by @(ViewData["writtenModifiedByFullName"])</h6>
+                            }
                         </div>
                     </fieldset>
                 </div>

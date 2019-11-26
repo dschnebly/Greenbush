@@ -498,6 +498,10 @@ tbody > tr {
         resize: none;
     }
 
+.modified {
+    opacity: 0.65;
+}
+
 .form-control {
     box-shadow: none;
     border-color: #333;
@@ -578,12 +582,12 @@ tbody > tr {
     z-index: 99999 !important;
 }
 
-.text-success {	
-	color: rgb(25, 204, 25);
+.text-success {
+    color: rgb(25, 204, 25);
 }
 
-.text-danger {	
-	color: red;
+.text-danger {
+    color: red;
 }
 
 /*==================================================

@@ -74,13 +74,20 @@
                 </p>
             </div>
         </fieldset>
-
         <div class="row">
             <div class="col-md-12" style="text-align:center;">
                 <div class="form-group">
                     <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="saveCommunicationCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewData["ModifiedByFullName"] != null)
+                {
+                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewData["ModifiedByFullName"])</h6>
+                }
             </div>
         </div>
     }
