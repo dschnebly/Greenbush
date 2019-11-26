@@ -2023,13 +2023,14 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult OtherConsiderations(int studentId, int IEPid)
         {
-            var model = new tblOtherConsideration();
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
+            tblOtherConsideration model = new tblOtherConsideration();
             bool isReadOnly = false;
             ViewBag.vehicleType = 0;
             ViewBag.minutes = "25";
             ViewBag.begin = "";
             ViewBag.end = "";
+
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -2041,6 +2042,10 @@ namespace GreenbushIep.Controllers
                 if (oc.Any())
                 {
                     model = oc.FirstOrDefault();
+
+                    // Load the modified by info
+                    tblUser modifier = db.tblUsers.Where(u => u.UserID == model.ModifiedBy).SingleOrDefault();
+                    ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                 }
                 else
                 {

@@ -101,9 +101,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                @if (ViewData["ModifiedByFullName"] != null || !String.IsNullOrEmpty(ViewBag.modifiedByFullName))
+                @if (ViewBag.modifiedByFullName != null)
                 {
-                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewData["ModifiedByFullName"])</h6>
+                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewBag.modifiedByFullName)</h6>
                 }
             </div>
         </div>

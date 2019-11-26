@@ -240,15 +240,20 @@
                 <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
             </div>
         </div>
-		
-           
-
         <div class="row">
             <div class="col-md-12" style="text-align:center; margin-top: 10px;">
                 <div class="form-group">
                     <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
                     <button type="button" class="formbtn btn btn-success btn-lg" id="saveOtherCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewBag.modifiedByFullName != null)
+                {
+                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewBag.modifiedByFullName)</h6>
+                }
             </div>
         </div>
     }
