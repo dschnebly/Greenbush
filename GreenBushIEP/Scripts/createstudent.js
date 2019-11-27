@@ -291,9 +291,9 @@ $("#next4").on("click", function () {
 
 					// our array to user for appending
 					var items = [];
-
+					
 					if (!$.isEmptyObject(data.teacherList)) {
-
+																   
 						$.each(data.teacherList, function (key, value) {
 							var userImage = '/Content/Images/newUser.png';
 							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
@@ -389,7 +389,39 @@ $("#next7").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					// clear out the ul list
+					$("ul#studentList").empty();
+
+					// our array to user for appending
+					var items = [];
+					var assignments = null;
+
+					if (!$.isEmptyObject(data.assignments)) {
+						assignments = data.assignments;
+					}
+
+					if (!$.isEmptyObject(data.teacherList)) {
+
+						$.each(data.teacherList, function (key, value) {
+							var userImage = '/Content/Images/newUser.png';
+							var isActive = "";
+							var isActiveImage = "";
+							if (assignments != null) {
+								var isAssigned = assignments.indexOf(value.UserID);
+								if (isAssigned >= 0) {
+									isActive = "active";
+									isActiveImage = "img-selection-correction";
+								}
+							}
+
+							items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+						});
+
+						$("ul#teacherList").append.apply($("ul#teacherList"), items);
+						$(".listrap").listrap().getSelection();
+					}
                 } else {
 
                     alert(data.Message);

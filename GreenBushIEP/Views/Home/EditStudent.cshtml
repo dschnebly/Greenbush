@@ -137,7 +137,7 @@
     }
 
     .wizard .nav-tabs > li {
-        width: 24%;
+        width: 20%;
     }
 
     .wizard li:after {
@@ -713,6 +713,16 @@
                                 </span>
                             </a>
                         </li>
+						@if (ViewBag.CanAssignTeacher)
+						{
+						 <li role="presentation" class="disabled">
+                            <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                <span class="round-tab">
+                                    <i class="fa fa-users"></i>
+                                </span>
+                            </a>
+                        </li>
+						}
                         <li role="presentation" class="disabled">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
@@ -1530,11 +1540,37 @@
                             }
                         }
                     </div>
+					@if (ViewBag.CanAssignTeacher)
+					{
+					<div id="step4" class="tab-pane" role="tabpanel">
+
+						@using (Html.BeginForm("CreateStudentAssignments", "Manage", null, FormMethod.Post, new { id = "createStudentAssignments", onsubmit = "return false;" }))
+						{
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+							@Html.Hidden("studentId", Model.student.UserID)
+							<div class="row">
+								<div class="col-md-12">
+									<h3 class="control-label studentNameLabel"></h3>										
+								</div>                                    
+							</div>
+							
+							<h4 style="font-size:1.5em; margin-bottom: 1.5em;">Assign Providers</h4>							
+							<div class="row">
+								<ul id="teacherList" class="listrap"></ul>
+							</div>
+							 <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+                                    <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                                    <li><button type="button" class="btn btn-info next-step" id="next8">Save and continue</button></li>
+                                </ul>
+						}
+					</div>
+					}
                     <div class="tab-pane" role="tabpanel" id="complete">
                         @using (Html.BeginForm("EditStudentAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return false;" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.Hidden("id", Model.student.UserID)
+							@Html.Hidden("selectedTeachers")
                             if (Model.contacts != null)
                             {
 
@@ -1723,6 +1759,6 @@
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/createstudent.js?v1.1")
+    @Scripts.Render("~/Scripts/createstudent.js?v1.4")
 
 }

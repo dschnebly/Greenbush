@@ -752,8 +752,16 @@ namespace GreenBushIEP.Controllers
 
 					db.SaveChanges();
 
+					//get teachers list
+					tblReferralInfo info = db.tblReferralInfoes.Where(o => o.ReferralID == referralId).FirstOrDefault();
+					List<TeacherView> teachers = new List<TeacherView>();
 
-					return Json(new { Result = "success", Message = referralId });
+					if (info != null)
+					{
+						teachers = GetTeacherByBuilding(info.ResponsibleBuildingID, info.AssignedUSD);
+					}
+										
+					return Json(new { Result = "success", Message = referralId, teacherList = teachers });
 				}
 				catch (DbEntityValidationException ex)
 				{
@@ -824,6 +832,14 @@ namespace GreenBushIEP.Controllers
 				tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
 				int studentId = CreateStudentFromReferral(referralID, submitter.UserID);
+
+				string teacherList = collection["selectedTeachers"];
+				if (!string.IsNullOrEmpty(teacherList))
+				{
+					int[] teacherArray = Array.ConvertAll(teacherList.Split(','), Int32.Parse);
+					StudentAssignments(studentId, teacherArray);
+				}
+
 
 				tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
 				try
@@ -2002,13 +2018,13 @@ namespace GreenBushIEP.Controllers
 					//get teachers list
 					tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 					List<TeacherView> teachers = new List<TeacherView>();
-
+					
 					if (info != null)
 					{
-						teachers = GetTeacherByBuilding(info.BuildingID, info.AssignedUSD);
+						teachers = GetTeacherByBuilding(info.BuildingID, info.AssignedUSD);					
 					}
 
-					return Json(new { Result = "success", Message = student.UserID, teacherList = teachers});
+					return Json(new { Result = "success", Message = student.UserID, teacherList = teachers });
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -2035,38 +2051,43 @@ namespace GreenBushIEP.Controllers
 		{
 			try
 			{
-				tblUser studentUser = db.tblUsers.Where(u => u.UserID == studentId).SingleOrDefault();
-				tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-
-				var existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == studentId).ToList();
-
-				if (existingAssignments.Any())
-				{
-					foreach(var existing in existingAssignments)
-					{
-						db.tblOrganizationMappings.Remove(existing);
-						db.SaveChanges();
-					}
-				}
-
-				foreach (int teacher in teachers)
-				{					
-					tblOrganizationMapping newRelation = new tblOrganizationMapping()
-					{
-						AdminID = teacher,
-						UserID = studentUser.UserID,
-                        Create_Date = DateTime.Now,
-						USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
-					};
-					db.tblOrganizationMappings.Add(newRelation);
-					db.SaveChanges();
-				}
+				StudentAssignments(studentId, teachers);
 
 				return Json(new { Result = "success", Message = "" }, JsonRequestBehavior.AllowGet);
 			}
 			catch (Exception e)
 			{
 				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+		}
+
+		private void StudentAssignments(int studentId, int[] teachers)
+		{
+			tblUser studentUser = db.tblUsers.Where(u => u.UserID == studentId).SingleOrDefault();
+			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+			var existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == studentId).ToList();
+
+			if (existingAssignments.Any())
+			{
+				foreach (var existing in existingAssignments)
+				{
+					db.tblOrganizationMappings.Remove(existing);
+					db.SaveChanges();
+				}
+			}
+
+			foreach (int teacher in teachers)
+			{
+				tblOrganizationMapping newRelation = new tblOrganizationMapping()
+				{
+					AdminID = teacher,
+					UserID = studentUser.UserID,
+					Create_Date = DateTime.Now,
+					USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
+				};
+				db.tblOrganizationMappings.Add(newRelation);
+				db.SaveChanges();
 			}
 		}
 
@@ -2191,8 +2212,9 @@ namespace GreenBushIEP.Controllers
                                         BuildingID = b.BuildingID,
                                         BuildingUSD = b.USD
                                     }).OrderBy(b => b.BuildingName).ToList();
+			ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
 
-            return View("~/Views/Home/EditStudent.cshtml", model);
+			return View("~/Views/Home/EditStudent.cshtml", model);
         }
 
         // POST: Manage/EditStudent
@@ -2528,7 +2550,21 @@ namespace GreenBushIEP.Controllers
                     return Json(new { Result = "error", Message = "There was an error while trying to edit the student's contacts. \n\n" + e.InnerException.ToString() });
                 }
 
-                return Json(new { Result = "success", Message = "yup" });
+				//get teachers list
+				tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+				List<TeacherView> teachers = new List<TeacherView>();
+				var currentAssignments = new List<int>();
+				if (info != null)
+				{
+					teachers = GetTeacherByBuilding(info.BuildingID, info.AssignedUSD);
+
+					currentAssignments = db.tblOrganizationMappings.Where(o => o.UserID == studentId).Select(o => o.AdminID).ToList();
+
+				}
+
+				return Json(new { Result = "success", Message = student.UserID, teacherList = teachers, assignments = currentAssignments });
+
+				
             }
 
             return Json(new { Result = "error", Message = "There was an error while trying to edit the student's contacts." });
