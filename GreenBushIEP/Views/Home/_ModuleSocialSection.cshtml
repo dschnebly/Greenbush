@@ -99,6 +99,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewBag.modifiedByFullName != null)
+                {
+                    <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewBag.modifiedByFullName)</h6>
+                }
+            </div>
+        </div>
     }
 
     <div class="completed-loader @(Model.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">

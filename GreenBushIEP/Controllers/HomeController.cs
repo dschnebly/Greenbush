@@ -208,7 +208,7 @@ namespace GreenbushIep.Controllers
                 foreach (var student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = (theIEP.current != null) ? theIEP.current.IEPid != 0 : false ; //theIEP.current == null ? false : theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
+                    student.hasIEP = (theIEP.current != null) ? theIEP.current.IEPid != 0 : false; //theIEP.current == null ? false : theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                         student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
@@ -217,12 +217,12 @@ namespace GreenbushIep.Controllers
                 var model = new StudentViewModel();
                 model.Teacher = teacher;
                 model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
-				model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList();
-				model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList();
+                model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList();
+                model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList();
 
 
-				// show the latest updated version changes
-				ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
+                // show the latest updated version changes
+                ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
 
                 return View(model);
             }
@@ -293,10 +293,10 @@ namespace GreenbushIep.Controllers
                 var model = new StudentViewModel();
                 model.Teacher = nurse;
                 model.Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
-				model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList();
-				model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList();
+                model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList();
+                model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList();
 
-				return View(model);
+                return View(model);
             }
 
             // Unknow error happened.
@@ -365,7 +365,7 @@ namespace GreenbushIep.Controllers
                                    join districts in db.tblProviderDistricts
                                         on providers.ProviderID equals districts.ProviderID
                                    where listOfUSD.Contains(districts.USD)
-                                   select providers).Distinct().OrderBy(o =>o.LastName).ThenBy(o => o.FirstName).ToList();
+                                   select providers).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
                 model.listOfProviders = listOfProviders;
                 model.districts = MISDistrictList;
@@ -456,29 +456,31 @@ namespace GreenbushIep.Controllers
                         return Json(new { Result = "error", id = pk, errors = "Provider code already exists" }, JsonRequestBehavior.AllowGet);
                     }
 
-					//var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
+                    //var listOfProviders = db.tblProviders.Where(p => p.UserID == owner.UserID).Select(o => new ProviderViewModel { ProviderID = o.ProviderID, ProviderCode = o.ProviderCode, FirstName = o.FirstName, LastName = o.LastName });
 
-					var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
-										   join districts in db.tblDistricts
-												on buildingMaps.USD equals districts.USD
-										   where buildingMaps.UserID == owner.UserID
-										   select districts).Distinct().ToList();
+                    var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
+                                           join districts in db.tblDistricts
+                                                on buildingMaps.USD equals districts.USD
+                                           where buildingMaps.UserID == owner.UserID
+                                           select districts).Distinct().ToList();
 
-					List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
+                    List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
 
-					List<ProviderViewModel> listOfProviders = new List<ProviderViewModel>();
-					listOfProviders = (from providers in db.tblProviders
-									   join districts in db.tblProviderDistricts
-											on providers.ProviderID equals districts.ProviderID
-									   where listOfUSD.Contains(districts.USD)
-									   select new ProviderViewModel {
-										   ProviderID = providers.ProviderID,
-										   ProviderCode = providers.ProviderCode,
-										   FirstName = providers.FirstName,
-										   LastName = providers.LastName }									   
-									   ).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
+                    List<ProviderViewModel> listOfProviders = new List<ProviderViewModel>();
+                    listOfProviders = (from providers in db.tblProviders
+                                       join districts in db.tblProviderDistricts
+                                            on providers.ProviderID equals districts.ProviderID
+                                       where listOfUSD.Contains(districts.USD)
+                                       select new ProviderViewModel
+                                       {
+                                           ProviderID = providers.ProviderID,
+                                           ProviderCode = providers.ProviderCode,
+                                           FirstName = providers.FirstName,
+                                           LastName = providers.LastName
+                                       }
+                                       ).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
-					return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", id = newProvider.ProviderID, errors = "", providerList = listOfProviders }, JsonRequestBehavior.AllowGet);
                 }
             }
 
@@ -621,23 +623,23 @@ namespace GreenbushIep.Controllers
 
                 for (int i = 0; i < selectedDistricts.Length; i++)
                 {
-										
-					foreach (var selectedBuilding in selectedBuildings)
-					{
-						var districtUSD = selectedDistricts[i].ToString();
-						var calendarExists = db.tblCalendars.Count(c => c.USD == districtUSD && c.BuildingID == selectedBuilding);
 
-						if (calendarExists == 0)
-						{
-							//if calendar does not exist, first create calendar from template, the update
-							CopyCalendar(districtUSD, selectedBuilding, MIS);
-						}
+                    foreach (var selectedBuilding in selectedBuildings)
+                    {
+                        var districtUSD = selectedDistricts[i].ToString();
+                        var calendarExists = db.tblCalendars.Count(c => c.USD == districtUSD && c.BuildingID == selectedBuilding);
 
-						using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
-						{
-							if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
+                        if (calendarExists == 0)
+                        {
+                            //if calendar does not exist, first create calendar from template, the update
+                            CopyCalendar(districtUSD, selectedBuilding, MIS);
+                        }
 
-							String saveStuff = @"UPDATE Cal_Upd 
+                        using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
+                        {
+                            if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
+
+                            String saveStuff = @"UPDATE Cal_Upd 
 											SET 
 											  Cal_Upd.[NoService] = Cal_Orig.[NoService]
 											, Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] 
@@ -649,19 +651,19 @@ namespace GreenbushIep.Controllers
 											AND Cal_Upd.USD = @USD_Upd 
 											AND Cal_Upd.BuildingID = @BuildingID_Upd 
 											AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
-							using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
-							{
-								querySaveStuff.Connection = SQLConn;
-								querySaveStuff.Parameters.Clear();
-								querySaveStuff.CommandTimeout = 180;
-								querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
-								querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-								querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-								querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
-								querySaveStuff.ExecuteNonQuery();
-							}
+                            using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
+                            {
+                                querySaveStuff.Connection = SQLConn;
+                                querySaveStuff.Parameters.Clear();
+                                querySaveStuff.CommandTimeout = 180;
+                                querySaveStuff.Parameters.AddWithValue("@USD_Orig", district);
+                                querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+                                querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+                                querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+                                querySaveStuff.ExecuteNonQuery();
+                            }
 
-							String saveMoreStuff = @"UPDATE CalR_Upd 
+                            String saveMoreStuff = @"UPDATE CalR_Upd 
 											SET CalR_Upd.DaysPerWeek = CalR_Orig.DaysPerWeek
 											, CalR_Upd.TotalDays = CalR_Orig.TotalDays
 											, CalR_Upd.TotalWeeks = CalR_Orig.TotalWeeks
@@ -672,19 +674,19 @@ namespace GreenbushIep.Controllers
 											AND CalR_Orig.USD = @USD_Orig
 											AND CalR_Orig.BuildingID = @BuildingID_Orig
 											AND CalR_Upd.USD = @USD_Upd AND CalR_Upd.BuildingID = @BuildingID_Upd";
-							using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
-							{
-								querySaveMoreStuff.Connection = SQLConn;
-								querySaveMoreStuff.Parameters.Clear();
-								querySaveMoreStuff.CommandTimeout = 180;
-								querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
-								querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
-								querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
-								querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
-								querySaveMoreStuff.ExecuteNonQuery();
-							}
-						}
-					}
+                            using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
+                            {
+                                querySaveMoreStuff.Connection = SQLConn;
+                                querySaveMoreStuff.Parameters.Clear();
+                                querySaveMoreStuff.CommandTimeout = 180;
+                                querySaveMoreStuff.Parameters.AddWithValue("@USD_Orig", district);
+                                querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
+                                querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+                                querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+                                querySaveMoreStuff.ExecuteNonQuery();
+                            }
+                        }
+                    }
                 }
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);
@@ -786,12 +788,14 @@ namespace GreenbushIep.Controllers
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser student = db.tblUsers.SingleOrDefault(s => s.UserID == studentId);
 
+            ViewBag.modifiedByFullName = string.Empty;
             ViewBag.studentName = student.FirstName + " " + student.LastName;
             var iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             var isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
 
             try
             {
+                tblUser modifier = db.tblUsers.FirstOrDefault();
                 switch (view)
                 {
                     case "HealthModule":
@@ -799,6 +803,11 @@ namespace GreenbushIep.Controllers
                         if (healthModel == null)
                         {
                             healthModel = new tblIEPHealth();
+                        }
+                        else
+                        { // Load the modified by info
+                            modifier = db.tblUsers.Where(u => u.UserID == healthModel.ModifiedBy).SingleOrDefault();
+                            ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         }
 
                         if (isReadOnly)
@@ -813,10 +822,10 @@ namespace GreenbushIep.Controllers
                         academicModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault();
                         academicModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault();
 
-                        if (academicModel.Academic == null) { academicModel.Academic = new tblIEPAcademic(); }
-                        if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); }
-                        if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); }
-                        if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); }
+                        if (academicModel.Academic == null) { academicModel.Academic = new tblIEPAcademic(); } else { modifier = db.tblUsers.Where(u => u.UserID == academicModel.Academic.ModifiedBy).SingleOrDefault(); ViewBag.academicModifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null; }
+                        if (academicModel.Reading == null) { academicModel.Reading = new tblIEPReading(); } else { modifier = db.tblUsers.Where(u => u.UserID == academicModel.Reading.ModifiedBy).SingleOrDefault(); ViewBag.readingModifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null; }
+                        if (academicModel.Math == null) { academicModel.Math = new tblIEPMath(); } else { modifier = db.tblUsers.Where(u => u.UserID == academicModel.Math.ModifiedBy).SingleOrDefault(); ViewBag.mathModifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null; }
+                        if (academicModel.Written == null) { academicModel.Written = new tblIEPWritten(); } else { modifier = db.tblUsers.Where(u => u.UserID == academicModel.Written.ModifiedBy).SingleOrDefault(); ViewBag.writtenModifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null; }
 
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_AcademicSection", academicModel);
@@ -828,6 +837,11 @@ namespace GreenbushIep.Controllers
                         if (motorModel == null)
                         {
                             motorModel = new tblIEPMotor();
+                        }
+                        else
+                        { // Load the modified by info
+                            modifier = db.tblUsers.Where(u => u.UserID == motorModel.ModifiedBy).SingleOrDefault();
+                            ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         }
 
                         if (isReadOnly)
@@ -841,6 +855,11 @@ namespace GreenbushIep.Controllers
                         {
                             communicationModel = new tblIEPCommunication();
                         }
+                        else
+                        { // Load the modified by info
+                            modifier = db.tblUsers.Where(u => u.UserID == communicationModel.ModifiedBy).SingleOrDefault();
+                            ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                        }
 
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_CommunicationSection", communicationModel);
@@ -853,6 +872,11 @@ namespace GreenbushIep.Controllers
                         {
                             socialModel = new tblIEPSocial();
                         }
+                        else
+                        { // Load the modified by info
+                            modifier = db.tblUsers.Where(u => u.UserID == socialModel.ModifiedBy).SingleOrDefault();
+                            ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                        }
 
                         if (isReadOnly)
                             return PartialView("ActiveIEP/_SocialSection", socialModel);
@@ -864,6 +888,11 @@ namespace GreenbushIep.Controllers
                         if (intelligenceModel == null)
                         {
                             intelligenceModel = new tblIEPIntelligence();
+                        }
+                        else
+                        { // Load the modified by info
+                            modifier = db.tblUsers.Where(u => u.UserID == intelligenceModel.ModifiedBy).SingleOrDefault();
+                            ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         }
 
                         if (isReadOnly)
@@ -1178,40 +1207,40 @@ namespace GreenbushIep.Controllers
                     {
                         var theIEP = GetIEPPrint(stId, IEPid);
 
-						if (theIEP != null)
-						{
-							theIEP.studentDetails.printStudentInfo = true;
-							theIEP.studentDetails.printIEPDetails = true;
-							theIEP.studentDetails.printHealth = true;
-							theIEP.studentDetails.printMotor = true;
-							theIEP.studentDetails.printComm = true;
-							theIEP.studentDetails.printSocial = true;
-							theIEP.studentDetails.printGeneral = true;
-							theIEP.studentDetails.printAcademic = true;
-							theIEP.studentDetails.printAcc = true;
-							theIEP.studentDetails.printBehavior = true;
-							theIEP.studentDetails.printTrans = true;
-							theIEP.studentDetails.printOther = true;
-							theIEP.studentDetails.printGoals = true;
-							theIEP.studentDetails.printServices = true;
-							theIEP.studentDetails.printNotice = true;
-							theIEP.studentDetails.printProgressReport = false;
+                        if (theIEP != null)
+                        {
+                            theIEP.studentDetails.printStudentInfo = true;
+                            theIEP.studentDetails.printIEPDetails = true;
+                            theIEP.studentDetails.printHealth = true;
+                            theIEP.studentDetails.printMotor = true;
+                            theIEP.studentDetails.printComm = true;
+                            theIEP.studentDetails.printSocial = true;
+                            theIEP.studentDetails.printGeneral = true;
+                            theIEP.studentDetails.printAcademic = true;
+                            theIEP.studentDetails.printAcc = true;
+                            theIEP.studentDetails.printBehavior = true;
+                            theIEP.studentDetails.printTrans = true;
+                            theIEP.studentDetails.printOther = true;
+                            theIEP.studentDetails.printGoals = true;
+                            theIEP.studentDetails.printServices = true;
+                            theIEP.studentDetails.printNotice = true;
+                            theIEP.studentDetails.printProgressReport = false;
 
-							theIEP.isServerRender = true;
-						}
-						
+                            theIEP.isServerRender = true;
+                        }
+
                         var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
 
                         string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
-						result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
-						HtmlDocument doc = new HtmlDocument();
+                        result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+                        HtmlDocument doc = new HtmlDocument();
                         doc.OptionWriteEmptyNodes = true;
                         doc.OptionFixNestedTags = true;
                         doc.LoadHtml(result);
 
                         var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                         var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "",  "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
+                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
 
                     }
                     catch (Exception e)
@@ -1387,76 +1416,76 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
-				//get latest year
-				int maxYear = DateTime.Now.AddYears(1).Year;
-				int currentYear = DateTime.Now.Year;
-				if (serviceId.HasValue)
-				{
-					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
-					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear) + 1;
-				}
-				else
-				{
-					currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
-					maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear) + 1;
-				}
+                //get latest year
+                int maxYear = DateTime.Now.AddYears(1).Year;
+                int currentYear = DateTime.Now.Year;
+                if (serviceId.HasValue)
+                {
+                    currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear);
+                    maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.ServiceID == serviceId).Max(o => o.SchoolYear) + 1;
+                }
+                else
+                {
+                    currentYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear);
+                    maxYear = db.tblServices.Where(s => s.IEPid == iep.IEPid).Max(o => o.SchoolYear) + 1;
+                }
 
-				if (maxYear > 0)
-				{
-					tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
-					int startMonth = 7; //july
-					int endMonth = 6; //june
+                if (maxYear > 0)
+                {
+                    tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
+                    int startMonth = 7; //july
+                    int endMonth = 6; //june
 
-					List<tblService> services = null;
-					if (serviceId.HasValue)
-						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear && s.ServiceID == serviceId).ToList();
-					else
-						services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear).ToList();
+                    List<tblService> services = null;
+                    if (serviceId.HasValue)
+                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear && s.ServiceID == serviceId).ToList();
+                    else
+                        services = db.tblServices.Where(s => s.IEPid == iep.IEPid && s.SchoolYear == currentYear).ToList();
 
-					List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
-					foreach (var service in services)
-					{
-						List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == service.BuildingID && c.canHaveClass == true && c.NoService == false && c.SchoolYear > service.SchoolYear && c.SchoolYear <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
+                    List<StudentServiceObject> serviceList = new List<StudentServiceObject>();
+                    foreach (var service in services)
+                    {
+                        List<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == service.BuildingID && c.canHaveClass == true && c.NoService == false && c.SchoolYear > service.SchoolYear && c.SchoolYear <= maxYear).OrderBy(c => c.SchoolYear).ThenBy(c => c.Month).ThenBy(c => c.Day).ToList();
 
-						tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
-						tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
+                        tblCalendar firstDaySchoolYear = availableCalendarDays.Where(c => c.Month >= startMonth).OrderBy(c => c.Month).ThenBy(c => c.Day).First();
+                        tblCalendar lastDaySchoolYear = availableCalendarDays.Where(c => c.Month <= endMonth).OrderByDescending(c => c.Month).ThenByDescending(c => c.Day).First();
 
-						var item = new StudentServiceObject();
-						var meetingDate = item.DaysPerWeek = service.DaysPerWeek;
-						item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
+                        var item = new StudentServiceObject();
+                        var meetingDate = item.DaysPerWeek = service.DaysPerWeek;
+                        item.StartDate = firstDaySchoolYear != null && firstDaySchoolYear.calendarDate.HasValue ? firstDaySchoolYear.calendarDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString();
 
-						if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
-						{
-							item.EndDate = iep.MeetingDate.Value.ToShortDateString();
-						}
-						else
-						{
-							item.EndDate = lastDaySchoolYear.calendarDate.Value.ToShortDateString();
-						}
+                        if (iep.MeetingDate.HasValue && (iep.MeetingDate.Value > lastDaySchoolYear.calendarDate))
+                        {
+                            item.EndDate = iep.MeetingDate.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            item.EndDate = lastDaySchoolYear.calendarDate.Value.ToShortDateString();
+                        }
 
-						item.LocationCode = service.LocationCode;
-						item.Minutes = service.Minutes;
-						item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
-						item.SchoolYear = service.SchoolYear;
-						item.ServiceCode = service.ServiceCode;
-						item.Frequency = service.Frequency;
-						item.selectedAttendingBuilding = service.BuildingID;
+                        item.LocationCode = service.LocationCode;
+                        item.Minutes = service.Minutes;
+                        item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
+                        item.SchoolYear = service.SchoolYear;
+                        item.ServiceCode = service.ServiceCode;
+                        item.Frequency = service.Frequency;
+                        item.selectedAttendingBuilding = service.BuildingID;
 
-						if (service.tblGoals.Any())
-						{
-							foreach (var goal in service.tblGoals)
-							{
-								item.Goals += goal.goalID + ",";
-							}
+                        if (service.tblGoals.Any())
+                        {
+                            foreach (var goal in service.tblGoals)
+                            {
+                                item.Goals += goal.goalID + ",";
+                            }
 
-							item.Goals = item.Goals.Trim(',');
-						}
+                            item.Goals = item.Goals.Trim(',');
+                        }
 
-						serviceList.Add(item);
-					}
+                        serviceList.Add(item);
+                    }
 
-					return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
-				}
+                    return Json(new { Result = "success", Data = serviceList }, JsonRequestBehavior.AllowGet);
+                }
             }
 
             return Json(new { Result = "fail" }, JsonRequestBehavior.AllowGet);
@@ -1952,17 +1981,17 @@ namespace GreenbushIep.Controllers
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
 
-				List<vw_ModuleAccommodationFlags> accommodationFlag = db.vw_ModuleAccommodationFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
-				model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation ? "Health " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation  ? "Motor " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation ? "Communication " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation  ? "Social-Emotional " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation  ? "Math " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation  ? "Reading " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation  ? "Written&nbsp;Language " : string.Empty;
-				model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation  ? "Academic/Functional" : string.Empty;
+                List<vw_ModuleAccommodationFlags> accommodationFlag = db.vw_ModuleAccommodationFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
+                model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation ? "Health " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation ? "Motor " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation ? "Communication " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written&nbsp;Language " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional" : string.Empty;
 
-				var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
+                var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
                 if (accommodations.Any())
                 {
                     model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
@@ -1994,13 +2023,14 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult OtherConsiderations(int studentId, int IEPid)
         {
-            var model = new tblOtherConsideration();
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
+            tblOtherConsideration model = new tblOtherConsideration();
             bool isReadOnly = false;
             ViewBag.vehicleType = 0;
             ViewBag.minutes = "25";
             ViewBag.begin = "";
             ViewBag.end = "";
+
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             if (iep != null)
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -2012,6 +2042,10 @@ namespace GreenbushIep.Controllers
                 if (oc.Any())
                 {
                     model = oc.FirstOrDefault();
+
+                    // Load the modified by info
+                    tblUser modifier = db.tblUsers.Where(u => u.UserID == model.ModifiedBy).SingleOrDefault();
+                    ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                 }
                 else
                 {
@@ -2202,17 +2236,17 @@ namespace GreenbushIep.Controllers
                 fileViewModel.districtName = district != null ? district.DistrictName : "";
             }
 
-			if (fileName == "TeamEvaluation")
-			{
-				viewModel.teamEval = db.tblFormTeamEvals.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "SummaryOfPerformance")
-			{
-				viewModel.summaryPerformance = db.tblFormSummaryPerformances.Where(o => o.StudentId == id).FirstOrDefault();
-			}
+            if (fileName == "TeamEvaluation")
+            {
+                viewModel.teamEval = db.tblFormTeamEvals.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "SummaryOfPerformance")
+            {
+                viewModel.summaryPerformance = db.tblFormSummaryPerformances.Where(o => o.StudentId == id).FirstOrDefault();
+            }
 
 
-			viewModel.fileModel = fileViewModel;
+            viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -2280,118 +2314,118 @@ namespace GreenbushIep.Controllers
             var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
             {
-				theIEP.studentDetails.printStudentInfo = true;
-				theIEP.studentDetails.printIEPDetails = true;
-				theIEP.studentDetails.printHealth = true;
-				theIEP.studentDetails.printMotor = true;
-				theIEP.studentDetails.printComm = true;
-				theIEP.studentDetails.printSocial = true;
-				theIEP.studentDetails.printGeneral = true;
-				theIEP.studentDetails.printAcademic = true;
-				theIEP.studentDetails.printAcc = true;
-				theIEP.studentDetails.printBehavior = true;
-				theIEP.studentDetails.printTrans = true;
-				theIEP.studentDetails.printOther = true;
-				theIEP.studentDetails.printGoals = true;
-				theIEP.studentDetails.printServices = true;
-				theIEP.studentDetails.printNotice = true;
-				theIEP.studentDetails.printProgressReport = false;
-				
-				return View("PrintIEP", theIEP);
+                theIEP.studentDetails.printStudentInfo = true;
+                theIEP.studentDetails.printIEPDetails = true;
+                theIEP.studentDetails.printHealth = true;
+                theIEP.studentDetails.printMotor = true;
+                theIEP.studentDetails.printComm = true;
+                theIEP.studentDetails.printSocial = true;
+                theIEP.studentDetails.printGeneral = true;
+                theIEP.studentDetails.printAcademic = true;
+                theIEP.studentDetails.printAcc = true;
+                theIEP.studentDetails.printBehavior = true;
+                theIEP.studentDetails.printTrans = true;
+                theIEP.studentDetails.printOther = true;
+                theIEP.studentDetails.printGoals = true;
+                theIEP.studentDetails.printServices = true;
+                theIEP.studentDetails.printNotice = true;
+                theIEP.studentDetails.printProgressReport = false;
+
+                return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.
             return RedirectToAction("Index", "Home", null);
         }
 
-		[HttpGet]
-		[Authorize]
-		public ActionResult PrintIEPSection(int stid, int iepId, string section)
-		{
-			var theIEP = GetIEPPrint(stid, iepId);
-			if (theIEP != null)
-			{
-				switch(section)
-				{
-					case "Health":
-						{
-							theIEP.studentDetails.printHealth= true;
-							break;
-						}
+        [HttpGet]
+        [Authorize]
+        public ActionResult PrintIEPSection(int stid, int iepId, string section)
+        {
+            var theIEP = GetIEPPrint(stid, iepId);
+            if (theIEP != null)
+            {
+                switch (section)
+                {
+                    case "Health":
+                        {
+                            theIEP.studentDetails.printHealth = true;
+                            break;
+                        }
 
-					case "Motor":
-						{
-							theIEP.studentDetails.printMotor= true;
-							break;
-						}
-					case "Comm":
-						{
-							theIEP.studentDetails.printComm= true;
-							break;
-						}
-					case "Social":
-						{
-							theIEP.studentDetails.printSocial= true;
-							break;
-						}
-					case "General":
-						{
-							theIEP.studentDetails.printGeneral= true;
-							break;
-						}
-					case "Academic":
-						{
-							theIEP.studentDetails.printAcademic= true;
-							break;
-						}
-					case "Acc":
-						{
-							theIEP.studentDetails.printAcc= true;
-							break;
-						}
-					case "Behavior":
-						{
-							theIEP.studentDetails.printBehavior= true;
-							break;
-						}
-					case "Trans":
-						{
-							theIEP.studentDetails.printTrans= true;
-							break;
-						}
+                    case "Motor":
+                        {
+                            theIEP.studentDetails.printMotor = true;
+                            break;
+                        }
+                    case "Comm":
+                        {
+                            theIEP.studentDetails.printComm = true;
+                            break;
+                        }
+                    case "Social":
+                        {
+                            theIEP.studentDetails.printSocial = true;
+                            break;
+                        }
+                    case "General":
+                        {
+                            theIEP.studentDetails.printGeneral = true;
+                            break;
+                        }
+                    case "Academic":
+                        {
+                            theIEP.studentDetails.printAcademic = true;
+                            break;
+                        }
+                    case "Acc":
+                        {
+                            theIEP.studentDetails.printAcc = true;
+                            break;
+                        }
+                    case "Behavior":
+                        {
+                            theIEP.studentDetails.printBehavior = true;
+                            break;
+                        }
+                    case "Trans":
+                        {
+                            theIEP.studentDetails.printTrans = true;
+                            break;
+                        }
 
-					case "Other":
-						{
-							theIEP.studentDetails.printOther= true;
-							break;
-						}
-					case "Goals":
-						{
-							theIEP.studentDetails.printGoals= true;
-							break;
-						}
-					case "Services":
-						{
-							theIEP.studentDetails.printServices= true;
-							break;
-						}
-					case "Progress":
-						{
-							theIEP.studentDetails.printProgressReport = true;
-							break;
-						}
+                    case "Other":
+                        {
+                            theIEP.studentDetails.printOther = true;
+                            break;
+                        }
+                    case "Goals":
+                        {
+                            theIEP.studentDetails.printGoals = true;
+                            break;
+                        }
+                    case "Services":
+                        {
+                            theIEP.studentDetails.printServices = true;
+                            break;
+                        }
+                    case "Progress":
+                        {
+                            theIEP.studentDetails.printProgressReport = true;
+                            break;
+                        }
 
 
-				}
+                }
 
-				return View("PrintIEP", theIEP);
-			}
+                return View("PrintIEP", theIEP);
+            }
 
-			// Unknow error happened.
-			return RedirectToAction("Index", "Home", null);
-		}
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
+        }
 
-		[HttpGet]
+        [HttpGet]
         [Authorize]
         public ActionResult PrintStudentInfo(int stid, int iepId)
         {
@@ -2399,24 +2433,24 @@ namespace GreenbushIep.Controllers
             ViewBag.IsStudentInfo = 1;
             if (theIEP != null)
             {
-				theIEP.studentDetails.printStudentInfo = true;
-				theIEP.studentDetails.printIEPDetails = true;
-				theIEP.studentDetails.printHealth = true;
-				theIEP.studentDetails.printMotor = true;
-				theIEP.studentDetails.printComm = true;
-				theIEP.studentDetails.printSocial = true;
-				theIEP.studentDetails.printGeneral = true;
-				theIEP.studentDetails.printAcademic = true;
-				theIEP.studentDetails.printAcc = true;
-				theIEP.studentDetails.printBehavior = true;
-				theIEP.studentDetails.printTrans = true;
-				theIEP.studentDetails.printOther = true;
-				theIEP.studentDetails.printGoals = true;
-				theIEP.studentDetails.printServices = true;
-				theIEP.studentDetails.printNotice = true;
-				theIEP.studentDetails.printProgressReport = false;
+                theIEP.studentDetails.printStudentInfo = true;
+                theIEP.studentDetails.printIEPDetails = true;
+                theIEP.studentDetails.printHealth = true;
+                theIEP.studentDetails.printMotor = true;
+                theIEP.studentDetails.printComm = true;
+                theIEP.studentDetails.printSocial = true;
+                theIEP.studentDetails.printGeneral = true;
+                theIEP.studentDetails.printAcademic = true;
+                theIEP.studentDetails.printAcc = true;
+                theIEP.studentDetails.printBehavior = true;
+                theIEP.studentDetails.printTrans = true;
+                theIEP.studentDetails.printOther = true;
+                theIEP.studentDetails.printGoals = true;
+                theIEP.studentDetails.printServices = true;
+                theIEP.studentDetails.printNotice = true;
+                theIEP.studentDetails.printProgressReport = false;
 
-				return View("PrintIEP", theIEP);
+                return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.
@@ -2484,15 +2518,15 @@ namespace GreenbushIep.Controllers
                 //student goalds
                 if (theIEP != null && theIEP.current != null)
                 {
-					//status of iep
-					var listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
-					theIEP.anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive); ;
-					theIEP.anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.Amendment && i.IsActive);
-					theIEP.anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && !i.Amendment && i.IsActive); ;
-					theIEP.anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ANNUAL && i.IsActive);
+                    //status of iep
+                    var listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
+                    theIEP.anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive); ;
+                    theIEP.anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.Amendment && i.IsActive);
+                    theIEP.anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && !i.Amendment && i.IsActive); ;
+                    theIEP.anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ANNUAL && i.IsActive);
 
 
-					theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+                    theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
                     foreach (var goal in theIEP.studentGoals)
                     {
                         theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
@@ -2532,26 +2566,26 @@ namespace GreenbushIep.Controllers
                         tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                         tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
-						bool isDOC = false;
-						if (theIEP.studentTransition != null)
-						{
-							isDOC = theIEP.studentTransition.isDOC;
-						}
+                        bool isDOC = false;
+                        if (theIEP.studentTransition != null)
+                        {
+                            isDOC = theIEP.studentTransition.isDOC;
+                        }
 
-						if (theIEP.current.begin_date != null && !isDOC)
-						{
-							//check student age for transition plan using the begin date plus one year
-							var endDate = theIEP.current.begin_date.Value.AddYears(1);
-							theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-						}
-						else
-						{
-							//use current date
-							theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-						}
+                        if (theIEP.current.begin_date != null && !isDOC)
+                        {
+                            //check student age for transition plan using the begin date plus one year
+                            var endDate = theIEP.current.begin_date.Value.AddYears(1);
+                            theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                        }
+                        else
+                        {
+                            //use current date
+                            theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                        }
 
 
-						stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
+                        stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
                         stvw.isDOC = district.DOC;
                         studentDetails.isDOC = district.DOC;
 
@@ -2763,7 +2797,7 @@ namespace GreenbushIep.Controllers
                     var filterUsers = db.vw_UserList.Where(ul => ul.RoleID != owner)
                         .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal)).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
                         .Distinct()
-						.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+                        .OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                     return Json(new { result = true, filterUsers = filterUsers }, JsonRequestBehavior.AllowGet);
 
@@ -2780,8 +2814,8 @@ namespace GreenbushIep.Controllers
 
                     var filterUsers = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false })
                         .Where(o => o.LastName.Contains(usernameVal) || o.FirstName.Contains(usernameVal) || o.MiddleName.Contains(usernameVal))
-						.Distinct()
-						.OrderBy(u => u.LastName)
+                        .Distinct()
+                        .OrderBy(u => u.LastName)
                         .ThenBy(u => u.FirstName)
                         .ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
@@ -2993,8 +3027,8 @@ namespace GreenbushIep.Controllers
                     {
                         //on save if no errors
                         db.SaveChanges();
-						var byteArray = System.Text.Encoding.UTF8.GetBytes(sb.ToString());						
-						OutputResponse(byteArray, "SpedProExport.txt", "text/plain");
+                        var byteArray = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+                        OutputResponse(byteArray, "SpedProExport.txt", "text/plain");
                     }
                     else
                     {
@@ -3078,7 +3112,7 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("\t{0}", studentIEP.studentOtherConsiderations != null ? studentIEP.studentOtherConsiderations.ExtendedSchoolYear_Necessary : "");
 
             //15 sped transportation		
-			sb.AppendFormat("\t{0}", studentIEP.studentServices != null && studentIEP.studentServices.Count(o => o.ServiceCode == "ST") > 0 ? "1" : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentServices != null && studentIEP.studentServices.Count(o => o.ServiceCode == "ST") > 0 ? "1" : "");
 
             //16 All Day Kindergarten
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.FullDayKG == null ? "" : studentIEP.studentDetails.student.FullDayKG.Value == true ? "1" : "");
@@ -3136,10 +3170,10 @@ namespace GreenbushIep.Controllers
             //if exit data exists
             if (studentIEP.studentDetails.student.ExitDate.HasValue)
             {
-				serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
+                serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
             }
 
-			int count = 1;
+            int count = 1;
             foreach (var service in studentIEP.studentServices)
             {
                 if (count == 25)
@@ -3175,8 +3209,8 @@ namespace GreenbushIep.Controllers
                 //6 gifted
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.isGifted ? "1" : "0");
 
-				//7 service location req
-				sb.AppendFormat("\t{0}", string.IsNullOrEmpty(service.BuildingID) ? studentIEP.studentDetails.building.BuildingID : service.BuildingID);
+                //7 service location req
+                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(service.BuildingID) ? studentIEP.studentDetails.building.BuildingID : service.BuildingID);
 
                 //8 Primary Service Location Indicator
                 sb.AppendFormat("\t{0}", "");
@@ -3226,50 +3260,50 @@ namespace GreenbushIep.Controllers
         }
 
 
-		[Authorize]
+        [Authorize]
         [ValidateInput(false)]
         public ActionResult DownloadPDF(FormCollection collection)
         {
 
             string StudentHTMLContent = collection["studentText"];
             string HTMLContent = collection["printText"];
-			string HTMLContent2 = collection["printText2"];
-			string HTMLContent3 = collection["printText3"];
-			string studentName = collection["studentName"];
+            string HTMLContent2 = collection["printText2"];
+            string HTMLContent3 = collection["printText3"];
+            string studentName = collection["studentName"];
             string studentId = collection["studentId"];
             string isArchive = collection["isArchive"];
             string iepIDStr = collection["iepID"];
             string isIEP = collection["isIEP"];
             string formName = collection["formName"];
-			string isSave = collection["isSave"];
+            string isSave = collection["isSave"];
 
-			if (isSave == "1")
-			{
-				try
-				{
-					SaveFormValues(HTMLContent, formName, studentId);
-				}
+            if (isSave == "1")
+            {
+                try
+                {
+                    SaveFormValues(HTMLContent, formName, studentId);
+                }
                 catch
                 {
 
                 }
 
-				return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
-			}
-			else
-			{
-				var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
-				if (mergedFile != null)
-				{
-					string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
-					OutputResponse(mergedFile, downloadFileName, "application/pdf");
-					
-				}
-			}
+                return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
+            }
+            else
+            {
+                var mergedFile = this.CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
+                if (mergedFile != null)
+                {
+                    string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
+                    OutputResponse(mergedFile, downloadFileName, "application/pdf");
 
-			return null;
+                }
+            }
 
-		}
+            return null;
+
+        }
 
         private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string HTMLContent2, string HTMLContent3, string studentName, string studentId,
         string isArchive, string iepIDStr, string isIEP, string formName)
@@ -3319,8 +3353,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-					result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-					result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
+                    result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
+                    result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -3333,50 +3367,50 @@ namespace GreenbushIep.Controllers
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
-				byte[] secondaryPageFile = null;
-				if (!string.IsNullOrEmpty(HTMLContent2))
-				{
-					string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-					secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
-					secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
-				}
+                byte[] secondaryPageFile = null;
+                if (!string.IsNullOrEmpty(HTMLContent2))
+                {
+                    string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
+                    secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
+                }
 
-				byte[] thirdPageFile = null;
-				if (!string.IsNullOrEmpty(HTMLContent3))
-				{
-					string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-					thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
-					thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
-				}
+                byte[] thirdPageFile = null;
+                if (!string.IsNullOrEmpty(HTMLContent3))
+                {
+                    string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
+                    thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
+                }
 
-				byte[] iepFile = null;
+                byte[] iepFile = null;
                 if (!string.IsNullOrEmpty(result))
                     iepFile = CreatePDFBytes(cssTextResult, result, "module-page", imgfoot, studentName, isDraft, true);
-								
 
-				List<byte[]> pdfByteContent = new List<byte[]>();
+
+                List<byte[]> pdfByteContent = new List<byte[]>();
 
                 if (studentFile != null)
                     pdfByteContent.Add(studentFile);
 
-				if (iepFile != null)
-				{
-					pdfByteContent.Add(iepFile);
+                if (iepFile != null)
+                {
+                    pdfByteContent.Add(iepFile);
 
-					//extra primary contacts
-					if (secondaryPageFile != null)
-					{
-						pdfByteContent.Add(secondaryPageFile);
-					}
+                    //extra primary contacts
+                    if (secondaryPageFile != null)
+                    {
+                        pdfByteContent.Add(secondaryPageFile);
+                    }
 
-					if (thirdPageFile != null)
-					{
-						pdfByteContent.Add(thirdPageFile);
-					}
+                    if (thirdPageFile != null)
+                    {
+                        pdfByteContent.Add(thirdPageFile);
+                    }
 
-				}
-				else
-					formName = "Student Information";//this is just the student info page print
+                }
+                else
+                    formName = "Student Information";//this is just the student info page print
 
                 var mergedFile = concatAndAddContent(pdfByteContent);
 
@@ -3696,224 +3730,224 @@ namespace GreenbushIep.Controllers
 
         }
 
-		private void OutputResponse(byte[] memoryStream, string fileName, string contentType)
-		{
-			Response.Clear();
+        private void OutputResponse(byte[] memoryStream, string fileName, string contentType)
+        {
+            Response.Clear();
 
-			Response.ContentType = contentType; //"application/octet-stream";
-			Response.AddHeader("Content-Disposition", "attachment;filename=" + fileName);
+            Response.ContentType = contentType; //"application/octet-stream";
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + fileName);
 
-			Response.BinaryWrite(memoryStream);
-			Response.End();
-		}
+            Response.BinaryWrite(memoryStream);
+            Response.End();
+        }
 
-		#region FormPDFDownload
-		private void SaveFormValues(string HTMLContent, string formName, string studentId)
-		{
-			//capture data
-			int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
+        #region FormPDFDownload
+        private void SaveFormValues(string HTMLContent, string formName, string studentId)
+        {
+            //capture data
+            int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
 
-			if (sid == 0)
-				return;
+            if (sid == 0)
+                return;
 
-			tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+            tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
 
-			HtmlDocument htmlDocument = new HtmlDocument();
-			htmlDocument.OptionWriteEmptyNodes = true;
-			htmlDocument.OptionFixNestedTags = true;
-			htmlDocument.LoadHtml(HTMLContent);
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.OptionWriteEmptyNodes = true;
+            htmlDocument.OptionFixNestedTags = true;
+            htmlDocument.LoadHtml(HTMLContent);
 
-			var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
-			var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+            var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
+            var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
 
-			if (formName == "Team Evaluation Report")
-			{
-				var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
+            if (formName == "Team Evaluation Report")
+            {
+                var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
 
-				teamEval.StudentId = sid;
-				teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
-				teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
-				teamEval.Hearing = GetInputValue("txtHearing", spans);
-				teamEval.Vision = GetInputValue("txtVision", spans);
-				teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
-				teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
-				teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
-				teamEval.TestData = GetInputValue("txtTestData", spans);
-				teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
-				teamEval.Peformance = GetInputValue("txtPeformance", spans);
-				teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
-				teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
-				teamEval.Regulations = GetInputValue("txtRegulations", spans);
-				teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
-				teamEval.Strengths = GetInputValue("txtStrengths", spans);
-				teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
-				teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
-				teamEval.Tried = GetInputValue("txtTried", spans);
-				teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
-				teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
-				teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
-				teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
-				teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
-				teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
-				teamEval.ListSources = GetInputValue("txtListSources", spans);
-
-
-				teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
-				teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
-				teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
-
-				if (teamEval.FormTeamEvalId == 0)
-				{
-					teamEval.CreatedBy = currentUser.UserID;
-					teamEval.Create_Date = DateTime.Now;
-					teamEval.ModifiedBy = currentUser.UserID;
-					teamEval.Update_Date = DateTime.Now;
-					db.tblFormTeamEvals.Add(teamEval);
-				}
-				else
-				{
-					teamEval.ModifiedBy = currentUser.UserID;
-					teamEval.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formName == "Summary Of Performance")
-			{
-				var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
-
-				summaryPerf.StudentId = sid;
-				summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
-				summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
-				summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
-				summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
-				summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
-				summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
-				summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
-				summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
-				summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
-				summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
-				summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
-				summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
-				summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
-				summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
-				summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
-				summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
-				summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
-				summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
-				summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
-				summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
-				summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
-				summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
-				summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
-				summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
-				summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
-				summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
-				summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
-				summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
-				summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
-				summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
-				summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
-				summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
-				summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
-				summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
-				summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
-				summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
-				summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
-				summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
-				summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
-				summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
-				summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
-				summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
-				summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
-				summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
-				summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
-				summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
-				summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
-				summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
-				summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
-				summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
-				summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
-				summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
-				summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
-				summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
-				summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
-				summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
-				summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
-				summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
+                teamEval.StudentId = sid;
+                teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
+                teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
+                teamEval.Hearing = GetInputValue("txtHearing", spans);
+                teamEval.Vision = GetInputValue("txtVision", spans);
+                teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
+                teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
+                teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
+                teamEval.TestData = GetInputValue("txtTestData", spans);
+                teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
+                teamEval.Peformance = GetInputValue("txtPeformance", spans);
+                teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
+                teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
+                teamEval.Regulations = GetInputValue("txtRegulations", spans);
+                teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
+                teamEval.Strengths = GetInputValue("txtStrengths", spans);
+                teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
+                teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
+                teamEval.Tried = GetInputValue("txtTried", spans);
+                teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
+                teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
+                teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
+                teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
+                teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
+                teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
+                teamEval.ListSources = GetInputValue("txtListSources", spans);
 
 
-				if (summaryPerf.FormSummaryPerformanceId == 0)
-				{
-					summaryPerf.CreatedBy = currentUser.UserID;
-					summaryPerf.Create_Date = DateTime.Now;
-					summaryPerf.ModifiedBy = currentUser.UserID;
-					summaryPerf.Update_Date = DateTime.Now;
-					db.tblFormSummaryPerformances.Add(summaryPerf);
-				}
-				else
-				{
-					summaryPerf.ModifiedBy = currentUser.UserID;
-					summaryPerf.Update_Date = DateTime.Now;
-				}
+                teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
+                teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
+                teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
 
-				db.SaveChanges();
-			}
+                if (teamEval.FormTeamEvalId == 0)
+                {
+                    teamEval.CreatedBy = currentUser.UserID;
+                    teamEval.Create_Date = DateTime.Now;
+                    teamEval.ModifiedBy = currentUser.UserID;
+                    teamEval.Update_Date = DateTime.Now;
+                    db.tblFormTeamEvals.Add(teamEval);
+                }
+                else
+                {
+                    teamEval.ModifiedBy = currentUser.UserID;
+                    teamEval.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formName == "Summary Of Performance")
+            {
+                var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
+
+                summaryPerf.StudentId = sid;
+                summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
+                summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
+                summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
+                summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
+                summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
+                summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
+                summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
+                summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
+                summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
+                summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
+                summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
+                summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
+                summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
+                summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
+                summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
+                summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
+                summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
+                summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
+                summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
+                summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
+                summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
+                summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
+                summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
+                summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
+                summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
+                summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
+                summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
+                summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
+                summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
+                summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
+                summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
+                summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
+                summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
+                summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
+                summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
+                summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
+                summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
+                summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
+                summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
+                summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
+                summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
+                summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
+                summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
+                summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
+                summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
+                summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
+                summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
+                summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
+                summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
+                summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
+                summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
+                summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
+                summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
+                summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
+                summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
+                summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
+                summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
+                summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
 
 
-		}
+                if (summaryPerf.FormSummaryPerformanceId == 0)
+                {
+                    summaryPerf.CreatedBy = currentUser.UserID;
+                    summaryPerf.Create_Date = DateTime.Now;
+                    summaryPerf.ModifiedBy = currentUser.UserID;
+                    summaryPerf.Update_Date = DateTime.Now;
+                    db.tblFormSummaryPerformances.Add(summaryPerf);
+                }
+                else
+                {
+                    summaryPerf.ModifiedBy = currentUser.UserID;
+                    summaryPerf.Update_Date = DateTime.Now;
+                }
 
-		private string GetInputValue(string inputName, List<HtmlNode> inputs)
-		{
-			var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
-			if (input != null)
-				return input.InnerHtml;
-			else
-				return "";
-		}
+                db.SaveChanges();
+            }
 
-		private DateTime? GetInputDateValue(string inputName, List<HtmlNode> inputs)
-		{
-			var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
-			if (input != null)
-			{
-				DateTime dtVal;
-				if (DateTime.TryParse(input.InnerHtml, out dtVal))
-					return dtVal;
-				else
-					return null;
-			}
-			else
-				return null;
-		}
 
-		private bool? GetCheckboxInputValue(string inputName, string inputName2, List<HtmlNode> checkboxes)
-		{
-			bool? returnValue = null;
-			var valYes = "";
-			var valNo = "";
+        }
 
-			var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
-			if (input != null)
-			{
-				valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
-			}
+        private string GetInputValue(string inputName, List<HtmlNode> inputs)
+        {
+            var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
+            if (input != null)
+                return input.InnerHtml;
+            else
+                return "";
+        }
 
-			var input2 = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
-			if (input2 != null)
-			{
-				valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";
-			}
+        private DateTime? GetInputDateValue(string inputName, List<HtmlNode> inputs)
+        {
+            var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
+            if (input != null)
+            {
+                DateTime dtVal;
+                if (DateTime.TryParse(input.InnerHtml, out dtVal))
+                    return dtVal;
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
 
-			if (valYes == "Y")
-				returnValue = true;
-			else if (valNo == "Y")
-				returnValue = false;
+        private bool? GetCheckboxInputValue(string inputName, string inputName2, List<HtmlNode> checkboxes)
+        {
+            bool? returnValue = null;
+            var valYes = "";
+            var valNo = "";
 
-			return returnValue;
+            var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+            if (input != null)
+            {
+                valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+            }
 
-		}
+            var input2 = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+            if (input2 != null)
+            {
+                valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";
+            }
 
-		#endregion
-	}
+            if (valYes == "Y")
+                returnValue = true;
+            else if (valNo == "Y")
+                returnValue = false;
+
+            return returnValue;
+
+        }
+
+        #endregion
+    }
 }
