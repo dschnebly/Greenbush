@@ -1536,7 +1536,7 @@ namespace GreenbushIep.Controllers
                                  select p).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
                 List<tblService> services = db.tblServices.Where(s => s.IEPid == iep.IEPid).ToList();
-
+                
                 if (services != null)
                 {
                     model.studentId = studentId;
@@ -1548,6 +1548,13 @@ namespace GreenbushIep.Controllers
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+
+                    int? modifiedby = model.studentServices.FirstOrDefault().ModifiedBy;
+                    if (modifiedby != null)
+                    {
+                        tblUser modifier = db.tblUsers.Where(u => u.UserID == modifiedby).SingleOrDefault();
+                        ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                    }
                 }
                 else
                 {
@@ -1716,6 +1723,8 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
+                int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
+
                 if (StudentSerivceId == 0) // new service
                 {
                     service = new tblService();
@@ -1735,6 +1744,7 @@ namespace GreenbushIep.Controllers
                     service.Completed = isCompleted;
                     service.Create_Date = DateTime.Now;
                     service.Update_Date = DateTime.Now;
+                    service.ModifiedBy = ModifiedBy;
 
                     // nullable serviceId
                     service.ProviderID = service.ProviderID == -1 ? null : service.ProviderID;
@@ -1778,6 +1788,7 @@ namespace GreenbushIep.Controllers
                     service.ProvidedFor = collection["serviceProvidedFor"];
                     service.Update_Date = DateTime.Now;
                     service.Completed = isCompleted;
+                    service.ModifiedBy = ModifiedBy;
                     service.FiledOn = null; //need to clear so it can be pickedup by spedpro export
                     service.tblGoals.Clear();
 
