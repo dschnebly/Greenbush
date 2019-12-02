@@ -867,7 +867,6 @@ namespace GreenBushIEP.Controllers
                     int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
                     int j = 3;
-                    //DateTime temp;
                     bool keyParse = Int32.TryParse(collection[++j], out goalId);
                     StudentGoal studentGoal = (!keyParse) ? new StudentGoal() : new StudentGoal(goalId); // new goal : exsisting goal
 
@@ -879,6 +878,7 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.Baseline = collection[++j].ToString();
                     studentGoal.goal.StateStandards = collection[++j].ToString();
                     studentGoal.goal.Completed = Convert.ToBoolean(collection["completed"]);
+                    studentGoal.goal.Update_Date = DateTime.Now;
                     studentGoal.goal.ModifiedBy = ModifiedBy;
 
                     var evalProcedures = "";

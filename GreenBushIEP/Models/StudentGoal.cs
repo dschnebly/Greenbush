@@ -9,6 +9,7 @@ namespace GreenBushIEP.Models
         private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         public tblGoal goal { get; set; }
+        public string modifiedByFullName { get; set; }
         public List<tblGoalBenchmark> benchmarks { get; set; } = new List<tblGoalBenchmark>();
         public List<tblGoalEvaluationProcedure> evaluationProcedures { get; set; } = new List<tblGoalEvaluationProcedure>();
 		public List<tblGoalBenchmarkMethod> shortTermBenchmarkMethods { get; set; } = new List<tblGoalBenchmarkMethod>();
@@ -20,6 +21,9 @@ namespace GreenBushIEP.Models
                 this.goal = db.tblGoals.Where(g => g.goalID == goalId).FirstOrDefault();
                 this.benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goalId).ToList();
                 this.evaluationProcedures = db.tblGoalEvaluationProcedures.Where(o => o.goalID == goalId).ToList();
+
+                tblUser modifier = db.tblUsers.Where(u => u.UserID == goal.ModifiedBy).SingleOrDefault();
+                this.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
             }
             else
             {

@@ -509,6 +509,14 @@
                                                         <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (!String.IsNullOrEmpty(studentGoal.modifiedByFullName))
+                                                        {
+                                                            <h6 class="pull-right modified">last updated on @(studentGoal.goal.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + studentGoal.goal.Update_Date.ToString("tt").ToLower()) by @(studentGoal.modifiedByFullName)</h6>
+                                                        }
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

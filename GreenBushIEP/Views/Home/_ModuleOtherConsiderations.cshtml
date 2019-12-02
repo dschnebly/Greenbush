@@ -250,7 +250,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                @if (ViewBag.modifiedByFullName != null)
+                @if (!String.IsNullOrEmpty(ViewBag.modifiedByFullName))
                 {
                     <h6 class="pull-right modified">last updated on @(Model.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Update_Date.ToString("tt").ToLower()) by @(ViewBag.modifiedByFullName)</h6>
                 }
