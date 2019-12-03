@@ -1382,6 +1382,14 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic/Functional" : string.Empty;
 
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
+                int? modifiedby = (goals.Count > 0) ? goals.FirstOrDefault().ModifiedBy : null;
+                if (modifiedby != null)
+                {
+                    tblUser modifier = db.tblUsers.Where(u => u.UserID == modifiedby).SingleOrDefault();
+                    ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                    ViewBag.modifiedByDate = goals.FirstOrDefault().Update_Date;
+                }
+
                 foreach (tblGoal goal in goals)
                 {
                     var studentGoal = new StudentGoal(goal.goalID);
@@ -1393,7 +1401,6 @@ namespace GreenbushIep.Controllers
                     {
                         var shortBenchmarks = db.tblGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == benchmark.goalBenchmarkID).ToList();
                         studentGoal.shortTermBenchmarkMethods.AddRange(shortBenchmarks);
-
                     }
 
                 }
@@ -1549,11 +1556,12 @@ namespace GreenbushIep.Controllers
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
 
-                    int? modifiedby = model.studentServices.FirstOrDefault().ModifiedBy;
+                    int? modifiedby = (services.Count > 0) ? services.FirstOrDefault().ModifiedBy : null ;
                     if (modifiedby != null)
                     {
                         tblUser modifier = db.tblUsers.Where(u => u.UserID == modifiedby).SingleOrDefault();
                         ViewBag.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                        ViewBag.modifiedByDate = services.FirstOrDefault().Update_Date;
                     }
                 }
                 else
