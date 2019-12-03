@@ -287,7 +287,7 @@ $("#next4").on("click", function () {
 
 					
 					// clear out the ul list
-					$("ul#studentList").empty();
+					$("ul#teacherList").empty();
 
 					// our array to user for appending
 					var items = [];
@@ -392,7 +392,7 @@ $("#next7").on("click", function () {
 					$($active).next().find('a[data-toggle="tab"]').click();
 
 					// clear out the ul list
-					$("ul#studentList").empty();
+					$("ul#teacherList").empty();
 
 					// our array to user for appending
 					var items = [];

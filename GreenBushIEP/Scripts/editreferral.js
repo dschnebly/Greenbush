@@ -301,7 +301,7 @@ $("#next7").on("click", function () {
 
 
 					// clear out the ul list
-					$("ul#studentList").empty();
+					$("ul#teacherList").empty();
 
 					// our array to user for appending
 					var items = [];
