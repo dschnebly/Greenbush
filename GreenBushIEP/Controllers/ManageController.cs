@@ -3697,7 +3697,7 @@ namespace GreenBushIEP.Controllers
 				teachers = db.vw_UserList
 						.Where(ul => myRoles.Contains(ul.RoleID) && ul.BuildingID == buildingId && ul.USD.Contains(usd))
 						.GroupBy(u => u.UserID)
-						.Select(u => u.FirstOrDefault()).ToList();
+						.Select(u => u.FirstOrDefault()).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
 				if (teachers != null && teachers.Count > 0)
 				{
