@@ -3,6 +3,92 @@
     init();
     initContacts();
 
+    // Custom jQuery to hide popover on click of the close button
+    $(document).on("click", ".popover-header .popover-close", function () {
+        $(this).parents(".popover").popover('hide');
+    });
+
+
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-header">Edit Dates <i class="glyphicon glyphicon-remove-circle pull-right popover-close"></i></h3><div class="popover-content"></div></div>'
+    });
+
+    $(".toggle-reEvaluationPopover").click(function () {
+
+        //studentid, will have to get the iep
+        var student = $("#studentId").val();
+        var folder = $(this);
+
+        //ajax call to get the past dates
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/GetPastSignedReEvaluationDates',
+            data: { studentId: student },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+                    if (data.Dates && data.Dates.length > 0) {
+                        var dataContentString = "<ul class='popupcontainer'>";
+                        $.each(data.Dates, function (key, value) {
+                            dataContentString += "<li data-signedId='" + value.archiveEvaluationDateSignedID + "'><input type='date' value='" + new Date(parseInt(value.evaluationDateSigned.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success' onclick='editDate(" + value.archiveEvaluationDateSignedID + ")'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate'><i class='glyphicon glyphicon-trash'></i></a></li>";
+                        });
+                        dataContentString += "</ul>";
+
+                        $("#reEvaluationSignature").attr("data-content", dataContentString);
+                        $("#reEvaluationSignature").popover('show');
+                    }
+                    else {
+                        $(this).attr("disabled", "disabled");
+                    }
+                }
+            },
+            error: function (data) {
+                alert("There was an error while retrieving past dates.");
+                console.log(data);
+            }
+        });
+    });
+
+    $(".toggle-reCompletedPopover").click(function () {
+
+        //studentid, will have to get the iep
+        var student = $("#studentId").val();
+        var folder = $(this);
+
+        //ajax call to get the past dates
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/GetPastCompletedReEvaluationDates',
+            data: { studentId: student },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+                    if (data.Dates && data.Dates.length > 0) {
+                        var dataContentString = "<ul class='popupcontainer'>";
+                        $.each(data.Dates, function (key, value) {
+                            dataContentString += "<li data-signedId='" + value.archiveEvaluationDateID + "'><input type='date' value='" + new Date(parseInt(value.evalutationDate.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success editdate'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate'><i class='glyphicon glyphicon-trash'></i></a></li>";
+                        });
+                        dataContentString += "</ul>";
+
+                        $("#reEvalCompleted").attr("data-content", dataContentString);
+                        $("#reEvalCompleted").popover('show');
+                    }
+                    else {
+                        console.log($(this));
+                        $(this).attr("disabled", "disabled");
+                    }
+                }
+            },
+            error: function (data) {
+                alert("There was an error while retrieving past dates.");
+                console.log(data);
+            }
+        });
+    });
+
     // attach event
     // fires when an avatar is uploaded
     $("#adminpersona").on('change', function (e) {
@@ -21,6 +107,20 @@
     $("#IEPEndDate").datepicker({
         dateFormat: "mm/dd/yy"
     }).datepicker("setDate", "0");
+
+    JSON.dateParser = function (key, value) {
+        if (typeof value === 'string') {
+            var a = reISO.exec(value);
+            if (a)
+                return new Date(value);
+            a = reMsAjax.exec(value);
+            if (a) {
+                var b = a[1].split(/[-+,.]/);
+                return new Date(b[0] ? +b[0] : 0 - +b[1]);
+            }
+        }
+        return value;
+    };
 
     $("#assignChildCount").on('change', function (e) {
         var optionSelected = $("option:selected", this);
@@ -76,6 +176,29 @@
     });
 });
 
+function editDate(Id) {
+
+    var userId = parseInt($("#studentId").val());
+    var date = $("li[data-signedid='" + Id + "']").find("input").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/Manage/EditReevalSignedDate',
+        contentType: 'application/json; charset=utf-8',
+        data: { studentId: 15, dateId: 12, dateValue: "10/12/2003" }, //hard-coded value used for simplicity
+        success: function (data) {
+            if (data.Result === 'success') {
+                alert("woot!");
+            } else {
+                alert(data.Message);
+            }
+        },
+        error: function (data) {
+            alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+        },
+    });
+}
+
 function init() {
 
     $(".sdob").datepicker({
@@ -90,9 +213,9 @@ function init() {
         width: "100%"
     });
 
-	$("#submitForm").on('click', function () {
-		var numForms = document.forms.length;
-		document.forms[numForms-1].submit();
+    $("#submitForm").on('click', function () {
+        var numForms = document.forms.length;
+        document.forms[numForms - 1].submit();
     });
 
     $('#buildingIds').hide();
@@ -171,20 +294,20 @@ function tabValidates() {
         }
     });
 
-	//copy student name
-	var firstName = $("#firstname").val();
-	var middleName = $("#middlename").val();
-	var lastname = $("#lastname").val();
-	var studentName = "";
+    //copy student name
+    var firstName = $("#firstname").val();
+    var middleName = $("#middlename").val();
+    var lastname = $("#lastname").val();
+    var studentName = "";
 
-	if (middleName == "") {
-		studentName = firstName + " " + lastname;
-	}
-	else {
-		studentName = firstName + " " + middleName + " " + lastname;
-	}
-	
-	$(".studentNameLabel").html(studentName);
+    if (middleName === "") {
+        studentName = firstName + " " + lastname;
+    }
+    else {
+        studentName = firstName + " " + middleName + " " + lastname;
+    }
+
+    $(".studentNameLabel").html(studentName);
 
     return validates;
 }
@@ -193,13 +316,13 @@ $("#next2").on("click", function () {
 
     var theForm = document.getElementById("createNewStudent");
 
-    if ($("#misDistrict").val() == "" || $("#misDistrict").val() == null) {
+    if ($("#misDistrict").val() === "" || $("#misDistrict").val() === null) {
         $("#misDistrict_chosen").addClass('contact-tooltip');
 
         return alert("Attending District is required.");
     } else {
         $("#misDistrict_chosen").removeClass('contact-tooltip');
-	}
+    }
 
 
     if (tabValidates()) {
@@ -217,11 +340,11 @@ $("#next2").on("click", function () {
 
                     // create a new student id and add it to the contacts form here.
 
-					$('*[name*=studentId]').each(function () {
-						$(this).val(data.Message);
-					});
+                    $('*[name*=studentId]').each(function () {
+                        $(this).val(data.Message);
+                    });
 
-					
+
                 } else {
 
                     alert(data.Message);
@@ -251,10 +374,10 @@ $("#next3").on("click", function () {
                     $active.next().removeClass('disabled');
                     $($active).next().find('a[data-toggle="tab"]').click();
 
-					$('*[name*=studentId]').each(function () {
-						$(this).val(data.Message);
-					});
-					
+                    $('*[name*=studentId]').each(function () {
+                        $(this).val(data.Message);
+                    });
+
 
                 } else {
 
@@ -283,25 +406,25 @@ $("#next4").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
+                    $($active).next().find('a[data-toggle="tab"]').click();
 
-					
-					// clear out the ul list
-					$("ul#teacherList").empty();
 
-					// our array to user for appending
-					var items = [];
-					
-					if (!$.isEmptyObject(data.teacherList)) {
-																   
-						$.each(data.teacherList, function (key, value) {
-							var userImage = '/Content/Images/newUser.png';
-							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
-						});
+                    // clear out the ul list
+                    $("ul#teacherList").empty();
 
-						$("ul#teacherList").append.apply($("ul#teacherList"), items);
-						$(".listrap").listrap().getSelection();
-					}
+                    // our array to user for appending
+                    var items = [];
+
+                    if (!$.isEmptyObject(data.teacherList)) {
+
+                        $.each(data.teacherList, function (key, value) {
+                            var userImage = '/Content/Images/newUser.png';
+                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+                        });
+
+                        $("ul#teacherList").append.apply($("ul#teacherList"), items);
+                        $(".listrap").listrap().getSelection();
+                    }
 
 
                 } else {
@@ -389,39 +512,39 @@ $("#next7").on("click", function () {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
+                    $($active).next().find('a[data-toggle="tab"]').click();
 
-					// clear out the ul list
-					$("ul#teacherList").empty();
+                    // clear out the ul list
+                    $("ul#teacherList").empty();
 
-					// our array to user for appending
-					var items = [];
-					var assignments = null;
+                    // our array to user for appending
+                    var items = [];
+                    var assignments = null;
 
-					if (!$.isEmptyObject(data.assignments)) {
-						assignments = data.assignments;
-					}
+                    if (!$.isEmptyObject(data.assignments)) {
+                        assignments = data.assignments;
+                    }
 
-					if (!$.isEmptyObject(data.teacherList)) {
+                    if (!$.isEmptyObject(data.teacherList)) {
 
-						$.each(data.teacherList, function (key, value) {
-							var userImage = '/Content/Images/newUser.png';
-							var isActive = "";
-							var isActiveImage = "";
-							if (assignments != null) {
-								var isAssigned = assignments.indexOf(value.UserID);
-								if (isAssigned >= 0) {
-									isActive = "active";
-									isActiveImage = "img-selection-correction";
-								}
-							}
+                        $.each(data.teacherList, function (key, value) {
+                            var userImage = '/Content/Images/newUser.png';
+                            var isActive = "";
+                            var isActiveImage = "";
+                            if (assignments !== null) {
+                                var isAssigned = assignments.indexOf(value.UserID);
+                                if (isAssigned >= 0) {
+                                    isActive = "active";
+                                    isActiveImage = "img-selection-correction";
+                                }
+                            }
 
-							items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
-						});
+                            items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+                        });
 
-						$("ul#teacherList").append.apply($("ul#teacherList"), items);
-						$(".listrap").listrap().getSelection();
-					}
+                        $("ul#teacherList").append.apply($("ul#teacherList"), items);
+                        $(".listrap").listrap().getSelection();
+                    }
                 } else {
 
                     alert(data.Message);
@@ -438,57 +561,57 @@ $("#next7").on("click", function () {
 $("#next8").on("click", function () {
 
 
-	var activeTeachers = $(".listrap").listrap().getSelection();
-	var teacherIds = [];
-	var studentId = $("#createStudentAssignments").find("input[name='studentId']").val();
-	
-	if (activeTeachers.length > 0) {
-		$.each(activeTeachers, function (index, value) {
-			teacherIds.push($(activeTeachers[index]).find('.ourTeacher').data("id"));
-		});
+    var activeTeachers = $(".listrap").listrap().getSelection();
+    var teacherIds = [];
+    var studentId = $("#createStudentAssignments").find("input[name='studentId']").val();
 
-		$.ajax({
-			type: 'POST',
-			url: '/Manage/CreateStudentAssignments',
-			dataType: 'json',
-			data: { studentId: studentId, teachers: teacherIds },
-			async: false,
-			success: function (data) {
-				if (data.Result === "success") {
+    if (activeTeachers.length > 0) {
+        $.each(activeTeachers, function (index, value) {
+            teacherIds.push($(activeTeachers[index]).find('.ourTeacher').data("id"));
+        });
 
-					var $active = $('.wizard .nav-tabs li.active');
-					$active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
-				} else {
-					alert(data.Message);
-				}
-			},
-			error: function (data) {
-				alert("There was an error when attempt to connect to the server.");
-			}
-		});
-	}
+        $.ajax({
+            type: 'POST',
+            url: '/Manage/CreateStudentAssignments',
+            dataType: 'json',
+            data: { studentId: studentId, teachers: teacherIds },
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var $active = $('.wizard .nav-tabs li.active');
+                    $active.next().removeClass('disabled');
+                    $($active).next().find('a[data-toggle="tab"]').click();
+                } else {
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.");
+            }
+        });
+    }
 
 });
 
 jQuery.fn.extend({
-	listrap: function () {
-		var listrap = this;
-		listrap.getSelection = function () {
-			var selection = new Array();
-			listrap.children("li.active").each(function (ix, el) {
-				selection.push($(el)[0]);
-			});
-			return selection;
-		};
-		var toggle = "li.listrap-toggle";
-		var selectionChanged = function () {
-			$(this).closest("li").toggleClass("active");
-			$(this).find("img").toggleClass('img-selection-correction');
-			listrap.trigger("selection-changed", [listrap.getSelection()]);
-		};
-		$("#teacherList li").on("click", selectionChanged);
-		return listrap;
-	}
+    listrap: function () {
+        var listrap = this;
+        listrap.getSelection = function () {
+            var selection = new Array();
+            listrap.children("li.active").each(function (ix, el) {
+                selection.push($(el)[0]);
+            });
+            return selection;
+        };
+        var toggle = "li.listrap-toggle";
+        var selectionChanged = function () {
+            $(this).closest("li").toggleClass("active");
+            $(this).find("img").toggleClass('img-selection-correction');
+            listrap.trigger("selection-changed", [listrap.getSelection()]);
+        };
+        $("#teacherList li").on("click", selectionChanged);
+        return listrap;
+    }
 });
 

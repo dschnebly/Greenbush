@@ -28,7 +28,6 @@ namespace GreenBushIEP.Models
         }
     
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
-        public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
         public virtual DbSet<tblAuditLog> tblAuditLogs { get; set; }
         public virtual DbSet<tblBehaviorBaseline> tblBehaviorBaselines { get; set; }
         public virtual DbSet<tblBehaviorHypothesi> tblBehaviorHypothesis { get; set; }
@@ -104,6 +103,9 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
+        public virtual DbSet<tblArchiveIEPExit> tblArchiveIEPExits { get; set; }
+        public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
+        public virtual DbSet<tblArchiveEvaluationDateSigned> tblArchiveEvaluationDateSigneds { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)

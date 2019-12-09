@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="90d0bc90b87d47938bf509ad57370c08" Name="Diagram1" ZoomLevel="21">
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodation" Width="1.5" PointX="13" PointY="1" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" Width="1.5" PointX="7.75" PointY="11.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAuditLog" Width="1.5" PointX="9.75" PointY="11.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" Width="1.5" PointX="11.75" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" Width="1.5" PointX="2.75" PointY="13.75" />
@@ -89,6 +88,9 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveIEPExit" Width="1.5" PointX="19.375" PointY="29.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" Width="1.5" PointX="30.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDateSigned" Width="1.5" PointX="0.75" PointY="30.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

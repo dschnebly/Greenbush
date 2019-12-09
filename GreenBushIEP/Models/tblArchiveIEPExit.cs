@@ -12,14 +12,15 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblArchiveEvaluationDate
+    public partial class tblArchiveIEPExit
     {
-        public int archiveEvaluationDateID { get; set; }
+        public int tblArchiveIEPExitID { get; set; }
         public int userID { get; set; }
-        public System.DateTime evalutationDate { get; set; }
-        public Nullable<System.DateTime> Create_Date { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
+        public System.DateTime exitDate { get; set; }
+        public string exitNotes { get; set; }
+        public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
+        public int CreatedBy { get; set; }
+        public int ModifiedBy { get; set; }
     }
 }

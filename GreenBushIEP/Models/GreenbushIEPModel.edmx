@@ -35,6 +35,33 @@
           <Property Name="evalutationDate" Type="datetime" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblArchiveEvaluationDateSigned">
+          <Key>
+            <PropertyRef Name="archiveEvaluationDateSignedID" />
+          </Key>
+          <Property Name="archiveEvaluationDateSignedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="evaluationDateSigned" Type="datetime" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblArchiveIEPExit">
+          <Key>
+            <PropertyRef Name="tblArchiveIEPExitID" />
+          </Key>
+          <Property Name="tblArchiveIEPExitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="exitDate" Type="datetime" Nullable="false" />
+          <Property Name="exitNotes" Type="nvarchar(max)" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -1638,6 +1665,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDate" EntityType="Self.tblArchiveEvaluationDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblArchiveEvaluationDateSigned" EntityType="Self.tblArchiveEvaluationDateSigned" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblArchiveIEPExit" EntityType="Self.tblArchiveIEPExit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAuditLog" EntityType="Self.tblAuditLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="Self.tblBehaviorBaselines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="Self.tblBehaviorHypothesis" Schema="dbo" store:Type="Tables" />
@@ -1878,7 +1907,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
       <Schema Namespace="IndividualizedEducationProgramModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="IndividualizedEducationProgramEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblAccommodations" EntityType="IndividualizedEducationProgramModel.tblAccommodation" />
-          <EntitySet Name="tblArchiveEvaluationDates" EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" />
           <EntitySet Name="tblAuditLogs" EntityType="IndividualizedEducationProgramModel.tblAuditLog" />
           <EntitySet Name="tblBehaviorBaselines" EntityType="IndividualizedEducationProgramModel.tblBehaviorBaseline" />
           <EntitySet Name="tblBehaviorHypothesis" EntityType="IndividualizedEducationProgramModel.tblBehaviorHypothesi" />
@@ -1987,7 +2015,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="DELIMITER" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
-            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2049,6 +2077,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="byUserID" Mode="In" Type="Int32" />
             <Parameter Name="ammend" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="tblArchiveIEPExits" EntityType="IndividualizedEducationProgramModel.tblArchiveIEPExit" />
+          <EntitySet Name="tblArchiveEvaluationDates" EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDate" />
+          <EntitySet Name="tblArchiveEvaluationDateSigneds" EntityType="IndividualizedEducationProgramModel.tblArchiveEvaluationDateSigned" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -2071,16 +2102,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblLocation" Relationship="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode" FromRole="tblAccommodation" ToRole="tblLocation" />
-        </EntityType>
-        <EntityType Name="tblArchiveEvaluationDate">
-          <Key>
-            <PropertyRef Name="archiveEvaluationDateID" />
-          </Key>
-          <Property Name="archiveEvaluationDateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userID" Type="Int32" Nullable="false" />
-          <Property Name="evalutationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Create_Date" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -3745,6 +3766,43 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="Int32" Name="UserID" Nullable="true" />
           <Property Type="Boolean" Name="isAmmendmant" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tblArchiveIEPExit">
+          <Key>
+            <PropertyRef Name="tblArchiveIEPExitID" />
+          </Key>
+          <Property Name="tblArchiveIEPExitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="exitDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="exitNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblArchiveEvaluationDate">
+          <Key>
+            <PropertyRef Name="archiveEvaluationDateID" />
+          </Key>
+          <Property Name="archiveEvaluationDateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="evalutationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblArchiveEvaluationDateSigned">
+          <Key>
+            <PropertyRef Name="archiveEvaluationDateSignedID" />
+          </Key>
+          <Property Name="archiveEvaluationDateSignedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="evaluationDateSigned" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3770,17 +3828,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblArchiveEvaluationDates">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveEvaluationDate">
-              <MappingFragment StoreEntitySet="tblArchiveEvaluationDate">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="evalutationDate" ColumnName="evalutationDate" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="archiveEvaluationDateID" ColumnName="archiveEvaluationDateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5440,6 +5487,46 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblArchiveIEPExits">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveIEPExit">
+              <MappingFragment StoreEntitySet="tblArchiveIEPExit">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="exitNotes" ColumnName="exitNotes" />
+                <ScalarProperty Name="exitDate" ColumnName="exitDate" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="tblArchiveIEPExitID" ColumnName="tblArchiveIEPExitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblArchiveEvaluationDates">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveEvaluationDate">
+              <MappingFragment StoreEntitySet="tblArchiveEvaluationDate">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="evalutationDate" ColumnName="evalutationDate" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="archiveEvaluationDateID" ColumnName="archiveEvaluationDateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblArchiveEvaluationDateSigneds">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveEvaluationDateSigned">
+              <MappingFragment StoreEntitySet="tblArchiveEvaluationDateSigned">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="evaluationDateSigned" ColumnName="evaluationDateSigned" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="archiveEvaluationDateSignedID" ColumnName="archiveEvaluationDateSignedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

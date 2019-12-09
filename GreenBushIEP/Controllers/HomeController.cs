@@ -1279,13 +1279,13 @@ namespace GreenbushIep.Controllers
         [Authorize(Roles = "1,2")]
         public ActionResult UpdateIEPStatusToInActive(int Stid, int IepId)
         {
-            tblIEP studehtIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
-            if (studehtIEP != null)
+            tblIEP studentIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
+            if (studentIEP != null)
             {
-                studehtIEP.IsActive = false;
-                if (studehtIEP.AmendingIEPid != null)
+                studentIEP.IsActive = false;
+                if (studentIEP.AmendingIEPid != null)
                 {
-                    studehtIEP.IepStatus = IEPStatus.ARCHIVE;
+                    studentIEP.IepStatus = IEPStatus.ARCHIVE;
                 }
                 db.SaveChanges();
 
@@ -2798,7 +2798,6 @@ namespace GreenbushIep.Controllers
                 return Json(new { result = false, message = ex.Message }, "text/plain");
             }
         }
-
 
         [HttpPost]
         public ActionResult SearchUserName(string username)

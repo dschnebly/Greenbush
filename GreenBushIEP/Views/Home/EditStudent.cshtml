@@ -585,6 +585,45 @@
         border: 2px solid #9F6000;
     }
 
+    .popover-header {
+        padding: .9rem 1.5rem;
+        margin-bottom: 0;
+        font-size: 1.75rem;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #ebebeb;
+    }
+
+    .popupcontainer {
+        display: inline-block;
+        list-style: none;
+        padding: 0px;
+    }
+
+        .popupcontainer li {
+            padding-bottom: 5px;
+        }
+
+            .popupcontainer li a {
+                padding: 5px 9px;
+                position: relative;
+                bottom: 1px;
+                margin: 0 0 0 3px;
+            }
+
+    .popover-content {
+        padding: 9px 14px;
+        padding-bottom: 10px;
+    }
+
+    /* Styles for custom popover template */
+    .popover-close {
+        font-size: 2.2rem;
+        top: -5px;
+        color: #8b8b8b;
+        left: 13px;
+        cursor: pointer;
+    }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -713,16 +752,16 @@
                                 </span>
                             </a>
                         </li>
-						@if (ViewBag.CanAssignTeacher)
-						{
-						 <li role="presentation" class="disabled">
-                            <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
-                                <span class="round-tab">
-                                    <i class="fa fa-users"></i>
-                                </span>
-                            </a>
-                        </li>
-						}
+                        @if (ViewBag.CanAssignTeacher)
+                        {
+                            <li role="presentation" class="disabled">
+                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                    <span class="round-tab">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        }
                         <li role="presentation" class="disabled">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
@@ -889,9 +928,9 @@
                                                     <option value="@selectedDistrictBuilding.BuildingID" @selected>@selectedDistrictBuilding.BuildingName</option>
                                                 }
                                             }
-											
-											
-											@if (Model.buildings != null)
+
+
+                                            @if (Model.buildings != null)
                                             {
                                                 foreach (var districtBuilding in Model.buildings)
                                                 {
@@ -899,9 +938,9 @@
                                                     <option value="@districtBuilding.BuildingID" @selected>@districtBuilding.BuildingName</option>
                                                 }
                                             }
-											
-											
-											@if (ViewBag.AllBuildings != null)
+
+
+                                            @if (ViewBag.AllBuildings != null)
                                             {
                                                 foreach (var allActiveBuilding in ViewBag.AllBuildings)
                                                 {
@@ -945,11 +984,11 @@
                                 @Html.Hidden("studentId", Model.student.UserID)
 
                                 <div class="step22">
-									 <div class="row">
-										<div class="col-md-12">
-											<h3 class="control-label studentNameLabel"></h3>										
-										</div>                                    
-									</div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="control-label studentNameLabel"></h3>
+                                        </div>
+                                    </div>
                                     <div class="row voffset2">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -1164,7 +1203,7 @@
                                         <div class="col-md-2">
                                             <label for="studentRace">Student Race</label>
                                             <select name="studentRace" id="studentRace" class="form-control">
-                                                @foreach(tblRace race in Model.races)
+                                                @foreach (tblRace race in Model.races)
                                                 {
                                                     <option value="@(race.RaceCode)" selected="@(Model.selectedRace != null && Model.selectedRace.RaceCode == race.RaceCode)">@(race.RaceDescription)</option>
                                                 }
@@ -1242,13 +1281,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-xs-12">
                                             <div class="form-group">
                                                 <input name="claimingCode" id="claimingCode" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(Model.info.ClaimingCode ? "checked" : "")>
                                                 <label for="claimingCode" style="float: left; position: relative; bottom: 16px; left: 20%;">Claiming Code</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 col-xs-12">
                                             <div class="form-group">
                                                 <input name="fullDayKindergarten" id="fullDayKindergarten" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(Model.info.FullDayKG == true ? "checked" : "")>
                                                 <label for="fullDayKindergarten" style="float: left; position: relative; bottom: 16px; left: 20%;">Full Day Kindergarten</label>
@@ -1295,16 +1334,6 @@
                                                 </div>
                                             </div>
                                         </div>
-										<div class="col-md-6">
-                                            <div class="bootstrap-iso">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
-                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1321,8 +1350,39 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="exitDate" class="control-label">Exit Date</label>
-                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
+                                                        <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr style="color: #333; height: 10px;" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="bootstrap-iso">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
+                                                        <div class="input-group">
+                                                            <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999;" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")"
+                                                                   data-placement="top" data-trigger="click" data-toggle="popover" data-content="" />
+                                                            <span class="input-group-addon btn toggle-reEvaluationPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="bootstrap-iso">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
+                                                        <div class="input-group">
+                                                            <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")"
+                                                                data-placement="top" data-trigger="click" data-toggle="popover" data-content="" />
+                                                            <span class="input-group-addon btn toggle-reCompletedPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1333,13 +1393,13 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
-                                                        <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
+                                                        <label for="exitDate" class="control-label">Exit Date</label>
+                                                        <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-										<div class="col-md-6">
+                                        <div class="col-md-6">
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
@@ -1350,18 +1410,6 @@
                                             </div>
                                         </div>
                                     </div>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="bootstrap-iso">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
-                                                        <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")" />
-                                                    </div>
-                                                </div>
-                                            </div>
-										</div>
-									</div>
                                 </div>
                                 <ul class="list-inline pull-right saveandcontinue">
                                     <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
@@ -1371,11 +1419,11 @@
                         </div>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="step3">
-						<div class="row">
-							<div class="col-md-12">
-									<h3 class="control-label studentNameLabel"></h3>										
-							</div>                                    
-						</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="control-label studentNameLabel"></h3>
+                            </div>
+                        </div>
                         <h4 style="font-size: 1.5em; margin-bottom: 1.5em;">Student Relationships</h4>
                         @using (Html.BeginForm("EditStudentContacts", "Manage", null, FormMethod.Post, new { id = "editStudentContacts", @class = "editstudent", onsubmit = "return false;" }))
                         {
@@ -1540,37 +1588,37 @@
                             }
                         }
                     </div>
-					@if (ViewBag.CanAssignTeacher)
-					{
-					<div id="step4" class="tab-pane" role="tabpanel">
+                    @if (ViewBag.CanAssignTeacher)
+                    {
+                        <div id="step4" class="tab-pane" role="tabpanel">
 
-						@using (Html.BeginForm("CreateStudentAssignments", "Manage", null, FormMethod.Post, new { id = "createStudentAssignments", onsubmit = "return false;" }))
-						{
-							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-							@Html.Hidden("studentId", Model.student.UserID)
-							<div class="row">
-								<div class="col-md-12">
-									<h3 class="control-label studentNameLabel"></h3>										
-								</div>                                    
-							</div>
-							
-							<h4 style="font-size:1.5em; margin-bottom: 1.5em;">Assign Providers</h4>							
-							<div class="row">
-								<ul id="teacherList" class="listrap"></ul>
-							</div>
-							 <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+                            @using (Html.BeginForm("CreateStudentAssignments", "Manage", null, FormMethod.Post, new { id = "createStudentAssignments", onsubmit = "return false;" }))
+                            {
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.Hidden("studentId", Model.student.UserID)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="control-label studentNameLabel"></h3>
+                                    </div>
+                                </div>
+
+                                <h4 style="font-size:1.5em; margin-bottom: 1.5em;">Assign Providers</h4>
+                                <div class="row">
+                                    <ul id="teacherList" class="listrap"></ul>
+                                </div>
+                                <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
                                     <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
                                     <li><button type="button" class="btn btn-info next-step" id="next8">Save and continue</button></li>
                                 </ul>
-						}
-					</div>
-					}
+                            }
+                        </div>
+                    }
                     <div class="tab-pane" role="tabpanel" id="complete">
                         @using (Html.BeginForm("EditStudentAvatar", "Manage", null, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return false;" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.Hidden("id", Model.student.UserID)
-							@Html.Hidden("selectedTeachers")
+                            @Html.Hidden("selectedTeachers")
                             if (Model.contacts != null)
                             {
 
@@ -1760,5 +1808,4 @@
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
     @Scripts.Render("~/Scripts/createstudent.js?v1.5")
-
 }
