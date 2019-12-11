@@ -8,7 +8,6 @@
         $(this).parents(".popover").popover('hide');
     });
 
-
     $('[data-toggle="popover"]').popover({
         html: true,
         template: '<div class="popover"><div class="arrow"></div><h3 class="popover-header">Edit Dates <i class="glyphicon glyphicon-remove-circle pull-right popover-close"></i></h3><div class="popover-content"></div></div>'
@@ -32,7 +31,7 @@
                     if (data.Dates && data.Dates.length > 0) {
                         var dataContentString = "<ul class='popupcontainer'>";
                         $.each(data.Dates, function (key, value) {
-                            dataContentString += "<li data-signedId='" + value.archiveEvaluationDateSignedID + "'><input type='date' value='" + new Date(parseInt(value.evaluationDateSigned.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success' onclick='editDate(" + value.archiveEvaluationDateSignedID + ")'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate'><i class='glyphicon glyphicon-trash'></i></a></li>";
+                            dataContentString += "<li data-signedId='" + value.archiveEvaluationDateSignedID + "'><input type='date' value='" + new Date(parseInt(value.evaluationDateSigned.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success' onclick='editSignedDate(" + value.archiveEvaluationDateSignedID + ")'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate' onclick='deleteDate(" + value.archiveEvaluationDateSignedID + ", false)'><i class='glyphicon glyphicon-trash'></i></a></li>";
                         });
                         dataContentString += "</ul>";
 
@@ -46,7 +45,6 @@
             },
             error: function (data) {
                 alert("There was an error while retrieving past dates.");
-                console.log(data);
             }
         });
     });
@@ -69,7 +67,7 @@
                     if (data.Dates && data.Dates.length > 0) {
                         var dataContentString = "<ul class='popupcontainer'>";
                         $.each(data.Dates, function (key, value) {
-                            dataContentString += "<li data-signedId='" + value.archiveEvaluationDateID + "'><input type='date' value='" + new Date(parseInt(value.evalutationDate.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success editdate'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate'><i class='glyphicon glyphicon-trash'></i></a></li>";
+                            dataContentString += "<li data-completeId='" + value.archiveEvaluationDateID + "'><input type='date' value='" + new Date(parseInt(value.evalutationDate.replace('/Date(', ''))).toISOString().split('T')[0] + "'><a href='#' class='btn-sm btn-success editComplete' onclick='editCompleteDate(" + value.archiveEvaluationDateID + ")'><i class='glyphicon glyphicon-ok'></i></a><a href='#' class='btn-sm btn-danger deletedate' onclick='deleteDate(" + value.archiveEvaluationDateID + ", true)'><i class='glyphicon glyphicon-trash'></i></a></li>";
                         });
                         dataContentString += "</ul>";
 
@@ -77,7 +75,6 @@
                         $("#reEvalCompleted").popover('show');
                     }
                     else {
-                        console.log($(this));
                         $(this).attr("disabled", "disabled");
                     }
                 }
@@ -154,7 +151,6 @@
             },
             error: function (data) {
                 alert("There was an error retrieving the building information.");
-                console.log(data);
             },
             complete: function (data) {
                 $(".info").hide();
@@ -176,27 +172,90 @@
     });
 });
 
-function editDate(Id) {
-
+function editSignedDate(Id) {
     var userId = parseInt($("#studentId").val());
-    var date = $("li[data-signedid='" + Id + "']").find("input").val();
+    var date = $("li[data-signedId='" + Id + "']").find("input").val();
 
     $.ajax({
         type: 'GET',
-        url: '/Manage/EditReevalSignedDate',
-        contentType: 'application/json; charset=utf-8',
-        data: { studentId: 15, dateId: 12, dateValue: "10/12/2003" }, //hard-coded value used for simplicity
+        url: '/Manage/editReevalSignedDates',
+        data: { studentId: userId, dateId: Id, newDateValue: date },
+        dataType: 'json',
         success: function (data) {
             if (data.Result === 'success') {
-                alert("woot!");
+                $("#reEvaluationSignature").popover('hide');
             } else {
                 alert(data.Message);
             }
         },
         error: function (data) {
             alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-        },
+        }
     });
+}
+
+function editCompleteDate(Id) {
+    var userId = parseInt($("#studentId").val());
+    var date = $("li[data-completeId='" + Id + "']").find("input").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/Manage/editReevalCompletDates',
+        data: { studentId: userId, dateId: Id, newDateValue: date },
+        dataType: 'json',
+        success: function (data) {
+            if (data.Result === 'success') {
+                $("#reEvalCompleted").popover('hide');
+            } else {
+                alert(data.Message);
+            }
+        },
+        error: function (data) {
+            alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+        }
+    });
+}
+
+function deleteDate(Id, isComplete) {
+
+    var answer = confirm("Are you sure you want to delete this date?");
+
+    if (answer) {
+        //ajax call to get the past dates
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/deleteReEvaluationDates',
+            data: { dateId: Id, Completed: isComplete },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+                    if (isComplete) {
+                        if ($("li[data-completeId='" + Id + "']").closest("ul").children().length > 1) {
+                            $("li[data-completeId='" + Id + "']").remove();
+                        } else { // hide the popup because there are none left;
+                            $("#reEvalCompleted").popover('hide');
+                        }
+                    } else {
+                        if ($("li[data-signedId='" + Id + "']").closest("ul").children().length > 1) {
+                            $("li[data-signedId='" + Id + "']").remove();
+                        } else { // hide the popup because there are none left;
+                            $("#reEvaluationSignature").popover('hide');
+                        }
+                    }
+                } else {
+                    alert("There was a problem while trying to delete the date.");
+                }
+            },
+            error: function (data) {
+                alert("There was an error while retrieving past dates.");
+            }
+        });
+
+        return true;
+    }
+
+    return false;
 }
 
 function init() {
@@ -343,10 +402,7 @@ $("#next2").on("click", function () {
                     $('*[name*=studentId]').each(function () {
                         $(this).val(data.Message);
                     });
-
-
                 } else {
-
                     alert(data.Message);
                 }
             },
@@ -356,7 +412,6 @@ $("#next2").on("click", function () {
         });
     }
 });
-
 $("#next3").on("click", function () {
 
     var theForm = document.getElementById("createStudentContacts");
@@ -377,10 +432,7 @@ $("#next3").on("click", function () {
                     $('*[name*=studentId]').each(function () {
                         $(this).val(data.Message);
                     });
-
-
                 } else {
-
                     alert(data.Message);
                 }
             },
@@ -391,7 +443,6 @@ $("#next3").on("click", function () {
 
     }
 });
-
 $("#next4").on("click", function () {
 
     var theForm = document.getElementById("editStudentContacts");
@@ -425,10 +476,7 @@ $("#next4").on("click", function () {
                         $("ul#teacherList").append.apply($("ul#teacherList"), items);
                         $(".listrap").listrap().getSelection();
                     }
-
-
                 } else {
-
                     alert(data.Message);
                 }
             },
@@ -439,7 +487,6 @@ $("#next4").on("click", function () {
 
     }
 });
-
 $("#next5").on("click", function () {
 
     var theForm = document.getElementById("editStudent");
@@ -467,7 +514,6 @@ $("#next5").on("click", function () {
 
     }
 });
-
 $("#next6").on("click", function () {
 
     var theForm = document.getElementById("editStudentOptions");
@@ -496,7 +542,6 @@ $("#next6").on("click", function () {
 
     }
 });
-
 $("#next7").on("click", function () {
 
     var theForm = document.getElementById("editStudentContacts");
@@ -557,7 +602,6 @@ $("#next7").on("click", function () {
 
     }
 });
-
 $("#next8").on("click", function () {
 
 

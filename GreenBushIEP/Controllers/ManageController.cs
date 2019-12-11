@@ -4,27 +4,27 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace GreenBushIEP.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
         private const string owner = "1"; //level 5
         private const string mis = "2"; //level 4
         private const string admin = "3"; //level 3
         private const string teacher = "4"; //level 2
         private const string student = "5";
         private const string nurse = "6"; //level 1
+
+        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         // GET: Manage
         public ActionResult Index()
@@ -461,7 +461,7 @@ namespace GreenBushIEP.Controllers
                     }
 
 
-                    if (!String.IsNullOrEmpty(collection["email"]))
+                    if (!string.IsNullOrEmpty(collection["email"]))
                     {
                         var email = collection["email"].ToString();
                         if (db.tblUsers.Any(o => o.Email == email))
@@ -519,7 +519,7 @@ namespace GreenBushIEP.Controllers
                     referInfo.ResponsibleBuildingID = collection["AttendanceBuildingId"];
                     referInfo.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                     referInfo.Status = "PENDING";
-                    referInfo.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                    referInfo.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                     referInfo.Update_Date = DateTime.Now;
                     referInfo.PlacementCode = collection["studentPlacement"];
                     referInfo.ClaimingCode = collection["claimingCode"] != null && collection["claimingCode"] == "on" ? true : false;
@@ -529,7 +529,6 @@ namespace GreenBushIEP.Controllers
 
                     try
                     {
-
                         db.SaveChanges();
                     }
                     catch (DbEntityValidationException ex)
@@ -611,7 +610,7 @@ namespace GreenBushIEP.Controllers
                         info.ExitNotes = collection["exitNotes"];
                         info.Update_Date = DateTime.Now;
 
-                        if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+                        if (!string.IsNullOrEmpty(collection["initialIEPDate"]))
                         {
                             info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
                         }
@@ -620,7 +619,7 @@ namespace GreenBushIEP.Controllers
                             info.InitialIEPDate = null;
                         }
 
-                        if (!String.IsNullOrEmpty(collection["exitDate"]))
+                        if (!string.IsNullOrEmpty(collection["exitDate"]))
                         {
                             info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
                         }
@@ -629,7 +628,7 @@ namespace GreenBushIEP.Controllers
                             info.ExitDate = null;
                         }
 
-                        if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                        if (!string.IsNullOrEmpty(collection["initialConsentSignature"]))
                         {
                             info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
                         }
@@ -638,7 +637,7 @@ namespace GreenBushIEP.Controllers
                             info.InitialEvalConsentSigned = null;
                         }
 
-                        if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+                        if (!string.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
                         {
                             info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
                         }
@@ -647,7 +646,7 @@ namespace GreenBushIEP.Controllers
                             info.InitialEvalDetermination = null;
                         }
 
-                        if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                        if (!string.IsNullOrEmpty(collection["reEvaluationSignature"]))
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                         }
@@ -656,7 +655,7 @@ namespace GreenBushIEP.Controllers
                             info.ReEvalConsentSigned = null;
                         }
 
-                        if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+                        if (!string.IsNullOrEmpty(collection["reEvalCompleted"]))
                         {
                             info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
                         }
@@ -1194,7 +1193,7 @@ namespace GreenBushIEP.Controllers
                             MiddleInitial = collection["middlename"],
                             LastName = collection["lastname"],
                             KIDSID = kidsID,
-                            Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+                            Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
                             Address1 = collection["studentStreetAddress1"].ToString(),
                             Address2 = collection["studentStreetAddress2"].ToString(),
                             City = collection["studentCity"].ToString(),
@@ -1212,7 +1211,7 @@ namespace GreenBushIEP.Controllers
                             Update_Date = DateTime.Now
                         };
 
-                        if (!String.IsNullOrEmpty(collection["dob"]))
+                        if (!string.IsNullOrEmpty(collection["dob"]))
                         {
                             studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                         }
@@ -1252,7 +1251,7 @@ namespace GreenBushIEP.Controllers
                             existingReferral.MiddleInitial = collection["middlename"];
                             existingReferral.LastName = collection["lastname"];
                             existingReferral.KIDSID = kidsID;
-                            existingReferral.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                            existingReferral.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                             existingReferral.Address1 = collection["studentStreetAddress1"].ToString();
                             existingReferral.Address2 = collection["studentStreetAddress2"].ToString();
                             existingReferral.City = collection["studentCity"].ToString();
@@ -1270,7 +1269,7 @@ namespace GreenBushIEP.Controllers
                             existingReferral.Update_Date = DateTime.Now;
                         };
 
-                        if (!String.IsNullOrEmpty(collection["dob"]))
+                        if (!string.IsNullOrEmpty(collection["dob"]))
                         {
                             existingReferral.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                         }
@@ -1330,7 +1329,7 @@ namespace GreenBushIEP.Controllers
                         student.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                         student.ReferralNotes = collection["ReferralNotes"];
 
-                        if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                        if (!string.IsNullOrEmpty(collection["initialConsentSignature"]))
                         {
                             student.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
                         }
@@ -1761,7 +1760,7 @@ namespace GreenBushIEP.Controllers
                     // try catch. If the email is the same as another student show error gracefully.
                     try
                     {
-                        if (!String.IsNullOrEmpty(student.Email) && db.tblUsers.Any(o => o.Email == student.Email))
+                        if (!string.IsNullOrEmpty(student.Email) && db.tblUsers.Any(o => o.Email == student.Email))
                         {
                             return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
                         }
@@ -1795,7 +1794,7 @@ namespace GreenBushIEP.Controllers
                         BuildingID = collection["AttendanceBuildingId"],
                         NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
                         Status = "PENDING",
-                        Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
+                        Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
                         CreatedBy = submitter.UserID,
                         Create_Date = DateTime.Now,
                         Update_Date = DateTime.Now,
@@ -1904,32 +1903,32 @@ namespace GreenBushIEP.Controllers
                         info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
                         info.StatusCode = collection["statusCode"].ToString();
 
-                        if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+                        if (!string.IsNullOrEmpty(collection["initialIEPDate"]))
                         {
                             info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
                         }
 
-                        if (!String.IsNullOrEmpty(collection["exitDate"]))
+                        if (!string.IsNullOrEmpty(collection["exitDate"]))
                         {
                             info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
                         }
 
-                        if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                        if (!string.IsNullOrEmpty(collection["initialConsentSignature"]))
                         {
                             info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
                         }
 
-                        if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+                        if (!string.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
                         {
                             info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
                         }
 
-                        if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                        if (!string.IsNullOrEmpty(collection["reEvaluationSignature"]))
                         {
                             info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                         }
 
-                        if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+                        if (!string.IsNullOrEmpty(collection["reEvalCompleted"]))
                         {
                             info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
                         }
@@ -2234,7 +2233,7 @@ namespace GreenBushIEP.Controllers
                 student.FirstName = collection["firstname"];
                 student.MiddleName = collection["middlename"];
                 student.LastName = collection["lastname"];
-                student.Email = String.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
+                student.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
                 student.RoleID = "5";
             }
             else
@@ -2320,7 +2319,7 @@ namespace GreenBushIEP.Controllers
                 info.BuildingID = collection["AttendanceBuildingId"];
                 info.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                 info.Status = "PENDING";
-                info.Gender = (String.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                info.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                 info.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
                 info.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
                 info.PlacementCode = collection["studentPlacement"];
@@ -2386,9 +2385,9 @@ namespace GreenBushIEP.Controllers
                     info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
                     info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
                     info.StatusCode = collection["statusCode"].ToString();
-                    info.ExitNotes = !String.IsNullOrEmpty(collection["exitNotes"]) ? collection["exitNotes"].ToString() : "";
+                    info.ExitNotes = !string.IsNullOrEmpty(collection["exitNotes"]) ? collection["exitNotes"].ToString() : "";
 
-                    if (!String.IsNullOrEmpty(collection["initialIEPDate"]))
+                    if (!string.IsNullOrEmpty(collection["initialIEPDate"]))
                     {
                         info.InitialIEPDate = Convert.ToDateTime(collection["initialIEPDate"]);
                     }
@@ -2397,7 +2396,7 @@ namespace GreenBushIEP.Controllers
                         info.InitialIEPDate = null;
                     }
 
-                    if (!String.IsNullOrEmpty(collection["exitDate"]))
+                    if (!string.IsNullOrEmpty(collection["exitDate"]))
                     {
                         info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
                     }
@@ -2406,7 +2405,7 @@ namespace GreenBushIEP.Controllers
                         info.ExitDate = null;
                     }
 
-                    if (!String.IsNullOrEmpty(collection["initialConsentSignature"]))
+                    if (!string.IsNullOrEmpty(collection["initialConsentSignature"]))
                     {
                         info.InitialEvalConsentSigned = Convert.ToDateTime(collection["initialConsentSignature"]);
                     }
@@ -2415,7 +2414,7 @@ namespace GreenBushIEP.Controllers
                         info.InitialEvalConsentSigned = null;
                     }
 
-                    if (!String.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
+                    if (!string.IsNullOrEmpty(collection["initialEvaluationDetermination"]))
                     {
                         info.InitialEvalDetermination = Convert.ToDateTime(collection["initialEvaluationDetermination"]);
                     }
@@ -2424,7 +2423,7 @@ namespace GreenBushIEP.Controllers
                         info.InitialEvalDetermination = null;
                     }
 
-                    if (!String.IsNullOrEmpty(collection["reEvaluationSignature"]))
+                    if (!string.IsNullOrEmpty(collection["reEvaluationSignature"]))
                     {
                         info.ReEvalConsentSigned = Convert.ToDateTime(collection["reEvaluationSignature"]);
                     }
@@ -2433,7 +2432,7 @@ namespace GreenBushIEP.Controllers
                         info.ReEvalConsentSigned = null;
                     }
 
-                    if (!String.IsNullOrEmpty(collection["reEvalCompleted"]))
+                    if (!string.IsNullOrEmpty(collection["reEvalCompleted"]))
                     {
                         info.ReEvalCompleted = Convert.ToDateTime(collection["reEvalCompleted"]);
                     }
@@ -2930,10 +2929,10 @@ namespace GreenBushIEP.Controllers
                     searchActiveType = false;
                 }
 
-                List<String> myDistricts = new List<string>();
-                List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
-                List<String> nonStudentRoles = new List<string>() { "2", "3", "4", "6" };
+                List<string> myDistricts = new List<string>();
+                List<string> myBuildings = new List<string>();
+                List<string> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
+                List<string> nonStudentRoles = new List<string>() { "2", "3", "4", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
@@ -3058,10 +3057,10 @@ namespace GreenBushIEP.Controllers
                 }
 
 
-                List<String> myDistricts = new List<string>();
-                List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() { "3", "4", "5", "6" };
-                List<String> nonStudentRoles = new List<string>() { "3", "4", "6" };
+                List<string> myDistricts = new List<string>();
+                List<string> myBuildings = new List<string>();
+                List<string> myRoles = new List<string>() { "3", "4", "5", "6" };
+                List<string> nonStudentRoles = new List<string>() { "3", "4", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
@@ -3178,9 +3177,9 @@ namespace GreenBushIEP.Controllers
                 }
 
 
-                List<String> myDistricts = new List<string>();
-                List<String> myBuildings = new List<string>();
-                List<String> myRoles = new List<string>() { "5" };
+                List<string> myDistricts = new List<string>();
+                List<string> myBuildings = new List<string>();
+                List<string> myRoles = new List<string>() { "5" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
@@ -3579,10 +3578,80 @@ namespace GreenBushIEP.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditReevalSignedDate(int studentId, int dateId, string dateValue)
+        public ActionResult editReevalSignedDates(int studentId, int dateId, string newDateValue)
         {
-            return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+            DateTime newDate = Convert.ToDateTime(newDateValue);
+
+            if (newDate != null)
+            {
+                tblArchiveEvaluationDateSigned signedDate = db.tblArchiveEvaluationDateSigneds.Where(d => d.archiveEvaluationDateSignedID == dateId && d.userID == studentId).SingleOrDefault();
+                if (signedDate != null)
+                {
+                    tblUser modifier = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+                    signedDate.evaluationDateSigned = newDate;
+                    signedDate.ModifiedBy = modifier.UserID;
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while tryring to edit the date" }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult editReevalCompletDates(int studentId, int dateId, string newDateValue)
+        {
+            DateTime newDate = Convert.ToDateTime(newDateValue);
+
+            if (newDate != null)
+            {
+                tblArchiveEvaluationDate signedDate = db.tblArchiveEvaluationDates.Where(d => d.archiveEvaluationDateID == dateId && d.userID == studentId).SingleOrDefault();
+                if (signedDate != null)
+                {
+                    tblUser modifier = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+                    signedDate.evalutationDate = newDate;
+                    signedDate.ModifiedBy = modifier.UserID;
+
+                    db.SaveChanges();
+
+                    return Json(new { Result = "success" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while tryring to edit the date" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult deleteReEvaluationDates(int dateId, bool Completed)
+        {
+            if (Completed)
+            {
+                tblArchiveEvaluationDate Date = db.tblArchiveEvaluationDates.Where(d => d.archiveEvaluationDateID == dateId).FirstOrDefault();
+                if(Date != null)
+                {
+                    db.tblArchiveEvaluationDates.Remove(Date);
+                }
+            }
+            else
+            {
+                tblArchiveEvaluationDateSigned Date = db.tblArchiveEvaluationDateSigneds.Where(d => d.archiveEvaluationDateSignedID == dateId).FirstOrDefault();
+                if(Date != null)
+                {
+                    db.tblArchiveEvaluationDateSigneds.Remove(Date);
+                }
+            }
+
+            try { db.SaveChanges(); }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "success" }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult GetBuildingsByDistrictId(string districtId)
@@ -3673,7 +3742,7 @@ namespace GreenBushIEP.Controllers
 
         protected void CreateReevalCompletedArchive(int studentId, DateTime reCompleted)
         {
-            if(reCompleted != null)
+            if (reCompleted != null)
             {
                 var archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reCompleted.Date).AsQueryable();
                 if (archives.Count() == 0)
@@ -3751,7 +3820,7 @@ namespace GreenBushIEP.Controllers
             try
             {
 
-                List<String> myRoles = new List<string>() { "2", "3", "4", "6" };
+                List<string> myRoles = new List<string>() { "2", "3", "4", "6" };
                 List<vw_UserList> teachers = new List<vw_UserList>();
 
                 teachers = db.vw_UserList

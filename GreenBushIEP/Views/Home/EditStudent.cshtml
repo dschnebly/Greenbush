@@ -1363,10 +1363,10 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
+                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Consent Signed</label>
                                                         <div class="input-group">
                                                             <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999;" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")"
-                                                                   data-placement="top" data-trigger="click" data-toggle="popover" data-content="" />
+                                                                   data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
                                                             <span class="input-group-addon btn toggle-reEvaluationPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
                                                         </div>
                                                     </div>
@@ -1380,7 +1380,7 @@
                                                         <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
                                                         <div class="input-group">
                                                             <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")"
-                                                                data-placement="top" data-trigger="click" data-toggle="popover" data-content="" />
+                                                                data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
                                                             <span class="input-group-addon btn toggle-reCompletedPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
                                                         </div>
                                                     </div>
