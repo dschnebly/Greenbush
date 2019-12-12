@@ -116,6 +116,10 @@
           <DataField>USD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Teachers">
+          <DataField>Teachers</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -526,7 +530,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!TeacherLastName.Value &amp; ", "  &amp; Fields!TeacherFirstName.Value</Value>
+                                  <Value>=Fields!Teachers.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -545,6 +549,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

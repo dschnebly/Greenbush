@@ -3631,13 +3631,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="DateTime" Name="EvalDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="TeacherFirstName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="TeacherLastName" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="TeacherID" Nullable="false" />
           <Property Type="String" Name="BuildingID" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Teachers" Nullable="true" />
         </ComplexType>
         <ComplexType Name="up_ReportProceduralDatesTracking_Result">
           <Property Type="DateTime" Name="ReEvalConsentSigned" Nullable="true" Precision="23" />
@@ -5326,13 +5324,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="EvalDate" ColumnName="EvalDate" />
                 <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
                 <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
-                <ScalarProperty Name="TeacherFirstName" ColumnName="TeacherFirstName" />
-                <ScalarProperty Name="TeacherLastName" ColumnName="TeacherLastName" />
-                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="Teachers" ColumnName="Teachers" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
