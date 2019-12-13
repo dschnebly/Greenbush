@@ -143,63 +143,103 @@ namespace GreenBushIEP.Controllers
         public ActionResult FilterReferrals(int searchType)
         {
             var currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			bool? completeType = null;
 
-            var districts = (from org in db.tblOrganizationMappings
-                             join user in db.tblUsers
-                                 on org.UserID equals user.UserID
-                             where (user.UserID == currentUser.UserID)
-                             select org).Distinct();
+			if (searchType == 1)
+				completeType = false;
+			else if (searchType == 2)
+				completeType = true;
 
-            List<ReferralViewModel> referralList = new List<ReferralViewModel>();
-            if (districts != null)
-            {
-                bool? completeType = null;
+			List<ReferralViewModel> referralList = new List<ReferralViewModel>();
 
-                if (searchType == 1)
-                    completeType = false;
-                else if (searchType == 2)
-                    completeType = true;
+			if (currentUser.RoleID == nurse || currentUser.RoleID == teacher)
+			{
+			
+				var referrals = (from refInfo in db.tblReferralInfoes
+								 join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
+								 where
+								 refInfo.UserID == currentUser.UserID
+								 && rr.UserID_Requster == currentUser.UserID
+								 && rr.Complete == false
+								 && rr.Submit_Date == null
+								 select refInfo).Distinct();
 
-                foreach (var district in districts)
-                {
+				foreach (var referral in referrals)
+				{
 
-                    var referrals = (from refInfo in db.tblReferralInfoes
-                                     join rr in db.tblReferralRequests
-                                         on refInfo.ReferralID equals rr.ReferralID
-                                     where
-                                     (refInfo.AssignedUSD == district.USD)
-                                     && ((completeType == null) || (rr.Complete == completeType.Value))
-                                     select refInfo).Distinct();
+					ReferralViewModel model = new ReferralViewModel();
 
-                    foreach (var referral in referrals)
-                    {
-                        //if duplicated skip
+					var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+					if (request != null)
+					{
+						model.submitDate = request.Create_Date.ToShortDateString();
+						model.isComplete = false;
+					}
+					model.referralId = referral.ReferralID;
+					model.lastName = referral.LastName;
+					model.firstName = referral.FirstName;
+					model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
+					model.notes = referral.ReferralNotes;
+					referralList.Add(model);
+				}
+				
+			}
+			else
+			{
 
-                        ReferralViewModel model = new ReferralViewModel();
-                        tblReferralRequest request = null;
+				var districts = (from org in db.tblOrganizationMappings
+								 join user in db.tblUsers
+									 on org.UserID equals user.UserID
+								 where (user.UserID == currentUser.UserID)
+								 select org).Distinct();
 
-                        if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType != null)
-                            request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID && o.Complete == completeType).FirstOrDefault();
-                        else if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType == null)
-                            request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).OrderByDescending(o => o.Complete).FirstOrDefault();
-                        else
-                            request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+				
+				if (districts != null)
+				{
+					
 
-                        if (request != null)
-                        {
-                            model.submitDate = request.Create_Date.ToShortDateString();
-                            model.isComplete = request.Complete;
-                        }
-                        model.referralId = referral.ReferralID;
-                        model.lastName = referral.LastName;
-                        model.firstName = referral.FirstName;
-                        model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
-                        model.notes = referral.ReferralNotes;
-                        referralList.Add(model);
-                    }
-                }
+					foreach (var district in districts)
+					{
 
-            }
+						var referrals = (from refInfo in db.tblReferralInfoes
+										 join rr in db.tblReferralRequests
+											 on refInfo.ReferralID equals rr.ReferralID
+										 where
+										 (refInfo.AssignedUSD == district.USD)
+										 && rr.Submit_Date != null
+										 && ((completeType == null) || (rr.Complete == completeType.Value))
+										 select refInfo).Distinct();
+
+						foreach (var referral in referrals)
+						{
+							//if duplicated skip
+
+							ReferralViewModel model = new ReferralViewModel();
+							tblReferralRequest request = null;
+
+							if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType != null)
+								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID && o.Complete == completeType).FirstOrDefault();
+							else if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType == null)
+								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).OrderByDescending(o => o.Complete).FirstOrDefault();
+							else
+								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+
+							if (request != null)
+							{
+								model.submitDate = request.Create_Date.ToShortDateString();
+								model.isComplete = request.Complete;
+							}
+							model.referralId = referral.ReferralID;
+							model.lastName = referral.LastName;
+							model.firstName = referral.FirstName;
+							model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
+							model.notes = referral.ReferralNotes;
+							referralList.Add(model);
+						}
+					}
+
+				}
+			}
 
             return Json(new { Result = "success", FilterList = referralList.OrderBy(o => o.lastName).ThenBy(o => o.firstName).ToList() });
         }
@@ -218,8 +258,8 @@ namespace GreenBushIEP.Controllers
                                  join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
                                  where
                                  refInfo.UserID == currentUser.UserID
-                                 && rr.UserID_Requster == 0
-                                 && rr.Complete == false
+                                 && rr.UserID_Requster == currentUser.UserID
+								 && rr.Complete == false
                                  && rr.Submit_Date == null
                                  select refInfo).Distinct();
 
@@ -270,6 +310,7 @@ namespace GreenBushIEP.Controllers
                                          where
                                          (refInfo.AssignedUSD == district.USD)
                                          && rr.Complete == false
+										 && rr.Submit_Date != null
                                          select refInfo).Distinct();
 
                         foreach (var referral in referrals)
@@ -282,7 +323,7 @@ namespace GreenBushIEP.Controllers
                                 var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                                 if (request != null)
                                 {
-                                    model.submitDate = request.Create_Date.ToShortDateString();
+                                    model.submitDate = request.Submit_Date.HasValue ? request.Submit_Date.Value.ToShortDateString() : request.Create_Date.ToShortDateString();
                                     model.isComplete = request.Complete;
                                 }
                                 model.referralId = referral.ReferralID;
@@ -1159,7 +1200,15 @@ namespace GreenBushIEP.Controllers
                 try
                 {
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-                    int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
+
+					var submitterDistrict = (from org in db.tblOrganizationMappings
+											 join user in db.tblUsers
+												 on org.UserID equals user.UserID
+											 where user.UserID == submitter.UserID
+											 select org).Distinct().FirstOrDefault();
+
+
+					int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
 
                     // check that the kidsIS doesn't already exsist in the system.
                     string kidsIdStr = collection["kidsid"].ToString();
@@ -1221,10 +1270,10 @@ namespace GreenBushIEP.Controllers
                             db.tblReferralInfoes.Add(studentInfo);
                             db.SaveChanges();
 
-
-                            tblReferralRequest request = new tblReferralRequest();
-                            //request.UserID_Requster = submitter.UserID;
-                            request.ReferralID = studentInfo.ReferralID;
+							tblReferralRequest request = new tblReferralRequest();
+                            request.UserID_Requster = submitter.UserID;
+							request.UserID_District = submitterDistrict != null ? submitterDistrict.USD : "";
+							request.ReferralID = studentInfo.ReferralID;
                             request.Create_Date = DateTime.Now;
                             request.Update_Date = DateTime.Now;
                             db.tblReferralRequests.Add(request);
