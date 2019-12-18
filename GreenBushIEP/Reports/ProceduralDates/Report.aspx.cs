@@ -102,9 +102,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			dt.Columns.Add("EvalDate", typeof(string));
 			dt.Columns.Add("StudentFirstName", typeof(string));
 			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("TeacherFirstName", typeof(string));
-			dt.Columns.Add("TeacherLastName", typeof(string));
-			dt.Columns.Add("TeacherID", typeof(string));
+			dt.Columns.Add("Teachers", typeof(string));			
 			dt.Columns.Add("USD", typeof(string));
 			dt.Columns.Add("BuildingName", typeof(string));
 
@@ -114,8 +112,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 				var list = ctx.up_ReportProceduralDates(districtFilter, teacherIds, buildingID);
 
 				foreach (var cs in list)
-					dt.Rows.Add(cs.DateType, cs.EvalDate, cs.StudentFirstName, cs.StudentLastName, cs.TeacherFirstName, cs.TeacherLastName
-						, cs.TeacherID, cs.USD, cs.BuildingName);
+					dt.Rows.Add(cs.DateType, cs.EvalDate, cs.StudentFirstName, cs.StudentLastName, cs.Teachers, cs.USD, cs.BuildingName);
 			}
 
 			return dt;

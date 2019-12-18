@@ -1309,7 +1309,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Signed</label>
+                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Consent Signed</label>
                                                         <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" />
                                                     </div>
                                                 </div>
@@ -1576,11 +1576,11 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createstudent.js?v1.1"></var>
+<var data-reload="true" data-src="/Scripts/createstudent.js?v1.6"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/createstudent.js?v1.5")
+    @Scripts.Render("~/Scripts/createstudent.js?v1.6")
 }

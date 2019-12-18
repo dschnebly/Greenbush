@@ -609,32 +609,37 @@ $("#next8").on("click", function () {
     var teacherIds = [];
     var studentId = $("#createStudentAssignments").find("input[name='studentId']").val();
 
-    if (activeTeachers.length > 0) {
-        $.each(activeTeachers, function (index, value) {
-            teacherIds.push($(activeTeachers[index]).find('.ourTeacher').data("id"));
-        });
+	if (activeTeachers.length > 0) {
+		$.each(activeTeachers, function (index, value) {
+			teacherIds.push($(activeTeachers[index]).find('.ourTeacher').data("id"));
+		});
 
-        $.ajax({
-            type: 'POST',
-            url: '/Manage/CreateStudentAssignments',
-            dataType: 'json',
-            data: { studentId: studentId, teachers: teacherIds },
-            async: false,
-            success: function (data) {
-                if (data.Result === "success") {
+		$.ajax({
+			type: 'POST',
+			url: '/Manage/CreateStudentAssignments',
+			dataType: 'json',
+			data: { studentId: studentId, teachers: teacherIds },
+			async: false,
+			success: function (data) {
+				if (data.Result === "success") {
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+				} else {
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+	}
+	else {
+		var $active = $('.wizard .nav-tabs li.active');
+		$active.next().removeClass('disabled');
+		$($active).next().find('a[data-toggle="tab"]').click();
 
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-                } else {
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-    }
+	}
 
 });
 
