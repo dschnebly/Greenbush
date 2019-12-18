@@ -601,6 +601,7 @@
         $(".duplication-loader").css('visibility', 'hidden');
     });
 
+    /* Event */
     //duplicate service for next school year
     $('#duplicateService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
@@ -655,6 +656,7 @@
         $(".duplication-loader").css('visibility', 'hidden');
     });
 
+    /* Event */
     //duplicate all services for next school year
     $('#duplicateAllService').on('click', function () {
         $(".duplication-loader").css('visibility', 'visible');
@@ -705,6 +707,10 @@
         $(".duplication-loader").css('visibility', 'hidden');
     });
 
+    // global varaible to save all our disabledDates when the select an attending building.
+    var disabledDays = null; // set our diabled days.
+
+    // initiate our services.
     function initService() {
         $('.oneStudentService').not('#defaultStudentService').not('.bound').addClass('bound').each(function (index) {
 
@@ -743,7 +749,6 @@
                 _validateDate(fiscalYear, selectedDate, e, buildingId);
             });
 			            
-
             $(this).find("a i.deleteService").on("click", function (e) {
 
                 if ($(e.target).hasClass('deleteService')) {
@@ -944,8 +949,6 @@
 
                     $(this).find('[value="-1"]').remove(); // remove 'select a building'
                     var holidays = null;  // set our holidays calendar.
-                    var disabledDays = null; // set our diabled days.
-
                     var userid = $("#sid").val();
                     var buildingid = $(this).val();
                     var serviceContainer = $(this).closest(".panel-default");
@@ -1022,6 +1025,7 @@
 
 			//have to remove the hasdatepicker before we can appy new datepicker to clone
             $(this).find('.dtField').each(function () {
+                console.log(disabledDays);
 				$(this).removeAttr('id').removeClass('hasDatepicker').removeData('datepicker').unbind()
 				.datepicker({
                     dateFormat: "mm/dd/yy",
@@ -1032,8 +1036,8 @@
 					beforeShowDay: function (date) {
                         var day = date.getDay();
                         var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                        //var isDisabled = ($.inArray(string, disabledDays) != -1);
-                        return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+                        var isDisabled = ($.inArray(string, disabledDays) != -1);
+                        return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
 					},
 					beforeShow: function () {
 						setTimeout(function (){
