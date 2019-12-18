@@ -1016,21 +1016,6 @@ $(".service-section").on('click', function (e) {
             $('.ajax-loader').css("visibility", "hidden");
         }
     });
-
-    //    }
-    //    else {
-    //        alert(data.Message);
-    //    }
-    //},
-    //error: function (data) {
-    //    $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
-    //    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-    //        $("#alertMessage").slideUp(500);
-    //    });
-    //},
-    //complete: function () {
-    //    $('.ajax-loader').css("visibility", "hidden");
-    //}
 });
 
 $(".accom-mod-section").on('click', function (e) {

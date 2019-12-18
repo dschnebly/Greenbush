@@ -120,6 +120,7 @@
             <input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
             <input type="hidden" id="sid" value="@Model.studentId" />
             <div class="alert alert-danger noPrint" id="alertMessage" role="alert">
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong class="moreinfo">Oh snap!</strong>
             </div>
             <div class="row oneStudentService hidden" id="defaultStudentService">
@@ -567,6 +568,12 @@
     /* When a user clicks on the question mark icon we turn on tooltips */
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
+    });
+
+    /* Event */
+    /* When the user clicks the close button on the alert  */
+    $("#alertMessage").on("click", function (e) {
+        $(e.currentTarget).hide();
     });
 
     /* Event */
@@ -1025,7 +1032,6 @@
 
 			//have to remove the hasdatepicker before we can appy new datepicker to clone
             $(this).find('.dtField').each(function () {
-                console.log(disabledDays);
 				$(this).removeAttr('id').removeClass('hasDatepicker').removeData('datepicker').unbind()
 				.datepicker({
                     dateFormat: "mm/dd/yy",
@@ -1147,13 +1153,13 @@
 
     function _showAlert(message, positive) {
 
-        var successFade = 5000;
+        var successFade = 9000;
 		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
 			if (positive) {
 				$("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
 			}
 			else {
-				$("#alertMessage").removeClass('alert-success').addClass('alert-danger'); successFade = 5000;
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
 			}
 
 			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
