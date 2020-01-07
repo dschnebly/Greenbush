@@ -1141,7 +1141,7 @@
 
         }).call(this);
 
-        var schoolYear = ((new Date()).getMonth() < 6) ? (new Date()).getFullYear() - 1 : (new Date()).getFullYear();
+        var schoolYear = document.getElementById("selectedYear").value;
         var nextYear = parseInt(schoolYear) + 1;
 
         $(".responsive-calendar:eq(0)").responsiveCalendar({
@@ -1318,24 +1318,24 @@
         // When user select a year from the drop down.
         $('#selectYear ul li a').on('click', function () {
             var selectedYearElem = $(this);
-            var schoolYear = ((new Date()).getMonth() < 6) ? $(this).data("year") - 1 : $(this).data("year");
-            var nextYear = parseInt(schoolYear) - 1;
+            var schoolYear = parseInt(selectedYearElem.data("year")) - 1;
+            var nextYear = parseInt(selectedYearElem.data("year"));
 
             $('#selectedYear').val(selectedYearElem.data("year"));
             selectedYearElem.parents('#selectYear').find('button').html(selectedYearElem.html() + '&nbsp;&nbsp;<span class="caret"></span>');
 
-            $(".responsive-calendar:eq(0)").responsiveCalendar(nextYear + '-07');
-            $(".responsive-calendar:eq(1)").responsiveCalendar(nextYear + '-08');
-            $(".responsive-calendar:eq(2)").responsiveCalendar(nextYear + '-09');
-            $(".responsive-calendar:eq(3)").responsiveCalendar(nextYear + '-10');
-            $(".responsive-calendar:eq(4)").responsiveCalendar(nextYear + '-11');
-            $(".responsive-calendar:eq(5)").responsiveCalendar(nextYear + '-12');
-            $(".responsive-calendar:eq(6)").responsiveCalendar(schoolYear + '-01');
-            $(".responsive-calendar:eq(7)").responsiveCalendar(schoolYear + '-02');
-            $(".responsive-calendar:eq(8)").responsiveCalendar(schoolYear + '-03');
-            $(".responsive-calendar:eq(9)").responsiveCalendar(schoolYear + '-04');
-            $(".responsive-calendar:eq(10)").responsiveCalendar(schoolYear + '-05');
-            $(".responsive-calendar:eq(11)").responsiveCalendar(schoolYear + '-06');
+            $(".responsive-calendar:eq(0)").responsiveCalendar(schoolYear + '-07');
+            $(".responsive-calendar:eq(1)").responsiveCalendar(schoolYear + '-08');
+            $(".responsive-calendar:eq(2)").responsiveCalendar(schoolYear + '-09');
+            $(".responsive-calendar:eq(3)").responsiveCalendar(schoolYear + '-10');
+            $(".responsive-calendar:eq(4)").responsiveCalendar(schoolYear + '-11');
+            $(".responsive-calendar:eq(5)").responsiveCalendar(schoolYear + '-12');
+            $(".responsive-calendar:eq(6)").responsiveCalendar(nextYear + '-01');
+            $(".responsive-calendar:eq(7)").responsiveCalendar(nextYear + '-02');
+            $(".responsive-calendar:eq(8)").responsiveCalendar(nextYear + '-03');
+            $(".responsive-calendar:eq(9)").responsiveCalendar(nextYear + '-04');
+            $(".responsive-calendar:eq(10)").responsiveCalendar(nextYear + '-05');
+            $(".responsive-calendar:eq(11)").responsiveCalendar(nextYear + '-06');
 
             if (reports != null) {
                 reports.forEach(function (element) {
