@@ -1089,8 +1089,6 @@ namespace GreenbushIep.Controllers
                     return View("~/Views/Home/ActiveIEP/index.cshtml", model);
                 case IEPStatus.AMENDMENT:
                     return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
-                case IEPStatus.ANNUAL:
-                    return View("~/Views/Home/AnnualIEP/index.cshtml", model);
                 case IEPStatus.DRAFT:
 
                     if(model.studentIEP.anyStudentIEPActive && !model.studentIEP.current.Amendment) // Annual
