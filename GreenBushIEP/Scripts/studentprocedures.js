@@ -596,6 +596,7 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
     });
 
     allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
+    allCompleted ? $("#makeIEPAmendmentActive").removeClass("disabled") : $("#makeIEPAmendmentActive").addClass("disabled");
 });
 
 ///////////
@@ -980,14 +981,6 @@ $(".service-section").on('click', function (e) {
     var iepId = $("#studentIEPId").val();
 
     $('.ajax-loader').css("visibility", "visible");
-
-    //$.ajax({
-    //    type: 'GET',
-    //    url: '/Home/CheckCalendar',
-    //    data: { studentId: stId, IEPid: iepId },
-    //    dataType: 'json',
-    //    success: function (data) {
-    //        if (data.Result === "success") {
 
     $.ajax({
         type: 'GET',

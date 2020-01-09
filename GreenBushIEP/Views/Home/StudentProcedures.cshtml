@@ -904,7 +904,7 @@
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment ? "ANNUAL" : string.Empty) @(Model.studentIEP.displayIEPStatus) @(Model.studentIEP.current.Amendment && Model.studentIEP.displayIEPStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty) &nbsp;&nbsp;<b class="caret"></b>
+                            <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b>
                         </button>
                         <ul class="dropdown-menu list-group" id="iepStatusList">
                             @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
@@ -919,29 +919,29 @@
                                     }
                                 }
                             }
-                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
+                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
                             { // teacher permissions removed in 10/24/2019 due to seeing teachers able to make ieps active.
                                 <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                             @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
                             {
-                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                             @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment) // Annual Draft
                             {
-                                <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT)
+                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT)
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
-                            @if (Model.studentIEP.displayIEPStatus == IEPStatus.ACTIVE)
+                            @if (Model.studentIEP.iepStatusType == IEPStatus.ACTIVE)
                             {
-                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                                 if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && !Model.studentIEP.anyStudentIEPDraft)
                                 {
-                                    <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
+                                    <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @Html.Raw(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
                                 }
                             }
                         </ul>
@@ -955,14 +955,14 @@
             <div class="col-md-7">
                 <div class="form-group col-md-6">
                     <label for="IEPBeginDate">Initiation Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" class="@(Model.studentIEP.current.begin_date == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" @((Model.studentIEP.displayIEPStatus != IEPStatus.DRAFT && Model.studentIEP.displayIEPStatus != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
+                    <input type="text" name="IEPBeginDate" id="IEPBeginDate" class="@(Model.studentIEP.current.begin_date == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" @((Model.studentIEP.iepStatusType != IEPStatus.DRAFT && Model.studentIEP.iepStatusType != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
                 </div>
                 <div class="form-group col-md-6">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" class="@(Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" @((Model.studentIEP.displayIEPStatus != IEPStatus.DRAFT && Model.studentIEP.displayIEPStatus != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" class="@(Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; padding-left: 5px;" @((Model.studentIEP.iepStatusType != IEPStatus.DRAFT && Model.studentIEP.iepStatusType != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
                 </div>
             </div>
-            @if (Model.studentIEP.displayIEPStatus.ToUpper() == IEPStatus.DRAFT || Model.studentIEP.displayIEPStatus.ToUpper() == IEPStatus.AMENDMENT)
+            @if (Model.studentIEP.iepStatusType == IEPStatus.DRAFT || Model.studentIEP.iepStatusType == IEPStatus.AMENDMENT)
             {
                 <div class="col-md-2">
                     <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
@@ -1110,7 +1110,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @(Model.studentIEP.displayIEPStatus == IEPStatus.DRAFT ? "hidden" : String.Empty)" id="progressReport">
+                <li class="ui-state-default filter planning @(Model.studentIEP.iepStatusType == IEPStatus.DRAFT ? "hidden" : String.Empty)" id="progressReport">
                     <div class="hero-widget well">
                         <div class="icon">
                             <i class="glyphicon glyphicon-stats"></i>
