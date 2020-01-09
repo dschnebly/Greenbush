@@ -958,6 +958,10 @@
     <Content Include="Views\Home\Referrals.cshtml" />
     <Content Include="Views\Home\EditReferral.cshtml" />
     <Content Include="Views\Form\SummaryOfPerformance.cshtml" />
+    <Content Include="Views\Home\DraftIEP\index.cshtml" />
+    <Content Include="Views\Home\AnnualIEP\index.cshtml" />
+    <Content Include="Views\Home\AmmendmentIEP\index.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

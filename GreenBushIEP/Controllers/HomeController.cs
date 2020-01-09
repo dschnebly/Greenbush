@@ -1081,9 +1081,21 @@ namespace GreenbushIep.Controllers
                     //use current date
                     model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 }
-
             }
 
+            switch(model.studentIEP.iepStatusType)
+            {
+                case IEPStatus.ACTIVE:
+                    return View("~/Views/Home/ActiveIEP/index.cshtml", model);
+                case IEPStatus.AMENDMENT:
+                    return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
+                case IEPStatus.ANNUAL:
+                    return View("~/Views/Home/AnnualIEP/index.cshtml", model);
+                case IEPStatus.DRAFT:
+                    return View("~/Views/Home/DraftIEP/index.cshtml", model);
+            }
+
+            // we should NEVER get here.
             return View(model);
         }
 
