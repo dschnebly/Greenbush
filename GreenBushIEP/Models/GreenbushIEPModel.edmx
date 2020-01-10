@@ -762,6 +762,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedBy" Type="int" />
+          <Property Name="OriginalIEPid" Type="int" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -2805,6 +2806,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="OriginalIEPid" Type="Int32" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -4534,6 +4536,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="OriginalIEPid" ColumnName="OriginalIEPid" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
