@@ -34,6 +34,7 @@ namespace GreenBushIEP.Models
 
         public string iepStatusType { get; set; }
         public string displayIEPStatus { get; set; }
+        public DateTime iepBeginTime { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -94,6 +95,7 @@ namespace GreenBushIEP.Models
             anyStudentIEPAnnual = false;
             iepStatusType = IEPStatus.DRAFT;
             displayIEPStatus = IEPStatus.DRAFT;
+            iepBeginTime = new DateTime();
 
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();

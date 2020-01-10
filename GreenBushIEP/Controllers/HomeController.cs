@@ -1096,7 +1096,7 @@ namespace GreenbushIep.Controllers
                         return View("~/Views/Home/AnnualIEP/index.cshtml", model);
                     }
 
-                    return View("~/Views/Home/DraftIEP/index.cshtml", model);
+                    return View("~/Views/Home/DraftIEP/index.cshtml", model); // Draft
             }
 
             // we should NEVER get here.
