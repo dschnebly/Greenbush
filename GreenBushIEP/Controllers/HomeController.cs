@@ -1120,12 +1120,18 @@ namespace GreenbushIep.Controllers
                         iep.begin_date = startDate;
                         iep.MeetingDate = meetingDate;
 
+                        if(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && iep.Amendment)
+                        {
+                            iep.begin_date = meetingDate;
+                        }
+
                         db.SaveChanges();
                     }
 
                     return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
                 }
             }
+
             return Json(new { Result = "error", Message = "Error saving to the database." }, JsonRequestBehavior.AllowGet);
         }
 
