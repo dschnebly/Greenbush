@@ -34,7 +34,7 @@ namespace GreenBushIEP.Models
 
         public string iepStatusType { get; set; }
         public string displayIEPStatus { get; set; }
-        public DateTime iepBeginTime { get; set; }
+        public DateTime? iepStartTime { get; set; }
 
         public tblIEPHealth studentHealth { get; set; }
         public tblIEPMotor studentMotor { get; set; }
@@ -95,7 +95,7 @@ namespace GreenBushIEP.Models
             anyStudentIEPAnnual = false;
             iepStatusType = IEPStatus.DRAFT;
             displayIEPStatus = IEPStatus.DRAFT;
-            iepBeginTime = new DateTime();
+            iepStartTime = new DateTime();
 
             studentGoals = new List<tblGoal>();
             studentGoalBenchmarks = new List<tblGoalBenchmark>();
@@ -188,6 +188,7 @@ namespace GreenBushIEP.Models
                 iepStatusType = (current.Amendment & current.IsActive & current.IepStatus.ToUpper() == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
                 displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && this.anyStudentIEPActive && !this.current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (this.current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
                 //if (iepStatusType == IEPStatus.AMENDMENT && this.current.IsActive) { isServiceCompleted = true; } // was added to fix a bug? but it is now causing an error in the way amendment is handled. lets try removing and see if it causes any errors.
+                if (iepStatusType == IEPStatus.AMENDMENT) { iepStartTime = db.tblIEPs.Where(i => i.IEPid == current.OriginalIEPid).FirstOrDefault().begin_date;  }
                 hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
                 hasBehavior = (studentSocial != null && studentSocial.BehaviorInterventionPlan);
             }

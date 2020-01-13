@@ -941,7 +941,6 @@
         var completedGoal = studentGoal.find("a i.isGoalCompleted");
         var postMethod = studentGoal.find("form").attr('action').split("/").pop();
 
-
         var data = studentGoal.find('.goalForm').serialize();
         $.post('/ModuleSection/' + postMethod, data)
 			.done(function (results) {
@@ -950,7 +949,8 @@
 			    studentGoalId.val(results.GoalId);
 
 			    //sync temp benchmarks with new database id
-			    if (results.GoalBenchmarks != null && results.GoalBenchmarks != undefined && results.GoalBenchmarks.length > 0) {
+			    if (results.GoalBenchmarks != null && results.GoalBenchmarks != undefined && results.GoalBenchmarks.length > 0)
+			    {
 			        var i;
 
 			        //delete temps
