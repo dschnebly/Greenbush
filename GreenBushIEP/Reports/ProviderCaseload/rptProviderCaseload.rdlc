@@ -566,6 +566,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -860,11 +861,7 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember>
-                  <Group Name="Details">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!ProviderName.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
+                  <Group Name="Details" />
                   <SortExpressions>
                     <SortExpression>
                       <Value>=Fields!LastName.Value</Value>
