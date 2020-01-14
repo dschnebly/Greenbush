@@ -2014,6 +2014,7 @@ namespace GreenbushIep.Controllers
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             List<SelectListItem> locationList = new List<SelectListItem>();
+			model.ModuleList = db.tblModules.Where(o => o.Active == true).ToList();
 
             if (iep != null)
             {

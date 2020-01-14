@@ -1,33 +1,40 @@
 ﻿@model GreenBushIEP.Models.tblAccommodation
 
 @{
-    string shortDesc = "Accommodation ";
+	string shortDesc = "Accommodation ";
 
-    if (Model.AccomType == 1)
-    {
-        shortDesc = "Accommodation ";
-    }
-    else if (Model.AccomType == 2)
-    {
-        shortDesc = "Modification ";
-    }
-    else if (Model.AccomType == 3)
-    {
-        shortDesc = "Supplemental Aids and Services ";
-    }
-    else if (Model.AccomType == 4)
-    {
-        shortDesc = "Support for School Personnel ";
-    }
-    else if (Model.AccomType == 5)
-    {
-        shortDesc = "Transportation ";
-    }
+	if (Model.AccomType == 1)
+	{
+		shortDesc = "Accommodation ";
+	}
+	else if (Model.AccomType == 2)
+	{
+		shortDesc = "Modification ";
+	}
+	else if (Model.AccomType == 3)
+	{
+		shortDesc = "Supplemental Aids and Services ";
+	}
+	else if (Model.AccomType == 4)
+	{
+		shortDesc = "Support for School Personnel ";
+	}
+	else if (Model.AccomType == 5)
+	{
+		shortDesc = "Transportation ";
+	}
 
-    if (Model.AnticipatedStartDate.HasValue)
-    {
-        shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
-    }
+	if (Model.AnticipatedStartDate.HasValue)
+	{
+		shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
+	}
+
+	List<GreenBushIEP.Models.tblModule> modules = new List<GreenBushIEP.Models.tblModule>();
+	if (this.ViewData.ContainsKey("ModuleList"))
+	{
+		modules = (List<GreenBushIEP.Models.tblModule>)this.ViewData["ModuleList"];
+	}
+
 }
 
 <div class="row oneStudentGoal " id="defaultgoal_@Model.AccommodationID">
@@ -64,17 +71,12 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="@(Model.Module)">
-                                                <ul class="dropdown-menu" role="menu" style="font-size:16px;width:100%">
-                                                    <li data-value="1"><a href="#">Health</a></li>
-                                                    <li data-value="2"><a href="#">Motor</a></li>
-                                                    <li data-value="3"><a href="#">Communication</a></li>
-                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>                                                    
-                                                    <li data-value="7"><a href="#">Reading</a></li>
-                                                    <li data-value="8"><a href="#">Math</a></li>
-                                                    <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
-													<li data-value="6"><a href="#">Academic/Functional</a></li>
-                                                    <li data-value="10"><a href="#">None</a></li>
-                                                </ul>
+													<ul class="dropdown-menu newlist" role="menu" style="font-size:16px;width:100%">
+													@foreach (var module in modules)
+													{
+														<li data-value="@(module.ModuleID)"><a href="#">@(module.ModuleName)</a></li>
+													}                                                    
+                                                </ul>                                              
                                             </div>                                            
                                         </div>										
 									</div>	

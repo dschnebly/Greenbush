@@ -50,7 +50,7 @@
             {
                 foreach (var accom in Model.AccomList)
                 {
-                    @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom);
+                    @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom,  new ViewDataDictionary { { "ModuleList", Model.ModuleList } });
                 }
             }
         </div>
@@ -91,17 +91,13 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="1">
-                                                <ul class="dropdown-menu" role="menu" style="font-size:16px;width:100%">
-                                                    <li data-value="1"><a href="#">Health</a></li>
-                                                    <li data-value="2"><a href="#">Motor</a></li>
-                                                    <li data-value="3"><a href="#">Communication</a></li>
-                                                    <li data-value="4"><a href="#">Social-Emotional</a></li>                                                    
-                                                    <li data-value="7"><a href="#">Reading</a></li>
-                                                    <li data-value="8"><a href="#">Math</a></li>
-                                                    <li data-value="9"><a href="#">Written&nbsp;Language</a></li>
-													<li data-value="6"><a href="#">Academic/Functional</a></li>
-                                                    <li data-value="10"><a href="#">None</a></li>
+                                               	<ul class="dropdown-menu newlist" role="menu" style="font-size:16px;width:100%">
+													@foreach (var module in Model.ModuleList)
+													{
+														<li data-value="@(module.ModuleID)"><a href="#">@(module.ModuleName)</a></li>
+													}                                                    
                                                 </ul>
+
                                             </div>
 											</div>
 										</div>
