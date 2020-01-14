@@ -1358,6 +1358,7 @@
                     $(".completed-loader").fadeOut();
                     $('.oneStudentService ').not('#defaultStudentService').each(function () {
                         $(this).find("a i.isServiceCompleted").addClass("thisServiceNotCompleted");
+                        $(this).find("form").find("input[name='completed']").val(false);
                     })
                     $("#ServiceWidget .hero-widget").removeClass("module-completed");
                 } else {
