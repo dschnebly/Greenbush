@@ -1,14 +1,22 @@
 ﻿@{
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-	string studentAddress = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
-	string studentCityStZip = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-}
 
+	string contactFormattedName = "";
+	string studentAddress = "";  
+	string studentCityStZip = ""; 
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		contactFormattedName = primary.FirstName + " " + primary.LastName;
+		studentAddress = primary.Address1 + " " + primary.Address2;
+		studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
+	}
+}
 
 <div class="module-page">
 	<div class=WordSection1>
@@ -32,9 +40,8 @@
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<span style='font-size:  11.0pt'>
-							<b>To:</b>
-							<span style="text-decoration:underline;font-weight:bold"><textarea data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span>
-
+							<b>To:</b>							
+							<span style="text-decoration:underline;font-weight:bold"><textarea data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span></span>
 						</span>
 						<span style='font-size:11.0pt'><o:p></o:p></span>
 					</p>
@@ -71,7 +78,7 @@
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
 	<span style='font-size:10.0pt'>
-		<span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
+		<span style='mso-tab-count:1'>                               </span>(Student’s name)<o:p></o:p>
 	</span>
 </p>
 <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
