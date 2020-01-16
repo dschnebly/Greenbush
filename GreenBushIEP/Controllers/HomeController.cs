@@ -2499,177 +2499,175 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        private IEP GetIEPPrint(int stid, int iepId)
-        {
-            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
-            iepId = (iepId == 0) ? db.tblIEPs.Where(i => i.UserID == stid && i.IEPid == iepId).OrderBy(i => i.IepStatus).FirstOrDefault().IEPid : iepId;
-            var studentDetails = new StudentDetailsPrintViewModel();
+		private IEP GetIEPPrint(int stid, int iepId)
+		{
+			tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+			tblUser student = db.tblUsers.SingleOrDefault(u => u.UserID == stid);
 
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
+			var studentDetails = new StudentDetailsPrintViewModel();
 
-            // Get the MIS id of the logged in teacher.
-            tblUser mis = FindSupervisor.GetUSersMIS(teacher);
+			List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
 
-            var query = (from iep in db.tblIEPs
-                         join health in db.tblIEPHealths
-                             on iep.IEPHealthID equals health.IEPHealthID
-                         join motor in db.tblIEPMotors
-                             on iep.IEPMotorID equals motor.IEPMotorID
-                         join communication in db.tblIEPCommunications
-                             on iep.IEPCommunicationID equals communication.IEPCommunicationID
-                         join social in db.tblIEPSocials
-                             on iep.IEPSocialID equals social.IEPSocialID
-                         join intelligence in db.tblIEPIntelligences
-                             on iep.IEPIntelligenceID equals intelligence.IEPIntelligenceID
-                         join academics in db.tblIEPAcademics
-                             on iep.IEPAcademicID equals academics.IEPAcademicID
-                         join reading in db.tblIEPReadings
-                             on iep.IEPReadingID equals reading.IEPReadingID
-                         join math in db.tblIEPMaths
-                             on iep.IEPMathID equals math.IEPMathID
-                         join written in db.tblIEPWrittens
-                             on iep.IEPWrittenID equals written.IEPWrittenID
-                         where iep.UserID == student.UserID && iep.IEPid == iepId
-                         select new { iep, health, motor, communication, social, intelligence, academics, reading, math, written }).ToList();
+			tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
-            if (query.Count() == 1)
-            {
+			IEP theIEP = new IEP(student.UserID, iepId)
+			{
+				locations = db.tblLocations.ToList(),
+				serviceTypes = db.tblServiceTypes.ToList(),
+				serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
+				studentFirstName = string.Format("{0}", student.FirstName),
+				studentLastName = string.Format("{0}", student.LastName),
+			};
 
-                IEP theIEP = new IEP()
-                {
-                    current = query.SingleOrDefault().iep,
-                    studentHealth = query.SingleOrDefault().health,
-                    studentMotor = query.SingleOrDefault().motor,
-                    studentCommunication = query.SingleOrDefault().communication,
-                    studentSocial = query.SingleOrDefault().social,
-                    studentIntelligence = query.SingleOrDefault().intelligence,
-                    studentAcademic = query.SingleOrDefault().academics,
-                    studentReading = query.SingleOrDefault().reading,
-                    studentMath = query.SingleOrDefault().math,
-                    studentWritten = query.SingleOrDefault().written,
-                    locations = db.tblLocations.ToList(),
-                    serviceTypes = db.tblServiceTypes.ToList(),
-                    serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
-                    studentFirstName = string.Format("{0}", student.FirstName),
-                    studentLastName = string.Format("{0}", student.LastName),
+			//student goalds
+			if (theIEP != null && theIEP.current != null)
+			{
+				if (theIEP.studentGoalBenchmarks == null)
+				{
+					theIEP.studentGoalBenchmarks = new List<tblGoalBenchmark>();
+				}
 
-                };
+				if (theIEP.studentGoalBenchmarkMethods == null)
+				{
+					theIEP.studentGoalBenchmarkMethods = new List<tblGoalBenchmarkMethod>();
+					
+				}
+
+				if (theIEP.studentGoalEvalProcs == null)
+				{
+					theIEP.studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
+
+				}
+
+				foreach (var goal in theIEP.studentGoals)
+				{
+					theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
+
+					theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
+
+					if (theIEP.studentGoalBenchmarks.Any())
+					{
+						var benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
+						theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
+					}
+
+				}
 
 
-                //student goalds
-                if (theIEP != null && theIEP.current != null)
-                {
-                    //status of iep
-                    var listOfStudentsIEPs = db.tblIEPs.Where(i => i.UserID == stid && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).OrderBy(i => i.IepStatus).ThenBy(i => i.Amendment).ToList();
-                    theIEP.anyStudentIEPActive = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ACTIVE && i.IsActive);
-                    theIEP.anyStudentIEPAmendment = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.Amendment && i.IsActive);
-                    theIEP.anyStudentIEPDraft = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.DRAFT && !i.Amendment && i.IsActive);
-                    theIEP.anyStudentIEPAnnual = listOfStudentsIEPs.Any(i => i.IepStatus.ToUpper() == IEPStatus.ANNUAL && i.IsActive);
+				var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
+				theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
 
-                    theIEP.studentGoals = db.tblGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    foreach (var goal in theIEP.studentGoals)
-                    {
-                        theIEP.studentGoalBenchmarks.AddRange(db.tblGoalBenchmarks.Where(g => g.goalID == goal.goalID).ToList());
-                        theIEP.studentGoalEvalProcs.AddRange(db.tblGoalEvaluationProcedures.Where(g => g.goalID == goal.goalID).ToList());
+				StudentTransitionViewModel stvw = new StudentTransitionViewModel();
+				stvw.studentId = student.UserID;
+				stvw.student = student;
+				stvw.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == theIEP.current.IEPid).ToList();
+				stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
+				stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
+				stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
+				if (stvw.transition != null)
+				{
+					stvw.careers = db.tblCareerPaths.Where(o => o.CareerPathID == stvw.transition.CareerPathID).ToList();
+				}
+				theIEP.studentTransition = stvw;
+				tblStudentInfo info = null;
+				if (student != null)
+				{
 
-                        if (theIEP.studentGoalBenchmarks.Any())
-                        {
-                            var benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
-                            theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
-                        }
+					info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+					tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
+					tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
 
-                    }
+					bool isDOC = false;
+					if (theIEP.studentTransition != null)
+					{
+						isDOC = theIEP.studentTransition.isDOC;
+					}
 
-                    theIEP.studentServices = db.tblServices.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    theIEP.accommodations = db.tblAccommodations.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    var studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
-                    theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
-                    theIEP.studentOtherConsiderations = db.tblOtherConsiderations.Where(o => o.IEPid == theIEP.current.IEPid).FirstOrDefault();
-
-                    StudentTransitionViewModel stvw = new StudentTransitionViewModel();
-                    stvw.studentId = student.UserID;
-                    stvw.student = student;
-                    stvw.assessments = db.tblTransitionAssessments.Where(a => a.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.services = db.tblTransitionServices.Where(s => s.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.goals = db.tblTransitionGoals.Where(g => g.IEPid == theIEP.current.IEPid).ToList();
-                    stvw.transition = db.tblTransitions.Where(t => t.IEPid == theIEP.current.IEPid).FirstOrDefault() ?? new tblTransition();
-                    if (stvw.transition != null)
-                    {
-                        stvw.careers = db.tblCareerPaths.Where(o => o.CareerPathID == stvw.transition.CareerPathID).ToList();
-                    }
-                    theIEP.studentTransition = stvw;
-                    tblStudentInfo info = null;
-                    if (student != null)
-                    {
-
-                        info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
-                        tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
-                        tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-
-                        bool isDOC = false;
-                        if (theIEP.studentTransition != null)
-                        {
-                            isDOC = theIEP.studentTransition.isDOC;
-                        }
-
-                        if (theIEP.current.begin_date != null && !isDOC)
-                        {
-                            //check student age for transition plan using the begin date plus one year
-                            var endDate = theIEP.current.begin_date.Value.AddYears(1);
-                            theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                        }
-                        else
-                        {
-                            //use current date
-                            theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                        }
+					if (theIEP.current.begin_date != null && !isDOC)
+					{
+						//check student age for transition plan using the begin date plus one year
+						var endDate = theIEP.current.begin_date.Value.AddYears(1);
+						theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+					}
+					else
+					{
+						//use current date
+						theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+					}
 
 
-                        stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
-                        stvw.isDOC = district.DOC;
-                        studentDetails.isDOC = district.DOC;
+					stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
+					stvw.isDOC = district.DOC;
+					studentDetails.isDOC = district.DOC;
 
-                    }
+				}
 
-                    if (info != null && theIEP.current != null)
-                    {
-                        var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-                        var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-                        var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-                        var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+				if (info != null && theIEP.current != null)
+				{
+					var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+					var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+					var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+					var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
 
-                        studentDetails.student = info;
-                        studentDetails.teacher = teacher;
-                        studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
-                        studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
-                        studentDetails.contacts = contacts;
-                        studentDetails.building = studentBuilding;
-                        studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-                        studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
-                        studentDetails.parentLang = GetLanguage(info.ParentLanguage);
-                        studentDetails.studentLang = GetLanguage(info.StudentLanguage);
-                        studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
-                        studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
-                        studentDetails.studentAgeAtIEP = (theIEP.current.begin_date.HasValue ? (theIEP.current.begin_date.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.begin_date.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.begin_date.Value.Month == info.DateOfBirth.Month) && (theIEP.current.begin_date.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-                        studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-                        studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-                        studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
-                        studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
-                        studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
-                        studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-                    }
+					studentDetails.student = info;
+					studentDetails.teacher = teacher;
+					studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
+					studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
+					studentDetails.contacts = contacts;
+					studentDetails.building = studentBuilding;
+					studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+					studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+					studentDetails.parentLang = GetLanguage(info.ParentLanguage);
+					studentDetails.studentLang = GetLanguage(info.StudentLanguage);
+					studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
+					studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
+					studentDetails.studentAgeAtIEP = (theIEP.current.begin_date.HasValue ? (theIEP.current.begin_date.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.begin_date.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.begin_date.Value.Month == info.DateOfBirth.Month) && (theIEP.current.begin_date.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+					studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+					studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+					studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
+					studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
+					studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
+					
+						switch (theIEP.iepStatusType)
+						{
+							case IEPStatus.DRAFT:
 
-                    theIEP.studentDetails = studentDetails;
+								if (theIEP.anyStudentIEPActive && !theIEP.current.Amendment) 
+								{
+									// Annual
+									studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+									studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+								}
+								else
+								{
+									studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+									studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+								}							
+							
+								break;
+							case IEPStatus.AMENDMENT:
+								studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+								studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
 
-                    return theIEP;
-                }
-            }
+							break;
+							default:								
+								studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+								studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";								
+							break;
+						}
 
-            return null;
-        }
 
-        public string RenderRazorViewToString(string viewName, object model)
+				}
+
+				theIEP.studentDetails = studentDetails;
+
+				return theIEP;
+			}
+			
+			return null;
+		}
+
+		public string RenderRazorViewToString(string viewName, object model)
         {
             ViewData.Model = model;
             using (var sw = new StringWriter())

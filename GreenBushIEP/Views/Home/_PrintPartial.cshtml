@@ -9,6 +9,7 @@
 	var iepType = string.Format("{0}", Model.anyStudentIEPActive && !Model.current.Amendment ? "ANNUAL" : Model.anyStudentIEPActive && Model.current.Amendment ? "AMENDMENT" : string.Empty);
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 	var studentGrade = "";
+	
 
 	if (Model.studentDetails.student.Grade != null)
 	{
@@ -160,18 +161,18 @@
 
 			</td>
 		</tr>
-		<tr>
+		@*<tr>
 			<td></td>
 			<td></td>
 			<td><label>Initiation:</label></td>
 			<td>@Model.studentDetails.inititationDate</td>
-		</tr>
+		</tr>*@
 		<tr>
 			<td><label>Annual Meeting:</label></td>
-			<td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
+			<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
 
 			<td><label>Next Annual Meeting:</label></td>
-			<td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
+			<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
 		</tr>
 		<tr>
 			<td><label>Exit:</label></td>
@@ -235,7 +236,10 @@
 			<td><label>Grade:</label></td>
 			<td>@(studentGrade)</td>
 			<td><label>IEP Meeting Date:</label></td>
-			<td style="width:150px;">@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
+			<td style="width:150px;">			
+			@(!string.IsNullOrEmpty(iepType) && iepType == "AMENDMENT" ? 
+					Model.studentDetails.inititationDate :
+					Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
 		</tr>
 		<tr>
 			<td><label>Initiation:</label></td>

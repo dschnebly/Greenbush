@@ -154,18 +154,17 @@
 
 					</td>
 				</tr>
-				<tr>				
+				@*<tr>				
                     <td></td><td></td>
 					<td><label>Initiation:</label></td>
                     <td>@Model.studentDetails.inititationDate</td>                
-                </tr>                
-                <tr>
-                    <td><label>Annual Meeting:</label></td>
-                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>                    
-                    
-					<td><label>Next Annual Meeting:</label></td>
-                    <td>@(Model.current.MeetingDate.HasValue ? Model.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>					
-                </tr>          
+                </tr>*@                
+               <tr>
+				<td><label>Annual Meeting:</label></td>
+				<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
+				<td><label>Next Annual Meeting:</label></td>
+				<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
+				</tr>         
                 <tr>
 					<td><label>Exit:</label></td>
                     <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>					
