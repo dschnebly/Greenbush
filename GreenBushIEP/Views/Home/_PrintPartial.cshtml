@@ -184,10 +184,37 @@
 		</tr>
 		<tr>
 			<td><label>Vision Screening:</label></td>
-			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
+			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)			
+			
+			</td>
 
 			<td><label>Next Vision:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.AddYears(2).ToShortDateString() : string.Empty)</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Vision Screening Result:</label>
+			</td>
+			<td colspan="3">
+				@if (Model.studentHealth != null)
+				{
+					var vResult = "";
+
+					switch (Model.studentHealth.VisionResult)
+					{
+						case 1:
+							vResult = "Pass";
+							break;
+						case 0:
+							vResult = "Fail";
+							break;
+						case -1:
+							vResult = "Unable to Test";
+							break;
+					}
+					<text>@vResult</text>
+				}
+			</td>			
 		</tr>
 		<tr>
 			<td><label>Hearing Screening:</label></td>
@@ -195,6 +222,31 @@
 
 			<td><label>Next Hearing:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.HearingDate != null ? Model.studentHealth.HearingDate.AddYears(3).ToShortDateString() : string.Empty)</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Hearing Screening Result:</label>
+			</td>
+			<td colspan="3">
+				@if (Model.studentHealth != null)
+				{
+					var hResult = "";
+
+					switch (Model.studentHealth.HearingResult)
+					{
+						case 1:
+							hResult = "Pass";
+							break;
+						case 0:
+							hResult = "Fail";
+							break;
+						case -1:
+							hResult = "Unable to Test";
+							break;
+					}
+					<text>@hResult</text>
+				}
+			</td>						
 		</tr>
 	</table>
 </div> <!--end student page-->
