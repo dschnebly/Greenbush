@@ -3,172 +3,162 @@
 @model StudentServiceViewModel
 
 <style>
-    .form-inline .form-group {
-        margin-right: 10px;
-    }
-
-    .well-primary {
-        color: rgb(255, 255, 255);
-        background-color: rgb(66, 139, 202);
-        border-color: rgb(53, 126, 189);
-    }
-
-    .panel-group {
-        margin-bottom: 12px;
-    }
-
-    .duplication-loader {
-        visibility: hidden;
-        background-color: rgba(255,255,255,0.7);
-        position: absolute;
-        z-index: 100 !important;
-        width: 108%;
-        height: 100%;
-        top: 0;
-        left: 0px;
-        right: 0;
-    }
-
-        .duplication-loader img {
-            position: fixed; /* or absolute */
-            top: 45%;
-            left: 40%;
+        .form-inline .form-group {
+            margin-right: 10px;
         }
 
-	#serviceTable td, th { 
-		padding: 10px;
-		text-align:left;
-}
+        .well-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+            border-color: rgb(53, 126, 189);
+        }
+
+        .panel-group {
+            margin-bottom: 12px;
+        }
+
+        .duplication-loader {
+            visibility: hidden;
+            background-color: rgba(255,255,255,0.7);
+            position: absolute;
+            z-index: 100 !important;
+            width: 108%;
+            height: 100%;
+            top: 0;
+            left: 0px;
+            right: 0;
+        }
+
+            .duplication-loader img {
+                position: fixed; /* or absolute */
+                top: 45%;
+                left: 40%;
+            }
+
+        #serviceTable td, th {
+            padding: 10px;
+            text-align:left;
+    }
 </style>
 
 <link href="/Content/chosen.css" rel="stylesheet" />
 <div id="printModuleDiv">
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Services');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
-    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title" style="font-size: 30px;">
-        <i class="fa fa-handshake-o" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Services
-    </h4>
-</div>
-<div class="modal-body">
-
-   <div>          
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Services');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+        <h4 class="modal-title" style="font-size: 30px;">
+            <i class="fa fa-handshake-o" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Services
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div>
             @if (Model.studentServices != null && Model.studentServices.Count() > 0)
-                {
-                    var serviceCount = 1;
-                    <table class="table-striped" id="serviceTable">
+            {
+                var serviceCount = 1;
+                <table class="table-striped" id="serviceTable">
+                    <tr>
+
+                        <th>Fiscal Year</th>
+                        <th>Service Type</th>
+                        <th>Provider</th>
+
+                        <th>Attend Blg</th>
+                        <th>Mins</th>
+                        <th>Days</th>
+                        <th>Initiation<br />Date</th>
+                        <th>End<br />Date</th>
+                        <th>Frequency</th>
+                    </tr>
+
+                    @foreach (var service in Model.studentServices)
+                    {
                         <tr>
-                            
-                            <th>Fiscal Year</th>
-                            <th>Service Type</th>
-                            <th>Provider</th>
-                           
-                            <th>Attend Blg</th>
-                            <th>Mins</th>
-                            <th>Days</th>
-                            <th>Initiation<br />Date</th>
-                            <th>End<br />Date</th>
-                            <th>Frequency</th>
+                            <td>
+                                @switch (@service.SchoolYear)
+                                {
+                                    case 2018: <text>2017 - 2018</text>; break;
+                                    case 2019: <text>2018 - 2019</text>; break;
+                                    case 2020: <text>2019 - 2020</text>; break;
+                                    case 2021: <text>2020 - 2021</text>; break;
+                                    case 2022: <text>2021 - 2022</text>; break;
+                                }
+                            </td>
+                            <td>
+                                @if (Model.serviceTypes.Count > 0)
+                                {
+                                    foreach (var serviceType in Model.serviceTypes)
+                                    {
+                                        if (serviceType.ServiceCode == service.ServiceCode)
+                                        {
+                                            <text>(@serviceType.ServiceCode) @serviceType.Name</text>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @if (Model.serviceProviders.Count > 0)
+                                {
+                                    foreach (var serviceProvider in Model.serviceProviders)
+                                    {
+                                        if (service.ProviderID == serviceProvider.ProviderID)
+                                        {
+                                            <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <text>&nbsp;&nbsp;&nbsp;</text>
+                                }
+                            </td>
+                            <td>
+                                @if (Model.serviceLocations.Count > 0)
+                                {
+                                    foreach (var serviceLocation in Model.serviceLocations)
+                                    {
+                                        if (service.LocationCode == serviceLocation.LocationCode)
+                                        {
+                                            <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @service.Minutes
+                            </td>
+                            <td>
+                                @service.DaysPerWeek
+                            </td>
+                            <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
+                            <td>@(service.EndDate.ToString("MM/dd/yyyy"))</td>
+                            <td>
+                                @switch (@service.Frequency)
+                                {
+                                    case 1: <text>Every week(1)</text>; break;
+                                    case 2: <text>Every 2 weeks(2)</text>; break;
+                                    case 3: <text>Every 3 weeks(3)</text>; break;
+                                    case 4: <text>Every 4 weeks(4)</text>; break;
+                                    case 8: <text>Every 8 weeks(8)</text>; break;
+                                    case 9: <text>Every 9 weeks(9)</text>; break;
+                                    case 12: <text>Every 12 weeks(12)</text>; break;
+                                    case 18: <text>Every 18 weeks(18)</text>; break;
+                                    case 19: <text>3 out of 4 weeks(19)</text>; break;
+                                    case 99: <text>1 day per year(99)</text>; break;
+                                }
+                            </td>
                         </tr>
-
-                        @foreach (var service in Model.studentServices)
-                        {
-                            <tr>
-                               
-                                <td>
-                                    @switch (@service.SchoolYear)
-                                    {
-                                        case 2018: <text>2017 - 2018</text>; break;
-                                        case 2019: <text>2018 - 2019</text>; break;
-                                        case 2020: <text>2019 - 2020</text>; break;
-                                        case 2021: <text>2020 - 2021</text>; break;
-                                        case 2022: <text>2021 - 2022</text>; break;
-                                    }
-                                </td>
-                                <td>
-                                    @if (Model.serviceTypes.Count > 0)
-                                    {
-                                        foreach (var serviceType in Model.serviceTypes)
-                                        {
-                                            if (serviceType.ServiceCode == service.ServiceCode)
-                                            {
-                                                <text>(@serviceType.ServiceCode) @serviceType.Name</text>
-                                            }
-                                        }
-                                    }
-                                </td>
-
-                                <td>
-                                    @if (Model.serviceProviders.Count > 0)
-                                    {
-                                        foreach (var serviceProvider in Model.serviceProviders)
-                                        {
-                                            if (service.ProviderID == serviceProvider.ProviderID)
-                                            {
-                                                <text>@serviceProvider.FirstName @serviceProvider.LastName</text>
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <text>&nbsp;&nbsp;&nbsp;</text>
-                                    }
-                                </td>
-                                
-                                <td>
-                                    @if (Model.serviceLocations.Count > 0)
-                                    {
-                                        foreach (var serviceLocation in Model.serviceLocations)
-                                        {
-                                            if (service.LocationCode == serviceLocation.LocationCode)
-                                            {
-                                                <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
-                                            }
-                                        }
-                                    }
-                                </td>
-                                <td>
-                                    @service.Minutes
-                                </td>
-                                <td>
-                                    @service.DaysPerWeek
-                                </td>
-                                <td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-                                <td>  @(service.EndDate.ToString("MM/dd/yyyy"))</td>
-                                <td>
-                                    @switch (@service.Frequency)
-                                    {
-                                        case 1: <text>Every week(1)</text>; break;
-                                        case 2: <text>Every 2 weeks(2)</text>; break;
-                                        case 3: <text>Every 3 weeks(3)</text>; break;
-                                        case 4: <text>Every 4 weeks(4)</text>; break;
-                                        case 8: <text>Every 8 weeks(8)</text>; break;
-                                        case 9: <text>Every 9 weeks(9)</text>; break;
-                                        case 12: <text>Every 12 weeks(12)</text>; break;
-                                        case 18: <text>Every 18 weeks(18)</text>; break;
-                                        case 19: <text>3 out of 4 weeks(19)</text>; break;
-                                        case 99: <text>1 day per year(99)</text>; break;
-                                    }
-                                </td>
-                            </tr>
-                            serviceCount++;
-                        }
-                    </table>                
-                 }
-                else
-                {                    
-                   <p class="text-center">The Team has no services at this time.</p>                 
-                }
-
-        </div>   
-	
-<div class="modal-footer" style="border-top: 0;">
-    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-</div>
-	
-	
-</div>
- 
+                        serviceCount++;
+                    }
+                </table>
+            }
+            else
+            {
+                <p class="text-center">The Team has no services at this time.</p>
+            }
+        </div>
+        <div class="modal-footer" style="border-top: 0;">
+            <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+        </div>
+    </div>
 </div> <!--end print-->
-
