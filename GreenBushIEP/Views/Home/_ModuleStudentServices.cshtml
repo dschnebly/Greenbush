@@ -115,7 +115,6 @@
                     <button id="duplicateAllService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
-            <input type="hidden" value="@Model.IEPStartDate.ToString("MM/dd/yyyy")" id="iepStartDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
             <input type="hidden" id="sid" value="@Model.studentId" />
@@ -130,6 +129,7 @@
                         <form action="/Home/saveStudentService" method="post">
                             <input type="hidden" name="StudentId" value="@(Model.studentId)" />
                             <input type="hidden" name="StudentSerivceId" value="0" />
+                            <input type="hidden" name="StudentServiceIepStartDate" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))" />
                             <input type="hidden" name="completed" value="false" />
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -244,7 +244,6 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                     <div class="form-group">
                                                         <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
-
                                                             @if (Model.serviceLocations.Count > 0)
                                                             {
                                                                 foreach (var serviceLocation in Model.serviceLocations)
@@ -252,7 +251,6 @@
                                                                     <option value="@serviceLocation.LocationCode">(@serviceLocation.LocationCode) @serviceLocation.Name</option>
                                                                 }
                                                             }
-
                                                         </select>
                                                     </div>
                                                 </div>
@@ -333,10 +331,11 @@
                         <div class="panel-group" id="accordion[@service.ServiceID]">
 
                             <form action="/Home/saveStudentService" method="post">
-                                <input type="hidden" name="StudentId" value="@Model.studentId" />
+                                <input type="hidden" name="StudentId" value="@(Model.studentId)" />
                                 <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
+                                <input type="hidden" name="StudentServiceIepStartDate" value="@(service.StartDate.ToString("MM/dd/yyyy"))" />
                                 <input type="hidden" name="completed" value="@(service.Completed.ToString().ToLower())" />
-                                <div class="panel panel-default panel-existing">
+                                <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
@@ -383,7 +382,7 @@
                                                     <label for="Frequency">Initiation Date</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" @(Model.IEPStartDate != service.StartDate && Model.isOriginalIEPService ? "readonly" : string.Empty) aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -739,7 +738,7 @@
                 _checkCalendarReporting(year, serviceMinutesPerDay, serviceDaysPerWeek);
             });
 
-            $(this).find(".dtField").on('change', function (e) {
+            $(this).find(".dtField:not([readonly])").on('change', function (e) {
                 if (e.target.value == '' || e.target.value == "undefined") {
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
@@ -880,7 +879,7 @@
                     studentService.find(".studentGoalLabel").text(serviceType);
 
                 //check dates are valid before saving
-                var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
+                var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), studentService.find("input[name='StudentServiceIepStartDate']"));
 
                 //if isvalid, don't allow user to save
                 if (!isValid) {
@@ -992,9 +991,9 @@
                                     serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('mm/d/yy', fiscalEndDate))
 
                                    // init our calendar
-                                    serviceContainer.find('.dtField').each(function () {
+                                    serviceContainer.find('.dtField:not([readonly])').each(function () {
                                         $(this).removeAttr('id').removeClass('hasDatepicker');
-                                        $(".dtField").datepicker({
+                                        $(".dtField:not([readonly])").datepicker({
                                             dateFormat: "mm/dd/yy",
                                             changeYear: true,
                                             changeMonth: true,
@@ -1031,7 +1030,7 @@
 			});
 
 			//have to remove the hasdatepicker before we can appy new datepicker to clone
-            $(this).find('.dtField').each(function () {
+            $(this).find('.dtField:not([readonly])').each(function () {
 				$(this).removeAttr('id').removeClass('hasDatepicker').removeData('datepicker').unbind()
 				.datepicker({
                     dateFormat: "mm/dd/yy",
@@ -1046,10 +1045,7 @@
                         return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
 					},
 					beforeShow: function () {
-						setTimeout(function (){
-						$('.ui-datepicker').css('z-index', 99999999999999);
-                
-						}, 0);
+						setTimeout(function (){$('.ui-datepicker').css('z-index', 99999999999999);}, 0);
 					}
                 });
             });
@@ -1140,11 +1136,10 @@
         cloneService.find("select[name='fiscalYear']").val(nextYear).prop('selected', true);
     }
 
-    function _validateStartDate(dateVal) {
-        var startDateElement = $("#iepStartDate").val();
-        var iepStartDate = new Date(startDateElement);
-        if (dateVal < iepStartDate) {
-            _showAlert("The Initiation date must be after the IEP Initiation (" + startDateElement + ")", false);
+    function _validateStartDate(dateVal, iepDateVal) {
+
+        if (dateVal < iepDateVal) {
+            _showAlert("The Initiation date must be after the IEP Initiation", false);
             return false;
         }
 
@@ -1246,7 +1241,7 @@
         }
     }
 
-    function _dateCheck(startDateElement, endDateElement) {
+    function _dateCheck(startDateElement, endDateElement, iepDateElement) {
 
         //check dates before saving
         var isValid = true;
@@ -1254,6 +1249,8 @@
         var endDateObj = new Date(eDate);
         var sDate = startDateElement.val();
         var startDateObj = new Date(sDate);
+        var pDate = iepDateElement.val();
+        var iepDateObj = new Date(pDate);
 
         if (!isDate(sDate)) {
             _showAlert("The Student Service Initiation date must be a valid date.", false);
@@ -1264,14 +1261,22 @@
 
         if (!isDate(eDate)) {
             _showAlert("The Student Service End date must be a valid date.", false);
-            endDateElement.closest(".input-group").addClass("has-error");
+            startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
         }
 
         //start date must be after IEP start date
-        var isAfterIEP = _validateStartDate(startDateObj);
+        var isAfterIEP = _validateStartDate(startDateObj, iepDateObj);
         if (!isAfterIEP) {
+            startDateElement.closest(".input-group").addClass("has-error");
+            isValid = false;
+            return false;
+        }
+
+        ////start date must be after the start of the IEPdate
+        if (startDateObj < iepDateObj) {
+            _showAlert("The service Initiation date must be after the start after the current IEP date " + iepDateElement.val(), false);
             startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
             return false;
@@ -1413,7 +1418,7 @@
             studentService.find(".studentGoalLabel").text(serviceType);
 
         //check dates are valid before saving
-        var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), $(this).closest('.oneStudentService').find("select[name='fiscalYear'] option:selected"));
+        var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), studentService.find("input[name='StudentServiceIepStartDate']"));
 
         //if isvalid, don't allow user to save
         if (!isValid) {

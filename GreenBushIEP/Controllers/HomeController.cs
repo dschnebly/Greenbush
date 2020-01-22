@@ -1577,6 +1577,7 @@ namespace GreenbushIep.Controllers
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+                    model.isOriginalIEPService = iep.IepStatus.ToUpper() == IEPStatus.DRAFT && iep.Amendment;
 
                     int? modifiedby = (services.Count > 0) ? services.FirstOrDefault().ModifiedBy : null ;
                     if (modifiedby != null)
@@ -1671,7 +1672,6 @@ namespace GreenbushIep.Controllers
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
-            //tblStudentInfo studentInfo = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
 
             int startMonth = 7; //july
             int endMonth = 6; //june
