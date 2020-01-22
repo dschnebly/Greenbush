@@ -1403,8 +1403,9 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal == 1 ? "Written&nbsp;Language " : string.Empty;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic/Functional" : string.Empty;
 
-                List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
-                int? modifiedby = (goals.Count > 0) ? goals.FirstOrDefault().ModifiedBy : null;
+				var modulesList = db.tblModules.OrderBy(o => o.ModuleName).Select(o => o.ModuleID.ToString()).ToList();				
+				List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList().OrderBy(d => modulesList.IndexOf(d.Module)).ToList();				
+				int? modifiedby = (goals.Count > 0) ? goals.FirstOrDefault().ModifiedBy : null;
                 if (modifiedby != null)
                 {
                     tblUser modifier = db.tblUsers.Where(u => u.UserID == modifiedby).SingleOrDefault();
