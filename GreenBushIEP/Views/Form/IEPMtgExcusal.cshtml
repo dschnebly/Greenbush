@@ -1,9 +1,19 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+
+	string contactFormattedName = "";	
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;			
+		}
+	}
 }
 
 <div class="module-page">
@@ -33,7 +43,7 @@
         </p>
         <p class=MsoNormal style='margin-top:10px;'>
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                IEP date <u><b>@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration:underline;font-weight:bold"><textarea  data-val="107" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span><o:p></o:p>
+                IEP date <u><b>@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration:underline;font-weight:bold"><textarea  data-val="107" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value">@(contactFormattedName)</span></span><o:p></o:p>
             </span>
         </p>
         <p class=MsoNormal style=''>

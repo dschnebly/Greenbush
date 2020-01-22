@@ -1,17 +1,28 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-	string studentAddress = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
-	string studentCityStZip = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip: "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-}
 
+	string contactFormattedName = "";
+	string studentAddress = "";
+	string studentCityStZip = "";
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
+			studentAddress = primary.Address1 + " " + primary.Address2;
+			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
+		}
+	}
+}
 
 <div class="module-page">
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='text-align:center;border:solid windowtext 0pt;padding-bottom:25px'>
-            <span style='font-size:14.0pt;'>
+            <span style='font-size:12.0pt;'>
                 <b>
                     PRIOR WRITTEN NOTICE for<br />
                     TERMINATION OF ALL SPECIAL EDUCATION SERVICES,<br />
@@ -27,7 +38,7 @@
                 <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal style='tab-stops:lined 261.0pt'>
                     <span style='font-size:  11.0pt'><b>To:</b>					
-					<span style="text-decoration:underline;font-weight:bold"><textarea  data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value"></span></span>
+					<span style="text-decoration:underline;font-weight:bold"><textarea  data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value">@(contactFormattedName)</span></span>
 					
 					</span>
                     <span style='font-size:11.0pt'><o:p></o:p></span>
@@ -271,12 +282,8 @@
                     by special education regulations.
                 </span>
             </b>
-        </p>
-
-        <p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
-        <p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
+        </p>       
+        <p class=MsoNormal></p>
         <p class=MsoNormal align=center style='text-align:center'>
             <b><span style='font-size:11.0pt'>ADDITIONAL INFORMATION<o:p></o:p></span></b>
         </p>
@@ -323,21 +330,17 @@
                 </td>
             </tr>
         </table>
-        <p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
-        <p class=MsoNormal><o:p>&nbsp;</o:p></p>
+        <br/>
         <table border="1" cellpadding="10">
             <tr>
                 <td>
                     <div>
 
-                        <p class=MsoNormal align=center style='text-align:center;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal align=center style='text-align:center;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
                         </p>
 
-                        <p class=MsoNormal align=center style='text-align:center;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal align=center style='text-align:center;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <span style='mso-bookmark:OLE_LINK2'>
                                 <span style='mso-bookmark:OLE_LINK1'>
                                     <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></b>
@@ -345,8 +348,7 @@
                             </span>
                         </p>
 
-                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <span style='mso-bookmark:
     OLE_LINK2'>
                                 <span style='mso-bookmark:OLE_LINK1'>
@@ -357,14 +359,12 @@
                             </span>
                         </p>
 
-                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <span style='mso-bookmark:
     OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
                         </p>
 
-                        <p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;
-    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;  hand delivered,
                             </span><span style='mso-bookmark:OLE_LINK2'>
                                 <span style='mso-bookmark:OLE_LINK1'>
@@ -383,14 +383,11 @@
                         </p>
 
 
-                        <p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;
-    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:
-    OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
+                        <p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                            <span style='mso-bookmark:    OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
                         </p>
 
-                        <p class=MsoNormal style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:
-    solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <p class=MsoNormal style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:    solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
                             <span style='mso-bookmark:OLE_LINK2'>
                                 <span style='mso-bookmark:OLE_LINK1'>
                                     this notice
@@ -404,12 +401,7 @@
                     </div>
                 </td>
             </tr>
-        </table>
-      
-
+        </table>     
+		<br/>
     </div>
-
-
-
-
 </div>

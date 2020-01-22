@@ -160,13 +160,7 @@
 			}
 
 			</td>
-		</tr>
-		@*<tr>
-			<td></td>
-			<td></td>
-			<td><label>Initiation:</label></td>
-			<td>@Model.studentDetails.inititationDate</td>
-		</tr>*@
+		</tr>		
 		<tr>
 			<td><label>Annual Meeting:</label></td>
 			<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
@@ -319,6 +313,18 @@
 			<td>@Model.studentDetails.neighborhoodBuilding.BuildingName</td>
 			<td><label>Responsible School:</label></td>
 			<td>@Model.studentDetails.building.BuildingName</td>
+		</tr>
+		<tr>
+			<td><label>Primary Disability:</label></td>
+			<td>@(Model.studentDetails.primaryDisability)</td>
+			<td><label>Secondary Disability:</label></td>
+			<td>@(Model.studentDetails.secondaryDisability)</td>
+		</tr>
+		<tr>
+			<td><label>Gifted:</label></td>
+			<td>@(Model.studentDetails.student.isGifted ? "Yes" : "No")</td>
+			<td></td>
+			<td></td>
 		</tr>
 	</table>
 	<div class="text-center"><label style="font-size:11pt">Participants</label></div>

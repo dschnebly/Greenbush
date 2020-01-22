@@ -1,10 +1,22 @@
 ﻿@{
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0  ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string studentAddress = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 : "";
-	string studentCityStZip = Model.contacts != null  && Model.contacts.Count > 0 ? Model.contacts[0].City + ", " + Model.contacts[0].State + " " + Model.contacts[0].Zip: "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	
+	string contactFormattedName = "";
+	string studentAddress = "";
+	string studentCityStZip = "";
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
+			studentAddress = primary.Address1 + " " + primary.Address2;
+			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
+		}
+	}
 }
 
 

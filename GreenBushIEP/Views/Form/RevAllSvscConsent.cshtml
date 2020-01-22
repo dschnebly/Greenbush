@@ -1,15 +1,25 @@
 ﻿@{
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-}
+	
+	string contactFormattedName = "";	
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;	
+		}
+	}
 
+}
 
 <div class="module-page">
     <div class=WordSection1>
-        <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;line-height:normal'>
+        <p class=MsoNormal align=center style='margin-bottom:2.0pt;text-align:center;line-height:normal'>
             <b>
                 <u>
                     <span style='font-family:"Cambria",serif'>REVOCATION OF CONSENT<o:p></o:p></span>
@@ -120,7 +130,7 @@
             to determine if the student qualifies for special education and related
             services.<span style=''>  </span>
         </p>
-        <table style="margin-top:10px;">
+        <table style="margin-top:20px;">
             <tr>
                 <td width="150">_______________________________________________________</td>
             </tr>

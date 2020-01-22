@@ -1403,8 +1403,9 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal == 1 ? "Written&nbsp;Language " : string.Empty;
                 model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic/Functional" : string.Empty;
 
-                List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList();
-                int? modifiedby = (goals.Count > 0) ? goals.FirstOrDefault().ModifiedBy : null;
+				var modulesList = db.tblModules.OrderBy(o => o.ModuleName).Select(o => o.ModuleID.ToString()).ToList();				
+				List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList().OrderBy(d => modulesList.IndexOf(d.Module)).ToList();				
+				int? modifiedby = (goals.Count > 0) ? goals.FirstOrDefault().ModifiedBy : null;
                 if (modifiedby != null)
                 {
                     tblUser modifier = db.tblUsers.Where(u => u.UserID == modifiedby).SingleOrDefault();
@@ -3615,7 +3616,7 @@ namespace GreenbushIep.Controllers
 
                         ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
                         //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
                     }
                 }
                 fileOut = stream.ToArray();
