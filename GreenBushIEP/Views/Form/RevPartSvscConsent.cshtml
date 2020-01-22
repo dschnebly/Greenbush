@@ -1,12 +1,11 @@
 ﻿@{
-    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	
 }
-
 
 <div class="module-page">
     <div class=WordSection1>

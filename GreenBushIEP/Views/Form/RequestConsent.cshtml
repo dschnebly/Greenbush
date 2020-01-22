@@ -6,41 +6,39 @@
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 
 	string contactFormattedName = "";
-	string studentAddress = "";  
-	string studentCityStZip = ""; 
+	string studentAddress = "";
+	string studentCityStZip = "";
 	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
 	{
 		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-		contactFormattedName = primary.FirstName + " " + primary.LastName;
-		studentAddress = primary.Address1 + " " + primary.Address2;
-		studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
+			studentAddress = primary.Address1 + " " + primary.Address2;
+			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
+		}
 	}
 }
 
 <div class="module-page">
 	<div class=WordSection1>
-
-		<div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;text-align:center'>
+		<div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;text-align:center' class="text-center">
 			<p class=MsoNormal align=center style='text-align:center'>
 				<span style='font-size: 12pt; font-weight: bold;'>PRIOR WRITTEN NOTICE FOR EVALUATION OR REEVALUATION</span>
 			</p>
-
 			<p class=MsoNormal align=center style='text-align:center'>
 				<span style='font-size: 12pt; font-weight: bold;'>AND REQUEST FOR CONSENT</span>
 			</p>
-			</center>
 		</div>
-
 		<p class=MsoNormal>&nbsp;</p>
-
 		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
 			   style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
 			<tr>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<span style='font-size:  11.0pt'>
-							<b>To:</b>							
+							<b>To:</b>
 							<span style="text-decoration:underline;font-weight:bold"><textarea data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span></span>
 						</span>
 						<span style='font-size:11.0pt'><o:p></o:p></span>
@@ -73,8 +71,7 @@
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<b>
 							<span style='font-size:  11.0pt'>On behalf of:</span>
-						</b><span style='font-size:11.0pt;mso-bidi-font-weight:
-  bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+						</b><span style='font-size:11.0pt;mso-bidi-font-weight: bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 </p>
 <p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
 	<span style='font-size:10.0pt'>
@@ -292,7 +289,7 @@
 	</tr>
 </table>
 <p style="padding-top:15px">
-	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
+	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u> at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
 </p>
 <p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
 
@@ -655,19 +652,19 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
 	<p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;
     mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-		<input type='checkbox' /> hand delivered,
+		<input type='checkbox' /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;hand delivered,
 		</span><span style='mso-bookmark:OLE_LINK2'>
 			<span style='mso-bookmark:OLE_LINK1'>
 				<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
 			</span>
 		</span><span style='mso-bookmark:OLE_LINK2'>
 			<span style='mso-bookmark:OLE_LINK1'>
-				<input type='checkbox' /> mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
+				<input type='checkbox' /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
 			</span>
 		</span><span style='mso-bookmark:
     OLE_LINK2'>
 			<span style='mso-bookmark:OLE_LINK1'>
-				<input type='checkbox' /> other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
+				<input type='checkbox' /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
 			</span>
 		</span>
 	</p>
@@ -702,7 +699,7 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 
 
 
-<h2 class="page-break" style="margin-top:15px">
+<h2 class="text-center" style="margin-top:15px">
 	<span style='font-size: 11pt;font-weight: bold;'>
 		REQUEST FOR CONSENT FOR SPECIAL
 		EDUCATION ACTION
@@ -726,14 +723,12 @@ padding:0in'><b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT'S RIGHTS</b></p>
 	regarding this notice, you may contact the following school representative: 
 </p>
 
-<p class=MsoNormal>&nbsp;</p>
-
-<p style="padding-top:15px">
-	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u>at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
+<p style="padding-top:15px;padding-bottom:0px">
+	<span style='font-size:10.0pt'></span><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'><u>@(String.Format(districtContactName).PadRight(103 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</u> at <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Phone)">@districtContactPhone</textarea><span style="display:none" class="input-value">@districtContactPhone</span></u>&nbsp; immediately.</span>
 </p>
-<p class=MsoNormal>(School Contact Person)                                                                                 (Phone)</p>
-<br /><br />
-<p class="MsoNormal" style="text-align:left;">
+<p class=MsoNormal style="padding:0px">(School Contact Person)                                                                                 (Phone)</p>
+
+<p class="MsoNormal" style="text-align:left;padding-top:8px">
 	<b>
 		If you wish to consent to the special education actions
 		specified in this notice, or if you do not give consent, please sign and date
@@ -770,36 +765,38 @@ padding:0in'>
 		</i>
 	</p>
 
-	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
-border:none;padding:0in'><u><span style='text-decoration:none;'>&nbsp;</span></u></p>
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;border:none;padding:0in'><u><span style='text-decoration:none;'>&nbsp;</span></u></p>
 
-	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
-border:none;padding:0in'><b><i>DO NOT GIVE CONSENT</i></b></p>
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;border:none;padding:0in'><b><i>DO NOT GIVE CONSENT</i></b></p>
 
-	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;
-border:none;padding:0in'>
+	<p class=MsoNormal align=center style='margin-top:6.0pt;text-align:center;border:none;padding:0in'>
 		<b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;</span></b>
 		I <b><i>do not give consent</i></b><i>
 			for the evaluation or reevaluation
 			specified in this notice for my child.
 		</i>
 	</p>
-
-
-	<p class=MsoNormal style='margin-top:6.0pt;border:none;padding:0in'>
-		<u>                                                                            </u>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date <u>                                                                       </u>
-	</p>
-
-	<p class=MsoNormal style='text-align: left; margin-left: 5px;'>
-		(Parent/Legal Education Decision Maker)
-	</p>
-
-	<p class=MsoNormal style='margin-bottom:6.0pt;border:none;padding:0in'>&nbsp;</p>
+	<div style='padding-top:40px'>
+		<p class=MsoNormal style='border:none;padding:0'>
+			<u>                                                                            </u>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date <u>                                                                       </u>
+		</p>
+		<p class=MsoNormal style='text-align: left; margin-left: 5px;padding:0'>
+			(Parent/Legal Education Decision Maker)
+		</p>
+	</div>
+	<div style='padding-top:40px'>
+		<p class=MsoNormal style='border:none;padding:0'>
+			<u>                                                                            </u>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date <u>                                                                       </u>
+		</p>
+		<p class=MsoNormal style='text-align: left; margin-left: 5px;padding:0'>
+			(Parent/Legal Education Decision Maker)
+		</p>
+	</div>
 
 </div>
 
-<p class=MsoNormal>&nbsp;</p>
 </div>
 
 </div>

@@ -3,15 +3,29 @@
 
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-	string contactPhone = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Phone : "";
-	string contactAddress = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].Address1 + " " + Model.contacts[0].Address2 + " " + Model.contacts[0].City + " " + Model.contacts[0].State + " " + Model.contacts[0].Zip : "";
 	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
 	string placement = Model.studentInfo != null ? Model.studentInfo.PlacementCode : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+
+
+	string contactFormattedName = "";
+	string contactAddress = "";
+	string contactPhone = "";
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
+			contactAddress = primary.Address1 + " " + primary.Address2 + " " + primary.City + ", " + primary.State + " " + primary.Zip;
+			contactPhone = primary.Phone;
+		}
+	}
+
 }
 <div class="module-page">
 	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;margin-bottom:35px' class="voffset2">
