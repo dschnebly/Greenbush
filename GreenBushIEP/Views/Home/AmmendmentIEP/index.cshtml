@@ -906,7 +906,7 @@
                                     }
                                 }
                             }
-                            @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
+                            @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }

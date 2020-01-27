@@ -230,14 +230,14 @@
         if (Math.round(new Date() - lastCheck) / (1000 * 3600 * 24 * 365.25) > 3) // validate within 3 years.
         {
             alert('Hearing Screening Date needs to be within the last 3 years');
-            return false;
+            //return false;
         }
 
         var lastCheck = new Date($("#VisionDate").val());
         if (Math.round(new Date() - lastCheck) / (1000 * 3600 * 24 * 365.25) > 2) // validate within 2 years.
         {
             alert('Vision Screening Date needs to be within the last 2 years');
-            return false;
+            //return false;
         }
 
         if (!$("input[name='HealthNoConcerns']").is(':checked')) {
