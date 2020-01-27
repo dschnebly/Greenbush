@@ -2031,7 +2031,7 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written&nbsp;Language " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written Language " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional" : string.Empty;
 
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
