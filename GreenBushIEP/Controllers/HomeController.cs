@@ -1083,7 +1083,12 @@ namespace GreenbushIep.Controllers
                 }
             }
 
-            //switch(model.studentIEP.iepStatusType)
+            if (model.studentIEP.iepStatusType == IEPStatus.AMENDMENT)
+            {
+                return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
+            }
+
+            //switch (model.studentIEP.iepStatusType)
             //{
             //    case IEPStatus.ACTIVE:
             //        return View("~/Views/Home/ActiveIEP/index.cshtml", model);
@@ -1091,7 +1096,7 @@ namespace GreenbushIep.Controllers
             //        return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
             //    case IEPStatus.DRAFT:
 
-            //        if(model.studentIEP.anyStudentIEPActive && !model.studentIEP.current.Amendment) // Annual
+            //        if (model.studentIEP.anyStudentIEPActive && !model.studentIEP.current.Amendment) // Annual
             //        {
             //            return View("~/Views/Home/AnnualIEP/index.cshtml", model);
             //        }
