@@ -2031,7 +2031,7 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written&nbsp;Language " : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written Language " : string.Empty;
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional" : string.Empty;
 
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
@@ -3005,8 +3005,13 @@ namespace GreenbushIep.Controllers
                 {
                     StringBuilder sb = new StringBuilder();
 
+					bool checkPrevious = false;
+										
                     foreach (var item in query)
                     {
+						//this is either a new iep or a new annual iep, we will need to resend any services for the fy
+						checkPrevious = item.iep.OriginalIEPid == null ? true : false;
+						
                         IEP theIEP = new IEP()
                         {
                             current = item.iep,
@@ -3051,7 +3056,60 @@ namespace GreenbushIep.Controllers
                             theIEP.studentDetails = studentDetails;
                         }
 
-                        var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+						if (checkPrevious)
+						{
+							//check for fy services not included in current IEP
+
+							var otherIEPs = (from iep in db.tblIEPs
+												 join student in db.tblUsers
+													 on iep.UserID equals student.UserID
+												 join services in db.tblServices
+													 on iep.IEPid equals services.IEPid
+												 join building in db.tblBuildingMappings
+													 on student.UserID equals building.UserID
+												 where
+												 iep.IepStatus == IEPStatus.ARCHIVE
+												 && (student.Archive == null || student.Archive == false)
+												 && services.SchoolYear == fiscalYear
+												 //&& (services.FiledOn == null || iep.FiledOn == null)
+												 && services.ServiceCode != "NS"
+												 && myBuildings.Contains(building.BuildingID)
+												 select iep).Distinct().ToList();
+
+							//if an iep has been amended, ex
+							var excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.OriginalIEPid.Value).ToList();													
+
+							var otherServices = (from iep in db.tblIEPs
+										 join student in db.tblUsers
+											 on iep.UserID equals student.UserID
+										 join services in db.tblServices
+											 on iep.IEPid equals services.IEPid
+										 join building in db.tblBuildingMappings
+											 on student.UserID equals building.UserID
+										 where
+										 iep.IepStatus == IEPStatus.ARCHIVE
+										 && (student.Archive == null || student.Archive == false)
+										 && services.SchoolYear == fiscalYear
+										 //&& (services.FiledOn == null || iep.FiledOn == null)
+										 && services.ServiceCode != "NS"
+										 && myBuildings.Contains(building.BuildingID)
+										 && !excludeIEPS.Contains(iep.IEPid)
+										 select services).Distinct().ToList();
+
+
+							if (theIEP.studentServices != null)
+							{
+								theIEP.studentServices.AddRange(otherServices);
+							}
+							else
+							{
+								theIEP.studentServices = otherServices;
+							}
+
+
+						}
+
+						var errors = CreateSpedProExport(theIEP, fiscalYear, sb);
 
                         if (errors.Count > 0)
                         {
@@ -3213,7 +3271,7 @@ namespace GreenbushIep.Controllers
             }
 
             int count = 1;
-            foreach (var service in studentIEP.studentServices)
+            foreach (var service in studentIEP.studentServices.Distinct())
             {
                 if (count == 25)
                     break;
