@@ -1083,21 +1083,21 @@ namespace GreenbushIep.Controllers
                 }
             }
 
-            //switch(model.studentIEP.iepStatusType)
-            //{
-            //    case IEPStatus.ACTIVE:
-            //        return View("~/Views/Home/ActiveIEP/index.cshtml", model);
-            //    case IEPStatus.AMENDMENT:
-            //        return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
-            //    case IEPStatus.DRAFT:
+            switch (model.studentIEP.iepStatusType)
+            {
+                case IEPStatus.ACTIVE:
+                    return View("~/Views/Home/ActiveIEP/index.cshtml", model);
+                case IEPStatus.AMENDMENT:
+                    return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
+                case IEPStatus.DRAFT:
 
-            //        if(model.studentIEP.anyStudentIEPActive && !model.studentIEP.current.Amendment) // Annual
-            //        {
-            //            return View("~/Views/Home/AnnualIEP/index.cshtml", model);
-            //        }
+                    if (model.studentIEP.anyStudentIEPActive && !model.studentIEP.current.Amendment) // Annual
+                    {
+                        return View("~/Views/Home/AnnualIEP/index.cshtml", model);
+                    }
 
-            //        return View("~/Views/Home/DraftIEP/index.cshtml", model); // Draft
-            //}
+                    return View("~/Views/Home/DraftIEP/index.cshtml", model); // Draft
+            }
 
             // we should NEVER get here.
             return View(model);
