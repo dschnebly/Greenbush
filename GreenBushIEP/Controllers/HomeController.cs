@@ -1083,11 +1083,6 @@ namespace GreenbushIep.Controllers
                 }
             }
 
-            if (model.studentIEP.iepStatusType == IEPStatus.AMENDMENT)
-            {
-                return View("~/Views/Home/AmmendmentIEP/index.cshtml", model);
-            }
-
             switch (model.studentIEP.iepStatusType)
             {
                 case IEPStatus.ACTIVE:
