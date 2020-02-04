@@ -188,7 +188,7 @@ namespace GreenBushIEP.Models
                 tblIEP originalIEP = db.tblIEPs.Where(i => i.IEPid == current.OriginalIEPid).FirstOrDefault();
                 iepStatusType = (current.Amendment & current.IsActive & current.IepStatus.ToUpper() == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
                 displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && this.anyStudentIEPActive && !this.current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (this.current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
-                if (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) { iepStartTime = originalIEP.begin_date; }
+                if (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) { iepStartTime = originalIEP.begin_date; } else { iepStartTime = this.current.begin_date; }
                 hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
                 hasBehavior = (studentSocial != null && studentSocial.BehaviorInterventionPlan);
             }
