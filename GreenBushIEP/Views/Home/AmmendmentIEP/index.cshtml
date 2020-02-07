@@ -918,10 +918,6 @@
                             {
                                 <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT)
-                            {
-                                <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
-                            }
                         </ul>
                     </div>
                 }
