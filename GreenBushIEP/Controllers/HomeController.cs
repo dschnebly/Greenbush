@@ -3070,13 +3070,13 @@ namespace GreenbushIep.Controllers
 												 where
 												 iep.IepStatus == IEPStatus.ARCHIVE
 												 && (student.Archive == null || student.Archive == false)
-												 && services.SchoolYear == fiscalYear
-												 //&& (services.FiledOn == null || iep.FiledOn == null)
+												 && services.SchoolYear == fiscalYear												 
 												 && services.ServiceCode != "NS"
+												 && iep.UserID == item.iep.UserID
 												 && myBuildings.Contains(building.BuildingID)
 												 select iep).Distinct().ToList();
 
-							//if an iep has been amended, ex
+							//if an iep has been amended, exclude those ieps
 							var excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.OriginalIEPid.Value).ToList();													
 
 							var otherServices = (from iep in db.tblIEPs
@@ -3089,9 +3089,9 @@ namespace GreenbushIep.Controllers
 										 where
 										 iep.IepStatus == IEPStatus.ARCHIVE
 										 && (student.Archive == null || student.Archive == false)
-										 && services.SchoolYear == fiscalYear
-										 //&& (services.FiledOn == null || iep.FiledOn == null)
+										 && services.SchoolYear == fiscalYear										 
 										 && services.ServiceCode != "NS"
+										 && iep.UserID == item.iep.UserID
 										 && myBuildings.Contains(building.BuildingID)
 										 && !excludeIEPS.Contains(iep.IEPid)
 										 select services).Distinct().ToList();
@@ -3277,19 +3277,43 @@ namespace GreenbushIep.Controllers
                     break;
 
                 service.FiledOn = DateTime.Now;
-                //1 IEP date req
-                if (!studentIEP.current.begin_date.HasValue)
-                {
-                    errors.Add(new ExportErrorView()
-                    {
-                        UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                        Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
-                    });
-                }
-                else
-                {
-                    sb.AppendFormat("\t{0}", studentIEP.current.begin_date.Value.ToShortDateString());
-                }
+
+				//1 IEP date req
+				if (service.IEPid != studentIEP.current.IEPid)
+				{
+					//need to look up date from the iep this service is from
+					var serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
+
+					if (!serviceIEP.begin_date.HasValue)
+					{
+						errors.Add(new ExportErrorView()
+						{
+							UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+							Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+						});
+					}
+					else
+					{
+						sb.AppendFormat("\t{0}", serviceIEP.begin_date.Value.ToShortDateString());
+					}
+
+				}
+				else
+				{
+
+					if (!studentIEP.current.begin_date.HasValue)
+					{
+						errors.Add(new ExportErrorView()
+						{
+							UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+							Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+						});
+					}
+					else
+					{
+						sb.AppendFormat("\t{0}", studentIEP.current.begin_date.Value.ToShortDateString());
+					}
+				}
 
                 //2 gap allow
                 sb.AppendFormat("\t{0}", "");
