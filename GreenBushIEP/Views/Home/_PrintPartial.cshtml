@@ -162,11 +162,13 @@
 			</td>
 		</tr>		
 		<tr>
-			<td><label>Annual Meeting:</label></td>
-			<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
+			<td><label>Annual IEP Date:</label></td>
+			<td>@(Model.studentDetails.inititationDate)</td>
+			@*<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>*@
 
-			<td><label>Next Annual Meeting:</label></td>
-			<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
+			<td><label>Next Annual IEP Date:</label></td>
+			<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
+			@*<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>*@
 		</tr>
 		<tr>
 			<td><label>Exit:</label></td>
@@ -255,9 +257,9 @@
 		<tr>
 			<td>
 				<h4><b>Individualized Education Plan</b></h4>
-				@if (!string.IsNullOrEmpty(iepType))
+				@if (!string.IsNullOrEmpty(@Model.displayIEPStatus) && Model.displayIEPStatus.Trim() != "ACTIVE")
 				{
-					<h5>@iepType</h5>
+					<h5 class="text-uppercase">@Model.displayIEPStatus</h5>
 				}
 				<h5>@Model.studentDetails.building.BuildingName</h5>
 				<h5>@Model.studentDetails.building.Address_Physical @Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
@@ -281,14 +283,11 @@
 		<tr>
 			<td><label>Grade:</label></td>
 			<td>@(studentGrade)</td>
-			<td><label>IEP Meeting Date:</label></td>
-			<td style="width:150px;">			
-			@(!string.IsNullOrEmpty(iepType) && iepType == "AMENDMENT" ? 
-					Model.studentDetails.inititationDate :
-					Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
+			<td><label><span style="text-transform:capitalize;display: inline-block;">@(Model.iepStatusType == "ACTIVE" ? "Annual" : Model.iepStatusType.ToLower())</span> IEP Meeting Date:</label></td>
+			<td style="width:150px;">@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
 		</tr>
 		<tr>
-			<td><label>Initiation:</label></td>
+			<td><label>Annual Initiation Date:</label></td>
 			<td style="width:150px;">@Model.studentDetails.inititationDate</td>
 			<td></td>
 			<td></td>

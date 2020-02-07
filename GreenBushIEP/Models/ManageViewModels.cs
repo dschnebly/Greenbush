@@ -681,7 +681,7 @@ namespace GreenBushIEP.Models
         public tblBuilding teacherBuilding { get; set; }
         public int studentAgeAtIEP { get; set; }
         public string inititationDate { get; set; }
-		public DateTime? calculatedMeetingDate { get; set; }		
+		public string inititationDateNext { get; set; }
 		public int studentAgeAtAnnualMeeting { get; set; }
         public string assignChildCount { get; set; }
         public string placementCodeDesc { get; set; }

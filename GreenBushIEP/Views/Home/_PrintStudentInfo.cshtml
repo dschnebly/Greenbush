@@ -160,10 +160,10 @@
                     <td>@Model.studentDetails.inititationDate</td>                
                 </tr>*@                
                <tr>
-				<td><label>Annual Meeting:</label></td>
-				<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>
-				<td><label>Next Annual Meeting:</label></td>
-				<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>
+				<td><label>Annual IEP Date:</label></td>
+				   <td>@(Model.studentDetails.inititationDate)</td>				
+				<td><label>Next Annual IEP Date:</label></td>
+				<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 				</tr>         
                 <tr>
 					<td><label>Exit:</label></td>

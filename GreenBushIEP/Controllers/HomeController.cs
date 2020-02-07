@@ -2628,34 +2628,37 @@ namespace GreenbushIep.Controllers
 					studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
 					studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
 					studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-					
-						switch (theIEP.iepStatusType)
-						{
-							case IEPStatus.DRAFT:
 
-								if (theIEP.anyStudentIEPActive && !theIEP.current.Amendment) 
-								{
-									// Annual
-									studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-									studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-								}
-								else
-								{
-									studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-									studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-								}							
+					studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
+					studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
+
+					//switch (theIEP.iepStatusType)
+					//	{
+					//		case IEPStatus.DRAFT:
+
+					//			if (theIEP.anyStudentIEPActive && !theIEP.current.Amendment) 
+					//			{
+					//				// Annual
+					//				studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+					//				studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+					//			}
+					//			else
+					//			{
+					//				studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+					//				studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
+					//			}							
 							
-								break;
-							case IEPStatus.AMENDMENT:
-								studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-								studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
+					//			break;
+					//		case IEPStatus.AMENDMENT:
+					//			studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+					//			studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
 
-							break;
-							default:								
-								studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-								studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";								
-							break;
-						}
+					//		break;
+					//		default:								
+					//			studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
+					//			studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";								
+					//		break;
+					//	}
 
 
 				}
