@@ -1074,7 +1074,16 @@ namespace GreenbushIep.Controllers
                 {
                     //check student age for transition plan using the begin date plus one year
                     var endDate = theIEP.current.begin_date.Value.AddYears(1);
-                    model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                    if (theIEP.iepStatusType != IEPStatus.AMENDMENT)
+                    {
+                        model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                    }
+                    else
+                    {
+                        int now = int.Parse(theIEP.iepStartTime.Value.ToString("yyyyMMdd"));
+                        int dob = int.Parse(info.DateOfBirth.ToString("yyyyMMdd"));
+                        model.studentAge = (now - dob) / 10000;
+                    }
                 }
                 else
                 {
