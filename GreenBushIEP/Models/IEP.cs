@@ -117,7 +117,7 @@ namespace GreenBushIEP.Models
             if (listOfStudentsIEPs.Count > 0)
             {
                 current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
-                //if (current == null) { listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault(); } // if they had reverted an amendement
+                if (current == null) { listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault(); } // if they had reverted an amendement
                 hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
             else
