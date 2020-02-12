@@ -93,7 +93,7 @@
         if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
             $("#IEPBeginDate").addClass("date-error");
 
-            return alert("The Initiation Date was not in the correct format or some other related problem. Please try again.");
+            return alert("The Annual Initiation Date was not in the correct format or some other related problem. Please try again.");
         }
 
         //If the student is over 21 or under 3, notify the teacher but let them save regardless.
@@ -118,7 +118,7 @@
         // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
         if (dayStart === 0 || dayStart === 6) {
             $("#IEPBeginDate").addClass("date-error");
-            return alert("Please select a Weekday for the Initiation Date.");
+            return alert("Please select a Weekday for the Annual Initiation Date.");
         }
         else {
             $("#IEPBeginDate").removeClass("date-error");
