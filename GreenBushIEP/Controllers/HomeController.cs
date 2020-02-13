@@ -1271,7 +1271,7 @@ namespace GreenbushIep.Controllers
 
                         var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                         var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", "Draft");
+                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString(): DateTime.Now.ToShortDateString()));
 
                     }
                     catch (Exception e)
@@ -2596,7 +2596,7 @@ namespace GreenbushIep.Controllers
 					if (theIEP.current.begin_date != null && !isDOC)
 					{
 						//check student age for transition plan using the begin date plus one year
-						var endDate = theIEP.current.begin_date.Value.AddYears(1);
+						var endDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1) : theIEP.current.begin_date.Value.AddYears(1);
 						theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 					}
 					else
@@ -2618,6 +2618,16 @@ namespace GreenbushIep.Controllers
 					var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
 					var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
 					var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+					int studentAgeAtIEP = 0;
+
+
+					if (theIEP.iepStartTime.HasValue)
+					{
+						var iepDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value : theIEP.current.begin_date.Value;
+						studentAgeAtIEP =(iepDate.Year - info.DateOfBirth.Year - 1) + (((iepDate.Month > info.DateOfBirth.Month) || ((iepDate.Month == info.DateOfBirth.Month) && (iepDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+
+					}
+					
 
 					studentDetails.student = info;
 					studentDetails.teacher = teacher;
@@ -2631,7 +2641,7 @@ namespace GreenbushIep.Controllers
 					studentDetails.studentLang = GetLanguage(info.StudentLanguage);
 					studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
 					studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
-					studentDetails.studentAgeAtIEP = (theIEP.current.begin_date.HasValue ? (theIEP.current.begin_date.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.begin_date.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.begin_date.Value.Month == info.DateOfBirth.Month) && (theIEP.current.begin_date.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+					studentDetails.studentAgeAtIEP = studentAgeAtIEP;
 					studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
 					studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
 					studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
@@ -2641,33 +2651,70 @@ namespace GreenbushIep.Controllers
 					studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
 					studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
 
-					//switch (theIEP.iepStatusType)
-					//	{
-					//		case IEPStatus.DRAFT:
+					var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == "ARCHIVE" || o.IepStatus == "ACTIVE")).OrderBy(o => o.begin_date);
+					var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
+					var historicalIEPList = new List<IEPHistoryViewModel>();
+					bool firstIEP = false;
+					int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
 
-					//			if (theIEP.anyStudentIEPActive && !theIEP.current.Amendment) 
-					//			{
-					//				// Annual
-					//				studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-					//				studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-					//			}
-					//			else
-					//			{
-					//				studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-					//				studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";
-					//			}							
-							
-					//			break;
-					//		case IEPStatus.AMENDMENT:
-					//			studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-					//			studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
+					foreach (var history in historicalIEPs)
+					{
+						
+						var historyItem = new IEPHistoryViewModel();
+						
+						if (history.OriginalIEPid == null)
+						{
+							historyItem.edStatus = history.IEPid == firstIEPId ? "N" : "C";
 
-					//		break;
-					//		default:								
-					//			studentDetails.calculatedMeetingDate = theIEP.current.MeetingDate;
-					//			studentDetails.inititationDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : "";								
-					//		break;
-					//	}
+							//if (firstIEPId == 0)
+							//{
+							//	firstIEPId = history.IEPid;
+							//	firstIEP = true;
+							//}
+
+							//if (firstIEP)
+							//{
+							//	historyItem.edStatus = history.IEPid == firstIEPId ? "N" : "C";
+							//}
+							//else
+							//{
+							//	historyItem.edStatus = "C";
+							//}
+
+							historyItem.iepType = "Annual";
+						}
+						else
+						{
+							if (history.Amendment)
+							{
+								//if (firstIEP)
+								//{
+								//	historyItem.edStatus = history.OriginalIEPid == firstIEPId ? "N" : "C";
+								//}
+								//else
+								//{
+								//	historyItem.edStatus = "C";
+								//}
+
+								historyItem.edStatus = history.OriginalIEPid == firstIEPId ? "N" : "C";
+								historyItem.iepType = "Amendment";
+							}
+						}
+
+						historyItem.iepDate = history.begin_date.HasValue ? history.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "";
+						historicalIEPList.Add(historyItem);
+					}
+
+					if (studentDetails.student.ExitDate.HasValue)
+					{
+						var exitItem = new IEPHistoryViewModel();
+						exitItem.iepType = "Exit";
+						exitItem.iepDate = studentDetails.student.ExitDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture); 
+						exitItem.edStatus = "D";
+						historicalIEPList.Add(exitItem);
+					}
+
+					ViewBag.History = historicalIEPList;
 
 
 				}
@@ -3551,10 +3598,23 @@ namespace GreenbushIep.Controllers
                 {
                     try
                     {
-                        var archive = new tblFormArchive();
+						var formNameValue = formName;
+						
+						if (formName == null || formName == "IEP")
+						{
+							if (iepObj != null)
+							{
+								if(iepObj.Amendment)
+									formNameValue = string.Format("Amendment IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
+								else
+									formNameValue = string.Format("Annual IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
+							}
+						}
+
+						var archive = new tblFormArchive();
                         archive.Creator_UserID = teacher.UserID;
                         archive.Student_UserID = id;
-                        archive.FormName = string.IsNullOrEmpty(formName) ? "IEP" : formName;
+                        archive.FormName = string.IsNullOrEmpty(formNameValue) ? "IEP" : formNameValue;
                         archive.FormFile = mergedFile;//fileIn;
                                                       //archive.IEPid = iepId;
                         archive.ArchiveDate = DateTime.Now;

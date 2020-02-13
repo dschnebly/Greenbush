@@ -137,6 +137,12 @@
 		</tr>
 		<tr><td colspan="6"><hr /></td></tr>
 		<tr>
+			<td><label>Initial IEP Date:</label></td>
+			<td>@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
 			<td><label>Init Eval Consent Signed:</label></td>
 			<td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>
 			<td><label>Init Eval Determination:</label></td>
@@ -163,22 +169,32 @@
 		</tr>		
 		<tr>
 			<td><label>Annual IEP Date:</label></td>
-			<td>@(Model.studentDetails.inititationDate)</td>
-			@*<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ? Model.studentDetails.calculatedMeetingDate.Value.ToShortDateString() : "")</td>*@
-
+			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? Model.studentDetails.inititationDate : "")</td>			
 			<td><label>Next Annual IEP Date:</label></td>
 			<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
-			@*<td>@(Model.studentDetails.calculatedMeetingDate.HasValue ?Model.studentDetails.calculatedMeetingDate.Value.AddYears(1).ToShortDateString() : "")</td>*@
 		</tr>
-		<tr>
+		@if (ViewBag.History != null && ViewBag.History.Count > 0)
+		{			
+			foreach (var history in (ViewBag.History as List<IEPHistoryViewModel>))
+			{
+
+				<tr>					
+					<td>@history.iepDate </td>
+					<td>(@history.edStatus) @history.iepType</td>
+					<td colspan="2"></td>
+				</tr>
+			}
+		}
+		
+		@*<tr>
 			<td><label>Exit:</label></td>
 			<td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
 			<td><label>Ed Status:</label></td>
 			<td>
 				(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc
 			</td>
-		</tr>
-		<tr>
+		</tr>*@
+		<tr class="voffset2">
 			<td><label>Vision Screening:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)			
 			
@@ -257,10 +273,7 @@
 		<tr>
 			<td>
 				<h4><b>Individualized Education Plan</b></h4>
-				@if (!string.IsNullOrEmpty(@Model.displayIEPStatus) && Model.displayIEPStatus.Trim() != "ACTIVE")
-				{
-					<h5 class="text-uppercase">@Model.displayIEPStatus</h5>
-				}
+				<h5>@(string.IsNullOrEmpty(iepType) ? "ANNUAL" : iepType)</h5>				
 				<h5>@Model.studentDetails.building.BuildingName</h5>
 				<h5>@Model.studentDetails.building.Address_Physical @Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
 				<h5>@Model.studentDetails.building.Phone</h5>
@@ -283,7 +296,7 @@
 		<tr>
 			<td><label>Grade:</label></td>
 			<td>@(studentGrade)</td>
-			<td><label><span style="text-transform:capitalize;display: inline-block;">@(Model.iepStatusType == "ACTIVE" ? "Annual" : Model.iepStatusType.ToLower())</span> IEP Meeting Date:</label></td>
+			<td><label><span>@(string.IsNullOrEmpty(iepType) ? "Annual" : char.ToUpper(iepType[0]) + iepType.Substring(1).ToLower())</span> IEP Meeting Date:</label></td>
 			<td style="width:150px;">@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
 		</tr>
 		<tr>
@@ -292,20 +305,25 @@
 			<td></td>
 			<td></td>
 		</tr>
-		@foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
-		{
-			<tr>
-				<td><label>Contact 1:</label></td>
-				<td>@( primaryContact != null ? string.Format("{0} {1}", primaryContact.FirstName, primaryContact.LastName) : "")</td>
-				<td><label>Address:</label></td>
-				<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
-			</tr>
-			<tr>
-				<td><label>Phone:</label></td>
-				<td>@( primaryContact != null ? primaryContact.Phone : "")</td>
-				<td><label>Email:</label></td>
-				<td>@( primaryContact != null ? primaryContact.Email : "")</td>
-			</tr>
+		@{
+			var pcCount = 1;
+
+			foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+			{
+				<tr>
+					<td><label>Contact @pcCount:</label></td>
+					<td>@( primaryContact != null ? string.Format("{0} {1}", primaryContact.FirstName, primaryContact.LastName) : "")</td>
+					<td><label>Address:</label></td>
+					<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
+				</tr>
+				<tr>
+					<td><label>Phone:</label></td>
+					<td>@( primaryContact != null ? primaryContact.Phone : "")</td>
+					<td><label>Email:</label></td>
+					<td>@( primaryContact != null ? primaryContact.Email : "")</td>
+				</tr>
+				pcCount++;
+			}
 		}
 		<tr>
 			<td><label>Neighborhood School:</label></td>

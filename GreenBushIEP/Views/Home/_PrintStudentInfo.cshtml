@@ -128,6 +128,12 @@
                     <td>@(Model.studentDetails.student.FullDayKG == null ? "" : Model.studentDetails.student.FullDayKG.Value == true ? "Yes" : "")</td>					
                 </tr>
 				<tr><td colspan="6"><hr/></td></tr>
+				<tr>
+					<td><label>Initial IEP Date:</label></td>
+					<td>@(Model.studentDetails.student.InitialIEPDate.HasValue ? Model.studentDetails.student.InitialIEPDate.Value.ToShortDateString() : "")</td>
+					<td></td>
+					<td></td>
+				</tr>
                 <tr>
                     <td><label>Init Eval Consent Signed:</label></td>
                     <td>@(Model.studentDetails.student.InitialEvalConsentSigned.HasValue ? Model.studentDetails.student.InitialEvalConsentSigned.Value.ToShortDateString() : "")</td>                
@@ -161,17 +167,29 @@
                 </tr>*@                
                <tr>
 				<td><label>Annual IEP Date:</label></td>
-				   <td>@(Model.studentDetails.inititationDate)</td>				
+	  			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? Model.studentDetails.inititationDate : "")</td>			
 				<td><label>Next Annual IEP Date:</label></td>
 				<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 				</tr>         
-                <tr>
+				@if (ViewBag.History != null)
+				{			
+					foreach (var history in (ViewBag.History as List<IEPHistoryViewModel>))
+					{
+
+						<tr>					
+							<td>@history.iepDate </td>
+							<td>(@history.edStatus) @history.iepType</td>
+							<td colspan="2"></td>
+						</tr>
+					}
+				}
+                @*<tr>
 					<td><label>Exit:</label></td>
                     <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>					
                     <td><label>Ed Status:</label></td>
 					<td>
 					(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td> 				
-				</tr>
+				</tr>*@
 				<tr>
 					<td><label>Vision Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
