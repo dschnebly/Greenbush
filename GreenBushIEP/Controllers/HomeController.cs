@@ -429,26 +429,35 @@ namespace GreenbushIep.Controllers
                     newProvider.LastName = providerLastName.ToString();
                     newProvider.ProviderCode = providerCode.ToString();
                     newProvider.UserID = owner.UserID;
+					newProvider.Create_Date = DateTime.Now;
+					newProvider.Update_Date = DateTime.Now;
 
                     //can't have duplicate provider code
                     tblProvider dup = db.tblProviders.Where(p => p.ProviderCode == providerCode).SingleOrDefault();
 
                     if (dup == null)
                     {
-                        db.tblProviders.Add(newProvider);
-                        db.SaveChanges();
+						try
+						{
+							db.tblProviders.Add(newProvider);
+							db.SaveChanges();
 
-                        int newProvderId = newProvider.ProviderID;
+							int newProvderId = newProvider.ProviderID;
 
-                        //add to tblProviderDistricts
-                        if (newProvderId > 0)
-                        {
-                            foreach (var district in providerDistrict)
-                            {
-                                db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString(), CreatedBy = owner.UserID, Create_Date = DateTime.Now });
-                                db.SaveChanges();
-                            }
-                        }
+							//add to tblProviderDistricts
+							if (newProvderId > 0)
+							{
+								foreach (var district in providerDistrict)
+								{
+									db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString(), CreatedBy = owner.UserID, Create_Date = DateTime.Now });
+									db.SaveChanges();
+								}
+							}
+						}
+						catch (Exception ex)
+						{
+							return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help." }, JsonRequestBehavior.AllowGet);
+						}
 
                     }
                     else
@@ -3304,13 +3313,31 @@ namespace GreenbushIep.Controllers
 
                 service.FiledOn = DateTime.Now;
 
-                //1 IEP date req
-                if (service.IEPid != studentIEP.current.IEPid)
+				DateTime? serviceIEPDate = null;
+
+				//1 IEP date req
+				if (service.IEPid != studentIEP.current.IEPid)
                 {
                     //need to look up date from the iep this service is from
                     var serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
+					
 
-                    if (!serviceIEP.begin_date.HasValue)
+					if (serviceIEP.OriginalIEPid != null)
+					{
+						//look up date of orginal iep
+						var originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
+						if (originalIEP != null && originalIEP.begin_date.HasValue)
+							serviceIEPDate = originalIEP.begin_date.Value;
+					}
+					else
+					{
+						if (serviceIEP.begin_date.HasValue)
+						{
+							serviceIEPDate = serviceIEP.begin_date.Value;
+						}
+					}
+
+                    if (!serviceIEPDate.HasValue)
                     {
                         errors.Add(new ExportErrorView()
                         {
@@ -3320,14 +3347,25 @@ namespace GreenbushIep.Controllers
                     }
                     else
                     {
-                        sb.AppendFormat("\t{0}", serviceIEP.begin_date.Value.ToShortDateString());
+                        sb.AppendFormat("\t{0}", serviceIEPDate.Value.ToShortDateString());
                     }
 
                 }
                 else
                 {
+					if (studentIEP.current.OriginalIEPid != null)
+					{
+						//look up date of orginal iep
+						var originalIEP2 = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
+						if (originalIEP2 != null && originalIEP2.begin_date.HasValue)
+							serviceIEPDate = originalIEP2.begin_date.Value;
+					}
+					else
+					{
+						serviceIEPDate = studentIEP.current.begin_date.Value;
+					}
 
-                    if (!studentIEP.current.begin_date.HasValue)
+					if (!serviceIEPDate.HasValue)
                     {
                         errors.Add(new ExportErrorView()
                         {
@@ -3337,7 +3375,7 @@ namespace GreenbushIep.Controllers
                     }
                     else
                     {
-                        sb.AppendFormat("\t{0}", studentIEP.current.begin_date.Value.ToShortDateString());
+                        sb.AppendFormat("\t{0}", serviceIEPDate.Value.ToShortDateString());
                     }
                 }
 
