@@ -2648,8 +2648,7 @@ namespace GreenbushIep.Controllers
 
 					var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == "ARCHIVE" || o.IepStatus == "ACTIVE")).OrderBy(o => o.begin_date);
 					var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
-					var historicalIEPList = new List<IEPHistoryViewModel>();
-					bool firstIEP = false;
+					var historicalIEPList = new List<IEPHistoryViewModel>();					
 					int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
 
 					foreach (var history in historicalIEPs)
@@ -2660,37 +2659,12 @@ namespace GreenbushIep.Controllers
 						if (history.OriginalIEPid == null)
 						{
 							historyItem.edStatus = history.IEPid == firstIEPId ? "N" : "C";
-
-							//if (firstIEPId == 0)
-							//{
-							//	firstIEPId = history.IEPid;
-							//	firstIEP = true;
-							//}
-
-							//if (firstIEP)
-							//{
-							//	historyItem.edStatus = history.IEPid == firstIEPId ? "N" : "C";
-							//}
-							//else
-							//{
-							//	historyItem.edStatus = "C";
-							//}
-
 							historyItem.iepType = "Annual";
 						}
 						else
 						{
 							if (history.Amendment)
-							{
-								//if (firstIEP)
-								//{
-								//	historyItem.edStatus = history.OriginalIEPid == firstIEPId ? "N" : "C";
-								//}
-								//else
-								//{
-								//	historyItem.edStatus = "C";
-								//}
-
+							{							
 								historyItem.edStatus = history.OriginalIEPid == firstIEPId ? "N" : "C";
 								historyItem.iepType = "Amendment";
 							}
@@ -2710,8 +2684,6 @@ namespace GreenbushIep.Controllers
 					}
 
 					ViewBag.History = historicalIEPList;
-
-
                 }
 
                 theIEP.studentDetails = studentDetails;
