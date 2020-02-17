@@ -1095,7 +1095,18 @@ namespace GreenbushIep.Controllers
                     //model.studentAge = (now - dob) / 10000;
                     model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
                 }
-            }
+
+				//need to check if transition plan is required and completed
+				if ((model.studentAge > 13 || (model.isDoc && model.studentAge <= 21))  && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
+				{
+					if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
+					{
+						//transition plan must be completed
+						theIEP.isAllCompleted = false;
+					}
+				}
+
+			}
 
             switch (model.studentIEP.iepStatusType)
             {
