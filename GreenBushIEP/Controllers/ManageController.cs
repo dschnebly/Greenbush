@@ -121,6 +121,7 @@ namespace GreenBushIEP.Controllers
                     district.BuildingID = "0";
                     district.USD = usd;
                     district.UserID = user.UserID;
+                    district.Create_Date = DateTime.Now;
 
                     db.tblBuildingMappings.Add(district);
                     db.SaveChanges();
@@ -133,7 +134,6 @@ namespace GreenBushIEP.Controllers
             }
             catch (Exception e)
             {
-                Console.Write(e.Message);
                 return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help" });
             }
         }
