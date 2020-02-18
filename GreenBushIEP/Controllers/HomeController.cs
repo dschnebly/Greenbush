@@ -456,7 +456,7 @@ namespace GreenbushIep.Controllers
 						}
 						catch (Exception ex)
 						{
-							return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help." }, JsonRequestBehavior.AllowGet);
+							return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help. " + ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
 						}
 
                     }
@@ -1571,7 +1571,7 @@ namespace GreenbushIep.Controllers
 
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name); // current teacher-esque user.
             tblUser mis = FindSupervisor.GetUSersMIS(teacher); // get the mis of the teacher
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault(); // gimme the student's iep.
+            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).First(); // gimme the student's iep.
 
             if (iep != null)
             {
@@ -1600,7 +1600,9 @@ namespace GreenbushIep.Controllers
                     model.serviceLocations = db.tblLocations.ToList();
                     model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).Distinct().ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
-                    model.IEPStartDate = iep.begin_date ?? DateTime.Now;
+
+                    IEP current = new IEP(studentId, IEPid);
+                    model.IEPStartDate = (iep.begin_date >= current.iepStartTime.Value) ? iep.begin_date.Value : current.iepStartTime.Value;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                     model.isOriginalIEPService = iep.IepStatus.ToUpper() == IEPStatus.DRAFT && iep.Amendment;
 
