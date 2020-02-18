@@ -1137,7 +1137,8 @@
     }
 
     function _validateStartDate(dateVal, iepDateVal) {
-
+        console.log(dateVal);
+        console.log(iepDateVal);
         if (dateVal < iepDateVal) {
             _showAlert("The Initiation date must be after the IEP Initiation", false);
             return false;
