@@ -1078,24 +1078,8 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
-                if (theIEP.current.begin_date != null && !model.isDoc)
-                {
-                    //check student age for transition plan using the begin date plus one year
-                    int now = int.Parse(theIEP.iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-                    int dob = int.Parse(info.DateOfBirth.ToString("yyyyMMdd"));
-                    model.studentAge = (now - dob) / 10000;
-                    //var endDate = theIEP.current.begin_date.Value.AddYears(1);
-                    //model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                }
-                else
-                {
-                    //use current date
-                    int now = int.Parse(theIEP.iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-                    int dob = int.Parse(info.DateOfBirth.ToString("yyyyMMdd"));
-                    model.studentAge = (now - dob) / 10000;
-                    //model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                }
-
+				model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
+				
 				//need to check if transition plan is required and completed
 				if ((model.studentAge > 13 || (model.isDoc && model.studentAge <= 21))  && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
 				{
@@ -1105,7 +1089,6 @@ namespace GreenbushIep.Controllers
 						theIEP.isAllCompleted = false;
 					}
 				}
-
 			}
 
             switch (model.studentIEP.iepStatusType)
@@ -1957,8 +1940,11 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult StudentTransition(int studentId, int IEPid)
         {
-            tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
-            bool isReadOnly = false;
+			IEP theIEP = new IEP(studentId, IEPid);
+			tblIEP iep = theIEP.current; //db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
+			
+
+			bool isReadOnly = false;
             if (iep != null)
             {
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1967,8 +1953,8 @@ namespace GreenbushIep.Controllers
 
                 string studentFirstName = string.Format("{0}", student.FirstName);
                 string studentLastName = string.Format("{0}", student.LastName);
-                int studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+				
+				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
@@ -1982,7 +1968,10 @@ namespace GreenbushIep.Controllers
                 model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).ToList();
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
-                model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
+								
+				int studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDOC);
+
+				model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
                 model.gender = info.Gender;
                 model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
 
@@ -1994,8 +1983,6 @@ namespace GreenbushIep.Controllers
                 ViewBag.studentFirstName = studentFirstName;
                 ViewBag.studentLastName = studentLastName;
                 ViewBag.studentAge = studentAge;
-
-                //isReadOnly = true;
 
                 if (isReadOnly)
                     return PartialView("ActiveIEP/_StudentTransition", model);
