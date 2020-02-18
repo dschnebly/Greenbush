@@ -517,5 +517,37 @@ namespace GreenBushIEP.Models
 
             return this;
         }
+
+		
+		public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
+		{
+
+			if (current.begin_date != null && !isDoc)
+			{
+				//check student age for transition plan using the begin date plus one year
+				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+				return (now - dob) / 10000;
+
+				//var endDate = theIEP.current.begin_date.Value.AddYears(1);
+				//model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+			}
+			else
+			{
+				//use current date
+				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+				return (now - dob) / 10000;
+
+				//model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+			}
+
+
+
+		}
+
+
+		
+		
     }
 }
