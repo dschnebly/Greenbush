@@ -5,6 +5,10 @@
 		// filter to only active students
 		var filterCollection = $('.list-group-root').find('.list-group-item');
 
+		$(".btn-filter").on("click", function () {
+		    $(".showFilters").toggleClass("hidden");
+		});
+
 		//$.each(filterCollection, function (index, value) {
 		//	if ($(value).attr("data-isActive") == 2) {
 		//		$(value).addClass('hidden');
@@ -372,8 +376,15 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
-			
+
             $(".ajax-loader").show();
+
+            if (selectedRole == 5) {
+                $(".activeIEPCol").removeClass("hidden");
+            }
+            else {
+                $(".activeIEPCol").addClass("hidden");
+            }
 
             $.ajax({
                 type: 'POST',

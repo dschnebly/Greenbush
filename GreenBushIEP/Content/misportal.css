@@ -161,9 +161,42 @@ hr {
     border: 0 !important;
 }
 
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #45906d;
+    border-color: #45906d;
+}
+
+.panel-primary {
+    border-color: #45906d;
+}
+
+.panel-title {
+    display: inline-block;
+}
+
+.btn-filter {
+    position: relative;
+    bottom: 1px;
+}
+
+.showFilters {
+    padding: 3px 16px;
+}
+
+#userRoles {
+    display: inline-block;
+    margin-bottom: 0;
+    color: #222;
+    margin-left: 15px;
+    width: 100px;
+    font-weight: 600;
+    padding: 3px;
+}
+
 /*//////////////////////////////////////
-        ///  User Toggle Buttons Starts Here
-        //////////////////////////////////////*/
+///  User Toggle Buttons Starts Here
+//////////////////////////////////////*/
 
 .btn-circle {
     width: 30px;
@@ -380,5 +413,5 @@ hr {
 }
 
 .ui-helper-hidden-accessible {
-	display: none;
+    display: none;
 }
