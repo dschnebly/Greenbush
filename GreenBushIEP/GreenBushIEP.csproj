@@ -527,6 +527,9 @@
     <Compile Include="Models\uspCopyIEP_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\uspUserListByUserID_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_BuildingList.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

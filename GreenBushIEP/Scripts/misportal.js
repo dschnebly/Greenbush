@@ -1,52 +1,13 @@
 ﻿$(function () {
     function init() {
-		$(".chosen-select").chosen({ width: "100%", });
-		
+        $(".chosen-select").chosen({ width: "95%", disable_search_threshold: 10 });
+
 		// filter to only active students
 		var filterCollection = $('.list-group-root').find('.list-group-item');
 
 		$(".btn-filter").on("click", function () {
 		    $(".showFilters").toggleClass("hidden");
 		});
-
-		//$.each(filterCollection, function (index, value) {
-		//	if ($(value).attr("data-isActive") == 2) {
-		//		$(value).addClass('hidden');
-		//	}
-		//});
-		
-		//$('.chosen-search input').autocomplete({
-		//	minLength: 3,						
-		//	source: function (request, response) {
-		//		$.ajax({
-		//			type: 'POST',
-		//			url: "/Home/SearchUserName?username=" + request.term,
-		//			dataType: "json",
-		//			beforeSend: function () { $('ul.chzn-results').empty(); },
-		//			success: function (data) {
-
-		//				if (data.result) {
-
-		//					var options = $("#filterName");
-		//					options.empty(); //remove all child nodes
-		//					options.append($("<option />").val(-1).text("All Users"));
-		//					options.trigger("chosen:updated");
-
-		//					if (data.filterUsers.length > 0) {
-		//						response($.map(data.filterUsers, function (item) {									
-		//							var username = item.LastName + ", " + item.FirstName;
-		//							if (item.MiddleName != null)
-		//								username += " " + item.MiddleName;
-		//							options.append($("<option />").val(item.UserID).text(username));
-		//						}));								
-		//					}
-
-		//					options.trigger("chosen:updated");
-		//				}
-		//			}
-		//		});
-		//	}
-		//});
 
         // attach event
         // fires when an delete button is pressed on a MIS role.
@@ -160,7 +121,6 @@
 						$('#userBuildings').append('<option value="-1">All Buildings</option>');
 						if (results.buildings.length > 0) {
 							$.each(results.buildings, function (index, value) {
-								console.log(value);
 								$('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
 							});
 						}
@@ -226,7 +186,6 @@
                         $('#userBuildings').append('<option value="-1">All Buildings</option>');
                         if (results.buildings.length > 0) {
                             $.each(results.buildings, function (index, value) {
-                                console.log(value);
                                 $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
                             });
                         }

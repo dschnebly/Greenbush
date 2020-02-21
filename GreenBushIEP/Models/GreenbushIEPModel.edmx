@@ -1664,6 +1664,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="byUserID" Type="int" Mode="In" />
           <Parameter Name="ammend" Type="bit" Mode="In" />
         </Function>
+        <Function Name="uspUserListByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDate" EntityType="Self.tblArchiveEvaluationDate" Schema="dbo" store:Type="Tables" />
@@ -2082,6 +2085,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblGoal" EntitySet="tblGoals" />
             <End Role="tblService" EntitySet="tblServices" />
           </AssociationSet>
+          <FunctionImport Name="uspUserListByUserID" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserListByUserID_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -3805,6 +3811,16 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <End Type="IndividualizedEducationProgramModel.tblGoal" Role="tblGoal" Multiplicity="*" />
           <End Type="IndividualizedEducationProgramModel.tblService" Role="tblService" Multiplicity="*" />
         </Association>
+        <ComplexType Name="uspUserListByUserID_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RoleID" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="hasIEP" Nullable="true" />
+          <Property Type="Int64" Name="KIDSID" Nullable="true" />
+          <Property Type="Boolean" Name="isAssgined" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5529,6 +5545,20 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               <ScalarProperty Name="goalID" ColumnName="GoalID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="uspUserListByUserID" FunctionName="IndividualizedEducationProgramModel.Store.uspUserListByUserID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspUserListByUserID_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="hasIEP" ColumnName="hasIEP" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="isAssgined" ColumnName="isAssgined" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
