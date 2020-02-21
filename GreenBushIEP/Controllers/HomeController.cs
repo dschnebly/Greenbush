@@ -1534,8 +1534,10 @@ namespace GreenbushIep.Controllers
                         item.ServiceCode = service.ServiceCode;
                         item.Frequency = service.Frequency;
                         item.selectedAttendingBuilding = service.BuildingID;
+						item.ProvidedFor = service.ProvidedFor;
 
-                        if (service.tblGoals.Any())
+
+						if (service.tblGoals.Any())
                         {
                             foreach (var goal in service.tblGoals)
                             {
