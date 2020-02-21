@@ -55,31 +55,23 @@
             <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-filter"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
-            @*<div class="col-xs-12 col-md-2 pull-left">
-                    <div class="form-group">
-                        <label for="userRoles">Filter by Role</label>
-                        <div class="input-group">
-                            <span class="input-group-addon danger"><span class="fa fa-user"></span></span>
-                            <select class="form-control" name="userRoles" id="userRoles">
-                                <option value="-1">All Roles</option>
-                                <option value="3">Level 3</option>
-                                <option value="4">Level 2</option>
-                                <option value="6">Level 1</option>
-                                <option value="5">Student</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>*@
             <div class="col-xs-12 col-md-3 pull-left">
                 <div class="form-group">
-                    <label for="filterName">Filter by Name</label>
+                    <label for="filterName">Filter by Name or Kids ID</label>
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
                         <select class="form-control chosen-select" name="filterName" id="filterName">
                             <option value="-1">All Users</option>
                             @foreach (var user in Model.members)
                             {
-                            <option value=@user.UserID>@user.LastName, @user.FirstName @user.MiddleName  </option>
+                                if (user.RoleID == "5")
+                                {
+                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &#8226; @(user.KidsID)</option>
+                                }
+                                else
+                                {
+                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName)</option>
+                                }
                             }
                         </select>
                     </div>
@@ -96,12 +88,12 @@
                             {
                                 foreach (var district in Model.districts)
                                 {
-                            <option value="@(district.USD)">@(district.DistrictName)</option>
+                                    <option value="@(district.USD)">@(district.DistrictName)</option>
                                 }
                             }
                             else
                             {
-                            <option>This user is not assigned to any districts.</option>
+                                <option>This user is not assigned to any districts.</option>
                             }
                         </select>
                     </div>
@@ -118,18 +110,18 @@
                             {
                                 foreach (var building in Model.buildings)
                                 {
-                            <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                                    <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
                                 }
                             }
                             else
                             {
-                            <option>This user is not assigned to any buildings.</option>
+                                <option>This user is not assigned to any buildings.</option>
                             }
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-2 pull-left activeIEPCol hidden">
+            <div class="col-xs-12 col-md-2 pull-right activeIEPCol hidden">
                 <div class="form-group">
                     <label for="filterActive">Filter Student by Active</label>
                     <div class="input-group">

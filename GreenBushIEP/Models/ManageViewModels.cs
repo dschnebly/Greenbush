@@ -109,6 +109,8 @@ namespace GreenBushIEP.Models
 		public string LastName;
 		public string RoleID;
 		public bool hasIEP;
+        public string KidsID;
+        public bool isAssigned;
 	}
 
 	public class UserOrganizationViewModel

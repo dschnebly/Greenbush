@@ -194,6 +194,10 @@ hr {
     padding: 3px;
 }
 
+.chosen-container-single .chosen-single {
+    background: none !important;
+}
+
 /*//////////////////////////////////////
 ///  User Toggle Buttons Starts Here
 //////////////////////////////////////*/
@@ -268,7 +272,6 @@ hr {
 
         #user-toggle .user-toggle-item ul li {
             display: inline-block;
-            float: left;
             padding-left: 15px;
         }
 
