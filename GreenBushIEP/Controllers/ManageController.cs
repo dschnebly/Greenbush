@@ -3454,9 +3454,20 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(Iepid, user.UserID, false);
-                int AnnualId = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault().IEPid;
 
-                return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
+				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+
+				var annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
+				int AnnualId = annual.IEPid;
+
+				if (studentDetails != null)
+				{
+					annual.StatusCode = studentDetails.StatusCode;
+					db.SaveChanges();
+
+				}
+
+				return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -3472,9 +3483,21 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(IepId, user.UserID, amend);
-                int AmendmentId = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault().IEPid;
 
-                return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
+				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+
+				var amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
+
+				int AmendmentId = amendment.IEPid;
+
+				if (studentDetails != null)
+				{
+					amendment.StatusCode = studentDetails.StatusCode;
+					db.SaveChanges();
+				}
+
+
+				return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

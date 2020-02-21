@@ -43,10 +43,10 @@
 	</table>
 	<table class="full">
 		<tr>
-			<td style="width:150px;"><label>Student Legal Name:</label></td>
-			<td style="width:100px;">@(studentFullName)</td>
-			<td style="width:75px;"><label>KIDS ID:</label></td>
-			<td style="width:75px;">@(Model.studentDetails.student.KIDSID)</td>
+			<td style="width:120px;"><label>Student Legal Name:</label></td>
+			<td style="width:120px;">@(studentFullName)</td>
+			<td style="width:120px;"><label>KIDS ID:</label></td>
+			<td style="width:120px;">@(Model.studentDetails.student.KIDSID)</td>
 		</tr>
 		<tr>
 			<td style="width:80px;"><label>Birthdate:</label></td>
@@ -169,7 +169,7 @@
 		</tr>		
 		<tr>
 			<td><label>Annual IEP Date:</label></td>
-			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? Model.studentDetails.inititationDate : "")</td>			
+			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>			
 			<td><label>Next Annual IEP Date:</label></td>
 			<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 		</tr>
@@ -177,13 +177,13 @@
 		{			
 			foreach (var history in (ViewBag.History as List<IEPHistoryViewModel>))
 			{
-
 				<tr>					
 					<td>@history.iepDate </td>
-					<td>(@Model.studentDetails.student.StatusCode) @history.iepType</td>
+					<td>(@history.edStatus) @history.iepType</td>
 					<td colspan="2"></td>
 				</tr>
 			}
+			
 		}
 		
 		@*<tr>
@@ -194,8 +194,8 @@
 				(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc
 			</td>
 		</tr>*@
-		<tr class="voffset2">
-			<td><label>Vision Screening:</label></td>
+		<tr>
+			<td class="voffset4"><label>Vision Screening:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)			
 			
 			</td>

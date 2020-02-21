@@ -226,6 +226,8 @@ namespace GreenBushIEP.Models
                 throw new System.ArgumentException("There is already a draft IEP for this user");
             }
 
+			var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stid).FirstOrDefault();
+
             current = new tblIEP();
             current.UserID = stid;
             current.IepStatus = IEPStatus.PLAN;
@@ -237,7 +239,10 @@ namespace GreenBushIEP.Models
             current.StateAssessment = string.Empty;
             current.IsActive = true;
 
-            try
+			if (studentDetails != null)
+				current.StatusCode = studentDetails.StatusCode;
+
+			try
             {
                 db.tblIEPs.Add(current);
                 db.SaveChanges();

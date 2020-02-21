@@ -3,8 +3,8 @@
 @{
 
 	Layout = "";
-	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
-	//var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
+	var studentFullName =   string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
+	var iepType = string.Format("{0}", Model.anyStudentIEPActive && !Model.current.Amendment ? "ANNUAL" : Model.anyStudentIEPActive && Model.current.Amendment ? "AMENDMENT" : string.Empty);
 	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
 	var studentGrade = "";
@@ -41,12 +41,13 @@
 	</table>
 	<hr />
 	 <table class="full">
-                <tr>
-                    <td style="width:150px;"><label>Student Legal Name:</label></td>
-                    <td style="width:100px;">@(studentFullName)</td>
-                    <td style="width:75px;"><label>KIDS ID:</label></td>
-                    <td style="width:75px;">@(Model.studentDetails.student.KIDSID)</td>
-				</tr><tr>
+              	<tr>
+				<td style="width:120px;"><label>Student Legal Name:</label></td>
+				<td style="width:120px;">@(studentFullName)</td>
+				<td style="width:120px;"><label>KIDS ID:</label></td>
+				<td style="width:120px;">@(Model.studentDetails.student.KIDSID)</td>
+				</tr>
+				 <tr>
 					<td style="width:80px;"><label>Birthdate:</label></td>
                     <td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>                          
                 
@@ -167,7 +168,7 @@
                 </tr>*@                
                <tr>
 				<td><label>Annual IEP Date:</label></td>
-	  			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? Model.studentDetails.inititationDate : "")</td>			
+	  			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>					
 				<td><label>Next Annual IEP Date:</label></td>
 				<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 				</tr>         
@@ -178,7 +179,7 @@
 
 						<tr>					
 							<td>@history.iepDate </td>
-							<td>(@Model.studentDetails.student.StatusCode) @history.iepType</td>
+							<td>(@history.edStatus) @history.iepType</td>
 							<td colspan="2"></td>
 						</tr>
 					}

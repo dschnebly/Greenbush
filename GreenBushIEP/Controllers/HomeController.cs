@@ -1132,7 +1132,7 @@ namespace GreenbushIep.Controllers
                             iep.begin_date = meetingDate;
                         }
 
-                        db.SaveChanges();
+						db.SaveChanges();
                     }
 
                     return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
@@ -1155,8 +1155,15 @@ namespace GreenbushIep.Controllers
                 studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
                 studentAmmendIEP.IepStatus = IEPStatus.ACTIVE;
+				
+				//iep status code history
+				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+				if (studentDetails != null)
+				{
+					studentAmmendIEP.StatusCode = studentDetails.StatusCode;
+				}
 
-                try
+				try
                 {
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
@@ -1190,7 +1197,14 @@ namespace GreenbushIep.Controllers
 
                 try
                 {
-                    db.SaveChanges();
+					//iep status code history
+					var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+					if (studentDetails != null)
+					{
+						studentAnnualIEP.StatusCode = studentDetails.StatusCode;
+					}
+
+					db.SaveChanges();
                     return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
@@ -1236,7 +1250,15 @@ namespace GreenbushIep.Controllers
                     {
                         var theIEP = GetIEPPrint(stId, IEPid);
 
-                        if (theIEP != null)
+						//iep status code history
+						var studentDetails = theIEP.studentDetails;
+						if (studentDetails != null)
+						{
+							iepDraft.StatusCode = studentDetails.student.StatusCode;
+						}
+
+
+						if (theIEP != null)
                         {
                             theIEP.studentDetails.printStudentInfo = true;
                             theIEP.studentDetails.printIEPDetails = true;
@@ -1271,7 +1293,9 @@ namespace GreenbushIep.Controllers
                         var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
                         var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString(): DateTime.Now.ToShortDateString()));
 
-                    }
+						
+
+					}
                     catch (Exception e)
                     {
                         return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive: " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
@@ -1285,7 +1309,9 @@ namespace GreenbushIep.Controllers
 
                     try
                     {
-                        db.SaveChanges();
+						
+
+						db.SaveChanges();
 
                         return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
                     }
@@ -2528,7 +2554,7 @@ namespace GreenbushIep.Controllers
                 locations = db.tblLocations.ToList(),
                 serviceTypes = db.tblServiceTypes.ToList(),
                 serviceProviders = db.tblProviders.Where(p => p.UserID == mis.UserID).ToList(),
-                studentFirstName = string.Format("{0}", student.FirstName),
+                studentFirstName = string.IsNullOrEmpty(student.MiddleName) ? string.Format("{0}", student.FirstName) : string.Format("{0} {1}", student.FirstName, student.MiddleName),
                 studentLastName = string.Format("{0}", student.LastName),
             };
 
@@ -2654,33 +2680,41 @@ namespace GreenbushIep.Controllers
                     studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
                     studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
 
-					var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == "ARCHIVE" || o.IepStatus == "ACTIVE")).OrderBy(o => o.begin_date);
+					var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
 					var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
 					var historicalIEPList = new List<IEPHistoryViewModel>();					
 					int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
+
+					if (theIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT)
+					{
+						//add draft to history
+						var iepType = string.Format("{0}", theIEP.anyStudentIEPActive && !theIEP.current.Amendment ? "Annual" : theIEP.anyStudentIEPActive && theIEP.current.Amendment ? "Amendment" : string.Empty);
+						var historyItem = new IEPHistoryViewModel() { edStatus = theIEP.current.StatusCode, iepDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "", iepType = iepType };
+						historicalIEPList.Add(historyItem);
+					}					
 
 					foreach (var history in historicalIEPs)
 					{
 						
 						var historyItem = new IEPHistoryViewModel();
-						
+
 						if (history.OriginalIEPid == null)
-						{
-							historyItem.edStatus = history.IEPid == firstIEPId ? "N" : "C";
+						{						
 							historyItem.iepType = "Annual";
 						}
 						else
 						{
 							if (history.Amendment)
-							{							
-								historyItem.edStatus = history.OriginalIEPid == firstIEPId ? "N" : "C";
+							{						
 								historyItem.iepType = "Amendment";
 							}
 						}
 
+						historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? studentDetails.student.StatusCode : history.StatusCode;
 						historyItem.iepDate = history.begin_date.HasValue ? history.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "";
 						historicalIEPList.Add(historyItem);
 					}
+
 
 					if (studentDetails.student.ExitDate.HasValue)
 					{
