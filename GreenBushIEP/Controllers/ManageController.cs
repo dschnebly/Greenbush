@@ -1604,7 +1604,7 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.AppendFormat("<b>Responsible School:</b> {0}", responsibleBuilding);
             sb.Append("<br/>");
-            sb.AppendFormat("<b>Initial Evaluation Consent Signed:</b> {0}", student.InitialEvalConsentSigned.HasValue ? student.InitialEvalConsentSigned.Value.ToShortDateString() : "");
+            sb.AppendFormat("<b>Initial Evaluation Consent Received:</b> {0}", student.InitialEvalConsentSigned.HasValue ? student.InitialEvalConsentSigned.Value.ToShortDateString() : "");
 
             sb.Append("<br/>");
             sb.Append("<br/>");
