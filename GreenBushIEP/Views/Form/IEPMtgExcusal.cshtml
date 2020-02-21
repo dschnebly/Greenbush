@@ -3,7 +3,7 @@
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-
+	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
 	string contactFormattedName = "";	
 	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
@@ -18,65 +18,48 @@
 
 <div class="module-page">
     <div class=WordSection1>
-        <p class=MsoNormal align=center style='text-align:center'>
+        <p class=MsoNormal align=center style='text-align:center;margin-bottom:10px'>
             <span style='font-size:11.0pt;font-family:"Cambria",serif;'>
-                EXCUSAL
-                FROM ATTENDANCE AT IEP MEETINGS of<o:p></o:p>
+                EXCUSAL FROM ATTENDANCE AT IEP MEETINGS of <br/>REQUIRED IEP TEAM MEMBERS
             </span>
         </p>
 
-        <p class=MsoNormal align=center style='text-align:center'>
-            <span style='font-size:11.0pt;font-family:"Cambria",serif;'>
-                REQUIRED
-                IEP TEAM MEMBERS<o:p></o:p>
-            </span>
+		<table cellpadding="1" cellspacing="3">
+			<tr>
+				<td style="width: 50px">Date:</td><td><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="59">@(currentDate.PadRight(59, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@((currentDate.Length) > 59 ? currentDate : String.Format(currentDate).PadRight(59 - String.Format(currentDate).Length, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td style="width: 50px">Student:</td><td><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></td>
+			</tr>		
+			<tr>
+				<td colspan="2">&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td style="width: 50px">IEP date</td><td><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="57">@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="83">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</span></u></td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				<td colspan="2">Name of parent(s)/decision maker</td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td  colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="72">@((districtContactName.Length) > 72 || string.IsNullOrEmpty(districtContactName) ? districtContactName : String.Format(districtContactName).PadRight(72 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@((districtContactName.Length) > 72 ? districtContactName : String.Format(districtContactName).PadRight(72 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td  colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="83">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</span></u></td>
+			</tr>
+			<tr>
+				<td colspan="2">School representative</td>
+				<td colspan="2">Position of school representative</td>
+			</tr>
+		</table>
+        <p class=MsoNormal align=center style='text-align:center;margin-top:8px'>
+            <b ><u><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>UNDERSTANDINGS<o:p></o:p></span></u></b>
         </p>
 
-        <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-
-
-        <p class=MsoNormal style=''>
-            <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                Date:&nbsp;<textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;text-decoration:underline" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student: </span><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u><o:p></o:p>
-            </span>
-        </p>
-        <p class=MsoNormal style='margin-top:10px;'>
-            <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                IEP date <u><b>@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</b></u><span style=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration:underline;font-weight:bold"><textarea  data-val="107" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value">@(contactFormattedName)</span></span><o:p></o:p>
-            </span>
-        </p>
-        <p class=MsoNormal style=''>
-            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif;'>
-                @(String.Format("{0}", "Name of parent(s)/decision maker").PadLeft(116, '\u00A0'))
-            </span>
-        </p>
-
-        <p class=MsoNormal style='margin-top:10px;'>
-            <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                <u><b>@(String.Format("{0}", districtContactName).PadRight(63, ' ').Replace(" ", "\u00A0"))</b></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><b>@(String.Format("{0}", "").PadRight(96, ' ').Replace(" ", "\u00A0"))</b></u>
-
-            </span>
-        </p>
-
-        <p class=MsoNormal style='font-size:10.0pt;font-family:"Calibri",sans-serif;'>
-            <span style="margin-left:0px">
-                School representative
-            </span>
-            <span>@(String.Format("{0}", "Position of school representative").PadLeft(78, '\u00A0'))</span>
-        </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
-            <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b style=''><u><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>UNDERSTANDINGS<o:p></o:p></span></u></b>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-31.5pt'>
-            <span style='font-size:11.0pt;
-font-family:"Calibri",sans-serif'>
+        <p class=MsoNormal>
+            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
                 I have been informed and understand that the
                 IEP team must include at least the following: (a) parent of the child; (b) one
                 regular education teacher of the child (if the child is, or may be,
@@ -90,14 +73,8 @@ font-family:"Calibri",sans-serif'>
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-right:-31.5pt'>
-            <span style='font-size:11.0pt;
-font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-31.5pt'>
-            <span style='font-size:11.0pt;
-font-family:"Calibri",sans-serif'>
+        <p class=MsoNormal>
+            <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>
                 I have also been informed and understand that:
                 (a) all of the <u>required</u> members of an IEP team (listed above) must
                 attend each IEP meeting unless both the parent and the school representative
@@ -111,39 +88,18 @@ font-family:"Calibri",sans-serif'>
                 prior to the meeting.<o:p></o:p>
             </span>
         </p>
-
-        <p class=MsoNormal>
-            <b style=''>
-                <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b style=''>
-                <u>
-                    <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><span style=''>                                                                                                                          </span><o:p></o:p></span>
-                </u>
-            </b>
-        </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
-            <i style=''>
+		 
+        <p class=MsoNormal align=center style='text-align:center;margin-bottom:5px'>			
+			<span align=center style='text-align:center;'>______________________________________________________________________________________________</span>
+            <i>
                 <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>(Position of team member who will not be attending)<o:p></o:p></span>
             </i>
         </p>
-
-        <p class=MsoNormal>
-            <b style=''>
-                <span style='font-size:9.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-
-        <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=0
-               style='width:535.5pt;margin-left:-26.1pt;border-collapse:collapse;border:none;'>
-            <tr style=''>
+        <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=0 style='width:535.5pt;margin-left:-26.1pt;border-collapse:collapse;border:none;'>
+            <tr >
                 <td width=714 colspan=2 valign=top style='width:535.5pt;border:solid windowtext 1.0pt;  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center'>
-                        <b style=''>
+                        <b >
                             <span style='font-size:10.0pt;font-family:"Cambria",serif;'>
                                 Complete
                                 only one column<o:p></o:p>
@@ -152,35 +108,29 @@ font-family:"Calibri",sans-serif'>
                     </p>
                 </td>
             </tr>
-            <tr style=''>
-                <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;
-  border-top:none;mso-border-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt'>
+            <tr >
+                <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt; border-top:none;mso-border-alt:solid windowtext .5pt; padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center'>
-                        <span style='font-size:10.0pt;font-family:"Cambria",serif;
-  '>
-                            AREA OF THE CURRICULUM OR RELATED SERVICES<b style=''>
+                        <span style='font-size:10.0pt;font-family:"Cambria",serif;'>
+                            AREA OF THE CURRICULUM OR RELATED SERVICES<b >
                                 <br>
                                 <u>IS NOT</u>
-                            </b>BEING MODIFIED<b style=''>
+                            </b>BEING MODIFIED<b >
                                 <u>OR</u>
-                            </b>DISCUSSED<b style=''>.</b>
+                            </b>DISCUSSED<b >.</b>
                         </span><span style='font-size:10.0pt;font-family:"Arial",sans-serif'><o:p></o:p></span>
                     </p>
                 </td>
-                <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center'>
-                        <span style='font-size:10.0pt;font-family:"Cambria",serif;
-  '>
+                        <span style='font-size:10.0pt;font-family:"Cambria",serif;'>
                             AREA OF THE CURRICULUM OR RELATED SERVICES <br>
-                            <b style=''><u>MAY BE</u></b> MODIFIED <b style=''><u>OR</u></b> DISCUSSED.<o:p></o:p>
+                            <b ><u>MAY BE</u></b> MODIFIED <b ><u>OR</u></b> DISCUSSED.<o:p></o:p>
                         </span>
                     </p>
                 </td>
             </tr>
-            <tr style=''>
+            <tr >
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
                         <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
@@ -196,7 +146,7 @@ font-family:"Calibri",sans-serif'>
                         </span>
                     </p>
                     <p class=MsoNormal>
-                        <b style=''>
+                        <b >
                             <span style='font-size:6.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
                         </b>
                     </p>
@@ -218,30 +168,28 @@ font-family:"Calibri",sans-serif'>
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center;'><br/>
                         <span style='font-family:"Calibri",sans-serif'>
-                            I<span style=''></span>
+                            I<span ></span>
                         </span>
                         <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
-                            agree<span style=''>  </span>
+                            agree<span >  </span>
                         </span>
                         <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
-                            <span style=''></span>disagree <br>
+                            <span ></span>disagree <br>
                             with the above marked statement:
                         </span><span style='
                                      font-family:"Arial",sans-serif'><o:p></o:p></span>
                     </p>
                 </td>
-                <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+                <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal align=center style='text-align:center'><br/>
                         <span style='font-family:"Calibri",sans-serif'>
-                            I<span style=''></span>
+                            I<span ></span>
                         </span>
                         <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
-                            consent<span style=''></span>
+                            consent<span ></span>
                         </span>
                         <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
                         <span style='font-family:"Calibri",sans-serif'>
@@ -253,12 +201,9 @@ font-family:"Calibri",sans-serif'>
                 </td>
             </tr>
         </table>
-
-        <p class=MsoNormal><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
-
-        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-               style='width:6.0in;margin-left:.9pt;border-collapse:collapse;'>
-            <tr style=''>
+		<br/>
+        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0  style='width:6.0in;margin-left:.9pt;border-collapse:collapse;'>
+            <tr >
                 <td width=325 valign=top style='width:243.9pt;border:none;border:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
                 </td>
