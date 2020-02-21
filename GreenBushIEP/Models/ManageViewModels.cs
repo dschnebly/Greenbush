@@ -721,6 +721,7 @@ namespace GreenBushIEP.Models
 		public int ProviderID { get; set; }
 		public string LocationCode { get; set; }
 		public string Goals { get; set; }
+		public string ProvidedFor { get; set; }
 
 	}
 

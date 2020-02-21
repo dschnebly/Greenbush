@@ -641,8 +641,9 @@
                                 var dupEndDate = null;
                                 var dupGoals = serviceObj.Goals;
                                 var dupAttendingBuilding = serviceObj.selectedAttendingBuilding;
+								var dupServiceProvidedFor = serviceObj.ProvidedFor;
 
-                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding);
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding, dupServiceProvidedFor);
                             });
                         }
                         else {
@@ -692,8 +693,9 @@
                                 var dupEndDate = null;
                                 var dupGoals = serviceObj.Goals;
                                 var dupAttendingBuilding = serviceObj.selectedAttendingBuilding;
+								var dupServiceProvidedFor = serviceObj.ProvidedFor;
 
-                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding);
+                                duplicateService(dupFiscalYear, dupServiceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupServiceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding, dupServiceProvidedFor);
                             });
                         }
                         else {
@@ -1075,7 +1077,7 @@
     }
     initGoalEvents();
 
-    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding) {
+    function duplicateService(dupFiscalYear, dupserviceDaysPerWeek, dupFrequency, dupLocation, dupServiceType, dupserviceProvider, dupserviceMinutesPerDay, dupStartDate, dupEndDate, dupGoals, dupAttendingBuilding, dupServiceProvidedFor) {
         $.each($("div.collapse"), function (index) {
             $(this).collapse('hide');
         });
@@ -1113,7 +1115,11 @@
         cloneService.find("select[name='ServiceType']").val(dupServiceType).prop('selected', true);
         cloneService.find("select[name='serviceProvider']").val(dupserviceProvider).prop('selected', true);
         cloneService.find("input[name='serviceStartDate']").val(dupStartDate);
-        cloneService.find("input[name='serviceEndDate']").val(dupEndDate);
+		cloneService.find("input[name='serviceEndDate']").val(dupEndDate);
+		cloneService.find("input[name='serviceProvidedFor']").val(dupServiceProvidedFor);
+
+
+		
         if (dupGoals != null) {
             var temp = dupGoals.split(",");
             if (temp.length == 1) {
