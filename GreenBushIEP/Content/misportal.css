@@ -162,17 +162,19 @@ hr {
 }
 
 .panel-primary > .panel-heading {
-    color: #fff;
-    background-color: #45906d;
-    border-color: #45906d;
+background-color: #d0d8b8 !important;
+    border-color: #d0d8b8 !important;
+    min-height: 57px !important;
 }
 
 .panel-primary {
-    border-color: #45906d;
+    border-color: #d0d8b8 !important;
 }
 
 .panel-title {
-    display: inline-block;
+    display: inline-block !important;
+    color: #333 !important;
+    font-weight: 600 !important;
 }
 
 .btn-filter {

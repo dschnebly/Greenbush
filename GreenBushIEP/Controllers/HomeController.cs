@@ -114,7 +114,7 @@ namespace GreenbushIep.Controllers
                 //myBuildings.Add("0");
 
                 //model.members = db.vw_UserList.Where(ul => (ul.RoleID == admin || ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
-                model.members = db.uspUserListByUserID(MIS.UserID).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), hasIEP = u.hasIEP ?? false }).ToList();
+                model.members = db.uspUserListByUserID(MIS.UserID).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), hasIEP = u.hasIEP ?? false }).Where(i => i.RoleID != mis).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
