@@ -60,13 +60,13 @@
                     <label for="filterName">Filter by Name or Kids ID</label>
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
-                        <select class="form-control chosen-select" name="filterName" id="filterName">
+                        <select class="form-control chosen-select form-control" name="filterName" id="filterName">
                             <option value="-1">All Users</option>
                             @foreach (var user in Model.members)
                             {
                                 if (user.RoleID == "5")
                                 {
-                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName)  #@(user.KidsID)</option>
+                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
                                 }
                                 else
                                 {
@@ -139,7 +139,7 @@
             @{
                 if (Model.members.Count > 0)
                 {
-                    <div class="list-group list-group-root well" style="margin-bottom:0;">
+                    <div class="list-group list-group-root well">
 
                         @foreach (var user in Model.members)
                         {

@@ -14,6 +14,10 @@
             border-top: 1px solid #ddd;
         }
 
+        h3 {
+            margin-bottom: 0;
+        }
+
         .transition-page {
             position: relative;
         }
@@ -30,6 +34,11 @@
             clear: both;
             margin: auto;
             position: relative;
+        }
+
+        .user-info-block {
+            padding-top: 12px;
+            padding-bottom: 12px;
         }
 
         .user-details .user-info-block {
@@ -99,6 +108,16 @@
 
         .yesConsentOverlay {
             display: none;
+        }
+
+        .transition-container {
+            overflow: hidden;
+            margin: 4em auto 5em auto;
+        }
+
+        #backtoportal {
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .noConsentOverlay {
@@ -598,6 +617,11 @@
                 cursor: default;
             }
 
+        #studentPlanBtn, #printStudentInfo, #printIEP {
+            font-size: 16px;
+            margin: 3px 0 3px 3px;
+        }
+
         .ajax-loader {
             visibility: hidden;
             background-color: rgba(255,255,255,0.7);
@@ -843,7 +867,7 @@
 }
 
 <div class="transition-page">
-    <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
+    <div class="container transition-container">
         <input type="hidden" name="studentIEPId" id="studentIEPId" value="@(Model.studentIEP.current.IEPid)" />
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
@@ -859,27 +883,27 @@
                         <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
                     }
                     <div class="student-identity edit-student">
-                        <h3 style="margin-bottom:0;">@(Model.student.FirstName + " " + Model.student.LastName)</h3>
+                        <h3>@(Model.student.FirstName + " " + Model.student.LastName)</h3>
                         <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("MM/dd/yyyy"))" />
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 pull-right">
-                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
+                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
+                <div class="user-info-block">
                     <ul class="navigation">
                         <li class="pull-right">
                             @if (ViewBag.UserRoleId != "6")
                             {
-                                <button type="button" class="btn btn-primary btn-lg hidden" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                                <button type="button" class="btn btn-primary btn-lg hidden" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning"><i class="fa fa-print"></i> Student Plan</button>
                             }
-                            <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print Student Info</button>
-                            <button type="button" class="btn btn-primary btn-lg" id="printIEP" style="font-size: 16px;margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Print This IEP</button>
+                            <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo"><i class="fa fa-print"></i> Print Student Info</button>
+                            <button type="button" class="btn btn-primary btn-lg" id="printIEP"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
                     </ul>
                 </div>

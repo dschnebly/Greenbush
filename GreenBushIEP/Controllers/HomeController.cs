@@ -455,7 +455,7 @@ namespace GreenbushIep.Controllers
 								}
 							}
 						}
-						catch (Exception ex)
+						catch
 						{
 							return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help." }, JsonRequestBehavior.AllowGet);
 						}
