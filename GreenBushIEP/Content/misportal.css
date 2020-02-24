@@ -163,7 +163,7 @@ hr {
 
 .panel-primary > .panel-heading {
     background-color: #b6c391 !important;
-    border-color: #b6c391!important;
+    border-color: #b6c391 !important;
     min-height: 57px !important;
 }
 
@@ -180,6 +180,10 @@ hr {
 .btn-filter {
     position: relative;
     bottom: 1px;
+}
+
+.form-group label {
+    color: #666 !important;
 }
 
 .showFilters {
@@ -277,17 +281,17 @@ hr {
             padding-left: 15px;
         }
 
-        #user-toggle .user-toggle-item .show-buttons {
-            display: inline-block;
-            -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-            -moz-animation: fadein 1s; /* Firefox < 16 */
-            -o-animation: fadein 1s; /* Opera < 12.1 */
-            animation: fadein 1s;
-        }
+    #user-toggle .user-toggle-item .show-buttons {
+        display: inline-block;
+        -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 1s; /* Firefox < 16 */
+        -o-animation: fadein 1s; /* Opera < 12.1 */
+        animation: fadein 1s;
+    }
 
-        #user-toggle .user-toggle-item .hide-buttons {
-            display: none;
-        }
+    #user-toggle .user-toggle-item .hide-buttons {
+        display: none;
+    }
 
 #mySettings, #add-system-user, #add-student-user, #reports, #referrals {
     margin-left: 15px;
