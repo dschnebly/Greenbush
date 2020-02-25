@@ -1,9 +1,13 @@
 ﻿$(function () {
     function init() {
-		$(".chosen-select").chosen({ width: "100%" });
+        $(".chosen-select").chosen({ width: "95%", disable_search_threshold: 10 });
 
 		// filter to only active students
 		var filterCollection = $('.list-group-root').find('.list-group-item');
+
+		$(".btn-filter").on("click", function () {
+		    $(".showFilters").toggleClass("hidden");
+		});
 
 		$.each(filterCollection, function (index, value) {
 			if ($(value).attr("data-isActive") == 2) {
