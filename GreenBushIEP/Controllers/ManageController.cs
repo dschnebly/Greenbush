@@ -143,103 +143,103 @@ namespace GreenBushIEP.Controllers
         public ActionResult FilterReferrals(int searchType)
         {
             var currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-			bool? completeType = null;
+            bool? completeType = null;
 
-			if (searchType == 1)
-				completeType = false;
-			else if (searchType == 2)
-				completeType = true;
+            if (searchType == 1)
+                completeType = false;
+            else if (searchType == 2)
+                completeType = true;
 
-			List<ReferralViewModel> referralList = new List<ReferralViewModel>();
+            List<ReferralViewModel> referralList = new List<ReferralViewModel>();
 
-			if (currentUser.RoleID == nurse || currentUser.RoleID == teacher)
-			{
-			
-				var referrals = (from refInfo in db.tblReferralInfoes
-								 join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
-								 where
-								 refInfo.UserID == currentUser.UserID
-								 && rr.UserID_Requster == currentUser.UserID
-								 && rr.Complete == false
-								 && rr.Submit_Date == null
-								 select refInfo).Distinct();
+            if (currentUser.RoleID == nurse || currentUser.RoleID == teacher)
+            {
 
-				foreach (var referral in referrals)
-				{
+                var referrals = (from refInfo in db.tblReferralInfoes
+                                 join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
+                                 where
+                                 refInfo.UserID == currentUser.UserID
+                                 && rr.UserID_Requster == currentUser.UserID
+                                 && rr.Complete == false
+                                 && rr.Submit_Date == null
+                                 select refInfo).Distinct();
 
-					ReferralViewModel model = new ReferralViewModel();
+                foreach (var referral in referrals)
+                {
 
-					var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
-					if (request != null)
-					{
-						model.submitDate = request.Create_Date.ToShortDateString();
-						model.isComplete = false;
-					}
-					model.referralId = referral.ReferralID;
-					model.lastName = referral.LastName;
-					model.firstName = referral.FirstName;
-					model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
-					model.notes = referral.ReferralNotes;
-					referralList.Add(model);
-				}
-				
-			}
-			else
-			{
+                    ReferralViewModel model = new ReferralViewModel();
 
-				var districts = (from org in db.tblOrganizationMappings
-								 join user in db.tblUsers
-									 on org.UserID equals user.UserID
-								 where (user.UserID == currentUser.UserID)
-								 select org).Distinct();
+                    var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                    if (request != null)
+                    {
+                        model.submitDate = request.Create_Date.ToShortDateString();
+                        model.isComplete = false;
+                    }
+                    model.referralId = referral.ReferralID;
+                    model.lastName = referral.LastName;
+                    model.firstName = referral.FirstName;
+                    model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
+                    model.notes = referral.ReferralNotes;
+                    referralList.Add(model);
+                }
 
-				
-				if (districts != null)
-				{
-					
+            }
+            else
+            {
 
-					foreach (var district in districts)
-					{
+                var districts = (from org in db.tblOrganizationMappings
+                                 join user in db.tblUsers
+                                     on org.UserID equals user.UserID
+                                 where (user.UserID == currentUser.UserID)
+                                 select org).Distinct();
 
-						var referrals = (from refInfo in db.tblReferralInfoes
-										 join rr in db.tblReferralRequests
-											 on refInfo.ReferralID equals rr.ReferralID
-										 where
-										 (refInfo.AssignedUSD == district.USD)
-										 && rr.Submit_Date != null
-										 && ((completeType == null) || (rr.Complete == completeType.Value))
-										 select refInfo).Distinct();
 
-						foreach (var referral in referrals)
-						{
-							//if duplicated skip
+                if (districts != null)
+                {
 
-							ReferralViewModel model = new ReferralViewModel();
-							tblReferralRequest request = null;
 
-							if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType != null)
-								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID && o.Complete == completeType).FirstOrDefault();
-							else if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType == null)
-								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).OrderByDescending(o => o.Complete).FirstOrDefault();
-							else
-								request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                    foreach (var district in districts)
+                    {
 
-							if (request != null)
-							{
-								model.submitDate = request.Create_Date.ToShortDateString();
-								model.isComplete = request.Complete;
-							}
-							model.referralId = referral.ReferralID;
-							model.lastName = referral.LastName;
-							model.firstName = referral.FirstName;
-							model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
-							model.notes = referral.ReferralNotes;
-							referralList.Add(model);
-						}
-					}
+                        var referrals = (from refInfo in db.tblReferralInfoes
+                                         join rr in db.tblReferralRequests
+                                             on refInfo.ReferralID equals rr.ReferralID
+                                         where
+                                         (refInfo.AssignedUSD == district.USD)
+                                         && rr.Submit_Date != null
+                                         && ((completeType == null) || (rr.Complete == completeType.Value))
+                                         select refInfo).Distinct();
 
-				}
-			}
+                        foreach (var referral in referrals)
+                        {
+                            //if duplicated skip
+
+                            ReferralViewModel model = new ReferralViewModel();
+                            tblReferralRequest request = null;
+
+                            if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType != null)
+                                request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID && o.Complete == completeType).FirstOrDefault();
+                            else if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType == null)
+                                request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).OrderByDescending(o => o.Complete).FirstOrDefault();
+                            else
+                                request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+
+                            if (request != null)
+                            {
+                                model.submitDate = request.Create_Date.ToShortDateString();
+                                model.isComplete = request.Complete;
+                            }
+                            model.referralId = referral.ReferralID;
+                            model.lastName = referral.LastName;
+                            model.firstName = referral.FirstName;
+                            model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
+                            model.notes = referral.ReferralNotes;
+                            referralList.Add(model);
+                        }
+                    }
+
+                }
+            }
 
             return Json(new { Result = "success", FilterList = referralList.OrderBy(o => o.lastName).ThenBy(o => o.firstName).ToList() });
         }
@@ -259,7 +259,7 @@ namespace GreenBushIEP.Controllers
                                  where
                                  refInfo.UserID == currentUser.UserID
                                  && rr.UserID_Requster == currentUser.UserID
-								 && rr.Complete == false
+                                 && rr.Complete == false
                                  && rr.Submit_Date == null
                                  select refInfo).Distinct();
 
@@ -310,7 +310,7 @@ namespace GreenBushIEP.Controllers
                                          where
                                          (refInfo.AssignedUSD == district.USD)
                                          && rr.Complete == false
-										 && rr.Submit_Date != null
+                                         && rr.Submit_Date != null
                                          select refInfo).Distinct();
 
                         foreach (var referral in referrals)
@@ -1201,14 +1201,14 @@ namespace GreenBushIEP.Controllers
                 {
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-					var submitterDistrict = (from org in db.tblOrganizationMappings
-											 join user in db.tblUsers
-												 on org.UserID equals user.UserID
-											 where user.UserID == submitter.UserID
-											 select org).Distinct().FirstOrDefault();
+                    var submitterDistrict = (from org in db.tblOrganizationMappings
+                                             join user in db.tblUsers
+                                                 on org.UserID equals user.UserID
+                                             where user.UserID == submitter.UserID
+                                             select org).Distinct().FirstOrDefault();
 
 
-					int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
+                    int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
 
                     // check that the kidsIS doesn't already exsist in the system.
                     string kidsIdStr = collection["kidsid"].ToString();
@@ -1270,10 +1270,10 @@ namespace GreenBushIEP.Controllers
                             db.tblReferralInfoes.Add(studentInfo);
                             db.SaveChanges();
 
-							tblReferralRequest request = new tblReferralRequest();
+                            tblReferralRequest request = new tblReferralRequest();
                             request.UserID_Requster = submitter.UserID;
-							request.UserID_District = submitterDistrict != null ? submitterDistrict.USD : "";
-							request.ReferralID = studentInfo.ReferralID;
+                            request.UserID_District = submitterDistrict != null ? submitterDistrict.USD : "";
+                            request.ReferralID = studentInfo.ReferralID;
                             request.Create_Date = DateTime.Now;
                             request.Update_Date = DateTime.Now;
                             db.tblReferralRequests.Add(request);
@@ -2952,247 +2952,43 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterOwnerUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType)
-        {
-            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-            if (submitter != null)
-            {
-                int? searchUserId = null;
-
-                if (userId != null)
-                {
-                    if (userId.Value > -1)
-                    {
-                        searchUserId = userId.Value;
-                    }
-                }
-
-                bool? searchActiveType = null;
-
-                if (activeType.HasValue && activeType == 1)
-                {
-                    searchActiveType = true;
-                }
-                else if (activeType.HasValue && activeType == 2)
-                {
-                    searchActiveType = false;
-                }
-
-                List<string> myDistricts = new List<string>();
-                List<string> myBuildings = new List<string>();
-                List<string> myRoles = new List<string>() { "2", "3", "4", "5", "6" };
-                List<string> nonStudentRoles = new List<string>() { "2", "3", "4", "6" };
-
-                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
-                NewPortalObject.Add("selectedDistrict", DistrictId);
-                NewPortalObject.Add("selectedBuilding", BuildingId);
-                NewPortalObject.Add("selectedRole", RoleId);
-
-                if (DistrictId == "-1")
-                {
-                    var districts = (from district in db.tblDistricts select new { district.USD, district.DistrictName }).Distinct().ToList();
-                    myDistricts = districts.Select(d => d.USD).ToList();
-                }
-                else
-                {
-                    var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.USD == DistrictId select new { district.USD, district.DistrictName }).Distinct().ToList();
-                    myDistricts = districts.Select(d => d.USD).ToList();
-                }
-
-                if (BuildingId == "-1")
-                {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
-                    NewPortalObject.Add("buildings", buildings);
-                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
-                    myBuildings.Add("0");
-                }
-                else
-                {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
-                    NewPortalObject.Add("buildings", buildings);
-                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
-                }
-
-                var members = new List<UserView>();
-
-                if (RoleId != "-1")
-                {
-                    //var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
-                    if (searchActiveType == null)
-                    {
-                        members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ul.RoleID == RoleId).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-                    }
-                    else
-                    {
-
-                        var students = RoleId == student ? db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList() : null;
-                        var nonStudents = db.vw_UserList.Where(ul => ul.RoleID == RoleId && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-
-                        if (students != null)
-                            members.AddRange(students);
-
-                        if (nonStudents != null)
-                            members.AddRange(nonStudents);
-
-                    }
-
-                    NewPortalObject.Add("members", members);
-                }
-                else
-                {
-                    //var members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new { u.UserID, u.FirstName, u.LastName, u.RoleID }).Distinct().ToList();
-                    if (searchActiveType == null)
-                    {
-                        members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).Distinct().ToList();
-                    }
-                    else
-                    {
-
-                        var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-                        var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-
-                        if (students != null)
-                            members.AddRange(students);
-
-                        if (nonStudents != null)
-                            members.AddRange(nonStudents);
-
-                    }
-
-                    NewPortalObject.Add("members", members);
-                }
-                // var members = (from buildingMap in db.tblBuildingMappings
-                //  join user in db.tblUsers on buildingMap.UserID equals user.UserID
-                //  where myRoles.Contains(user.RoleID) 
-                //  && !(user.Archive ?? false)
-                //  && ((searchUserId == null) || (user.UserID == searchUserId.Value))
-                //  && myDistricts.Contains(buildingMap.USD)
-                //  && myBuildings.Contains(buildingMap.BuildingID)
-                //  select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
-
-
-                return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
-        }
-
-        // POST: Manage/FilterUserList
-        [HttpPost]
         public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
             {
-                int? searchUserId = null;
+                string selectedDistrict = Convert.ToInt32(DistrictId) == -1 ? null : DistrictId;
+                string selectedBuilding = Convert.ToInt32(BuildingId) == -1 ? null : BuildingId;
+                int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
+                bool? searchActiveType = activeType.HasValue && activeType == 1 ? true : activeType.HasValue && activeType == 2 ? false : (bool?)null;
 
-                if (userId != null)
-                {
-                    if (userId.Value > -1)
-                    {
-                        searchUserId = userId.Value;
-                    }
-                }
-
-                bool? searchActiveType = null;
-
-                if (activeType.HasValue && activeType == 1)
-                {
-                    searchActiveType = true;
-                }
-                else if (activeType.HasValue && activeType == 2)
-                {
-                    searchActiveType = false;
-                }
-
-
-                List<string> myDistricts = new List<string>();
-                List<string> myBuildings = new List<string>();
-                List<string> myRoles = new List<string>() { "3", "4", "5", "6" };
-                List<string> nonStudentRoles = new List<string>() { "3", "4", "6" };
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
                 NewPortalObject.Add("selectedBuilding", BuildingId);
                 NewPortalObject.Add("selectedRole", RoleId);
 
-                if (DistrictId == "-1")
-                {
-                    var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == submitter.UserID select new { district.USD, district.DistrictName }).Distinct().ToList();
-                    myDistricts = districts.Select(d => d.USD).ToList();
-                }
-                else
-                {
-                    var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == submitter.UserID && org.USD == DistrictId select new { district.USD, district.DistrictName }).Distinct().ToList();
-                    myDistricts = districts.Select(d => d.USD).ToList();
-                }
-
-                if (BuildingId == "-1")
-                {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
-                    NewPortalObject.Add("buildings", buildings);
-                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
-                    myBuildings.Add("0");
-                }
-                else
-                {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
-                    NewPortalObject.Add("buildings", buildings);
-                    myBuildings = buildings.Select(b => b.BuildingID).ToList();
-                }
-
-                if (submitter.RoleID == "2" || submitter.RoleID == "1")
-                {
-                    myRoles.Add("2");
-                    nonStudentRoles.Add("2");
-                }
-
-
-                //model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
-
                 var members = new List<UserView>();
 
-                if (searchActiveType == null)
+                members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, searchActiveType).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+
+                if (searchUserId != -1)
                 {
-
-                    members = db.vw_UserList.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-                }
-                else
-                {
-
-                    var students = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-                    var nonStudents = db.vw_UserList.Where(ul => nonStudentRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID)).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault()).ToList();
-
-                    if (students != null)
-                        members.AddRange(students);
-
-                    if (nonStudents != null)
-                        members.AddRange(nonStudents);
-
-
+                    members = members.Where(u => u.UserID == searchUserId).ToList();
                 }
 
-                //var members = (from buildingMap in db.tblBuildingMappings
-                //			   join user in db.tblUsers on buildingMap.UserID equals user.UserID
-                //			   where myRoles.Contains(user.RoleID)
-                //			   && ((searchUserId == null) || (user.UserID == searchUserId.Value))
-                //			   && !(user.Archive ?? false) 
-                //			   && (myDistricts.Contains(buildingMap.USD) 
-                //			   && myBuildings.Contains(buildingMap.BuildingID)) select new { user.UserID, user.FirstName, user.LastName, user.RoleID }).Distinct().ToList();
-
-                if (RoleId != "-1")
+                if (RoleId != "-1" )
                 {
-                    foreach (var user in members.ToList())
-                    {
-                        if (user.RoleID != RoleId)
-                        {
-                            members.Remove(user);
-                        }
-                    }
+                    members = members.Where(u => u.RoleID == RoleId).ToList();
                 }
 
+                if (searchActiveType != null)
+                {
+                    members = members.Where(u => u.hasIEP == searchActiveType).ToList();
+                }
 
                 NewPortalObject.Add("members", members);
+
                 return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
             }
 
@@ -3455,19 +3251,19 @@ namespace GreenBushIEP.Controllers
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(Iepid, user.UserID, false);
 
-				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+                var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
-				var annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
-				int AnnualId = annual.IEPid;
+                var annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
+                int AnnualId = annual.IEPid;
 
-				if (studentDetails != null)
-				{
-					annual.StatusCode = studentDetails.StatusCode;
-					db.SaveChanges();
+                if (studentDetails != null)
+                {
+                    annual.StatusCode = studentDetails.StatusCode;
+                    db.SaveChanges();
 
-				}
+                }
 
-				return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = AnnualId }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -3484,20 +3280,20 @@ namespace GreenBushIEP.Controllers
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(IepId, user.UserID, amend);
 
-				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+                var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
-				var amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
+                var amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
 
-				int AmendmentId = amendment.IEPid;
+                int AmendmentId = amendment.IEPid;
 
-				if (studentDetails != null)
-				{
-					amendment.StatusCode = studentDetails.StatusCode;
-					db.SaveChanges();
-				}
+                if (studentDetails != null)
+                {
+                    amendment.StatusCode = studentDetails.StatusCode;
+                    db.SaveChanges();
+                }
 
 
-				return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -3701,7 +3497,7 @@ namespace GreenBushIEP.Controllers
             if (Completed)
             {
                 tblArchiveEvaluationDate Date = db.tblArchiveEvaluationDates.Where(d => d.archiveEvaluationDateID == dateId).FirstOrDefault();
-                if(Date != null)
+                if (Date != null)
                 {
                     db.tblArchiveEvaluationDates.Remove(Date);
                 }
@@ -3709,7 +3505,7 @@ namespace GreenBushIEP.Controllers
             else
             {
                 tblArchiveEvaluationDateSigned Date = db.tblArchiveEvaluationDateSigneds.Where(d => d.archiveEvaluationDateSignedID == dateId).FirstOrDefault();
-                if(Date != null)
+                if (Date != null)
                 {
                     db.tblArchiveEvaluationDateSigneds.Remove(Date);
                 }

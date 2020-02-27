@@ -18,7 +18,8 @@ namespace GreenBushIEP.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string RoleID { get; set; }
+        public Nullable<bool> hasIEP { get; set; }
         public Nullable<long> KIDSID { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> isAssgined { get; set; }
     }
 }

@@ -25,158 +25,159 @@
     }
 </style>
 <div id="printModuleDiv">
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Acc');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
-	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title" style="font-size: 30px;">
-        <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations, Modifications, Supplemental Aids, Supports, Transportation
-    </h4>
-</div>
-<div class="modal-body">
-    <div class="row">
-        <div class="col-md-12" style="margin-bottom: 12px;">
-            <button id="newgoal" class="btn btn-default">New Accommodations, Modifications, Supplemental Aids, Supports or Transportation&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-        </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Acc');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+        <h4 class="modal-title" style="font-size: 30px;">
+            <i class="glyphicon glyphicon-scissors" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Accommodations, Modifications, Supplemental Aids, Supports, Transportation
+        </h4>
     </div>
-    <div class="container goalContainer">
-	 @Html.HiddenFor(m => m.modulesNeedingAccommodations)
-        <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
-            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 12px;">
+                <button id="newgoal" class="btn btn-default">New Accommodations, Modifications, Supplemental Aids, Supports or Transportation&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+            </div>
         </div>
-        <div id="ExistingAccommodations" style="margin: 5px;">
-            @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
-            {
-                foreach (var accom in Model.AccomList)
+        <div class="container goalContainer">
+            @Html.HiddenFor(m => m.modulesNeedingAccommodations)
+            <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+            </div>
+            <div id="ExistingAccommodations" style="margin: 5px;">
+                @if (Model.AccomList.Any() && Model.AccomList.Count > 0)
                 {
-                    @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom,  new ViewDataDictionary { { "ModuleList", Model.ModuleList } });
+                    foreach (var accom in Model.AccomList)
+                    {
+                            @Html.Partial("~/Views/Home/_AccommodationPartial.cshtml", accom, new ViewDataDictionary { { "ModuleList", Model.ModuleList } });
+                    }
                 }
-            }
-        </div>
-        <div class="row oneStudentGoal hidden" id="defaultgoal">
+            </div>
+            <div class="row oneStudentGoal hidden" id="defaultgoal">
 
-            @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
-            {
-                @Html.HiddenFor(model => model.AccommodationID)
-                @Html.HiddenFor(model => model.IEPid)
-                @Html.HiddenFor(model => model.StudentId)
-                @Html.HiddenFor(model => model.Completed, new { @class="isAccomComplete" })
-                @Html.AntiForgeryToken()
+                @using (Html.BeginForm("EditAccom", "ModuleSection", FormMethod.Post, new { name = "frm", id = "frm" }))
+                {
+                    @Html.HiddenFor(model => model.AccommodationID)
+                    @Html.HiddenFor(model => model.IEPid)
+                    @Html.HiddenFor(model => model.StudentId)
+                    @Html.HiddenFor(model => model.Completed, new { @class = "isAccomComplete" })
+                    @Html.AntiForgeryToken()
 
-                <div class="col-md-12">
-                    <div class="panel-group" id="accordion[0]">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
-                                        <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
-                                        <i class="glyphicon glyphicon-ok isGoalCompleted thisGoalNotCompleted"></i>
-                                        <span class="pull-right">
-                                            <i class="glyphicon glyphicon-trash deleteGoal"></i>
-                                        </span>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse0" class="panel-collapse in">
-                                <div class="panel-body">
-									<div class="row form-group">
-                                        <div class="col-md-3">                                          
-											<label style="font-size: 18px;" for="ModuleType">Module</label>
-											<div class="input-group">												
-                                            <div class="input-group-btn bs-dropdown-to-select-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;width:100%;text-align:left">
-                                                    <span data-bind="bs-drp-sel-label">Select Module...</span>
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="1">
-                                               	<ul class="dropdown-menu newlist" role="menu" style="font-size:16px;width:100%">
-													@foreach (var module in Model.ModuleList)
-													{
-														<li data-value="@(module.ModuleID)"><a href="#">@(module.ModuleName)</a></li>
-													}                                                    
-                                                </ul>
+                    <div class="col-md-12">
+                        <div class="panel-group" id="accordion[0]">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="btnToggle" data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
+                                            <span class="glyphicon glyphicon-scissors"></span><span class="studentGoalLabel" style="margin-left:5px;">Accommodation/Modification</span>
+                                            <i class="glyphicon glyphicon-ok isGoalCompleted thisGoalNotCompleted"></i>
+                                            <span class="pull-right">
+                                                <i class="glyphicon glyphicon-trash deleteGoal"></i>
+                                            </span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse0" class="panel-collapse in">
+                                    <div class="panel-body">
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                                <label style="font-size: 18px;" for="ModuleType">Module</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-btn bs-dropdown-to-select-group">
+                                                        <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;width:100%;text-align:left">
+                                                            <span data-bind="bs-drp-sel-label">Select Module...</span>
+                                                            <span class="caret"></span>
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="1">
+                                                        <ul class="dropdown-menu newlist" role="menu" style="font-size:16px;width:100%">
+                                                            @foreach (var module in Model.ModuleList)
+                                                            {
+                                                                <li data-value="@(module.ModuleID)"><a href="#">@(module.ModuleName)</a></li>
+                                                            }
+                                                        </ul>
 
-                                            </div>
-											</div>
-										</div>
-									</div>
-                                    <div class="row form-group">
-                                        <div class="col-md-12">
-                                            <label style="font-size: 18px;" for="AccType">Type</label>
-                                            <div class="form-check" style="margin-left:8px">
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" checked>Accommodation</label><br />
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;">Supplemental Aids and Services</label><br />
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;">Support for School Personnel</label><br />
-                                                <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="5" style="position: relative; right: 5px;">Transportation</label><br />
-                                            </div>
-                                        </div>
-                                    </div>									
-                                    <div class="row form-group voffset2">
-                                        <div class="col-md-12">
-                                            <label style="font-size: 18px;">Description</label>
-                                            <div>
-                                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control standard-font-size accommodationDescription", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.", @rows = 3 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group voffset2">
-                                        <div class="col-md-12">
-                                            <label style="font-size: 18px;">Frequency</label>
-                                            <div>
-                                                @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size accommodationFrequency", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group voffset2">
-                                        <div class="col-md-12">
-                                            <label style="font-size: 18px;">Location</label>
-                                            <div>
-                                                @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size accommodationLocation", @maxlength = 300, @rows = 3 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group voffset2">
-                                        <div class="col-md-12">
-                                            <label style="font-size: 18px;">Duration</label>
-                                            <div>
-                                                @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size accommodationDuration", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-12">
-                                            <div class="row voffset4">
-
-                                                <div class="col-md-3">
-                                                    <label style="font-size: 18px;" for="AnticipatedStartDate">Anticipated Start Date</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                        <input type="text" data-val="true" value="@(Model.DefaultStartDate)" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
-                                                               id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label style="font-size: 18px;" for="AnticipatedEndDate">Anticipated End Date</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
-
-                                                        <input type="text" data-val="true" value="@(Model.DefaultEndDate)" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
-                                                               id="AnticipatedEndDate" name="AnticipatedEndDate"
-                                                               class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999;" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group" id="saveGroup">
-                                            <div class="form-group">
-                                                <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                                                <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;" for="AccType">Type</label>
+                                                <div class="form-check" style="margin-left:8px">
+                                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="1" style="position: relative; right: 5px;" checked>Accommodation</label><br />
+                                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="2" style="position: relative; right: 5px;">Modification</label><br />
+                                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="3" style="position: relative; right: 5px;">Supplemental Aids and Services</label><br />
+                                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="4" style="position: relative; right: 5px;">Support for School Personnel</label><br />
+                                                    <label class="radio-inline" style="font-size: 16px;"><input type="radio" name="AccomType" value="5" style="position: relative; right: 5px;">Transportation</label><br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group voffset2">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;">Description</label>
+                                                <div>
+                                                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control standard-font-size accommodationDescription", @maxlength = 500, @data_toggle = "tooltip", @data_placement = "bottom", @title = "500 character limit.", @rows = 3 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group voffset2">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;">Frequency</label>
+                                                <div>
+                                                    @Html.TextAreaFor(x => x.Frequency, new { @class = "form-control standard-font-size accommodationFrequency", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group voffset2">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;">Location</label>
+                                                <div>
+                                                    @Html.TextAreaFor(x => x.Location, new { @class = "form-control standard-font-size accommodationLocation", @maxlength = 300, @rows = 3 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group voffset2">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;">Duration</label>
+                                                <div>
+                                                    @Html.TextAreaFor(x => x.Duration, new { @class = "form-control standard-font-size accommodationDuration", @maxlength = 300, @data_toggle = "tooltip", @data_placement = "bottom", @title = "300 character limit.", @rows = 3 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <div class="row voffset4">
+
+                                                    <div class="col-md-3">
+                                                        <label style="font-size: 18px;" for="AnticipatedStartDate">Anticipated Start Date</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                            <input type="text" data-val="true" value="@(Model.DefaultStartDate)" data-val-date="The field Start date must be a date." data-val-required="The Anticipated Start Date field is required."
+                                                                   id="AnticipatedStartDate" name="AnticipatedStartDate" class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999; " />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label style="font-size: 18px;" for="AnticipatedEndDate">Anticipated End Date</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-calendar"></i></span>
+
+                                                            <input type="text" data-val="true" value="@(Model.DefaultEndDate)" data-val-date="The field End date must be a date." data-val-required="The Anticipated End Date field is required."
+                                                                   id="AnticipatedEndDate" name="AnticipatedEndDate"
+                                                                   class="form-control standard-font-size dtField" aria-describedby="basic-addon1" style="z-index: 99999;" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" id="saveGroup">
+                                                <div class="form-group">
+                                                    <button type="button" class="formbtn btn btn-primary btn-lg SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                                                    <button type="button" class="formbtn btn btn-success btn-lg saveCompletedGoal"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -184,29 +185,28 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-        </div> <!--end oneStudentGoal-->
-    </div><!--end container student goal-->
-    <div class="completed-loader @(Model.AccomList.Count != 0 && Model.AccomList.All(a => a.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
-        <div class="text-center completed-checkbox">
-            <div class="form-check">
-                <div class="checkbox">
-                    <label style="top: 30%;"><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+            </div> <!--end oneStudentGoal-->
+        </div><!--end container student goal-->
+        <div class="completed-loader @(Model.AccomList.Count != 0 && Model.AccomList.All(a => a.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
+            <div class="text-center completed-checkbox">
+                <div class="form-check">
+                    <div class="checkbox">
+                        <label style="top: 30%;"><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="ajax-loader" style="visibility: hidden;">
+            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+            <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
+            <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
+        </div>
     </div>
-    <div class="ajax-loader" style="visibility: hidden;">
-        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-        <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
-        <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
-    </div>
-</div>
 </div> <!--end print-->
 <script>
-	
+
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -275,9 +275,9 @@
                         $(this).find("input[name=Completed]").val(false);
                     });
 
-					$("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
-					$("#AccommodationWidget").addClass("needsAttention");
-					
+                    $("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
+                    $("#AccommodationWidget").addClass("needsAttention");
+
                     $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                 } else {
                     console.log("Error when updating the module.")
@@ -313,9 +313,9 @@
                     e.target.title = '';
                     e.target.parentNode.classList.remove('has-error');
                 }
-			});
+            });
 
-			 //* Binding */
+            //* Binding */
             /* When the user selects an option from the drop down. */
             $(this).find('.bs-dropdown-to-select-group .dropdown-menu li').on('click', function (event) {
                 var $target = $(event.currentTarget);
@@ -326,7 +326,7 @@
                     .children('.dropdown-toggle').dropdown('toggle');
                 $target.closest('.bs-dropdown-to-select-group')
                     .find('[data-bind="bs-drp-sel-label"]').text($target[0].innerText);
-				               
+
                 return false;
             });
 
@@ -334,131 +334,131 @@
                 $(".panel-collapse").each(function () {
                     $(this).collapse('hide');
                 });
-			});
+            });
 
-			$(this).find(".deleteGoal").on("click", function () {
-				var dataId = $(this).attr('accom-id');
+            $(this).find(".deleteGoal").on("click", function () {
+                var dataId = $(this).attr('accom-id');
 
-				if (confirm("Do you really want to delete this Accommodation/Modification?")) {
-					var accommodation = $(this).parents('.oneStudentGoal');
-					var accommodationId = accommodation.find('input:hidden:first').prop("value");
+                if (confirm("Do you really want to delete this Accommodation/Modification?")) {
+                    var accommodation = $(this).parents('.oneStudentGoal');
+                    var accommodationId = accommodation.find('input:hidden:first').prop("value");
 
-					if (accommodationId == 0) {
-						return accommodation.remove();
-					}
+                    if (accommodationId == 0) {
+                        return accommodation.remove();
+                    }
 
-					$.post('/Home/DeleteAccommodation', { accomId: dataId }, function (response) {
-						if (response.result != undefined && response.result) {
+                    $.post('/Home/DeleteAccommodation', { accomId: dataId }, function (response) {
+                        if (response.result != undefined && response.result) {
 
-							accommodation.remove();
+                            accommodation.remove();
 
-							$(window).trigger("deleting.bs.modal");
-						}
-						else {
-							_showAlert("There was a problem deleting the Accommodation or Modification.", false);
-						}
-					});
-				}
-			});
+                            $(window).trigger("deleting.bs.modal");
+                        }
+                        else {
+                            _showAlert("There was a problem deleting the Accommodation or Modification.", false);
+                        }
+                    });
+                }
+            });
 
-			$(this).find(".saveCompletedGoal").on('click', function (e) {
+            $(this).find(".saveCompletedGoal").on('click', function (e) {
 
-				var currentForm = $(this).closest("form").find('.panel-collapse');
-				var modulesNeedingAccommodations = $("#modulesNeedingAccommodations").val();
-				
-				var canSave = true;
-				//need to save and complete all 
-				$.each($(".oneStudentGoal").not(".hidden"), function () {
+                var currentForm = $(this).closest("form").find('.panel-collapse');
+                var modulesNeedingAccommodations = $("#modulesNeedingAccommodations").val();
 
-					var accFor = $(this).find("[data-bind='bs-drp-sel-label']").html();				
-					modulesNeedingAccommodations = modulesNeedingAccommodations.replace(accFor, "");
+                var canSave = true;
+                //need to save and complete all
+                $.each($(".oneStudentGoal").not(".hidden"), function () {
 
-					var accommTitle = $(this).closest('.oneStudentGoal').find('.studentGoalLabel').text();
-					var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
+                    var accFor = $(this).find("[data-bind='bs-drp-sel-label']").html();
+                    modulesNeedingAccommodations = modulesNeedingAccommodations.replace(accFor, "");
 
-					var desc = $(this).closest('.oneStudentGoal').find('.accommodationDescription');
-					var freq = $(this).closest('.oneStudentGoal').find('.accommodationFrequency');
-					var location = $(this).closest('.oneStudentGoal').find('.accommodationLocation');
-					var duration = $(this).closest('.oneStudentGoal').find('.accommodationDuration');
-					var endDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedEndDate"]');
-					var startDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedStartDate"]');
-					var isComplete = $(this).closest('.oneStudentGoal').find("input[name=Completed]");
+                    var accommTitle = $(this).closest('.oneStudentGoal').find('.studentGoalLabel').text();
+                    var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
 
-					if (desc.val().length == 0) {					
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						desc.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Description');
-						return canSave = false;
-					}
+                    var desc = $(this).closest('.oneStudentGoal').find('.accommodationDescription');
+                    var freq = $(this).closest('.oneStudentGoal').find('.accommodationFrequency');
+                    var location = $(this).closest('.oneStudentGoal').find('.accommodationLocation');
+                    var duration = $(this).closest('.oneStudentGoal').find('.accommodationDuration');
+                    var endDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedEndDate"]');
+                    var startDate = $(this).closest('.oneStudentGoal').find('input[name="AnticipatedStartDate"]');
+                    var isComplete = $(this).closest('.oneStudentGoal').find("input[name=Completed]");
 
-					if (freq.val().length == 0) {
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						freq.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Frequency');
-						return canSave = false;
-					}
+                    if (desc.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        desc.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Description');
+                        return canSave = false;
+                    }
 
-					if (location.val().length == 0) {
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						location.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Location');
-						return canSave = false;
-					}
+                    if (freq.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        freq.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Frequency');
+                        return canSave = false;
+                    }
 
-					if (duration.val().length == 0) {
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						duration.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Duration');
-						return canSave = false;
-					}
+                    if (location.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        location.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Location');
+                        return canSave = false;
+                    }
 
-					if (startDate.val().length == 0) {
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						startDate.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Anticipated Start Date');
-						return canSave = false;
-					}
+                    if (duration.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        duration.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Duration');
+                        return canSave = false;
+                    }
 
-					if (endDate.val().length == 0) {
-						if (toggleButton.hasClass("collapsed"))
-							toggleButton.trigger('click');
-						endDate.focus();
-						alert(accommTitle + ': The following field is required not to be empty: Anticipated End Date');
-						return canSave = false;
-					}				
+                    if (startDate.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        startDate.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Anticipated Start Date');
+                        return canSave = false;
+                    }
 
-					if (canSave) {
-						isComplete.val(true);
-					}			
-				
-				});
+                    if (endDate.val().length == 0) {
+                        if (toggleButton.hasClass("collapsed"))
+                            toggleButton.trigger('click');
+                        endDate.focus();
+                        alert(accommTitle + ': The following field is required not to be empty: Anticipated End Date');
+                        return canSave = false;
+                    }
 
-				if (canSave && modulesNeedingAccommodations.trim(' ', "").length != 0) {
-						alert('You need to make a Student Accommodation(s), Modification(s), and/or Supplemental Aid of type(s): ' + modulesNeedingAccommodations.trim().replace(RegExp(' ', 'g'), ', ').replace(RegExp('&nbsp;', 'g'), ' '));
-						return canSave = false;
-				}
+                    if (canSave) {
+                        isComplete.val(true);
+                    }
 
-				if (canSave) {
-					$.each($(".oneStudentGoal").not(".hidden"), function () {
-						$(this).find(".SaveForm").trigger(event.type);
-					});
+                });
 
-					$(window).trigger("saving.bs.modal");
-					setTimeout(function () {
-						$("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
-						$("#AccommodationWidget").removeClass("needsAttention");
-					    $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
-						$('#moduleSection').modal('hide');
-					}, 1200);
-										
-				}
-				
-			});
+                if (canSave && modulesNeedingAccommodations.trim(' ', "").length != 0) {
+                    alert('You need to make a Student Accommodation(s), Modification(s), and/or Supplemental Aid of type(s): ' + modulesNeedingAccommodations.trim().replace(RegExp(' ', 'g'), ', ').replace(RegExp('&nbsp;', 'g'), ' '));
+                    return canSave = false;
+                }
+
+                if (canSave) {
+                    $.each($(".oneStudentGoal").not(".hidden"), function () {
+                        $(this).find(".SaveForm").trigger(event.type);
+                    });
+
+                    $(window).trigger("saving.bs.modal");
+                    setTimeout(function () {
+                        $("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
+                        $("#AccommodationWidget").removeClass("needsAttention");
+                        $("#AccommodationWidget .needsAttentionIcon").addClass("hidden");
+                        $('#moduleSection').modal('hide');
+                    }, 1200);
+
+                }
+
+            });
 
             $(this).find(".SaveForm").on('click', function () {
                 $('.ajax-loader').css("visibility", "visible");
@@ -467,7 +467,7 @@
                 var studentGoal = $(this).closest('.oneStudentGoal');
 
                 var studentGoalId = studentGoal.find("input[name='AccommodationID']").val();
-                var completedGoal = studentGoal.find(".isAccomComplete").val(); 
+                var completedGoal = studentGoal.find(".isAccomComplete").val();
                 var accomType = studentGoal.find("input[name='AccomType']:checked").val();
                 var startDate = studentGoal.find("input[name='AnticipatedStartDate']").val();
                 var datastring = $(this).closest("form[name='frm']").serialize();
@@ -495,9 +495,9 @@
                                 });
 
                                 if (allCompleted) {
-									$("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
-									$("#AccommodationWidget").addClass("module-completed").removeClass("needsAttention");
-                                    
+                                    $("#AccommodationWidget .hero-widget").addClass("module-completed").removeClass("needsAttention");
+                                    $("#AccommodationWidget").addClass("module-completed").removeClass("needsAttention");
+
 
                                     $(window).trigger("saving.bs.modal");
 
@@ -506,8 +506,8 @@
                                     }, 1200);
 
                                 } else {
-									$("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
-									$("#AccommodationWidget").addClass("needsAttention");
+                                    $("#AccommodationWidget .hero-widget").removeClass("module-completed").addClass("needsAttention");
+                                    $("#AccommodationWidget").addClass("needsAttention");
                                     $("#AccommodationWidget .needsAttentionIcon").removeClass("hidden");
                                 }
                             }
@@ -588,7 +588,7 @@
                 $("#alertMessage").slideUp(500);
             });
         }
-	}
+    }
 
     function _getTypeName(val) {
         var shortDesc = "Accommodation ";
@@ -612,14 +612,14 @@
         return shortDesc;
     }
 
-	$(document).ready(function () {
-		$(".dropdown-menu").each(function (index) {
+    $(document).ready(function () {
+        $(".dropdown-menu").each(function (index) {
             var menuValue = $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-value"]').val();
             if (menuValue > 0) {
                 var menuText = $(this).find('[data-value="' + menuValue + '"]').find('a').get(0).innerText;
                 $(this).closest('.bs-dropdown-to-select-group').find('[data-bind="bs-drp-sel-label"]')[0].innerHTML = menuText;
             }
-		});
+        });
 
         $(".oneStudentGoal").each(function () {
             initGoal($(this));

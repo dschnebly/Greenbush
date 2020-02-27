@@ -340,13 +340,38 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     
-        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID)
+        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter);
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
+        }
+    
+        public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var uSDParameter = uSD != null ?
+                new ObjectParameter("USD", uSD) :
+                new ObjectParameter("USD", typeof(string));
+    
+            var buildingIDParameter = buildingID != null ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(string));
+    
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter);
         }
     }
 }
