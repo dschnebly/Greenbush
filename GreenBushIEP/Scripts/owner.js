@@ -293,44 +293,44 @@
                 url: '/Manage/FilterUserList',
                 dataType: 'json',
                 data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+                //async: false,
+                //success: function (data) {
+                //    if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $('.list-group-root').find('.list-group-item');
+                //        // hide all the users in the list.
+                //        var filterCollection = $('.list-group-root').find('.list-group-item');
 
-                        var i = filterCollection.length;
-                        while (i >= 0) {
-                            $(filterCollection[i]).addClass('hidden');
-                            i--;
-                        }
+                //        var i = filterCollection.length;
+                //        while (i >= 0) {
+                //            $(filterCollection[i]).addClass('hidden');
+                //            i--;
+                //        }
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
+                //        var results = data.Message;
+                //        if (results.members.length > 0) {
 
-                            var j = results.members.length - 1;
-                            while (j >= 0) {
-                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-                                $(filterCollection[foundIndex]).removeClass('hidden');
-                                j--;
-                            }
-                        }
-                    }
-                    else {
-                        alert('doh');
-                    }
-                },
-                error: function (data) {
-                    alert('ERROR!!!');
+                //            var j = results.members.length - 1;
+                //            while (j >= 0) {
+                //                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+                //                $(filterCollection[foundIndex]).removeClass('hidden');
+                //                j--;
+                //            }
+                //        }
+                //    }
+                //    else {
+                //        alert('doh');
+                //    }
+                //},
+                //error: function (data) {
+                //    alert('ERROR!!!');
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
+                //    console.log(data);
+                //},
+                //complete: function (data) {
+                //    $(".ajax-loader").hide();
+                //    //A function to be called when the request finishes 
+                //    // (after success and error callbacks are executed). 
+                //}
             });
         })
 
@@ -517,6 +517,12 @@
                     }
                 });
             }
+        });
+
+        // attach event
+        // fires when the user clicks the button
+        $('#unassigned').on("click", function () {
+            alert('dude');
         });
 
         // attach event
