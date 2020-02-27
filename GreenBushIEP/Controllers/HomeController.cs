@@ -1157,18 +1157,30 @@ namespace GreenbushIep.Controllers
                 studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
                 studentAmmendIEP.IepStatus = IEPStatus.ACTIVE;
-				
-				//iep status code history
-				var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
-				if (studentDetails != null)
-				{
-					studentAmmendIEP.StatusCode = studentDetails.StatusCode;
-				}
 
+				//iep status code history just in case the teacher changed it
+				var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+
+				if (studentRec != null)
+				{
+					studentAmmendIEP.StatusCode = studentRec.StatusCode;
+				}
+								
 				try
                 {
                     db.SaveChanges();
-                    return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
+
+					//archive print
+					var theIEP = GetIEPPrint(stId, IEPid);
+
+					bool success = ArchiveIEPPrint(stId, theIEP);
+
+					if (!success)
+					{
+						return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
+					}
+
+					return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1207,7 +1219,19 @@ namespace GreenbushIep.Controllers
 					}
 
 					db.SaveChanges();
-                    return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+
+					//archive print
+					var theIEP = GetIEPPrint(stId, IEPid);
+
+					bool success = ArchiveIEPPrint(stId, theIEP);
+
+					if (!success)
+					{
+						return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
+					}
+
+
+					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1247,75 +1271,36 @@ namespace GreenbushIep.Controllers
             {
                 if (iepDraft.IepStatus != IEPStatus.ACTIVE)
                 {
-                    //create archive
-                    try
-                    {
-                        var theIEP = GetIEPPrint(stId, IEPid);
-
-						//iep status code history
-						var studentDetails = theIEP.studentDetails;
-						if (studentDetails != null)
-						{
-							iepDraft.StatusCode = studentDetails.student.StatusCode;
-						}
-
-
-						if (theIEP != null)
-                        {
-                            theIEP.studentDetails.printStudentInfo = true;
-                            theIEP.studentDetails.printIEPDetails = true;
-                            theIEP.studentDetails.printHealth = true;
-                            theIEP.studentDetails.printMotor = true;
-                            theIEP.studentDetails.printComm = true;
-                            theIEP.studentDetails.printSocial = true;
-                            theIEP.studentDetails.printGeneral = true;
-                            theIEP.studentDetails.printAcademic = true;
-                            theIEP.studentDetails.printAcc = true;
-                            theIEP.studentDetails.printBehavior = true;
-                            theIEP.studentDetails.printTrans = true;
-                            theIEP.studentDetails.printOther = true;
-                            theIEP.studentDetails.printGoals = true;
-                            theIEP.studentDetails.printServices = true;
-                            theIEP.studentDetails.printNotice = true;
-                            theIEP.studentDetails.printProgressReport = false;
-
-                            theIEP.isServerRender = true;
-                        }
-
-                        var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
-
-                        string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
-                        result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
-                        HtmlDocument doc = new HtmlDocument();
-                        doc.OptionWriteEmptyNodes = true;
-                        doc.OptionFixNestedTags = true;
-                        doc.LoadHtml(result);
-
-                        var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
-                        var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                        var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", stId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString(): DateTime.Now.ToShortDateString()));
-
-						
-
+					//iep status code history just in case the teacher changed it
+					var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+					
+					if (studentRec != null)
+					{
+						iepDraft.StatusCode = studentRec.StatusCode;												
 					}
-                    catch (Exception e)
-                    {
-                        return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive: " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
-                    }
 
-                    // start switching the flag.
-                    iepDraft.IepStatus = IEPStatus.ACTIVE;
+					// start switching the flag.
+					iepDraft.IepStatus = IEPStatus.ACTIVE;
 
                     //iepDraft.begin_date = DateTime.Now;
                     iepDraft.end_Date = (!iepDraft.Amendment) ? iepDraft.begin_date.Value.AddYears(1) : iepDraft.end_Date;
 
                     try
-                    {
-						
+                    {						
 
 						db.SaveChanges();
 
-                        return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
+						//archive print
+						var theIEP = GetIEPPrint(stId, IEPid);
+
+						bool success = ArchiveIEPPrint(stId, theIEP);
+
+						if (!success)
+						{
+							return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
+						}
+
+						return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
@@ -3975,6 +3960,60 @@ namespace GreenbushIep.Controllers
             Response.BinaryWrite(memoryStream);
             Response.End();
         }
+
+		private bool ArchiveIEPPrint(int studentId, IEP theIEP)
+		{
+			bool success = false;
+
+			//create archive
+			try
+			{
+				
+				if (theIEP != null)
+				{
+					theIEP.studentDetails.printStudentInfo = true;
+					theIEP.studentDetails.printIEPDetails = true;
+					theIEP.studentDetails.printHealth = true;
+					theIEP.studentDetails.printMotor = true;
+					theIEP.studentDetails.printComm = true;
+					theIEP.studentDetails.printSocial = true;
+					theIEP.studentDetails.printGeneral = true;
+					theIEP.studentDetails.printAcademic = true;
+					theIEP.studentDetails.printAcc = true;
+					theIEP.studentDetails.printBehavior = true;
+					theIEP.studentDetails.printTrans = true;
+					theIEP.studentDetails.printOther = true;
+					theIEP.studentDetails.printGoals = true;
+					theIEP.studentDetails.printServices = true;
+					theIEP.studentDetails.printNotice = true;
+					theIEP.studentDetails.printProgressReport = false;
+
+					theIEP.isServerRender = true;
+				}
+
+				var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+
+				string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
+				result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+				HtmlDocument doc = new HtmlDocument();
+				doc.OptionWriteEmptyNodes = true;
+				doc.OptionFixNestedTags = true;
+				doc.LoadHtml(result);
+
+				var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
+				var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
+				var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+
+				success = true;
+
+			}
+			catch (Exception e)
+			{
+				success = false;				
+			}
+
+			return success;
+		}
 
         #region FormPDFDownload
         private void SaveFormValues(string HTMLContent, string formName, string studentId)
