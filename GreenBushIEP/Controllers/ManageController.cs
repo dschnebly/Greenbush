@@ -2971,7 +2971,7 @@ namespace GreenBushIEP.Controllers
 
                 if (RoleId != "999")
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, searchActiveType).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {

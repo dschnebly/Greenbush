@@ -143,7 +143,7 @@
 
                         @foreach (var user in Model.members)
                         {
-                            <div class="list-group-item" data-id="@(user.UserID)" data-isActive="@(user.RoleID == "5" ? user.hasIEP ? 1: 2 : 0)">
+                            <div class="list-group-item" data-id="@(user.UserID)">
 
                                 @if (user.RoleID == "2") //MIS
                                 {
@@ -234,7 +234,7 @@
         </div>
     </div>
 </div>
-<div class="ajax-loader" style="visibility: visible;">
+<div class="ajax-loader">
     <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
 </div>
 
