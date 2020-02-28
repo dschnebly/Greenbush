@@ -2962,7 +2962,6 @@ namespace GreenBushIEP.Controllers
                 int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
                 bool? searchActiveType = activeType.HasValue && activeType == 1 ? true : activeType.HasValue && activeType == 2 ? false : (bool?)null;
 
-
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
                 NewPortalObject.Add("selectedDistrict", DistrictId);
                 NewPortalObject.Add("selectedBuilding", BuildingId);
@@ -2970,25 +2969,41 @@ namespace GreenBushIEP.Controllers
 
                 var members = new List<UserView>();
 
-                members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, searchActiveType).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
-
-                if (searchUserId != -1)
+                if (RoleId != "999")
                 {
-                    members = members.Where(u => u.UserID == searchUserId).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, searchActiveType).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+
+                    if (searchUserId != -1)
+                    {
+                        members = members.Where(u => u.UserID == searchUserId).ToList();
+                    }
+
+                    if (RoleId != "-1")
+                    {
+                        members = members.Where(u => u.RoleID == RoleId).ToList();
+                    }
+
+                    if (searchActiveType != null)
+                    {
+                        members = members.Where(u => u.hasIEP == searchActiveType).ToList();
+                    }
                 }
-
-                if (RoleId != "-1" )
+                else // Unassigned Users.
                 {
-                    members = members.Where(u => u.RoleID == RoleId).ToList();
-                }
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
-                if (searchActiveType != null)
-                {
-                    members = members.Where(u => u.hasIEP == searchActiveType).ToList();
+                    if (searchUserId != -1)
+                    {
+                        members = members.Where(u => u.UserID == searchUserId).ToList();
+                    }
+
+                    if (RoleId != "-1")
+                    {
+                        members = members.Where(u => u.RoleID == RoleId).ToList();
+                    }
                 }
 
                 NewPortalObject.Add("members", members);
-
                 return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
             }
 

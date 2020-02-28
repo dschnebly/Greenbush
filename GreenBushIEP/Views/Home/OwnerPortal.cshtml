@@ -137,7 +137,7 @@
 
                         @foreach (var user in Model.members)
                         {
-                            <div class="list-group-item" data-id="@(user.UserID)" data-isActive="@(user.RoleID == "5" ? user.hasIEP ? 1: 2 : 0)">
+                            <div class="list-group-item" data-id="@(user.UserID)" @*data-isActive="@(user.RoleID == "5" ? user.hasIEP ? 1: 2 : 0)"*@>
 
                                 @if (user.RoleID == "2")
                                 {
