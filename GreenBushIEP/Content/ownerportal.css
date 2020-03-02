@@ -166,9 +166,9 @@ hr {
 }
 
 .panel-primary > .panel-heading {
-    background-color: #b6c391 !important;
-    border-color: #b6c391 !important;
-    min-height: 57px !important;
+    padding: 8px 15px;
+    background-color: #45906d !important;
+    border-color: #45906d !important;
 }
 
 .panel-primary {
@@ -177,17 +177,19 @@ hr {
 
 .panel-title {
     display: inline-block !important;
-    color: #333 !important;
+    color: #fff !important;
     font-weight: 600 !important;
 }
 
 .btn-filter {
     position: relative;
     bottom: 1px;
+    margin-right: 5px;
 }
 
 .form-group label {
     color: #666 !important;
+    display: initial;
 }
 
 .showFilters {
@@ -202,6 +204,7 @@ hr {
     width: 100px;
     font-weight: 600;
     padding: 3px;
+    background-color: #fff;
 }
 
 .chosen-container-single .chosen-single {
@@ -309,7 +312,6 @@ hr {
         padding-left: 0;
     }
 
-
 @-webkit-keyframes pulse {
     0% {
         -webkit-transform: scale(1);
@@ -408,7 +410,6 @@ hr {
         opacity: 1;
     }
 }
-
 
 .ui-helper-hidden-accessible {
     display: none;
