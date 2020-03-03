@@ -13,7 +13,6 @@
 
 <div class="container">
     <h2>@ViewBag.Title</h2>
-
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
@@ -46,7 +45,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">Users </h3>
             <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="2">Level 4</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="999">Level 1</option><option value="5">Student</option><option value="999">Unassigned</option></select>
-            <button class="btn btn-default btn btn-sm btn-filter pull-right"><span cclass="glyphicon glyphicon-option-vertical"></span> Filter</button>
+            <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
             <div class="col-xs-12 col-md-3 pull-left">

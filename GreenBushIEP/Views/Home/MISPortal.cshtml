@@ -13,10 +13,9 @@
 
 <div class="container">
     <h2>@ViewBag.Title</h2>
-
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)">
         </a>
     </div>
     <h3>
@@ -136,17 +135,19 @@
             </div>
         </div>
         <div>
-            @{
-                if (Model.members.Count > 0)
-                {
-                    <div class="list-group list-group-root well">
+            @if (Model.members.Count > 0)
+            {
+                <div class="list-group list-group-root well">
 
-                        @foreach (var user in Model.members)
-                        {
-                            <div class="list-group-item" data-id="@(user.UserID)">
+                    @for (int i = 0; i < Model.members.Count; i++)
+                    {
+                        var user = Model.members[i];
 
-                                @if (user.RoleID == "2") //MIS
-                                {
+                        <div class="list-group-item" data-id="@(user.UserID)">
+
+                            @switch (user.RoleID)
+                            {
+                                case "2": //MIS
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
@@ -156,9 +157,8 @@
                                         <span class="fa fa-building-o" aria-hidden="true"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                }
-                                else if (user.RoleID == "3") //ADMIN
-                                {
+                                    break;
+                                case "3": //ADMIN
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
@@ -168,9 +168,8 @@
                                         <span class="fa fa-building-o" aria-hidden="true"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                }
-                                else if (user.RoleID == "4") //Teacher
-                                {
+                                    break;
+                                case "4": //Teacher
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
@@ -182,9 +181,8 @@
                                         <span class="fa fa-building-o" aria-hidden="true"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                }
-                                else if (user.RoleID == "6") //Nurse
-                                {
+                                    break;
+                                case "6": //Nurse
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
@@ -196,15 +194,14 @@
                                         <span class="fa fa-building-o" aria-hidden="true"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                }
-                                else
-                                { //KIDS
+                                    break;
+                                default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
 
                                     if (user.hasIEP)
                                     {
-                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data - ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
                                     }
@@ -223,13 +220,13 @@
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                }
+                                    break;
+                            }
 
-                            </div>
-                        }
+                        </div>
+                    }
 
-                    </div>
-                }
+                </div>
             }
         </div>
     </div>
@@ -335,7 +332,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- end modal -->
-
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
