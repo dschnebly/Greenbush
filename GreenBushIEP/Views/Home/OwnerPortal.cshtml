@@ -143,7 +143,7 @@
                             {
                                 case "2": //MIS
                                     <i class="fa fa-cog" aria-hidden="true"></i>
-                                    @user.FirstName @user.MiddleName  @user.LastName
+                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
@@ -154,7 +154,7 @@
                                     break;
                                 case "3": //ADMIN
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
-                                    @user.FirstName @user.MiddleName  @user.LastName
+                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
@@ -191,7 +191,7 @@
                                     break;
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
-                                    @user.FirstName @user.MiddleName  @user.LastName
+                                    <text>@user.FirstName  @user.MiddleName @user.LastName</text>
 
                                     if (user.hasIEP)
                                     {
