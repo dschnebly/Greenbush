@@ -74,6 +74,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = owner)]
+        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult OwnerPortal()
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
