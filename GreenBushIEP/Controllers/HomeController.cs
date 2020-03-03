@@ -33,6 +33,7 @@ namespace GreenbushIep.Controllers
 
         // GET: Home
         [AllowAnonymous]
+        [OutputCache(Duration = 15, VaryByParam = "none", Location = System.Web.UI.OutputCacheLocation.Client)]
         public ActionResult Index()
         {
             // Invalidate the Cache on the Client Side
@@ -100,6 +101,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = mis)]
+        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult MISPortal()
         {
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
