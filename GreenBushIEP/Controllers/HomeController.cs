@@ -4012,7 +4012,8 @@ namespace GreenbushIep.Controllers
 			}
 			catch (Exception e)
 			{
-				success = false;				
+				success = false;
+                Console.Write(e.InnerException.ToString());				
 			}
 
 			return success;
