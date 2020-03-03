@@ -14,7 +14,7 @@
 <div class="container">
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
-        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide" alt="owner avatar">
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
@@ -143,7 +143,7 @@
                             {
                                 case "2": //MIS
                                     <i class="fa fa-cog" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                    @user.FirstName @user.MiddleName  @user.LastName
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
@@ -154,7 +154,7 @@
                                     break;
                                 case "3": //ADMIN
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                    @user.FirstName @user.MiddleName  @user.LastName
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
@@ -166,7 +166,7 @@
                                 case "4": //Teacher
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                        @user.FirstName @user.MiddleName  @user.LastName
                                     </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
@@ -179,7 +179,7 @@
                                 case "6": //Nurse
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                        @user.FirstName @user.MiddleName  @user.LastName
                                     </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
@@ -191,11 +191,11 @@
                                     break;
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                    @user.FirstName @user.MiddleName  @user.LastName
 
                                     if (user.hasIEP)
                                     {
-                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data - ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
                                     }
@@ -278,7 +278,7 @@
             @Html.Hidden("id", 0)
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
+                <h4 class="modal-title custom_align" id="DeleteHeading">Delete this User</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
